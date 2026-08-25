@@ -1774,6 +1774,20 @@ v1 파서가 지원할 예:
 - 최초 scaffold에서는 실제 D1 퀴즈 schema, OpenAI 호출, 자막 provider, R2 backup, AI 생성 이미지, 실제 관리자·공개 화면 기능을 구현하지 않는다.
 - npm이나 Yarn을 호출하지 않으며 `package-lock.json`·`yarn.lock`이 생기면 자동 검사에서 실패한다.
 
+#### Phase 1 scaffold 구현 결과 — 2026-08-25
+
+최초 실행 골격을 실제 코드로 구현하고 local 검증까지 마쳤다. 이 완료 표시는 **Phase 1 전체 완료가 아니라 scaffold 하위 작업 완료**를 뜻하며, D1·Access·교차 Workflow binding·Cloudflare Preview 자원 연결은 계속 후속 작업이다.
+
+- Node `24.18.0`, pnpm `11.14.0`, 단일 root `package.json`, 유일한 `pnpm-lock.yaml`을 생성했다.
+- `pnpm-workspace.yaml`은 여러 package를 만드는 workspace 구성이 아니라 pnpm 11의 프로젝트 보안 설정 파일로만 사용한다. `packages`를 선언하지 않아 root package 하나만 포함하며, 설치 script는 Vite/Workers에 필요한 `esbuild`와 `workerd`만 allowlist한다.
+- React 19 + Vite 8 + TypeScript strict + React Router Data Mode + Tailwind CSS v4를 연결했다. TypeScript 최신 7.0.2 대신 현재 `typescript-eslint` 지원 범위 안의 6.0.3을 고정했다.
+- Cloudflare 공식 Vite plugin으로 React Static Assets와 `biblequiz-app` Worker를 같은 local server에서 실행한다. 입력 `wrangler.jsonc`에는 SPA fallback과 `/api/*` routing만 선언하고, 실제 asset directory는 build 시 plugin이 `dist/biblequiz_app/wrangler.json`에 `../client`로 생성한다.
+- `biblequiz-content`·`biblequiz-backup`은 공개 `fetch`가 없는 Workflow class와 비공개 Wrangler 설정 골격만 만들었다. 외부 API, D1, R2, schedule과 실제 작업은 아직 연결하지 않았다.
+- 공통 성공·오류 envelope, request ID, `GET /api/health`, 알 수 없는 API의 JSON 404를 구현했다.
+- ESLint, TypeScript project reference, 일반 Vitest, Workers runtime Vitest, Playwright 기본 설정, GitHub Actions Node 24/pnpm frozen install 검사를 구성했다.
+- local HTTP 검증에서 `/api/health` JSON 200, `/api/unknown` JSON 404, `/quiz/test-slug`·`/archive` 직접 접속 HTML 200을 확인했다.
+- `pnpm lint`, `pnpm typecheck`, unit 2건, Worker 2건, production build와 Playwright 4개 test discovery가 통과했다. 브라우저 binary를 내려받아 실행하는 실제 Playwright E2E는 화면 구현 단계에서 CI에 활성화한다.
+
 #### 예상 이용 규모 — 2026-08-12 확정
 
 - 주간 방문자: 약 30명
@@ -1952,7 +1966,7 @@ Cloudflare 종속성과 완화책:
 - 세션 제출 여부, Turnstile, 관리자 Access 검증은 필요한 route group에 명시적으로 적용한다. route 등록 테스트가 보호 누락을 검사한다.
 - Hono 내장 middleware를 무분별하게 추가하지 않고 필요한 기능만 사용한다. third-party Hono middleware는 보안·유지보수 검토 후 도입한다.
 - API 성공·오류 envelope은 15장의 계약을 따르며 Hono 기본 오류 HTML을 사용자에게 그대로 노출하지 않는다.
-- `wrangler.jsonc`의 `assets.directory = "./dist"`, `assets.not_found_handling = "single-page-application"`, `assets.run_worker_first = ["/api/*"]`를 정본으로 둔다. React route·실제 정적 파일은 Static Assets가 제공하고 `/api/*`만 Worker 코드를 먼저 실행한다.
+- 입력 `wrangler.jsonc`의 `assets.not_found_handling = "single-page-application"`, `assets.run_worker_first = ["/api/*"]`를 정본으로 둔다. Cloudflare Vite plugin이 client build output을 계산해 생성된 배포 설정에 `assets.directory`를 넣으므로 입력 설정에 `./dist`를 중복 고정하지 않는다. React route·실제 정적 파일은 Static Assets가 제공하고 `/api/*`만 Worker 코드를 먼저 실행한다.
 - 브라우저에서 `/quiz/:slug`를 직접 열거나 새로고침하면 Static Assets가 `index.html`을 반환하고 React Router가 화면을 선택한다. `/api/*`는 navigation 여부와 관계없이 Hono JSON API가 처리하며 SPA HTML로 잘못 fallback하지 않게 자동 검사한다.
 
 비용은 월 0원이다. Hono는 MIT 라이선스 오픈소스이며 별도 서비스나 서버 비용이 아니다. 유료 대안은 현재 필요하지 않다. Hono 유지보수가 중단되거나 Cloudflare 공식 지원과 충돌하면 순수 Worker `fetch` router로 교체할 수 있도록 핵심 service를 독립시킨다.
@@ -2194,7 +2208,7 @@ Workflows가 AI 계산 자체를 하는 것은 아니다. AI 계산은 선택한
 | 계층 | 도구 | 담당 범위 |
 |---|---|---|
 | 정적 검사 | TypeScript strict, ESLint | 잘못된 type, 금지된 import와 명백한 코드 문제 |
-| 단위·통합 | Vitest + `@cloudflare/vitest-pool-workers` | 퍼즐·한글·채점·moderation, 메인 애플리케이션 Worker, D1 migration, Workflow |
+| 단위·통합 | Vitest + `@cloudflare/vitest-plugin` | 퍼즐·한글·채점·moderation, 메인 애플리케이션 Worker, D1 migration, Workflow |
 | UI 컴포넌트 | React Testing Library | 버튼 상태, 오류 안내, 접근성 이름과 상태 전환 |
 | 실제 브라우저 E2E | Playwright | 입력→부분 제출→정답보기→참여 현황→Top N 출력의 전체 흐름 |
 | 시각·산출물 | Playwright screenshot + PDF 구조 검사 | 핵심 viewport 회귀, PDF 크기·페이지·한글 font 포함 |
@@ -3202,7 +3216,7 @@ monthly check POST는 서버의 `Asia/Seoul` 연월, 현재 `pricing_catalog` ve
 
 ## 16. 권장 저장소 구조
 
-아래는 구현 시작 시 만들 목표 구조다. 현재는 정본 기획서 `implementation.md`와 사용자가 별도 보존을 요청한 `docs/future/` 기록만 있으며, 코드·scaffold·asset은 아직 만들지 않는다.
+아래는 전체 구현의 목표 구조다. 2026-08-25 현재 Phase 1 scaffold에 필요한 root 설정, `src/`, 세 Worker 골격, `shared/`, `scripts/`, `tests/`는 생성되었고, 기능별 하위 폴더·migration·실제 asset은 각 Phase에서 추가한다.
 
 ```text
 /
@@ -3210,6 +3224,7 @@ monthly check POST는 서버의 `Asia/Seoul` 연월, 현재 `pricing_catalog` ve
 ├─ README.md
 ├─ package.json
 ├─ pnpm-lock.yaml          # 유일한 lockfile; package-lock.json·yarn.lock 금지
+├─ pnpm-workspace.yaml     # root package 하나의 pnpm 11 보안 설정; multi-package 미사용
 ├─ index.html
 ├─ vite.config.ts
 ├─ drizzle.config.ts
@@ -4067,7 +4082,7 @@ v1 `reference_only` 필수 검사:
 [pending] Phase 1 Workers Preview에서 같은 자막 adapter 재검증
 [pending] Phase 5 Preview 관리자 화면에서 대표 설교 자막 수정·AI 교정 비교·최종 확정
 [pending] Phase 5 Preview에서 non-production OpenAI 실제 품질·사용량·비용 평가
-[pending] Phase 1 코드 scaffold
+[complete] Phase 1 코드 scaffold — React/Vite/TypeScript, 3개 Worker 골격, health API, local tests/build
 [pending] 모든 디자인·배경 이미지 생성
 ```
 

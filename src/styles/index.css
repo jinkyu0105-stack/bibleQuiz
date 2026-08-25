@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light dark;
+  font-family:
+    Pretendard,
+    "Noto Sans KR",
+    system-ui,
+    sans-serif;
+  --page: #fdf6e3;
+  --surface: #f4f0d9;
+  --border: #bdc3af;
+  --text: #5c6a72;
+  --text-strong: #36434a;
+  --accent: #657900;
+  --focus: #24769f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #282828;
+    --surface: #3c3836;
+    --border: #665c54;
+    --text: #ebdbb2;
+    --text-strong: #fbf1c7;
+    --accent: #b8bb26;
+    --focus: #83a598;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+}
+
+a:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.app-shell {
+  width: min(100% - 2rem, 72rem);
+  margin-inline: auto;
+  padding-block: 2rem 5rem;
+}
+
+.site-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.25rem;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2 {
+  color: var(--text-strong);
+  font-family: "Noto Serif KR", serif;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-size: clamp(1.75rem, 5vw, 3rem);
+}
+
+.eyebrow {
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.health {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+
+.health span {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+nav {
+  display: flex;
+  gap: 1.25rem;
+  padding-block: 1rem;
+}
+
+nav a {
+  border-bottom: 2px solid transparent;
+  padding-block: 0.25rem;
+  text-decoration: none;
+}
+
+nav a.active {
+  border-color: var(--accent);
+  color: var(--text-strong);
+}
+
+.placeholder,
+.error-page {
+  margin-top: clamp(3rem, 10vw, 8rem);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: clamp(1.5rem, 5vw, 4rem);
+}
+
+.placeholder p:not(.eyebrow),
+.error-page p:not(.eyebrow) {
+  max-width: 42rem;
+  line-height: 1.75;
+}
+
+.text-link {
+  color: var(--text-strong);
+  font-weight: 700;
+  text-underline-offset: 0.3em;
+}
+
+@media (max-width: 42rem) {
+  .app-shell {
+    width: min(100% - 1.25rem, 72rem);
+    padding-top: 1.25rem;
+  }
+
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  nav {
+    overflow-x: auto;
+  }
+}

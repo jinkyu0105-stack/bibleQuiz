@@ -1,0 +1,15 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "biblequiz-content",
+  "main": "./index.ts",
+  "compatibility_date": "2026-08-25",
+  "workers_dev": false,
+  "preview_urls": false,
+  "workflows": [
+    {
+      "name": "biblequiz-content-workflow",
+      "binding": "CONTENT_WORKFLOW",
+      "class_name": "ContentWorkflow"
+    }
+  ]
+}

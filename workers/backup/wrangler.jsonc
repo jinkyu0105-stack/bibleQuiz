@@ -1,0 +1,15 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "biblequiz-backup",
+  "main": "./index.ts",
+  "compatibility_date": "2026-08-25",
+  "workers_dev": false,
+  "preview_urls": false,
+  "workflows": [
+    {
+      "name": "biblequiz-backup-workflow",
+      "binding": "BACKUP_WORKFLOW",
+      "class_name": "BackupWorkflow"
+    }
+  ]
+}
