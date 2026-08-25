@@ -1,7 +1,7 @@
 # 다사랑교회 「이번 주의 말씀 : 낱말 퀴즈」 구현 명세
 
 > 문서 상태: 구현 전 기준안<br>
-> 마지막 갱신: 2026-08-24 (Asia/Seoul)<br>
+> 마지막 갱신: 2026-08-25 (Asia/Seoul)<br>
 > 대상 배포: GitHub → Cloudflare Pages<br>
 > 서비스 표기명: `이번 주의 말씀 : 낱말 퀴즈`<br>
 > 교회 표기명: `다사랑교회`
@@ -38,6 +38,7 @@
 | 항목 | 결정 | 상태 |
 |---|---|---|
 | 플랫폼 | 반응형 웹, GitHub 연동 Cloudflare Pages 배포 | 확정 |
+| 런타임·패키지 관리 | local·GitHub Actions·Cloudflare 모두 Node.js 24, pnpm 11, `pnpm-lock.yaml` 단일 lockfile | 확정 |
 | 프런트엔드 | React SPA + Vite + TypeScript strict | 확정 |
 | UI/CSS | Tailwind CSS v4 + 중앙 디자인 토큰, 복잡한 기능만 CSS Modules | 확정 |
 | 서버 | Cloudflare Pages Functions + Hono (`/api/*`) | 확정 |
@@ -1702,6 +1703,7 @@ v1 파서가 지원할 예:
 6. 관리자 인증: Cloudflare Access 적용 범위 — **확정 완료**
 7. 콘텐츠·AI 작업: 동기 요청과 비동기 작업의 경계 — **확정 완료**
 8. 테스트·관측·배포: 단위/E2E, 오류 추적, preview/production 분리 — **확정 완료**
+9. JavaScript 런타임·패키지 관리자: Node.js와 lockfile 운영 방식 — **확정 완료**
 
 결정할 때는 다음 기준을 함께 기록한다.
 
@@ -1734,6 +1736,17 @@ v1 파서가 지원할 예:
 - 주요 기능에는 정상 흐름뿐 아니라 답 유출·중복 제출·본문 변조 같은 실패 회귀 테스트를 둔다.
 
 각 기술 비교에서는 “AI 유지보수성과 단일 운영 경로”를 가장 높은 평가 기준으로 사용한다.
+
+#### 런타임·패키지 관리자 — 2026-08-25 확정
+
+- local, GitHub Actions, Cloudflare Pages build 환경은 모두 **Node.js 24 LTS** major로 통일한다.
+- 패키지 관리자는 **pnpm 11**만 사용한다. 프로젝트 `package.json`의 `packageManager` 필드로 실제 scaffold 시 정한 정확한 pnpm 버전을 고정하고, Node 요구 범위도 `engines`에 명시한다.
+- 저장소의 유일한 lockfile은 `pnpm-lock.yaml`이다. 이를 Git에 반드시 포함하며 `package-lock.json`, `yarn.lock`, npm, Yarn을 사용한 의존성 설치는 금지한다.
+- local 설치·스크립트 실행은 프로젝트 루트에서 `pnpm` 명령으로 한다. PATH가 의심되면 먼저 `pnpm --version`과 `node --version`을 확인한다. 특정 사용자의 nvm 실행 파일 경로나 pnpm store 절대 경로는 기기별 구현 세부사항이므로 코드·CI·문서의 필수 경로로 고정하지 않는다.
+- GitHub Actions는 Node 24를 설정하고 pnpm 11을 활성화한 뒤 `pnpm install --frozen-lockfile`을 사용한다. lockfile과 `package.json`이 불일치하면 자동 수정하지 않고 CI를 실패시킨다.
+- Cloudflare Pages도 Node 24와 같은 pnpm major를 사용하고 build command는 pnpm script로만 실행한다. 배포 환경이 lockfile을 바꾸거나 npm fallback을 사용하지 않도록 설정을 명시한다.
+- CI에는 `package-lock.json` 또는 `yarn.lock`이 생기면 실패하는 저장소 위생 검사를 둔다.
+- 2026-08-25 개발 환경 확인값은 Node `v24.18.0`, pnpm `11.14.0`이다. 이는 첫 scaffold의 기준값이며, 이후 버전 변경은 local·CI·Cloudflare를 한 번에 올리고 테스트를 통과한 뒤 이 문서를 갱신한다.
 
 #### 예상 이용 규모 — 2026-08-12 확정
 
@@ -3142,6 +3155,7 @@ monthly check POST는 서버의 `Asia/Seoul` 연월, 현재 `pricing_catalog` ve
 ├─ implementation.md
 ├─ README.md
 ├─ package.json
+├─ pnpm-lock.yaml          # 유일한 lockfile; package-lock.json·yarn.lock 금지
 ├─ index.html
 ├─ vite.config.ts
 ├─ drizzle.config.ts
@@ -3330,6 +3344,7 @@ AI 개발 작업:
 작업:
 
 - React/Vite/TypeScript scaffold
+- Node.js 24 + pnpm 11 고정, `pnpm-lock.yaml` 생성, npm/Yarn lockfile 차단
 - Pages Functions, preview/production D1 binding
 - standalone content Worker와 자체 Workflow binding, Pages의 `WORKFLOW_SERVICE` service binding, 외부 공개 fetch 차단
 - 대표 영상 `94eQ16j7rKI`로 계정 없는 공개 자막 adapter를 Cloudflare Preview에서 실행하고 수동·자동 한국어 자막 성공과 `SOURCE_BLOCKED`·자막 없음 실패를 구분
@@ -3925,6 +3940,7 @@ v1 `reference_only` 필수 검사:
 ### 22.2 다시 묻지 않아도 되는 결정
 
 - 서비스명과 교회명
+- local·GitHub Actions·Cloudflare 모두 Node.js 24 LTS + pnpm 11, `pnpm-lock.yaml`만 사용하고 npm/Yarn 설치 금지
 - 기본 5×5와 어린이 5~6개·장년 6~8개 추천값, 발행 전 난이도별 5×5~10×10·목표 단어 수 시험
 - 짧은 한글 명사를 우선하되 설교의 핵심 의미를 보존하는 조사 포함 명사구 허용; 표시형과 공백 없는 격자형 분리
 - 크기·단어 수별 높은 교차 hard gate와 관리자 선택 없는 자동 확대 금지
@@ -3976,6 +3992,7 @@ v1 `reference_only` 필수 검사:
 [complete] OpenAI API 계정·결제수단 준비
 [complete] OpenAI API를 `biblequiz-nonprod`·`biblequiz-production` Project와 환경별 키로 분리하기로 확정
 [complete] 계정·결제·Secret 등록은 운영자, 코드·binding·검증은 AI가 맡는 개발 착수 역할 분담 확정
+[complete] Node.js 24 LTS + pnpm 11 통일, `pnpm-lock.yaml` 단일 lockfile 정책 확정
 [complete] v1 개발·초기 운영은 무료 `*.pages.dev`; 별도 도메인은 안정화 뒤 결정
 [complete] 대표 설교 `94eQ16j7rKI`의 계정 없는 한국어 자동 자막 로컬 spike — 773 segments 추출 성공, 직접 timedtext 빈 응답과 adapter 필요성 확인
 [pending] Access에 허용할 정확한 관리자 이메일 결정
