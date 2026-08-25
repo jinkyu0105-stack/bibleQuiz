@@ -1748,6 +1748,19 @@ v1 파서가 지원할 예:
 - CI에는 `package-lock.json` 또는 `yarn.lock`이 생기면 실패하는 저장소 위생 검사를 둔다.
 - 2026-08-25 개발 환경 확인값은 Node `v24.18.0`, pnpm `11.14.0`이다. 이는 첫 scaffold의 기준값이며, 이후 버전 변경은 local·CI·Cloudflare를 한 번에 올리고 테스트를 통과한 뒤 이 문서를 갱신한다.
 
+#### Phase 1 최초 scaffold 범위 — 2026-08-25 확정
+
+최초 scaffold는 실제 퀴즈 기능이나 디자인 시안을 만드는 단계가 아니라, 이후 기능을 안전하게 올릴 수 있는 실행·검사·배포 골격을 만드는 단계다.
+
+- 루트 `package.json` 하나를 사용하는 단일 package 구조로 시작한다. v1 초기부터 pnpm workspace나 여러 package로 나누지 않는다.
+- Node 24, pnpm `11.14.0`, `pnpm-lock.yaml`, `.nvmrc`, `packageManager`, `engines`를 함께 고정한다.
+- React + Vite + TypeScript strict와 Tailwind CSS v4를 연결한다. 임시 화면에는 서비스명과 개발 상태만 표시하며, Phase 7A 전에는 실제 디자인 시안·배경 이미지·production 화면을 만들지 않는다.
+- Cloudflare Pages Functions + Hono를 연결하고, DB나 secret 없이 동작하는 최소 `/api/health` 응답과 공통 성공·오류 envelope을 만든다.
+- TypeScript 검사, ESLint, Vitest, production build를 local과 GitHub Actions에서 같은 pnpm script로 실행한다. Playwright는 기본 설정을 준비하고 실제 사용자 흐름은 해당 화면 구현 Phase에서 추가한다.
+- `vite.config.ts`, `wrangler.jsonc`, 환경변수 type, `.gitignore`, `README.md`, 기본 폴더 구조를 만든다.
+- 최초 scaffold에서는 실제 D1 퀴즈 schema, OpenAI 호출, 자막 provider, R2 backup, AI 생성 이미지, 실제 관리자·공개 화면 기능을 구현하지 않는다.
+- npm이나 Yarn을 호출하지 않으며 `package-lock.json`·`yarn.lock`이 생기면 자동 검사에서 실패한다.
+
 #### 예상 이용 규모 — 2026-08-12 확정
 
 - 주간 방문자: 약 30명
@@ -3993,6 +4006,7 @@ v1 `reference_only` 필수 검사:
 [complete] OpenAI API를 `biblequiz-nonprod`·`biblequiz-production` Project와 환경별 키로 분리하기로 확정
 [complete] 계정·결제·Secret 등록은 운영자, 코드·binding·검증은 AI가 맡는 개발 착수 역할 분담 확정
 [complete] Node.js 24 LTS + pnpm 11 통일, `pnpm-lock.yaml` 단일 lockfile 정책 확정
+[complete] Phase 1 최초 scaffold의 단일 package·실행·검사·최소 API 범위 확정
 [complete] v1 개발·초기 운영은 무료 `*.pages.dev`; 별도 도메인은 안정화 뒤 결정
 [complete] 대표 설교 `94eQ16j7rKI`의 계정 없는 한국어 자동 자막 로컬 spike — 773 segments 추출 성공, 직접 timedtext 빈 응답과 adapter 필요성 확인
 [pending] Access에 허용할 정확한 관리자 이메일 결정
