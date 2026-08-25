@@ -147,7 +147,7 @@ source type과 coverage에 맞지 않는 고지를 발행 화면에서 선택할
 | 경로 | 내용 |
 |---|---|
 | `/` | 현재 발행된 최신 주간 퀴즈 |
-| `/quiz/:slug` | 특정 설교 주차의 고유 퀴즈. v1 slug는 확정 설교일 `YYYY-MM-DD` |
+| `/quiz/:slug` | 특정 설교 주차의 고유 퀴즈. v1 slug는 `YYYY-MM-DD-고유문자6자리` |
 | `/archive` | 이전 퀴즈 최신순 목록 |
 | `/admin` | 관리자 대시보드 |
 | `/admin/quiz/:id` | 주간 초안·검수·미리보기·발행 |
@@ -1103,12 +1103,14 @@ draft → review_ready → published → archived
 
 - `sermon_date`는 성도들이 주차를 구분하는 정본 날짜이며, v1 운영에서는 주일 설교일을 뜻한다. 아카이브 카드·검색·정렬과 공개 화면의 주 날짜에는 `sermon_date`를 사용한다.
 - `published_at`은 관리자가 실제로 발행 버튼을 누른 시각이다. 참여 시작·기본 마감 계산과 감사 기록에 사용하며, 공개 화면에서는 필요할 때만 `발행 YYYY년 M월 D일`처럼 작은 보조 정보로 표시한다. 아카이브의 대표 날짜나 URL에는 사용하지 않는다.
-- 새 주간 작업을 만들 때 서버가 `Asia/Seoul`의 현재 날짜에서 가장 최근 일요일을 결정적으로 계산해 `설교 일자(주일)` date input의 기본값으로 넣는다. 일요일이면 당일, 월~토요일이면 바로 앞 일요일이다. 이 계산에는 AI나 외부 API를 호출하지 않는다.
+- YouTube URL에서 metadata를 가져오면 영상 제목·게시일과 설교일 후보를 함께 표시한다. 게시일은 업로드 지연 때문에 설교일의 정본으로 바로 확정하지 않는다.
+- `설교 일자(주일)` date input의 초기 후보는 AI 없이 결정적으로 정한다. 영상 제목 시작 부분의 유효한 `YYMMDD` 또는 `YYYYMMDD` 날짜가 있으면 이를 우선하고(`YY`는 `20YY`), 없으면 `Asia/Seoul`로 변환한 YouTube 게시일 기준 가장 최근 일요일, 게시일도 없으면 작업 생성일 기준 가장 최근 일요일을 사용한다. 제목 날짜가 실재하는지 검증하고 게시일과 31일 넘게 차이 나면 후보는 입력하되 관리자가 확인하기 전 발행할 수 없게 경고한다.
 - 관리자는 발행 전 `sermon_date`를 언제든 수정할 수 있고 선택한 날짜의 요일을 input 가까이에 표시한다. 일요일이 아니면 실수 가능성을 경고하지만 특별예배를 막지 않도록 저장·발행 자체를 금지하지 않는다.
-- v1 공개 slug는 확정 `sermon_date`의 ISO 날짜 문자열 그대로 사용한다. 예: `/quiz/2026-08-23`. 어린이·장년용은 각각 `?level=child`, `?level=adult`를 붙이고 출력은 `/quiz/2026-08-23/print`를 사용한다.
-- slug는 발행 transaction에서 확정한다. 발행 뒤 제목·설교일 표시를 정정하더라도 이미 공개된 slug는 바꾸지 않아 공유 링크와 archive 주소를 보존한다. 문제 수정 revision도 같은 slug에서 현재 유효 variant를 보여준다.
-- v1은 같은 `sermon_date`의 공개 퀴즈 세트를 하나만 허용한다. 같은 날짜의 draft나 발행본이 이미 있으면 새 작업을 만들지 않고 기존 작업으로 이동시킨다. 날짜만 같은 별도 설교 여러 개를 지원해야 하는 실제 요구가 생기면 그때 suffix 규칙을 추가하되 기존 날짜-only URL은 변경하지 않는다.
-- 날짜 slug는 식별자일 뿐 인증 정보나 보안 장치가 아니다. 정답·참여 현황 접근 권한은 기존 session·상태 검사를 그대로 사용한다.
+- draft 생성 시 Web Crypto로 혼동하기 쉬운 `0/o`, `1/i/l`을 제외한 소문자·숫자 기반의 고유 문자 6자리를 한 번 생성해 저장한다. 이는 AI 호출이나 별도 package 없이 만들며 충돌하면 서버가 새 값을 생성한다.
+- v1 공개 slug는 발행 시 확정한 `sermon_date`와 위 고유 문자를 결합한다. 예: `/quiz/2026-08-23-k4m7q2`. 어린이·장년용은 각각 `?level=child`, `?level=adult`를 붙이고 출력은 `/quiz/2026-08-23-k4m7q2/print`를 사용한다.
+- draft에서는 날짜를 수정할 때 같은 고유 문자를 유지한 채 slug 미리보기의 날짜 부분만 갱신한다. 발행 transaction에서 전체 slug를 확정하며, 발행 뒤 제목·설교일 표시를 정정하더라도 이미 공개된 slug는 바꾸지 않아 공유 링크와 archive 주소를 보존한다. 문제 수정 revision도 같은 slug에서 현재 유효 variant를 보여준다.
+- 같은 `sermon_date`의 서로 다른 설교와 퀴즈 세트를 허용한다. 고유 문자가 URL을 구별하며, 같은 YouTube video ID를 다시 입력한 경우에만 중복 영상으로 판단해 기존 작업으로 안내한다.
+- slug는 식별자일 뿐 인증 정보나 보안 장치가 아니다. 정답·참여 현황 접근 권한은 기존 session·상태 검사를 그대로 사용한다.
 
 variant 공개 수명은 다음과 같이 관리한다.
 
@@ -1126,7 +1128,7 @@ active → superseded   # 첫 제출 후 수정본으로 교체된 버전
 1. YouTube URL 입력
 2. video ID 형식과 중복 여부 확인
 3. 영상 제목·게시 정보와 공개 자막 가져오기
-4. 자동 입력된 `설교 일자(주일)`과 설교 제목·성경 주소 확인 및 필요 시 설교일 수정
+4. 영상 제목 날짜·YouTube 게시일·추천 근거를 보며 자동 입력된 `설교 일자(주일)`과 설교 제목·성경 주소 확인 및 필요 시 설교일 수정
 5. 성경 주소를 결정적 파서 또는 선택 UI로 정규화
 6. 개역개정 장절을 정규화하고 대한성서공회 공식 읽기 링크 미리보기
 7. 가져온 자막 원본을 보면서 직접 수정하거나 `AI 오타 교정 제안` 실행
@@ -2391,12 +2393,13 @@ API 판본을 쓰면 계약의 캐시·FUMS·출처표시 조건을 구현한 �
 
 ```text
 id PK
-slug UNIQUE nullable        # draft에서는 비어 있을 수 있고 발행 시 최초 확정 설교일 YYYY-MM-DD로 고정
+slug UNIQUE nullable        # draft에서는 비어 있을 수 있고 발행 시 YYYY-MM-DD-고유문자6자리로 고정
+slug_suffix UNIQUE NOT NULL # draft 생성 시 한 번 만든 읽기 쉬운 소문자·숫자 6자리
 church_name             # 다사랑교회
 youtube_url
 youtube_video_id UNIQUE
 sermon_title
-sermon_date UNIQUE NOT NULL # v1의 주차 정본; archive 표시·정렬에 쓰며 published_at과 별개
+sermon_date NOT NULL    # 주차 정본; 같은 날짜 여러 설교 허용, archive 표시·정렬에 쓰며 published_at과 별개
 bible_translation_id FK
 bible_reference_json
 bible_reference_label
@@ -3678,6 +3681,8 @@ moderation:
 - 삭제 후 같은 세션 재제출 차단
 - Access 없는 관리자 API, 위조 JWT, 잘못된 issuer/audience 거부
 - 관리자 dashboard가 활성 미발행 작업 유무에 따라 `이번 주 퀴즈 만들기`와 `계속 작업하기` 상태를 정확히 반환하고 중복 주간 세트를 만들지 않음
+- 설교일 후보는 유효한 제목 앞 `YYMMDD`/`YYYYMMDD`를 우선하고, 없으면 한국 시간 YouTube 게시일 기준 최근 주일, metadata도 없으면 작업일 기준 최근 주일을 사용함; 잘못된 날짜와 게시일 31일 초과 차이는 확인 경고
+- 같은 설교일의 서로 다른 영상은 서로 다른 6자리 suffix와 slug로 생성되고, 같은 YouTube video ID 재입력은 기존 작업으로 안내되며, 발행된 slug는 표시 날짜 정정 뒤에도 바뀌지 않음
 - 6단계 상태는 저장된 콘텐츠와 검증 결과에서 파생되며 클라이언트가 임의로 완료 처리할 수 없음
 - 상위 단계 수정 시 이후 단계가 `다시 확인 필요`가 되고 과거 revision은 비교 가능하게 유지됨
 - 첫 성공 제출 전에는 발행 내용 새 revision 교체와 발행 취소가 가능하고, 첫 성공 제출 직후 같은 요청은 `PUBLISHED_SUBMISSIONS_EXIST`로 거부됨
@@ -3965,7 +3970,7 @@ v1 `reference_only` 필수 검사:
 
 - 서비스명과 교회명
 - local·GitHub Actions·Cloudflare 모두 Node.js 24 LTS + pnpm 11, `pnpm-lock.yaml`만 사용하고 npm/Yarn 설치 금지
-- 설교일은 한국 시간 기준 최근 주일로 자동 입력하되 발행 전 수정 가능; 공개 slug는 최초 발행 때 확정한 설교일 `YYYY-MM-DD`, 발행일은 별도 보조 정보
+- 설교일은 영상 제목 날짜→YouTube 게시일 기준 최근 주일→작업일 기준 최근 주일 순으로 AI 없이 추천하고 발행 전 수정 가능; slug는 `YYYY-MM-DD-고유문자6자리`, 발행일은 별도 보조 정보
 - 기본 5×5와 어린이 5~6개·장년 6~8개 추천값, 발행 전 난이도별 5×5~10×10·목표 단어 수 시험
 - 짧은 한글 명사를 우선하되 설교의 핵심 의미를 보존하는 조사 포함 명사구 허용; 표시형과 공백 없는 격자형 분리
 - 크기·단어 수별 높은 교차 hard gate와 관리자 선택 없는 자동 확대 금지
@@ -4019,7 +4024,7 @@ v1 `reference_only` 필수 검사:
 [complete] 계정·결제·Secret 등록은 운영자, 코드·binding·검증은 AI가 맡는 개발 착수 역할 분담 확정
 [complete] Node.js 24 LTS + pnpm 11 통일, `pnpm-lock.yaml` 단일 lockfile 정책 확정
 [complete] Phase 1 최초 scaffold의 단일 package·실행·검사·최소 API 범위 확정
-[complete] 설교일 자동 기본값·수정 UI, 날짜-only 영구 slug, 발행일 분리 정책 확정
+[complete] 영상 날짜 기반 설교일 추천·수정 UI, 날짜+고유문자 영구 slug, 같은 날짜 여러 설교, 발행일 분리 정책 확정
 [complete] v1 개발·초기 운영은 무료 `*.pages.dev`; 별도 도메인은 안정화 뒤 결정
 [complete] 대표 설교 `94eQ16j7rKI`의 계정 없는 한국어 자동 자막 로컬 spike — 773 segments 추출 성공, 직접 timedtext 빈 응답과 adapter 필요성 확인
 [pending] Access에 허용할 정확한 관리자 이메일 결정
