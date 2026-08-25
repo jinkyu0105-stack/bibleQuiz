@@ -2,7 +2,7 @@
 
 > 문서 상태: 구현 전 기준안<br>
 > 마지막 갱신: 2026-08-25 (Asia/Seoul)<br>
-> 대상 배포: GitHub → Cloudflare Pages<br>
+> 대상 배포: GitHub → Cloudflare Workers + Static Assets<br>
 > 서비스 표기명: `이번 주의 말씀 : 낱말 퀴즈`<br>
 > 교회 표기명: `다사랑교회`
 
@@ -37,13 +37,13 @@
 
 | 항목 | 결정 | 상태 |
 |---|---|---|
-| 플랫폼 | 반응형 웹, GitHub 연동 Cloudflare Pages 배포 | 확정 |
+| 플랫폼 | 반응형 웹, GitHub 연동 Cloudflare Workers + Static Assets 배포 | 확정 (2026-08-25 전환) |
 | 런타임·패키지 관리 | local·GitHub Actions·Cloudflare 모두 Node.js 24, pnpm 11, `pnpm-lock.yaml` 단일 lockfile | 확정 |
-| 프런트엔드 | React SPA + Vite + TypeScript strict | 확정 |
+| 프런트엔드 | React SPA + Vite + TypeScript strict + React Router Data Mode | 확정 |
 | UI/CSS | Tailwind CSS v4 + 중앙 디자인 토큰, 복잡한 기능만 CSS Modules | 확정 |
-| 서버 | Cloudflare Pages Functions + Hono (`/api/*`) | 확정 |
+| 서버 | `biblequiz-app` 메인 애플리케이션 Worker + Hono (`/api/*`) | 확정 |
 | 데이터 | Cloudflare D1 + Drizzle ORM, 검토된 SQL migration | 확정 |
-| 파일 저장 | 정적 이미지를 Git `public/assets`에 두고 Pages CDN으로 제공 | 확정 |
+| 파일 저장 | 정적 이미지를 Git `public/assets`에 두고 Workers Static Assets CDN으로 제공 | 확정 |
 | R2 | 공개 이미지에는 쓰지 않고 비공개 D1 주간 백업 8개 순환 보관에만 사용 | 확정 |
 | KV | v1에서 사용하지 않음 | 보류 |
 | 일반 사용자 계정 | 회원가입 없음, 익명 브라우저 세션 사용 | 확정 |
@@ -51,12 +51,12 @@
 | 콘텐츠 생성 작업 | Cloudflare Workflows로 백그라운드 실행 + D1에 영구 작업 상태 저장 | 확정 |
 | AI 초안 | OpenAI API `gpt-5.6-terra`, 설교 의도 분석 품질 우선, 관리자 수동 재생성 무제한 | 확정 |
 | YouTube 자막 | CC가 있으면 계정 없는 공개 자막 provider를 기술 spike하되 공식 API가 아님을 명시; 약관·교회 사용 권한 확인 후 production 채택 결정 | 출시 전 게이트 |
-| 테스트·배포 안전망 | Vitest + Playwright + Access 보호 Preview + 환경별 D1 + 승인형 Production 배포 | 확정 |
+| 테스트·배포 안전망 | Vitest + Playwright + Access 보호 Workers Preview + 환경별 D1 + 승인형 Production 배포 | 확정 |
 | 운영 오류 확인 | Cloudflare Workers Logs + D1 영구 작업·감사 기록, Sentry는 v1 보류 | 확정 |
 | 퀴즈 | 기본 5×5, 발행 전 관리자 화면에서 난이도별 5×5~10×10과 목표 단어 수 시험 | 확정 |
 | 답안 | 한글 명사 중심, 설교의 핵심 표현이면 조사 포함 명사구 허용, 한 셀에 완성형 한글 한 음절 | 확정 |
 | 교차 | 모든 단어 연결, 높은 교차 밀도를 발행 하드 게이트로 검사 | 확정 |
-| 채점 | Pages Function이 D1의 비공개 정답으로 최종 채점 | 확정 |
+| 채점 | `biblequiz-app`의 Hono API가 D1의 비공개 정답으로 최종 채점 | 확정 |
 | 제출 | 최소 한 칸 작성, 나머지 빈칸 허용 + 주차·난이도·세션당 1회 | 확정 |
 | 제출 답안 공개 | 실제 제출 답안을 저장하고 같은 퀴즈를 제출한 사람의 참여 현황판에 공개 | 확정 |
 | 정답 공개 | 현재 퀴즈는 제출 즉시 비교 채점, 지난 퀴즈는 풀이 없이도 공개 | 확정 |
@@ -201,7 +201,7 @@ source type과 coverage에 맞지 않는 고지를 발행 화면에서 선택할
 - 결과가 없으면 `찾는 지난 퀴즈가 없습니다`와 `검색 조건 지우기`를 표시한다.
 - 목록의 장식 이미지는 lazy load하고, 이미지가 없어도 날짜·제목·장절과 난이도 버튼만으로 완전히 사용할 수 있어야 한다.
 
-지난 퀴즈 상세 화면은 6.6의 정책에 따라 풀이 여부와 관계없이 정답·참여 현황·코멘트·확정 Top N·출력을 공개한다. 목록 검색과 pagination은 기존 D1·Pages Function 안에서 처리하며 별도 검색 서비스나 KV를 추가하지 않고, 백업용 R2를 공개 조회에 사용하지 않는다.
+지난 퀴즈 상세 화면은 6.6의 정책에 따라 풀이 여부와 관계없이 정답·참여 현황·코멘트·확정 Top N·출력을 공개한다. 목록 검색과 pagination은 기존 D1·메인 애플리케이션 Worker 안에서 처리하며 별도 검색 서비스나 KV를 추가하지 않고, 백업용 R2를 공개 조회에 사용하지 않는다.
 
 ### 2.6 관리자 대시보드 첫 화면
 
@@ -488,15 +488,15 @@ selectionIndex
 
 ### 6.1 “서버에서 최종 채점”의 의미
 
-브라우저 채점은 공식 답을 JavaScript, 정적 JSON 또는 네트워크 응답에 미리 담아야 하므로 개발자 도구로 답을 볼 수 있고 사용자가 점수를 위조할 수 있다. 이 서비스에서 “서버”는 Cloudflare Pages Function을 뜻한다.
+브라우저 채점은 공식 답을 JavaScript, 정적 JSON 또는 네트워크 응답에 미리 담아야 하므로 개발자 도구로 답을 볼 수 있고 사용자가 점수를 위조할 수 있다. 이 서비스에서 “서버”는 `biblequiz-app` 메인 애플리케이션 Worker의 Hono API를 뜻한다.
 
-1. 브라우저가 작성한 셀, 이름, 코멘트만 Pages Function에 보낸다.
-2. Function이 D1의 비공개 공식 정답을 읽는다.
-3. Function이 각 활성 셀을 비교하고 점수와 correctness mask를 계산한다.
+1. 브라우저가 작성한 셀, 이름, 코멘트만 Hono API에 보낸다.
+2. `biblequiz-app`의 Hono API가 D1의 비공개 공식 정답을 읽는다.
+3. 같은 Hono API가 각 활성 셀을 비교하고 점수와 correctness mask를 계산한다.
 4. D1에는 서버 점수와 정오 위치만 저장한다.
 5. 브라우저가 보낸 `score`, `rank`, `isCorrect`는 받지 않거나 무시한다.
 
-Pages Functions는 계산을 수행하는 서버 코드이고, D1은 그 코드가 읽고 쓰는 데이터베이스다. 둘은 경쟁하는 선택지가 아니라 함께 쓰는 실행 계층과 저장 계층이다.
+메인 애플리케이션 Worker는 계산을 수행하는 서버 코드이고, D1은 그 코드가 읽고 쓰는 데이터베이스다. 둘은 경쟁하는 선택지가 아니라 함께 쓰는 실행 계층과 저장 계층이다.
 
 ### 6.2 채점 기준
 
@@ -565,7 +565,7 @@ Pages Functions는 계산을 수행하는 서버 코드이고, D1은 그 코드�
 
 ### 6.5 제출 답안 저장과 노출 경계
 
-- Pages Function은 제출 답안을 정규화·검사한 뒤 D1의 `answers_json`에 저장한다.
+- 메인 애플리케이션 Worker는 제출 답안을 정규화·검사한 뒤 D1의 `answers_json`에 저장한다.
 - 현재 `published` 퀴즈에서는 일반 방문자와 검색 엔진에 제출 답안을 반환하지 않고, 같은 퀴즈·난이도를 성공적으로 제출한 세션에만 참여자의 실제 답안 목록을 반환한다.
 - `archived` 퀴즈의 참여 현황은 실제 제출 답안과 코멘트를 포함해 공개한다. 별도 `noindex`를 강제하지 않지만 숨김·삭제된 기록은 언제나 제외한다.
 - 응답은 `Cache-Control: private, no-store`로 설정한다.
@@ -619,7 +619,7 @@ D1은 `(quiz_variant_id, session_hash)`에 고유 제약을 둔다. 한 브라�
 Cloudflare Turnstile은 계정을 만드는 기능이 아니라, 자동화된 대량 제출을 줄이는 CAPTCHA 계열 방어다. 대부분의 정상 사용자는 퍼즐을 고르라는 전통 CAPTCHA 없이 통과한다.
 
 - 모든 최종 제출에 적용한다.
-- 위젯 성공만 믿지 않고 Function이 Siteverify API로 토큰을 검증한다.
+- 위젯 성공만 믿지 않고 `biblequiz-app`이 Siteverify API로 토큰을 검증한다.
 - 토큰은 짧게 유효하고 한 번만 쓸 수 있으므로 재시도는 같은 idempotency key를 쓴다.
 - 검증 서비스 장애 시 제출을 저장하지 않고 재시도 안내를 보여준다.
 
@@ -1174,7 +1174,7 @@ production 채택 전에는 다음을 모두 확인한다.
 
 Phase 0 기술 spike는 로컬 성공만으로 통과시키지 않는다.
 
-1. 실제 Cloudflare Preview/Worker 환경에 배포한다.
+1. 실제 Cloudflare Workers Preview 환경에 배포한다.
 2. 교회 영상과 공개 한국어 영상에서 수동 자막·자동 자막을 각각 시험한다.
 3. timestamp, 전체 segment 수, 앞·중간·끝 표본을 YouTube 화면과 비교한다.
 4. 같은 영상을 여러 번 호출해 IP 차단과 일시 오류를 구분한다.
@@ -1611,7 +1611,7 @@ GET /v1/bibles?language=kor&include-full-details=true
 - cache 기간·갱신·삭제 조건
 - Starter에서 production 사용 가능 여부
 
-정확한 개역개정 판본과 그 개별 라이선스가 확인될 때만 `licensed_api` 후보로 평가한다. 없으면 API.Bible 경로를 사용하지 않으며 다른 한국어 판본으로 바꾸지 않는다. Starter가 해당 판본을 포함한다면 0원 후보이고, 유료 플랜이 필요하면 월비용과 판본별 추가비를 먼저 제시해 사용자 승인을 받는다. API key는 Pages Function에만 두고 브라우저에 노출하지 않는다.
+정확한 개역개정 판본과 그 개별 라이선스가 확인될 때만 `licensed_api` 후보로 평가한다. 없으면 API.Bible 경로를 사용하지 않으며 다른 한국어 판본으로 바꾸지 않는다. Starter가 해당 판본을 포함한다면 0원 후보이고, 유료 플랜이 필요하면 월비용과 판본별 추가비를 먼저 제시해 사용자 승인을 받는다. API key는 서버 전용 Worker secret에만 두고 브라우저에 노출하지 않는다.
 
 #### C. 응답 관리와 승인
 
@@ -1711,7 +1711,7 @@ v1 파서가 지원할 예:
 1. 배포·운영 경계: Cloudflare 중심 구성을 어느 정도까지 고정할지 — **확정 완료**
 2. 프런트엔드 프레임워크: Astro + React islands와 React SPA 계열 비교 — **확정 완료**
 3. UI/CSS: Tailwind CSS와 CSS Modules/vanilla CSS의 역할 — **확정 완료**
-4. 서버 실행 계층: React 앱과 Pages Functions + Hono의 경계 — **확정 완료**
+4. 서버 실행 계층: React Static Assets와 메인 애플리케이션 Worker + Hono의 경계 — **확정 완료**
 5. 데이터베이스·접근 계층: D1 직접 SQL, query builder/ORM 사용 여부 — **확정 완료**
 6. 관리자 인증: Cloudflare Access 적용 범위 — **확정 완료**
 7. 콘텐츠·AI 작업: 동기 요청과 비동기 작업의 경계 — **확정 완료**
@@ -1740,7 +1740,7 @@ v1 파서가 지원할 예:
 
 - 한 저장소와 한 배포 흐름을 유지한다. 특별한 이유가 없으면 프런트엔드·API를 여러 저장소나 서비스로 나누지 않는다.
 - 숨은 규칙보다 명시적인 TypeScript type, Zod schema, DB migration, 테스트를 선호한다.
-- 같은 기능을 두 방식으로 구현하지 않는다. 서버 API는 루트 `functions/`의 Pages Functions로만 구현하고 React 안에 서버 로직을 두지 않는다.
+- 같은 기능을 두 방식으로 구현하지 않는다. 서버 API는 `workers/app/`의 `biblequiz-app` Hono route로만 구현하고 React 안에 서버 로직을 두지 않는다.
 - 의존성 수를 최소화하고, 유행성 라이브러리나 작은 플러그인을 무분별하게 추가하지 않는다.
 - 반복 운영은 관리자 화면의 버튼·검수표로 제공하며, 운영자가 터미널이나 D1 SQL을 직접 실행하게 하지 않는다.
 - 위험한 작업은 확인 화면, 미리보기, 불변 revision, 감사 로그, 복구 가능한 상태 변경으로 감싼다.
@@ -1752,12 +1752,12 @@ v1 파서가 지원할 예:
 
 #### 런타임·패키지 관리자 — 2026-08-25 확정
 
-- local, GitHub Actions, Cloudflare Pages build 환경은 모두 **Node.js 24 LTS** major로 통일한다.
+- local, GitHub Actions, Cloudflare Workers Builds 환경은 모두 **Node.js 24 LTS** major로 통일한다.
 - 패키지 관리자는 **pnpm 11**만 사용한다. 프로젝트 `package.json`의 `packageManager` 필드로 실제 scaffold 시 정한 정확한 pnpm 버전을 고정하고, Node 요구 범위도 `engines`에 명시한다.
 - 저장소의 유일한 lockfile은 `pnpm-lock.yaml`이다. 이를 Git에 반드시 포함하며 `package-lock.json`, `yarn.lock`, npm, Yarn을 사용한 의존성 설치는 금지한다.
 - local 설치·스크립트 실행은 프로젝트 루트에서 `pnpm` 명령으로 한다. PATH가 의심되면 먼저 `pnpm --version`과 `node --version`을 확인한다. 특정 사용자의 nvm 실행 파일 경로나 pnpm store 절대 경로는 기기별 구현 세부사항이므로 코드·CI·문서의 필수 경로로 고정하지 않는다.
 - GitHub Actions는 Node 24를 설정하고 pnpm 11을 활성화한 뒤 `pnpm install --frozen-lockfile`을 사용한다. lockfile과 `package.json`이 불일치하면 자동 수정하지 않고 CI를 실패시킨다.
-- Cloudflare Pages도 Node 24와 같은 pnpm major를 사용하고 build command는 pnpm script로만 실행한다. 배포 환경이 lockfile을 바꾸거나 npm fallback을 사용하지 않도록 설정을 명시한다.
+- Cloudflare Workers Builds도 Node 24와 같은 pnpm major를 사용하고 build·deploy command는 pnpm script로만 실행한다. 배포 환경이 lockfile을 바꾸거나 npm fallback을 사용하지 않도록 설정을 명시한다.
 - CI에는 `package-lock.json` 또는 `yarn.lock`이 생기면 실패하는 저장소 위생 검사를 둔다.
 - 2026-08-25 개발 환경 확인값은 Node `v24.18.0`, pnpm `11.14.0`이다. 이는 첫 scaffold의 기준값이며, 이후 버전 변경은 local·CI·Cloudflare를 한 번에 올리고 테스트를 통과한 뒤 이 문서를 갱신한다.
 
@@ -1768,7 +1768,7 @@ v1 파서가 지원할 예:
 - 루트 `package.json` 하나를 사용하는 단일 package 구조로 시작한다. v1 초기부터 pnpm workspace나 여러 package로 나누지 않는다.
 - Node 24, pnpm `11.14.0`, `pnpm-lock.yaml`, `.nvmrc`, `packageManager`, `engines`를 함께 고정한다.
 - React + Vite + TypeScript strict와 Tailwind CSS v4를 연결한다. 임시 화면에는 서비스명과 개발 상태만 표시하며, Phase 7A 전에는 실제 디자인 시안·배경 이미지·production 화면을 만들지 않는다.
-- Cloudflare Pages Functions + Hono를 연결하고, DB나 secret 없이 동작하는 최소 `/api/health` 응답과 공통 성공·오류 envelope을 만든다.
+- `biblequiz-app` Worker + Hono를 연결하고, DB나 secret 없이 동작하는 최소 `/api/health` 응답과 공통 성공·오류 envelope을 만든다.
 - TypeScript 검사, ESLint, Vitest, production build를 local과 GitHub Actions에서 같은 pnpm script로 실행한다. Playwright는 기본 설정을 준비하고 실제 사용자 흐름은 해당 화면 구현 Phase에서 추가한다.
 - `vite.config.ts`, `wrangler.jsonc`, 환경변수 type, `.gitignore`, `README.md`, 기본 폴더 구조를 만든다.
 - 최초 scaffold에서는 실제 D1 퀴즈 schema, OpenAI 호출, 자막 provider, R2 backup, AI 생성 이미지, 실제 관리자·공개 화면 기능을 구현하지 않는다.
@@ -1811,7 +1811,7 @@ AI 비용
 규모 증가 시 예상 과금 지점
 ```
 
-#### 배포 기반 결정 — 2026-08-13 확정
+#### 배포 기반 결정 — 2026-08-13 최초 확정, 2026-08-25 Workers로 전환 확정
 
 이 비교에서 GitHub와 Cloudflare는 서로 대신하는 서비스가 아니다. **GitHub는 원본 코드와 변경 이력을 보관**하고, GitHub에 코드가 올라오면 **Cloudflare가 웹사이트·API·데이터베이스를 실제로 실행**하는 조합을 권장한다.
 
@@ -1819,28 +1819,30 @@ AI 비용
 |---|---|---|---|---|---|
 | GitHub Pages 단독 | 가능 | 불가능 | 없음 | 월 0원 | 제외. 정적 사이트 호스팅이라 서버 채점·세션·제출 저장·관리 기능을 별도 서비스에 만들어야 한다. |
 | Vercel | 가능 | 가능 | 외부 DB를 별도로 연결 | 조건 충족 시 월 0원 | 차선. Hobby가 개인·비상업 용도로 한정되고 DB 서비스까지 더해져 운영 경로가 늘어난다. |
-| **GitHub + Cloudflare Pages + Pages Functions + D1** | 가능 | 가능 | D1 내장 연결 | **월 0원 예상** | **채택.** 한 저장소와 한 공급자 안에서 배포·API·DB·보안 도구를 함께 운영한다. |
+| GitHub + Cloudflare Pages + Pages Functions + D1 | 가능 | 가능 | D1 내장 연결 | 월 0원 예상 | 2026-08-13 최초 채택 후 제외. 구현 전 Cloudflare의 신규 앱 중심축이 Workers로 이동했고 Workflow 연결에 별도 중간 Worker가 필요한 제약을 재검토했다. |
+| **GitHub + Cloudflare Workers + Static Assets + D1** | 가능 | 가능 | D1 native binding | **월 0원 예상** | **2026-08-25 최종 채택.** 정적 SPA와 Hono API를 한 메인 배포 단위로 두고 Workflow를 직접 binding한다. |
 
 확정한 구성의 역할은 다음처럼 고정한다.
 
 ```text
-GitHub                    코드·이미지·문서·변경 이력 보관
-Cloudflare Pages          화면과 정적 파일 배포
-Pages Functions           제출, 서버 채점, 세션, 관리자 API
-Cloudflare D1             퀴즈, 공식 정답, 실제 제출 답안, 순위 저장
+GitHub                         코드·이미지·문서·변경 이력 보관
+biblequiz-app Worker           Static Assets, 제출·채점·세션·관리자 Hono API
+biblequiz-content Worker       자막·OpenAI·퀴즈 생성 Workflow; 공개 URL 없음
+biblequiz-backup Worker        D1 export→비공개 R2 주간 백업 Workflow; 공개 URL 없음
+Cloudflare D1                  퀴즈, 공식 정답, 실제 제출 답안, 순위 저장
 ```
 
 비용과 한도 판단:
 
-- Cloudflare Pages의 정적 파일 요청은 무료 플랜에서도 무료·무제한이다.
-- Pages Functions는 Workers Free 한도를 공유하며 현재 하루 100,000요청이다. 예상 이용량은 여기에 크게 못 미친다.
+- Workers Static Assets의 정적 파일 요청은 무료·무제한이고 asset 저장에 별도 비용이 없다. 정적 route는 Worker 코드를 실행하지 않도록 한다.
+- Hono API처럼 실제 Worker 코드를 실행하는 요청은 Workers Free의 계정 합산 하루 100,000요청 한도를 사용한다. 예상 이용량은 여기에 크게 못 미친다.
 - D1 무료 한도는 현재 하루 500만 행 읽기, 10만 행 쓰기, 총 5GB다. 주 10~20회 제출 규모에서는 충분하다.
-- 도메인을 구입한다면 등록·연간 갱신비만 별도다. `*.pages.dev` 기본 주소를 쓰면 도메인 비용도 없다.
+- 도메인을 구입한다면 등록·연간 갱신비만 별도다. `*.workers.dev` 기본 주소를 쓰면 도메인 비용도 없다.
 - AI 사용료는 이 인프라 계산에 포함하지 않는다.
 
 저비용 대안과 전환 조건:
 
-- 실제 사용량이 무료 한도를 반복해서 넘거나 더 긴 로그·높은 실행 한도가 필요해질 때만 Workers Paid를 검토한다. 현재 공식 최소 비용은 계정당 월 USD 5이며, 사용자 승인 없이 전환하지 않는다.
+- 실제 사용량이 무료 한도를 반복해서 넘거나 호출당 10ms CPU 제한 때문에 정상 기능이 반복 실패할 때만 Workers Paid를 검토한다. 현재 공식 최소 비용은 계정당 월 USD 5이며, 사용자 승인 없이 전환하지 않는다. Free 한도 초과는 자동 결제가 아니라 해당 동적 작업의 오류로 처리한다.
 - Vercel을 선택해야 할 특별한 이유가 생기면 Hobby 월 USD 0을 먼저 검토한다. 다만 공식 설명이 개인·비상업 용도이므로 교회 운영 사이트 적용 조건을 배포 직전에 확인한다. Pro는 현재 월 USD 20부터이며 별도 DB 선택·비용도 함께 계산해야 한다.
 - GitHub Pages를 화면 배포에 사용하고 Cloudflare를 API·DB에만 쓰는 분할 구성도 가능하지만, CORS·환경변수·배포·오류 추적이 두 갈래가 되어 AI 유지보수에 불리하므로 채택하지 않는다.
 
@@ -1852,14 +1854,23 @@ Cloudflare 종속성과 완화책:
 - 정적 이미지와 문서는 Git에 보관하고 R2는 비공개 DB 백업에만 한정하며 KV는 추가하지 않는다.
 - 브라우저용 PDF 생성으로 서버에서 Chromium이나 Node 전용 PDF 도구를 실행할 필요를 없앤다.
 
-공식 확인 자료(2026-08-13 확인):
+전환 근거와 시점:
+
+- Cloudflare의 `Call Workflows from Pages` 문서는 2026-04-22 갱신본에서 Pages는 별도 Workflow Worker가 필요하므로 Static Assets 사용을 권장한다고 명시한다. 따라서 이 프로젝트와 직접 관련된 권장은 늦어도 그 시점부터 공식 문서에 있었다.
+- Cloudflare Pages의 framework/migration 상단 안내는 2026-08-21 갱신본에서 Workers가 대부분의 Pages 사용 사례를 지원하는 주 플랫폼이며 신규 프로젝트는 Workers로 시작하라고 명시한다. 정확한 내부 정책 전환일은 단정하지 않고 공식 문서의 확인 가능한 갱신일을 기록한다.
+- 2026-08-25 현재 아직 scaffold·Pages project·production data가 없어 전환 migration 비용이 없고, 제품 사양보다 배포 계층 용어와 binding 구성을 바꾸는 시점이다.
+
+공식 확인 자료(2026-08-25 재확인):
 
 - GitHub Pages는 HTML/CSS/JavaScript를 게시하는 정적 사이트 호스팅이라고 명시한다: <https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages>
-- Cloudflare Pages Functions 및 정적 요청 한도: <https://developers.cloudflare.com/pages/functions/pricing/>
+- Cloudflare Workers Static Assets SPA·요금: <https://developers.cloudflare.com/workers/static-assets/routing/single-page-application/>, <https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/>
+- Pages에서 Workflow 호출 시 Static Assets 권장: <https://developers.cloudflare.com/workflows/build/call-workflows-from-pages/>
+- Cloudflare의 신규 앱 Workers 권장: <https://developers.cloudflare.com/pages/framework-guides/>
 - Cloudflare Workers와 D1 무료·유료 한도: <https://developers.cloudflare.com/workers/platform/pricing/>, <https://developers.cloudflare.com/d1/platform/pricing/>
+- Workers Builds의 GitHub 연결·Preview·무료 build 한도: <https://developers.cloudflare.com/workers/ci-cd/builds/>, <https://developers.cloudflare.com/workers/ci-cd/builds/limits-and-pricing/>
 - Vercel Hobby/Pro 가격과 용도: <https://vercel.com/pricing>
 
-사용자가 2026-08-13 이 구성을 승인했다. 이 결정만으로 프런트엔드·CSS·ORM까지 자동 확정하지 않는다.
+사용자가 2026-08-13 Pages 구성을 최초 승인했고, 2026-08-25 구현 전 재검토 후 Workers + Static Assets로 완전 전환을 승인했다. Pages와 Workers를 병행하지 않는다.
 
 #### 프런트엔드 프레임워크 결정 — 2026-08-13 확정
 
@@ -1867,18 +1878,18 @@ Cloudflare 종속성과 완화책:
 
 | 후보 | 장점 | 이 프로젝트의 판단 |
 |---|---|---|
-| Astro + React islands | 정적인 콘텐츠를 가볍게 제공하고 상호작용 부분만 JavaScript로 실행 | 제외. 화면 기술이 Astro와 React로 나뉘고, 최신 Astro Cloudflare adapter의 동적 Pages 지원도 제거되어 확정한 Pages Functions 구조와 맞추려면 경계가 복잡해진다. |
-| **React SPA + Vite + TypeScript** | 퍼즐·관리자·참여 현황을 모두 같은 UI 모델로 구현하고 정적 결과물을 Pages에 배포 | **채택.** 상호작용이 많은 이 서비스와 AI 중심 유지보수에 더 단순하다. |
+| Astro + React islands | 정적인 콘텐츠를 가볍게 제공하고 상호작용 부분만 JavaScript로 실행 | 제외. 화면 기술이 Astro와 React로 나뉘어 상호작용이 많은 공개·관리 화면의 상태 모델과 테스트 경계가 복잡해진다. |
+| **React SPA + Vite + TypeScript** | 퍼즐·관리자·참여 현황을 모두 같은 UI 모델로 구현하고 정적 결과물을 Workers Static Assets로 배포 | **채택.** 상호작용이 많은 이 서비스와 AI 중심 유지보수에 더 단순하다. |
 
 구현 경계:
 
-- Vite는 React 앱을 빌드해 정적 HTML/CSS/JavaScript로 만들고 Cloudflare Pages가 이를 배포한다.
+- Vite는 React 앱을 `dist/`의 정적 HTML/CSS/JavaScript로 만들고 `biblequiz-app`의 Workers Static Assets가 이를 배포한다.
 - React는 공개 퀴즈, 아카이브, 참여 현황, Top N, 관리자 화면을 모두 담당한다.
-- `functions/api/*`만 서버로 취급한다. 공식 정답, 채점, 세션 검증, D1 접근, 관리자 권한 검사는 절대로 React 번들에 넣지 않는다.
+- `biblequiz-app`의 `/api/*` Hono route만 서버 API로 취급한다. 공식 정답, 채점, 세션 검증, D1 접근, 관리자 권한 검사는 절대로 React 번들에 넣지 않는다.
 - 브라우저와 서버가 함께 쓰는 것은 TypeScript type과 Zod schema 같은 계약뿐이다. 서버 secret이나 정답 데이터는 공유 모듈에 넣지 않는다.
 - 퍼즐처럼 상태가 복잡한 기능은 feature 단위의 `useReducer`로 관리한다. 전역 상태 라이브러리는 v1에 추가하지 않는다.
 - SPA 최초 로딩 비용은 현재 규모와 기능에서 감수할 수 있다. route 단위 지연 로딩으로 관리자·PDF 코드가 일반 방문자의 초기 번들에 포함되지 않게 한다.
-- 검색 노출은 핵심 목표가 아니다. 공유 링크의 제목·설명·대표 이미지는 Pages가 제공하는 기본 HTML과 정적 메타데이터로 보장하고, 고급 SSR/SSG는 v1에 도입하지 않는다.
+- 검색 노출은 핵심 목표가 아니다. 공유 링크의 제목·설명·대표 이미지는 Static Assets의 기본 HTML과 정적 메타데이터로 보장하고, 고급 SSR/SSG는 v1에 도입하지 않는다.
 
 비용은 배포 기반과 동일하게 월 0원 예상이다. React, Vite, TypeScript는 별도 사용료가 없다. 저비용 유료 프런트엔드 대안도 현재 필요하지 않다.
 
@@ -1922,18 +1933,18 @@ Cloudflare 종속성과 완화책:
 
 10.6의 Everforest Light Medium / Gruvbox Dark Medium 기준색은 확정값이다. 지정된 디자인 스킬로 시안을 만들 때 이 방향을 유지하면서 컴포넌트별 파생색·서체·간격과 WCAG 대비를 검증해 최종 토큰을 완성한다.
 
-#### 서버 API 구성 결정 — 2026-08-13 확정
+#### 서버 API 구성 결정 — 2026-08-13 최초 확정, 2026-08-25 Worker 진입점으로 변경
 
-**Cloudflare Pages Functions + Hono**를 채택한다. Hono는 `/api/*` 주소 연결, 공통 middleware, 오류 응답을 정리하는 얇은 계층으로만 사용한다.
+**`biblequiz-app` 메인 애플리케이션 Worker + Hono**를 채택한다. Hono는 `/api/*` 주소 연결, 공통 middleware, 오류 응답을 정리하는 얇은 계층으로만 사용한다.
 
 | 후보 | 장점 | 이 프로젝트의 판단 |
 |---|---|---|
-| 파일별 Pages Functions | Cloudflare 기본 기능만 사용하고 작은 API에서는 단순함 | 제외. API가 늘면 세션·권한·오류·보안 검사가 여러 파일과 폴더 middleware에 흩어진다. |
-| **Pages Functions + Hono** | route와 공통 검사를 명시적으로 중앙 관리하고 기능별 파일로 나눌 수 있음 | **채택.** API 수와 공통 보안 규칙이 많은 이 서비스에서 AI가 적용 범위를 검증하기 쉽다. |
+| Pages Functions + Hono | 파일 기반 routing과 Pages 정적 배포를 함께 사용 | 2026-08-25 제외. Workflow 연결에 별도 중간 Worker가 필요하고 신규 앱의 공식 중심축이 Workers로 이동했다. |
+| **메인 애플리케이션 Worker + Hono** | 하나의 Worker 진입점에서 route와 공통 검사를 명시적으로 중앙 관리 | **채택.** Static Assets·D1·Workflow binding과 API 보안 경계를 `wrangler.jsonc`에 함께 선언할 수 있다. |
 
 구현 원칙:
 
-- Cloudflare 진입점은 `functions/api/[[route]].ts` 하나로 둔다.
+- Cloudflare 서버 진입점은 `workers/app/index.ts` 하나로 두고 Hono app을 export하는 Worker `fetch` handler로 만든다.
 - Hono app은 `/api`를 base path로 사용하고 공개, 제출, 참여 현황, 관리자 route 모듈을 조립한다.
 - route handler는 요청 해석과 응답 생성만 담당한다. 채점·퍼즐·검열·순위 규칙은 framework를 모르는 순수 TypeScript service로 둔다.
 - Drizzle query와 예외적인 직접 SQL은 repository 계층에만 둔다. route나 middleware에서 DB를 직접 조회하지 않는다.
@@ -1941,15 +1952,16 @@ Cloudflare 종속성과 완화책:
 - 세션 제출 여부, Turnstile, 관리자 Access 검증은 필요한 route group에 명시적으로 적용한다. route 등록 테스트가 보호 누락을 검사한다.
 - Hono 내장 middleware를 무분별하게 추가하지 않고 필요한 기능만 사용한다. third-party Hono middleware는 보안·유지보수 검토 후 도입한다.
 - API 성공·오류 envelope은 15장의 계약을 따르며 Hono 기본 오류 HTML을 사용자에게 그대로 노출하지 않는다.
-- `_routes.json`은 `/api/*`만 Function을 호출하도록 명시해 React 정적 파일 요청이 Functions 무료 한도를 사용하지 않게 한다.
+- `wrangler.jsonc`의 `assets.directory = "./dist"`, `assets.not_found_handling = "single-page-application"`, `assets.run_worker_first = ["/api/*"]`를 정본으로 둔다. React route·실제 정적 파일은 Static Assets가 제공하고 `/api/*`만 Worker 코드를 먼저 실행한다.
+- 브라우저에서 `/quiz/:slug`를 직접 열거나 새로고침하면 Static Assets가 `index.html`을 반환하고 React Router가 화면을 선택한다. `/api/*`는 navigation 여부와 관계없이 Hono JSON API가 처리하며 SPA HTML로 잘못 fallback하지 않게 자동 검사한다.
 
-비용은 월 0원이다. Hono는 MIT 라이선스 오픈소스이며 별도 서비스나 서버 비용이 아니다. 유료 대안은 현재 필요하지 않다. Hono 유지보수가 중단되거나 Cloudflare 공식 지원과 충돌하면 순수 Pages Functions 또는 Worker router로 교체할 수 있도록 핵심 service를 독립시킨다.
+비용은 월 0원이다. Hono는 MIT 라이선스 오픈소스이며 별도 서비스나 서버 비용이 아니다. 유료 대안은 현재 필요하지 않다. Hono 유지보수가 중단되거나 Cloudflare 공식 지원과 충돌하면 순수 Worker `fetch` router로 교체할 수 있도록 핵심 service를 독립시킨다.
 
 공식 확인 자료(2026-08-13 확인):
 
-- Pages Functions 파일 기반 routing과 `_routes.json`: <https://developers.cloudflare.com/pages/functions/routing/>
-- Pages Functions middleware: <https://developers.cloudflare.com/pages/functions/middleware/>
-- Hono의 Cloudflare Pages 연결 방식: <https://hono.dev/docs/getting-started/cloudflare-pages>
+- Workers Static Assets SPA routing: <https://developers.cloudflare.com/workers/static-assets/routing/single-page-application/>
+- Workers Static Assets binding·routing: <https://developers.cloudflare.com/workers/static-assets/binding/>
+- Hono의 Cloudflare Workers 연결 방식: <https://hono.dev/docs/getting-started/cloudflare-workers>
 - Hono middleware 적용 방식: <https://hono.dev/docs/guides/middleware>
 
 #### D1 데이터 접근 결정 — 2026-08-13 확정
@@ -1964,7 +1976,7 @@ Cloudflare 종속성과 완화책:
 정본과 역할:
 
 ```text
-functions/_shared/db/schema.ts   현재 테이블·열·index·관계의 TypeScript 정본
+workers/_shared/db/schema.ts     현재 테이블·열·index·관계의 TypeScript 정본
 Drizzle ORM                      일반 조회·추가·수정·삭제 query 작성
 migrations/                      실제 D1에 적용할 순서 있는 SQL과 생성 metadata
 Wrangler                         local → preview → production migration 적용
@@ -2000,9 +2012,12 @@ D1                               실제 데이터 저장
 | 용어 | 역할 | v1 |
 |---|---|---|
 | GitHub | 소스 코드, 마이그레이션, 정적 이미지, 변경 이력 | 사용 |
-| Cloudflare Pages | 빌드한 사이트와 정적 파일을 전 세계 CDN에 배포 | 사용 |
-| Pages Functions | 제출 채점, 관리자 발행 같은 서버 API 실행 | 사용 |
-| Hono | Pages Functions 안에서 API 주소·middleware·응답을 정리하는 경량 router | 사용 |
+| Cloudflare Worker | Cloudflare에 독립적으로 배포되어 요청이나 백그라운드 작업을 실행하는 프로그램 단위. 이 문서에서는 모호한 `웹 Worker`·`script` 대신 `Worker 배포 단위`라고 부름 | 사용 |
+| `biblequiz-app` | 교인이 접속하는 Static Assets와 `/api/*` Hono 서버를 함께 가진 **메인 애플리케이션 Worker** | 사용 |
+| Workers Static Assets | Vite가 만든 `index.html`·JS·CSS·이미지·폰트를 Worker와 함께 올리고 CDN에서 직접 제공하는 기능. 정적 요청은 Worker 코드를 실행하지 않음 | 사용 |
+| `biblequiz-content` | 자막·OpenAI·격자 생성 Workflow만 가진 **비공개 콘텐츠 Worker**. 브라우저가 접속하는 URL과 일반 `fetch` endpoint가 없음 | 사용 |
+| `biblequiz-backup` | D1 export와 private R2 보관 Workflow만 가진 **비공개 백업 Worker**. 브라우저가 접속하는 URL이 없음 | 사용 |
+| Hono | `biblequiz-app` 안에서 `/api/*` 주소·middleware·응답을 정리하는 경량 router | 사용 |
 | D1 | SQLite 방식의 서버리스 관계형 데이터베이스 | 사용 |
 | Drizzle ORM | D1 schema와 query 결과를 TypeScript type으로 연결하는 데이터 접근 도구 | 사용 |
 | R2 | 이미지·백업 같은 파일 객체 저장소. 공개 이미지에는 쓰지 않고 D1 비공개 백업에만 사용 | 백업 전용 사용 |
@@ -2012,36 +2027,36 @@ D1                               실제 데이터 저장
 | React SPA | 화면 전체를 하나의 React 애플리케이션으로 구성하는 방식 | 사용 |
 | Vite | React 개발 서버와 production 정적 파일 build 도구 | 사용 |
 
-R2와 KV는 Pages Functions의 대안이 아니다. Functions가 일을 하고, D1/R2/KV는 각기 다른 종류의 데이터를 저장한다. **D1은 퀴즈·제출처럼 SQL로 조회하고 관계를 지켜야 하는 장부**, **R2는 D1에서 내보낸 SQL 백업 파일을 통째로 두는 비공개 창고**다. 배경 이미지는 계속 Git에서 관리하고 R2 bucket은 공개하지 않는다. KV는 사용하지 않는다.
+Worker와 D1/R2/KV는 경쟁하는 선택지가 아니다. Worker가 일을 하고, D1/R2/KV는 각기 다른 종류의 데이터를 저장한다. **D1은 퀴즈·제출처럼 SQL로 조회하고 관계를 지켜야 하는 장부**, **R2는 D1에서 내보낸 SQL 백업 파일을 통째로 두는 비공개 창고**다. 배경 이미지는 Git→Static Assets로 제공하고 R2 bucket은 공개하지 않는다. KV는 사용하지 않는다.
 
 ### 13.2 구조도
 
 ```mermaid
 flowchart LR
-    G["GitHub 저장소"] -->|push / build| P["Cloudflare Pages + CDN"]
-    U["비회원 브라우저"] --> P
-    U -->|제출·순위 API| F["Pages Functions"]
+    G["GitHub 저장소"] -->|Workers Builds| APP["biblequiz-app"]
+    APP --> SA["Static Assets · React/Vite"]
+    U["비회원 브라우저"] --> SA
+    U -->|/api/*| APP
     A["관리자 브라우저"] --> C["Cloudflare Access"]
-    C --> P
-    C --> F
-    F -->|prepared query| D[("D1")]
-    F -->|WORKFLOW_SERVICE| CW["비공개 content Worker"]
-    CW -->|자체 binding| GW["콘텐츠 생성 Workflow"]
-    GW --> O["OpenAI API"]
-    GW --> D
-    W["주간 백업 Workflow"] -->|REST export| D
-    W -->|검증 후 저장| R[("비공개 R2 · 최근 8개")]
-    F -->|token 검증| T["Turnstile Siteverify"]
-    P --> S["Git의 최적화 이미지·폰트"]
+    C -->|/admin/* · /api/admin/*| APP
+    APP -->|prepared query| D[("D1")]
+    APP -->|CONTENT_WORKFLOW 내부 연결| CW["biblequiz-content · 콘텐츠 Workflow"]
+    CW --> O["OpenAI API"]
+    CW --> D
+    BW["biblequiz-backup · 백업 Workflow"] -->|REST export| D
+    BW -->|검증 후 저장| R[("비공개 R2 · 최근 8개")]
+    APP -->|token 검증| T["Turnstile Siteverify"]
 ```
 
 ### 13.3 React SPA 실행 방식
 
 - `React + Vite + TypeScript strict`를 기본으로 한다.
-- Vite가 만든 정적 결과물은 Cloudflare Pages에 배포한다.
-- 브라우저 route는 React가 담당하고, `/api/*` 요청만 루트 `functions/`의 Pages Functions가 처리한다.
+- React Router는 2026-08-25 확정한 **Data Mode**의 `createBrowserRouter`를 사용한다. Framework Mode·SSR·React Router 전용 server build는 도입하지 않는다.
+- Vite가 만든 `dist/` 결과물은 `biblequiz-app`의 Workers Static Assets로 배포한다.
+- 브라우저 route는 React Router가 담당하고, `/api/*` 요청만 같은 `biblequiz-app`의 Hono handler가 처리한다.
+- `assets.not_found_handling = "single-page-application"`으로 `/quiz/:slug`, `/archive`, `/admin` 직접 접속·새로고침도 `index.html`에서 시작한다. 앱 안 이동은 전체 문서 새로고침 없이 처리한다.
 - 최신 퀴즈·제출·순위는 API에서 받고, 브라우저 저장소에는 입력 중 임시 답안과 비민감 UI 설정만 둔다.
-- 폼·API schema는 브라우저와 Function이 Zod schema로 공유하되 공식 정답과 secret은 서버 전용으로 분리한다.
+- route loader·action은 `/api/*` 호출과 pending/error 화면 조정에만 사용하고 DB·secret·공식 정답을 포함하지 않는다. 폼·API schema는 브라우저와 Worker가 Zod schema로 공유하되 공식 정답과 secret은 서버 전용으로 분리한다.
 - 전역 상태 라이브러리는 v1에서 쓰지 않고 feature별 React `useReducer`와 서버 데이터를 조합한다.
 - Tailwind CSS v4와 중앙 디자인 토큰을 기본으로 하고 복잡한 feature만 CSS Modules를 사용한다.
 
@@ -2056,7 +2071,19 @@ production
 - local과 preview는 별도 D1 데이터베이스 또는 명확히 분리된 binding을 쓴다.
 - preview에서 실제 참여자 데이터를 복사하지 않는다.
 - production migration은 백업·검증 후 순차 적용한다.
-- Cloudflare preview URL의 `/admin`도 Access 또는 별도 차단을 적용한다.
+- Workers branch/commit Preview는 전체 배포를 Worker-level Access로 보호한다. Production은 일반 공개 화면을 열어 두고 hostname/path 기반 Access로 `/admin/*`, `/api/admin/*`만 보호한다.
+
+Worker 이름과 연결 대상도 환경별로 분리한다.
+
+| 역할 | Preview | Production | 공개 주소 |
+|---|---|---|---|
+| 메인 애플리케이션 | `biblequiz-app-preview` | `biblequiz-app` | Preview URL / `biblequiz-app.<account>.workers.dev` |
+| 콘텐츠 Workflow | `biblequiz-content-preview` | `biblequiz-content` | 없음; `workers_dev = false`, preview URL 비활성 |
+| 백업 Workflow | `biblequiz-backup-preview` | `biblequiz-backup` | 없음; `workers_dev = false`, preview URL 비활성 |
+
+- `biblequiz-app-preview.CONTENT_WORKFLOW`는 `biblequiz-content-preview`만, Production binding은 `biblequiz-content`만 가리킨다. 교차 환경 binding은 CI에서 실패시킨다.
+- Preview D1/R2/secret은 non-production 자원만 사용한다. Production D1 export token과 production R2 bucket은 `biblequiz-backup`에만 존재한다.
+- 공개 주소가 없다는 것은 단순히 링크를 숨긴다는 뜻이 아니라 Wrangler에서 `workers_dev`와 preview URL을 끄고 route/custom domain을 등록하지 않는다는 뜻이다.
 
 ### 13.5 관리자 인증
 
@@ -2068,7 +2095,7 @@ production
 - 이메일 일회용 코드(OTP) 또는 관리자의 Google 계정을 사용한다.
 - 권장 Access 세션은 8시간이다.
 - `Include Everyone`, 모든 이메일 허용, 영구 bypass 정책은 금지한다.
-- Function도 `Cf-Access-Jwt-Assertion`의 서명, issuer, audience를 검증한다.
+- `biblequiz-app`의 관리자 API도 `Cf-Access-Jwt-Assertion`의 서명, issuer, audience를 검증한다.
 - 관리자 조치는 검증된 이메일을 감사 로그에 기록한다.
 
 Cloudflare Access는 앱 자체 회원가입과 사용자 DB를 요구하지 않기 때문에 현재 단계에 적합하다.
@@ -2081,7 +2108,7 @@ Access 좌석은 프로젝트별 50명이 아니라 **같은 Cloudflare Zero Tru
 - 50명을 넘는 시점의 저비용 대안: 현재 Pay-as-you-go 사용자당 월 USD 7. 가격은 도입 직전에 재확인한다.
 - 좌석 현황은 `Zero Trust → Team & Resources → Users`에서 확인한다.
 
-공식 문서: [Access 이메일 OTP](https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/one-time-pin/), [Access JWT 검증](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/), [Access 좌석 관리](https://developers.cloudflare.com/cloudflare-one/team-and-resources/users/seat-management/), [Access 가격](https://www.cloudflare.com/sase/products/access/)
+공식 문서: [Worker·Preview에 Access 적용](https://developers.cloudflare.com/workers/configuration/cloudflare-access/), [Access 이메일 OTP](https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/one-time-pin/), [Access JWT 검증](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/), [Access 좌석 관리](https://developers.cloudflare.com/cloudflare-one/team-and-resources/users/seat-management/), [Access 가격](https://www.cloudflare.com/sase/products/access/)
 
 ### 13.6 Secrets와 bindings
 
@@ -2093,13 +2120,13 @@ OpenAI API는 GitHub·Cloudflare 환경 분리와 맞춰 `biblequiz-nonprod`와 
 
 | 배포 단위 | Secret | 일반 변수·binding |
 |---|---|---|
-| Pages Functions | `TURNSTILE_SECRET`, `SESSION_PEPPER`, 필요 시 `CLOUDFLARE_ANALYTICS_TOKEN` | `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `DB`, `WORKFLOW_SERVICE` |
-| content Workflow Worker | 환경별 `OPENAI_API_KEY`, 필요할 때만 `TRANSCRIPT_PROVIDER_SECRET` | `DB`, 자체 Workflow binding |
-| backup Workflow Worker | export만 허용한 `D1_REST_API_TOKEN` | `CLOUDFLARE_ACCOUNT_ID`, production `D1_DATABASE_ID`, `BACKUP_BUCKET`, 자체 Workflow binding |
+| `biblequiz-app` 메인 애플리케이션 Worker | `TURNSTILE_SECRET`, `SESSION_PEPPER`, 필요 시 `CLOUDFLARE_ANALYTICS_TOKEN` | `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `DB`, `CONTENT_WORKFLOW`, Static Assets |
+| `biblequiz-content` 비공개 콘텐츠 Worker | 환경별 `OPENAI_API_KEY`, 필요할 때만 `TRANSCRIPT_PROVIDER_SECRET` | `DB`, 콘텐츠 Workflow 정의·binding |
+| `biblequiz-backup` 비공개 백업 Worker | export만 허용한 `D1_REST_API_TOKEN` | `CLOUDFLARE_ACCOUNT_ID`, production `D1_DATABASE_ID`, `BACKUP_BUCKET`, 백업 Workflow 정의·binding |
 
-`OPENAI_API_KEY`는 실제 AI 호출을 수행하는 content Worker에만 두고 일반 공개 Pages Functions에는 주지 않는다. `D1_REST_API_TOKEN`은 D1 binding의 일반 query용 비밀번호가 아니라 Cloudflare 관리 API의 SQL export를 시작하기 위한 예외적인 최소 권한 token이며 backup Worker에만 둔다. Global API Key를 사용하지 않는다. `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, account/database ID와 binding 이름은 식별·연결 정보이지 비밀값은 아니지만 환경별로 섞이지 않게 관리한다.
+`OPENAI_API_KEY`는 실제 AI 호출을 수행하는 `biblequiz-content`에만 두고 `biblequiz-app`에는 주지 않는다. `D1_REST_API_TOKEN`은 D1 binding의 일반 query용 비밀번호가 아니라 Cloudflare 관리 API의 SQL export를 시작하기 위한 예외적인 최소 권한 token이며 `biblequiz-backup`에만 둔다. Global API Key를 사용하지 않는다. `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, account/database ID와 binding 이름은 식별·연결 정보이지 비밀값은 아니지만 환경별로 섞이지 않게 관리한다.
 
-D1 binding은 `DB`, content Worker service binding은 `WORKFLOW_SERVICE`, 비공개 백업 R2 binding은 `BACKUP_BUCKET`으로 통일한다. R2 binding과 `D1_REST_API_TOKEN`은 backup Worker에만 주고 일반 공개 Pages Functions와 content Worker에는 부여하지 않는다. 공식 참고: [Pages Functions bindings](https://developers.cloudflare.com/pages/functions/bindings/), [Pages에서 Workflow 호출](https://developers.cloudflare.com/workflows/build/call-workflows-from-pages/), [D1→R2 Workflow 백업](https://developers.cloudflare.com/workflows/examples/backup-d1/)
+D1 binding은 `DB`, `biblequiz-app`에서 콘텐츠 Workflow를 시작·조회하는 내부 binding은 `CONTENT_WORKFLOW`, 비공개 백업 R2 binding은 `BACKUP_BUCKET`으로 통일한다. `CONTENT_WORKFLOW`는 URL·API key가 아니라 `wrangler.jsonc`에서 target Worker 이름을 `script_name`으로 지정하는 Cloudflare 계정 내부 연결이다. 이 binding은 Workflow instance 시작·상태 조회 권한만 제공하며 대상 Worker의 `OPENAI_API_KEY` 값을 호출자에게 전달하지 않는다. R2 binding과 `D1_REST_API_TOKEN`은 `biblequiz-backup`에만 주고 `biblequiz-app`·`biblequiz-content`에는 부여하지 않는다. 공식 참고: [Workers Workflow API와 다른 Worker의 Workflow binding](https://developers.cloudflare.com/workflows/build/workers-api/), [Workers bindings 설정](https://developers.cloudflare.com/workers/wrangler/configuration/), [D1→R2 Workflow 백업](https://developers.cloudflare.com/workflows/examples/backup-d1/)
 
 운영자용 쉬운 구분:
 
@@ -2111,7 +2138,7 @@ D1 binding은 `DB`, content Worker service binding은 `WORKFLOW_SERVICE`, 비공
 
 관리자 화면에서 빠르게 끝나는 저장·검사와 오래 걸릴 수 있는 주간 콘텐츠 생성을 분리한다.
 
-**Pages Functions가 요청 안에서 바로 처리하는 작업**
+**`biblequiz-app`이 요청 안에서 바로 처리하는 작업**
 
 - YouTube URL 형식과 video ID 중복 확인
 - 관리자가 수정한 제목·날짜·본문 주소·단서 저장
@@ -2133,9 +2160,9 @@ D1 binding은 `DB`, content Worker service binding은 `WORKFLOW_SERVICE`, 비공
 
 Workflows가 AI 계산 자체를 하는 것은 아니다. AI 계산은 선택한 외부 AI 제공자가 수행하고, Workflows는 네트워크 호출·재시도·순서·상태를 조정한다. 배치와 검증 코드는 각 Workflow step에서 실행되는 Worker 코드다.
 
-Workflow 코드는 같은 GitHub 저장소와 같은 Cloudflare 계정에서 관리하지만 Pages와 별도 배포 단위인 작은 Worker로 둔다. Pages Functions는 Workflow binding을 직접 갖는다고 가정하지 않는다. `WORKFLOW_SERVICE` service binding으로 standalone content Worker를 내부 호출하고, 그 Worker가 자신의 Workflow binding으로 instance를 시작한다. content Worker의 일반 공개 `fetch` route는 사용하지 않거나 항상 404로 닫는다. 별도 서버나 별도 회원 계정, KV는 추가하지 않으며 R2는 백업 Workflow의 비공개 bucket만 예외로 둔다.
+콘텐츠 Workflow는 같은 GitHub 저장소·Cloudflare 계정 안의 `biblequiz-content`라는 별도 Worker 배포 단위에 둔다. 이 배포 단위는 브라우저가 호출할 공개 URL과 일반 `fetch` endpoint를 만들지 않으며 `OPENAI_API_KEY`를 전용 secret으로 가진다. `biblequiz-app`은 `CONTENT_WORKFLOW` 내부 binding으로 이 Workflow의 instance를 시작·조회한다. 공식 설정에서는 대상 배포 단위를 가리키는 필드 이름이 `script_name`이지만, 이 문서의 설명에서는 파일 하나로 오해하지 않도록 `대상 Worker 이름`이라고 부른다. 별도 서버나 별도 회원 계정, KV는 추가하지 않으며 R2는 `biblequiz-backup`의 비공개 bucket만 예외로 둔다.
 
-관리자가 **퀴즈 초안 만들기**를 누르면 Pages Function은 작업을 한 번 등록하고 `202 Accepted`와 `jobId`를 즉시 반환한다. 관리자 화면은 D1의 작업 상태를 조회해 `자막 가져오는 중 → 자막 확인 대기/AI 교정 중 → 설교 의도 분석 중 → 관리자 의도 확인 대기 → 요약·문제 생성 중 → 격자 검사 중 → 검토 준비`처럼 보여준다. 브라우저를 닫아도 작업과 결과는 사라지지 않는다. 일반 방문자의 퀴즈 조회·입력·제출·채점 때에는 이 Workflow가 실행되지 않는다.
+관리자가 **퀴즈 초안 만들기**를 누르면 `biblequiz-app`은 작업을 한 번 등록하고 `CONTENT_WORKFLOW`를 시작한 뒤 `202 Accepted`와 `jobId`를 즉시 반환한다. 관리자 화면은 D1의 작업 상태를 조회해 `자막 가져오는 중 → 자막 확인 대기/AI 교정 중 → 설교 의도 분석 중 → 관리자 의도 확인 대기 → 요약·문제 생성 중 → 격자 검사 중 → 검토 준비`처럼 보여준다. 브라우저를 닫아도 작업과 결과는 사라지지 않는다. 일반 방문자의 퀴즈 조회·입력·제출·채점 때에는 이 Workflow가 실행되지 않는다.
 
 운영 규칙:
 
@@ -2167,7 +2194,7 @@ Workflow 코드는 같은 GitHub 저장소와 같은 Cloudflare 계정에서 관
 | 계층 | 도구 | 담당 범위 |
 |---|---|---|
 | 정적 검사 | TypeScript strict, ESLint | 잘못된 type, 금지된 import와 명백한 코드 문제 |
-| 단위·통합 | Vitest + `@cloudflare/vitest-pool-workers` | 퍼즐·한글·채점·moderation, Pages Functions, D1 migration, Workflow |
+| 단위·통합 | Vitest + `@cloudflare/vitest-pool-workers` | 퍼즐·한글·채점·moderation, 메인 애플리케이션 Worker, D1 migration, Workflow |
 | UI 컴포넌트 | React Testing Library | 버튼 상태, 오류 안내, 접근성 이름과 상태 전환 |
 | 실제 브라우저 E2E | Playwright | 입력→부분 제출→정답보기→참여 현황→Top N 출력의 전체 흐름 |
 | 시각·산출물 | Playwright screenshot + PDF 구조 검사 | 핵심 viewport 회귀, PDF 크기·페이지·한글 font 포함 |
@@ -2180,18 +2207,18 @@ Cloudflare Vitest 설정은 실제 production과 compatibility flag를 맞춘다
 
 ```text
 local        개발자/AI의 로컬 fixture와 Local D1
-preview      작업 branch·Pull Request의 고유 Pages URL + Preview D1
+preview      작업 branch·Pull Request의 고유 Workers Preview URL + Preview D1
 production   main의 승인된 release + Production D1 + 실제 도메인
 ```
 
 - Preview와 Production은 D1 database ID, secret, Workflow binding을 분리한다.
 - Preview에는 실제 참여자 제출·관리자 이메일·production secret을 복사하지 않는다.
 - Preview는 Cloudflare Access로 보호하고 검색엔진 `noindex`를 유지한다.
-- AI 작업 branch는 `codex/*`를 기본으로 하며, Pull Request마다 고유 Preview URL을 만든다.
-- `main` push만으로 무검토 Production 공개가 되지 않도록 자동 Production 배포를 끄고, 승인된 release 작업만 Production 배포를 실행한다.
+- AI 작업 branch는 `codex/*`를 기본으로 하며, Workers Builds의 non-production branch build로 Pull Request마다 고유 Preview URL을 만든다.
+- Workers Builds의 production branch command도 version upload까지만 수행해 `main` push가 곧바로 traffic을 바꾸지 않게 한다. GitHub Actions의 보호된 `production` environment와 수동 승인 release만 실제 Production 배포·migration을 수행한다.
 - 운영자는 코드를 읽는 대신 Preview 주소에서 화면과 기능을 확인하고 “배포하세요”라고 승인한다. 승인 전에는 실제 도메인과 Production D1을 바꾸지 않는다.
 - Production migration은 13.4의 환경 분리와 앞서 확정한 Drizzle migration의 백업·순차 적용 절차를 먼저 통과해야 한다. 앱 배포와 DB migration 대상 환경을 화면·로그에 명시한다.
-- 배포 실패나 심각한 회귀에 대비해 직전 정상 Pages deployment로 되돌리는 절차와 호환 가능한 DB migration 원칙을 운영 문서에 둔다.
+- 배포 실패나 심각한 회귀에 대비해 직전 정상 Worker version으로 traffic을 되돌리는 절차와 호환 가능한 DB migration 원칙을 운영 문서에 둔다.
 
 #### 오류 기록과 개인정보
 
@@ -2208,9 +2235,9 @@ status, durationMs, safeErrorCode, deploymentVersion
 - 운영자가 매일 로그를 읽을 필요는 없다. 자막·AI 실패는 관리자 화면의 실패 상태로 지속 표시하고, 문제 발생 시 requestId/jobId로 로그를 찾는다.
 - Sentry 같은 외부 오류 추적은 v1에서 사용하지 않는다. 오류를 늦게 발견하는 운영 문제가 실제로 생기면 무료 플랜부터 재검토한다.
 
-현재 예상 규모에서는 Vitest, Playwright, GitHub 자동 검사, Cloudflare Preview와 Logs를 월 USD 0 범위에서 운영하는 것을 목표로 한다. 로그 장기 보관·상시 알림·대규모 브라우저 병렬 실행이 실제로 필요해질 때만 유료 대안을 제안하며, 도입 전 가격과 개인정보 전송 범위를 다시 승인받는다.
+현재 예상 규모에서는 Vitest, Playwright, GitHub 자동 검사, Workers Preview와 Logs를 월 USD 0 범위에서 운영하는 것을 목표로 한다. 로그 장기 보관·상시 알림·대규모 브라우저 병렬 실행이 실제로 필요해질 때만 유료 대안을 제안하며, 도입 전 가격과 개인정보 전송 범위를 다시 승인받는다.
 
-공식 참고: [Cloudflare Vitest integration](https://developers.cloudflare.com/workers/testing/vitest-integration/), [Pages Preview deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/), [Pages branch controls](https://developers.cloudflare.com/pages/configuration/branch-build-controls/), [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/), [Playwright browsers](https://playwright.dev/docs/browsers)
+공식 참고: [Cloudflare Vitest integration](https://developers.cloudflare.com/workers/testing/vitest-integration/), [Workers Builds GitHub integration](https://developers.cloudflare.com/workers/ci-cd/builds/git-integration/github-integration/), [Workers build branches·Preview](https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/), [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/), [Playwright browsers](https://playwright.dev/docs/browsers)
 
 ### 13.9 백업과 통합 비용·사용량 대시보드 — 2026-08-24 확정
 
@@ -2239,12 +2266,12 @@ R2의 `구독 등록`은 정액 월 이용권을 사는 뜻이 아니라 Cloudfl
 | OpenAI API | 이번 quiz set·이번 달 모델별 token/전사량, 앱 기록 추정 비용, 호출 실패 제외 | 실제 사용량 과금. 생성 횟수·token을 앱이 강제 제한하지 않고 정보 제공 |
 | R2 | 계정 전체와 backup bucket의 저장 bytes·object 수, 월 Class A/B 작업, 최근 8개 backup, 마지막 성공/실패 | 무료 포함량 초과 시 실제 과금 가능 |
 | D1 | 계정/production DB의 일별 rows read·written, 저장 bytes, Time Travel 상태 | Workers Free에서는 한도 초과 시 중단 위험; paid 전환 시 과금 가능 |
-| Workers / Pages Functions | 일별 요청 수, CPU time, resource-limit 오류 | Free에서는 한도·실행 제한; Workers Paid를 명시적으로 켠 경우 과금 가능 |
+| Workers | 계정 전체와 `biblequiz-app`·`biblequiz-content`·`biblequiz-backup`별 요청 수, CPU time, resource-limit 오류 | Free에서는 한도·실행 제한; Workers Paid를 명시적으로 켠 경우 과금 가능 |
 | Workflows | 일별 instance·step 수, state storage, 실패·재시도 | Free 포함량 초과 시 중단; Paid에서 초과 과금 가능 |
-| Cloudflare Pages | 월 build 수, 실패 수, 현재 project/file 수 | Free build 한도 초과·배포 중단 위험, 현재 자동 과금 대상 아님 |
+| Workers Builds | 월 build minutes, 성공·실패 수, Preview·Production version 상태 | Free 월 3,000 build minutes 초과 시 새 build 중단 위험; 자동 Paid 전환 금지 |
 | Cloudflare Access | 이 프로젝트 관리자 수와 가능하면 계정 active seat 수 | 무료 좌석 한도 위험; 자동 유료 전환 금지 |
 | GitHub Actions | repository 공개/비공개, runner 종류, 최근 CI 사용 상태 | 공개 repository의 standard runner는 무료. private 전환·larger runner 사용 시 별도 경고·GitHub budget 필요 |
-| 사용자 도메인 | 사용 여부와 다음 갱신일을 관리자가 등록했을 때만 표시 | 사용하면 등록기관의 연간 고정비; `pages.dev`면 USD 0 |
+| 사용자 도메인 | 사용 여부와 다음 갱신일을 관리자가 등록했을 때만 표시 | 사용하면 등록기관의 연간 고정비; `workers.dev`면 USD 0 |
 
 Turnstile, React, Vite, Tailwind, Hono, Drizzle은 현재 별도 사용량 과금 항목이 아니므로 숫자 카드를 만들지 않고 `현재 별도 과금 없음` 목록에 모은다. 아직 쓰지 않는 KV, 유료 transcript provider, Sentry 등은 표시하지 않으며 나중에 도입하는 서비스는 **배포 조건으로 이 표와 usage adapter를 먼저 추가**한다.
 
@@ -2264,7 +2291,7 @@ Cloudflare 수치는 읽기 전용 최소 권한 `CLOUDFLARE_ANALYTICS_TOKEN`으
 
 이 확인은 정책 reminder만 닫는다. 실제 사용량 50/80% 경고, 비용 발생, metric 조회 실패, 백업 실패는 `확인 완료`로 숨길 수 없다. 공식 정책이 달라졌다면 먼저 `pricing_catalog`와 계산 기준을 새 version으로 갱신한 뒤 확인 완료 처리한다. 배포 전 공식 가격표 재확인 gate도 유지한다. 월별 외부 알림이 필요하면 이후 Codex 자동 확인 작업을 별도 승인받아 추가하며, 현재 앱이 이메일을 보낸다고 가정하지 않는다.
 
-공식 참고: [D1 Time Travel](https://developers.cloudflare.com/d1/reference/time-travel/), [D1 import/export](https://developers.cloudflare.com/d1/best-practices/import-export-data/), [R2 가격](https://developers.cloudflare.com/r2/pricing/), [R2 metrics](https://developers.cloudflare.com/r2/platform/metrics-analytics/), [D1 metrics](https://developers.cloudflare.com/d1/observability/metrics-analytics/), [Workers metrics](https://developers.cloudflare.com/workers/observability/metrics-and-analytics/), [Workflows 가격](https://developers.cloudflare.com/workflows/reference/pricing/), [Pages limits](https://developers.cloudflare.com/pages/platform/limits/), [OpenAI Usage/Costs API](https://platform.openai.com/docs/api-reference/usage/audio_transcriptions_object), [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions)
+공식 참고: [D1 Time Travel](https://developers.cloudflare.com/d1/reference/time-travel/), [D1 import/export](https://developers.cloudflare.com/d1/best-practices/import-export-data/), [R2 가격](https://developers.cloudflare.com/r2/pricing/), [R2 metrics](https://developers.cloudflare.com/r2/platform/metrics-analytics/), [D1 metrics](https://developers.cloudflare.com/d1/observability/metrics-analytics/), [Workers metrics](https://developers.cloudflare.com/workers/observability/metrics-and-analytics/), [Workflows 가격](https://developers.cloudflare.com/workflows/reference/pricing/), [Workers Builds limits](https://developers.cloudflare.com/workers/ci-cd/builds/limits-and-pricing/), [OpenAI Usage/Costs API](https://platform.openai.com/docs/api-reference/usage/audio_transcriptions_object), [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions)
 
 ### 13.10 운영·개발 매뉴얼 페이지 — 전체 기능 완료 뒤 구현
 
@@ -2286,7 +2313,7 @@ Cloudflare 수치는 읽기 전용 최소 권한 `CLOUDFLARE_ANALYTICS_TOKEN`으
 
 1. **이 프로그램은 무엇인가** — 공개 퀴즈, 관리자 발행, 제출·채점, 참여 현황, Top N, 출력, 아카이브를 짧게 설명
 2. **화면·기능 지도** — 일반 사용자와 관리자 메뉴가 각각 무엇을 하는지
-3. **전체 구조** — 브라우저 → Pages/Functions → D1, Workflows/OpenAI, private R2 backup의 관계를 쉬운 그림과 용어로 설명
+3. **전체 구조** — 브라우저 → `biblequiz-app` Static Assets/Hono → D1, `biblequiz-content`/OpenAI, `biblequiz-backup`/private R2의 관계를 쉬운 그림과 용어로 설명
 4. **서비스 사전** — Cloudflare Access, GitHub Actions 같은 각 서비스를 왜 쓰는지, 멈추면 무엇이 안 되는지, 무료/과금 성격, 대체 가능성
 5. **직접 등록·연결한 항목** — 계정 소유자, 가입/활성화 시점, 관리 화면 경로, 등록 절차 요약, plan, 필요한 secret/binding의 **이름만**, 연결 해제·교체 시 영향
 6. **매주 운영** — 설교 등록부터 검수·발행·마감·오류 수정·출력까지
@@ -2846,7 +2873,7 @@ started_at / completed_at / rotated_at
 
 ```text
 id PK
-service: openai | r2 | d1 | workers | workflows | pages | access | github_actions | domain
+service: openai | r2 | d1 | workers | workflows | workers_builds | access | github_actions | domain
 scope: account | project | bucket | database | quiz_set
 scope_id nullable
 period_start / period_end
@@ -3112,7 +3139,7 @@ POST   /api/admin/reserved-names                 # 보호 대상·alias와 정�
 PATCH  /api/admin/reserved-names/:id             # 활성화·표시명·alias 변경
 ```
 
-모든 관리자 endpoint는 Access가 앞에서 차단한 뒤 Function에서도 JWT issuer, audience, signature를 검증한다.
+모든 관리자 endpoint는 Access가 앞에서 차단한 뒤 `biblequiz-app`에서도 JWT issuer, audience, signature를 검증한다.
 
 `withdraw-to-review`는 세트의 모든 variant에 성공 제출이 0건일 때만 허용한다. 발행 정식 snapshot을 새 편집 revision의 시작점으로 복사하되, 공개 세트를 미발행 초안으로 되돌렸다는 감사 기록을 남긴다. 취소된 세트가 featured였다면 다음으로 최신인 열린 published 세트를 featured로 승격한다. 그런 세트가 없을 때만 직전 archived 세트를 읽기 전용 featured 항목으로 둘 수 있으며 `published`나 접수 가능 상태로 되돌리지 않는다.
 
@@ -3186,7 +3213,7 @@ monthly check POST는 서버의 `Asia/Seoul` 연월, 현재 `pricing_catalog` ve
 ├─ index.html
 ├─ vite.config.ts
 ├─ drizzle.config.ts
-├─ wrangler.jsonc
+├─ wrangler.jsonc          # biblequiz-app 정본; Static Assets·Hono·DB·CONTENT_WORKFLOW
 ├─ public/
 │  └─ assets/
 │     ├─ backgrounds/{child,adult}/
@@ -3219,16 +3246,20 @@ monthly check POST는 서버의 `Asia/Seoul` 연월, 현재 `pricing_catalog` ve
 │  ├─ styles/
 │  ├─ main.tsx
 │  └─ env.d.ts
-├─ functions/
-│  ├─ api/
-│  │  └─ [[route]].ts       # Hono Pages Function 진입점
-│  ├─ app.ts                # Hono app과 route group 조립
-│  ├─ routes/
-│  │  ├─ public/
-│  │  ├─ submissions/
-│  │  ├─ board/
-│  │  └─ admin/
-│  ├─ middleware/
+├─ workers/
+│  ├─ app/                   # biblequiz-app 메인 애플리케이션 Worker
+│  │  ├─ index.ts           # Worker fetch 진입점
+│  │  ├─ app.ts             # Hono app과 /api route group 조립
+│  │  ├─ routes/{public,submissions,board,admin}/
+│  │  └─ middleware/
+│  ├─ content/               # biblequiz-content 비공개 Workflow Worker
+│  │  ├─ wrangler.jsonc
+│  │  ├─ index.ts           # Workflow class export; 공개 fetch 없음
+│  │  └─ steps/
+│  ├─ backup/                # biblequiz-backup 비공개 Workflow Worker
+│  │  ├─ wrangler.jsonc
+│  │  ├─ index.ts           # scheduled backup Workflow; 공개 fetch 없음
+│  │  └─ steps/
 │  └─ _shared/
 │     ├─ services/
 │     ├─ db/
@@ -3237,11 +3268,6 @@ monthly check POST는 서버의 `Asia/Seoul` 연월, 현재 `pricing_catalog` ve
 │     ├─ repositories/
 │     ├─ auth/
 │     └─ security/
-├─ workers/
-│  ├─ content-workflow/       # 주간 자막·AI·배치·검증 Workflow
-│  │  ├─ index.ts
-│  │  └─ steps/
-│  └─ backup-workflow/        # D1 export→private R2 검증·8개 회전
 ├─ shared/
 │  ├─ schemas/
 │  └─ types/
@@ -3298,7 +3324,7 @@ Phase 0 출시 전 기술 spike·운영 입력
 
 운영자가 직접 수행:
 
-- Cloudflare Pages에서 GitHub 저장소 연결
+- Cloudflare Workers Builds에서 GitHub 저장소 연결 및 `biblequiz-app`·`biblequiz-content`·`biblequiz-backup` Worker 배포 단위 등록
 - Access 허용 관리자 이메일 등록
 - R2 사용량 기반 구독 활성화
 - backup Worker용 production D1 export 최소 권한 API token 생성·Secret 등록
@@ -3308,19 +3334,19 @@ Phase 0 출시 전 기술 spike·운영 입력
 
 AI 개발 작업:
 
-- React/Vite/TypeScript, Pages Functions/Hono, D1 schema·migration
-- local/Preview/Production 환경 분리, D1/R2/service binding 설정과 backup token 권한·노출 검증
+- React/Vite/TypeScript, Workers Static Assets/Hono, D1 schema·migration
+- local/Preview/Production 환경 분리, D1/R2/Workflow binding 설정과 backup token 권한·노출 검증
 - Access JWT·Turnstile server 검증, AI Workflow·비용 기록
 - 자막·퍼즐·제출·채점·출력·backup 기능과 자동 테스트
 - 배포 검증과 최종 운영 매뉴얼
 
-비밀값은 대화·GitHub·문서로 전달하지 않는다. 필요한 시점마다 한 서비스씩 운영자가 dashboard 또는 승인된 secret 입력 절차에 직접 등록한다. AI는 값 자체를 출력하지 않고 존재 여부, 테스트 호출 성공, 환경 오연결, log redaction만 검증한다. 개발 순서는 `secret 없는 fixture → Pages/D1 Preview → Access → OpenAI nonprod → Turnstile → R2 → Production 별도 연결 → 전체 리허설`로 한다.
+비밀값은 대화·GitHub·문서로 전달하지 않는다. 필요한 시점마다 한 서비스씩 운영자가 dashboard 또는 승인된 secret 입력 절차에 직접 등록한다. AI는 값 자체를 출력하지 않고 존재 여부, 테스트 호출 성공, 환경 오연결, log redaction만 검증한다. 개발 순서는 `secret 없는 fixture → Workers Static Assets/Hono/D1 Preview → Access → OpenAI nonprod → Turnstile → R2 → Production 별도 연결 → 전체 리허설`로 한다.
 
 ### Phase 0 — 출시 게이트와 운영 계정
 
 작업:
 
-- v1 개발·초기 운영 주소를 무료 Cloudflare Pages `*.pages.dev`로 사용하고, 별도 도메인은 안정화 뒤 선택
+- v1 개발·초기 운영 주소를 무료 Cloudflare Workers `*.workers.dev`로 사용하고, 별도 도메인은 안정화 뒤 선택
 - GitHub 저장소와 Cloudflare 계정 확인
 - 관리자 이메일 allowlist 결정
 - 초기 성경 표시는 개역개정 장절·판본명과 대한성서공회 공식 읽기 링크로 고정
@@ -3353,7 +3379,7 @@ AI 개발 작업:
 - 임시 `youtube-transcript-api 1.2.4`의 최신 계정 없는 요청 방식은 같은 환경에서 성공함: 773개 segment, 마지막 구간 약 1,864.12초, plain text 12,807자
 - 추출 plain text SHA-256: `927a2778e3dcba0fbaa6ca027f56ca6baef234272eafbc954f5d08f78f7b28ba`
 - 자막 전문은 저장소·기획 문서에 넣지 않고 `/tmp`에서만 검토함. production 보존 정책은 source 이용 조건과 11.3.1·14.3을 따름
-- Python package 성공은 production 의존성 채택을 뜻하지 않는다. v1 React/TypeScript 구조에 맞는 교체 가능한 adapter를 구현하고 Cloudflare Preview에서 별도로 재검증해야 함
+- Python package 성공은 production 의존성 채택을 뜻하지 않는다. v1 React/TypeScript 구조에 맞는 교체 가능한 adapter를 구현하고 Workers Preview에서 별도로 재검증해야 함
 
 자동 자막은 설교 구조 파악에 사용할 수 있을 정도로 전반적으로 이어지지만 사람 확정 없이 AI 분석에 바로 넣기에는 오류가 있다. 실제 예시는 `헌신의 재발견→헌신의 제발견`, `산상보훈→산상복음/산상보원`, `의를 주리고→의에 줄이고`, `허비→허의`, `분개→붕괴/분괴`, `향유 옥합→향욕합/향위옥합`, `병행 본문→경행 본문`, `만류→만료` 등이다. 성경 인명·구절 인용에도 오인식이 있어 계획한 불변 원본, 사람 직접 수정, 선택적 AI diff 교정, 사람 최종 확정 gate를 유지한다.
 
@@ -3372,9 +3398,9 @@ AI 개발 작업:
 
 - React/Vite/TypeScript scaffold
 - Node.js 24 + pnpm 11 고정, `pnpm-lock.yaml` 생성, npm/Yarn lockfile 차단
-- Pages Functions, preview/production D1 binding
-- standalone content Worker와 자체 Workflow binding, Pages의 `WORKFLOW_SERVICE` service binding, 외부 공개 fetch 차단
-- 대표 영상 `94eQ16j7rKI`로 계정 없는 공개 자막 adapter를 Cloudflare Preview에서 실행하고 수동·자동 한국어 자막 성공과 `SOURCE_BLOCKED`·자막 없음 실패를 구분
+- `biblequiz-app`의 Static Assets SPA fallback, `/api/*` Hono Worker 진입점, preview/production D1 binding
+- `biblequiz-content` Workflow와 `biblequiz-app`의 `CONTENT_WORKFLOW` 내부 binding, 콘텐츠 Worker의 공개 fetch·URL 없음과 OpenAI secret 격리
+- 대표 영상 `94eQ16j7rKI`로 계정 없는 공개 자막 adapter를 Workers Preview에서 실행하고 수동·자동 한국어 자막 성공과 `SOURCE_BLOCKED`·자막 없음 실패를 구분
 - private backup R2 bucket/binding, backup Workflow, 최소 권한 `D1_REST_API_TOKEN`, account read-only analytics token, 비용·사용량 adapter
 - migrations, 환경 schema, CI
 - 기본 route와 Access 보호
@@ -3382,11 +3408,13 @@ AI 개발 작업:
 
 종료 조건:
 
-- GitHub push로 preview가 배포됨
+- GitHub branch push로 Access 보호 Workers Preview version이 배포되고 `main` push만으로 Production traffic이 바뀌지 않음
 - 공개 route와 Access 보호 route가 분리됨
 - local/preview/production DB가 섞이지 않음
-- Pages Functions가 `WORKFLOW_SERVICE`로만 콘텐츠 작업을 시작하고 content Worker의 공개 URL에서는 작업을 시작할 수 없음
-- 같은 대표 영상의 Cloudflare Preview 자막 결과가 로컬 baseline과 비교되어 성공 또는 데이터센터 IP 차단 원인이 진단됨
+- `/`, `/archive`, `/quiz/test-slug`, `/admin` 직접 접속·새로고침이 Static Assets SPA fallback으로 정상이고 실제 asset·React navigation 요청은 Worker invocation을 만들지 않으며 `/api/health`는 항상 Hono JSON을 반환함
+- `biblequiz-app`이 `CONTENT_WORKFLOW` 내부 binding으로만 콘텐츠 작업을 시작하고 `biblequiz-content`에는 공개 URL·일반 fetch endpoint가 없음
+- Preview `CONTENT_WORKFLOW`가 Production 콘텐츠 Worker를 가리키지 않고 `biblequiz-app` 환경에 `OPENAI_API_KEY`·R2 binding·D1 export token이 존재하지 않음
+- 같은 대표 영상의 Workers Preview 자막 결과가 로컬 baseline과 비교되어 성공 또는 데이터센터 IP 차단 원인이 진단됨
 - backup Worker만 D1 export token과 R2 binding을 가지며 secret·signed URL이 로그와 응답에서 redaction됨
 - R2 bucket이 public하지 않고 production D1 백업 8개 회전과 checksum 검증이 fixture로 재현됨
 
@@ -3680,6 +3708,10 @@ moderation:
 - 숨김·해제·삭제 후 순위 재계산
 - 삭제 후 같은 세션 재제출 차단
 - Access 없는 관리자 API, 위조 JWT, 잘못된 issuer/audience 거부
+- `wrangler.jsonc`에서 Static Assets navigation은 `index.html`로 fallback하고 `/api/*`는 항상 `biblequiz-app` Hono JSON으로 routing되며, asset·SPA navigation은 Worker invocation을 만들지 않음
+- Preview/Production `DB`·`CONTENT_WORKFLOW` target·secret 이름이 교차하지 않고, `biblequiz-content`·`biblequiz-backup`은 `workers_dev = false`, preview URL 비활성, route/custom domain 없음
+- `biblequiz-app` binding 환경에 `OPENAI_API_KEY`, `D1_REST_API_TOKEN`, `BACKUP_BUCKET`이 없고 `biblequiz-content`에는 R2/export token이 없으며 `biblequiz-backup`에만 R2/export token이 있음
+- Workers Builds production branch가 version upload까지만 수행하고 승인 없는 `main` push로 Production traffic과 D1 migration이 바뀌지 않음
 - 관리자 dashboard가 활성 미발행 작업 유무에 따라 `이번 주 퀴즈 만들기`와 `계속 작업하기` 상태를 정확히 반환하고 중복 주간 세트를 만들지 않음
 - 설교일 후보는 유효한 제목 앞 `YYMMDD`/`YYYYMMDD`를 우선하고, 없으면 한국 시간 YouTube 게시일 기준 최근 주일, metadata도 없으면 작업일 기준 최근 주일을 사용함; 잘못된 날짜와 게시일 31일 초과 차이는 확인 경고
 - 같은 설교일의 서로 다른 영상은 서로 다른 6자리 suffix와 slug로 생성되고, 같은 YouTube video ID 재입력은 기존 작업으로 안내되며, 발행된 slug는 표시 날짜 정정 뒤에도 바뀌지 않음
@@ -3721,12 +3753,12 @@ moderation:
 - 개인화 응답이 CDN cache를 통해 다른 사용자에게 섞이지 않음
 - prepared statement로 SQL injection 문자열 처리
 - rate limit 후 `429`와 `Retry-After`
-- Pages Functions에서 content Worker를 직접 공개 URL로 호출하거나 Workflow binding을 직접 가정하지 않고 `WORKFLOW_SERVICE` service binding으로만 시작하며, content Worker 공개 fetch는 404/차단됨
+- `biblequiz-app`은 공개 URL이나 service binding이 아니라 `CONTENT_WORKFLOW` 내부 binding으로 `biblequiz-content`의 Workflow만 시작하며, 대상 Worker에는 공개 URL·일반 fetch endpoint가 없고 OpenAI secret은 호출자 환경에 없음
 - D1 export의 polling bookmark가 완료될 때까지 재시도되고, 제한 token 누락·권한 부족·signed URL 만료를 구분하며 token·signed URL은 모든 응답·로그에서 redaction됨
 - D1 export 중 query 일시 실패에는 안전한 재시도 안내와 requestId를 반환하고 미제출 격자 local draft가 유지됨
 - backup upload 실패·checksum 불일치에서는 기존 정상 8개를 삭제하지 않고 실패 상태를 기록
 - 검증된 9번째 backup 성공 뒤 가장 오래된 정상본 하나만 회전되어 항상 8개 유지
-- backup bucket public URL 접근 실패, 일반 Function·공개 API에 R2 binding/object key가 노출되지 않음
+- backup bucket public URL 접근 실패, `biblequiz-app`·공개 API에 R2 binding/object key가 노출되지 않음
 - 삭제 tombstone manifest가 과거 backup 복원 fixture에 재적용되어 삭제된 이름·답안·코멘트가 다시 공개되지 않음
 - R2·D1·Workers·Workflows metric 정상/지연/실패 fixture와 계정 전체·프로젝트 사용량 구분
 - 50%·80% 상태, 24시간 metric stale, 매월 1일 policy reminder가 한국 시간 기준으로 정확히 계산되고 provider 오류를 `여유`로 오표시하지 않음
@@ -3898,13 +3930,13 @@ v1 `reference_only` 필수 검사:
 | 모든 참가자를 A4 한 장에 넣으려 함 | 글자·격자 판독 불가 | 페이지당 수용량 고정, 자동 다중 페이지 |
 | 주간 이미지 4종으로 Git 증가 | clone/build 느려짐 | 자산 재사용, AVIF/WebP, catalog, 정기 용량 점검; 필요할 때만 R2 재평가 |
 | 어린이 이미지의 교리적 민감성 | 오해·거부감 | 상징 중심, 글자 없음, 목회자 검수 |
-| Cloudflare 요금·기능 변경 | 예상 비용·구현 차이 | 배포 직전 Pages/D1/Access/WAF 공식 플랜 재확인 |
+| Cloudflare 요금·기능 변경 | 예상 비용·구현 차이 | 배포 직전 Workers Static Assets/Workers Builds/D1/Access/WAF 공식 플랜 재확인 |
 | R2 사용량 기반 구독이 무료 포함량을 초과 | 등록 결제수단에 예상 밖 청구 | account 전체 metric 표시, 50/80% 경고, 새 backup 예상치가 80%를 넘으면 자동 중지, Cloudflare budget alert 병행 |
 | 사용량 API 실패를 0으로 오인 | 위험을 숨긴 잘못된 안심 표시 | 마지막 성공 시각과 stale 상태를 노출하고 24시간이 지나면 초록 상태 금지 |
 | 요금 정책이 바뀌었지만 앱의 한도 설정이 오래됨 | 잘못된 무료 여유 계산 | 공식 source·확인일·version 저장, 매월 1일 확인 reminder, 관리자 월별 확인 기록, 배포 전 재검증 |
 | 주간 D1 export 중 DB query가 일시 중단됨 | 짧은 조회·제출 실패 가능 | Preview에서 소요 시간 측정 후 최저 트래픽 시각 실행, 입력 local draft 유지, 안전한 재시도 안내·requestId, migration 전 영향 확인 |
 | 과거 backup 복원으로 삭제 개인정보 부활 | 삭제 요청 위반·재공개 | PII 없는 삭제 tombstone manifest 재적용을 공개 재개 전 hard gate로 검사 |
-| Access 경로만 믿고 API 검증 생략 | 관리자 기능 우회 | Function에서 JWT를 다시 검증 |
+| Access 경로만 믿고 API 검증 생략 | 관리자 기능 우회 | `biblequiz-app`에서 JWT를 다시 검증 |
 
 ## 21. v1 완료 정의
 
@@ -3970,15 +4002,16 @@ v1 `reference_only` 필수 검사:
 
 - 서비스명과 교회명
 - local·GitHub Actions·Cloudflare 모두 Node.js 24 LTS + pnpm 11, `pnpm-lock.yaml`만 사용하고 npm/Yarn 설치 금지
+- React Router Data Mode로 공개·관리자 SPA route, loader/action pending·error 경계를 관리하고 SSR·Framework Mode는 사용하지 않음
 - 설교일은 영상 제목 날짜→YouTube 게시일 기준 최근 주일→작업일 기준 최근 주일 순으로 AI 없이 추천하고 발행 전 수정 가능; slug는 `YYYY-MM-DD-고유문자6자리`, 발행일은 별도 보조 정보
 - 기본 5×5와 어린이 5~6개·장년 6~8개 추천값, 발행 전 난이도별 5×5~10×10·목표 단어 수 시험
 - 짧은 한글 명사를 우선하되 설교의 핵심 의미를 보존하는 조사 포함 명사구 허용; 표시형과 공백 없는 격자형 분리
 - 크기·단어 수별 높은 교차 hard gate와 관리자 선택 없는 자동 확대 금지
 - body 100%, max-width 1440px, 1024px 적층, 60:40
 - 크게 보기, 다크모드, 단일 IME buffer
-- Pages Functions + Hono + D1 + Drizzle, 비공개 백업용 R2 사용, KV 제외
+- `biblequiz-app` Workers Static Assets + Hono + D1 + Drizzle, `biblequiz-content` Workflow, 비공개 백업용 R2 사용, KV 제외
 - D1 Time Travel + private R2 Standard 주간 SQL backup 정상본 8개 순환, 공개 restore UI 없음
-- 관리자 dashboard에 OpenAI·R2·D1·Workers/Functions·Workflows·Pages·Access 등 비용/무료 한도 사용량과 stale·정책 확인일 표시
+- 관리자 dashboard에 OpenAI·R2·D1·Workers·Workflows·Workers Builds·Access 등 비용/무료 한도 사용량과 stale·정책 확인일 표시
 - 주간 자막·AI·격자 초안은 Workflows 백그라운드 실행, D1에 영구 진행 상태 저장
 - AI는 `gpt-5.6-terra` high로 의도 분석→비판 검토→관리자 의도 확정→요약·난이도별 문제→최종 감사를 분리하며 관리자 수동 재생성 횟수와 앱 자체 token·비용 차단 없음
 - 현재 YouTube 채널 권한 없음; CC의 계정 없는 공개 자막 provider는 기술·약관·교회 사용 허락 gate를 모두 통과해야 production 채택
@@ -4014,22 +4047,24 @@ v1 `reference_only` 필수 검사:
 ```text
 [complete] 요구사항 정리와 구현 명세
 [complete] Cloudflare 역할 결정
+[complete] 구현 전 Pages를 제외하고 Workers + Static Assets 기반으로 완전 전환; 3개 Worker 배포 단위와 내부 Workflow binding 확정
 [complete] 비회원 보안·moderation 정책
 [complete] 개역개정 공식 저작권 조건 조사와 출시 게이트
 [complete] 구현 순서와 Phase별 종료 조건 최종 점검
 [complete] GitHub `jinkyu0105-stack/bibleQuiz` 저장소 준비
-[complete] Cloudflare 계정 준비 및 Pages–GitHub 연결 경험 확인
+[complete] Cloudflare 계정 준비 및 기존 Pages–GitHub 연결 경험 확인; v1은 Workers Builds–GitHub 연결로 전환
 [complete] OpenAI API 계정·결제수단 준비
 [complete] OpenAI API를 `biblequiz-nonprod`·`biblequiz-production` Project와 환경별 키로 분리하기로 확정
 [complete] 계정·결제·Secret 등록은 운영자, 코드·binding·검증은 AI가 맡는 개발 착수 역할 분담 확정
 [complete] Node.js 24 LTS + pnpm 11 통일, `pnpm-lock.yaml` 단일 lockfile 정책 확정
 [complete] Phase 1 최초 scaffold의 단일 package·실행·검사·최소 API 범위 확정
+[complete] React Router Data Mode 확정
 [complete] 영상 날짜 기반 설교일 추천·수정 UI, 날짜+고유문자 영구 slug, 같은 날짜 여러 설교, 발행일 분리 정책 확정
-[complete] v1 개발·초기 운영은 무료 `*.pages.dev`; 별도 도메인은 안정화 뒤 결정
+[complete] v1 개발·초기 운영은 무료 `*.workers.dev`; 별도 도메인은 안정화 뒤 결정
 [complete] 대표 설교 `94eQ16j7rKI`의 계정 없는 한국어 자동 자막 로컬 spike — 773 segments 추출 성공, 직접 timedtext 빈 응답과 adapter 필요성 확인
 [pending] Access에 허용할 정확한 관리자 이메일 결정
 [pending] Phase 0 운영 입력 확인
-[pending] Phase 1 Cloudflare Preview에서 같은 자막 adapter 재검증
+[pending] Phase 1 Workers Preview에서 같은 자막 adapter 재검증
 [pending] Phase 5 Preview 관리자 화면에서 대표 설교 자막 수정·AI 교정 비교·최종 확정
 [pending] Phase 5 Preview에서 non-production OpenAI 실제 품질·사용량·비용 평가
 [pending] Phase 1 코드 scaffold
@@ -4062,10 +4097,14 @@ v1 `reference_only` 필수 검사:
 
 | 용어 | 짧은 설명 |
 |---|---|
-| 서버 채점 | 사용자의 브라우저가 아니라 Pages Function이 비공개 D1 정답으로 계산하는 것 |
-| Pages | 정적 웹 파일을 빌드·배포하고 CDN으로 전달하는 서비스 |
-| Pages Functions | Pages와 같은 도메인에서 실행되는 서버 API 코드 |
-| Hono | Pages Functions 안에서 route와 공통 middleware를 정리하는 작은 API framework |
+| 서버 채점 | 사용자의 브라우저가 아니라 `biblequiz-app`의 Hono API가 비공개 D1 정답으로 계산하는 것 |
+| Worker 배포 단위 | Cloudflare에 독립적으로 올리는 프로그램 하나. 이 프로젝트에는 역할이 다른 `biblequiz-app`, `biblequiz-content`, `biblequiz-backup`이 있음 |
+| `biblequiz-app` | 공개 React Static Assets와 `/api/*` Hono 서버를 함께 제공하는 메인 애플리케이션 Worker |
+| Workers Static Assets | Vite의 HTML·JS·CSS·이미지·폰트를 Worker와 함께 배포하고 정적 요청에는 서버 코드를 실행하지 않는 CDN 기능 |
+| `biblequiz-content` | 자막·OpenAI·퍼즐 생성 Workflow 전용 비공개 Worker. 공개 URL이나 일반 fetch endpoint가 없음 |
+| `biblequiz-backup` | D1 export와 private R2 주간 백업 Workflow 전용 비공개 Worker. 공개 URL이 없음 |
+| `CONTENT_WORKFLOW` binding | `biblequiz-app`이 공개 URL·API key 없이 `biblequiz-content`의 Workflow를 시작·조회하는 Cloudflare 계정 내부 연결 |
+| Hono | `biblequiz-app` 안에서 `/api/*` route와 공통 middleware를 정리하는 작은 API framework |
 | D1 | SQLite 문법을 쓰는 Cloudflare의 서버리스 관계형 DB |
 | Drizzle ORM | D1 표·열과 서버 query의 TypeScript type을 연결하는 도구 |
 | migration | DB 구조 변경을 순서대로 기록하고 적용하는 검토된 SQL 파일 |
@@ -4082,7 +4121,7 @@ v1 `reference_only` 필수 검사:
 | Vite | React 개발 환경과 배포용 정적 파일 build를 담당하는 도구 |
 | Scrim | 배경 이미지 위에 덮어 글자 대비를 높이는 반투명 어두운 막 |
 | AVIF / WebP | JPEG보다 용량을 줄이기 좋은 웹 이미지 형식; fallback은 자동 제공 |
-| D1 binding | Function 코드가 특정 D1 DB를 `env.DB`처럼 사용할 수 있게 연결한 설정 |
+| D1 binding | Worker 코드가 특정 D1 DB를 `env.DB`처럼 사용할 수 있게 연결한 설정 |
 | revision | 퍼즐의 불변 버전 번호. 첫 제출 뒤 수정이 필요하면 기존 번호를 고치지 않고 새 revision을 발행함 |
 | featured quiz | 메인에 소개되는 퀴즈. 접수 가능한 active quiz와 다를 수 있으며 이전 퀴즈를 읽기 전용으로 보여줄 수 있음 |
 | superseded | 첫 제출 후 오류가 확인되어 수정본으로 대체됐지만 기존 제출자의 당시 결과를 위해 보존하는 문제 버전 |
