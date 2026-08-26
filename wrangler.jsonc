@@ -10,9 +10,27 @@
   "observability": {
     "enabled": true
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "biblequiz-local",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "preview_database_id": "biblequiz-local",
+      "migrations_dir": "migrations"
+    }
+  ],
   "env": {
     "preview": {
-      "name": "biblequiz-app-preview"
+      "name": "biblequiz-app-preview",
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "biblequiz-preview",
+          "database_id": "00000000-0000-0000-0000-000000000002",
+          "preview_database_id": "biblequiz-preview",
+          "migrations_dir": "migrations"
+        }
+      ]
     }
   }
 }

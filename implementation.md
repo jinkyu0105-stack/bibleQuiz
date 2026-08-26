@@ -1788,6 +1788,21 @@ v1 파서가 지원할 예:
 - local HTTP 검증에서 `/api/health` JSON 200, `/api/unknown` JSON 404, `/quiz/test-slug`·`/archive` 직접 접속 HTML 200을 확인했다.
 - `pnpm lint`, `pnpm typecheck`, unit 2건, Worker 2건, production build와 Playwright 4개 test discovery가 통과했다. 브라우저 binary를 내려받아 실행하는 실제 Playwright E2E는 화면 구현 단계에서 CI에 활성화한다.
 
+#### Phase 1 D1 기초 구현 결과 — 2026-08-26
+
+로컬 D1에 제품 데이터의 첫 관계 골격을 실제 구현했다. 이번 완료는 **DB 전체 완성이 아니라 이후 테이블이 참조할 기초 6개 테이블과 접근 규칙의 완료**를 뜻한다. 실제 Cloudflare Preview·Production D1은 아직 만들거나 변경하지 않았다.
+
+- `drizzle-orm 0.45.2`, `drizzle-kit 0.31.10`, `zod 4.4.3`을 pnpm으로 고정했다. Drizzle과 Zod 자체의 별도 서비스 요금은 없다.
+- 첫 migration `migrations/0000_foundation.sql`에 `bible_translations`, `sermons`, `sermon_transcripts`, `quiz_sets`, `quiz_variants`, `site_state`를 만들었다. 원래 먼저 언급한 핵심 4개 외에 번역본 권한과 자막 출처 관계에 필요한 선행 2개 테이블을 같은 기초 migration에 포함했다.
+- enum 허용값, 날짜 창, 5~10 격자, Top N 1~10, 음수가 될 수 없는 집계값, 확정 자막 필수값을 DB `CHECK`로 보호했다. 외래키와 `sermon_id + revision`, 난이도별 active variant 하나, 영상 ID·slug 같은 고유 제약도 SQL에 명시했다.
+- 설교일/아카이브/상태/결과 수정 조회용 index를 추가했다. 정답·단서·제출 테이블은 아직 만들지 않았으므로 공개 데이터와 비공개 정답 repository 분리는 해당 테이블 구현 단계에서 별도로 완성한다.
+- JSON 열은 Drizzle type만 믿고 쓰지 않고 repository 진입 전에 Zod로 검사한다. 이번 단계에는 성경 장절 JSON의 실제 쓰기 검사를 연결했으며, 격자·검증 보고서 Zod schema는 후속 repository가 사용하도록 준비했다.
+- React route나 Hono route가 D1을 직접 호출하지 않도록 `createFoundationRepository`를 추가했다. 외부에 DB 확인용 쓰기 API를 노출하지 않고 테스트가 repository를 직접 검증한다.
+- Workers Vitest가 격리된 로컬 D1에 같은 migration을 적용해 설교 저장·조회, `site_state` upsert, enum CHECK 거부, 외래키 거부를 실행한다. scaffold의 기존 2건을 포함해 Worker test 5건이 통과했다.
+- 지속형 `.wrangler` 로컬 D1에도 migration 19개 statement를 적용했고 `0000_foundation.sql`이 적용 완료 상태임을 확인했다. `.wrangler` 데이터는 Git에 넣지 않는다.
+- `pnpm db:check`를 전체 `pnpm check`에 포함했다. `db:generate`는 WSL에서 Windows 임시 폴더를 잘못 참조하지 않도록 이 프로젝트 명령에 한해 `/tmp`를 사용한다.
+- `wrangler.jsonc`의 all-zero D1 ID는 local 개발을 가능하게 하는 **비배포 placeholder**다. 다음 Preview 자원 연결 단계에서 실제 non-production database ID로 교체하고, Production은 사용자 승인 전 생성·migration하지 않는다.
+
 #### 예상 이용 규모 — 2026-08-12 확정
 
 - 주간 방문자: 약 30명
@@ -4083,6 +4098,7 @@ v1 `reference_only` 필수 검사:
 [pending] Phase 5 Preview 관리자 화면에서 대표 설교 자막 수정·AI 교정 비교·최종 확정
 [pending] Phase 5 Preview에서 non-production OpenAI 실제 품질·사용량·비용 평가
 [complete] Phase 1 코드 scaffold — React/Vite/TypeScript, 3개 Worker 골격, health API, local tests/build
+[complete] Phase 1 D1 기초 — Drizzle schema, 6개 선행 테이블, 첫 SQL migration, repository와 local D1 통합 검사
 [pending] 모든 디자인·배경 이미지 생성
 ```
 

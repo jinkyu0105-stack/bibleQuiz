@@ -20,14 +20,20 @@
     "test:e2e": "playwright test",
     "test:e2e:list": "playwright test --list",
     "cf:types": "wrangler types",
+    "db:generate": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp drizzle-kit generate",
+    "db:check": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp drizzle-kit check",
+    "db:migrate:local": "wrangler d1 migrations apply biblequiz-local --local",
+    "db:migrations:list:local": "wrangler d1 migrations list biblequiz-local --local",
     "check:locks": "node scripts/check-lockfiles.mjs",
-    "check": "pnpm run check:locks && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build"
+    "check": "pnpm run check:locks && pnpm run db:check && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build"
   },
   "dependencies": {
+    "drizzle-orm": "0.45.2",
     "hono": "4.13.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-router-dom": "7.18.2"
+    "react-router-dom": "7.18.2",
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.53.1",
@@ -39,6 +45,7 @@
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "@vitejs/plugin-react": "6.1.0",
+    "drizzle-kit": "0.31.10",
     "eslint": "10.9.1",
     "eslint-plugin-react-hooks": "7.1.1",
     "eslint-plugin-react-refresh": "0.5.4",

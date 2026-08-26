@@ -13,6 +13,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "moduleDetection": "force",
+    "types": ["@cloudflare/vitest-plugin/types"],
     "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
