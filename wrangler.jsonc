@@ -25,9 +25,9 @@
       "d1_databases": [
         {
           "binding": "DB",
-          "database_name": "biblequiz-preview",
-          "database_id": "00000000-0000-0000-0000-000000000002",
-          "preview_database_id": "biblequiz-preview",
+          "database_name": "biblequiz-d1-preview",
+          "database_id": "cb044032-7e26-452b-afae-b0cae3d93678",
+          "preview_database_id": "biblequiz-d1-preview-local",
           "migrations_dir": "migrations"
         }
       ]

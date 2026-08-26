@@ -1801,7 +1801,21 @@ v1 파서가 지원할 예:
 - Workers Vitest가 격리된 로컬 D1에 같은 migration을 적용해 설교 저장·조회, `site_state` upsert, enum CHECK 거부, 외래키 거부를 실행한다. scaffold의 기존 2건을 포함해 Worker test 5건이 통과했다.
 - 지속형 `.wrangler` 로컬 D1에도 migration 19개 statement를 적용했고 `0000_foundation.sql`이 적용 완료 상태임을 확인했다. `.wrangler` 데이터는 Git에 넣지 않는다.
 - `pnpm db:check`를 전체 `pnpm check`에 포함했다. `db:generate`는 WSL에서 Windows 임시 폴더를 잘못 참조하지 않도록 이 프로젝트 명령에 한해 `/tmp`를 사용한다.
-- `wrangler.jsonc`의 all-zero D1 ID는 local 개발을 가능하게 하는 **비배포 placeholder**다. 다음 Preview 자원 연결 단계에서 실제 non-production database ID로 교체하고, Production은 사용자 승인 전 생성·migration하지 않는다.
+- `wrangler.jsonc` 최상위의 all-zero D1 ID는 아직 승인되지 않은 Production 자리를 막아 두는 **비배포 placeholder**다. Local은 기본적으로 `.wrangler`의 별도 D1을 사용하며 Production은 사용자 승인 전 생성·migration하지 않는다.
+
+#### Phase 1 Preview D1 연결 결과 — 2026-08-26
+
+Cloudflare OAuth는 프로젝트 파일이 아니라 개발자 WSL 사용자 영역의 기본 Wrangler profile에 연결했다. 저장소에는 OAuth token·refresh token·개인 이메일을 기록하지 않는다. 같은 WSL 사용자의 다른 프로젝트는 이 로그인을 재사용할 수 있지만 각 프로젝트의 실제 Cloudflare 자원 이름은 아래 접두어 규칙으로 분리한다.
+
+- 생성 전 계정의 D1 목록을 읽기 전용 조회했고 기존 DB가 없음을 확인했다.
+- 비운영 D1을 `biblequiz-d1-preview`라는 이름과 APAC 위치 힌트로 하나 생성했다. Cloudflare가 발급한 database UUID는 비밀값이 아니므로 `wrangler.jsonc`의 `env.preview`에 기록했고 코드 binding은 프로젝트 내부 표준 별칭 `DB`를 유지했다.
+- `env.preview`의 local 개발 식별자는 `biblequiz-d1-preview-local`로 분리했다. 원격 Preview DB와 로컬 Miniflare DB는 같은 데이터가 아니다.
+- `0000_foundation.sql`을 `--remote --env preview`로 명시해 Preview에만 적용했다. 19개 SQL statement가 성공했고 6개 제품 기초 테이블, migration 기록표와 계획한 index를 원격에서 확인했다.
+- `site_state`에 `__preview_smoke_test__` 점검 행을 쓰고 다시 읽은 뒤 삭제했다. 점검 데이터가 남지 않도록 삭제 성공까지 확인했다.
+- `scripts/check-cloudflare-config.mjs`를 CI 검사에 추가했다. Preview Worker·D1 이름, 실제 Preview UUID, local 식별자, Preview/Production ID 분리를 검사하며, 아직 승인되지 않은 Production D1은 all-zero placeholder가 아니면 실패한다.
+- `pnpm db:migrations:list:preview`는 원격 변경 전 확인용이고 `pnpm db:migrate:preview`는 `biblequiz-d1-preview`만 대상으로 한다. Production migration 명령은 아직 만들지 않는다.
+
+Cloudflare 계정 자원 이름은 `프로젝트-자원-환경`을 기본 규칙으로 한다. Worker는 `biblequiz-app`, `biblequiz-content`, `biblequiz-backup`과 `-preview` 환경명을 사용하고, D1은 `biblequiz-d1-preview`/향후 `biblequiz-d1-production`, R2는 `biblequiz-backups-preview`/향후 `biblequiz-backups-production`을 사용한다. Workflow·Access·Turnstile에도 `biblequiz-` 접두어와 필요 시 환경 suffix를 붙인다. 반면 Worker 내부 binding인 `DB`, `CONTENT_WORKFLOW`, `BACKUP_BUCKET`과 Secret 이름은 각 배포 단위의 지역 별칭이므로 다른 프로젝트에서 반복할 수 있다. 새 원격 자원은 항상 `기존 목록 읽기 → 정확한 이름 표시 → 사용자 승인 → 명시적 생성 → ID 기록` 순서로 만든다.
 
 #### 예상 이용 규모 — 2026-08-12 확정
 
@@ -4099,6 +4113,7 @@ v1 `reference_only` 필수 검사:
 [pending] Phase 5 Preview에서 non-production OpenAI 실제 품질·사용량·비용 평가
 [complete] Phase 1 코드 scaffold — React/Vite/TypeScript, 3개 Worker 골격, health API, local tests/build
 [complete] Phase 1 D1 기초 — Drizzle schema, 6개 선행 테이블, 첫 SQL migration, repository와 local D1 통합 검사
+[complete] Phase 1 Preview D1 — OAuth 연결, APAC `biblequiz-d1-preview`, 환경 안전 검사, 원격 migration·읽기·쓰기 점검
 [pending] 모든 디자인·배경 이미지 생성
 ```
 

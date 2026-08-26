@@ -2,7 +2,7 @@
 
 다사랑교회 주간 설교를 바탕으로 어린이용·장년용 한글 낱말 퀴즈를 제공하는 웹앱입니다.
 
-현재 저장소는 Phase 1의 실행 가능한 scaffold와 D1 기초 schema 단계입니다. 실제 퀴즈·제출·관리자 기능과 최종 디자인은 아직 구현하지 않았습니다. 전체 제품 결정은 [`implementation.md`](./implementation.md)를 정본으로 사용합니다.
+현재 저장소는 Phase 1의 실행 가능한 scaffold, D1 기초 schema와 비운영 Preview D1 연결 단계입니다. 실제 퀴즈·제출·관리자 기능과 최종 디자인은 아직 구현하지 않았습니다. 전체 제품 결정은 [`implementation.md`](./implementation.md)를 정본으로 사용합니다.
 
 ## 아주 간단한 구조
 
@@ -51,9 +51,12 @@ pnpm test:e2e:list
 
 DB 구조를 바꿀 때는 `workers/_shared/db/schema.ts`를 수정한 뒤 `pnpm db:generate`로 새 SQL을 만들고, 생성된 SQL을 검토한 뒤 `pnpm db:migrate:local`로 적용합니다. `drizzle-kit push`는 사용하지 않습니다.
 
+Preview D1의 미적용 migration은 `pnpm db:migrations:list:preview`로 먼저 확인합니다. 검토 후 `pnpm db:migrate:preview`를 실행하면 `biblequiz-d1-preview`에만 원격 적용됩니다. 이 명령은 Production DB에 사용하지 않습니다.
+
 ## 아직 연결하지 않은 항목
 
-- 실제 Cloudflare 계정의 Preview·Production D1 생성과 binding ID
+- Production D1 생성과 binding ID
+- Preview Worker 배포와 Workers Builds 연결
 - `CONTENT_WORKFLOW` 교차 Worker binding
 - OpenAI API와 자막 provider
 - R2 bucket과 자동 백업
