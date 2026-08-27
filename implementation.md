@@ -47,7 +47,7 @@
 | R2 | 공개 이미지에는 쓰지 않고 비공개 D1 주간 백업 8개 순환 보관에만 사용 | 확정 |
 | KV | v1에서 사용하지 않음 | 보류 |
 | 일반 사용자 계정 | 회원가입 없음, 익명 브라우저 세션 사용 | 확정 |
-| 관리자 로그인 | Cloudflare Access 이메일 허용 목록 + 이메일 일회용 코드(OTP) | 확정 |
+| 관리자 로그인 | Cloudflare Access의 `Cloudflare account` 정책 + Cloudflare 계정 로그인 | 확정; 추가 관리자에게 Cloudflare 계정 권한을 주지 않을 때만 정확한 이메일 allowlist와 OTP 선택 가능 |
 | 콘텐츠 생성 작업 | Cloudflare Workflows로 백그라운드 실행 + D1에 영구 작업 상태 저장 | 확정 |
 | AI 초안 | OpenAI API `gpt-5.6-terra`, 설교 의도 분석 품질 우선, 관리자 수동 재생성 무제한 | 확정 |
 | YouTube 자막 | CC가 있으면 계정 없는 공개 자막 provider를 기술 spike하되 공식 API가 아님을 명시; 약관·교회 사용 권한 확인 후 production 채택 결정 | 출시 전 게이트 |
@@ -1809,7 +1809,7 @@ Cloudflare OAuth는 프로젝트 파일이 아니라 개발자 WSL 사용자 영
 
 - 생성 전 계정의 D1 목록을 읽기 전용 조회했고 기존 DB가 없음을 확인했다.
 - 비운영 D1을 `biblequiz-d1-preview`라는 이름과 APAC 위치 힌트로 하나 생성했다. Cloudflare가 발급한 database UUID는 비밀값이 아니므로 `wrangler.jsonc`의 `env.preview`에 기록했고 코드 binding은 프로젝트 내부 표준 별칭 `DB`를 유지했다.
-- `env.preview`의 local 개발 식별자는 `biblequiz-d1-preview-local`로 분리했다. 원격 Preview DB와 로컬 Miniflare DB는 같은 데이터가 아니다.
+- `env.preview`의 `database_id`와 `preview_database_id`는 같은 비운영 D1 UUID를 사용한다. 이는 Preview 배포와 명시적 원격 개발이 같은 비운영 DB를 가리키게 하며, 기본 local 실행은 `remote`를 켜지 않으므로 여전히 `.wrangler`의 별도 Miniflare D1을 사용한다.
 - `0000_foundation.sql`을 `--remote --env preview`로 명시해 Preview에만 적용했다. 19개 SQL statement가 성공했고 6개 제품 기초 테이블, migration 기록표와 계획한 index를 원격에서 확인했다.
 - `site_state`에 `__preview_smoke_test__` 점검 행을 쓰고 다시 읽은 뒤 삭제했다. 점검 데이터가 남지 않도록 삭제 성공까지 확인했다.
 - `scripts/check-cloudflare-config.mjs`를 CI 검사에 추가했다. Preview Worker·D1 이름, 실제 Preview UUID, local 식별자, Preview/Production ID 분리를 검사하며, 아직 승인되지 않은 Production D1은 all-zero placeholder가 아니면 실패한다.
@@ -2114,7 +2114,7 @@ production
 - local과 preview는 별도 D1 데이터베이스 또는 명확히 분리된 binding을 쓴다.
 - preview에서 실제 참여자 데이터를 복사하지 않는다.
 - production migration은 백업·검증 후 순차 적용한다.
-- Workers branch/commit Preview는 전체 배포를 Worker-level Access로 보호한다. Production은 일반 공개 화면을 열어 두고 hostname/path 기반 Access로 `/admin/*`, `/api/admin/*`만 보호한다.
+- Workers branch/commit Preview는 전체 배포를 Worker-level Access로 보호한다. `biblequiz-app-preview`의 `workers.dev` 주소는 Access가 적용된 뒤에만 켠다. Production은 일반 공개 화면을 열어 두고 hostname/path 기반 Access로 `/admin/*`, `/api/admin/*`만 보호한다.
 
 Worker 이름과 연결 대상도 환경별로 분리한다.
 
@@ -2126,22 +2126,28 @@ Worker 이름과 연결 대상도 환경별로 분리한다.
 
 - `biblequiz-app-preview.CONTENT_WORKFLOW`는 `biblequiz-content-preview`만, Production binding은 `biblequiz-content`만 가리킨다. 교차 환경 binding은 CI에서 실패시킨다.
 - Preview D1/R2/secret은 non-production 자원만 사용한다. Production D1 export token과 production R2 bucket은 `biblequiz-backup`에만 존재한다.
-- 공개 주소가 없다는 것은 단순히 링크를 숨긴다는 뜻이 아니라 Wrangler에서 `workers_dev`와 preview URL을 끄고 route/custom domain을 등록하지 않는다는 뜻이다.
+- `biblequiz-app-preview`는 Worker-level Access의 `All traffic` 보호가 확인된 뒤 `workers_dev = true`로 전환하고, 고정 주소 하나만 사용하도록 버전별 `preview_urls = false`를 유지한다. 브라우저가 직접 호출하지 않는 콘텐츠·백업 Worker는 단순히 링크를 숨기는 것이 아니라 Wrangler에서 `workers_dev`와 preview URL을 끄고 route/custom domain도 등록하지 않는다.
 
 ### 13.5 관리자 인증
 
 일반 회원 시스템을 만들지 않고 Cloudflare Access로 `/admin`, `/admin/*`, `/api/admin/*`를 보호한다.
 
-여기서 말하는 `PIN`은 앱이 D1에 저장하는 별도 숫자 비밀번호가 아니라 Cloudflare가 허용된 이메일 주소로 보내는 **일회용 이메일 로그인 코드(OTP)**다. 앱은 관리자 계정·비밀번호·OTP를 생성하거나 D1에 저장하지 않는다. D1에는 Access가 검증한 관리자 이메일을 발행·수정·삭제·월간 점검 같은 관리자 조치의 감사 기록으로만 남긴다.
+초기 관리자 1명은 이미 사용하는 Cloudflare 계정으로 로그인한다. 앱은 관리자 계정·비밀번호·2단계 인증 정보를 생성하거나 D1에 저장하지 않는다. D1에는 Access가 검증한 관리자 이메일을 발행·수정·삭제·월간 점검 같은 관리자 조치의 감사 기록으로만 남긴다.
 
-- 허용된 교회 관리자 이메일을 정확히 allowlist한다.
-- 이메일 일회용 코드(OTP) 또는 관리자의 Google 계정을 사용한다.
-- 권장 Access 세션은 8시간이다.
+- 초기에는 Cloudflare 계정 구성원만 허용하는 사전 구성 `Cloudflare account` 정책을 사용한다. 현재 계정 구성원은 운영자 1명이다.
+- 초기 Preview와 Production은 Cloudflare identity provider만 허용하고, 관리자의 기존 Cloudflare 계정과 가능하면 그 계정의 2단계 인증을 사용한다.
+- `One-time PIN` identity provider는 Zero Trust 조직에 등록되어 있어도 초기 앱의 로그인 방식에서는 제외한다.
+- 향후 다른 관리자에게 Cloudflare 대시보드 권한을 주지 않고 사이트 관리자 화면만 허용해야 할 때, 그 사람의 정확한 이메일을 allowlist한 뒤 OTP를 선택적으로 추가할 수 있다. 새 프로젝트를 만들 때마다 OTP를 추가한다는 뜻은 아니다.
+- Access 세션은 현재 UI에서 선택 가능한 6시간으로 설정한다. 나중에 운영 편의에 따라 변경할 수 있다.
 - `Include Everyone`, 모든 이메일 허용, 영구 bypass 정책은 금지한다.
 - `biblequiz-app`의 관리자 API도 `Cf-Access-Jwt-Assertion`의 서명, issuer, audience를 검증한다.
 - 관리자 조치는 검증된 이메일을 감사 로그에 기록한다.
 
 Cloudflare Access는 앱 자체 회원가입과 사용자 DB를 요구하지 않기 때문에 현재 단계에 적합하다.
+
+2026-08-27 Preview 실제 적용에서는 `Workers & Pages → biblequiz-app-preview → Access`의 Worker 전용 간편 설정을 사용했다. 이 경로는 Access application 이름과 policy 이름을 별도로 입력하지 않고 Worker 연결 객체를 자동 생성하며, 사전 구성 정책명이 `Cloudflare account`로 표시된다. 따라서 상담 중 제안했던 `biblequiz-preview-access`·`biblequiz-preview-admin`을 수동 입력하지 않은 것은 누락이 아니다. `All traffic`, `Cloudflare account / Allow`, 세션 6시간만 선택했고 `Everyone`, `Email domain`, `Bypass`는 선택하지 않았다. 계정에 다른 구성원을 초대하면 그 사람도 Preview 접근 대상이 되므로 구성원 추가 시 이 정책을 재검토한다.
+
+같은 날 `Workers Free`, `Zero Trust Teams Free Base`, zone `Free Plan`이 활성 상태이고 별도 유료 add-on이 없음을 Billing의 Subscriptions 화면에서 확인했다. 비로그인 상태의 `/`, `/api/health`, `/api/health/database`는 모두 Access 로그인으로 이동했고, 운영자 로그인 뒤 화면의 `기반 연결 정상 · biblequiz-app`과 D1 응답의 `database: d1`, `status: ok`를 확인했다. Preview 고정 주소는 `biblequiz-app-preview.jinkyu0105.workers.dev`이며 버전별 Preview URL은 비활성화한다.
 
 Access 좌석은 프로젝트별 50명이 아니라 **같은 Cloudflare Zero Trust 조직 전체의 활성 고유 사용자**를 합산한다. 허용 목록에 이메일을 추가한 것만으로는 좌석을 쓰지 않고, 그 사용자가 Access 인증을 실제로 수행하면 1석을 사용한다. 같은 사용자가 여러 사이트·Access application에 여러 번 로그인해도 1석이며, 서로 다른 7명이 같은 조직의 여러 프로젝트에 로그인하면 총 7석이다. 다른 Cloudflare 계정/Zero Trust 조직은 별도 한도를 갖지만, 무료 한도 분산을 목적으로 프로젝트마다 조직을 나누지 않는다. 필요하면 1개월 이상의 비활성 좌석 자동 만료를 설정한다.
 
@@ -2151,7 +2157,7 @@ Access 좌석은 프로젝트별 50명이 아니라 **같은 Cloudflare Zero Tru
 - 50명을 넘는 시점의 저비용 대안: 현재 Pay-as-you-go 사용자당 월 USD 7. 가격은 도입 직전에 재확인한다.
 - 좌석 현황은 `Zero Trust → Team & Resources → Users`에서 확인한다.
 
-공식 문서: [Worker·Preview에 Access 적용](https://developers.cloudflare.com/workers/configuration/cloudflare-access/), [Access 이메일 OTP](https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/one-time-pin/), [Access JWT 검증](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/), [Access 좌석 관리](https://developers.cloudflare.com/cloudflare-one/team-and-resources/users/seat-management/), [Access 가격](https://www.cloudflare.com/sase/products/access/)
+공식 문서: [Worker·Preview에 Access 적용](https://developers.cloudflare.com/workers/configuration/cloudflare-access/), [Access identity provider](https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/), [향후 선택 가능한 이메일 OTP](https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/one-time-pin/), [Access JWT 검증](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/), [Access 좌석 관리](https://developers.cloudflare.com/cloudflare-one/team-and-resources/users/seat-management/), [Access 가격](https://www.cloudflare.com/sase/products/access/)
 
 ### 13.6 Secrets와 bindings
 
@@ -4000,7 +4006,7 @@ v1 `reference_only` 필수 검사:
 
 ### 관리자
 
-- 별도 앱 회원 시스템 없이 Access OTP로 로그인한다.
+- 별도 앱 회원 시스템 없이 Access가 허용한 Cloudflare 계정으로 로그인한다.
 - YouTube URL에서 성공/실패를 명확히 확인한다.
 - 가져온 자막 원본을 보며 직접 수정하거나 AI 오타 교정을 제안받고, 변경점을 항목별로 비교·수락·거절한 뒤 사람이 추가 수정하여 최종 확정한다.
 - 성경 주소를 자연어와 selector 양쪽에서 입력하고 동일한 canonical 장절·판본명·공식 읽기 링크를 확인한다.
@@ -4081,7 +4087,7 @@ v1 `reference_only` 필수 검사:
 | Cloudflare GraphQL Analytics 읽기 전용 token | Phase 1 production | 앱 dashboard에 provider metric 대신 `연동 필요` 표시; 서비스 본 기능은 가능 |
 | Cloudflare billing email·budget alert 설정 확인 | Phase 1 production | 앱 내부 사용량 경고는 가능하지만 Cloudflare 비용 이메일 보조 알림 없음 |
 | 첫 실제 설교의 AI 품질·비용 평가 | Phase 0/5 | `gpt-5.6-terra` 설정을 production 기본값으로 승격하지 않음 |
-| 실제 관리자 이메일 | Phase 1 production | `/admin` 배포 불가 |
+| 실제 관리자 접근 | Phase 1 Preview에서 Cloudflare 계정 구성원 정책으로 실연결 완료; 이메일 실제 값은 저장소에 기록하지 않음 | Production 관리자 경로 정책은 출시 전 별도 확인 |
 | 실제 목회자·교역자 이름·변형 | Phase 4 | 일반 직함만 차단 |
 | 개인정보 공개·보존·본인삭제 문구 최종 확인 | Phase 8 | production 제출 비활성 |
 | 계정 없는 자막의 Cloudflare 실배포 결과 | Phase 0/5 | production 자막 자동 가져오기 미승인 |
@@ -4106,7 +4112,7 @@ v1 `reference_only` 필수 검사:
 [complete] 영상 날짜 기반 설교일 추천·수정 UI, 날짜+고유문자 영구 slug, 같은 날짜 여러 설교, 발행일 분리 정책 확정
 [complete] v1 개발·초기 운영은 무료 `*.workers.dev`; 별도 도메인은 안정화 뒤 결정
 [complete] 대표 설교 `94eQ16j7rKI`의 계정 없는 한국어 자동 자막 로컬 spike — 773 segments 추출 성공, 직접 timedtext 빈 응답과 adapter 필요성 확인
-[pending] Access에 허용할 정확한 관리자 이메일 결정
+[complete] Preview Access 인증 정책 — `All traffic`, `Cloudflare account / Allow`, 세션 6시간; 현재 계정 구성원 1명
 [pending] Phase 0 운영 입력 확인
 [pending] Phase 1 Workers Preview에서 같은 자막 adapter 재검증
 [pending] Phase 5 Preview 관리자 화면에서 대표 설교 자막 수정·AI 교정 비교·최종 확정
@@ -4114,6 +4120,7 @@ v1 `reference_only` 필수 검사:
 [complete] Phase 1 코드 scaffold — React/Vite/TypeScript, 3개 Worker 골격, health API, local tests/build
 [complete] Phase 1 D1 기초 — Drizzle schema, 6개 선행 테이블, 첫 SQL migration, repository와 local D1 통합 검사
 [complete] Phase 1 Preview D1 — OAuth 연결, APAC `biblequiz-d1-preview`, 환경 안전 검사, 원격 migration·읽기·쓰기 점검
+[complete] Phase 1 Preview Worker — Worker-level Access, 고정 `workers.dev`, 비로그인 차단, 로그인 앱 health, Preview D1 health 실점검 완료; Production 미변경
 [pending] 모든 디자인·배경 이미지 생성
 ```
 

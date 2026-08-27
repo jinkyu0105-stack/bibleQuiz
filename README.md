@@ -2,7 +2,7 @@
 
 다사랑교회 주간 설교를 바탕으로 어린이용·장년용 한글 낱말 퀴즈를 제공하는 웹앱입니다.
 
-현재 저장소는 Phase 1의 실행 가능한 scaffold, D1 기초 schema와 비운영 Preview D1 연결 단계입니다. 실제 퀴즈·제출·관리자 기능과 최종 디자인은 아직 구현하지 않았습니다. 전체 제품 결정은 [`implementation.md`](./implementation.md)를 정본으로 사용합니다.
+현재 저장소는 Phase 1의 실행 가능한 scaffold, D1 기초 schema, Access로 보호된 비운영 Preview Worker와 Preview D1 연결 단계입니다. 실제 퀴즈·제출·관리자 기능과 최종 디자인은 아직 구현하지 않았습니다. 전체 제품 결정은 [`implementation.md`](./implementation.md)를 정본으로 사용합니다.
 
 ## 아주 간단한 구조
 
@@ -53,14 +53,25 @@ DB 구조를 바꿀 때는 `workers/_shared/db/schema.ts`를 수정한 뒤 `pnpm
 
 Preview D1의 미적용 migration은 `pnpm db:migrations:list:preview`로 먼저 확인합니다. 검토 후 `pnpm db:migrate:preview`를 실행하면 `biblequiz-d1-preview`에만 원격 적용됩니다. 이 명령은 Production DB에 사용하지 않습니다.
 
+## 보호된 Preview
+
+`https://biblequiz-app-preview.jinkyu0105.workers.dev`는 Cloudflare Access의 Worker-level `All traffic` 정책으로 보호됩니다. 현재 Cloudflare 계정 구성원만 로그인할 수 있으며 세션은 6시간입니다. 비로그인 요청은 Worker와 D1에 도달하기 전에 Access에서 차단됩니다.
+
+- `/api/health`: 배포된 앱 Worker 상태
+- `/api/health/database`: migration이 적용된 Preview D1 binding 상태
+- `pnpm run deploy:preview:dry-run`: Preview D1 target과 산출물만 확인
+- `pnpm run deploy:preview`: Access가 먼저 적용되어 있음을 확인한 뒤 Preview만 배포
+
+Production 자원은 아직 만들거나 연결하지 않았습니다.
+
 ## 아직 연결하지 않은 항목
 
 - Production D1 생성과 binding ID
-- Preview Worker 배포와 Workers Builds 연결
+- Workers Builds–GitHub 연결
 - `CONTENT_WORKFLOW` 교차 Worker binding
 - OpenAI API와 자막 provider
 - R2 bucket과 자동 백업
-- Cloudflare Access와 Turnstile
+- Production 관리자 경로용 Cloudflare Access와 공개 제출용 Turnstile
 - 실제 공개·관리자 UI와 이미지 자산
 
 비밀값은 Git에 저장하지 않습니다. 필요한 시점에 Cloudflare Secret으로 환경별 등록합니다.

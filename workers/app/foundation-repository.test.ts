@@ -1,19 +1,10 @@
 import { env } from "cloudflare:workers";
-import { applyD1Migrations, type D1Migration } from "cloudflare:test";
-import { beforeAll, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { createDatabase } from "../_shared/db/client";
 import { createFoundationRepository } from "../_shared/repositories/foundation-repository";
 
-interface TestEnv extends Env {
-  TEST_MIGRATIONS: D1Migration[];
-}
-
-const testEnv = env as TestEnv;
-
-beforeAll(async () => {
-  await applyD1Migrations(testEnv.DB, testEnv.TEST_MIGRATIONS);
-});
+const testEnv = env as Env;
 
 describe("foundation D1 repository", () => {
   it("writes and reads a validated sermon through Drizzle", async () => {

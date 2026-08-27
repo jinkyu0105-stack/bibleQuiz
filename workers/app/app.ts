@@ -1,6 +1,12 @@
 import { Hono } from "hono";
 
 import { failure, success } from "../../shared/api/envelope";
+import { createDatabase } from "../_shared/db/client";
+import { createFoundationRepository } from "../_shared/repositories/foundation-repository";
+
+interface AppBindings {
+  DB: D1Database;
+}
 
 interface AppVariables {
   requestId: string;
@@ -12,7 +18,16 @@ interface HealthData {
   timestamp: string;
 }
 
-export const app = new Hono<{ Variables: AppVariables }>();
+interface DatabaseHealthData {
+  database: "d1";
+  status: "ok";
+  timestamp: string;
+}
+
+export const app = new Hono<{
+  Bindings: AppBindings;
+  Variables: AppVariables;
+}>();
 
 app.use("/api/*", async (context, next) => {
   const requestId = crypto.randomUUID();
@@ -25,6 +40,23 @@ app.get("/api/health", (context) => {
   return context.json(
     success<HealthData>({
       service: "biblequiz-app",
+      status: "ok",
+      timestamp: new Date().toISOString(),
+    }),
+  );
+});
+
+app.get("/api/health/database", async (context) => {
+  const repository = createFoundationRepository(createDatabase(context.env.DB));
+  const isReady = await repository.isDatabaseReady();
+
+  if (!isReady) {
+    throw new Error("D1 readiness query returned an invalid result.");
+  }
+
+  return context.json(
+    success<DatabaseHealthData>({
+      database: "d1",
       status: "ok",
       timestamp: new Date().toISOString(),
     }),

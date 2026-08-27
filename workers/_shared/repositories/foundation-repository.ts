@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 
 import type { Database } from "../db/client";
 import {
@@ -18,6 +18,7 @@ export interface FoundationRepository {
   createSermon(sermon: NewSermonRow): Promise<void>;
   findSermonByVideoId(videoId: string): Promise<SermonRow | undefined>;
   getSiteState(key: string): Promise<string | undefined>;
+  isDatabaseReady(): Promise<boolean>;
   setSiteState(key: string, value: string, updatedAt: string): Promise<void>;
 }
 
@@ -46,6 +47,13 @@ export function createFoundationRepository(
         where: eq(siteState.key, key),
       });
       return row?.value;
+    },
+
+    async isDatabaseReady() {
+      const [result] = await database
+        .select({ rowCount: count() })
+        .from(siteState);
+      return result !== undefined && result.rowCount >= 0;
     },
 
     async setSiteState(key, value, updatedAt) {

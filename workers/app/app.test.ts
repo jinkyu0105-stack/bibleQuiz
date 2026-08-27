@@ -30,4 +30,18 @@ describe("biblequiz-app Worker", () => {
       error: { code: "NOT_FOUND" },
     });
   });
+
+  it("checks the migrated D1 binding without returning database contents", async () => {
+    const response = await exports.default.fetch(
+      new Request("https://example.com/api/health/database"),
+    );
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toMatchObject({
+      data: {
+        database: "d1",
+        status: "ok",
+      },
+    });
+  });
 });

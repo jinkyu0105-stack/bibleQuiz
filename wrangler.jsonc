@@ -22,12 +22,14 @@
   "env": {
     "preview": {
       "name": "biblequiz-app-preview",
+      "workers_dev": true,
+      "preview_urls": false,
       "d1_databases": [
         {
           "binding": "DB",
           "database_name": "biblequiz-d1-preview",
           "database_id": "cb044032-7e26-452b-afae-b0cae3d93678",
-          "preview_database_id": "biblequiz-d1-preview-local",
+          "preview_database_id": "cb044032-7e26-452b-afae-b0cae3d93678",
           "migrations_dir": "migrations"
         }
       ]
