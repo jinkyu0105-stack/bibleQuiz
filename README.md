@@ -71,6 +71,7 @@ Cloudflare Workers Builds는 `jinkyu0105-stack/bibleQuiz`의 `main` 브랜치를
 - Build 환경: Node `24.18.0`, pnpm `11.14.0`
 - 비기준 브랜치 자동 build는 현재 끈 상태다. 별도 feature branch 검토가 필요해질 때만 다시 검토한다.
 - Cloudflare가 이 연결 전용 API token을 자동 관리한다. 저장소나 Cloudflare Secret에 사람이 token 값을 복사하지 않는다.
+- 첫 build에서 과거 조직 구성원 소유의 무효 token 오류가 나타난 경우, `Settings → Builds → API token → Create new token`으로 교체한 뒤 `Retry build`한다. 2026-08-29에 이 절차로 첫 자동 Preview 배포를 성공 확인했다.
 
 Production 자원은 아직 만들거나 연결하지 않았습니다.
 

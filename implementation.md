@@ -4105,6 +4105,7 @@ v1 `reference_only` 필수 검사:
 [complete] GitHub `jinkyu0105-stack/bibleQuiz` 저장소 준비
 [complete] Cloudflare 계정 준비 및 기존 Pages–GitHub 연결 경험 확인; v1은 Workers Builds–GitHub 연결로 전환
 [complete] `biblequiz-app-preview`에 `jinkyu0105-stack/bibleQuiz`의 `main`을 Workers Builds로 연결; Node 24.18.0·pnpm 11.14.0·build cache 사용, non-production branch build 비활성
+[complete] 첫 GitHub push build에서 과거 조직 구성원 소유의 무효 Build token 오류를 확인하고 새 자동 token으로 교체·Retry; commit `3860e39`가 Preview Worker version `38ae1c76-1d84-45ce-a634-3b0ebae70d50`에 100% 배포됨
 [complete] OpenAI API 계정·결제수단 준비
 [complete] OpenAI API를 `biblequiz-nonprod`·`biblequiz-production` Project와 환경별 키로 분리하기로 확정
 [complete] 계정·결제·Secret 등록은 운영자, 코드·binding·검증은 AI가 맡는 개발 착수 역할 분담 확정
