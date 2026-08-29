@@ -2,7 +2,20 @@
 
 다사랑교회 주간 설교를 바탕으로 어린이용·장년용 한글 낱말 퀴즈를 제공하는 웹앱입니다.
 
-현재 저장소는 Phase 1의 실행 가능한 scaffold, D1 기초 schema, Access로 보호된 비운영 Preview Worker와 Preview D1 연결 단계입니다. 실제 퀴즈·제출·관리자 기능과 최종 디자인은 아직 구현하지 않았습니다. 전체 제품 결정은 [`implementation.md`](./implementation.md)를 정본으로 사용합니다.
+현재 저장소는 Phase 1의 실행 가능한 scaffold, D1 기초 schema, Access로 보호된 비운영 Preview Worker와 Preview D1 연결 단계입니다. 실제 퀴즈·제출·관리자 기능과 최종 디자인은 아직 구현하지 않았습니다. 상세 제품 결정은 [`implementation.md`](./implementation.md)를 정본으로 사용합니다.
+
+## 프로젝트 문서 지도
+
+새 task는 다음 문서를 순서대로 읽습니다.
+
+1. [`AGENTS.md`](./AGENTS.md): 이 저장소에서 항상 지킬 개발·검사·안전 규칙
+2. [`docs/PROJECT_CONTEXT.md`](./docs/PROJECT_CONTEXT.md): 목표, 사용자, 범위, 기술 구조
+3. [`docs/DECISIONS.md`](./docs/DECISIONS.md): 중요한 선택과 이유
+4. [`docs/STATUS.md`](./docs/STATUS.md): 실제 완료·진행·미완료 상태
+5. [`docs/HANDOFF.md`](./docs/HANDOFF.md): 직전 task의 결과와 다음 첫 작업
+6. [`implementation.md`](./implementation.md): 제품·API·데이터·보안·단계별 완료 조건의 상세 명세
+
+실제 구현 여부는 코드·테스트·migration·Wrangler 설정·Git 기록으로 확인합니다. 의도한 제품 동작은 `implementation.md`와 결정 기록을 확인하며, 둘이 다르면 차이를 먼저 밝히고 함께 바로잡습니다.
 
 ## 아주 간단한 구조
 

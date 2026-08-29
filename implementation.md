@@ -1,16 +1,18 @@
 # 다사랑교회 「이번 주의 말씀 : 낱말 퀴즈」 구현 명세
 
-> 문서 상태: 구현 전 기준안<br>
-> 마지막 갱신: 2026-08-25 (Asia/Seoul)<br>
+> 문서 상태: 상세 제품·구현 명세 정본; Phase 1 기반 구현 완료<br>
+> 마지막 갱신: 2026-08-29 (Asia/Seoul)<br>
 > 대상 배포: GitHub → Cloudflare Workers + Static Assets<br>
 > 서비스 표기명: `이번 주의 말씀 : 낱말 퀴즈`<br>
 > 교회 표기명: `다사랑교회`
 
 ## 0. 이 문서의 역할
 
-이 파일은 여러 날·여러 Codex 세션에 걸친 개발의 단일 인수인계 문서다. 새 개발 세션은 작업 전에 이 파일 전체를 읽고, 아래의 **확정**, **출시 전 게이트**, **보류**를 구분해야 한다. 확정 사항을 조용히 바꾸지 말고, 변경이 필요하면 이유와 영향을 이 문서에 먼저 기록한다.
+이 파일은 여러 날·여러 Codex task에 걸친 상세 제품·구현 명세 정본이다. 확정 사항을 조용히 바꾸지 말고, 변경이 필요하면 이유와 영향을 이 문서와 `docs/DECISIONS.md`에 기록한다.
 
-현재 단계에서는 제품 기획과 구현 사양만 확정한다. 아직 웹 코드, 데이터베이스, 배경 이미지, 디자인 시안은 만들지 않는다.
+새 task는 먼저 루트 `AGENTS.md`, `docs/PROJECT_CONTEXT.md`, `docs/DECISIONS.md`, `docs/STATUS.md`, `docs/HANDOFF.md`를 읽고 실제 Git 상태를 확인한다. 그다음 이번 작업과 관련된 이 문서의 절을 읽는다. 실제 구현 여부는 `docs/STATUS.md`와 코드·테스트·migration·설정을 확인하며, 이 문서의 목표 구조를 이미 구현된 사실로 오인하지 않는다.
+
+현재 Phase 1의 웹 scaffold, D1 기초, Access 보호 Preview와 GitHub 자동 Preview 배포까지 구현되었다. 실제 퀴즈·제출·관리자·출력 기능과 디자인 자산은 아직 구현하지 않았다.
 
 ### 빠른 탐색
 
@@ -3252,10 +3254,11 @@ monthly check POST는 서버의 `Asia/Seoul` 연월, 현재 `pricing_catalog` ve
 
 ## 16. 권장 저장소 구조
 
-아래는 전체 구현의 목표 구조다. 2026-08-25 현재 Phase 1 scaffold에 필요한 root 설정, `src/`, 세 Worker 골격, `shared/`, `scripts/`, `tests/`는 생성되었고, 기능별 하위 폴더·migration·실제 asset은 각 Phase에서 추가한다.
+아래는 전체 구현의 목표 구조다. 2026-08-29 현재 Phase 1 scaffold에 필요한 root 설정, `src/`, 세 Worker 골격, `shared/`, `scripts/`, `tests/`와 세션 복구 문서는 생성되었고, 기능별 하위 폴더·migration·실제 asset은 각 Phase에서 추가한다.
 
 ```text
 /
+├─ AGENTS.md                 # 저장소 전체의 안정적인 AI 작업·검사·안전 규칙
 ├─ implementation.md
 ├─ README.md
 ├─ package.json
@@ -3331,9 +3334,13 @@ monthly check POST는 서버의 `Asia/Seoul` 연월, 현재 `pricing_catalog` ve
 │  ├─ bible/                 # 승인된 판본만, 권리 문서 확인 후
 │  └─ asset-catalog.json
 ├─ docs/
+│  ├─ PROJECT_CONTEXT.md     # 목표·사용자·범위·기술 구조 요약
+│  ├─ DECISIONS.md           # 중요한 선택과 이유
+│  ├─ STATUS.md              # 실제 완료·진행·미완료 상태
+│  ├─ HANDOFF.md             # 직전 task 결과와 다음 첫 작업
 │  ├─ operations-manual.md    # Phase 8 마지막에 작성하는 운영자 정본
-│  └─ future/
-│     └─ member-auth-and-church-account-integration.md # 향후 회원·공식 계정 연동 기록
+│  ├─ future/
+│  │  └─ member-auth-and-church-account-integration.md # 향후 회원·공식 계정 연동 기록
 │  ├─ licenses/
 │  ├─ permissions/
 │  └─ operations/
@@ -3399,7 +3406,7 @@ AI 개발 작업:
 
 - v1 개발·초기 운영 주소를 무료 Cloudflare Workers `*.workers.dev`로 사용하고, 별도 도메인은 안정화 뒤 선택
 - GitHub 저장소와 Cloudflare 계정 확인
-- 관리자 이메일 allowlist 결정
+- Preview 관리자 인증은 Cloudflare 계정 구성원 정책으로 확정·적용하고, Production 정책은 출시 전에 별도 확인
 - 초기 성경 표시는 개역개정 장절·판본명과 대한성서공회 공식 읽기 링크로 고정
 - 선택 후속 작업으로 대한성서공회에 소규모 비영리 교회의 무료 사용 가능 여부를 문의하고 원문·회신 보관
 - 무료 병행 조사에 동의하면 API.Bible 계정에서 **개역개정의 정확한 판본명·권리자·무료 개별 라이선스** 확인
