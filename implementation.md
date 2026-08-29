@@ -2256,15 +2256,16 @@ Cloudflare Vitest 설정은 실제 production과 compatibility flag를 맞춘다
 
 ```text
 local        개발자/AI의 로컬 fixture와 Local D1
-preview      작업 branch·Pull Request의 고유 Workers Preview URL + Preview D1
-production   main의 승인된 release + Production D1 + 실제 도메인
+preview      main 자동 배포의 Access 보호 고정 Preview URL + Preview D1
+production   별도 승인 release + Production D1 + 실제 도메인
 ```
 
 - Preview와 Production은 D1 database ID, secret, Workflow binding을 분리한다.
 - Preview에는 실제 참여자 제출·관리자 이메일·production secret을 복사하지 않는다.
 - Preview는 Cloudflare Access로 보호하고 검색엔진 `noindex`를 유지한다.
-- AI 작업 branch는 `codex/*`를 기본으로 하며, Workers Builds의 non-production branch build로 Pull Request마다 고유 Preview URL을 만든다.
-- Workers Builds의 production branch command도 version upload까지만 수행해 `main` push가 곧바로 traffic을 바꾸지 않게 한다. GitHub Actions의 보호된 `production` environment와 수동 승인 release만 실제 Production 배포·migration을 수행한다.
+- 현재 Workers Builds는 `jinkyu0105-stack/bibleQuiz`의 `main`을 **`biblequiz-app-preview`에만** 연결한다. `main` push는 이 고정 Preview traffic을 자동 갱신하지만, Production Worker·D1·도메인에는 닿지 않는다.
+- 현재 non-production branch build는 끈다. `codex/*` 또는 Pull Request별 고유 Preview URL이 정말 필요해지는 시점에 URL·Access·무료 build minutes 정책을 함께 다시 결정한다.
+- 실제 Production 배포·migration은 아직 Workers Builds에 연결하지 않으며, 출시 단계에서 보호된 release와 명시적 운영자 승인을 별도로 설계한다.
 - 운영자는 코드를 읽는 대신 Preview 주소에서 화면과 기능을 확인하고 “배포하세요”라고 승인한다. 승인 전에는 실제 도메인과 Production D1을 바꾸지 않는다.
 - Production migration은 13.4의 환경 분리와 앞서 확정한 Drizzle migration의 백업·순차 적용 절차를 먼저 통과해야 한다. 앱 배포와 DB migration 대상 환경을 화면·로그에 명시한다.
 - 배포 실패나 심각한 회귀에 대비해 직전 정상 Worker version으로 traffic을 되돌리는 절차와 호환 가능한 DB migration 원칙을 운영 문서에 둔다.
@@ -4103,6 +4104,7 @@ v1 `reference_only` 필수 검사:
 [complete] 구현 순서와 Phase별 종료 조건 최종 점검
 [complete] GitHub `jinkyu0105-stack/bibleQuiz` 저장소 준비
 [complete] Cloudflare 계정 준비 및 기존 Pages–GitHub 연결 경험 확인; v1은 Workers Builds–GitHub 연결로 전환
+[complete] `biblequiz-app-preview`에 `jinkyu0105-stack/bibleQuiz`의 `main`을 Workers Builds로 연결; Node 24.18.0·pnpm 11.14.0·build cache 사용, non-production branch build 비활성
 [complete] OpenAI API 계정·결제수단 준비
 [complete] OpenAI API를 `biblequiz-nonprod`·`biblequiz-production` Project와 환경별 키로 분리하기로 확정
 [complete] 계정·결제·Secret 등록은 운영자, 코드·binding·검증은 AI가 맡는 개발 착수 역할 분담 확정

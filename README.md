@@ -62,12 +62,21 @@ Preview D1의 미적용 migration은 `pnpm db:migrations:list:preview`로 먼저
 - `pnpm run deploy:preview:dry-run`: Preview D1 target과 산출물만 확인
 - `pnpm run deploy:preview`: Access가 먼저 적용되어 있음을 확인한 뒤 Preview만 배포
 
+## GitHub 자동 Preview 배포
+
+Cloudflare Workers Builds는 `jinkyu0105-stack/bibleQuiz`의 `main` 브랜치를 **`biblequiz-app-preview` Worker에만** 연결한다. `main`에 푸시하면 이 Access 보호 Preview가 자동으로 갱신되며, 실제 Production Worker·Production D1·실제 도메인은 아직 생성하거나 연결하지 않았다.
+
+- Build command: `pnpm run build:preview`
+- Deploy command: `pnpm exec wrangler deploy --strict --autoconfig=false`
+- Build 환경: Node `24.18.0`, pnpm `11.14.0`
+- 비기준 브랜치 자동 build는 현재 끈 상태다. 별도 feature branch 검토가 필요해질 때만 다시 검토한다.
+- Cloudflare가 이 연결 전용 API token을 자동 관리한다. 저장소나 Cloudflare Secret에 사람이 token 값을 복사하지 않는다.
+
 Production 자원은 아직 만들거나 연결하지 않았습니다.
 
 ## 아직 연결하지 않은 항목
 
 - Production D1 생성과 binding ID
-- Workers Builds–GitHub 연결
 - `CONTENT_WORKFLOW` 교차 Worker binding
 - OpenAI API와 자막 provider
 - R2 bucket과 자동 백업
