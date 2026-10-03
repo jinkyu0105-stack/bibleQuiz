@@ -10,7 +10,7 @@ await mkdir(output, { mode: 0o700 });
 const base = `https://api.cloudflare.com/client/v4/accounts/${account}/browser-rendering/devtools`;
 const started = Date.now();
 const report = { runtime: 'Cloudflare Browser Run via CDP', startedAt: new Date().toISOString(), timeline: [], outcome: 'pending', closed: false };
-let session, browser, watchdog, stage = 'session';
+let session, browser, page, watchdog, stage = 'session';
 const mark = name => { stage = name; report.timeline.push({ stage, elapsedMs: Date.now() - started }); };
 async function api(path, method) {
   const response = await fetch(base + path, { method, headers: { Authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(15000) });
@@ -30,7 +30,7 @@ try {
   });
   watchdog = setTimeout(() => { void browser.close().catch(() => {}); }, 60000);
   const context = browser.contexts()[0];
-  const page = context.pages()[0] ?? await context.newPage();
+  page = context.pages()[0] ?? await context.newPage();
   page.setDefaultTimeout(12000);
   mark('watch');
   const response = await page.goto(`https://www.youtube.com/watch?v=${video}&hl=ko`, { waitUntil: 'domcontentloaded', timeout: 25000 });
@@ -45,8 +45,10 @@ try {
     await page.getByRole('button', { name: /^(스크립트 표시|Show transcript)$/ }).click();
     mark('transcript_rows');
     // eslint-disable-next-line no-undef -- This function runs inside the browser page.
-    await page.waitForFunction(() => Array.from(document.querySelectorAll('button,[role=button]')).some(e => /^\d{1,2}:\d{2}(?::\d{2})?\n/.test(e.innerText || '')));
-    const rows = await page.getByRole('button').evaluateAll(es => es.map(e => e.innerText).filter(s => /^\d{1,2}:\d{2}(?::\d{2})?\n/.test(s)));
+    await page.waitForFunction(() => document.querySelectorAll('ytd-transcript-segment-renderer .segment-text').length > 0 || Array.from(document.querySelectorAll('button,[role=button]')).some(e => /^\d{1,2}:\d{2}(?::\d{2})?\n/.test(e.innerText || '')));
+    const legacyRows = await page.locator('ytd-transcript-segment-renderer').allInnerTexts();
+    const rows = legacyRows.length ? legacyRows : await page.getByRole('button').evaluateAll(es => es.map(e => e.innerText).filter(s => /^\d{1,2}:\d{2}(?::\d{2})?\n/.test(s)));
+    report.renderer = legacyRows.length ? 'legacy' : 'button';
     report.rows = rows.length;
     report.charactersWithTimestamps = [...rows.join('\n')].length;
     await writeFile(resolve(output, 'rows-private.json'), JSON.stringify(rows), { mode: 0o600, flag: 'wx' });
@@ -58,6 +60,14 @@ try {
   report.failedStage = stage;
   // Never print Playwright messages: they can include signed URLs or headers.
   report.errorType = error?.name ?? 'Error';
+  if (page && !page.isClosed()) {
+    try {
+      const text = await page.locator('body').innerText({ timeout: 3000 });
+      report.visibleTranscriptError = /Unable to load|Error loading|Something went wrong|스크립트를 불러올 수|자막을 불러올 수|문제가 발생/.test(text);
+      await writeFile(resolve(output, 'failed-page-private.txt'), text, { mode: 0o600, flag: 'wx' });
+      await page.screenshot({ path: resolve(output, 'failed-screen-private.png'), timeout: 5000 });
+    } catch { report.failureCaptureUnavailable = true; }
+  }
 } finally {
   if (watchdog) clearTimeout(watchdog);
   if (browser) await browser.close().catch(() => {});

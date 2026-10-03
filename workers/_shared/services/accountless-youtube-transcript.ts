@@ -82,31 +82,6 @@ function parseJson(body: string): unknown {
   try { return JSON.parse(body); } catch { return fail("TRANSCRIPT_FORMAT_CHANGED", "schema"); }
 }
 
-/** Read JSON already supplied by the watch page without executing its scripts. */
-function playerFromWatch(html: string): unknown | undefined {
-  const marker = /\bytInitialPlayerResponse\s*=\s*/u.exec(html);
-  if (!marker) return undefined;
-  const start = marker.index + marker[0].length;
-  if (html[start] !== "{") return fail("TRANSCRIPT_FORMAT_CHANGED", "schema");
-  let depth = 0;
-  let inString = false;
-  let escaped = false;
-  for (let index = start; index < html.length; index++) {
-    const char = html[index];
-    if (inString) {
-      if (escaped) escaped = false;
-      else if (char === "\\") escaped = true;
-      else if (char === '"') inString = false;
-    } else if (char === '"') inString = true;
-    else if (char === "{") depth++;
-    else if (char === "}") {
-      depth--;
-      if (depth === 0) return parseJson(html.slice(start, index + 1));
-    }
-  }
-  return fail("TRANSCRIPT_FORMAT_CHANGED", "schema");
-}
-
 function parseSegments(body: string) {
   if (!body.trim()) return fail("CAPTION_TRACK_EMPTY", "empty");
   const parsed = json3Schema.safeParse(parseJson(body));
@@ -317,22 +292,21 @@ export function createAccountlessPublicTranscriptProvider(options: {
         stage("watch");
         const html = await read(`https://www.youtube.com/watch?v=${videoId}&hl=en`, {}, 2_097_152);
         requireContentType("html");
-        const embedded = playerFromWatch(html);
+        // The watch page's caption URLs can return an empty body even when
+        // the explicit player request supplies a usable track. Keep the
+        // original single player request; never retry a challenge.
+        const apiKey = /"INNERTUBE_API_KEY"\s*:\s*"([A-Za-z0-9_-]{1,256})"/u.exec(html)?.[1];
+        if (!apiKey) return fail("PLAYER_RESPONSE_MISSING", "missing");
         stage("player");
-        let data = embedded;
-        if (embedded === undefined) {
-          const apiKey = /"INNERTUBE_API_KEY"\s*:\s*"([A-Za-z0-9_-]{1,256})"/u.exec(html)?.[1];
-          if (!apiKey) return fail("PLAYER_RESPONSE_MISSING", "missing");
-          const body = await read(`https://www.youtube.com/youtubei/v1/player?key=${apiKey}`, {
-            method: "POST", headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ videoId, context: {
-              client: { clientName: "ANDROID", clientVersion: "20.10.38", hl: "en" },
-            } }),
-          }, 2_097_152);
-          if (!body.trim()) return fail("PLAYER_RESPONSE_MISSING", "missing");
-          requireContentType("json");
-          data = parseJson(body);
-        }
+        const body = await read(`https://www.youtube.com/youtubei/v1/player?key=${apiKey}`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ videoId, context: {
+            client: { clientName: "ANDROID", clientVersion: "20.10.38", hl: "en" },
+          } }),
+        }, 2_097_152);
+        if (!body.trim()) return fail("PLAYER_RESPONSE_MISSING", "missing");
+        requireContentType("json");
+        const data = parseJson(body);
         const parsed = playerSchema.safeParse(data);
         if (!parsed.success) return fail("TRANSCRIPT_FORMAT_CHANGED", "schema");
         const player = parsed.data;

@@ -310,37 +310,26 @@ describe("accountless YouTube transcript technical spike", () => {
     expect(JSON.stringify(noCaptions.result)).not.toContain("TEST_ONLY_PRIVATE_TITLE");
   });
 
-  it("uses the existing watch player for metadata and captions with no extra player POST", async () => {
-    const value = { ...player(), videoDetails: { videoId, title: 'TEST_ONLY_PRIVATE_TITLE } " { \\ text' },
-      microformat: { playerMicroformatRenderer: { publishDate: "2026-09-27" } } };
-    const response = new Response(`<script>var ytInitialPlayerResponse = ${JSON.stringify(value)}; var other = {};</script>`, { headers: { "Content-Type": "text/html" } });
-    const mock = transport([response, Response.json(timedText())]);
+  it("uses the original player request instead of watch caption URLs", async () => {
+    const stale = player([{ ...track(), baseUrl: `https://www.youtube.com/api/timedtext?v=${videoId}&signature=STALE` }]);
+    const html = `<script>{"INNERTUBE_API_KEY":"TEST_ONLY_PUBLIC_CONFIG"};var ytInitialPlayerResponse = ${JSON.stringify(stale)};</script>`;
+    const mock = transport([new Response(html, { headers: { "Content-Type": "text/html" } }), Response.json(player()), Response.json(timedText())]);
     const inspected = await createAccountlessPublicTranscriptProvider({ fetcher: mock.fetcher }).inspectVideo({ video: videoId });
     expect(inspected.result.outcome).toBe("fetched");
-    expect(inspected.video).toEqual({ videoId, title: value.videoDetails.title, publishedDate: "2026-09-27" });
-    expect(mock.calls).toHaveLength(2);
-    expect(mock.calls[1]?.url).toContain("/api/timedtext?");
-    expect(mock.calls.some(call => call.init?.method === "POST")).toBe(false);
+    expect(mock.calls).toHaveLength(3);
+    expect(mock.calls[1]?.url).toContain("/youtubei/v1/player?");
+    expect(mock.calls[1]?.init?.method).toBe("POST");
+    expect(mock.calls[2]?.url).toContain(secret);
+    expect(mock.calls[2]?.url).not.toContain("STALE");
   });
 
-  it("preserves matching metadata on an embedded challenge and stops without extra requests", async () => {
+  it("preserves matching player metadata on challenge and stops without captions or retry", async () => {
     const value = { ...player(), playabilityStatus: { status: "LOGIN_REQUIRED", reason: "Sign in to confirm you're not a bot" } };
-    const response = new Response(`<script>var ytInitialPlayerResponse = ${JSON.stringify(value)};</script>`, { headers: { "Content-Type": "text/html" } });
-    const mock = transport([response]);
+    const mock = transport([watch(), Response.json(value)]);
     const inspected = await createAccountlessPublicTranscriptProvider({ fetcher: mock.fetcher }).inspectVideo({ video: videoId });
     failure(inspected.result, "TRANSCRIPT_SOURCE_BLOCKED");
     expect(inspected.video).toEqual({ videoId, title: "TEST_ONLY_PRIVATE_TITLE", publishedDate: null });
-    expect(mock.calls).toHaveLength(1);
-  });
-
-  it.each([
-    'var ytInitialPlayerResponse = {"playabilityStatus":',
-    'var ytInitialPlayerResponse = function () { throw new Error("should never execute"); };',
-    `var ytInitialPlayerResponse = ${JSON.stringify({ ...player(), videoDetails: { videoId: "OTHERONLY01", title: secret } })};`,
-  ])("rejects invalid embedded player JSON or another video without a fallback request %#", async html => {
-    const { result, calls } = await run([new Response(`<script>${html}</script>`, { headers: { "Content-Type": "text/html" } })]);
-    failure(result, "TRANSCRIPT_FORMAT_CHANGED");
-    expect(calls).toHaveLength(1);
+    expect(mock.calls).toHaveLength(2);
   });
 
   it("strict diagnostics reject extras and arbitrary upstream strings", () => {
@@ -350,23 +339,23 @@ describe("accountless YouTube transcript technical spike", () => {
 });
 
 describe("blocked preview independent public title", () => {
-  const blocked = () => new Response(`<script>var ytInitialPlayerResponse = ${JSON.stringify({
+  const blocked = () => Response.json({
     playabilityStatus: { status: "LOGIN_REQUIRED", reason: "Sign in to confirm you're not a bot" },
-  })};</script>`, { headers: { "Content-Type": "text/html" } });
+  });
   const metadata = (title = "260927 주일예배 - 합성 제목(시편 147:1~20)") => ({
     type: "video", version: "1.0", provider_name: "YouTube", title,
     html: '<iframe src="https://untrusted.invalid/private"></iframe>', author_name: "TEST_ONLY_AUTHOR",
   });
 
   it("keeps the caption challenge while filling only the oEmbed title without private embed fields", async () => {
-    const mock = transport([blocked(), Response.json(metadata())]);
+    const mock = transport([watch(), blocked(), Response.json(metadata())]);
     const inspected = await createAccountlessPublicTranscriptProvider({ fetcher: mock.fetcher })
       .inspectVideo({ video: `https://youtu.be/${videoId}?si=TEST_ONLY_TRACKING` });
     expect(inspected.video).toEqual({ videoId, title: metadata().title, publishedDate: null });
     failure(inspected.result, "TRANSCRIPT_SOURCE_BLOCKED");
-    expect(inspected.result.diagnostic).toMatchObject({ stage: "player", reason: "challenge", contentType: "html" });
-    expect(mock.calls).toHaveLength(2);
-    const request = mock.calls[1]!;
+    expect(inspected.result.diagnostic).toMatchObject({ stage: "player", reason: "challenge", contentType: "json" });
+    expect(mock.calls).toHaveLength(3);
+    const request = mock.calls[2]!;
     const url = new URL(request.url);
     expect(url.origin + url.pathname).toBe("https://www.youtube.com/oembed");
     expect([...url.searchParams]).toEqual([["url", `https://www.youtube.com/watch?v=${videoId}`], ["format", "json"]]);
@@ -384,32 +373,32 @@ describe("blocked preview independent public title", () => {
     () => Response.json({ ...metadata(), title: undefined }),
     () => Response.json({ ...metadata(), html: "x".repeat(16_384) }),
   ])("does not hide the original caption error when metadata is unavailable or unsafe %#", async response => {
-    const mock = transport([blocked(), response()]);
+    const mock = transport([watch(), blocked(), response()]);
     const inspected = await createAccountlessPublicTranscriptProvider({ fetcher: mock.fetcher }).inspectVideo({ video: videoId });
     expect(inspected.video).toBeNull();
     failure(inspected.result, "TRANSCRIPT_SOURCE_BLOCKED");
-    expect(mock.calls).toHaveLength(2);
+    expect(mock.calls).toHaveLength(3);
   });
 
   it("bounds a stalled metadata body and cancels it without retrying the captions", async () => {
     const cancel = vi.fn();
-    const mock = transport([blocked(), new Response(new ReadableStream({ cancel }), {
+    const mock = transport([watch(), blocked(), new Response(new ReadableStream({ cancel }), {
       headers: { "Content-Type": "application/json" },
     })]);
     const inspected = await createAccountlessPublicTranscriptProvider({ fetcher: mock.fetcher, timeoutMs: 30 }).inspectVideo({ video: videoId });
     expect(inspected.video).toBeNull();
     failure(inspected.result, "TRANSCRIPT_SOURCE_BLOCKED");
-    expect(mock.calls[1]!.init?.signal?.aborted).toBe(true);
+    expect(mock.calls[2]!.init?.signal?.aborted).toBe(true);
     expect(cancel).toHaveBeenCalledOnce();
-    expect(mock.calls).toHaveLength(2);
+    expect(mock.calls).toHaveLength(3);
   });
 
   it("does not make a metadata request during caption import or for an invalid preview", async () => {
-    const mock = transport([blocked()]);
+    const mock = transport([watch(), blocked()]);
     const provider = createAccountlessPublicTranscriptProvider({ fetcher: mock.fetcher });
     failure(await provider.fetchTranscript({ video: videoId }), "TRANSCRIPT_SOURCE_BLOCKED");
     const invalid = await provider.inspectVideo({ video: "invalid" });
     failure(invalid.result, "INVALID_YOUTUBE_URL");
-    expect(mock.calls).toHaveLength(1);
+    expect(mock.calls).toHaveLength(2);
   });
 });
