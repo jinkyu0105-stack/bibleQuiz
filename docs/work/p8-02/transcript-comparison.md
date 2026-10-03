@@ -31,7 +31,7 @@ Python 요청 두 번과 GET 확인은 Cloudflare preview 입구403/1010으로 �
 
 ## 운영 앱 복구와 검사
 
-사용자가 운영 앱에서도 과거 코드로 시험하도록 요청했다. watch → 기존 player POST → 한국어 자막 조회 순서를 복구하고, native fetch 참조 분리·일치 video ID의 metadata 보존·제목 없는 차단 미리보기의 oEmbed 보완은 유지한다. 기존 한국어 track/파싱/저장·중복 처리·차단 자동 재시도 금지는 변경하지 않는다. watch에 오래된 caption URL이 있어도 새 player 응답을 사용하는 회귀 검사를 추가했다. 관련90개와 전체 `pnpm check`가 통과했다(unit308/Worker2165/Workflow4/복구CLI2/Node14/Python6·lint/typecheck/Drizzle/build). 소스 커밋 후 앱만 배포하고 실제 관리자 조회를 검수한다.
+사용자가 운영 앱에서도 과거 코드로 시험하도록 요청했다. watch → 기존 player POST → 한국어 자막 조회 순서를 복구하고, native fetch 참조 분리·일치 video ID의 metadata 보존·제목 없는 차단 미리보기의 oEmbed 보완은 유지한다. 기존 한국어 track/파싱/저장·중복 처리·차단 자동 재시도 금지는 변경하지 않는다. watch에 오래된 caption URL이 있어도 새 player 응답을 사용하는 회귀 검사를 추가했다. 관련90개와 전체 `pnpm check`가 통과했다(unit308/Worker2165/Workflow4/복구CLI2/Node14/Python6·lint/typecheck/Drizzle/build). 소스 커밋 `a5d46765705f24446b9a8c083a33339015c42096`에서 운영 앱 `ad9ebbf0-be59-4941-af42-ea063e97f984`100%를 배포했다. 직전 `033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf`는 호환 rollback 후보다. Production build/strict·후보binding/runtime 대조·공개200/관리자4경로302가 통과했다. 모든vars/Secret명·content/backup/Preview/예약과 참가1/제출2/call7/usage7/860448microUSD/migration39/FK0을 보존했다. 소스657개 중2개변경·산출물73개를 고정했고 기본dist/deploypointer를 복구했다. 실제 관리자 조회는 사용자에게 새로고침 후 한 번 요청했으며 결과 대기다. 저장된 Access JWT가 만료돼 인증된 앱 조회를 agent가 완료했다고 쓰지 않는다. 배포 근거는 Git 제외 `.wrangler/releases/p8-02-transcript-restoration-20261004`다.
 
 과거 직접 요청이 Cloudflare에서 성공했으므로 두 방식 모두 실패했다는 조건은 성립하지 않는다. 별도 서비스 도입보다 기존 경로 복구를 우선하며 장기 성공률은 보장하지 않는다.
 

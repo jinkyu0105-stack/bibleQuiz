@@ -2206,8 +2206,8 @@
     "deployed": true,
     "public": true,
     "productionClientBuild": true,
-    "reason": "Public title fallback deployed; actual caption challenge unresolved; operator metadata verification pending",
-    "version": "033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf",
+    "reason": "Original single player POST restored; production operator caption preview pending",
+    "version": "ad9ebbf0-be59-4941-af42-ea063e97f984",
     "buildSourceSha256": {
       ".github/workflows/ci.yml": "be431dab011a2e7414782fe21006a1ed0f89cd9901a9ea1e36372f36c02b185b",
       ".nvmrc": "55075b5ec4e8b31936cbbc282b8829116d1fd48f2f2f1856dee592a6650700ce",
@@ -2629,7 +2629,7 @@
       "workers/_shared/repositories/submission-repository.ts": "a83629ec7049f4211a99ae1226a55b1f80a064462e23e38326f329ef93d6b7a5",
       "workers/_shared/services/access-auth.ts": "9099ae4fea2095b7dbcdeb10310fdc25c1c624966a77a1595fe7a92ce8a4d2e6",
       "workers/_shared/services/accountless-transcript-contract.ts": "918088ad07a07f818e44ae2e51f19c69d183f22b945b477f413062961fe7e33f",
-      "workers/_shared/services/accountless-youtube-transcript.ts": "157ff2476bd7d09882b526928029953783558617b910921d5368a5421183064a",
+      "workers/_shared/services/accountless-youtube-transcript.ts": "577f89ed7319c6a1d56587d766e2b56c584d59ca2c3ded78bae26407423c3700",
       "workers/_shared/services/admin-ai-costs.ts": "c14481956488aebd39638781ba2018b717e7f296ffd59776a1486aad55e1b9fa",
       "workers/_shared/services/admin-weekly.ts": "564fdcbe2dac89bdc32d3276f0ecda18e874e236e9bdbb0a7e03293baa2a43c9",
       "workers/_shared/services/ai-draft-provider-contract.ts": "249655e22053808c5876ec1f1960957163a11eaba90dcc1702f53cd21107c091",
@@ -2736,7 +2736,7 @@
       "workers/_shared/storage/sha256.ts": "fc30527cfc38dd05e594494d1b8cc529aa5c6c6088f40170cf1e6afb647cb965",
       "workers/_shared/storage/utf8-byte-length.ts": "b694a0a105fd3c339c54cbb9a785a535c382f78ed26f8cbf2687b82d0d555490",
       "workers/app/access-auth.test.ts": "215b542c868cff65a0e8a6312506360a6a2fef4c89efc97d27fd7dbd62c39238",
-      "workers/app/accountless-youtube-transcript.test.ts": "06b024bb1e9b7c6c6ff2475bdab5da6fa7fc6aa291ec54f5b4914636788e81c8",
+      "workers/app/accountless-youtube-transcript.test.ts": "6a7eabde066b7ee8bbbf08791703f374b9c19462993d188069eec39302e6deb9",
       "workers/app/admin-bible-reference.test.ts": "f1703cb6bb524256f185a2d70a2006c5b9529001ba56967d521494d43905fb39",
       "workers/app/admin-compute.test.ts": "c27132c5626e523655c109922fcb77396557ca58bcfaa09fd584a17661208092",
       "workers/app/admin-compute.ts": "b747615fe77a2b0a1d9dc309ae256c564d7ac8e56fc88ce9efa9c280bd62503a",
@@ -2866,7 +2866,8 @@
       "workers/backup/wrangler.production.jsonc": "8cb888a5c80ec6072a65286ad530a0181d9c1107a42feeca3379d8da7a5e89f8",
       "scripts/check-production-build-env.mjs": "bd2f08f2f777eb3e1103895336505f3379213893bed458aa285c564a5559ae85",
       "tests/e2e/quiz-input-notice.spec.ts": "f54e3058c608191c648e0a3aa97ce5d664b640bba3bfd2cac7965afdbbb67169"
-    }
+    },
+    "sourceCommit": "a5d46765705f24446b9a8c083a33339015c42096"
   },
   "preservedPreviewVersions": {
     "biblequiz-app-preview": "219368c4-5d27-4ec7-8413-1dc4f0ce0db9",
@@ -3296,7 +3297,7 @@
     "workers/_shared/repositories/submission-repository.ts": "a83629ec7049f4211a99ae1226a55b1f80a064462e23e38326f329ef93d6b7a5",
     "workers/_shared/services/access-auth.ts": "9099ae4fea2095b7dbcdeb10310fdc25c1c624966a77a1595fe7a92ce8a4d2e6",
     "workers/_shared/services/accountless-transcript-contract.ts": "918088ad07a07f818e44ae2e51f19c69d183f22b945b477f413062961fe7e33f",
-    "workers/_shared/services/accountless-youtube-transcript.ts": "157ff2476bd7d09882b526928029953783558617b910921d5368a5421183064a",
+    "workers/_shared/services/accountless-youtube-transcript.ts": "577f89ed7319c6a1d56587d766e2b56c584d59ca2c3ded78bae26407423c3700",
     "workers/_shared/services/admin-ai-costs.ts": "c14481956488aebd39638781ba2018b717e7f296ffd59776a1486aad55e1b9fa",
     "workers/_shared/services/admin-weekly.ts": "564fdcbe2dac89bdc32d3276f0ecda18e874e236e9bdbb0a7e03293baa2a43c9",
     "workers/_shared/services/ai-draft-provider-contract.ts": "249655e22053808c5876ec1f1960957163a11eaba90dcc1702f53cd21107c091",
@@ -3403,7 +3404,7 @@
     "workers/_shared/storage/sha256.ts": "fc30527cfc38dd05e594494d1b8cc529aa5c6c6088f40170cf1e6afb647cb965",
     "workers/_shared/storage/utf8-byte-length.ts": "b694a0a105fd3c339c54cbb9a785a535c382f78ed26f8cbf2687b82d0d555490",
     "workers/app/access-auth.test.ts": "215b542c868cff65a0e8a6312506360a6a2fef4c89efc97d27fd7dbd62c39238",
-    "workers/app/accountless-youtube-transcript.test.ts": "06b024bb1e9b7c6c6ff2475bdab5da6fa7fc6aa291ec54f5b4914636788e81c8",
+    "workers/app/accountless-youtube-transcript.test.ts": "6a7eabde066b7ee8bbbf08791703f374b9c19462993d188069eec39302e6deb9",
     "workers/app/admin-bible-reference.test.ts": "f1703cb6bb524256f185a2d70a2006c5b9529001ba56967d521494d43905fb39",
     "workers/app/admin-compute.test.ts": "c27132c5626e523655c109922fcb77396557ca58bcfaa09fd584a17661208092",
     "workers/app/admin-compute.ts": "b747615fe77a2b0a1d9dc309ae256c564d7ac8e56fc88ce9efa9c280bd62503a",
@@ -12837,7 +12838,7 @@
     "newReleaseField": "productionAiReadinessRelease"
   },
   "pending": [
-    "Reuse saved browser transcript; connect existing admin source storage and choose repeatable browser execution location. No user manual copying as default, no source re-fetch, no new paid call or unapproved service."
+    "Verify restored production transcript preview once through the authenticated admin screen, then resume existing original-storage/AI-generation acceptance. Do not repeat completed input/PDF checks or paid results."
   ],
   "historicalBeforeAutomaticOperationsFullCheckSourceSha256": {
     ".github/workflows/ci.yml": "be431dab011a2e7414782fe21006a1ed0f89cd9901a9ea1e36372f36c02b185b",
@@ -24272,5 +24273,83 @@
     "sourceInGit": false,
     "manualPasteInstructionRetracted": true,
     "automationGoalPreserved": true
+  },
+  "historicalTranscriptRestoration": {
+    "task": "P8-02",
+    "status": "deployed_operator_caption_check_pending",
+    "sourceCommit": "a5d46765705f24446b9a8c083a33339015c42096",
+    "version": "ad9ebbf0-be59-4941-af42-ea063e97f984",
+    "previousVersion": "033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf",
+    "allBindingsAndSecretNamesPreserved": true,
+    "contentBackupPreviewPreserved": true,
+    "allCronsPreserved": true,
+    "dataCounts": {
+      "submissions": 2,
+      "sessions": 1,
+      "calls": 7,
+      "usageEvents": 7,
+      "estimatedMicroUsd": 860448,
+      "migrations": 39
+    },
+    "foreignKeyErrors": 0,
+    "sourceCount": 657,
+    "changedSourceFiles": [
+      "workers/_shared/services/accountless-youtube-transcript.ts",
+      "workers/app/accountless-youtube-transcript.test.ts"
+    ],
+    "artifactCount": 73,
+    "newPaidCalls": 0,
+    "newMigration": 0,
+    "mainPush": false,
+    "defaultDistAndDeployPointerRestored": true,
+    "checks": {
+      "pnpmCheck": true,
+      "unit": 308,
+      "worker": 2165,
+      "workflow": 4,
+      "recoveryCli": 2,
+      "node": 14,
+      "python": 6,
+      "relatedTests": 90,
+      "productionBuild": true,
+      "strictDryRun": true
+    },
+    "http": [
+      {
+        "path": "/",
+        "status": 200,
+        "redirectHost": null
+      },
+      {
+        "path": "/admin",
+        "status": 302,
+        "redirectHost": "holy-paper-720a.cloudflareaccess.com"
+      },
+      {
+        "path": "/admin/new",
+        "status": 302,
+        "redirectHost": "holy-paper-720a.cloudflareaccess.com"
+      },
+      {
+        "path": "/api/admin",
+        "status": 302,
+        "redirectHost": "holy-paper-720a.cloudflareaccess.com"
+      },
+      {
+        "path": "/api/admin/sermons",
+        "status": 302,
+        "redirectHost": "holy-paper-720a.cloudflareaccess.com"
+      }
+    ],
+    "operatorVerification": "pending; saved Access token expired; no bypass",
+    "cloudBrowserProbe": {
+      "attempts": 2,
+      "outcome": "transcript_rows_timeout",
+      "elapsedTotalMs": 49249,
+      "sessionsClosed": true,
+      "explicitChallengeObserved": false,
+      "billingVerified": false
+    },
+    "privateProofDirectory": ".wrangler/releases/p8-02-transcript-restoration-20261004"
   }
 }

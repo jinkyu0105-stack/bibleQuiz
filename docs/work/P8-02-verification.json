@@ -2193,7 +2193,7 @@
     "scope": "Historical installation baseline; current input-notice source preservation in inputModeNoticeRelease.documentationAndGit"
   },
   "pending": [
-    "Reuse saved browser transcript; connect existing admin source storage and choose repeatable browser execution location. No user manual copying as default, no source re-fetch, no new paid call or unapproved service."
+    "Verify restored production transcript preview once through the authenticated admin screen, then resume existing original-storage/AI-generation acceptance. Do not repeat completed input/PDF checks or paid results."
   ],
   "previousUsageBeforeD1EditApproval": {
     "plan": "pro",
@@ -9087,5 +9087,83 @@
     "sourceInGit": false,
     "manualPasteInstructionRetracted": true,
     "automationGoalPreserved": true
+  },
+  "historicalTranscriptRestoration": {
+    "task": "P8-02",
+    "status": "deployed_operator_caption_check_pending",
+    "sourceCommit": "a5d46765705f24446b9a8c083a33339015c42096",
+    "version": "ad9ebbf0-be59-4941-af42-ea063e97f984",
+    "previousVersion": "033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf",
+    "allBindingsAndSecretNamesPreserved": true,
+    "contentBackupPreviewPreserved": true,
+    "allCronsPreserved": true,
+    "dataCounts": {
+      "submissions": 2,
+      "sessions": 1,
+      "calls": 7,
+      "usageEvents": 7,
+      "estimatedMicroUsd": 860448,
+      "migrations": 39
+    },
+    "foreignKeyErrors": 0,
+    "sourceCount": 657,
+    "changedSourceFiles": [
+      "workers/_shared/services/accountless-youtube-transcript.ts",
+      "workers/app/accountless-youtube-transcript.test.ts"
+    ],
+    "artifactCount": 73,
+    "newPaidCalls": 0,
+    "newMigration": 0,
+    "mainPush": false,
+    "defaultDistAndDeployPointerRestored": true,
+    "checks": {
+      "pnpmCheck": true,
+      "unit": 308,
+      "worker": 2165,
+      "workflow": 4,
+      "recoveryCli": 2,
+      "node": 14,
+      "python": 6,
+      "relatedTests": 90,
+      "productionBuild": true,
+      "strictDryRun": true
+    },
+    "http": [
+      {
+        "path": "/",
+        "status": 200,
+        "redirectHost": null
+      },
+      {
+        "path": "/admin",
+        "status": 302,
+        "redirectHost": "holy-paper-720a.cloudflareaccess.com"
+      },
+      {
+        "path": "/admin/new",
+        "status": 302,
+        "redirectHost": "holy-paper-720a.cloudflareaccess.com"
+      },
+      {
+        "path": "/api/admin",
+        "status": 302,
+        "redirectHost": "holy-paper-720a.cloudflareaccess.com"
+      },
+      {
+        "path": "/api/admin/sermons",
+        "status": 302,
+        "redirectHost": "holy-paper-720a.cloudflareaccess.com"
+      }
+    ],
+    "operatorVerification": "pending; saved Access token expired; no bypass",
+    "cloudBrowserProbe": {
+      "attempts": 2,
+      "outcome": "transcript_rows_timeout",
+      "elapsedTotalMs": 49249,
+      "sessionsClosed": true,
+      "explicitChallengeObserved": false,
+      "billingVerified": false
+    },
+    "privateProofDirectory": ".wrangler/releases/p8-02-transcript-restoration-20261004"
   }
 }

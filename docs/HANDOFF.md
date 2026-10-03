@@ -4,7 +4,7 @@
 
 ## 다음 첫 동작
 
-사용자가 “운영 앱에서도 과거 코드로 다시 한 번 테스트”를 명시 승인하고 Browser Run Authorize를 완료했다. 과거 요청 로직 복구·관련90개·전체 `pnpm check`가 통과했다. 다음은 이 소스를 커밋하고 production 앱만 업로드/검증/활성화한 뒤 관리자 `/admin/new`에서 실제 조회 한 번을 검수하는 것이다. 현재 활성 버전은 아래 설치 절을 따른다. 저장된 Access JWT는 만료됐으며 인증을 우회하지 않는다. [복구·Cloudflare 비교 결과](work/p8-02/transcript-comparison.md)가 정본이다.
+사용자가 “운영 앱에서도 과거 코드로 다시 한 번 테스트”를 명시 승인하고 Browser Run Authorize를 완료했다. 과거 요청 로직 복구·관련90개·전체 `pnpm check`(unit308/Worker2165/Workflow4/복구CLI2/Node14/Python6)·Production build/strict가 통과했다. 소스 커밋 `a5d46765705f24446b9a8c083a33339015c42096`에서 앱 `ad9ebbf0-be59-4941-af42-ea063e97f984`100%를 배포했다. 공개200/관리자4경로302·모든binding/Secret명/다른Worker/Cron·참가1/제출2/call7/usage7/860448microUSD/migration39/FK0 보존을 확인했다. 소스657개 중2개변경·산출물73개를 고정했고 기본dist/deploypointer를 복구했다. 다음은 사용자에게 요청한 관리자 `/admin/new` 새로고침→같은 영상 조회 한 번의 결과 확인이다. 저장된 Access JWT는 만료됐으며 인증을 우회하지 않는다. 새 AI/키/서비스/migration/main push는0이다. [복구·Cloudflare 비교 결과](work/p8-02/transcript-comparison.md)가 정본이다.
 
 Browser Run 최소 별도 프로필 인증은 성공했다. 실제2회 모두 watch200/스크립트 표시 클릭 후 자막 행 대기 시간 초과다. 총49.249초, 세션 명시 종료, 화면상 명시 차단 문구 없음. 실패를 challenge로 단정하지 않는다. 직접 요청의 과거 로직은 이미 같은 Cloudflare 환경에서 성공했으므로 새 상시 서비스가 필요하다고 확대하지 않는다. 기본 Wrangler 인증·실제 자료·키·다른 Worker는 보존한다.
 
@@ -14,7 +14,7 @@ Browser Run 최소 별도 프로필 인증은 성공했다. 실제2회 모두 wa
 
 ## 현재 설치와 배포
 
-- Production app **033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf**100%; AI_GENERATION_ENABLED/CONTENT_FINAL_CHECK_WORKFLOW_ENABLED=true. 요청 제한·운영5분Cron·초안정리·백업=true를 유지했다. 직전 **602bb937-ab11-413e-b037-c89936f8e9f0**는 watch JSON 우선 사용 코드복귀후보다. 그전 **c6e396c0-44f8-4147-bc38-24e35cb8fdc0**는자동제목/장절보완완료·추가player POST 코드복귀후보다. 그전 **615eb2cd-a899-4d36-996b-8b0793696a20**는영상native조회복구완료/자동등록누락코드이며복귀후보다. 그전 **c0516ec1-1b0f-444e-8f3c-b0e54e1e4dd1**는AI연결완료/영상native오류가있는코드복귀후보다. 그전de4d4797-9ee9-483f-a96d-a7cfa5e68c5c는AI비활성호환후보다.
+- Production app **ad9ebbf0-be59-4941-af42-ea063e97f984**100%, 소스 커밋 **a5d4676**. 직전 **033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf**는 이번 복구의 rollback 후보이며 기존 D1/DO와 호환된다; AI_GENERATION_ENABLED/CONTENT_FINAL_CHECK_WORKFLOW_ENABLED=true. 요청 제한·운영5분Cron·초안정리·백업=true를 유지했다. 직전 **602bb937-ab11-413e-b037-c89936f8e9f0**는 watch JSON 우선 사용 코드복귀후보다. 그전 **c6e396c0-44f8-4147-bc38-24e35cb8fdc0**는자동제목/장절보완완료·추가player POST 코드복귀후보다. 그전 **615eb2cd-a899-4d36-996b-8b0793696a20**는영상native조회복구완료/자동등록누락코드이며복귀후보다. 그전 **c0516ec1-1b0f-444e-8f3c-b0e54e1e4dd1**는AI연결완료/영상native오류가있는코드복귀후보다. 그전de4d4797-9ee9-483f-a96d-a7cfa5e68c5c는AI비활성호환후보다.
 - 비공개 content **95fbc7a6-95f5-4bcc-a85b-30dad3a59e56**100%; AI_GENERATION_ENABLED/AI_RESPONSE_ARCHIVE_ENABLED=true, OPENAI_API_KEY Secret만 추가했다. key-only 중간version **c21931a8-2d8f-4e3e-92c9-b18090474af7**는 AI=false였고 코드/기존binding을 보존했다. 이전 키 없는 비활성version210f95a2-37a1-46bd-b1ed-44e0835c4e8c도 보존했다. 주소/Preview URL/Cron 없음, display-preparation/cleanup=false·합성목록[] 유지. 모델 gpt-5.6-terra/high.
 - backup **3fb0e7c7-368b-45a9-89f9-2818739e415d**100%; 비공개 Standard R2·기존 D1/Analytics Secret·삭제manifest10분/주간SQL 예약 유지. 첫 주간SQL **2026-10-05 04:00KST**는 아직 미관측이며 기존 정상SQL/격리복원 증거를 재사용했다.
 - Preview app7c356a97-f0f3-4793-ab7b-066b2ae2aeea/content2df93f07-3703-42ec-b576-fd085e8c839f·설정/자료 보존. Production/Preview SQL0000~0038·39개 유지.
