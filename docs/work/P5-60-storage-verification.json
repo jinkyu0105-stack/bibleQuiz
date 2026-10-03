@@ -1,0 +1,175 @@
+{
+  "head": "0ab476e4281734f4eab64cc6231be09092221651",
+  "baselineFileCount": 539,
+  "removedExistingFiles": [],
+  "unchangedExistingFileCount": 523,
+  "changedExistingFiles": [
+    {
+      "path": "docs/HANDOFF.md",
+      "beforeSha256": "c85cae357ff1cbd2baf0152fe71b79200a65e2aef4097014aeef052b5d39c1a4",
+      "afterSha256": "7b8a1b8262c7adc8cdb1eab4908096bb4afc21ad654c5ce9eec602aa84982b8b"
+    },
+    {
+      "path": "docs/PROJECT_CONTEXT.md",
+      "beforeSha256": "8cf7766c38be165358995d2012eaf8f749acd26979ab62ec24ed0dd251d365bb",
+      "afterSha256": "77be6f3a7763dc3654571e4c8243b85f7af7a6a060658dd7f00bfc8f190f4a4e"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "beforeSha256": "292acc37f503ac5a6fdb220e52027934d234d5bd51b09f8a262508ed5a42b4d1",
+      "afterSha256": "6d04bffbc1cac2c3e7aa90cfa12e6577fcf9a38b83e8dec7a3fe1fc0fcb44d6e"
+    },
+    {
+      "path": "docs/spec/api.md",
+      "beforeSha256": "2291e7d845fdb8f67e044cbc6477d28a7d2efb318337b21b05007a800e512b75",
+      "afterSha256": "ca0870de990c2211a943cba27ea98d9b44f7938d7c9ef68cc2a158d64e90bd33"
+    },
+    {
+      "path": "docs/spec/data-model.md",
+      "beforeSha256": "69316340faf9158a52695c63f40704044ba60569fd2cfb3d9452340161d41618",
+      "afterSha256": "0939f618015d47400c1c13fd2d26a5d6225744d330532e240124cfe14e6abd73"
+    },
+    {
+      "path": "docs/spec/generation.md",
+      "beforeSha256": "c7ed34f8beffac42296e8824cc263b697fa95d2304b252e5156984cb52d54956",
+      "afterSha256": "4d4641899b9bfd943db764d2e0ee0b61165c96a00795d7e536a20257ce037a46"
+    },
+    {
+      "path": "docs/work/P5-60.md",
+      "beforeSha256": "f0f80437183bb5a406427b4314d6882ae8e6fb34bb95bc46ac4d25e950956c28",
+      "afterSha256": "155ac5a3d5d52180fa2b9bea4d5dd3056ecf673dab3e7a610dbce5b6f0871c77"
+    },
+    {
+      "path": "implementation.md",
+      "beforeSha256": "f1b5948ac4f5c815bc77da5c48fd5d14984de244327e3d3b3af4837bb8313e24",
+      "afterSha256": "d998cb4f9dc705a39387af095b60475c56b5b263f787530cd10162a4fd3cb2f1"
+    },
+    {
+      "path": "migrations/meta/_journal.json",
+      "beforeSha256": "83c6034dc9745bf7fcf97106e5efac5a5293e235c9ae32250e4abe1e985ca58d",
+      "afterSha256": "1bd1356053c7be040db91db3957fdf5a72fdbc1444904f90b11418ada61e7313"
+    },
+    {
+      "path": "scripts/check-withdrawal-upgrade.mjs",
+      "beforeSha256": "972e227f10ae9907d48239ceaf01f615c4c0ddc9d363f9cbe1eab0c2c871524f",
+      "afterSha256": "ba02ea690cfa6dbf590eb2a95e57d0ba991f81a77a7763174f6c0693b137e837"
+    },
+    {
+      "path": "shared/api/admin-withdrawal-preview.ts",
+      "beforeSha256": "8bac9674aef7c93eea5e1e86a71243dfcd8f8822e923117eee01cd477e7b60d7",
+      "afterSha256": "71a2473907023db3137b0a3d0bba0f620c1ebc9337e9d5fd4395e96fbfb05bad"
+    },
+    {
+      "path": "workers/_shared/db/schema.ts",
+      "beforeSha256": "faef11b9a9bd62d480c3cbcec6737d050f1a48d79b9ee5bd1c34444833dabf89",
+      "afterSha256": "8f1a920fbcc5264f68426c62b5bba29c14affb657cb6243ebcb27c0e8241b739"
+    },
+    {
+      "path": "workers/_shared/services/withdrawal-preview.ts",
+      "beforeSha256": "66ebdfa785fd0dbc9486a8f1659f0de02b5c4e56975a7f447dc09e1bcf35799e",
+      "afterSha256": "297b22aa07bf1546e714c9e67ffc480442c10a9cbf4921d3aebb8a558ba68af6"
+    },
+    {
+      "path": "workers/app/app.ts",
+      "beforeSha256": "1859d3f75515ef2741a4535e558ad9acba3640de8664d05e1a3dbcf10cbe4ce7",
+      "afterSha256": "dedc73f648d0e7135b5727cb396b8637e504230cae4cc3f87293fd74301c3b79"
+    },
+    {
+      "path": "workers/app/content-intent-generation.test.ts",
+      "beforeSha256": "f30be76c6b960cc07309099c849d68648519d6771f10e01c5f34863de7f43d1c",
+      "afterSha256": "d826f216d06c410515014e6d3031fdb9b1b7e88f4536e91f3ee234876a9d363a"
+    },
+    {
+      "path": "workers/app/withdrawal-preview.test.ts",
+      "beforeSha256": "f55004adb44265438116152de337f97521f5a7feae1c88da9a2bb965ad3ce91e",
+      "afterSha256": "c352fd0f40f89625d57781ba8b52746705ff6102cd71b2e7f80d74a83f1bf1fe"
+    }
+  ],
+  "newFilesExcludingThisManifest": [
+    {
+      "path": "migrations/0024_phase5_withdrawal_edits.sql",
+      "sha256": "2b49dd5cb44856637f39afd792ce02201b2ad8f9e6c9b9fc6d3e1d5c5d15a73a"
+    },
+    {
+      "path": "migrations/meta/0024_snapshot.json",
+      "sha256": "25c51a81c7e928b341b1f5d24d2e83da46161af2605c43a223a9e9e1093488e7"
+    },
+    {
+      "path": "workers/_shared/services/withdrawal-edits.ts",
+      "sha256": "ecd5bc503acaebb5d9c1ecdc4d10ec9fb7e0c3a6e39faae9bd323e7a7a2f1e21"
+    }
+  ],
+  "protectedFilesUnchanged": [
+    "AGENTS.md",
+    "docs/work/P5-60-verification.json",
+    "migrations/0000_foundation.sql",
+    "migrations/0001_public_quiz_entries.sql",
+    "migrations/0002_phase4_submission_storage.sql",
+    "migrations/0003_phase4_moderation_policy.sql",
+    "migrations/0004_phase4_leaderboard_snapshot.sql",
+    "migrations/0005_phase4_audit_logs.sql",
+    "migrations/0006_phase4_submission_moderation.sql",
+    "migrations/0007_phase5_private_sermon_metadata.sql",
+    "migrations/0008_phase5_private_sermon_history.sql",
+    "migrations/0009_sermon_input_selected_storage.sql",
+    "migrations/0010_phase5_generation_jobs.sql",
+    "migrations/0011_phase5_ai_result_usage_storage.sql",
+    "migrations/0012_phase5_human_content_final_ticket.sql",
+    "migrations/0013_phase5_generation_lifecycle.sql",
+    "migrations/0014_phase5_full_validation_finish.sql",
+    "migrations/0015_phase5_domain_content_lineage.sql",
+    "migrations/0016_phase5_placement_selections.sql",
+    "migrations/0017_phase5_individual_regeneration.sql",
+    "migrations/0018_phase5_published_content.sql",
+    "migrations/0019_phase5_intent_regeneration.sql",
+    "migrations/0020_phase5_intent_critique_retry.sql",
+    "migrations/0021_phase5_draft_cleanup.sql",
+    "migrations/0022_phase5_display_corrections.sql",
+    "migrations/0023_phase5_withdrawals.sql",
+    "migrations/meta/0000_snapshot.json",
+    "migrations/meta/0001_snapshot.json",
+    "migrations/meta/0002_snapshot.json",
+    "migrations/meta/0003_snapshot.json",
+    "migrations/meta/0004_snapshot.json",
+    "migrations/meta/0005_snapshot.json",
+    "migrations/meta/0006_snapshot.json",
+    "migrations/meta/0007_snapshot.json",
+    "migrations/meta/0008_snapshot.json",
+    "migrations/meta/0009_snapshot.json",
+    "migrations/meta/0010_snapshot.json",
+    "migrations/meta/0011_snapshot.json",
+    "migrations/meta/0012_snapshot.json",
+    "migrations/meta/0013_snapshot.json",
+    "migrations/meta/0014_snapshot.json",
+    "migrations/meta/0015_snapshot.json",
+    "migrations/meta/0016_snapshot.json",
+    "migrations/meta/0017_snapshot.json",
+    "migrations/meta/0018_snapshot.json",
+    "migrations/meta/0019_snapshot.json",
+    "migrations/meta/0020_snapshot.json",
+    "migrations/meta/0021_snapshot.json",
+    "migrations/meta/0022_snapshot.json",
+    "migrations/meta/0023_snapshot.json",
+    "package.json",
+    "pnpm-lock.yaml",
+    "wrangler.generation-local.jsonc",
+    "wrangler.jsonc",
+    "wrangler.p5-27-selected.jsonc",
+    "wrangler.p5-27-trigger.jsonc",
+    "wrangler.p5-27.jsonc"
+  ],
+  "checks": {
+    "workerFocused": "8 passed, exit 0",
+    "postCleanupIntegration": "2 passed, 28 skipped, exit 0",
+    "migration0024": "322 checks; 67 existing tables and all previous triggers preserved",
+    "migration0023Regression": "316 checks; 66 existing tables preserved",
+    "lint": "exit 0",
+    "typecheck": "exit 0",
+    "drizzleCheck": "exit 0",
+    "fullCheckBuildE2E": "not run: partial API/storage scope",
+    "localLinksChecked": 96
+  },
+  "boundary": "Temporary synthetic D1 only; actual app/remote databases untouched; no provider invocation or deployment",
+  "usage": "Pro 5x remaining 5%, Plus-equivalent 25%; no separate five-hour window",
+  "status": "P5-60 in progress; edit save/read/preview complete; new draft cleanup, layout changes, human review/UI and republication pending"
+}

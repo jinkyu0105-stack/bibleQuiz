@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "biblequiz-generation-local",
+  "main": "./workers/app/index.ts",
+  "compatibility_date": "2026-08-25",
+  "workers_dev": false,
+  "preview_urls": false,
+  "vars": { "AI_GENERATION_ENABLED": "false" },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "biblequiz-local",
+    "database_id": "00000000-0000-0000-0000-000000000001",
+    "migrations_dir": "migrations"
+  }],
+  "workflows": [{
+    "binding": "CONTENT_WORKFLOW",
+    "name": "biblequiz-content-local",
+    "class_name": "ContentWorkflow"
+  }]
+}

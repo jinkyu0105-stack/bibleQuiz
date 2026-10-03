@@ -1,0 +1,45 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "biblequiz-admin-compute-local",
+  "main": "./workers/app/index.ts",
+  "compatibility_date": "2026-08-25",
+  "keep_vars": true,
+  "assets": {
+    "not_found_handling": "single-page-application",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "observability": {
+    "enabled": false
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "biblequiz-local",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "preview_database_id": "biblequiz-local",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "ADMIN_COMPUTE_ENABLED": "true",
+    "AI_GENERATION_ENABLED": "false"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ADMIN_COMPUTE",
+        "class_name": "AdminCompute"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "admin-compute-v1",
+      "new_sqlite_classes": [
+        "AdminCompute"
+      ]
+    }
+  ]
+}

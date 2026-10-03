@@ -1,0 +1,154 @@
+.page {
+  margin-block: clamp(24px, 4vw, 56px);
+}
+
+.intro {
+  max-width: 48rem;
+  margin-bottom: clamp(28px, 5vw, 48px);
+}
+
+.intro h2 {
+  margin-bottom: 0.75rem;
+}
+
+.intro p:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.notice {
+  padding: 12px 16px;
+  border-left: 3px solid var(--accent);
+  background: var(--selection);
+  color: var(--text-strong);
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 32px);
+}
+
+.form {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: clamp(20px, 3vw, 32px);
+}
+
+.form h3 {
+  margin: 0 0 0.75rem;
+  color: var(--text-strong);
+  font-size: 1.25rem;
+}
+
+.form > p {
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+.fields {
+  display: grid;
+  gap: 16px;
+}
+
+.fields label {
+  display: grid;
+  gap: 8px;
+  color: var(--text-strong);
+  font-weight: 700;
+}
+
+.fields input,
+.fields select {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  border: 1px solid var(--grid-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--cell);
+  color: var(--text-strong);
+  font: inherit;
+}
+
+.rangeFields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.result,
+.error,
+.loading {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.result {
+  border: 1px solid var(--accent);
+  background: var(--selection);
+}
+
+.result h4,
+.error p,
+.loading {
+  margin: 0;
+}
+
+.result h4 {
+  color: var(--text-strong);
+  font-size: 1.15rem;
+}
+
+.result dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 8px 16px;
+  margin: 16px 0 0;
+}
+
+.result dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.result a {
+  color: var(--text-strong);
+  font-weight: 700;
+  text-underline-offset: 0.25em;
+}
+
+.error {
+  border: 1px solid var(--danger);
+  background: color-mix(in srgb, var(--danger) 10%, var(--surface));
+}
+
+.requestId {
+  margin-top: 12px !important;
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+
+.loading {
+  border-left: 3px solid var(--accent);
+  background: var(--selection);
+}
+
+@media (max-width: 800px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 440px) {
+  .rangeFields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

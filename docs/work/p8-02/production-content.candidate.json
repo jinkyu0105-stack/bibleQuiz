@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2026-08-25",
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": false
+    }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "biblequiz-d1",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "migrations_dir": "../../../migrations"
+    }
+  ],
+  "name": "biblequiz-content",
+  "main": "../../../workers/content/index.ts",
+  "vars": {
+    "AI_GENERATION_ENABLED": "false",
+    "AI_RESPONSE_ARCHIVE_ENABLED": "false",
+    "CONTENT_DISPLAY_PREPARATION_ENABLED": "false",
+    "CONTENT_DISPLAY_PREPARATION_SERMON_IDS": "[]",
+    "DRAFT_CLEANUP_ENABLED": "false",
+    "P571_SYNTHETIC_SERMON_IDS": "[]"
+  },
+  "workflows": [
+    {
+      "binding": "CONTENT_WORKFLOW",
+      "name": "biblequiz-content-workflow",
+      "class_name": "ContentWorkflow"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "purpose": "P5-48 개발 문서 재구성 전 원문 보존. 원문은 현재 실행 지침이 아니다.",
+  "sources": [
+    {
+      "source": "AGENTS.md",
+      "original": "docs/archive/2026-09-21-p5-48/original/AGENTS.md.txt",
+      "readable": "docs/archive/2026-09-21-p5-48/AGENTS.record.md",
+      "bytes": 10631,
+      "sha256": "baa12fea3a5f67378e031cc08dfc40db1eaaaacf6ca2ae3cc3144457243bcdde"
+    },
+    {
+      "source": "README.md",
+      "original": "docs/archive/2026-09-21-p5-48/original/README.md.txt",
+      "readable": "docs/archive/2026-09-21-p5-48/README.record.md",
+      "bytes": 13154,
+      "sha256": "b54744405d7c035efed514700fc1b50305df25e87f4d67fd01c7eda7d879a353"
+    },
+    {
+      "source": "implementation.md",
+      "original": "docs/archive/2026-09-21-p5-48/original/implementation.md.txt",
+      "readable": "docs/archive/2026-09-21-p5-48/implementation.md",
+      "bytes": 945967,
+      "sha256": "47e60d0b244ce8e96a13b8ff3852528bf418f5a7918081c7b1b9858e116bf000"
+    },
+    {
+      "source": "docs/PROJECT_CONTEXT.md",
+      "original": "docs/archive/2026-09-21-p5-48/original/docs/PROJECT_CONTEXT.md.txt",
+      "readable": "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md",
+      "bytes": 16593,
+      "sha256": "7610b41a670e1e7fa00681e0b4f43e377105bbf09d6fffe6087ce7c053e147c5"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "original": "docs/archive/2026-09-21-p5-48/original/docs/DECISIONS.md.txt",
+      "readable": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md",
+      "bytes": 91744,
+      "sha256": "2e2117a42595ad1cadc40f14594932d43fa2aa4a24be9f2d3f71f110cd188e89"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "original": "docs/archive/2026-09-21-p5-48/original/docs/STATUS.md.txt",
+      "readable": "docs/archive/2026-09-21-p5-48/docs/STATUS.md",
+      "bytes": 353341,
+      "sha256": "b33ed86dcce9f5afceba052f2e1de89425a16106e8ed8542013b0fed0df5ad51"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "original": "docs/archive/2026-09-21-p5-48/original/docs/HANDOFF.md.txt",
+      "readable": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md",
+      "bytes": 413826,
+      "sha256": "9759c508e66e527b474a8729f080fd9a6a27974db3c7eb4e2dc522f9d7d695ac"
+    }
+  ]
+}

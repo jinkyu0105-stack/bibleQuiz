@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "p5-27-local-trigger",
+  "main": "./workers/app/p5-27-local-trigger.ts",
+  "compatibility_date": "2026-08-25",
+  "services": [
+    {
+      "binding": "TARGET",
+      "service": "biblequiz-app-preview",
+      "remote": true
+    }
+  ]
+}

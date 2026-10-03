@@ -3,6 +3,7 @@
   "name": "biblequiz-app",
   "main": "./workers/app/index.ts",
   "compatibility_date": "2026-08-25",
+  "keep_vars": true,
   "assets": {
     "not_found_handling": "single-page-application",
     "run_worker_first": ["/api/*"]
@@ -24,6 +25,25 @@
       "name": "biblequiz-app-preview",
       "workers_dev": true,
       "preview_urls": false,
+      "vars": {
+        "ADMIN_COMPUTE_ENABLED": "true",
+        "AI_GENERATION_ENABLED": "false",
+        "CONTENT_FINAL_CHECK_WORKFLOW_ENABLED": "false",
+        "CONTENT_DISPLAY_PREPARATION_ENABLED": "false",
+        "CONTENT_DISPLAY_PREPARATION_SERMON_IDS": "[]",
+        "P571_SYNTHETIC_SERMON_IDS": "[]",
+        "DRAFT_CLEANUP_ENABLED": "false"
+      },
+      "workflows": [{
+        "binding": "CONTENT_WORKFLOW",
+        "name": "biblequiz-content-preview",
+        "class_name": "PreviewMeasurementWorkflow",
+        "script_name": "biblequiz-content-preview"
+      }],
+      "durable_objects": {
+        "bindings": [{ "name": "ADMIN_COMPUTE", "class_name": "AdminCompute" }]
+      },
+      "migrations": [{ "tag": "admin-compute-v1", "new_sqlite_classes": ["AdminCompute"] }],
       "d1_databases": [
         {
           "binding": "DB",

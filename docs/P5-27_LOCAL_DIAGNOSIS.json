@@ -1,0 +1,5610 @@
+{
+  "kind": "local-v8-sampling-not-remote-billing-or-peak",
+  "intervalUs": 1000,
+  "recordedAt": "2026-09-15T08:15:06.852Z",
+  "groups": [
+    {
+      "name": "wrapper-boundary",
+      "count": 30,
+      "results": [
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 0,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 1,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 2,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 3,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 4,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 5,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 6,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 7,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 8,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 9,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 10,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 11,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 12,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 13,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 14,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 15,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 16,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 17,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 18,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 19,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 20,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 21,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 22,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 23,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 24,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 25,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 26,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 27,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 28,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-local-only",
+          "index": 29,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        }
+      ],
+      "heapBefore": {
+        "usedSize": 8412680,
+        "totalSize": 13135872,
+        "embedderHeapUsedSize": 386904,
+        "backingStorageSize": 256931
+      },
+      "heapAfter": {
+        "usedSize": 8704736,
+        "totalSize": 13135872,
+        "embedderHeapUsedSize": 386904,
+        "backingStorageSize": 256931
+      },
+      "profile": {
+        "samples": 9,
+        "selfFrames": [
+          {
+            "name": "(idle)",
+            "url": "",
+            "line": 0,
+            "samples": 3
+          },
+          {
+            "name": "(program)",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "(anonymous)",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "formatWithOptions",
+            "url": "node-internal:internal_inspect",
+            "line": 2157,
+            "samples": 1
+          },
+          {
+            "name": "fetch",
+            "url": "script-0.mjs",
+            "line": 17972,
+            "samples": 1,
+            "source": "workers/app/p5-27-local-diagnostic.ts",
+            "sourceLine": 21
+          }
+        ]
+      }
+    },
+    {
+      "name": "payload-boundary",
+      "count": 30,
+      "results": [
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 3
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 2
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 1
+        },
+        {
+          "status": 200,
+          "outcome": "validated",
+          "wallMs": 0
+        }
+      ],
+      "heapBefore": {
+        "usedSize": 8704736,
+        "totalSize": 13135872,
+        "embedderHeapUsedSize": 386904,
+        "backingStorageSize": 256931
+      },
+      "heapAfter": {
+        "usedSize": 10606748,
+        "totalSize": 15929344,
+        "embedderHeapUsedSize": 386904,
+        "backingStorageSize": 4257251
+      },
+      "profile": {
+        "samples": 25,
+        "selfFrames": [
+          {
+            "name": "digest",
+            "url": "",
+            "line": 0,
+            "samples": 6
+          },
+          {
+            "name": "RegExp: [\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F\\u007F]",
+            "url": "",
+            "line": 0,
+            "samples": 5
+          },
+          {
+            "name": "(idle)",
+            "url": "",
+            "line": 0,
+            "samples": 3
+          },
+          {
+            "name": "validateTextAndMetadata",
+            "url": "script-0.mjs",
+            "line": 14551,
+            "samples": 3,
+            "source": "workers/_shared/services/manual-transcript-source.ts",
+            "sourceLine": 43
+          },
+          {
+            "name": "fetch",
+            "url": "script-0.mjs",
+            "line": 17972,
+            "samples": 2,
+            "source": "workers/app/p5-27-local-diagnostic.ts",
+            "sourceLine": 21
+          },
+          {
+            "name": "hashRawText",
+            "url": "script-0.mjs",
+            "line": 14566,
+            "samples": 2,
+            "source": "workers/_shared/services/manual-transcript-source.ts",
+            "sourceLine": 62
+          },
+          {
+            "name": "when._a3.when",
+            "url": "script-0.mjs",
+            "line": 1981,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+            "sourceLine": 320
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3048,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 833
+          },
+          {
+            "name": "(garbage collector)",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "isObject",
+            "url": "script-0.mjs",
+            "line": 805,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+            "sourceLine": 142
+          }
+        ]
+      }
+    },
+    {
+      "name": "baseline-typical",
+      "count": 10,
+      "results": [
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 0,
+          "profile": "typical",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 11,
+          "queries": 24,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 1,
+          "profile": "typical",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 11,
+          "queries": 24,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 2,
+          "profile": "typical",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 11,
+          "queries": 24,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 3,
+          "profile": "typical",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 11,
+          "queries": 24,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 4,
+          "profile": "typical",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 11,
+          "queries": 24,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 5,
+          "profile": "typical",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 11,
+          "queries": 24,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 6,
+          "profile": "typical",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 11,
+          "queries": 24,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 7,
+          "profile": "typical",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 11,
+          "queries": 24,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 8,
+          "profile": "typical",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 11,
+          "queries": 24,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 9,
+          "profile": "typical",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 11,
+          "queries": 24,
+          "operationReads": 1,
+          "replayCount": 0
+        }
+      ],
+      "heapBefore": {
+        "usedSize": 10606748,
+        "totalSize": 15929344,
+        "embedderHeapUsedSize": 386904,
+        "backingStorageSize": 4257251
+      },
+      "heapAfter": {
+        "usedSize": 10241460,
+        "totalSize": 19165184,
+        "embedderHeapUsedSize": 386904,
+        "backingStorageSize": 392768
+      },
+      "profile": {
+        "samples": 56,
+        "selfFrames": [
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17579,
+            "samples": 10,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 597
+          },
+          {
+            "name": "toJson",
+            "url": "cloudflare-internal:d1-api",
+            "line": 624,
+            "samples": 4
+          },
+          {
+            "name": "(idle)",
+            "url": "",
+            "line": 0,
+            "samples": 3
+          },
+          {
+            "name": "(anonymous)",
+            "url": "",
+            "line": 0,
+            "samples": 3
+          },
+          {
+            "name": "add",
+            "url": "script-0.mjs",
+            "line": 16385,
+            "samples": 3,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 26
+          },
+          {
+            "name": "digest",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "string4",
+            "url": "script-0.mjs",
+            "line": 16389,
+            "samples": 2,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 27
+          },
+          {
+            "name": "_send",
+            "url": "cloudflare-internal:d1-api",
+            "line": 196,
+            "samples": 2
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 2905,
+            "samples": 2,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 682
+          },
+          {
+            "name": "runLeaf",
+            "url": "script-0.mjs",
+            "line": 17896,
+            "samples": 1,
+            "source": "workers/app/p5-27-preview-probe.ts",
+            "sourceLine": 26
+          },
+          {
+            "name": "all",
+            "url": "script-0.mjs",
+            "line": 17818,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-packed-spike.ts",
+            "sourceLine": 153
+          },
+          {
+            "name": "execute",
+            "url": "script-0.mjs",
+            "line": 17881,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-packed-spike.ts",
+            "sourceLine": 221
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3048,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 833
+          },
+          {
+            "name": "handleCatchall",
+            "url": "script-0.mjs",
+            "line": 2979,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 759
+          },
+          {
+            "name": "project",
+            "url": "script-0.mjs",
+            "line": 16507,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-references.ts",
+            "sourceLine": 36
+          },
+          {
+            "name": "encode",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "probeAttemptPacked",
+            "url": "script-0.mjs",
+            "line": 17546,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 564
+          },
+          {
+            "name": "visit",
+            "url": "script-0.mjs",
+            "line": 16404,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 41
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17394,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 429
+          },
+          {
+            "name": "readPackedHistorySnapshot",
+            "url": "script-0.mjs",
+            "line": 17826,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-packed-spike.ts",
+            "sourceLine": 163
+          },
+          {
+            "name": "rowRecord",
+            "url": "script-0.mjs",
+            "line": 17172,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 186
+          },
+          {
+            "name": "normalizeDef",
+            "url": "script-0.mjs",
+            "line": 2963,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 743
+          },
+          {
+            "name": "measureHistoryBatch",
+            "url": "script-0.mjs",
+            "line": 16459,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 95
+          },
+          {
+            "name": "enterSpan",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 3938,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 1786
+          },
+          {
+            "name": "normalizeExpectedRow",
+            "url": "script-0.mjs",
+            "line": 17478,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 491
+          },
+          {
+            "name": "add",
+            "url": "script-0.mjs",
+            "line": 16523,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-references.ts",
+            "sourceLine": 65
+          },
+          {
+            "name": "prepare",
+            "url": "cloudflare-internal:d1-api",
+            "line": 30,
+            "samples": 1
+          },
+          {
+            "name": "fetch",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "fetch",
+            "url": "script-0.mjs",
+            "line": 17972,
+            "samples": 1,
+            "source": "workers/app/p5-27-local-diagnostic.ts",
+            "sourceLine": 21
+          },
+          {
+            "name": "randomUUID",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "preparePlan",
+            "url": "script-0.mjs",
+            "line": 17329,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 359
+          },
+          {
+            "name": "(garbage collector)",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "(program)",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "baseline-boundary",
+      "count": 10,
+      "results": [
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 0,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 1,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 2,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 3,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 4,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 5,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 6,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 7,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 8,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        },
+        {
+          "status": 200,
+          "code": "P5_27_LEAF",
+          "runId": "p5-27-20260915-r2",
+          "index": 9,
+          "profile": "boundary",
+          "outcome": "updated",
+          "failureCode": null,
+          "mutationStatements": 21,
+          "queries": 34,
+          "operationReads": 1,
+          "replayCount": 0
+        }
+      ],
+      "heapBefore": {
+        "usedSize": 10241460,
+        "totalSize": 19165184,
+        "embedderHeapUsedSize": 386904,
+        "backingStorageSize": 392768
+      },
+      "heapAfter": {
+        "usedSize": 79457288,
+        "totalSize": 127582208,
+        "embedderHeapUsedSize": 52736,
+        "backingStorageSize": 5106431
+      },
+      "profile": {
+        "samples": 856,
+        "selfFrames": [
+          {
+            "name": "sameHistoryValue",
+            "url": "script-0.mjs",
+            "line": 16181,
+            "samples": 198,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 26
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 16187,
+            "samples": 153,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 32
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 395,
+            "samples": 145
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17479,
+            "samples": 74,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 492
+          },
+          {
+            "name": "_send",
+            "url": "cloudflare-internal:d1-api",
+            "line": 196,
+            "samples": 71
+          },
+          {
+            "name": "(garbage collector)",
+            "url": "",
+            "line": 0,
+            "samples": 46
+          },
+          {
+            "name": "toJson",
+            "url": "cloudflare-internal:d1-api",
+            "line": 624,
+            "samples": 28
+          },
+          {
+            "name": "string4",
+            "url": "script-0.mjs",
+            "line": 16389,
+            "samples": 26,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 27
+          },
+          {
+            "name": "add",
+            "url": "script-0.mjs",
+            "line": 16385,
+            "samples": 16,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 26
+          },
+          {
+            "name": "digest",
+            "url": "",
+            "line": 0,
+            "samples": 14
+          },
+          {
+            "name": "(program)",
+            "url": "",
+            "line": 0,
+            "samples": 12
+          },
+          {
+            "name": "visit",
+            "url": "script-0.mjs",
+            "line": 16404,
+            "samples": 8,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 41
+          },
+          {
+            "name": "_wrappedFetch",
+            "url": "cloudflare-internal:d1-api",
+            "line": 162,
+            "samples": 7
+          },
+          {
+            "name": "withinHistoryLimit",
+            "url": "script-0.mjs",
+            "line": 16379,
+            "samples": 6,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 17
+          },
+          {
+            "name": "json",
+            "url": "",
+            "line": 0,
+            "samples": 5
+          },
+          {
+            "name": "validText",
+            "url": "script-0.mjs",
+            "line": 15791,
+            "samples": 5,
+            "source": "workers/_shared/services/transcript-revisions.ts",
+            "sourceLine": 34
+          },
+          {
+            "name": "validateTextAndMetadata",
+            "url": "script-0.mjs",
+            "line": 14551,
+            "samples": 5,
+            "source": "workers/_shared/services/manual-transcript-source.ts",
+            "sourceLine": 43
+          },
+          {
+            "name": "(anonymous)",
+            "url": "",
+            "line": 0,
+            "samples": 4
+          },
+          {
+            "name": "groupedStatement",
+            "url": "script-0.mjs",
+            "line": 17228,
+            "samples": 3,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 247
+          },
+          {
+            "name": "text",
+            "url": "",
+            "line": 0,
+            "samples": 3
+          },
+          {
+            "name": "(idle)",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3844,
+            "samples": 2,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 1688
+          },
+          {
+            "name": "fetch",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "inst._zod.run",
+            "url": "script-0.mjs",
+            "line": 2356,
+            "samples": 2,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 92
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 606,
+            "samples": 1
+          },
+          {
+            "name": "freeze",
+            "url": "script-0.mjs",
+            "line": 15780,
+            "samples": 1,
+            "source": "workers/_shared/services/transcript-revisions.ts",
+            "sourceLine": 23
+          },
+          {
+            "name": "resolveBatchOutcome",
+            "url": "script-0.mjs",
+            "line": 17604,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 672
+          },
+          {
+            "name": "normalizeExpectedRow",
+            "url": "script-0.mjs",
+            "line": 17478,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 491
+          },
+          {
+            "name": "defineLazy",
+            "url": "script-0.mjs",
+            "line": 729,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+            "sourceLine": 60
+          },
+          {
+            "name": "measureHistoryBatch",
+            "url": "script-0.mjs",
+            "line": 16459,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 95
+          },
+          {
+            "name": "exactRows",
+            "url": "script-0.mjs",
+            "line": 17484,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 496
+          },
+          {
+            "name": "_",
+            "url": "script-0.mjs",
+            "line": 565,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js",
+            "sourceLine": 38
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17230,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 250
+          },
+          {
+            "name": "integrity",
+            "url": "script-0.mjs",
+            "line": 16885,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-reader.ts",
+            "sourceLine": 82
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 2280,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 8
+          },
+          {
+            "name": "encode",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "addGroupedRows",
+            "url": "script-0.mjs",
+            "line": 17249,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 273
+          },
+          {
+            "name": "compareAndSwap",
+            "url": "script-0.mjs",
+            "line": 17640,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 768
+          },
+          {
+            "name": "hashRawText",
+            "url": "script-0.mjs",
+            "line": 14566,
+            "samples": 1,
+            "source": "workers/_shared/services/manual-transcript-source.ts",
+            "sourceLine": 62
+          },
+          {
+            "name": "HistoryResourceLimitError",
+            "url": "script-0.mjs",
+            "line": 16375,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 14
+          },
+          {
+            "name": "escapeRegex",
+            "url": "script-0.mjs",
+            "line": 912,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+            "sourceLine": 257
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 2905,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 682
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 12735,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js",
+            "sourceLine": 56
+          }
+        ]
+      }
+    },
+    {
+      "name": "operation-typical",
+      "count": 10,
+      "results": [
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 4,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 4,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 9
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 6,
+              "statements": 11
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 10
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 11,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 19
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 2,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 4,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 6
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 4,
+              "statements": 11
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 8
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 11,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 14
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 2,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 6
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 5,
+              "statements": 11
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 8
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 11,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 14
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 3,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 6
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 5,
+              "statements": 11
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 9
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 11,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 15
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 4,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 2,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 6
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 4,
+              "statements": 11
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 9
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 11,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 15
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 3,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 9,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 12
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 4,
+              "statements": 11
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 5,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 10
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 11,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 22
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 3,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 1,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 5
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 3,
+              "statements": 11
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 4,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 7
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 11,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 12
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 3,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 1,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 4
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 4,
+              "statements": 11
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 2,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 7
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 11,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 11
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 3,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 2,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 6
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 3,
+              "statements": 11
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 4,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 8
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 11,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 14
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 4,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 7
+            },
+            {
+              "phase": "payload",
+              "wallMs": 1
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 8,
+              "statements": 11
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 12
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 11,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 20
+        }
+      ],
+      "heapBefore": {
+        "usedSize": 79457288,
+        "totalSize": 127582208,
+        "embedderHeapUsedSize": 52736,
+        "backingStorageSize": 5106431
+      },
+      "heapAfter": {
+        "usedSize": 86109156,
+        "totalSize": 127844352,
+        "embedderHeapUsedSize": 126088,
+        "backingStorageSize": 2133781
+      },
+      "profile": {
+        "samples": 21,
+        "selfFrames": [
+          {
+            "name": "TextEncoder",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "init",
+            "url": "script-0.mjs",
+            "line": 536,
+            "samples": 2,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js",
+            "sourceLine": 7
+          },
+          {
+            "name": "(anonymous)",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "digest",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "(idle)",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "readPackedHistorySnapshot",
+            "url": "script-0.mjs",
+            "line": 17826,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-packed-spike.ts",
+            "sourceLine": 163
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 12735,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js",
+            "sourceLine": 56
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 606,
+            "samples": 1
+          },
+          {
+            "name": "defineLazy",
+            "url": "script-0.mjs",
+            "line": 729,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+            "sourceLine": 60
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 2842,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 619
+          },
+          {
+            "name": "groupedStatement",
+            "url": "script-0.mjs",
+            "line": 17228,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 247
+          },
+          {
+            "name": "_sendOrThrow",
+            "url": "cloudflare-internal:d1-api",
+            "line": 183,
+            "samples": 1
+          },
+          {
+            "name": "inst._zod.check",
+            "url": "script-0.mjs",
+            "line": 2099,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+            "sourceLine": 437
+          },
+          {
+            "name": "inst._zod.run",
+            "url": "script-0.mjs",
+            "line": 2356,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 92
+          },
+          {
+            "name": "text",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "project",
+            "url": "script-0.mjs",
+            "line": 16507,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-references.ts",
+            "sourceLine": 36
+          },
+          {
+            "name": "toArrayOfObjects",
+            "url": "cloudflare-internal:d1-api",
+            "line": 591,
+            "samples": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "operation-boundary",
+      "count": 10,
+      "results": [
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 2,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 5
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 45,
+              "statements": 21
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 17,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 125
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 21,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 130
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 5,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 2,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 8
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 48,
+              "statements": 21
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 16,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 123
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 21,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 131
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 2,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 5
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 50,
+              "statements": 21
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 15,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 133
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 21,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 138
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 4,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 2,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 6
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 46,
+              "statements": 21
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 18,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 134
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 21,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 140
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 4,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 8
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 48,
+              "statements": 21
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 15,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 133
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 21,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 141
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 2,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 2,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 4
+            },
+            {
+              "phase": "payload",
+              "wallMs": 1
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 40,
+              "statements": 21
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 18,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 112
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 21,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 117
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 2,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 2,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 4
+            },
+            {
+              "phase": "payload",
+              "wallMs": 1
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 45,
+              "statements": 21
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 17,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 132
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 21,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 137
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 3,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 6
+            },
+            {
+              "phase": "payload",
+              "wallMs": 0
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 44,
+              "statements": 21
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 17,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 127
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 21,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 133
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 2,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 5
+            },
+            {
+              "phase": "payload",
+              "wallMs": 1
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 41,
+              "statements": 21
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 15,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 114
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 21,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 120
+        },
+        {
+          "status": 200,
+          "outcome": "updated",
+          "failureCode": null,
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 2,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 3,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 5
+            },
+            {
+              "phase": "payload",
+              "wallMs": 1
+            },
+            {
+              "phase": "batch-3",
+              "wallMs": 54,
+              "statements": 21
+            },
+            {
+              "phase": "batch-4",
+              "wallMs": 17,
+              "statements": 6
+            },
+            {
+              "phase": "execute",
+              "wallMs": 136
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 21,
+            "probeQueries": 6,
+            "operationReads": 1
+          },
+          "wallMs": 142
+        }
+      ],
+      "heapBefore": {
+        "usedSize": 86109156,
+        "totalSize": 127844352,
+        "embedderHeapUsedSize": 126088,
+        "backingStorageSize": 2133781
+      },
+      "heapAfter": {
+        "usedSize": 55194100,
+        "totalSize": 112353280,
+        "embedderHeapUsedSize": 110496,
+        "backingStorageSize": 5107479
+      },
+      "profile": {
+        "samples": 732,
+        "selfFrames": [
+          {
+            "name": "sameHistoryValue",
+            "url": "script-0.mjs",
+            "line": 16181,
+            "samples": 164,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 26
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 16187,
+            "samples": 155,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 32
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 395,
+            "samples": 114
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17479,
+            "samples": 58,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 492
+          },
+          {
+            "name": "_send",
+            "url": "cloudflare-internal:d1-api",
+            "line": 196,
+            "samples": 55
+          },
+          {
+            "name": "(garbage collector)",
+            "url": "",
+            "line": 0,
+            "samples": 36
+          },
+          {
+            "name": "string4",
+            "url": "script-0.mjs",
+            "line": 16389,
+            "samples": 30,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 27
+          },
+          {
+            "name": "toJson",
+            "url": "cloudflare-internal:d1-api",
+            "line": 624,
+            "samples": 21
+          },
+          {
+            "name": "(program)",
+            "url": "",
+            "line": 0,
+            "samples": 14
+          },
+          {
+            "name": "add",
+            "url": "script-0.mjs",
+            "line": 16385,
+            "samples": 10,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 26
+          },
+          {
+            "name": "digest",
+            "url": "",
+            "line": 0,
+            "samples": 9
+          },
+          {
+            "name": "withinHistoryLimit",
+            "url": "script-0.mjs",
+            "line": 16379,
+            "samples": 7,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 17
+          },
+          {
+            "name": "fetch",
+            "url": "",
+            "line": 0,
+            "samples": 5
+          },
+          {
+            "name": "_wrappedFetch",
+            "url": "cloudflare-internal:d1-api",
+            "line": 162,
+            "samples": 5
+          },
+          {
+            "name": "measureHistoryBatch",
+            "url": "script-0.mjs",
+            "line": 16459,
+            "samples": 4,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 95
+          },
+          {
+            "name": "validateTextAndMetadata",
+            "url": "script-0.mjs",
+            "line": 14551,
+            "samples": 4,
+            "source": "workers/_shared/services/manual-transcript-source.ts",
+            "sourceLine": 43
+          },
+          {
+            "name": "validText",
+            "url": "script-0.mjs",
+            "line": 15791,
+            "samples": 3,
+            "source": "workers/_shared/services/transcript-revisions.ts",
+            "sourceLine": 34
+          },
+          {
+            "name": "visit",
+            "url": "script-0.mjs",
+            "line": 16404,
+            "samples": 2,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 41
+          },
+          {
+            "name": "compareAndSwap",
+            "url": "script-0.mjs",
+            "line": 17640,
+            "samples": 2,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 768
+          },
+          {
+            "name": "encodeHistoryJson",
+            "url": "script-0.mjs",
+            "line": 16219,
+            "samples": 2,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 71
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 12735,
+            "samples": 2,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js",
+            "sourceLine": 56
+          },
+          {
+            "name": "setAttributes",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 18006,
+            "samples": 2,
+            "source": "workers/app/p5-27-local-diagnostic.ts",
+            "sourceLine": 48
+          },
+          {
+            "name": "(idle)",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "firstIfArray",
+            "url": "cloudflare-internal:d1-api",
+            "line": 586,
+            "samples": 1
+          },
+          {
+            "name": "historySha256",
+            "url": "script-0.mjs",
+            "line": 16215,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 65
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17485,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 497
+          },
+          {
+            "name": "verifyContent",
+            "url": "script-0.mjs",
+            "line": 15815,
+            "samples": 1,
+            "source": "workers/_shared/services/transcript-revisions.ts",
+            "sourceLine": 64
+          },
+          {
+            "name": "_",
+            "url": "script-0.mjs",
+            "line": 565,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js",
+            "sourceLine": 38
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3844,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 1688
+          },
+          {
+            "name": "get",
+            "url": "script-0.mjs",
+            "line": 18005,
+            "samples": 1,
+            "source": "workers/app/p5-27-local-diagnostic.ts",
+            "sourceLine": 46
+          },
+          {
+            "name": "defineLazy",
+            "url": "script-0.mjs",
+            "line": 729,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+            "sourceLine": 60
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3957,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 1807
+          },
+          {
+            "name": "HistoryResourceLimitError",
+            "url": "script-0.mjs",
+            "line": 16375,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 14
+          },
+          {
+            "name": "TextEncoder",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17663,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 791
+          },
+          {
+            "name": "batch",
+            "url": "cloudflare-internal:d1-api",
+            "line": 33,
+            "samples": 1
+          },
+          {
+            "name": "hashRawText",
+            "url": "script-0.mjs",
+            "line": 14566,
+            "samples": 1,
+            "source": "workers/_shared/services/manual-transcript-source.ts",
+            "sourceLine": 62
+          },
+          {
+            "name": "verifyJson",
+            "url": "script-0.mjs",
+            "line": 16189,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 37
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17581,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 600
+          },
+          {
+            "name": "init",
+            "url": "script-0.mjs",
+            "line": 536,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js",
+            "sourceLine": 7
+          },
+          {
+            "name": "normalizeExpectedRow",
+            "url": "script-0.mjs",
+            "line": 17478,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 491
+          },
+          {
+            "name": "json",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 3083,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 870
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17385,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 420
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3245,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 1037
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3048,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 833
+          },
+          {
+            "name": "groupedStatement",
+            "url": "script-0.mjs",
+            "line": 17228,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 247
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 175,
+            "samples": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "read-boundary",
+      "count": 10,
+      "results": [
+        {
+          "status": 200,
+          "outcome": "read",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 25,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 134,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 313
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 0,
+            "probeQueries": 0,
+            "operationReads": 0
+          }
+        },
+        {
+          "status": 200,
+          "outcome": "read",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 3,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 41,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 192
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 0,
+            "probeQueries": 0,
+            "operationReads": 0
+          }
+        },
+        {
+          "status": 200,
+          "outcome": "read",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 6,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 46,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 284
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 0,
+            "probeQueries": 0,
+            "operationReads": 0
+          }
+        },
+        {
+          "status": 200,
+          "outcome": "read",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 8,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 140,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 497
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 0,
+            "probeQueries": 0,
+            "operationReads": 0
+          }
+        },
+        {
+          "status": 200,
+          "outcome": "read",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 102,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 87,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 368
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 0,
+            "probeQueries": 0,
+            "operationReads": 0
+          }
+        },
+        {
+          "status": 200,
+          "outcome": "read",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 5,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 55,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 266
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 0,
+            "probeQueries": 0,
+            "operationReads": 0
+          }
+        },
+        {
+          "status": 200,
+          "outcome": "read",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 15,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 51,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 285
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 0,
+            "probeQueries": 0,
+            "operationReads": 0
+          }
+        },
+        {
+          "status": 200,
+          "outcome": "read",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 13,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 43,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 244
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 0,
+            "probeQueries": 0,
+            "operationReads": 0
+          }
+        },
+        {
+          "status": 200,
+          "outcome": "read",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 6,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 31,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 191
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 0,
+            "probeQueries": 0,
+            "operationReads": 0
+          }
+        },
+        {
+          "status": 200,
+          "outcome": "read",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 12,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 70,
+              "statements": 6
+            },
+            {
+              "phase": "read",
+              "wallMs": 294
+            }
+          ],
+          "metrics": {
+            "readQueries": 7,
+            "mutationStatements": 0,
+            "probeQueries": 0,
+            "operationReads": 0
+          }
+        }
+      ],
+      "heapBefore": {
+        "usedSize": 46605620,
+        "totalSize": 106446848,
+        "embedderHeapUsedSize": 43496,
+        "backingStorageSize": 5106824
+      },
+      "heapAfter": {
+        "usedSize": 112348620,
+        "totalSize": 181338112,
+        "embedderHeapUsedSize": 43496,
+        "backingStorageSize": 2460838
+      },
+      "profile": {
+        "samples": 1296,
+        "selfFrames": [
+          {
+            "name": "inst._zod.run",
+            "url": "script-0.mjs",
+            "line": 2356,
+            "samples": 291,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 92
+          },
+          {
+            "name": "runChecks",
+            "url": "script-0.mjs",
+            "line": 2301,
+            "samples": 267,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 33
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 2905,
+            "samples": 177,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 682
+          },
+          {
+            "name": "read",
+            "url": "script-0.mjs",
+            "line": 16926,
+            "samples": 146,
+            "source": "workers/_shared/repositories/sermon-history-reader.ts",
+            "sourceLine": 119
+          },
+          {
+            "name": "all",
+            "url": "script-0.mjs",
+            "line": 17818,
+            "samples": 90,
+            "source": "workers/_shared/repositories/sermon-history-packed-spike.ts",
+            "sourceLine": 153
+          },
+          {
+            "name": "visit",
+            "url": "script-0.mjs",
+            "line": 16404,
+            "samples": 49,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 41
+          },
+          {
+            "name": "toJson",
+            "url": "cloudflare-internal:d1-api",
+            "line": 624,
+            "samples": 43
+          },
+          {
+            "name": "(garbage collector)",
+            "url": "",
+            "line": 0,
+            "samples": 30
+          },
+          {
+            "name": "inst._zod.check",
+            "url": "script-0.mjs",
+            "line": 1713,
+            "samples": 27,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+            "sourceLine": 29
+          },
+          {
+            "name": "inst._zod.check",
+            "url": "script-0.mjs",
+            "line": 1792,
+            "samples": 22,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+            "sourceLine": 111
+          },
+          {
+            "name": "inst._zod.check",
+            "url": "script-0.mjs",
+            "line": 1741,
+            "samples": 17,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+            "sourceLine": 57
+          },
+          {
+            "name": "(program)",
+            "url": "",
+            "line": 0,
+            "samples": 16
+          },
+          {
+            "name": "handleArrayResult",
+            "url": "script-0.mjs",
+            "line": 2897,
+            "samples": 15,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 674
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 2719,
+            "samples": 10,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 490
+          },
+          {
+            "name": "digest",
+            "url": "",
+            "line": 0,
+            "samples": 8
+          },
+          {
+            "name": "createSermonHistoryOperationStore",
+            "url": "script-0.mjs",
+            "line": 17616,
+            "samples": 8,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 738
+          },
+          {
+            "name": "historySha256",
+            "url": "script-0.mjs",
+            "line": 16215,
+            "samples": 7,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 65
+          },
+          {
+            "name": "decodeHistoryJson",
+            "url": "script-0.mjs",
+            "line": 16244,
+            "samples": 7,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 87
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3048,
+            "samples": 5,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 833
+          },
+          {
+            "name": "(idle)",
+            "url": "",
+            "line": 0,
+            "samples": 3
+          },
+          {
+            "name": "handleCatchall",
+            "url": "script-0.mjs",
+            "line": 2979,
+            "samples": 3,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 759
+          },
+          {
+            "name": "init",
+            "url": "script-0.mjs",
+            "line": 536,
+            "samples": 3,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js",
+            "sourceLine": 7
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 117,
+            "samples": 3
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 16247,
+            "samples": 3,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 91
+          },
+          {
+            "name": "normalizeDef",
+            "url": "script-0.mjs",
+            "line": 2963,
+            "samples": 2,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 743
+          },
+          {
+            "name": "verifyRecordChecksum",
+            "url": "script-0.mjs",
+            "line": 16318,
+            "samples": 2,
+            "source": "workers/_shared/storage/history-record.ts",
+            "sourceLine": 53
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 606,
+            "samples": 2
+          },
+          {
+            "name": "handlePropertyResult",
+            "url": "script-0.mjs",
+            "line": 2936,
+            "samples": 2,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 714
+          },
+          {
+            "name": "result",
+            "url": "script-0.mjs",
+            "line": 17764,
+            "samples": 2,
+            "source": "workers/_shared/repositories/sermon-history-packed-spike.ts",
+            "sourceLine": 115
+          },
+          {
+            "name": "decode",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "fetch",
+            "url": "",
+            "line": 0,
+            "samples": 2
+          },
+          {
+            "name": "validateTextAndMetadata",
+            "url": "script-0.mjs",
+            "line": 14551,
+            "samples": 2,
+            "source": "workers/_shared/services/manual-transcript-source.ts",
+            "sourceLine": 43
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 18006,
+            "samples": 2,
+            "source": "workers/app/p5-27-local-diagnostic.ts",
+            "sourceLine": 48
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 12735,
+            "samples": 2,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js",
+            "sourceLine": 56
+          },
+          {
+            "name": "_installLazyMethods",
+            "url": "script-0.mjs",
+            "line": 12699,
+            "samples": 2,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js",
+            "sourceLine": 20
+          },
+          {
+            "name": "_wrappedFetch",
+            "url": "cloudflare-internal:d1-api",
+            "line": 162,
+            "samples": 1
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 13430,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js",
+            "sourceLine": 811
+          },
+          {
+            "name": "when._a3.when",
+            "url": "script-0.mjs",
+            "line": 1981,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+            "sourceLine": 320
+          },
+          {
+            "name": "inst._zod.check",
+            "url": "script-0.mjs",
+            "line": 1990,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+            "sourceLine": 329
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3844,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 1688
+          },
+          {
+            "name": "sameHistoryValue",
+            "url": "script-0.mjs",
+            "line": 16181,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 26
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 16187,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 32
+          },
+          {
+            "name": "set",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "parse3",
+            "url": "script-0.mjs",
+            "line": 16854,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-reader.ts",
+            "sourceLine": 43
+          },
+          {
+            "name": "verifyJson",
+            "url": "script-0.mjs",
+            "line": 16189,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 37
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17067,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-reader.ts",
+            "sourceLine": 209
+          },
+          {
+            "name": "withSpan",
+            "url": "cloudflare-internal:tracing-helpers",
+            "line": 34,
+            "samples": 1
+          },
+          {
+            "name": "(anonymous)",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "structuredClone",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "inst.safeParse",
+            "url": "script-0.mjs",
+            "line": 12748,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js",
+            "sourceLine": 74
+          },
+          {
+            "name": "Headers",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 218,
+            "samples": 1
+          },
+          {
+            "name": "array",
+            "url": "script-0.mjs",
+            "line": 96,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/external.js",
+            "sourceLine": 1
+          },
+          {
+            "name": "get",
+            "url": "script-0.mjs",
+            "line": 732,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+            "sourceLine": 62
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17624,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 751
+          },
+          {
+            "name": "text",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "setAttributes",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 2394,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 136
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3184,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 975
+          }
+        ]
+      }
+    },
+    {
+      "name": "race-boundary",
+      "count": 4,
+      "results": [
+        {
+          "status": 500,
+          "outcome": "caught",
+          "failureCode": "HISTORY_READ_CHANGED",
+          "phase": "read",
+          "winner": "updated",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 54,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 42,
+              "statements": 6
+            }
+          ],
+          "wallMs": 392
+        },
+        {
+          "status": 500,
+          "outcome": "caught",
+          "failureCode": "HISTORY_READ_CHANGED",
+          "phase": "read",
+          "winner": "updated",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 14,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 62,
+              "statements": 6
+            }
+          ],
+          "wallMs": 512
+        },
+        {
+          "status": 500,
+          "outcome": "caught",
+          "failureCode": "HISTORY_READ_CHANGED",
+          "phase": "read",
+          "winner": "updated",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 12,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 47,
+              "statements": 6
+            }
+          ],
+          "wallMs": 435
+        },
+        {
+          "status": 500,
+          "outcome": "caught",
+          "failureCode": "HISTORY_READ_CHANGED",
+          "phase": "read",
+          "winner": "updated",
+          "spans": [
+            {
+              "phase": "batch-1",
+              "wallMs": 8,
+              "statements": 1
+            },
+            {
+              "phase": "batch-2",
+              "wallMs": 53,
+              "statements": 6
+            }
+          ],
+          "wallMs": 464
+        }
+      ],
+      "heapBefore": {
+        "usedSize": 112348620,
+        "totalSize": 181338112,
+        "embedderHeapUsedSize": 43496,
+        "backingStorageSize": 2460838
+      },
+      "heapAfter": {
+        "usedSize": 87043240,
+        "totalSize": 135114752,
+        "embedderHeapUsedSize": 109248,
+        "backingStorageSize": 5106824
+      },
+      "profile": {
+        "samples": 669,
+        "selfFrames": [
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 16187,
+            "samples": 137,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 32
+          },
+          {
+            "name": "sameHistoryValue",
+            "url": "script-0.mjs",
+            "line": 16181,
+            "samples": 130,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 26
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 395,
+            "samples": 92
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 17479,
+            "samples": 57,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 492
+          },
+          {
+            "name": "(garbage collector)",
+            "url": "",
+            "line": 0,
+            "samples": 55
+          },
+          {
+            "name": "_send",
+            "url": "cloudflare-internal:d1-api",
+            "line": 196,
+            "samples": 47
+          },
+          {
+            "name": "toJson",
+            "url": "cloudflare-internal:d1-api",
+            "line": 624,
+            "samples": 34
+          },
+          {
+            "name": "string4",
+            "url": "script-0.mjs",
+            "line": 16389,
+            "samples": 23,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 27
+          },
+          {
+            "name": "(program)",
+            "url": "",
+            "line": 0,
+            "samples": 18
+          },
+          {
+            "name": "fetch",
+            "url": "",
+            "line": 0,
+            "samples": 11
+          },
+          {
+            "name": "add",
+            "url": "script-0.mjs",
+            "line": 16385,
+            "samples": 10,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 26
+          },
+          {
+            "name": "(idle)",
+            "url": "",
+            "line": 0,
+            "samples": 7
+          },
+          {
+            "name": "digest",
+            "url": "",
+            "line": 0,
+            "samples": 6
+          },
+          {
+            "name": "withinHistoryLimit",
+            "url": "script-0.mjs",
+            "line": 16379,
+            "samples": 5,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 17
+          },
+          {
+            "name": "init",
+            "url": "script-0.mjs",
+            "line": 536,
+            "samples": 4,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js",
+            "sourceLine": 7
+          },
+          {
+            "name": "visit",
+            "url": "script-0.mjs",
+            "line": 16404,
+            "samples": 4,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 41
+          },
+          {
+            "name": "validateTextAndMetadata",
+            "url": "script-0.mjs",
+            "line": 14551,
+            "samples": 3,
+            "source": "workers/_shared/services/manual-transcript-source.ts",
+            "sourceLine": 43
+          },
+          {
+            "name": "_wrappedFetch",
+            "url": "cloudflare-internal:d1-api",
+            "line": 162,
+            "samples": 2
+          },
+          {
+            "name": "groupedStatement",
+            "url": "script-0.mjs",
+            "line": 17228,
+            "samples": 1,
+            "source": "workers/_shared/repositories/sermon-history-writer.ts",
+            "sourceLine": 247
+          },
+          {
+            "name": "text",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "toArrayOfObjects",
+            "url": "cloudflare-internal:d1-api",
+            "line": 591,
+            "samples": 1
+          },
+          {
+            "name": "_",
+            "url": "script-0.mjs",
+            "line": 565,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js",
+            "sourceLine": 38
+          },
+          {
+            "name": "encodeHistoryJson",
+            "url": "script-0.mjs",
+            "line": 16219,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 71
+          },
+          {
+            "name": "hashRawText",
+            "url": "script-0.mjs",
+            "line": 14566,
+            "samples": 1,
+            "source": "workers/_shared/services/manual-transcript-source.ts",
+            "sourceLine": 62
+          },
+          {
+            "name": "encode",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "_sendOrThrow",
+            "url": "cloudflare-internal:d1-api",
+            "line": 183,
+            "samples": 1
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 218,
+            "samples": 1
+          },
+          {
+            "name": "now",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "URL",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "hash2",
+            "url": "script-0.mjs",
+            "line": 15787,
+            "samples": 1,
+            "source": "workers/_shared/services/transcript-revisions.ts",
+            "sourceLine": 30
+          },
+          {
+            "name": "encodeHistoryRecord",
+            "url": "script-0.mjs",
+            "line": 16334,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-record.ts",
+            "sourceLine": 69
+          },
+          {
+            "name": "measureHistoryBatch",
+            "url": "script-0.mjs",
+            "line": 16459,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 95
+          },
+          {
+            "name": "(anonymous)",
+            "url": "cloudflare-internal:d1-api",
+            "line": 117,
+            "samples": 1
+          },
+          {
+            "name": "(anonymous)",
+            "url": "script-0.mjs",
+            "line": 13631,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js",
+            "sourceLine": 1028
+          },
+          {
+            "name": "setAttributes",
+            "url": "",
+            "line": 0,
+            "samples": 1
+          },
+          {
+            "name": "firstIfArray",
+            "url": "cloudflare-internal:d1-api",
+            "line": 586,
+            "samples": 1
+          },
+          {
+            "name": "runChecks",
+            "url": "script-0.mjs",
+            "line": 2301,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 33
+          },
+          {
+            "name": "inst._zod.parse",
+            "url": "script-0.mjs",
+            "line": 3048,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 833
+          },
+          {
+            "name": "handlePropertyResult",
+            "url": "script-0.mjs",
+            "line": 2936,
+            "samples": 1,
+            "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+            "sourceLine": 714
+          },
+          {
+            "name": "historySha256",
+            "url": "script-0.mjs",
+            "line": 16215,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-json-codec.ts",
+            "sourceLine": 65
+          },
+          {
+            "name": "verifyRecordChecksum",
+            "url": "script-0.mjs",
+            "line": 16318,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-record.ts",
+            "sourceLine": 53
+          },
+          {
+            "name": "HistoryResourceLimitError",
+            "url": "script-0.mjs",
+            "line": 16375,
+            "samples": 1,
+            "source": "workers/_shared/storage/history-resource-limits.ts",
+            "sourceLine": 14
+          }
+        ]
+      }
+    }
+  ],
+  "concurrent": {
+    "results": [
+      {
+        "status": 200,
+        "outcome": "updated",
+        "failureCode": null,
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 31,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 11,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 43
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "batch-3",
+            "wallMs": 138,
+            "statements": 21
+          },
+          {
+            "phase": "batch-4",
+            "wallMs": 54,
+            "statements": 6
+          },
+          {
+            "phase": "execute",
+            "wallMs": 431
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 21,
+          "probeQueries": 6,
+          "operationReads": 1
+        },
+        "wallMs": 475
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 170,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 960,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 1321
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 3
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 1325
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 171,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 1168,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 1524
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 7
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 1532
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 171,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 1412,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 1757
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 4
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 1762
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 171,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 1601,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 1918
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 1
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 1920
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 171,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 1755,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 2123
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 2
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 2126
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 171,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 1971,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 2336
+          },
+          {
+            "phase": "payload",
+            "wallMs": 7
+          },
+          {
+            "phase": "execute",
+            "wallMs": 7
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 2350
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 170,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 2188,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 2588
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 1
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 2590
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 170,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 2426,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 2792
+          },
+          {
+            "phase": "payload",
+            "wallMs": 0
+          },
+          {
+            "phase": "execute",
+            "wallMs": 2
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 2794
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 171,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 2638,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 3036
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 2
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 3039
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 171,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 2883,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 3233
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 2
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 3236
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 171,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 3084,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 3431
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 2
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 3434
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 171,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 3276,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 3592
+          },
+          {
+            "phase": "payload",
+            "wallMs": 0
+          },
+          {
+            "phase": "execute",
+            "wallMs": 2
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 3594
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 171,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 3428,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 3806
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 12
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 3819
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 170,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 3663,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 4021
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 3
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 4025
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 170,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 3866,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 4208
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 9
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 4218
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 56,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 158,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 369
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 6
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 376
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 56,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 327,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 544
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 2
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 547
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 56,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 500,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 676
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 2
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 679
+      },
+      {
+        "status": 200,
+        "outcome": "failed",
+        "failureCode": "TRANSCRIPT_REVISION_CONFLICT",
+        "spans": [
+          {
+            "phase": "batch-1",
+            "wallMs": 56,
+            "statements": 1
+          },
+          {
+            "phase": "batch-2",
+            "wallMs": 630,
+            "statements": 6
+          },
+          {
+            "phase": "read",
+            "wallMs": 850
+          },
+          {
+            "phase": "payload",
+            "wallMs": 1
+          },
+          {
+            "phase": "execute",
+            "wallMs": 1
+          }
+        ],
+        "metrics": {
+          "readQueries": 7,
+          "mutationStatements": 0,
+          "probeQueries": 0,
+          "operationReads": 1
+        },
+        "wallMs": 852
+      }
+    ],
+    "counts": [
+      1,
+      2,
+      2,
+      8,
+      1,
+      1
+    ],
+    "profile": {
+      "samples": 2776,
+      "selfFrames": [
+        {
+          "name": "inst._zod.run",
+          "url": "script-0.mjs",
+          "line": 2356,
+          "samples": 577,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 92
+        },
+        {
+          "name": "runChecks",
+          "url": "script-0.mjs",
+          "line": 2301,
+          "samples": 507,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 33
+        },
+        {
+          "name": "inst._zod.parse",
+          "url": "script-0.mjs",
+          "line": 2905,
+          "samples": 369,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 682
+        },
+        {
+          "name": "read",
+          "url": "script-0.mjs",
+          "line": 16926,
+          "samples": 250,
+          "source": "workers/_shared/repositories/sermon-history-reader.ts",
+          "sourceLine": 119
+        },
+        {
+          "name": "all",
+          "url": "script-0.mjs",
+          "line": 17818,
+          "samples": 216,
+          "source": "workers/_shared/repositories/sermon-history-packed-spike.ts",
+          "sourceLine": 153
+        },
+        {
+          "name": "toJson",
+          "url": "cloudflare-internal:d1-api",
+          "line": 624,
+          "samples": 96
+        },
+        {
+          "name": "(garbage collector)",
+          "url": "",
+          "line": 0,
+          "samples": 85
+        },
+        {
+          "name": "(program)",
+          "url": "",
+          "line": 0,
+          "samples": 74
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 16187,
+          "samples": 53,
+          "source": "workers/_shared/storage/history-json-codec.ts",
+          "sourceLine": 32
+        },
+        {
+          "name": "string4",
+          "url": "script-0.mjs",
+          "line": 16389,
+          "samples": 51,
+          "source": "workers/_shared/storage/history-resource-limits.ts",
+          "sourceLine": 27
+        },
+        {
+          "name": "add",
+          "url": "script-0.mjs",
+          "line": 16385,
+          "samples": 48,
+          "source": "workers/_shared/storage/history-resource-limits.ts",
+          "sourceLine": 26
+        },
+        {
+          "name": "sameHistoryValue",
+          "url": "script-0.mjs",
+          "line": 16181,
+          "samples": 32,
+          "source": "workers/_shared/storage/history-json-codec.ts",
+          "sourceLine": 26
+        },
+        {
+          "name": "inst._zod.check",
+          "url": "script-0.mjs",
+          "line": 1792,
+          "samples": 29,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+          "sourceLine": 111
+        },
+        {
+          "name": "inst._zod.check",
+          "url": "script-0.mjs",
+          "line": 1741,
+          "samples": 28,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+          "sourceLine": 57
+        },
+        {
+          "name": "validateTextAndMetadata",
+          "url": "script-0.mjs",
+          "line": 14551,
+          "samples": 23,
+          "source": "workers/_shared/services/manual-transcript-source.ts",
+          "sourceLine": 43
+        },
+        {
+          "name": "handleArrayResult",
+          "url": "script-0.mjs",
+          "line": 2897,
+          "samples": 23,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 674
+        },
+        {
+          "name": "digest",
+          "url": "",
+          "line": 0,
+          "samples": 22
+        },
+        {
+          "name": "(anonymous)",
+          "url": "cloudflare-internal:d1-api",
+          "line": 395,
+          "samples": 22
+        },
+        {
+          "name": "inst._zod.parse",
+          "url": "script-0.mjs",
+          "line": 2719,
+          "samples": 18,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 490
+        },
+        {
+          "name": "historySha256",
+          "url": "script-0.mjs",
+          "line": 16215,
+          "samples": 17,
+          "source": "workers/_shared/storage/history-json-codec.ts",
+          "sourceLine": 65
+        },
+        {
+          "name": "inst._zod.check",
+          "url": "script-0.mjs",
+          "line": 1713,
+          "samples": 16,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+          "sourceLine": 29
+        },
+        {
+          "name": "validateTranscriptState",
+          "url": "script-0.mjs",
+          "line": 15838,
+          "samples": 13,
+          "source": "workers/_shared/services/transcript-revisions.ts",
+          "sourceLine": 92
+        },
+        {
+          "name": "inst._zod.parse",
+          "url": "script-0.mjs",
+          "line": 3184,
+          "samples": 11,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 975
+        },
+        {
+          "name": "hashRawText",
+          "url": "script-0.mjs",
+          "line": 14566,
+          "samples": 11,
+          "source": "workers/_shared/services/manual-transcript-source.ts",
+          "sourceLine": 62
+        },
+        {
+          "name": "decodeHistoryJson",
+          "url": "script-0.mjs",
+          "line": 16244,
+          "samples": 11,
+          "source": "workers/_shared/storage/history-json-codec.ts",
+          "sourceLine": 87
+        },
+        {
+          "name": "_send",
+          "url": "cloudflare-internal:d1-api",
+          "line": 196,
+          "samples": 10
+        },
+        {
+          "name": "init",
+          "url": "script-0.mjs",
+          "line": 536,
+          "samples": 10,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js",
+          "sourceLine": 7
+        },
+        {
+          "name": "(idle)",
+          "url": "",
+          "line": 0,
+          "samples": 9
+        },
+        {
+          "name": "visit",
+          "url": "script-0.mjs",
+          "line": 16404,
+          "samples": 9,
+          "source": "workers/_shared/storage/history-resource-limits.ts",
+          "sourceLine": 41
+        },
+        {
+          "name": "text",
+          "url": "",
+          "line": 0,
+          "samples": 9
+        },
+        {
+          "name": "inst._zod.parse",
+          "url": "script-0.mjs",
+          "line": 3048,
+          "samples": 9,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 833
+        },
+        {
+          "name": "createSermonHistoryOperationStore",
+          "url": "script-0.mjs",
+          "line": 17616,
+          "samples": 9,
+          "source": "workers/_shared/repositories/sermon-history-writer.ts",
+          "sourceLine": 738
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 17479,
+          "samples": 6,
+          "source": "workers/_shared/repositories/sermon-history-writer.ts",
+          "sourceLine": 492
+        },
+        {
+          "name": "structuredClone",
+          "url": "",
+          "line": 0,
+          "samples": 6
+        },
+        {
+          "name": "validText",
+          "url": "script-0.mjs",
+          "line": 15791,
+          "samples": 5,
+          "source": "workers/_shared/services/transcript-revisions.ts",
+          "sourceLine": 34
+        },
+        {
+          "name": "aborted",
+          "url": "script-0.mjs",
+          "line": 1165,
+          "samples": 5,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+          "sourceLine": 524
+        },
+        {
+          "name": "_wrappedFetch",
+          "url": "cloudflare-internal:d1-api",
+          "line": 162,
+          "samples": 4
+        },
+        {
+          "name": "defineLazy",
+          "url": "script-0.mjs",
+          "line": 729,
+          "samples": 4,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+          "sourceLine": 60
+        },
+        {
+          "name": "withinHistoryLimit",
+          "url": "script-0.mjs",
+          "line": 16379,
+          "samples": 4,
+          "source": "workers/_shared/storage/history-resource-limits.ts",
+          "sourceLine": 17
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 16247,
+          "samples": 4,
+          "source": "workers/_shared/storage/history-json-codec.ts",
+          "sourceLine": 91
+        },
+        {
+          "name": "fetch",
+          "url": "",
+          "line": 0,
+          "samples": 3
+        },
+        {
+          "name": "inst._zod.check",
+          "url": "script-0.mjs",
+          "line": 2099,
+          "samples": 3,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+          "sourceLine": 437
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 12735,
+          "samples": 3,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js",
+          "sourceLine": 56
+        },
+        {
+          "name": "json",
+          "url": "",
+          "line": 0,
+          "samples": 2
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 2280,
+          "samples": 2,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 8
+        },
+        {
+          "name": "normalizeDef",
+          "url": "script-0.mjs",
+          "line": 2963,
+          "samples": 2,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 743
+        },
+        {
+          "name": "mergeDefs",
+          "url": "script-0.mjs",
+          "line": 762,
+          "samples": 2,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+          "sourceLine": 95
+        },
+        {
+          "name": "result",
+          "url": "script-0.mjs",
+          "line": 17764,
+          "samples": 2,
+          "source": "workers/_shared/repositories/sermon-history-packed-spike.ts",
+          "sourceLine": 115
+        },
+        {
+          "name": "escapeRegex",
+          "url": "script-0.mjs",
+          "line": 912,
+          "samples": 2,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+          "sourceLine": 257
+        },
+        {
+          "name": "encode",
+          "url": "",
+          "line": 0,
+          "samples": 2
+        },
+        {
+          "name": "verifyJson",
+          "url": "script-0.mjs",
+          "line": 16189,
+          "samples": 2,
+          "source": "workers/_shared/storage/history-json-codec.ts",
+          "sourceLine": 37
+        },
+        {
+          "name": "TextEncoder",
+          "url": "",
+          "line": 0,
+          "samples": 2
+        },
+        {
+          "name": "handleCatchall",
+          "url": "script-0.mjs",
+          "line": 2979,
+          "samples": 2,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 759
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 3229,
+          "samples": 2,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 1021
+        },
+        {
+          "name": "inst.safeParse",
+          "url": "script-0.mjs",
+          "line": 12748,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js",
+          "sourceLine": 74
+        },
+        {
+          "name": "project",
+          "url": "script-0.mjs",
+          "line": 16507,
+          "samples": 1,
+          "source": "workers/_shared/storage/history-references.ts",
+          "sourceLine": 36
+        },
+        {
+          "name": "addD1MetaToSpan",
+          "url": "cloudflare-internal:d1-api",
+          "line": 640,
+          "samples": 1
+        },
+        {
+          "name": "toArrayOfObjects",
+          "url": "cloudflare-internal:d1-api",
+          "line": 591,
+          "samples": 1
+        },
+        {
+          "name": "fetch",
+          "url": "script-0.mjs",
+          "line": 17972,
+          "samples": 1,
+          "source": "workers/app/p5-27-local-diagnostic.ts",
+          "sourceLine": 21
+        },
+        {
+          "name": "optionalKeys",
+          "url": "script-0.mjs",
+          "line": 977,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js",
+          "sourceLine": 323
+        },
+        {
+          "name": "projectHistoryReferences",
+          "url": "script-0.mjs",
+          "line": 16500,
+          "samples": 1,
+          "source": "workers/_shared/storage/history-references.ts",
+          "sourceLine": 32
+        },
+        {
+          "name": "freeze3",
+          "url": "script-0.mjs",
+          "line": 17130,
+          "samples": 1,
+          "source": "workers/_shared/repositories/sermon-history-writer.ts",
+          "sourceLine": 118
+        },
+        {
+          "name": "readState",
+          "url": "script-0.mjs",
+          "line": 15833,
+          "samples": 1,
+          "source": "workers/_shared/services/transcript-revisions.ts",
+          "sourceLine": 85
+        },
+        {
+          "name": "verifyCandidateHistory",
+          "url": "script-0.mjs",
+          "line": 15514,
+          "samples": 1,
+          "source": "workers/_shared/services/sermon-candidates.ts",
+          "sourceLine": 121
+        },
+        {
+          "name": "execute",
+          "url": "script-0.mjs",
+          "line": 17881,
+          "samples": 1,
+          "source": "workers/_shared/repositories/sermon-history-packed-spike.ts",
+          "sourceLine": 221
+        },
+        {
+          "name": "reject",
+          "url": "script-0.mjs",
+          "line": 15773,
+          "samples": 1,
+          "source": "workers/_shared/services/transcript-revisions.ts",
+          "sourceLine": 18
+        },
+        {
+          "name": "when._a3.when",
+          "url": "script-0.mjs",
+          "line": 1981,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js",
+          "sourceLine": 320
+        },
+        {
+          "name": "handlePropertyResult",
+          "url": "script-0.mjs",
+          "line": 2936,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 714
+        },
+        {
+          "name": "preflightHistoryState",
+          "url": "script-0.mjs",
+          "line": 16438,
+          "samples": 1,
+          "source": "workers/_shared/storage/history-resource-limits.ts",
+          "sourceLine": 74
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 17067,
+          "samples": 1,
+          "source": "workers/_shared/repositories/sermon-history-reader.ts",
+          "sourceLine": 209
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 3939,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 1787
+        },
+        {
+          "name": "get",
+          "url": "script-0.mjs",
+          "line": 3022,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 806
+        },
+        {
+          "name": "inst._zod.parse",
+          "url": "script-0.mjs",
+          "line": 3844,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 1688
+        },
+        {
+          "name": "page",
+          "url": "script-0.mjs",
+          "line": 17761,
+          "samples": 1,
+          "source": "workers/_shared/repositories/sermon-history-packed-spike.ts",
+          "sourceLine": 112
+        },
+        {
+          "name": "verifyCorrectionHistory",
+          "url": "script-0.mjs",
+          "line": 14665,
+          "samples": 1,
+          "source": "workers/_shared/services/transcript-corrections.ts",
+          "sourceLine": 82
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 3843,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 1685
+        },
+        {
+          "name": "TextDecoder",
+          "url": "",
+          "line": 0,
+          "samples": 1
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 17054,
+          "samples": 1,
+          "source": "workers/_shared/repositories/sermon-history-reader.ts",
+          "sourceLine": 198
+        },
+        {
+          "name": "_array",
+          "url": "script-0.mjs",
+          "line": 11065,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/api.js",
+          "sourceLine": 711
+        },
+        {
+          "name": "inst._zod.parse",
+          "url": "script-0.mjs",
+          "line": 3361,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 1160
+        },
+        {
+          "name": "historyJsonBytes",
+          "url": "script-0.mjs",
+          "line": 16382,
+          "samples": 1,
+          "source": "workers/_shared/storage/history-resource-limits.ts",
+          "sourceLine": 23
+        },
+        {
+          "name": "pages",
+          "url": "script-0.mjs",
+          "line": 16911,
+          "samples": 1,
+          "source": "workers/_shared/repositories/sermon-history-reader.ts",
+          "sourceLine": 103
+        },
+        {
+          "name": "verifyContent",
+          "url": "script-0.mjs",
+          "line": 15815,
+          "samples": 1,
+          "source": "workers/_shared/services/transcript-revisions.ts",
+          "sourceLine": 64
+        },
+        {
+          "name": "_",
+          "url": "script-0.mjs",
+          "line": 565,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js",
+          "sourceLine": 38
+        },
+        {
+          "name": "integrity",
+          "url": "script-0.mjs",
+          "line": 16885,
+          "samples": 1,
+          "source": "workers/_shared/repositories/sermon-history-reader.ts",
+          "sourceLine": 82
+        },
+        {
+          "name": "InvalidTranscript",
+          "url": "script-0.mjs",
+          "line": 15767,
+          "samples": 1,
+          "source": "workers/_shared/services/transcript-revisions.ts",
+          "sourceLine": 15
+        },
+        {
+          "name": "(anonymous)",
+          "url": "",
+          "line": 0,
+          "samples": 1
+        },
+        {
+          "name": "(anonymous)",
+          "url": "cloudflare-internal:d1-api",
+          "line": 606,
+          "samples": 1
+        },
+        {
+          "name": "(anonymous)",
+          "url": "cloudflare-internal:d1-api",
+          "line": 117,
+          "samples": 1
+        },
+        {
+          "name": "now",
+          "url": "",
+          "line": 0,
+          "samples": 1
+        },
+        {
+          "name": "inst._zod.parse",
+          "url": "script-0.mjs",
+          "line": 2394,
+          "samples": 1,
+          "source": "node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js",
+          "sourceLine": 136
+        },
+        {
+          "name": "(anonymous)",
+          "url": "script-0.mjs",
+          "line": 16217,
+          "samples": 1,
+          "source": "workers/_shared/storage/history-json-codec.ts",
+          "sourceLine": 67
+        },
+        {
+          "name": "currentBinding",
+          "url": "script-0.mjs",
+          "line": 15251,
+          "samples": 1,
+          "source": "workers/_shared/services/sermon-summary.ts",
+          "sourceLine": 26
+        },
+        {
+          "name": "hash2",
+          "url": "script-0.mjs",
+          "line": 15787,
+          "samples": 1,
+          "source": "workers/_shared/services/transcript-revisions.ts",
+          "sourceLine": 30
+        }
+      ]
+    }
+  },
+  "source": "scripts/p5-27-profile-local.mjs",
+  "caveats": [
+    "Local diagnostic, not remote billed CPU",
+    "Self samples are counts, not milliseconds",
+    "Endpoint heap samples are not peak and include diagnostic/GC/order effects",
+    "Four deterministic read races do not prove the historical remote failures had this cause"
+  ],
+  "rawProfileSha256": {
+    "wrapper-boundary": "3c23ba63fa3ce295135f32783c17f40d24e09176359fab21ef054a583f757c35",
+    "payload-boundary": "a922cea3e9eef25eacbfb3e30376809de74fa6bc64e31ae260b2c2e470d7160a",
+    "baseline-typical": "a80a71b5d954cf517b550defa0fee83a79b33cd696d57a91ac97b383b1887a85",
+    "baseline-boundary": "e7f4a740c3e2ad2e0d751a998f4ba1589fd922dcefdb236efa657cc7891aa816",
+    "operation-typical": "e0b99d0aeb8a5822f8d661c3b147fc6efb5f47bacbcff39e35b9b31f43e84a4d",
+    "operation-boundary": "03e30226e503454f833a144a0c88f661936c1e4f0f4bb511019c8b1d5c9c5154",
+    "read-boundary": "8a0729a3817f52d415d73e7f10ebe6ab70fbf0915c3fd57e4515fdac83963c0c",
+    "race-boundary": "195a0db3d100a706d7c9bb273ba7c5e52415f1e258b8f7fd32acd682d0b2a103",
+    "concurrent": "6ce81f558c65cf4837b6c1b86e55a59a845002be6e2ff6e3a28b74af213992a5"
+  }
+}

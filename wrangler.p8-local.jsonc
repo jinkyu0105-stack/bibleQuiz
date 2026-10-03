@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "biblequiz-p8-synthetic-only",
+  "main": "./workers/app/index.ts",
+  "compatibility_date": "2026-08-25",
+  "workers_dev": false,
+  "preview_urls": false,
+  "vars": {"OPERATIONS_ENVIRONMENT":"local","BACKUP_ENABLED":"false","OPERATIONS_CRON_ENABLED":"true","DRAFT_CLEANUP_ENABLED":"false","PUBLIC_RATE_LIMIT_ENABLED":"true"},
+  "d1_databases": [{"binding":"DB","database_name":"biblequiz-p8-synthetic-only","database_id":"00000000-0000-0000-0000-000000000002","migrations_dir":"./migrations"}],
+  "triggers": {"crons":["*/5 * * * *"]},
+  "ratelimits": [
+    {"name":"PUBLIC_SESSION_LIMIT","namespace_id":"80101","simple":{"limit":100,"period":10}},
+    {"name":"PUBLIC_ACTOR_LIMIT","namespace_id":"80102","simple":{"limit":6,"period":10}},
+    {"name":"PUBLIC_GUEST_LIMIT","namespace_id":"80103","simple":{"limit":100,"period":10}}
+  ]
+}

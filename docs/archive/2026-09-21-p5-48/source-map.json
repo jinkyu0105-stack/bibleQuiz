@@ -1,0 +1,3179 @@
+{
+  "routes": [
+    {
+      "source": "AGENTS.md",
+      "anchor": "biblequiz-저장소-작업-지침",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#biblequiz-저장소-작업-지침"
+    },
+    {
+      "source": "AGENTS.md",
+      "anchor": "작업-시작-순서",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#작업-시작-순서"
+    },
+    {
+      "source": "AGENTS.md",
+      "anchor": "문서의-역할",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#문서의-역할"
+    },
+    {
+      "source": "AGENTS.md",
+      "anchor": "사용자와-소통",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#사용자와-소통"
+    },
+    {
+      "source": "AGENTS.md",
+      "anchor": "작업-번호5시간-한도세션-전환",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#작업-번호5시간-한도세션-전환"
+    },
+    {
+      "source": "AGENTS.md",
+      "anchor": "개발-환경과-패키지",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#개발-환경과-패키지"
+    },
+    {
+      "source": "AGENTS.md",
+      "anchor": "코드와-데이터-안전",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#코드와-데이터-안전"
+    },
+    {
+      "source": "AGENTS.md",
+      "anchor": "cloudflare-환경-경계",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#cloudflare-환경-경계"
+    },
+    {
+      "source": "AGENTS.md",
+      "anchor": "검사-기준",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#검사-기준"
+    },
+    {
+      "source": "AGENTS.md",
+      "anchor": "git과-인수인계",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#git과-인수인계"
+    },
+    {
+      "source": "AGENTS.md",
+      "anchor": "프런트엔드와-이미지-작업-시점",
+      "target": "docs/archive/2026-09-21-p5-48/AGENTS.record.md#프런트엔드와-이미지-작업-시점"
+    },
+    {
+      "source": "README.md",
+      "anchor": "이번-주의-말씀--낱말-퀴즈",
+      "target": "docs/archive/2026-09-21-p5-48/README.record.md#이번-주의-말씀--낱말-퀴즈"
+    },
+    {
+      "source": "README.md",
+      "anchor": "프로젝트-문서-지도",
+      "target": "docs/archive/2026-09-21-p5-48/README.record.md#프로젝트-문서-지도"
+    },
+    {
+      "source": "README.md",
+      "anchor": "아주-간단한-구조",
+      "target": "docs/archive/2026-09-21-p5-48/README.record.md#아주-간단한-구조"
+    },
+    {
+      "source": "README.md",
+      "anchor": "개발-환경",
+      "target": "docs/archive/2026-09-21-p5-48/README.record.md#개발-환경"
+    },
+    {
+      "source": "README.md",
+      "anchor": "실행",
+      "target": "docs/archive/2026-09-21-p5-48/README.record.md#실행"
+    },
+    {
+      "source": "README.md",
+      "anchor": "검사",
+      "target": "docs/archive/2026-09-21-p5-48/README.record.md#검사"
+    },
+    {
+      "source": "README.md",
+      "anchor": "보호된-preview",
+      "target": "docs/archive/2026-09-21-p5-48/README.record.md#보호된-preview"
+    },
+    {
+      "source": "README.md",
+      "anchor": "github-자동-preview-배포",
+      "target": "docs/archive/2026-09-21-p5-48/README.record.md#github-자동-preview-배포"
+    },
+    {
+      "source": "README.md",
+      "anchor": "아직-연결하지-않은-항목",
+      "target": "docs/archive/2026-09-21-p5-48/README.record.md#아직-연결하지-않은-항목"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "다사랑교회-이번-주의-말씀--낱말-퀴즈-구현-명세",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#다사랑교회-이번-주의-말씀--낱말-퀴즈-구현-명세"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "0-이-문서의-역할",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#0-이-문서의-역할"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "빠른-탐색",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#빠른-탐색"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "01-상태-용어",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#01-상태-용어"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "02-한눈에-보는-핵심-결정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#02-한눈에-보는-핵심-결정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "03-v1-범위",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#03-v1-범위"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1-제품-목표와-원칙",
+      "target": "docs/spec/product.md#1-제품-목표와-원칙"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "11-목표",
+      "target": "docs/spec/product.md#11-목표"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "12-비가역적-원칙",
+      "target": "docs/spec/product.md#12-비가역적-원칙"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "13-ai-고지-문구",
+      "target": "docs/spec/product.md#13-ai-고지-문구"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "2-사용자권한정보-구조",
+      "target": "docs/spec/users.md#2-사용자권한정보-구조"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "21-사용자-역할",
+      "target": "docs/spec/users.md#21-사용자-역할"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "22-필수-경로",
+      "target": "docs/spec/users.md#22-필수-경로"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "23-최신-퀴즈-페이지-순서",
+      "target": "docs/spec/users.md#23-최신-퀴즈-페이지-순서"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "24-난이도-전환",
+      "target": "docs/spec/users.md#24-난이도-전환"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "25-지난-퀴즈-목록",
+      "target": "docs/spec/users.md#25-지난-퀴즈-목록"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "26-관리자-대시보드-첫-화면",
+      "target": "docs/spec/users.md#26-관리자-대시보드-첫-화면"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "27-관리자-6단계-작업-화면",
+      "target": "docs/spec/users.md#27-관리자-6단계-작업-화면"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "3-반응형-화면-사양",
+      "target": "docs/spec/responsive.md#3-반응형-화면-사양"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "31-고정-수치",
+      "target": "docs/spec/responsive.md#31-고정-수치"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "32-크게-보기",
+      "target": "docs/spec/responsive.md#32-크게-보기"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "33-다크모드",
+      "target": "docs/spec/responsive.md#33-다크모드"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "34-접근성-기준",
+      "target": "docs/spec/responsive.md#34-접근성-기준"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "4-퍼즐-콘텐츠와-가변-격자-배치-규칙",
+      "target": "docs/spec/puzzle.md#4-퍼즐-콘텐츠와-가변-격자-배치-규칙"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "41-난이도별-콘텐츠",
+      "target": "docs/spec/puzzle.md#41-난이도별-콘텐츠"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "42-정답-언어-규칙과-관리자-판단",
+      "target": "docs/spec/puzzle.md#42-정답-언어-규칙과-관리자-판단"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "43-교차와-연결-하드-게이트",
+      "target": "docs/spec/puzzle.md#43-교차와-연결-하드-게이트"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "44-가변-배치-생성기",
+      "target": "docs/spec/puzzle.md#44-가변-배치-생성기"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-12-검수-후보-배치-연결합성-검증--2026-09-09",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-12-검수-후보-배치-연결합성-검증--2026-09-09"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "45-발행-검증-보고서",
+      "target": "docs/spec/puzzle.md#45-발행-검증-보고서"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-13-최종-검사-입력-계약합성-검증--2026-09-09",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-13-최종-검사-입력-계약합성-검증--2026-09-09"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-14-최종-검사-메타데이터-입력-계약합성-검증--2026-09-09",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-14-최종-검사-메타데이터-입력-계약합성-검증--2026-09-09"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-15-ai-최종-감사-경고-only-계약합성-검증--2026-09-09",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-15-ai-최종-감사-경고-only-계약합성-검증--2026-09-09"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "46-발행-후-불변성",
+      "target": "docs/spec/puzzle.md#46-발행-후-불변성"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "5-한글-ime-입력-설계",
+      "target": "docs/spec/ime.md#5-한글-ime-입력-설계"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "51-핵심-선택",
+      "target": "docs/spec/ime.md#51-핵심-선택"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "52-입력-상태",
+      "target": "docs/spec/ime.md#52-입력-상태"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "53-조합-이벤트-규칙",
+      "target": "docs/spec/ime.md#53-조합-이벤트-규칙"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "54-키보드와-모바일-조작",
+      "target": "docs/spec/ime.md#54-키보드와-모바일-조작"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "55-자동-이동",
+      "target": "docs/spec/ime.md#55-자동-이동"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "56-임시-저장",
+      "target": "docs/spec/ime.md#56-임시-저장"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "6-서버-채점과-정답-노출-정책",
+      "target": "docs/spec/scoring.md#6-서버-채점과-정답-노출-정책"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "61-서버에서-최종-채점의-의미",
+      "target": "docs/spec/scoring.md#61-서버에서-최종-채점의-의미"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "62-채점-기준",
+      "target": "docs/spec/scoring.md#62-채점-기준"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "63-제출-후-즉시-정답-공개",
+      "target": "docs/spec/scoring.md#63-제출-후-즉시-정답-공개"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "631-내-답안과-정답-비교-화면",
+      "target": "docs/spec/scoring.md#631-내-답안과-정답-비교-화면"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "64-참여자의-실제-제출-답안-공개",
+      "target": "docs/spec/scoring.md#64-참여자의-실제-제출-답안-공개"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "65-제출-답안-저장과-노출-경계",
+      "target": "docs/spec/scoring.md#65-제출-답안-저장과-노출-경계"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "66-지난-퀴즈-풀어보기-practice-내부-모드",
+      "target": "docs/spec/scoring.md#66-지난-퀴즈-풀어보기-practice-내부-모드"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "7-제출중복-방지악성-내용-방어",
+      "target": "docs/spec/submissions.md#7-제출중복-방지악성-내용-방어"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "71-제출-전-조건",
+      "target": "docs/spec/submissions.md#71-제출-전-조건"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "72-익명-세션",
+      "target": "docs/spec/submissions.md#72-익명-세션"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "73-turnstile",
+      "target": "docs/spec/submissions.md#73-turnstile"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "74-멱등성과-속도-제한",
+      "target": "docs/spec/submissions.md#74-멱등성과-속도-제한"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "75-이름-규칙",
+      "target": "docs/spec/submissions.md#75-이름-규칙"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "76-코멘트-규칙",
+      "target": "docs/spec/submissions.md#76-코멘트-규칙"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "77-답안-격자-문자열-검사",
+      "target": "docs/spec/submissions.md#77-답안-격자-문자열-검사"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "78-렌더링요청-보안",
+      "target": "docs/spec/submissions.md#78-렌더링요청-보안"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "8-리더보드참여-기록관리자-조치",
+      "target": "docs/spec/leaderboard.md#8-리더보드참여-기록관리자-조치"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "81-정렬",
+      "target": "docs/spec/leaderboard.md#81-정렬"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "82-제출자-전용-참여-현황판",
+      "target": "docs/spec/leaderboard.md#82-제출자-전용-참여-현황판"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "83-참여-현황--top-n-애니메이션",
+      "target": "docs/spec/leaderboard.md#83-참여-현황--top-n-애니메이션"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "84-정답자top-n-카드",
+      "target": "docs/spec/leaderboard.md#84-정답자top-n-카드"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "85-숨김삭제",
+      "target": "docs/spec/leaderboard.md#85-숨김삭제"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "86-보존-기본값",
+      "target": "docs/spec/leaderboard.md#86-보존-기본값"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "9-이미지인쇄-내보내기",
+      "target": "docs/spec/export.md#9-이미지인쇄-내보내기"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "91-공통-원칙",
+      "target": "docs/spec/export.md#91-공통-원칙"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "911-dpi와-파일-형식",
+      "target": "docs/spec/export.md#911-dpi와-파일-형식"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "92-주보-편집용-빈-격자와-문제-텍스트",
+      "target": "docs/spec/export.md#92-주보-편집용-빈-격자와-문제-텍스트"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "93-a4-정답자top-n-벽보",
+      "target": "docs/spec/export.md#93-a4-정답자top-n-벽보"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "94-출력-qa",
+      "target": "docs/spec/export.md#94-출력-qa"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "10-시각-디자인과-이미지-자산",
+      "target": "docs/spec/design.md#10-시각-디자인과-이미지-자산"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "101-공통-디자인-방향",
+      "target": "docs/spec/design.md#101-공통-디자인-방향"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "102-장년용-이미지",
+      "target": "docs/spec/design.md#102-장년용-이미지"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "103-어린이용-이미지",
+      "target": "docs/spec/design.md#103-어린이용-이미지"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "104-데스크톱모바일-자산",
+      "target": "docs/spec/design.md#104-데스크톱모바일-자산"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "105-스크림과-가독성",
+      "target": "docs/spec/design.md#105-스크림과-가독성"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "106-디자인-토큰-초안",
+      "target": "docs/spec/design.md#106-디자인-토큰-초안"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "11-매주-발행-흐름",
+      "target": "docs/spec/generation.md#11-매주-발행-흐름"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "111-콘텐츠-상태",
+      "target": "docs/spec/generation.md#111-콘텐츠-상태"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1111-설교일발행일영구-slug",
+      "target": "docs/spec/generation.md#1111-설교일발행일영구-slug"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "112-관리자-주간-절차",
+      "target": "docs/spec/generation.md#112-관리자-주간-절차"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1121-마감-실행과-실패-안전장치",
+      "target": "docs/spec/generation.md#1121-마감-실행과-실패-안전장치"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "113-youtube-자막",
+      "target": "docs/spec/generation.md#113-youtube-자막"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "현재-운영-제약과-v1-결정--2026-08-13-확정",
+      "target": "docs/spec/generation.md#현재-운영-제약과-v1-결정--2026-08-13-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "입력자료-용어와-수정-범위--2026-09-15-확정",
+      "target": "docs/spec/generation.md#입력자료-용어와-수정-범위--2026-09-15-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "설교-자막-최대-3만-자--2026-09-16-d-033",
+      "target": "docs/spec/generation.md#설교-자막-최대-3만-자--2026-09-16-d-033"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "저장-처리-범위-축소--2026-09-15-확정",
+      "target": "docs/spec/generation.md#저장-처리-범위-축소--2026-09-15-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-06-수동-입력-계약검증-경계--2026-09-08",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-06-수동-입력-계약검증-경계--2026-09-08"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-07-불변-원본작업-revision사람-최종-확정-계약--2026-09-08",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-07-불변-원본작업-revision사람-최종-확정-계약--2026-09-08"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-08-선택적-교정-제안항목-결정merged-revision-계약--2026-09-08",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-08-선택적-교정-제안항목-결정merged-revision-계약--2026-09-08"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1131-자막-검수ai-교정최종-확정",
+      "target": "docs/spec/generation.md#1131-자막-검수ai-교정최종-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "114-ai-생성-경계와-품질-우선-원칙--2026-08-13-확정",
+      "target": "docs/spec/generation.md#114-ai-생성-경계와-품질-우선-원칙--2026-08-13-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-16-provider-중립-structured-output-adapter-계약--2026-09-09",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-16-provider-중립-structured-output-adapter-계약--2026-09-09"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "설교-의도-분석-절차",
+      "target": "docs/spec/generation.md#설교-의도-분석-절차"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-09-설교-의도-분석사람-수정확정-계약--2026-09-08",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-09-설교-의도-분석사람-수정확정-계약--2026-09-08"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-10-확정-의도-기반-설교-요약-초안-계약--2026-09-08",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-10-확정-의도-기반-설교-요약-초안-계약--2026-09-08"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-11-어린이장년-답단서-후보-계약--2026-09-09",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-11-어린이장년-답단서-후보-계약--2026-09-09"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "115-관리자-ai-검수-화면--2026-08-17-갱신",
+      "target": "docs/spec/generation.md#115-관리자-ai-검수-화면--2026-08-17-갱신"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "설교-등록",
+      "target": "docs/spec/generation.md#설교-등록"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "설교-의도-분석-패널",
+      "target": "docs/spec/generation.md#설교-의도-분석-패널"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "ai-요약-패널",
+      "target": "docs/spec/generation.md#ai-요약-패널"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "어린이장년-문제-검수-패널",
+      "target": "docs/spec/generation.md#어린이장년-문제-검수-패널"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "최종-미리보기발행",
+      "target": "docs/spec/generation.md#최종-미리보기발행"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "116-추후-youtube-채널-자동화",
+      "target": "docs/spec/generation.md#116-추후-youtube-채널-자동화"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "12-성경-본문-출처정확성장절-ui",
+      "target": "docs/spec/bible.md#12-성경-본문-출처정확성장절-ui"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "121-조사-결론과-실행-결정--2026-08-13-갱신",
+      "target": "docs/spec/bible.md#121-조사-결론과-실행-결정--2026-08-13-갱신"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "122-후보-비교",
+      "target": "docs/spec/bible.md#122-후보-비교"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "공개-api와-사용-허가의-구분",
+      "target": "docs/spec/bible.md#공개-api와-사용-허가의-구분"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "123-허가-취득-실행-계획",
+      "target": "docs/spec/bible.md#123-허가-취득-실행-계획"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "a-대한성서공회-무료-사용-가능-여부-문의--선택-후속-작업",
+      "target": "docs/spec/bible.md#a-대한성서공회-무료-사용-가능-여부-문의--선택-후속-작업"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "b-apibible의-개역개정-제공-여부-확인--저비용-병행-조사",
+      "target": "docs/spec/bible.md#b-apibible의-개역개정-제공-여부-확인--저비용-병행-조사"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "c-응답-관리와-승인",
+      "target": "docs/spec/bible.md#c-응답-관리와-승인"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "124-본문-모드",
+      "target": "docs/spec/bible.md#124-본문-모드"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "125-판본-레지스트리",
+      "target": "docs/spec/bible.md#125-판본-레지스트리"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "126-자연어-입력과-선택-ui",
+      "target": "docs/spec/bible.md#126-자연어-입력과-선택-ui"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "13-cloudflarereact-spa-기술-구조",
+      "target": "docs/spec/architecture.md#13-cloudflarereact-spa-기술-구조"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "130-기술-스택-상담-상태",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#130-기술-스택-상담-상태"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "운영자-프로필--2026-08-12-확정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#운영자-프로필--2026-08-12-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "런타임패키지-관리자--2026-08-25-확정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#런타임패키지-관리자--2026-08-25-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-1-최초-scaffold-범위--2026-08-25-확정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-1-최초-scaffold-범위--2026-08-25-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-1-scaffold-구현-결과--2026-08-25",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-1-scaffold-구현-결과--2026-08-25"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-1-d1-기초-구현-결과--2026-08-26",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-1-d1-기초-구현-결과--2026-08-26"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-1-preview-d1-연결-결과--2026-08-26",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-1-preview-d1-연결-결과--2026-08-26"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "예상-이용-규모--2026-08-12-확정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#예상-이용-규모--2026-08-12-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "비용-원칙--2026-08-12-확정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#비용-원칙--2026-08-12-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "배포-기반-결정--2026-08-13-최초-확정-2026-08-25-workers로-전환-확정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#배포-기반-결정--2026-08-13-최초-확정-2026-08-25-workers로-전환-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "프런트엔드-프레임워크-결정--2026-08-13-확정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#프런트엔드-프레임워크-결정--2026-08-13-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "uicss-결정--2026-08-13-확정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#uicss-결정--2026-08-13-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "서버-api-구성-결정--2026-08-13-최초-확정-2026-08-25-worker-진입점으로-변경",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#서버-api-구성-결정--2026-08-13-최초-확정-2026-08-25-worker-진입점으로-변경"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "d1-데이터-접근-결정--2026-08-13-확정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#d1-데이터-접근-결정--2026-08-13-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "131-구성-요소를-쉬운-말로-설명",
+      "target": "docs/spec/architecture.md#131-구성-요소를-쉬운-말로-설명"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "132-구조도",
+      "target": "docs/spec/architecture.md#132-구조도"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "133-react-spa-실행-방식",
+      "target": "docs/spec/architecture.md#133-react-spa-실행-방식"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "134-환경-분리",
+      "target": "docs/spec/architecture.md#134-환경-분리"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "135-관리자-인증",
+      "target": "docs/spec/architecture.md#135-관리자-인증"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "136-secrets와-bindings",
+      "target": "docs/spec/architecture.md#136-secrets와-bindings"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "137-콘텐츠ai-백그라운드-작업--2026-08-13-확정",
+      "target": "docs/spec/architecture.md#137-콘텐츠ai-백그라운드-작업--2026-08-13-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "무료-cpu-한도와-비용-판단",
+      "target": "docs/spec/architecture.md#무료-cpu-한도와-비용-판단"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "138-테스트관측배포-안전망--2026-08-13-확정",
+      "target": "docs/spec/architecture.md#138-테스트관측배포-안전망--2026-08-13-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "자동-검사-계층",
+      "target": "docs/spec/architecture.md#자동-검사-계층"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "localpreviewproduction-분리",
+      "target": "docs/spec/architecture.md#localpreviewproduction-분리"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "장기-구현-작업의-추적한도세션-규칙--2026-09-03-확정",
+      "target": "docs/spec/architecture.md#장기-구현-작업의-추적한도세션-규칙--2026-09-03-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "오류-기록과-개인정보",
+      "target": "docs/spec/architecture.md#오류-기록과-개인정보"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "139-백업과-통합-비용사용량-대시보드--2026-08-24-확정",
+      "target": "docs/spec/architecture.md#139-백업과-통합-비용사용량-대시보드--2026-08-24-확정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "d1-time-travel--비공개-r2-주간-백업",
+      "target": "docs/spec/architecture.md#d1-time-travel--비공개-r2-주간-백업"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "관리자-비용사용량-영역",
+      "target": "docs/spec/architecture.md#관리자-비용사용량-영역"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1310-운영개발-매뉴얼-페이지--전체-기능-완료-뒤-구현",
+      "target": "docs/spec/architecture.md#1310-운영개발-매뉴얼-페이지--전체-기능-완료-뒤-구현"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14-d1-데이터-모델",
+      "target": "docs/spec/data-model.md#14-d1-데이터-모델"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "141-공통-규칙",
+      "target": "docs/spec/data-model.md#141-공통-규칙"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "142-성경-판본본문",
+      "target": "docs/spec/data-model.md#142-성경-판본본문"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "143-설교와-자막",
+      "target": "docs/spec/data-model.md#143-설교와-자막"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1431-p5-17-d1-저장-매핑casmetadataworkflow-선행-설계-점검--2026-09-10",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#1431-p5-17-d1-저장-매핑casmetadataworkflow-선행-설계-점검--2026-09-10"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1432-p5-18-비공개-설교-metadata-저장-기반--2026-09-10",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#1432-p5-18-비공개-설교-metadata-저장-기반--2026-09-10"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1433-p5-19-자막초안-이력의-물리-구조와-chunkcas-상세-설계--2026-09-10",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#1433-p5-19-자막초안-이력의-물리-구조와-chunkcas-상세-설계--2026-09-10"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1434-p5-20-자막초안-이력의-빈-물리-구조제약--2026-09-10",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#1434-p5-20-자막초안-이력의-빈-물리-구조제약--2026-09-10"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1435-p5-21-순수-저장-codec참조-투영-검증--2026-09-10",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#1435-p5-21-순수-저장-codec참조-투영-검증--2026-09-10"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1436-p5-22-일관된-이력-read-adapter격리-합성-검증--2026-09-11",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#1436-p5-22-일관된-이력-read-adapter격리-합성-검증--2026-09-11"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1437-p5-23-append-writercas격리-합성-검증--2026-09-11",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#1437-p5-23-append-writercas격리-합성-검증--2026-09-11"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1438-p5-24-누적-이력쓰기-batch-자원-경계--2026-09-12",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#1438-p5-24-누적-이력쓰기-batch-자원-경계--2026-09-12"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "1439-p5-25-무료-실행-예산에-맞춘-저장-호출-구조-설계--2026-09-12",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#1439-p5-25-무료-실행-예산에-맞춘-저장-호출-구조-설계--2026-09-12"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14310-p5-26-schema-없는-무료-실행-구조-격리-spike--2026-09-12",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14310-p5-26-schema-없는-무료-실행-구조-격리-spike--2026-09-12"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14311-p5-27-preview-격리-cpuisolate-계측--2026-09-13-진행-중",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14311-p5-27-preview-격리-cpuisolate-계측--2026-09-13-진행-중"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-27-메모리-검증-방법-변경--2026-09-16-d-032",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-27-메모리-검증-방법-변경--2026-09-16-d-032"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-27-로컬-저장-구조-축소--2026-09-16",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-27-로컬-저장-구조-축소--2026-09-16"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-27-새-경로-preview-격리-계측--2026-09-16",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-27-새-경로-preview-격리-계측--2026-09-16"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-27-첫-요청-초기화와-utf-8-변환-재사용--2026-09-16",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-27-첫-요청-초기화와-utf-8-변환-재사용--2026-09-16"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-27-중복-처리와-최초-저장-사전-조회-축소--2026-09-16",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-27-중복-처리와-최초-저장-사전-조회-축소--2026-09-16"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14312-p5-28a-관리자-입력자료-최초-저장조회-서버-연결--2026-09-16",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14312-p5-28a-관리자-입력자료-최초-저장조회-서버-연결--2026-09-16"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14313-p5-28b-관리자-자막-변경-명령-서버-연결--2026-09-16",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14313-p5-28b-관리자-자막-변경-명령-서버-연결--2026-09-16"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14314-p5-29-비공개-입력자료-이력선택-상세-조회-api--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14314-p5-29-비공개-입력자료-이력선택-상세-조회-api--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14315-p5-30-access-관리자-입력자료-화면-연결--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14315-p5-30-access-관리자-입력자료-화면-연결--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14316-p5-31-생성-작업workflow-영수증-물리-저장-상세-설계--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14316-p5-31-생성-작업workflow-영수증-물리-저장-상세-설계--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14317-p5-32-generation-jobreceiptdispatch-빈-물리-구조제약--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14317-p5-32-generation-jobreceiptdispatch-빈-물리-구조제약--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14318-p5-33-generation-저장-adapter합성-dispatchertransport--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14318-p5-33-generation-저장-adapter합성-dispatchertransport--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14319-p5-34-ai-결과호출별-usage-event-물리-저장-상세-설계--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14319-p5-34-ai-결과호출별-usage-event-물리-저장-상세-설계--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14320-p5-35-ai-결과provider-callusage-빈-물리-구조와-task-guard--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14320-p5-35-ai-결과provider-callusage-빈-물리-구조와-task-guard--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14321-p5-36-ai-결과usage-원자-commit-adapter와-exact-own-probe--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14321-p5-36-ai-결과usage-원자-commit-adapter와-exact-own-probe--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14322-p5-37-사람-content-검수final-ticket-물리-저장-상세-설계--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14322-p5-37-사람-content-검수final-ticket-물리-저장-상세-설계--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14323-p5-38-사람-content-currentfkfinal-ticket-input-guard-빈-물리-구조--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14323-p5-38-사람-content-currentfkfinal-ticket-input-guard-빈-물리-구조--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14324-p5-39-사람-contentfinal-ticket-private-runtime--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14324-p5-39-사람-contentfinal-ticket-private-runtime--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14325-p5-40-전체-generation-workflow-조립-상세-설계--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14325-p5-40-전체-generation-workflow-조립-상세-설계--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14326-p5-41-authoritydomain-bridge-계약과-순수-판정--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14326-p5-41-authoritydomain-bridge-계약과-순수-판정--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14327-p5-42-generation-lifecyclecontext-내구성-상세-설계--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14327-p5-42-generation-lifecyclecontext-내구성-상세-설계--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14328-p5-43-generation-lifecyclecontext-순수-계약전이-판정--2026-09-17",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14328-p5-43-generation-lifecyclecontext-순수-계약전이-판정--2026-09-17"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14329-p5-44-generation-lifecyclecontext-빈-물리-구조-후보--2026-09-18",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14329-p5-44-generation-lifecyclecontext-빈-물리-구조-후보--2026-09-18"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14330-p5-45-generation-lifecycle-private-저장조회자기-증거--2026-09-19",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14330-p5-45-generation-lifecycle-private-저장조회자기-증거--2026-09-19"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14331-p5-46-g03-저장도메인-연결-상세-설계--2026-09-19",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14331-p5-46-g03-저장도메인-연결-상세-설계--2026-09-19"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14332-p5-47-bounded-domain-순수-계약검증과-전이-회귀--2026-09-19",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14332-p5-47-bounded-domain-순수-계약검증과-전이-회귀--2026-09-19"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "14333-p5-48-출력-예산-정책저장-연결-설계-검토--2026-09-21",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#14333-p5-48-출력-예산-정책저장-연결-설계-검토--2026-09-21"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "144-주간-퀴즈",
+      "target": "docs/spec/data-model.md#144-주간-퀴즈"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "145-익명-세션과-제출",
+      "target": "docs/spec/data-model.md#145-익명-세션과-제출"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "146-필터와-감사-로그",
+      "target": "docs/spec/data-model.md#146-필터와-감사-로그"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "147-백업사용량-운영-데이터",
+      "target": "docs/spec/data-model.md#147-백업사용량-운영-데이터"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "148-필수-인덱스무결성",
+      "target": "docs/spec/data-model.md#148-필수-인덱스무결성"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "15-api-계약",
+      "target": "docs/spec/api.md#15-api-계약"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "151-공통-규칙",
+      "target": "docs/spec/api.md#151-공통-규칙"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "152-공개세션-api",
+      "target": "docs/spec/api.md#152-공개세션-api"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "153-제출-요청",
+      "target": "docs/spec/api.md#153-제출-요청"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "154-참여-현황top-n-응답",
+      "target": "docs/spec/api.md#154-참여-현황top-n-응답"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "155-관리자-api",
+      "target": "docs/spec/api.md#155-관리자-api"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "156-표준-오류",
+      "target": "docs/spec/api.md#156-표준-오류"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "16-권장-저장소-구조",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#16-권장-저장소-구조"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "17-구현-단계와-종료-조건",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#17-구현-단계와-종료-조건"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "170-진행-원칙과-전체-순서",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#170-진행-원칙과-전체-순서"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "개발-착수-역할-분담",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#개발-착수-역할-분담"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-0--출시-게이트와-운영-계정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-0--출시-게이트와-운영-계정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-0-대표-영상-자막-spike-기록--2026-08-24",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-0-대표-영상-자막-spike-기록--2026-08-24"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-1--프로젝트cloudflare-기반",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-1--프로젝트cloudflare-기반"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-2--퍼즐-도메인-엔진",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-2--퍼즐-도메인-엔진"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-2-구현-결과--2026-08-29",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-2-구현-결과--2026-08-29"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-3--공개-퀴즈와-한글-입력",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-3--공개-퀴즈와-한글-입력"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-3-첫-묶음-구현-결과--2026-08-31",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-3-첫-묶음-구현-결과--2026-08-31"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-3-두-번째-묶음-구현-결과--2026-08-31",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-3-두-번째-묶음-구현-결과--2026-08-31"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-3-전체-격자-맞춤-후속-변경--2026-08-31",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-3-전체-격자-맞춤-후속-변경--2026-08-31"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-3-공개-데이터-연결-구현-결과--2026-08-31",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-3-공개-데이터-연결-구현-결과--2026-08-31"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-3-지난-퀴즈-구현-결과--2026-09-01",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-3-지난-퀴즈-구현-결과--2026-09-01"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-3-실제-콘텐츠-통합-경로접근성-후속-결과--2026-09-01",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-3-실제-콘텐츠-통합-경로접근성-후속-결과--2026-09-01"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4--제출채점moderation",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4--제출채점moderation"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-제출-계약순수-서버-채점-첫-묶음--2026-09-01",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-제출-계약순수-서버-채점-첫-묶음--2026-09-01"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-d1-제출-저장중복-제약-두-번째-묶음--2026-09-01",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-d1-제출-저장중복-제약-두-번째-묶음--2026-09-01"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-익명-세션상태변경-요청-경계-세-번째-묶음--2026-09-01",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-익명-세션상태변경-요청-경계-세-번째-묶음--2026-09-01"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-moderationturnstile-서버-경계-네-번째-묶음--2026-09-01",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-moderationturnstile-서버-경계-네-번째-묶음--2026-09-01"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-moderation-d1-정책-다섯-번째-묶음--2026-09-01",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-moderation-d1-정책-다섯-번째-묶음--2026-09-01"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-최종-제출-서버-경로-여섯-번째-묶음--2026-09-01",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-최종-제출-서버-경로-여섯-번째-묶음--2026-09-01"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-브라우저-제출즉시-결과-일곱-번째-묶음--2026-09-0102",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-브라우저-제출즉시-결과-일곱-번째-묶음--2026-09-0102"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-본인-제출-조회복원-여덟-번째-묶음--2026-09-02",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-본인-제출-조회복원-여덟-번째-묶음--2026-09-02"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-참여-현황-서버-경계-아홉-번째-묶음--2026-09-02",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-참여-현황-서버-경계-아홉-번째-묶음--2026-09-02"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-참여-현황-브라우저-화면-열-번째-묶음--2026-09-02",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-참여-현황-브라우저-화면-열-번째-묶음--2026-09-02"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-참여-현황-top-n-전환-열한-번째-묶음--2026-09-02",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-참여-현황-top-n-전환-열한-번째-묶음--2026-09-02"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-본인-제출-삭제-서버-경계-열두-번째-묶음--2026-09-02",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-본인-제출-삭제-서버-경계-열두-번째-묶음--2026-09-02"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-본인-제출-삭제-브라우저-경계-열세-번째-묶음--2026-09-02",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-본인-제출-삭제-브라우저-경계-열세-번째-묶음--2026-09-02"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-공개-visible-제출-수-열네-번째-묶음--2026-09-02",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-공개-visible-제출-수-열네-번째-묶음--2026-09-02"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-원자적-마감-snapshot-writer-열다섯-번째-묶음--2026-09-02",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-원자적-마감-snapshot-writer-열다섯-번째-묶음--2026-09-02"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-공개-lazy-finalization-열여섯-번째-묶음--2026-09-02",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-공개-lazy-finalization-열여섯-번째-묶음--2026-09-02"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-정답-공개-strict-서버-경계-열일곱-번째-묶음--2026-09-03",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-정답-공개-strict-서버-경계-열일곱-번째-묶음--2026-09-03"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-정답-공개-브라우저-경계-열여덟-번째-묶음--2026-09-03",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-정답-공개-브라우저-경계-열여덟-번째-묶음--2026-09-03"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-지난-퀴즈-연습-채점-열아홉-번째-묶음--2026-09-03",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-지난-퀴즈-연습-채점-열아홉-번째-묶음--2026-09-03"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-scheduled관리자-즉시-마감-스무-번째-묶음--2026-09-03",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-scheduled관리자-즉시-마감-스무-번째-묶음--2026-09-03"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-삭제-감사보존-경계-스물한-번째-묶음--2026-09-03",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-삭제-감사보존-경계-스물한-번째-묶음--2026-09-03"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-4-access-관리자-제출-moderation-스물두-번째-묶음--2026-09-03",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-4-access-관리자-제출-moderation-스물두-번째-묶음--2026-09-03"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p4-23-운영-입력환경-승인안--2026-09-04",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p4-23-운영-입력환경-승인안--2026-09-04"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p4-24-phase-4-종료-회귀문서-점검--2026-09-07",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p4-24-phase-4-종료-회귀문서-점검--2026-09-07"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-5--성경자막주간-관리자-발행",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-5--성경자막주간-관리자-발행"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-01-성경-66권-metadata결정적-장절-parser--2026-09-07",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-01-성경-66권-metadata결정적-장절-parser--2026-09-07"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-02-access-관리자-성경-장절-strict-api--2026-09-07",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-02-access-관리자-성경-장절-strict-api--2026-09-07"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-03-access-관리자-성경-장절-입력선택-ui--2026-09-07",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-03-access-관리자-성경-장절-입력선택-ui--2026-09-07"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-04-허가형-성경-본문-provider-interface-경계--2026-09-07",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-04-허가형-성경-본문-provider-interface-경계--2026-09-07"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "p5-05-계정-없는-공개-자막-adapter-기술-spike--2026-09-08",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#p5-05-계정-없는-공개-자막-adapter-기술-spike--2026-09-08"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-6--주보a4-내보내기",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-6--주보a4-내보내기"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-7a7b--디자인-시안과-최종-시각-구현",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-7a7b--디자인-시안과-최종-시각-구현"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-7a-완료-기록--2026-08-29",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-7a-완료-기록--2026-08-29"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "phase-8--출시-qa와-운영-문서",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#phase-8--출시-qa와-운영-문서"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "18-이후-디자인이미지-스킬-사용-규칙",
+      "target": "docs/spec/design-workflow.md#18-이후-디자인이미지-스킬-사용-규칙"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "181-imagegen-frontend-web",
+      "target": "docs/spec/design-workflow.md#181-imagegen-frontend-web"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "182-기본-imagegen사용자가-말한-image-gem",
+      "target": "docs/spec/design-workflow.md#182-기본-imagegen사용자가-말한-image-gem"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "183-imagegen-frontend-mobile",
+      "target": "docs/spec/design-workflow.md#183-imagegen-frontend-mobile"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "184-design-taste-frontend",
+      "target": "docs/spec/design-workflow.md#184-design-taste-frontend"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "185-실행-순서",
+      "target": "docs/spec/design-workflow.md#185-실행-순서"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "19-테스트-계획",
+      "target": "docs/spec/testing.md#19-테스트-계획"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "191-단위-테스트",
+      "target": "docs/spec/testing.md#191-단위-테스트"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "192-api통합-테스트",
+      "target": "docs/spec/testing.md#192-api통합-테스트"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "193-자동-브라우저-e2e",
+      "target": "docs/spec/testing.md#193-자동-브라우저-e2e"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "194-실제-한글-ime-수동-행렬",
+      "target": "docs/spec/testing.md#194-실제-한글-ime-수동-행렬"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "195-반응형접근성-테스트",
+      "target": "docs/spec/testing.md#195-반응형접근성-테스트"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "196-출력-테스트",
+      "target": "docs/spec/testing.md#196-출력-테스트"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "197-성경콘텐츠-검증",
+      "target": "docs/spec/testing.md#197-성경콘텐츠-검증"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "198-성능-예산",
+      "target": "docs/spec/testing.md#198-성능-예산"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "20-위험과-대응",
+      "target": "docs/spec/risks.md#20-위험과-대응"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "21-v1-완료-정의",
+      "target": "docs/spec/release.md#21-v1-완료-정의"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "공개-사용자",
+      "target": "docs/spec/release.md#공개-사용자"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "관리자",
+      "target": "docs/spec/release.md#관리자"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "보안데이터",
+      "target": "docs/spec/release.md#보안데이터"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "성경콘텐츠",
+      "target": "docs/spec/release.md#성경콘텐츠"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "22-다음-세션-인수인계",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#22-다음-세션-인수인계"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "221-다음-개발-세션의-시작-순서",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#221-다음-개발-세션의-시작-순서"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "222-다시-묻지-않아도-되는-결정",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#222-다시-묻지-않아도-되는-결정"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "223-아직-입력확인이-필요한-항목",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#223-아직-입력확인이-필요한-항목"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "224-현재-작업-상태",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#224-현재-작업-상태"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "225-나중에-해야-할-일재검토-조건",
+      "target": "docs/archive/2026-09-21-p5-48/implementation.md#225-나중에-해야-할-일재검토-조건"
+    },
+    {
+      "source": "implementation.md",
+      "anchor": "23-용어집",
+      "target": "docs/spec/glossary.md#23-용어집"
+    },
+    {
+      "source": "docs/PROJECT_CONTEXT.md",
+      "anchor": "프로젝트-맥락",
+      "target": "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md#프로젝트-맥락"
+    },
+    {
+      "source": "docs/PROJECT_CONTEXT.md",
+      "anchor": "1-한-문장-목표",
+      "target": "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md#1-한-문장-목표"
+    },
+    {
+      "source": "docs/PROJECT_CONTEXT.md",
+      "anchor": "2-사용자와-운영-규모",
+      "target": "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md#2-사용자와-운영-규모"
+    },
+    {
+      "source": "docs/PROJECT_CONTEXT.md",
+      "anchor": "3-핵심-제품-흐름",
+      "target": "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md#3-핵심-제품-흐름"
+    },
+    {
+      "source": "docs/PROJECT_CONTEXT.md",
+      "anchor": "4-현재-기술-구조",
+      "target": "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md#4-현재-기술-구조"
+    },
+    {
+      "source": "docs/PROJECT_CONTEXT.md",
+      "anchor": "5-환경-분리",
+      "target": "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md#5-환경-분리"
+    },
+    {
+      "source": "docs/PROJECT_CONTEXT.md",
+      "anchor": "6-v1-범위",
+      "target": "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md#6-v1-범위"
+    },
+    {
+      "source": "docs/PROJECT_CONTEXT.md",
+      "anchor": "7-변경하면-안-되는-핵심-경계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md#7-변경하면-안-되는-핵심-경계"
+    },
+    {
+      "source": "docs/PROJECT_CONTEXT.md",
+      "anchor": "8-프로젝트의-공식-기억",
+      "target": "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md#8-프로젝트의-공식-기억"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "주요-결정-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#주요-결정-기록"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "기록-규칙",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#기록-규칙"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-001--상세-명세는-루트-implementationmd에-유지",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-001--상세-명세는-루트-implementationmd에-유지"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-002--cloudflare-workers--static-assets-단일-웹앱",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-002--cloudflare-workers--static-assets-단일-웹앱"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-003--d1--drizzle--검토된-sql-migration",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-003--d1--drizzle--검토된-sql-migration"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-004--node-24와-pnpm-11-단일화",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-004--node-24와-pnpm-11-단일화"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-005--preview와-production을-물리적으로-분리",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-005--preview와-production을-물리적으로-분리"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-006--관리자-인증은-cloudflare-access",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-006--관리자-인증은-cloudflare-access"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-007--일반-사용자는-회원가입-없이-익명-세션",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-007--일반-사용자는-회원가입-없이-익명-세션"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-008--성경은-개역개정-장절판본공식-링크만-표시",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-008--성경은-개역개정-장절판본공식-링크만-표시"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-009--ai는-내용-이해-코드는-퍼즐-배치",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-009--ai는-내용-이해-코드는-퍼즐-배치"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-010--설교-이해-품질을-ai-비용보다-우선",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-010--설교-이해-품질을-ai-비용보다-우선"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-011--자막은-공개-cc-우선-원본과-수정본을-보존",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-011--자막은-공개-cc-우선-원본과-수정본을-보존"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-012--출력은-웹-데이터에서-재현하고-ai를-다시-호출하지-않음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-012--출력은-웹-데이터에서-재현하고-ai를-다시-호출하지-않음"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-013--정적-이미지는-git-r2는-비공개-백업만",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-013--정적-이미지는-git-r2는-비공개-백업만"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-014--디자인은-시안-승인-뒤-구현",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-014--디자인은-시안-승인-뒤-구현"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-015--작은-화면에서는-칸을-줄여-퍼즐-전체-표시",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-015--작은-화면에서는-칸을-줄여-퍼즐-전체-표시"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-016--조합-중-명시적-클릭은-취소-후-이동",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-016--조합-중-명시적-클릭은-취소-후-이동"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-017--iphone-길게-누르기-붙여넣기는-v1-게이트에서-제외",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-017--iphone-길게-누르기-붙여넣기는-v1-게이트에서-제외"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-018--제출-재시도는-실제-내용-기준으로-재생",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-018--제출-재시도는-실제-내용-기준으로-재생"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-019--본인-제출-복원은-exact-session의-최소-응답",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-019--본인-제출-복원은-exact-session의-최소-응답"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-020--참여-현황은-상태별-접근과-고정-순위를-분리",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-020--참여-현황은-상태별-접근과-고정-순위를-분리"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-021--본인-삭제는-exact-owner의-멱등-tombstone-변경",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-021--본인-삭제는-exact-owner의-멱등-tombstone-변경"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-022--마감-순위와-archive-전환은-하나의-조건부-d1-batch로-확정",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-022--마감-순위와-archive-전환은-하나의-조건부-d1-batch로-확정"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-023--phase-작업은-고정-번호한도-게이트검증된-세션-경계로-추적",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-023--phase-작업은-고정-번호한도-게이트검증된-세션-경계로-추적"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-024--삭제-manifest는-pii-없이-복원-전-재적용하고-tombstone은-명시적-종료-경계에서만-purge",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-024--삭제-manifest는-pii-없이-복원-전-재적용하고-tombstone은-명시적-종료-경계에서만-purge"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-025--관리자-submission-moderation은-exact-상태-전이와-복원-안전-삭제를-한-batch로-확정",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-025--관리자-submission-moderation은-exact-상태-전이와-복원-안전-삭제를-한-batch로-확정"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-026--실제-turnstile은-preview-전용-widget부터-준비",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-026--실제-turnstile은-preview-전용-widget부터-준비"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-027--정답-비교는-두-격자를-항상-펼쳐서-표시",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-027--정답-비교는-두-격자를-항상-펼쳐서-표시"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-028--실제-moderation-목록은-관리자-화면에서-관리하고-공개-요청-제한은-production-게이트로-둔다",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-028--실제-moderation-목록은-관리자-화면에서-관리하고-공개-요청-제한은-production-게이트로-둔다"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-029--현재-생성-계약을-보존하는-d1-저장workflow-연결-경계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-029--현재-생성-계약을-보존하는-d1-저장workflow-연결-경계"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-030--입력자료-수정은-자막에만-허용",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-030--입력자료-수정은-자막에만-허용"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-031--저장-한-번의-처리-범위를-줄이고-수정본-3개-자동-삭제는-폐기",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-031--저장-한-번의-처리-범위를-줄이고-수정본-3개-자동-삭제는-폐기"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-032--p5-27-메모리-검증을-로컬-동시-부하와-원격-지표로-분리",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-032--p5-27-메모리-검증을-로컬-동시-부하와-원격-지표로-분리"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "anchor": "d-033--설교-자막-최대-3만-자",
+      "target": "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md#d-033--설교-자막-최대-3만-자"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "현재-구현-상태",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#현재-구현-상태"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "1-현재-위치",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#1-현재-위치"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "활성-작업-번호",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#활성-작업-번호"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-21--p5-48-사용자-방향-반영과도한-용량-정책-제안-철회",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-21--p5-48-사용자-방향-반영과도한-용량-정책-제안-철회"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-21--p5-48-총량-중심-비교안초과-동작-구체화--계속-검수-대기",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-21--p5-48-총량-중심-비교안초과-동작-구체화--계속-검수-대기"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-21--p5-48-출력-예산저장-연결-문서-검토--정책-검수-대기",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-21--p5-48-출력-예산저장-연결-문서-검토--정책-검수-대기"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-19--p5-47-bounded-domain-순수-계약검증전이-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-19--p5-47-bounded-domain-순수-계약검증전이-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-19--p5-46-g03-저장도메인-연결-상세-설계-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-19--p5-46-g03-저장도메인-연결-상세-설계-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-19--p5-45-private-lifecycle-저장조회자기-증거-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-19--p5-45-private-lifecycle-저장조회자기-증거-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-19--p5-44-빈-물리-구조guard격리-upgrade-rehearsal-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-19--p5-44-빈-물리-구조guard격리-upgrade-rehearsal-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-19--p5-44d-교정-성공-결과비용새-대기-원자-저장-검증-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-19--p5-44d-교정-성공-결과비용새-대기-원자-저장-검증-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-19--사용량-복구작업-단위-조정",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-19--사용량-복구작업-단위-조정"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-18--p5-44c-대기-소비-경쟁-부모-p5-44-진행-중",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-18--p5-44c-대기-소비-경쟁-부모-p5-44-진행-중"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-18--p5-44b-대기-진입pending-교정-등록-부모-p5-44-진행-중",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-18--p5-44b-대기-진입pending-교정-등록-부모-p5-44-진행-중"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-18--p5-44a-구조-후보기초-guard보존-검증-부모-p5-44-진행-중",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-18--p5-44a-구조-후보기초-guard보존-검증-부모-p5-44-진행-중"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-43-generation-lifecyclecontext-순수-계약전이-판정-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-43-generation-lifecyclecontext-순수-계약전이-판정-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-42-generation-lifecyclecontext-내구성-문서-설계-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-42-generation-lifecyclecontext-내구성-문서-설계-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-41-authoritydomain-bridge-순수-계약-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-41-authoritydomain-bridge-순수-계약-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-40-전체-generation-workflow-조립-상세-설계-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-40-전체-generation-workflow-조립-상세-설계-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-39-사람-contentfinal-ticket-private-runtime-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-39-사람-contentfinal-ticket-private-runtime-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-38-사람-content-currentfkfinal-ticket-input-guard-빈-물리-구조-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-38-사람-content-currentfkfinal-ticket-input-guard-빈-물리-구조-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-37-사람-content-검수final-ticket-물리-저장-상세-설계-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-37-사람-content-검수final-ticket-물리-저장-상세-설계-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-36-ai-결과usage-원자-commit-adapter와-exact-own-probe-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-36-ai-결과usage-원자-commit-adapter와-exact-own-probe-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-35-ai-결과provider-callusage-빈-물리-구조와-task-guard-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-35-ai-결과provider-callusage-빈-물리-구조와-task-guard-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-34-ai-결과호출별-usage-event-물리-저장-상세-설계-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-34-ai-결과호출별-usage-event-물리-저장-상세-설계-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-33-generation-저장-adapter합성-dispatchertransport-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-33-generation-저장-adapter합성-dispatchertransport-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-32-generation-빈-물리-구조db-제약과-격리-실패-주입-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-32-generation-빈-물리-구조db-제약과-격리-실패-주입-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-31-생성-작업workflow-영수증-저장-상세-설계-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-31-생성-작업workflow-영수증-저장-상세-설계-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-30-access-관리자-입력자료-화면-연결-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-30-access-관리자-입력자료-화면-연결-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-17--p5-29-비공개-입력자료-이력선택-상세-조회-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-17--p5-29-비공개-입력자료-이력선택-상세-조회-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-28-관리자-입력자료-저장조회-서버-연결-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-28-관리자-입력자료-저장조회-서버-연결-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-28a-관리자-입력자료-최초-저장조회-서버-연결",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-28a-관리자-입력자료-최초-저장조회-서버-연결"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-완료"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-자막-3만-자-원격-cpu-통과메모리-확인-전-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-자막-3만-자-원격-cpu-통과메모리-확인-전-기록"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-자막-3만-자-구현로컬-검증",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-자막-3만-자-구현로컬-검증"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-자막-3만-자-상한-확정d-033-이전-문서-단계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-자막-3만-자-상한-확정d-033-이전-문서-단계"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-10분-사전-검토이전-제안-d-033으로-우선순위-변경",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-10분-사전-검토이전-제안-d-033으로-우선순위-변경"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-cpu4-포함-코드중복-검사최초-사전-조회-축소",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-cpu4-포함-코드중복-검사최초-사전-조회-축소"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-첫-요청-초기화중복-변환-개선이전-cpu3-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-첫-요청-초기화중복-변환-개선이전-cpu3-기록"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-d-032-승인로컬20개-동시-메모리-검증",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-d-032-승인로컬20개-동시-메모리-검증"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-로그인-성공원격-메모리-측정-기능-한계-확인이전-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-로그인-성공원격-메모리-측정-기능-한계-확인이전-기록"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-공식-로그인-도구-준비사용자-로그인-대기이전-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-공식-로그인-도구-준비사용자-로그인-대기이전-기록"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-첫-요청-로컬-진단메모리-인증-확인",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-첫-요청-로컬-진단메모리-인증-확인"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-새-경로-원격-계측의존성-분리",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-새-경로-원격-계측의존성-분리"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-16--p5-27-로컬-원본-단독-저장명령별-선택-읽기",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-16--p5-27-로컬-원본-단독-저장명령별-선택-읽기"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-15--p5-27-네-저장-축소-정책-채택정상-성공-재조회-제거",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-15--p5-27-네-저장-축소-정책-채택정상-성공-재조회-제거"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-15--p5-27-입력자료-수정-범위-확정",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-15--p5-27-입력자료-수정-범위-확정"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-15--p5-27-저장-설계-재검토",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-15--p5-27-저장-설계-재검토"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-15--p5-27-d1-전송-검토",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-15--p5-27-d1-전송-검토"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-15--p5-27-바이트-처리-로컬-개선",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-15--p5-27-바이트-처리-로컬-개선"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-15--p5-27-로컬-cpu일반-실패-진단",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-15--p5-27-로컬-cpu일반-실패-진단"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-15--p5-27-원격-220회-실행cpu-gate-실패",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-15--p5-27-원격-220회-실행cpu-gate-실패"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-13--p5-27-preview-격리-cpuisolate-계측-1차-시도",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-13--p5-27-preview-격리-cpuisolate-계측-1차-시도"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-12--p5-26-schema-없는-무료-실행-구조-격리-spike",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-12--p5-26-schema-없는-무료-실행-구조-격리-spike"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-12--p5-25-무료-실행-구조-설계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-12--p5-25-무료-실행-구조-설계"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-12--p5-24-누적-이력쓰기-자원-경계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-12--p5-24-누적-이력쓰기-자원-경계"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-11--p5-23-append-writercas격리-합성-검증",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-11--p5-23-append-writercas격리-합성-검증"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-11--p5-22-일관된-이력-read-adapter격리-합성-검증",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-11--p5-22-일관된-이력-read-adapter격리-합성-검증"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-10--p5-21-순수-저장-codec참조-투영-검증",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-10--p5-21-순수-저장-codec참조-투영-검증"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-10--p5-20-빈-이력-구조제약과-격리-검증",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-10--p5-20-빈-이력-구조제약과-격리-검증"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-10--p5-19-자막초안-이력의-물리-구조chunkcas-상세-설계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-10--p5-19-자막초안-이력의-물리-구조chunkcas-상세-설계"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-10--p5-18-비공개-설교-metadata-저장-기반",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-10--p5-18-비공개-설교-metadata-저장-기반"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-10--p5-17-d1-저장-매핑workflow-선행-설계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-10--p5-17-d1-저장-매핑workflow-선행-설계"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-09--p5-16-provider-중립-structured-output-adapter",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-09--p5-16-provider-중립-structured-output-adapter"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-09--p5-15-ai-최종-감사-경고-only-계약합성-검증",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-09--p5-15-ai-최종-감사-경고-only-계약합성-검증"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-09--p5-14-최종-검사-메타데이터-입력-계약합성-검증",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-09--p5-14-최종-검사-메타데이터-입력-계약합성-검증"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-09--p5-13-최종-검사-입력-계약합성-검증",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-09--p5-13-최종-검사-입력-계약합성-검증"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-09--p5-12-검수-후보-가변-격자-배치-연결",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-09--p5-12-검수-후보-가변-격자-배치-연결"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-09--p5-11-어린이장년-답단서-후보-계약",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-09--p5-11-어린이장년-답단서-후보-계약"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-08--p5-10-확정-의도-기반-설교-요약-초안-계약",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-08--p5-10-확정-의도-기반-설교-요약-초안-계약"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-08--p5-09-설교-의도-분석사람-수정확정-계약",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-08--p5-09-설교-의도-분석사람-수정확정-계약"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-08--p5-08-선택적-교정-제안항목-결정merged-revision-계약",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-08--p5-08-선택적-교정-제안항목-결정merged-revision-계약"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-08--p5-07-불변-원본작업-revision사람-확정-계약",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-08--p5-07-불변-원본작업-revision사람-확정-계약"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-08--p5-06-수동-입력-fallback-계약검증-경계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-08--p5-06-수동-입력-fallback-계약검증-경계"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-08--p5-05-계정-없는-공개-자막-adapter-기술-spike",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-08--p5-05-계정-없는-공개-자막-adapter-기술-spike"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-07--p5-04-허가형-성경-본문-provider-interface-경계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-07--p5-04-허가형-성경-본문-provider-interface-경계"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-07--p5-03-관리자-성경-장절-입력선택-ui",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-07--p5-03-관리자-성경-장절-입력선택-ui"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-07--p5-02-access-관리자-성경-장절-strict-api",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-07--p5-02-access-관리자-성경-장절-strict-api"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-07--p5-01-성경-66권-metadata결정적-장절-parser",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-07--p5-01-성경-66권-metadata결정적-장절-parser"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-07--p4-24-phase-4-종료-회귀문서-점검",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-07--p4-24-phase-4-종료-회귀문서-점검"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-07--p4-23-결과-비교-수정-preview-활성화",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-07--p4-23-결과-비교-수정-preview-활성화"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2-단계별-상태",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2-단계별-상태"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "3-현재-코드로-동작하는-것",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#3-현재-코드로-동작하는-것"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "4-cloudflare-실제-자원",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#4-cloudflare-실제-자원"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "5-검증-결과",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#5-검증-결과"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-05--p4-23-합성-preview-검수-자료-준비",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-05--p4-23-합성-preview-검수-자료-준비"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-04--p4-23-운영-입력환경-승인안",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-04--p4-23-운영-입력환경-승인안"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-03--phase-4-access-관리자-제출-moderation-스물두-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-03--phase-4-access-관리자-제출-moderation-스물두-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-03--phase-4-삭제-감사보존-경계-스물한-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-03--phase-4-삭제-감사보존-경계-스물한-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-03--phase-4-scheduled관리자-즉시-마감-스무-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-03--phase-4-scheduled관리자-즉시-마감-스무-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-03--phase-4-지난-퀴즈-연습-채점-열아홉-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-03--phase-4-지난-퀴즈-연습-채점-열아홉-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-03--phase-4-정답-공개-브라우저-경계-열여덟-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-03--phase-4-정답-공개-브라우저-경계-열여덟-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-03--phase-4-정답-공개-strict-서버-경계-열일곱-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-03--phase-4-정답-공개-strict-서버-경계-열일곱-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-02--phase-4-공개-lazy-finalization-열여섯-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-02--phase-4-공개-lazy-finalization-열여섯-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-02--phase-4-원자적-마감-snapshot-writer-열다섯-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-02--phase-4-원자적-마감-snapshot-writer-열다섯-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-02--phase-4-공개-visible-제출-수-열네-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-02--phase-4-공개-visible-제출-수-열네-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-02--phase-4-본인-제출-삭제-브라우저-경계-열세-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-02--phase-4-본인-제출-삭제-브라우저-경계-열세-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-02--phase-4-본인-제출-삭제-서버-경계-열두-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-02--phase-4-본인-제출-삭제-서버-경계-열두-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-02--phase-4-참여-현황-top-n-전환-열한-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-02--phase-4-참여-현황-top-n-전환-열한-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-02--phase-4-참여-현황-브라우저-화면-열-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-02--phase-4-참여-현황-브라우저-화면-열-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-02--phase-4-참여-현황-서버-경계-아홉-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-02--phase-4-참여-현황-서버-경계-아홉-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-02--phase-4-본인-제출-조회복원-여덟-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-02--phase-4-본인-제출-조회복원-여덟-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-0102--phase-4-브라우저-제출즉시-결과-일곱-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-0102--phase-4-브라우저-제출즉시-결과-일곱-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--phase-4-최종-제출-서버-경로-여섯-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--phase-4-최종-제출-서버-경로-여섯-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--phase-4-moderation-d1-정책-다섯-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--phase-4-moderation-d1-정책-다섯-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--phase-4-moderationturnstile-경계-네-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--phase-4-moderationturnstile-경계-네-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--phase-4-익명-세션상태변경-요청-경계-세-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--phase-4-익명-세션상태변경-요청-경계-세-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--phase-4-d1-제출-저장중복-제약-두-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--phase-4-d1-제출-저장중복-제약-두-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--phase-4-제출-계약순수-서버-채점-첫-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--phase-4-제출-계약순수-서버-채점-첫-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--iphone-한국어-입력-안정화d-017-확정",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--iphone-한국어-입력-안정화d-017-확정"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--phase-3-실제-콘텐츠-통합-경로접근성-후속",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--phase-3-실제-콘텐츠-통합-경로접근성-후속"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--phase-3-지난-퀴즈",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--phase-3-지난-퀴즈"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-08-31--phase-3-공개-데이터-연결",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-08-31--phase-3-공개-데이터-연결"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-08-31--chrome-사용자-직접-입력-확인부분-검수",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-08-31--chrome-사용자-직접-입력-확인부분-검수"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--windows-chrome-사용자-직접-입력-후속-확인",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--windows-chrome-사용자-직접-입력-후속-확인"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--d-016-입력-연결회귀-반영",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--d-016-입력-연결회귀-반영"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--windows-edge-실제-ime-첫-행렬",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--windows-edge-실제-ime-첫-행렬"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--windows-edge-실제-200-확대tab-확인",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--windows-edge-실제-200-확대tab-확인"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--windows-edge-키보드-전용-탐색",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--windows-edge-키보드-전용-탐색"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-09-01--windows-내레이터-부분-확인",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-09-01--windows-내레이터-부분-확인"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-08-31--전체-격자-맞춤-후속-변경d-015",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-08-31--전체-격자-맞춤-후속-변경d-015"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-08-31--phase-3-두-번째-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-08-31--phase-3-두-번째-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-08-31--phase-3-첫-묶음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-08-31--phase-3-첫-묶음"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "2026-08-29--phase-2-기준-결과",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#2026-08-29--phase-2-기준-결과"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "6-알려진-위험과-게이트",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#6-알려진-위험과-게이트"
+    },
+    {
+      "source": "docs/STATUS.md",
+      "anchor": "7-다음-이정표",
+      "target": "docs/archive/2026-09-21-p5-48/docs/STATUS.md#7-다음-이정표"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "새-task-인수인계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#새-task-인수인계"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "0-작업-추적과-안전한-재개",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#0-작업-추적과-안전한-재개"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "1-현재-결론",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#1-현재-결론"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-24-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-24-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-23-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-23-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-22-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-22-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-21-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-21-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-20-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-20-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-19-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-19-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-18-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-18-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-17-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-17-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-16-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-16-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-15-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-15-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-14-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-14-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-12-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-12-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-11-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-11-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-10-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-10-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-09-이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-09-이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "이전-단계-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#이전-단계-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "이전-p4-23-진행-기록-위-현재-결론-우선",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#이전-p4-23-진행-기록-위-현재-결론-우선"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "2-시작할-때-읽을-것",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#2-시작할-때-읽을-것"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "3-이번-코드와-자료형",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#3-이번-코드와-자료형"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "4-공개-api-경계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#4-공개-api-경계"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "5-migration과-실행-환경",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#5-migration과-실행-환경"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "6-검증과-한계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#6-검증과-한계"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "7-입력-계약과-사용자-검수-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#7-입력-계약과-사용자-검수-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "8-다음-권장-순서",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#8-다음-권장-순서"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "다음-실행-같은-p5-48--사용자-방향에-맞춘-계약-문서-정합화",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#다음-실행-같은-p5-48--사용자-방향에-맞춘-계약-문서-정합화"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "이전-p5-27-재개-계획--실행하지-않음",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#이전-p5-27-재개-계획--실행하지-않음"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "9-git보존폐기한-접근",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#9-git보존폐기한-접근"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-48-2026-09-21-사용자-방향-반영용량-정책-제안-철회",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-48-2026-09-21-사용자-방향-반영용량-정책-제안-철회"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-48-2026-09-21-총량-중심-비교안초과-동작-구체화",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-48-2026-09-21-총량-중심-비교안초과-동작-구체화"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-48-2026-09-21-출력-예산저장-연결-문서-검토",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-48-2026-09-21-출력-예산저장-연결-문서-검토"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-47-2026-09-19-bounded-domain-순수-계약검증전이-회귀",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-47-2026-09-19-bounded-domain-순수-계약검증전이-회귀"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-46-2026-09-19-g03-연결-상세-설계-문서",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-46-2026-09-19-g03-연결-상세-설계-문서"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-45-2026-09-19-private-lifecycle-writerbounded-readerprobe",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-45-2026-09-19-private-lifecycle-writerbounded-readerprobe"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-44-2026-09-19-잔여-guardpopulated-upgrade-완료",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-44-2026-09-19-잔여-guardpopulated-upgrade-완료"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-44d-2026-09-19-교정-성공-결과비용새-대기",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-44d-2026-09-19-교정-성공-결과비용새-대기"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "2026-09-19-작업-단위-지침-갱신--문서만",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#2026-09-19-작업-단위-지침-갱신--문서만"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-44c-2026-09-18-대기-소비-경쟁",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-44c-2026-09-18-대기-소비-경쟁"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-44b-2026-09-18-대기-진입pending-교정-등록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-44b-2026-09-18-대기-진입pending-교정-등록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-44-2026-09-18-구조-후보기초-guard보존-검사-진행-중",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-44-2026-09-18-구조-후보기초-guard보존-검사-진행-중"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-43-2026-09-17-generation-lifecyclecontext-순수-계약전이-판정",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-43-2026-09-17-generation-lifecyclecontext-순수-계약전이-판정"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-42-2026-09-17-generation-lifecyclecontext-내구성-문서-설계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-42-2026-09-17-generation-lifecyclecontext-내구성-문서-설계"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-41-2026-09-17-authoritydomain-bridge-순수-계약",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-41-2026-09-17-authoritydomain-bridge-순수-계약"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-40-2026-09-17-전체-generation-workflow-조립-상세-설계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-40-2026-09-17-전체-generation-workflow-조립-상세-설계"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-39-2026-09-17-사람-contentfinal-ticket-private-runtime",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-39-2026-09-17-사람-contentfinal-ticket-private-runtime"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-36-2026-09-17-ai-결과usage-원자-commit-adapter와-exact-own-probe",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-36-2026-09-17-ai-결과usage-원자-commit-adapter와-exact-own-probe"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-35-2026-09-17-ai-결과provider-callusage-빈-물리-구조와-task-guard",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-35-2026-09-17-ai-결과provider-callusage-빈-물리-구조와-task-guard"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-34-2026-09-17-ai-결과호출별-usage-event-물리-저장-상세-설계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-34-2026-09-17-ai-결과호출별-usage-event-물리-저장-상세-설계"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-33-2026-09-17-generation-저장-adapter합성-dispatchertransport",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-33-2026-09-17-generation-저장-adapter합성-dispatchertransport"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-32-2026-09-17-generation-빈-물리-구조db-제약과-격리-실패-주입",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-32-2026-09-17-generation-빈-물리-구조db-제약과-격리-실패-주입"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-31-2026-09-17-generation-jobworkflow-영수증-물리-저장-설계",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-31-2026-09-17-generation-jobworkflow-영수증-물리-저장-설계"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-30-2026-09-17-access-관리자-입력자료-화면-연결",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-30-2026-09-17-access-관리자-입력자료-화면-연결"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-29-2026-09-17-비공개-이력선택-상세-조회-api",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-29-2026-09-17-비공개-이력선택-상세-조회-api"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-28b-2026-09-16-자막-변경-명령-서버-연결",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-28b-2026-09-16-자막-변경-명령-서버-연결"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-28a-2026-09-16-최초-원본-저장조회-서버-연결",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-28a-2026-09-16-최초-원본-저장조회-서버-연결"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-최종-완료-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-최종-완료-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-3만-자-원격-단일-후보",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-3만-자-원격-단일-후보"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-3만-자-구현로컬-검사",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-3만-자-구현로컬-검사"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-d-033-문서-반영",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-d-033-문서-반영"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-10분-사전-검토",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-10분-사전-검토"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-cpu4-최종",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-cpu4-최종"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-이전-cpu3-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-이전-cpu3-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-첫-요청-초기화중복-변환-개선",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-첫-요청-초기화중복-변환-개선"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-d-032-로컬-동시-메모리-검증",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-d-032-로컬-동시-메모리-검증"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-로그인-성공원격-inspector-비지원-확인",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-로그인-성공원격-inspector-비지원-확인"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-공식-도구-준비사용자-로그인-대기",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-공식-도구-준비사용자-로그인-대기"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-첫-요청-로컬-진단인증-경로-확인",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-첫-요청-로컬-진단인증-경로-확인"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-선택-저장-원격-계측",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-선택-저장-원격-계측"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-16-로컬-선택-저장-구조",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-16-로컬-선택-저장-구조"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-15-d-031-정상-성공-재조회-제거",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-15-d-031-정상-성공-재조회-제거"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-15-입력자료-수정-정책-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-15-입력자료-수정-정책-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-15-저장-재검토-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-15-저장-재검토-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-15-전송-검토-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-15-전송-검토-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-15-바이트-개선-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-15-바이트-개선-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-15-로컬-진단-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-15-로컬-진단-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-2026-09-15-재개-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-2026-09-15-재개-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-27-진행-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-27-진행-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-26-최종-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-26-최종-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-25-최종-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-25-최종-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-24-최종-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-24-최종-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-23-최종-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-23-최종-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-22-최종-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-22-최종-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-21-최종-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-21-최종-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-20-최종-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-20-최종-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-19-최종-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-19-최종-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-18-최종-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-18-최종-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-17-이전-작업-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-17-이전-작업-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-17-현재-작업",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-17-현재-작업"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-16-이전-작업-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-16-이전-작업-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-15-이전-작업-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-15-이전-작업-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-14-이전-작업-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-14-이전-작업-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-13-현재-작업",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-13-현재-작업"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-12-이전-작업-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-12-이전-작업-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-11-이전-작업-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-11-이전-작업-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-10-이전-작업-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-10-이전-작업-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-09-이전-작업-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-09-이전-작업-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-08-이전-작업-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-08-이전-작업-기록"
+    },
+    {
+      "source": "docs/HANDOFF.md",
+      "anchor": "p5-07-이전-작업-기록",
+      "target": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#p5-07-이전-작업-기록"
+    }
+  ],
+  "historical_sections": [
+    {
+      "heading": "P5-12 검수 후보 배치 연결·합성 검증 — 2026-09-09",
+      "start_line": 398,
+      "end_line": 409,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-13 최종 검사 입력 계약·합성 검증 — 2026-09-09",
+      "start_line": 423,
+      "end_line": 436,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-14 최종 검사 메타데이터 입력 계약·합성 검증 — 2026-09-09",
+      "start_line": 437,
+      "end_line": 451,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-15 AI 최종 감사 경고-only 계약·합성 검증 — 2026-09-09",
+      "start_line": 452,
+      "end_line": 463,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-06 수동 입력 계약·검증 경계 — 2026-09-08",
+      "start_line": 1374,
+      "end_line": 1395,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-07 불변 원본·작업 revision·사람 최종 확정 계약 — 2026-09-08",
+      "start_line": 1396,
+      "end_line": 1411,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-08 선택적 교정 제안·항목 결정·merged revision 계약 — 2026-09-08",
+      "start_line": 1412,
+      "end_line": 1428,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-16 provider 중립 structured-output adapter 계약 — 2026-09-09",
+      "start_line": 1512,
+      "end_line": 1533,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-09 설교 의도 분석·사람 수정·확정 계약 — 2026-09-08",
+      "start_line": 1571,
+      "end_line": 1587,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-10 확정 의도 기반 설교 요약 초안 계약 — 2026-09-08",
+      "start_line": 1588,
+      "end_line": 1602,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-11 어린이·장년 답/단서 후보 계약 — 2026-09-09",
+      "start_line": 1603,
+      "end_line": 1619,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "13.0 기술 스택 상담 상태",
+      "start_line": 1958,
+      "end_line": 2303,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "Phase 1 scaffold 구현 결과 — 2026-08-25",
+      "start_line": 2028,
+      "end_line": 2041,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "Phase 1 D1 기초 구현 결과 — 2026-08-26",
+      "start_line": 2042,
+      "end_line": 2056,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "Phase 1 Preview D1 연결 결과 — 2026-08-26",
+      "start_line": 2057,
+      "end_line": 2070,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.1 P5-17 D1 저장 매핑·CAS·metadata·Workflow 선행 설계 점검 — 2026-09-10",
+      "start_line": 2933,
+      "end_line": 3047,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.2 P5-18 비공개 설교 metadata 저장 기반 — 2026-09-10",
+      "start_line": 3048,
+      "end_line": 3063,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.3 P5-19 자막·초안 이력의 물리 구조와 chunk/CAS 상세 설계 — 2026-09-10",
+      "start_line": 3064,
+      "end_line": 3204,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.4 P5-20 자막·초안 이력의 빈 물리 구조·제약 — 2026-09-10",
+      "start_line": 3205,
+      "end_line": 3222,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.5 P5-21 순수 저장 codec·참조 투영 검증 — 2026-09-10",
+      "start_line": 3223,
+      "end_line": 3242,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.6 P5-22 일관된 이력 read adapter·격리 합성 검증 — 2026-09-11",
+      "start_line": 3243,
+      "end_line": 3259,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.7 P5-23 append writer/CAS·격리 합성 검증 — 2026-09-11",
+      "start_line": 3260,
+      "end_line": 3275,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.8 P5-24 누적 이력·쓰기 batch 자원 경계 — 2026-09-12",
+      "start_line": 3276,
+      "end_line": 3283,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.9 P5-25 무료 실행 예산에 맞춘 저장 호출 구조 설계 — 2026-09-12",
+      "start_line": 3284,
+      "end_line": 3291,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.10 P5-26 schema 없는 무료 실행 구조 격리 spike — 2026-09-12",
+      "start_line": 3292,
+      "end_line": 3301,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.11 P5-27 Preview 격리 CPU/isolate 계측 — 2026-09-13 진행 중",
+      "start_line": 3302,
+      "end_line": 3343,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-27 메모리 검증 방법 변경 — 2026-09-16 D-032",
+      "start_line": 3310,
+      "end_line": 3343,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-27 로컬 저장 구조 축소 — 2026-09-16",
+      "start_line": 3344,
+      "end_line": 3356,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-27 새 경로 Preview 격리 계측 — 2026-09-16",
+      "start_line": 3357,
+      "end_line": 3384,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-27 첫 요청 초기화와 UTF-8 변환 재사용 — 2026-09-16",
+      "start_line": 3367,
+      "end_line": 3372,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "P5-27 중복 처리와 최초 저장 사전 조회 축소 — 2026-09-16",
+      "start_line": 3373,
+      "end_line": 3384,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.12 P5-28a 관리자 입력자료 최초 저장·조회 서버 연결 — 2026-09-16",
+      "start_line": 3385,
+      "end_line": 3392,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.13 P5-28b 관리자 자막 변경 명령 서버 연결 — 2026-09-16",
+      "start_line": 3393,
+      "end_line": 3402,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.14 P5-29 비공개 입력자료 이력·선택 상세 조회 API — 2026-09-17",
+      "start_line": 3403,
+      "end_line": 3414,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.15 P5-30 Access 관리자 입력자료 화면 연결 — 2026-09-17",
+      "start_line": 3415,
+      "end_line": 3426,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.16 P5-31 생성 작업·Workflow 영수증 물리 저장 상세 설계 — 2026-09-17",
+      "start_line": 3427,
+      "end_line": 3610,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.17 P5-32 generation job/receipt/dispatch 빈 물리 구조·제약 — 2026-09-17",
+      "start_line": 3611,
+      "end_line": 3629,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.18 P5-33 generation 저장 adapter·합성 dispatcher/transport — 2026-09-17",
+      "start_line": 3630,
+      "end_line": 3647,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.19 P5-34 AI 결과·호출별 usage event 물리 저장 상세 설계 — 2026-09-17",
+      "start_line": 3648,
+      "end_line": 3885,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.20 P5-35 AI 결과·provider call·usage 빈 물리 구조와 task guard — 2026-09-17",
+      "start_line": 3886,
+      "end_line": 3907,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.21 P5-36 AI 결과·usage 원자 commit adapter와 exact-own probe — 2026-09-17",
+      "start_line": 3908,
+      "end_line": 3919,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.22 P5-37 사람 content 검수·final ticket 물리 저장 상세 설계 — 2026-09-17",
+      "start_line": 3920,
+      "end_line": 4082,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.23 P5-38 사람 content current/FK·final ticket input guard 빈 물리 구조 — 2026-09-17",
+      "start_line": 4083,
+      "end_line": 4103,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.24 P5-39 사람 content/final ticket private runtime — 2026-09-17",
+      "start_line": 4104,
+      "end_line": 4117,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.25 P5-40 전체 generation Workflow 조립 상세 설계 — 2026-09-17",
+      "start_line": 4118,
+      "end_line": 4296,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.26 P5-41 authority/domain bridge 계약과 순수 판정 — 2026-09-17",
+      "start_line": 4297,
+      "end_line": 4314,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.27 P5-42 generation lifecycle/context 내구성 상세 설계 — 2026-09-17",
+      "start_line": 4315,
+      "end_line": 4497,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.28 P5-43 generation lifecycle/context 순수 계약·전이 판정 — 2026-09-17",
+      "start_line": 4498,
+      "end_line": 4538,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.29 P5-44 generation lifecycle/context 빈 물리 구조 후보 — 2026-09-18",
+      "start_line": 4539,
+      "end_line": 4556,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.30 P5-45 generation lifecycle private 저장·조회·자기 증거 — 2026-09-19",
+      "start_line": 4557,
+      "end_line": 4572,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.31 P5-46 G03 저장·도메인 연결 상세 설계 — 2026-09-19",
+      "start_line": 4573,
+      "end_line": 4780,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.32 P5-47 bounded domain 순수 계약·검증과 전이 회귀 — 2026-09-19",
+      "start_line": 4781,
+      "end_line": 4817,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    },
+    {
+      "heading": "14.3.33 P5-48 출력 예산 정책·저장 연결 설계 검토 — 2026-09-21",
+      "start_line": 4818,
+      "end_line": 5018,
+      "reason": "기존 구현/실험 기록 또는 기술 선택 논의; 원문 보관"
+    }
+  ]
+}

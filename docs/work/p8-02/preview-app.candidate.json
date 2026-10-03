@@ -1,0 +1,105 @@
+{
+  "$schema": "../../../node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2026-08-25",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": false
+    }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "biblequiz-d1-preview",
+      "database_id": "cb044032-7e26-452b-afae-b0cae3d93678",
+      "migrations_dir": "../../../migrations"
+    }
+  ],
+  "name": "biblequiz-app-preview",
+  "main": "../../../workers/app/index.ts",
+  "keep_vars": true,
+  "assets": {
+    "directory": "../../../dist/client",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "vars": {
+    "AI_GENERATION_ENABLED": "false",
+    "AI_RESPONSE_ARCHIVE_ENABLED": "false",
+    "CONTENT_FINAL_CHECK_WORKFLOW_ENABLED": "false",
+    "CONTENT_DISPLAY_PREPARATION_ENABLED": "false",
+    "DRAFT_CLEANUP_ENABLED": "false",
+    "BACKUP_ENABLED": "false",
+    "OPERATIONS_CRON_ENABLED": "false",
+    "PUBLIC_RATE_LIMIT_ENABLED": "false",
+    "CONTENT_DISPLAY_PREPARATION_SERMON_IDS": "[]",
+    "P571_SYNTHETIC_SERMON_IDS": "[]",
+    "ADMIN_COMPUTE_ENABLED": "true",
+    "OPERATIONS_ENVIRONMENT": "preview",
+    "D1_DATABASE_ID": "cb044032-7e26-452b-afae-b0cae3d93678",
+    "BACKUP_BUCKET_NAME": "biblequiz-backups-preview"
+  },
+  "version_metadata": {
+    "binding": "CF_VERSION_METADATA"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ADMIN_COMPUTE",
+        "class_name": "AdminCompute"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "admin-compute-v1",
+      "new_sqlite_classes": [
+        "AdminCompute"
+      ]
+    }
+  ],
+  "workflows": [
+    {
+      "binding": "CONTENT_WORKFLOW",
+      "name": "biblequiz-content-preview",
+      "class_name": "PreviewMeasurementWorkflow",
+      "script_name": "biblequiz-content-preview"
+    },
+    {
+      "binding": "BACKUP_WORKFLOW",
+      "name": "biblequiz-backup-preview",
+      "class_name": "BackupWorkflow",
+      "script_name": "biblequiz-backup-preview"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "PUBLIC_SESSION_LIMIT",
+      "namespace_id": "80211",
+      "simple": {
+        "limit": 100,
+        "period": 10
+      }
+    },
+    {
+      "name": "PUBLIC_ACTOR_LIMIT",
+      "namespace_id": "80212",
+      "simple": {
+        "limit": 6,
+        "period": 10
+      }
+    },
+    {
+      "name": "PUBLIC_GUEST_LIMIT",
+      "namespace_id": "80213",
+      "simple": {
+        "limit": 100,
+        "period": 10
+      }
+    }
+  ]
+}

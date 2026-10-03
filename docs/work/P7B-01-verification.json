@@ -1,0 +1,309 @@
+{
+  "task": "P7B-01",
+  "date": "2026-10-01",
+  "status": "complete-local",
+  "head": "0ab476e4281734f4eab64cc6231be09092221651",
+  "usage": {
+    "plan": "pro",
+    "usedPercent": 5,
+    "remainingPercent": 95,
+    "windowDurationMins": 10080,
+    "separateFiveHourWindow": false,
+    "userMultiplier": 10,
+    "userConvertedRemainingPercent": 950,
+    "officialPlanMultiplierClaim": false
+  },
+  "preservation": {
+    "protectedFiles": 5131,
+    "changed": 0,
+    "missing": 0,
+    "migrationSqlSnapshotJournal": 77,
+    "packageLockWorkspaceFontFontkitPatchUnchanged": true,
+    "realDatabaseRead": false,
+    "workerSharedScriptsUnchangedAgainstStart": true,
+    "existingP6Shm8Difference": "preserved in P6-01 work record"
+  },
+  "checks": {
+    "fullPnpmCheck": {
+      "exitCode": 0,
+      "unit": 297,
+      "worker": 2125,
+      "contentWorkflow": 4,
+      "recoveryCli": 2,
+      "qualityNode": 14,
+      "qualityPython": 6
+    },
+    "afterLastCodeChange": {
+      "lint": 0,
+      "typecheck": 0,
+      "unit": {
+        "passed": 298,
+        "files": 33
+      },
+      "build": 0,
+      "remainingWarning": "existing >500kB build chunks"
+    },
+    "browser": {
+      "chromiumFinalPublicAdminPolish": {
+        "passed": 48
+      },
+      "chromiumEarlierInputPublic": {
+        "passed": 43,
+        "skipped": 1
+      },
+      "firefoxInputPolish": {
+        "passed": 15,
+        "skipped": 1
+      },
+      "webkitInputPolish": {
+        "passed": 15,
+        "skipped": 1,
+        "launcher": "/tmp/p7b-01-webkit-launch.sh",
+        "config": "/tmp/p7b-webkit-config.ts",
+        "allWpeElfAndGlesLoadVerified": true,
+        "osAndOriginalBrowserUntouched": true
+      },
+      "skipMeaning": "iOS-style replacement test is excluded from a PC context; synthetic input is not physical IME"
+    },
+    "axe": [
+      {
+        "url": "/",
+        "theme": "light",
+        "version": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "url": "/",
+        "theme": "dark",
+        "version": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "url": "/dev/quiz?level=adult&size=10",
+        "theme": "light",
+        "version": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "url": "/dev/quiz?level=adult&size=10",
+        "theme": "dark",
+        "version": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "url": "/archive",
+        "theme": "light",
+        "version": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "url": "/archive",
+        "theme": "dark",
+        "version": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "url": "/privacy-requests",
+        "theme": "light",
+        "version": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "url": "/privacy-requests",
+        "theme": "dark",
+        "version": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "url": "/admin",
+        "theme": "light",
+        "version": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "url": "/admin",
+        "theme": "dark",
+        "version": "4.13.0",
+        "violations": [],
+        "incomplete": []
+      }
+    ],
+    "lighthouseBuilt": {
+      "version": "13.5.0",
+      "mode": "mobile local gzip build + synthetic existing local API; no remote deployment",
+      "categories": {
+        "performance": 0.94,
+        "accessibility": 1
+      },
+      "metrics": {
+        "first-contentful-paint": {
+          "value": 1860.370875,
+          "displayValue": "1.9 s"
+        },
+        "largest-contentful-paint": {
+          "value": 2867.84505,
+          "displayValue": "2.9 s"
+        },
+        "total-blocking-time": {
+          "value": 20.5,
+          "displayValue": "20 ms"
+        },
+        "cumulative-layout-shift": {
+          "value": 0,
+          "displayValue": "0"
+        },
+        "speed-index": {
+          "value": 1860.370875,
+          "displayValue": "1.9 s"
+        }
+      },
+      "notMeasured": "physical device, deployed performance, field INP"
+    },
+    "lighthouseDevDiscardedAsReleaseEvidence": {
+      "performance": 54,
+      "accessibility": 100,
+      "lcpSeconds": 39.8
+    }
+  },
+  "codeAndTestHashes": {
+    "src/styles/index.css": "ee617201c5a6a7b91adb2ad4e79ffad9b21f5e5a9a5b7dc992415de3ebe2a20a",
+    "src/features/quiz/ParticipationBoard.tsx": "d63c179511300f5fb3b0c657dcd64a58eb21b322174c92c5dc647bb5be8f390b",
+    "src/features/quiz/public-page.tsx": "acdc89a1264bdda03f22923a6c5f3327af6cd76c24eb4856566d46b47e68f002",
+    "src/features/quiz/QuizWorkspace.tsx": "249f17ccd266aa94788e9f7f27539f08726ed83e00ad2db64daa976f70fef2de",
+    "src/features/quiz/preview-page.tsx": "53e6eca4238c4bb3d9f113ba8c5efb11fe2568d898016a390da0c85cf4019256",
+    "src/features/quiz/quiz.module.css": "70cbb72bea5529e68178e07eadb4fc22dc559604677b0f673227ce61e754b557",
+    "src/features/quiz/QuizArtwork.tsx": "399274c5adaa9bcf80dd978bda9ddefbd65142e1152bf8a5b7bd4311494cc0f3",
+    "src/features/export/scene.ts": "69b74833661a5a1baa16e94e091c26eae6b726b900849f73897796d136805450",
+    "src/features/export/render.ts": "2a42ec5bed93e9a33771bb156b55f9927dfc639bb8416dd2910232ad70f114e2",
+    "src/features/export/celebration.test.ts": "1fb95919952d95ce0a81f1e21e6830d0c94b17e3b109d5d6e3cc6ba7556c723f",
+    "tests/e2e/responsive-accessibility.spec.ts": "43576f9ecf99d2fac911bbfa1fc65d18b25ecfb05e7f8ce50876fda7b4f0f8d2",
+    "tests/e2e/quiz-input.spec.ts": "ec995b3b5e42ad11e76f9e7de6f5548b0105f00a90959f67c00a751e75168a65",
+    "tests/e2e/public-quiz.spec.ts": "fcb13bf51a8bc37511ad227a852822ba7568a474f0c3a45386303d3f392b2a26",
+    "tests/e2e/admin-weekly.spec.ts": "780562313ab08c40401b8615168f4cbb52f1fe53df22da6bf4212b039070cceb"
+  },
+  "logHashes": {
+    "/tmp/p7b-01-check.log": "64efd3344c9426cd4704403075b5406f00cd5d70dbc46eaee9feed0e95499074",
+    "/tmp/p7b-01-lint-final.log": "960f1eb37ac4d28430af9bef2c98f32333254854ffde619330f53d373ce0f632",
+    "/tmp/p7b-01-typecheck-final.log": "5cfb036289d819b2a87e947d65f4532031dd37753f3cf2def0f77d398eea1737",
+    "/tmp/p7b-01-unit-final.log": "629f4c99a37ab80eed5f31413165754b3428580ca39ee19adc34fd542699b2cc",
+    "/tmp/p7b-01-build-final.log": "277dbf004c8c9bedea37e080ed8a8bc85c9288ed29c97eb2e91e8cb5130c5fa0",
+    "/tmp/p7b-01-final-browser.log": "963e72458fdc6fee7eeb36a74562a902aeb56b500c0d33c81649557eeb873195",
+    "/tmp/p7b-01-firefox.log": "b95bb739dd00fdbadd8f2a0a8f2bf9534d33d1fbb48f1c8c87f65f6af7accdea",
+    "/tmp/p7b-01-webkit-wrapper.log": "a65e1c2cad47f057015be22d78ef1b1df2c4bf8e43134de271f31f24368ee7a1",
+    "/tmp/p7b-01-axe.log": "501bc9e3add66975ed4b284943093334185035959f574fa5fdbf2d9bf9cc6f43",
+    "/tmp/p7b-01-lighthouse-built.log": "4f4b3580f410d3950d653150c226012d4f175cdfec507a84402649a32444247b"
+  },
+  "visualReview": {
+    "savedScreenshotBrowser": "Linux Playwright WebKit WPE; not iPhone",
+    "files": [
+      "docs/design/phase-7b/screenshots/top-n-final.png",
+      "docs/design/phase-7b/screenshots/hero-adult-1440-light.png",
+      "docs/design/phase-7b/screenshots/hero-child-320-light.png",
+      "docs/design/phase-7b/screenshots/hero-adult-320-dark.png",
+      "docs/design/phase-7b/screenshots/hero-child-1440-dark.png"
+    ],
+    "reviewed": "child320 light/adult320 dark/adult1440 light/child1440 dark/Top N; hierarchy, clipping and decoration placement"
+  },
+  "pending": [],
+  "boundaries": {
+    "remoteSqlDeployProductionMainPush": 0,
+    "paidOpenAiApiCalls": 0,
+    "builtInImagegenAssetGenerations": 5,
+    "p6CompletedPdfCorrectionRenderE2eRepeated": false,
+    "newProductionDependenciesOrServices": false,
+    "gitCommitResetStash": 0
+  },
+  "docCheck": {
+    "diffCheck": 0,
+    "localLinksBroken": 0,
+    "codeAndTestHashesUnchanged": 14,
+    "fullCodeChecksRepeated": false,
+    "status": "verified"
+  },
+  "localPreview": {
+    "url": "http://127.0.0.1:4173/dev/quiz?level=adult&size=10",
+    "syntheticDatabaseOnly": true,
+    "phoneLocalhostIsNotThisMachine": true
+  },
+  "existingPhysicalEvidence": {
+    "source": "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md#7-입력-계약과-사용자-검수-기록",
+    "reused": [
+      "Windows Chrome/Edge Microsoft IME",
+      "Windows Edge real 200% zoom/keyboard/Narrator",
+      "iPhone12ProMax iOS26.5.2 Safari input/keyboard scrolling, Chrome smoke"
+    ],
+    "fullRetestRequested": false,
+    "nativeInputStorageCoreAnnouncementsChangedInP7B": false,
+    "userClarification": "Previously tested physical devices must reuse their completion evidence; no support-matrix or completion-rule change authorized"
+  },
+  "mobileLanPreview": {
+    "device": "Samsung Galaxy Note10+ (user provided)",
+    "sameRouterConfirmedByUser": true,
+    "url": "http://192.168.219.102:4175/",
+    "bindAddress": "192.168.219.102",
+    "allowedNetwork": "192.168.219.0/24",
+    "temporaryStaticBuild": "/tmp/p7b-01-mobile-client",
+    "buildScript": "/tmp/p7b-01-mobile-build.mjs",
+    "serverScript": "/tmp/p7b-01-mobile-server.py",
+    "windowsPython": "3.12.14",
+    "configFile": false,
+    "envDir": "/tmp/p7b-01-mobile-env (empty)",
+    "workerOrRealDbBindings": false,
+    "pcHtmlJsStatus": 200,
+    "physicalPhoneStatus": "user-confirmed Chrome on Galaxy Note10+",
+    "firewallOrRouterChanges": false,
+    "existingTestsRepeated": false,
+    "usageRemainingPercent": 94,
+    "userConvertedRemainingPercent": 940,
+    "serverStatus": "stopped after user physical review"
+  },
+  "physicalAndroidReview": {
+    "date": "2026-10-01",
+    "source": "direct user report in this chat",
+    "device": "Samsung Galaxy Note10+",
+    "browser": "Chrome",
+    "browserVersion": "not collected",
+    "osVersion": "not collected",
+    "keyboardTypeAndVersion": "not collected; not assumed to be Samsung Keyboard or Gboard",
+    "cases": {
+      "pageAndPuzzleDisplayed": true,
+      "continuousInput값갑세": "passed: 값 | 갑 | 세",
+      "rotationPreservesEnteredText": true,
+      "keyboardAfterRotation": "closed in landscape and remained closed after return to portrait",
+      "retapInPortraitOpensKeyboard": true,
+      "selectedCellVisibleAboveKeyboardAfterRetap": true
+    },
+    "notClaimed": [
+      "keyboard stays open during rotation",
+      "all Android browsers/keyboards",
+      "macOS physical review",
+      "new Windows/iPhone retest"
+    ],
+    "existingAutomaticChecksReused": true,
+    "macOSAvailability": "user confirmed no macOS device",
+    "macOSStatus": "not tested; unavailable device, not a failed test"
+  },
+  "knownLimitations": [
+    "physical macOS Safari/Chrome two-set Korean keyboard",
+    "remaining original browser/keyboard matrix: Gboard and Samsung Internet/Samsung Keyboard not individually identified or tested"
+  ],
+  "completionApproval": {
+    "date": "2026-10-01",
+    "source": "User explicitly agreed to close P7B-01 using available-device evidence and designate P8-01 next.",
+    "criterion": "Reuse existing Windows/iPhone physical evidence and current Galaxy Note10+ Chrome physical input/rotation preservation/retouch visibility results.",
+    "untestedMatrixIsCompletionGate": false,
+    "supportScopeRemoved": false,
+    "nextTask": "P8-01",
+    "nextTaskImplementationStarted": false,
+    "remoteApplied": false
+  }
+}

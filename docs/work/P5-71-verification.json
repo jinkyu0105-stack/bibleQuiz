@@ -1,0 +1,5090 @@
+{
+  "task": "P5-71",
+  "date": "2026-09-30",
+  "status": "completed",
+  "scope": "Approved existing Preview generation/failure preservation/final-check/display reads validated on Cloudflare. Snapshot bodies and difficulty grids use separate HTTP requests. No actual AI, paid plan change, new migration, Production or push.",
+  "usage": {
+    "planBasis": "USD200 Pro; user-specified remaining percent x10, not official multiplier",
+    "startUsedPercent": 2,
+    "latestUsedPercent": 2,
+    "startPlusEquivalentRemaining": 980,
+    "latestPlusEquivalentRemaining": 980,
+    "separateFiveHourValueAvailable": false,
+    "queriedWindowDurationMins": 10080
+  },
+  "git": {
+    "head": "0ab476e4281734f4eab64cc6231be09092221651",
+    "branch": "main",
+    "existingUncommittedWorkPreserved": true,
+    "changedBaselineFiles": [
+      "docs/DELIVERY_PLAN.md",
+      "docs/spec/architecture.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/STATUS.md",
+      "implementation.md",
+      "package.json",
+      "scripts/check-cloudflare-config.mjs",
+      "workers/content/index.ts"
+    ],
+    "commit": false,
+    "push": false,
+    "newFiles": [
+      "docs/work/P5-71-verification.json",
+      "docs/work/P5-71.md",
+      "scripts/check-preview-generation-upgrade.mjs",
+      "scripts/p5-71-capture-tail.mjs",
+      "scripts/p5-71-capture-tail.test.mjs",
+      "scripts/p5-71-d1-meter.ts",
+      "scripts/p5-71-synthetic-provider.ts",
+      "workers/app/preview-generation-resources.test.ts",
+      "workers/content/preview-measurement.ts",
+      "wrangler.p5-71-content.jsonc"
+    ],
+    "fixChangedBaselineFiles": [
+      "docs/DECISIONS.md",
+      "docs/DELIVERY_PLAN.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/STATUS.md",
+      "docs/spec/architecture.md",
+      "docs/work/P5-71-verification.json",
+      "docs/work/P5-71.md",
+      "implementation.md",
+      "scripts/p5-71-capture-tail.mjs",
+      "scripts/p5-71-capture-tail.test.mjs",
+      "scripts/p5-71-d1-meter.ts",
+      "workers/_shared/repositories/generation-lifecycle-artifact.ts",
+      "workers/_shared/repositories/generation-lifecycle-data.ts",
+      "workers/_shared/repositories/generation-lifecycle-store.ts",
+      "workers/_shared/repositories/human-content-runtime-store.ts",
+      "workers/_shared/services/content-generation-final.ts",
+      "workers/_shared/services/content-generation-view.ts",
+      "workers/_shared/services/content-generation.ts",
+      "workers/_shared/services/content-human-generation.ts",
+      "workers/_shared/services/content-intent-generation.ts",
+      "workers/_shared/services/generation-domain-reader.ts",
+      "workers/_shared/services/generation-final-validation.ts",
+      "workers/app/app.ts",
+      "workers/app/content-intent-generation.test.ts",
+      "workers/app/content-workflow.test.ts",
+      "workers/app/preview-generation-resources.test.ts",
+      "workers/app/recovered-analysis-continuation.test.ts",
+      "workers/content/index.ts",
+      "workers/content/preview-measurement.ts"
+    ],
+    "fixNewFiles": [
+      "workers/_shared/repositories/generation-read-session.ts",
+      "workers/app/generation-read-session.test.ts"
+    ],
+    "fixBaselineFiles": 679,
+    "remoteStartBaselineFiles": 681,
+    "remoteTurnChangedBaselineFiles": [
+      "docs/DECISIONS.md",
+      "docs/DELIVERY_PLAN.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/STATUS.md",
+      "docs/spec/architecture.md",
+      "docs/spec/data-model.md",
+      "docs/spec/testing.md",
+      "docs/work/P5-71-verification.json",
+      "docs/work/P5-71.md",
+      "implementation.md",
+      "migrations/meta/_journal.json",
+      "scripts/apply-archived-intent-recovery.mjs",
+      "scripts/archived-intent-application.test.mjs",
+      "scripts/check-cloudflare-config.mjs",
+      "workers/_shared/db/schema.ts",
+      "workers/_shared/services/content-generation.ts",
+      "workers/_shared/services/content-intent-generation.ts",
+      "workers/_shared/services/draft-cleanup.ts",
+      "workers/_shared/services/openai-draft-transport.ts",
+      "workers/app/admin-generation.test.ts",
+      "workers/app/app.ts",
+      "workers/app/openai-draft-transport.test.ts",
+      "workers/content/index.ts",
+      "workers/content/preview-measurement.ts",
+      "wrangler.jsonc",
+      "wrangler.p5-71-content.jsonc"
+    ],
+    "remoteTurnNewFiles": [
+      "workers/_shared/repositories/ai-response-archive.ts",
+      "workers/_shared/services/preview-generation-access.ts",
+      "workers/app/ai-response-archive.test.ts",
+      "scripts/p5-71-run-preview.mjs",
+      "scripts/prepare-preview-migration-transport.test.py",
+      "scripts/prepare-preview-migration-transport.py",
+      "migrations/0035_ai_response_archives.sql",
+      "migrations/meta/0035_snapshot.json"
+    ]
+  },
+  "remoteReadOnly": {
+    "app": "biblequiz-app-preview",
+    "deployment": "e1643401-ae0e-4351-8f75-f2dbfbe6e323",
+    "version": "fc10f77d-ca54-4dfd-a94a-9fb3cffcf482",
+    "createdAt": "2026-09-16T11:29:54.131423Z",
+    "trafficPercent": 100,
+    "database": "biblequiz-d1-preview",
+    "databaseId": "cb044032-7e26-452b-afae-b0cae3d93678",
+    "contentWorkflowBindingPresent": false,
+    "generationAndCleanupFlagNamesPresent": false,
+    "pendingMigrations": [
+      "0007_phase5_private_sermon_metadata.sql",
+      "0008_phase5_private_sermon_history.sql",
+      "0009_sermon_input_selected_storage.sql",
+      "0010_phase5_generation_jobs.sql",
+      "0011_phase5_ai_result_usage_storage.sql",
+      "0012_phase5_human_content_final_ticket.sql",
+      "0013_phase5_generation_lifecycle.sql",
+      "0014_phase5_full_validation_finish.sql",
+      "0015_phase5_domain_content_lineage.sql",
+      "0016_phase5_placement_selections.sql",
+      "0017_phase5_individual_regeneration.sql",
+      "0018_phase5_published_content.sql",
+      "0019_phase5_intent_regeneration.sql",
+      "0020_phase5_intent_critique_retry.sql",
+      "0021_phase5_draft_cleanup.sql",
+      "0022_phase5_display_corrections.sql",
+      "0023_phase5_withdrawals.sql",
+      "0024_phase5_withdrawal_edits.sql",
+      "0025_phase5_withdrawal_edit_cleanup.sql",
+      "0026_phase5_quiz_republication.sql",
+      "0027_phase5_problem_corrections.sql",
+      "0028_phase5_wording_corrections.sql",
+      "0029_phase5_content_quality_reviews.sql",
+      "0030_phase5_archived_intent_recovery.sql",
+      "0031_phase5_recovered_analysis_continuation.sql",
+      "0032_phase5_archived_critique_continuation.sql",
+      "0033_phase5_archived_summary_recovery.sql",
+      "0034_phase5_stored_content_continuation.sql"
+    ],
+    "contentWorkerExistenceChecked": false,
+    "historicalOnly": true
+  },
+  "localMeasurements": [
+    {
+      "characters": 11715,
+      "syntheticResponses": 5,
+      "requestBytes": 216009,
+      "responseBytes": 16868,
+      "paidCalls": 0,
+      "rows": [
+        {
+          "stage": "request-and-dispatch",
+          "d1Calls": 23,
+          "sqlStatements": 50,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 133,
+          "cpuMs": null
+        },
+        {
+          "stage": "workflow-initial",
+          "d1Calls": 240,
+          "sqlStatements": 616,
+          "largestBatch": 18,
+          "blockedCalls": 0,
+          "wallMs": 1031,
+          "cpuMs": null
+        },
+        {
+          "stage": "duplicate-initial",
+          "d1Calls": 30,
+          "sqlStatements": 96,
+          "largestBatch": 16,
+          "blockedCalls": 0,
+          "wallMs": 134,
+          "cpuMs": null
+        },
+        {
+          "stage": "intent-select",
+          "d1Calls": 28,
+          "sqlStatements": 96,
+          "largestBatch": 16,
+          "blockedCalls": 0,
+          "wallMs": 155,
+          "cpuMs": null
+        },
+        {
+          "stage": "intent-confirm",
+          "d1Calls": 31,
+          "sqlStatements": 103,
+          "largestBatch": 16,
+          "blockedCalls": 0,
+          "wallMs": 122,
+          "cpuMs": null
+        },
+        {
+          "stage": "resume-and-dispatch",
+          "d1Calls": 46,
+          "sqlStatements": 135,
+          "largestBatch": 16,
+          "blockedCalls": 0,
+          "wallMs": 151,
+          "cpuMs": null
+        },
+        {
+          "stage": "workflow-resumed",
+          "d1Calls": 220,
+          "sqlStatements": 794,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 1012,
+          "cpuMs": null
+        },
+        {
+          "stage": "view-before-review",
+          "d1Calls": 39,
+          "sqlStatements": 183,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 196,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-summary",
+          "d1Calls": 37,
+          "sqlStatements": 184,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 213,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-child",
+          "d1Calls": 37,
+          "sqlStatements": 190,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 202,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-adult",
+          "d1Calls": 37,
+          "sqlStatements": 196,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 209,
+          "cpuMs": null
+        },
+        {
+          "stage": "finish",
+          "d1Calls": 50,
+          "sqlStatements": 268,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 238,
+          "cpuMs": null
+        },
+        {
+          "stage": "view-completed",
+          "d1Calls": 50,
+          "sqlStatements": 218,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 215,
+          "cpuMs": null
+        },
+        {
+          "stage": "duplicate-completed",
+          "d1Calls": 8,
+          "sqlStatements": 25,
+          "largestBatch": 14,
+          "blockedCalls": 0,
+          "wallMs": 28,
+          "cpuMs": null
+        }
+      ],
+      "units": [
+        {
+          "name": "receive",
+          "d1Calls": 25,
+          "sqlStatements": 47
+        },
+        {
+          "name": "input-stage",
+          "d1Calls": 7,
+          "sqlStatements": 16
+        },
+        {
+          "name": "transcript-wait",
+          "d1Calls": 18,
+          "sqlStatements": 45
+        },
+        {
+          "name": "input-resume",
+          "d1Calls": 22,
+          "sqlStatements": 45
+        },
+        {
+          "name": "input-confirm",
+          "d1Calls": 35,
+          "sqlStatements": 83
+        },
+        {
+          "name": "stage-intent_analysis",
+          "d1Calls": 3,
+          "sqlStatements": 4
+        },
+        {
+          "name": "task-intent_analysis",
+          "d1Calls": 40,
+          "sqlStatements": 113
+        },
+        {
+          "name": "stage-intent_critique",
+          "d1Calls": 9,
+          "sqlStatements": 18
+        },
+        {
+          "name": "task-intent_critique",
+          "d1Calls": 47,
+          "sqlStatements": 133
+        },
+        {
+          "name": "intent-wait",
+          "d1Calls": 25,
+          "sqlStatements": 96
+        },
+        {
+          "name": "receive",
+          "d1Calls": 21,
+          "sqlStatements": 80
+        },
+        {
+          "name": "receive",
+          "d1Calls": 36,
+          "sqlStatements": 114
+        },
+        {
+          "name": "input-stage",
+          "d1Calls": 1,
+          "sqlStatements": 2
+        },
+        {
+          "name": "transcript-wait",
+          "d1Calls": 1,
+          "sqlStatements": 2
+        },
+        {
+          "name": "input-resume",
+          "d1Calls": 1,
+          "sqlStatements": 2
+        },
+        {
+          "name": "input-confirm",
+          "d1Calls": 1,
+          "sqlStatements": 2
+        },
+        {
+          "name": "stage-summary",
+          "d1Calls": 3,
+          "sqlStatements": 4
+        },
+        {
+          "name": "task-summary",
+          "d1Calls": 50,
+          "sqlStatements": 175
+        },
+        {
+          "name": "stage-child_candidates",
+          "d1Calls": 9,
+          "sqlStatements": 19
+        },
+        {
+          "name": "task-child_candidates",
+          "d1Calls": 47,
+          "sqlStatements": 193
+        },
+        {
+          "name": "stage-adult_candidates",
+          "d1Calls": 9,
+          "sqlStatements": 19
+        },
+        {
+          "name": "task-adult_candidates",
+          "d1Calls": 47,
+          "sqlStatements": 220
+        },
+        {
+          "name": "content-review",
+          "d1Calls": 6,
+          "sqlStatements": 16
+        }
+      ]
+    },
+    {
+      "characters": 30000,
+      "syntheticResponses": 5,
+      "requestBytes": 490284,
+      "responseBytes": 16868,
+      "paidCalls": 0,
+      "rows": [
+        {
+          "stage": "request-and-dispatch",
+          "d1Calls": 23,
+          "sqlStatements": 50,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 84,
+          "cpuMs": null
+        },
+        {
+          "stage": "workflow-initial",
+          "d1Calls": 240,
+          "sqlStatements": 616,
+          "largestBatch": 18,
+          "blockedCalls": 0,
+          "wallMs": 1127,
+          "cpuMs": null
+        },
+        {
+          "stage": "duplicate-initial",
+          "d1Calls": 30,
+          "sqlStatements": 96,
+          "largestBatch": 16,
+          "blockedCalls": 0,
+          "wallMs": 126,
+          "cpuMs": null
+        },
+        {
+          "stage": "intent-select",
+          "d1Calls": 28,
+          "sqlStatements": 96,
+          "largestBatch": 16,
+          "blockedCalls": 0,
+          "wallMs": 133,
+          "cpuMs": null
+        },
+        {
+          "stage": "intent-confirm",
+          "d1Calls": 31,
+          "sqlStatements": 103,
+          "largestBatch": 16,
+          "blockedCalls": 0,
+          "wallMs": 135,
+          "cpuMs": null
+        },
+        {
+          "stage": "resume-and-dispatch",
+          "d1Calls": 46,
+          "sqlStatements": 135,
+          "largestBatch": 16,
+          "blockedCalls": 0,
+          "wallMs": 188,
+          "cpuMs": null
+        },
+        {
+          "stage": "workflow-resumed",
+          "d1Calls": 220,
+          "sqlStatements": 794,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 1256,
+          "cpuMs": null
+        },
+        {
+          "stage": "view-before-review",
+          "d1Calls": 39,
+          "sqlStatements": 183,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 220,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-summary",
+          "d1Calls": 37,
+          "sqlStatements": 184,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 248,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-child",
+          "d1Calls": 37,
+          "sqlStatements": 190,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 269,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-adult",
+          "d1Calls": 37,
+          "sqlStatements": 196,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 247,
+          "cpuMs": null
+        },
+        {
+          "stage": "finish",
+          "d1Calls": 50,
+          "sqlStatements": 268,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 279,
+          "cpuMs": null
+        },
+        {
+          "stage": "view-completed",
+          "d1Calls": 50,
+          "sqlStatements": 218,
+          "largestBatch": 32,
+          "blockedCalls": 0,
+          "wallMs": 284,
+          "cpuMs": null
+        },
+        {
+          "stage": "duplicate-completed",
+          "d1Calls": 8,
+          "sqlStatements": 25,
+          "largestBatch": 14,
+          "blockedCalls": 0,
+          "wallMs": 28,
+          "cpuMs": null
+        }
+      ],
+      "units": [
+        {
+          "name": "receive",
+          "d1Calls": 25,
+          "sqlStatements": 47
+        },
+        {
+          "name": "input-stage",
+          "d1Calls": 7,
+          "sqlStatements": 16
+        },
+        {
+          "name": "transcript-wait",
+          "d1Calls": 18,
+          "sqlStatements": 45
+        },
+        {
+          "name": "input-resume",
+          "d1Calls": 22,
+          "sqlStatements": 45
+        },
+        {
+          "name": "input-confirm",
+          "d1Calls": 35,
+          "sqlStatements": 83
+        },
+        {
+          "name": "stage-intent_analysis",
+          "d1Calls": 3,
+          "sqlStatements": 4
+        },
+        {
+          "name": "task-intent_analysis",
+          "d1Calls": 40,
+          "sqlStatements": 113
+        },
+        {
+          "name": "stage-intent_critique",
+          "d1Calls": 9,
+          "sqlStatements": 18
+        },
+        {
+          "name": "task-intent_critique",
+          "d1Calls": 47,
+          "sqlStatements": 133
+        },
+        {
+          "name": "intent-wait",
+          "d1Calls": 25,
+          "sqlStatements": 96
+        },
+        {
+          "name": "receive",
+          "d1Calls": 21,
+          "sqlStatements": 80
+        },
+        {
+          "name": "receive",
+          "d1Calls": 36,
+          "sqlStatements": 114
+        },
+        {
+          "name": "input-stage",
+          "d1Calls": 1,
+          "sqlStatements": 2
+        },
+        {
+          "name": "transcript-wait",
+          "d1Calls": 1,
+          "sqlStatements": 2
+        },
+        {
+          "name": "input-resume",
+          "d1Calls": 1,
+          "sqlStatements": 2
+        },
+        {
+          "name": "input-confirm",
+          "d1Calls": 1,
+          "sqlStatements": 2
+        },
+        {
+          "name": "stage-summary",
+          "d1Calls": 3,
+          "sqlStatements": 4
+        },
+        {
+          "name": "task-summary",
+          "d1Calls": 50,
+          "sqlStatements": 175
+        },
+        {
+          "name": "stage-child_candidates",
+          "d1Calls": 9,
+          "sqlStatements": 19
+        },
+        {
+          "name": "task-child_candidates",
+          "d1Calls": 47,
+          "sqlStatements": 193
+        },
+        {
+          "name": "stage-adult_candidates",
+          "d1Calls": 9,
+          "sqlStatements": 19
+        },
+        {
+          "name": "task-adult_candidates",
+          "d1Calls": 47,
+          "sqlStatements": 220
+        },
+        {
+          "name": "content-review",
+          "d1Calls": 6,
+          "sqlStatements": 16
+        }
+      ]
+    }
+  ],
+  "measurementLimitations": [
+    "Native tail coverage is incomplete; see adminComputeContinuation.remoteChecks.httpCpuCoverage. Every retained native sample matched its exact HTTP CF-Ray hash and Worker/DO role.",
+    "DO GraphQL usage returned empty rows, not zero. Current validation interval duration was conservatively bounded by at most 9 objects times 128MB times elapsed time; not an actual metered reading or future forecast.",
+    "Billing API still returns403; current Workers Free US$0 was confirmed by the user supplied current-plan screenshot.",
+    "Individual Workflow step CPU remains unavailable; prior durable completion evidence is not a per-step CPU claim.",
+    "Free quota verification covers the approved existing Preview and observed test interval; no Production deployment or real AI provider execution was performed."
+  ],
+  "simulatedFreeAllowance": {
+    "d1CallLimit": 50,
+    "scope": "per administrator request or real Workflow unit; outer orchestration has its own bound",
+    "outcome": "review_ready",
+    "blockedCalls": 0,
+    "responsesPerFullFixture": 5,
+    "replayedExtraResponses": 0,
+    "largestGenerationUnit": 50,
+    "largestAdministratorBoundary": 50,
+    "withoutUnitBoundary": {
+      "outcome": "unavailable",
+      "providerCalls": 0
+    }
+  },
+  "migrationRehearsal": {
+    "code": "P571_UPGRADE_REHEARSAL",
+    "from": "0006",
+    "through": "0034",
+    "migrations": 28,
+    "oldTablesPreserved": 17,
+    "oldRowsPreserved": 13,
+    "injectedFailureRolledBack": true,
+    "foreignKeyErrors": 0,
+    "quickCheck": "ok",
+    "manifest": [
+      {
+        "name": "0007_phase5_private_sermon_metadata.sql",
+        "sha256": "c9680cd98542d175b6ec2ee478d74ba1ce02d4ab74b3ea3d5748d89c1f6e3072"
+      },
+      {
+        "name": "0008_phase5_private_sermon_history.sql",
+        "sha256": "119b997a7f49d2b26408b14b01a793caec9673f39bc3d5420a6b39968958ea28"
+      },
+      {
+        "name": "0009_sermon_input_selected_storage.sql",
+        "sha256": "53157112bba2bdc5f8ef19f25fc580f77480d07bd84c56308de63f16306220f7"
+      },
+      {
+        "name": "0010_phase5_generation_jobs.sql",
+        "sha256": "1f7d311a5a5b7f20d114a60f4250aeea893d3967f84d214976f3566b52108995"
+      },
+      {
+        "name": "0011_phase5_ai_result_usage_storage.sql",
+        "sha256": "1083df3650137f4101893347704ea21bd301528d8f530dcdf74826a6782e363b"
+      },
+      {
+        "name": "0012_phase5_human_content_final_ticket.sql",
+        "sha256": "d8d8958cb7291de1cc3c39c644b310fe0ddb265686611e015f58b32c06a16ebe"
+      },
+      {
+        "name": "0013_phase5_generation_lifecycle.sql",
+        "sha256": "a86b88e00bab22eb1228fa43ed1a538c0c824752ec04254114dd1409fdc9400a"
+      },
+      {
+        "name": "0014_phase5_full_validation_finish.sql",
+        "sha256": "38bf25a9bca1390c658852ea11aa68e2b6165cb7f965a719bf37914c863284d7"
+      },
+      {
+        "name": "0015_phase5_domain_content_lineage.sql",
+        "sha256": "614e53553c2cfb0e65fe2c750032fae2e447adf9273c2f47e5178af5fd04e59d"
+      },
+      {
+        "name": "0016_phase5_placement_selections.sql",
+        "sha256": "beb463dd5dc9df062def7971991731328dbfd61eed717f350b408306768e071a"
+      },
+      {
+        "name": "0017_phase5_individual_regeneration.sql",
+        "sha256": "c9d4623af6fade49a6876d70539b5f5e8cee4ebba83ab2efbf4a6151e3018e0b"
+      },
+      {
+        "name": "0018_phase5_published_content.sql",
+        "sha256": "b322c747c266fa111d4ac7b5be36fcefc8167199926a80d1817229770e971730"
+      },
+      {
+        "name": "0019_phase5_intent_regeneration.sql",
+        "sha256": "623533bfcda4aa44edfa4568d4f2a3034cd8830c4ba0e1da150012c4bc9b1b19"
+      },
+      {
+        "name": "0020_phase5_intent_critique_retry.sql",
+        "sha256": "aafabc9d088a1a8f3ec469d5aab9c0153608a6154eb6dd351dff3753db03eb86"
+      },
+      {
+        "name": "0021_phase5_draft_cleanup.sql",
+        "sha256": "0fdedc800ef6c4149faa174c5cb1b6e1ad57fe54a88d1fea79ecf913ccbfd118"
+      },
+      {
+        "name": "0022_phase5_display_corrections.sql",
+        "sha256": "1c9c4eb6f3d3639d815550b242b6affe93c072486cd0ec7fe4008dde068c19a9"
+      },
+      {
+        "name": "0023_phase5_withdrawals.sql",
+        "sha256": "207b7db40d69f8f784089e9806f5d857ac81f98ba3458eb891c6434931e0493c"
+      },
+      {
+        "name": "0024_phase5_withdrawal_edits.sql",
+        "sha256": "2b49dd5cb44856637f39afd792ce02201b2ad8f9e6c9b9fc6d3e1d5c5d15a73a"
+      },
+      {
+        "name": "0025_phase5_withdrawal_edit_cleanup.sql",
+        "sha256": "dd479568cf2ea1b5d8cc7f5445505765168d457bbcfc22179e73b71156b3639a"
+      },
+      {
+        "name": "0026_phase5_quiz_republication.sql",
+        "sha256": "82a737faa43f0f2ed44bc2938d9f097d5d76755e377b0adfb1c8da2b028e3186"
+      },
+      {
+        "name": "0027_phase5_problem_corrections.sql",
+        "sha256": "f5ed93a0cb9aaf3f674542194c833226462f2d9b097819540237f98bc4eb8988"
+      },
+      {
+        "name": "0028_phase5_wording_corrections.sql",
+        "sha256": "dbd4252abf26f93e7e8abc00810adfb54769b2779beef585ff24517140da1a8d"
+      },
+      {
+        "name": "0029_phase5_content_quality_reviews.sql",
+        "sha256": "f06910cd92c44c20ed4e183b9ab350c2a5d50e57eafddbefb648403e0474ea1c"
+      },
+      {
+        "name": "0030_phase5_archived_intent_recovery.sql",
+        "sha256": "82942d80c910644ab1510994349ab8a939b7ed2e5508984302da74e31a98cca3"
+      },
+      {
+        "name": "0031_phase5_recovered_analysis_continuation.sql",
+        "sha256": "e836964c80113eac7ccf96d13af0c6a0e3d65e0c35a5dbefb1abaa3ab407927a"
+      },
+      {
+        "name": "0032_phase5_archived_critique_continuation.sql",
+        "sha256": "e2ca6cc6aebed33e362ad0dc0df52fcf397999c8f4457ef0abe1e81dc68c6f5d"
+      },
+      {
+        "name": "0033_phase5_archived_summary_recovery.sql",
+        "sha256": "1346049dc8c742556ba1a1d9a69d4524208820b0c23e4505e537de5351de3b8c"
+      },
+      {
+        "name": "0034_phase5_stored_content_continuation.sql",
+        "sha256": "8e283cc511b6a923f9169bfe71f9d43dab3dbf43c1de288e7bbf1074e524f7c4"
+      }
+    ]
+  },
+  "checks": {
+    "resourceIntegration": {
+      "passed": 7,
+      "scope": "two transcript sizes, 50-call hard limit, administrator owner/read view, rejected usage/no automatic replay, Preview entry boundaries"
+    },
+    "additionalRegression": {
+      "passed": 7,
+      "scope": "read scope/invalidation/failure, budget windows, atomic final rollback/races/response loss"
+    },
+    "recoveredAnalysisRegression": {
+      "passed": 9
+    },
+    "tailSanitization": {
+      "passed": 2,
+      "includedIn": "quality tools in pnpm check"
+    },
+    "previewContentDryRun": {
+      "exitCode": 0,
+      "deployed": true,
+      "strict": true
+    },
+    "pnpmCheck": {
+      "status": "passed",
+      "exitCode": 0,
+      "unit": 275,
+      "unitFiles": 31,
+      "worker": 2094,
+      "workerFiles": 87,
+      "contentWorkflow": 4,
+      "recoveryCli": 2,
+      "node": 14,
+      "python": 6,
+      "lint": "passed",
+      "typecheck": "passed",
+      "build": "passed",
+      "log": "/tmp/biblequiz-p571-async-check.log",
+      "warnings": [
+        "Two non-blocking Vite dynamic/static import chunk warnings in unrelated existing modules; build exited 0."
+      ],
+      "durableLog": "/home/onegem/.local/state/biblequiz/p5-71-preview-20260929/free-cpu/checks-async-final.log"
+    },
+    "firstFullRun": {
+      "exitCode": 1,
+      "unit": 274,
+      "workerPassed": 2076,
+      "workerFailed": 1,
+      "resolved": "Recovery test raced every batch, including new read batches. Injection now targets actual generation_jobs insert transaction without changing the rejection assertion; all nine recovery tests passed."
+    },
+    "e2e": {
+      "executed": true,
+      "passed": 8,
+      "projects": [
+        "chromium",
+        "mobile-chromium"
+      ],
+      "scope": "admin content generation existing sync and new async final status polling; actual local browsers, not remote device verification"
+    },
+    "documentation": {
+      "diffCheck": "passed",
+      "localLinksAndAnchors": 125,
+      "linkErrors": 0
+    },
+    "migrationRehearsal": {
+      "rerun": false,
+      "reason": "All 0000~0034 migration files unchanged; previous populated rehearsal retained in migrationRehearsal."
+    },
+    "lint": {
+      "exitCode": 0
+    },
+    "typecheck": {
+      "exitCode": 0
+    },
+    "preDeploymentCheck": {
+      "exitCode": 0,
+      "worker": 2079,
+      "workerFiles": 83,
+      "log": "/tmp/biblequiz-p571-preview-scoped-check-final.log"
+    },
+    "responseArchiveRelated": {
+      "providerAndArchivePassed": 40,
+      "archiveAndRetentionPassed": 10,
+      "recoveryCliPassed": 2,
+      "transportPythonPassed": 2
+    },
+    "firstArchiveFullCheck": {
+      "exitCode": 1,
+      "workerPassed": 2084,
+      "recoveryCliFailed": 1,
+      "resolved": "Pin the existing archived-result recovery migration scope through 0034 rather than taking the last five migrations. New 0035 is explicitly excluded; final full check passes."
+    },
+    "newMigrationCopyRehearsal": {
+      "scope": "Latest actual remote export, in-memory SQLite only; 0034 to 0035",
+      "existingTablesUnchanged": 82,
+      "existingRowsUnchanged": 219,
+      "foreignKeyErrors": 0,
+      "quickCheck": "ok",
+      "remoteApplied": false,
+      "sha256": "cb6a1b919a2aff7585fc9d00bac3da7b8335b83b12ed8d00086547498ea3e46f"
+    },
+    "stoppedRemoteCopyFinish": {
+      "outcome": "review_ready",
+      "source": "after-trial.sql copied to isolated local SQLite; 0035 added to copy",
+      "existingSyntheticResponsesReused": 5,
+      "additionalProviderCalls": 0,
+      "remoteMutated": false,
+      "nodeProfilingIsNotWorkerCpu": true,
+      "harnessAdjustment": "Serialize local-recovery adapter batches to emulate D1 transaction ordering; concurrent SQLite savepoints are not valid Worker behavior."
+    },
+    "previewAppDryRun": {
+      "exitCode": 0,
+      "deployed": true,
+      "strict": true
+    },
+    "previewBuild": {
+      "exitCode": 0,
+      "checkedSourceFiles": 388,
+      "checkedSourceMatchesDeploy": true
+    }
+  },
+  "preservation": {
+    "repositoryBaselineFiles": 681,
+    "privateAndCredentialFiles": 4095,
+    "rootD1Files": 13,
+    "rootD1Changed": 0,
+    "privateRuntimeOnlyChanges": [
+      "quality-session-4gdw2F/continuation-2026-09-28/wrangler.log",
+      "quality-session-4gdw2F/continuation-2026-09-28/.wrangler/tmp/dev-qhXc63/entry.js",
+      "quality-session-4gdw2F/continuation-2026-09-28/.wrangler/tmp/dev-qhXc63/entry.js.map"
+    ],
+    "unchangedPrivateAndCredentialFiles": 4092,
+    "privateMissing": 0,
+    "credentialFiles": 2,
+    "credentialChanged": 0,
+    "primaryDataFilesUnchanged": true,
+    "migrationSqlFiles": 35,
+    "migrationSqlChanged": 0,
+    "migrationSqlSnapshotsJournalFiles": 71,
+    "migrationSqlSnapshotsJournalChanged": 1,
+    "lockfileUnchanged": true,
+    "finalRecheck": "passed",
+    "journalChange": "Only appended 0035; removing it reconstructs exact baseline SHA",
+    "oldMigrationSqlAndSnapshotsChanged": 0,
+    "newLocalMigrationSql": "0035_ai_response_archives.sql",
+    "repositoryMissing": 0
+  },
+  "boundaries": {
+    "paidCalls": 0,
+    "remoteMigrations": 29,
+    "deployments": 17,
+    "newMigrations": 1,
+    "newDependencies": 0,
+    "newServices": 0,
+    "newSecrets": 0,
+    "actualSourceOrPaidResponseModified": false,
+    "productionTouched": false,
+    "newWorkers": 1
+  },
+  "issuesResolvedInPreparation": [
+    "Sandbox pnpm store access prevented startup; reran original pnpm commands under approved execution",
+    "Synthetic child/adult clue collision corrected without weakening domain checks",
+    "Measurement entry module default export corrected"
+  ],
+  "next": "P5-72: administrator weekly operation screens; P5-71 is complete within approved Preview scope. No repeated CPU fixes, fixture preparation or paid AI in the next task.",
+  "beforeFixLocalMeasurements": [
+    {
+      "characters": 11715,
+      "syntheticResponses": 5,
+      "requestBytes": 216009,
+      "responseBytes": 16868,
+      "paidCalls": 0,
+      "rows": [
+        {
+          "stage": "request-and-dispatch",
+          "d1Calls": 60,
+          "sqlStatements": 69,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 230,
+          "cpuMs": null
+        },
+        {
+          "stage": "workflow-initial",
+          "d1Calls": 782,
+          "sqlStatements": 858,
+          "largestBatch": 18,
+          "blockedCalls": 0,
+          "wallMs": 2316,
+          "cpuMs": null
+        },
+        {
+          "stage": "duplicate-initial",
+          "d1Calls": 157,
+          "sqlStatements": 157,
+          "largestBatch": 0,
+          "blockedCalls": 0,
+          "wallMs": 410,
+          "cpuMs": null
+        },
+        {
+          "stage": "intent-select",
+          "d1Calls": 133,
+          "sqlStatements": 141,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 367,
+          "cpuMs": null
+        },
+        {
+          "stage": "intent-confirm",
+          "d1Calls": 140,
+          "sqlStatements": 148,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 383,
+          "cpuMs": null
+        },
+        {
+          "stage": "resume-and-dispatch",
+          "d1Calls": 195,
+          "sqlStatements": 197,
+          "largestBatch": 2,
+          "blockedCalls": 0,
+          "wallMs": 548,
+          "cpuMs": null
+        },
+        {
+          "stage": "workflow-resumed",
+          "d1Calls": 1591,
+          "sqlStatements": 1672,
+          "largestBatch": 18,
+          "blockedCalls": 0,
+          "wallMs": 3840,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-summary",
+          "d1Calls": 296,
+          "sqlStatements": 304,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 647,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-child",
+          "d1Calls": 302,
+          "sqlStatements": 310,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 666,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-adult",
+          "d1Calls": 308,
+          "sqlStatements": 316,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 704,
+          "cpuMs": null
+        },
+        {
+          "stage": "finish",
+          "d1Calls": 1367,
+          "sqlStatements": 1383,
+          "largestBatch": 5,
+          "blockedCalls": 0,
+          "wallMs": 4135,
+          "cpuMs": null
+        },
+        {
+          "stage": "duplicate-completed",
+          "d1Calls": 31,
+          "sqlStatements": 31,
+          "largestBatch": 0,
+          "blockedCalls": 0,
+          "wallMs": 133,
+          "cpuMs": null
+        }
+      ]
+    },
+    {
+      "characters": 30000,
+      "syntheticResponses": 5,
+      "requestBytes": 490284,
+      "responseBytes": 16868,
+      "paidCalls": 0,
+      "rows": [
+        {
+          "stage": "request-and-dispatch",
+          "d1Calls": 60,
+          "sqlStatements": 69,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 347,
+          "cpuMs": null
+        },
+        {
+          "stage": "workflow-initial",
+          "d1Calls": 782,
+          "sqlStatements": 858,
+          "largestBatch": 18,
+          "blockedCalls": 0,
+          "wallMs": 2644,
+          "cpuMs": null
+        },
+        {
+          "stage": "duplicate-initial",
+          "d1Calls": 157,
+          "sqlStatements": 157,
+          "largestBatch": 0,
+          "blockedCalls": 0,
+          "wallMs": 380,
+          "cpuMs": null
+        },
+        {
+          "stage": "intent-select",
+          "d1Calls": 133,
+          "sqlStatements": 141,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 334,
+          "cpuMs": null
+        },
+        {
+          "stage": "intent-confirm",
+          "d1Calls": 140,
+          "sqlStatements": 148,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 357,
+          "cpuMs": null
+        },
+        {
+          "stage": "resume-and-dispatch",
+          "d1Calls": 195,
+          "sqlStatements": 197,
+          "largestBatch": 2,
+          "blockedCalls": 0,
+          "wallMs": 438,
+          "cpuMs": null
+        },
+        {
+          "stage": "workflow-resumed",
+          "d1Calls": 1591,
+          "sqlStatements": 1672,
+          "largestBatch": 18,
+          "blockedCalls": 0,
+          "wallMs": 4027,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-summary",
+          "d1Calls": 296,
+          "sqlStatements": 304,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 623,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-child",
+          "d1Calls": 302,
+          "sqlStatements": 310,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 687,
+          "cpuMs": null
+        },
+        {
+          "stage": "review-adult",
+          "d1Calls": 308,
+          "sqlStatements": 316,
+          "largestBatch": 9,
+          "blockedCalls": 0,
+          "wallMs": 693,
+          "cpuMs": null
+        },
+        {
+          "stage": "finish",
+          "d1Calls": 1367,
+          "sqlStatements": 1383,
+          "largestBatch": 5,
+          "blockedCalls": 0,
+          "wallMs": 3303,
+          "cpuMs": null
+        },
+        {
+          "stage": "duplicate-completed",
+          "d1Calls": 31,
+          "sqlStatements": 31,
+          "largestBatch": 0,
+          "blockedCalls": 0,
+          "wallMs": 94,
+          "cpuMs": null
+        }
+      ]
+    }
+  ],
+  "beforeFixChecks": {
+    "resourceIntegration": {
+      "passed": 7,
+      "parts": [
+        "full flow and meter/rejected result: 4",
+        "50-call stop/disabled entry: 2",
+        "opt-in synthetic entry: 1"
+      ]
+    },
+    "tailSanitization": {
+      "passed": 2
+    },
+    "previewContentDryRun": {
+      "exitCode": 0,
+      "uploadKiB": 1463.68,
+      "gzipKiB": 255.93,
+      "deployed": false
+    },
+    "lint": {
+      "exitCode": 0
+    },
+    "typecheck": {
+      "exitCode": 0
+    },
+    "pnpmCheck": {
+      "status": "passed",
+      "exitCode": 0,
+      "unit": 274,
+      "worker": 2070,
+      "workerFiles": 82,
+      "contentWorkflow": 3,
+      "recoveryCli": 2,
+      "node": 14,
+      "python": 6,
+      "build": "passed",
+      "note": "The additional opt-in Preview entry test was added after Worker collection and passed separately; final lint/typecheck also passed."
+    },
+    "e2e": {
+      "executed": false,
+      "reason": "No UI change; preparation does not complete remote deployment or Phase 5"
+    },
+    "documentation": {
+      "diffCheck": "passed",
+      "localLinksAndAnchors": 103,
+      "linkErrors": 0
+    },
+    "migrationRehearsalCommand": "pnpm exec node scripts/check-preview-generation-upgrade.mjs"
+  },
+  "beforeFixPreservation": {
+    "repositoryBaselineFiles": 669,
+    "migrationSqlFiles": 35,
+    "migrationSqlChanged": 0,
+    "migrationSqlSnapshotsJournalFiles": 71,
+    "migrationSqlSnapshotsJournalChanged": 0,
+    "rootD1Files": 13,
+    "rootD1Changed": 0,
+    "privateAndCredentialFiles": 578,
+    "privateRuntimeOnlyChanges": [
+      "quality-session-4gdw2F/continuation-2026-09-28/wrangler.log",
+      "quality-session-4gdw2F/continuation-2026-09-28/.wrangler/tmp/dev-qhXc63/entry.js",
+      "quality-session-4gdw2F/continuation-2026-09-28/.wrangler/tmp/dev-qhXc63/entry.js.map"
+    ],
+    "credentialFiles": 2,
+    "credentialChanged": 0,
+    "primaryDataFilesUnchanged": true,
+    "lockfileUnchanged": true,
+    "unchangedPrivateAndCredentialFiles": 575
+  },
+  "issuesResolvedInFix": [
+    "Retained pre-body context size guard after eager read regression",
+    "Preserved v1 runtime compatibility without requiring the later cleanup table in legacy reads",
+    "Recovery race injection targets the write transaction now that reads also use batch",
+    "Final completion rollback/race/response-loss protections passed"
+  ],
+  "beforeRemoteChecks": {
+    "resourceIntegration": {
+      "passed": 7,
+      "scope": "two transcript sizes, 50-call hard limit, administrator owner/read view, rejected usage/no automatic replay, Preview entry boundaries"
+    },
+    "additionalRegression": {
+      "passed": 7,
+      "scope": "read scope/invalidation/failure, budget windows, atomic final rollback/races/response loss"
+    },
+    "recoveredAnalysisRegression": {
+      "passed": 9
+    },
+    "tailSanitization": {
+      "passed": 2,
+      "includedIn": "quality tools in pnpm check"
+    },
+    "previewContentDryRun": {
+      "exitCode": 0,
+      "uploadKiB": 1490.16,
+      "gzipKiB": 261.89,
+      "deployed": false
+    },
+    "pnpmCheck": {
+      "status": "passed",
+      "exitCode": 0,
+      "unit": 274,
+      "unitFiles": 31,
+      "worker": 2077,
+      "workerFiles": 83,
+      "contentWorkflow": 3,
+      "recoveryCli": 2,
+      "node": 14,
+      "python": 6,
+      "lint": "passed",
+      "typecheck": "passed",
+      "build": "passed",
+      "log": "/tmp/biblequiz-p571-fix-check-final.log",
+      "warnings": [
+        "Two non-blocking Vite dynamic/static import chunk warnings in unrelated existing modules; build exited 0."
+      ]
+    },
+    "firstFullRun": {
+      "exitCode": 1,
+      "unit": 274,
+      "workerPassed": 2076,
+      "workerFailed": 1,
+      "resolved": "Recovery test raced every batch, including new read batches. Injection now targets actual generation_jobs insert transaction without changing the rejection assertion; all nine recovery tests passed."
+    },
+    "e2e": {
+      "executed": false,
+      "reason": "No UI change; preparation does not complete remote deployment or Phase 5"
+    },
+    "documentation": {
+      "diffCheck": "passed",
+      "localLinksAndAnchors": 186,
+      "linkErrors": 0
+    },
+    "migrationRehearsal": {
+      "rerun": false,
+      "reason": "All 0000~0034 migration files unchanged; previous populated rehearsal retained in migrationRehearsal."
+    },
+    "lint": {
+      "exitCode": 0
+    },
+    "typecheck": {
+      "exitCode": 0
+    }
+  },
+  "beforeRemotePreservation": {
+    "repositoryBaselineFiles": 679,
+    "privateAndCredentialFiles": 4095,
+    "rootD1Files": 13,
+    "rootD1Changed": 0,
+    "privateRuntimeOnlyChanges": [
+      "quality-session-4gdw2F/continuation-2026-09-28/wrangler.log",
+      "quality-session-4gdw2F/continuation-2026-09-28/.wrangler/tmp/dev-qhXc63/entry.js",
+      "quality-session-4gdw2F/continuation-2026-09-28/.wrangler/tmp/dev-qhXc63/entry.js.map"
+    ],
+    "unchangedPrivateAndCredentialFiles": 4092,
+    "privateMissing": 0,
+    "credentialFiles": 2,
+    "credentialChanged": 0,
+    "primaryDataFilesUnchanged": true,
+    "migrationSqlFiles": 35,
+    "migrationSqlChanged": 0,
+    "migrationSqlSnapshotsJournalFiles": 71,
+    "migrationSqlSnapshotsJournalChanged": 0,
+    "lockfileUnchanged": true,
+    "finalRecheck": "passed"
+  },
+  "remoteExecution": {
+    "authorization": "User said 진행하세요 after the concrete Preview-only migration/connection/three-synthetic-run bundle. CPU failure stop condition triggered.",
+    "paidCalls": 0,
+    "fixtureRecordsCreated": 2,
+    "workflowInstancesCreated": 1,
+    "firstProfile": 11715,
+    "secondProfile": {
+      "characters": 30000,
+      "inputConfirmed": true,
+      "jobCreated": false
+    },
+    "invalidOutputRemoteStarted": false,
+    "workflowInstance": "2d69c0b5-42a4-4d2b-9be5-325ded16d800",
+    "workflowDefinitionVersion": "d819a242-e3aa-4be6-8df4-542bc5a59743",
+    "workflowState": "paused",
+    "jobState": "running",
+    "jobStep": "content_review",
+    "calls": 5,
+    "usageRows": 5,
+    "syntheticEstimatedCostMicroUsd": 2620,
+    "actualAiCostUsd": 0,
+    "finish": {
+      "httpStatus": 503,
+      "nativeOutcome": "exceededCpu",
+      "invocationCpuMs": 184,
+      "wallMs": 847
+    },
+    "pauseResumePreservedResponses": true,
+    "pauseResumeInitialExtraSyntheticResponses": 0,
+    "completedDispatchReplayExecuted": false,
+    "activeDisabledVersions": {
+      "biblequiz-app-preview": {
+        "version": "c24cf5d4-991b-4758-be4a-580d63fc4357",
+        "flags": {
+          "AI_GENERATION_ENABLED": "false",
+          "P571_SYNTHETIC_SERMON_IDS": "[]"
+        },
+        "openAiKey": false
+      },
+      "biblequiz-content-preview": {
+        "version": "5f0e3516-5a94-4aa7-9d6b-161fd36cbf0c",
+        "flags": {
+          "P571_MEASUREMENT_ENABLED": "false",
+          "P571_SCENARIO": "success"
+        },
+        "openAiKey": false
+      }
+    },
+    "finalAccess": [
+      {
+        "authenticated": false,
+        "status": 302
+      },
+      {
+        "authenticated": true,
+        "status": 200
+      }
+    ],
+    "tailSamples": {
+      "tail-app-seed.jsonl": [
+        {
+          "at": 1790656957775,
+          "scriptName": "biblequiz-app-preview",
+          "version": "acff80c0-e343-4756-8a66-b786a2095d5b",
+          "outcome": "ok",
+          "invocationCpuMs": 11,
+          "wallMs": 156,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790656956793,
+          "scriptName": "biblequiz-app-preview",
+          "version": "acff80c0-e343-4756-8a66-b786a2095d5b",
+          "outcome": "ok",
+          "invocationCpuMs": 13,
+          "wallMs": 688,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790656958311,
+          "scriptName": "biblequiz-app-preview",
+          "version": "acff80c0-e343-4756-8a66-b786a2095d5b",
+          "outcome": "ok",
+          "invocationCpuMs": 6,
+          "wallMs": 294,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790656958023,
+          "scriptName": "biblequiz-app-preview",
+          "version": "acff80c0-e343-4756-8a66-b786a2095d5b",
+          "outcome": "ok",
+          "invocationCpuMs": 9,
+          "wallMs": 237,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        }
+      ],
+      "tail-app-11715.jsonl": [
+        {
+          "at": 1790657104272,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 19,
+          "wallMs": 764,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657105312,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 9,
+          "wallMs": 408,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657105774,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 54,
+          "wallMs": 3305,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657460539,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 27,
+          "wallMs": 733,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657461611,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 173,
+          "wallMs": 2380,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657464065,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 122,
+          "wallMs": 1931,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657466065,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 112,
+          "wallMs": 2280,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657468417,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 136,
+          "wallMs": 2187,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657470676,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 125,
+          "wallMs": 4323,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657501155,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 29,
+          "wallMs": 240,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657501779,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 317,
+          "wallMs": 2671,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657504525,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 283,
+          "wallMs": 2462,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657507060,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 242,
+          "wallMs": 2514,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657509650,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 247,
+          "wallMs": 2442,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657512166,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 211,
+          "wallMs": 2425,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657514666,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 313,
+          "wallMs": 2567,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657517304,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 258,
+          "wallMs": 2481,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657519869,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "exceededCpu",
+          "invocationCpuMs": 184,
+          "wallMs": 847,
+          "truncated": false,
+          "exceptionCount": 1,
+          "completeCpuSample": false,
+          "measurements": []
+        },
+        {
+          "at": 1790657547284,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 14,
+          "wallMs": 593,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657548227,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 13,
+          "wallMs": 64,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657548496,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 11,
+          "wallMs": 110,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        },
+        {
+          "at": 1790657548681,
+          "scriptName": "biblequiz-app-preview",
+          "version": "925f9346-87c9-4168-ac04-45be33b56fc1",
+          "outcome": "ok",
+          "invocationCpuMs": 8,
+          "wallMs": 109,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": true,
+          "measurements": []
+        }
+      ],
+      "tail-content-success.jsonl": [
+        {
+          "at": 1790657114540,
+          "scriptName": "biblequiz-content-preview",
+          "version": "aa5178e2-0dce-43df-aee0-dbf3f4e04b0f",
+          "outcome": "canceled",
+          "invocationCpuMs": 523,
+          "wallMs": 313345,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": false,
+          "measurements": [
+            {
+              "unit": "receive",
+              "preflightD1Calls": null,
+              "d1Calls": 25,
+              "sqlStatements": 47,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "input-stage",
+              "preflightD1Calls": null,
+              "d1Calls": 7,
+              "sqlStatements": 16,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "transcript-wait",
+              "preflightD1Calls": null,
+              "d1Calls": 18,
+              "sqlStatements": 45,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "input-resume",
+              "preflightD1Calls": null,
+              "d1Calls": 22,
+              "sqlStatements": 45,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "input-confirm",
+              "preflightD1Calls": null,
+              "d1Calls": 35,
+              "sqlStatements": 83,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "stage-intent_analysis",
+              "preflightD1Calls": null,
+              "d1Calls": 3,
+              "sqlStatements": 4,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "task-intent_analysis",
+              "preflightD1Calls": null,
+              "d1Calls": 40,
+              "sqlStatements": 113,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 1,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "stage-intent_critique",
+              "preflightD1Calls": null,
+              "d1Calls": 9,
+              "sqlStatements": 18,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "task-intent_critique",
+              "preflightD1Calls": null,
+              "d1Calls": 47,
+              "sqlStatements": 133,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 1,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "intent-wait",
+              "preflightD1Calls": null,
+              "d1Calls": 25,
+              "sqlStatements": 96,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "preflightD1Calls": 6,
+              "d1Calls": 240,
+              "sqlStatements": 616,
+              "largestBatch": 18,
+              "blockedCalls": 0,
+              "syntheticResponses": 2,
+              "requestBytes": 95296,
+              "responseBytes": 3746,
+              "paidCalls": 0
+            }
+          ]
+        },
+        {
+          "at": 1790657433698,
+          "scriptName": "biblequiz-content-preview",
+          "version": "aa5178e2-0dce-43df-aee0-dbf3f4e04b0f",
+          "outcome": "canceled",
+          "invocationCpuMs": 771,
+          "wallMs": 207135,
+          "truncated": false,
+          "exceptionCount": 0,
+          "completeCpuSample": false,
+          "measurements": [
+            {
+              "preflightD1Calls": 6,
+              "d1Calls": 9,
+              "sqlStatements": 16,
+              "largestBatch": 7,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": 0,
+              "responseBytes": 0,
+              "paidCalls": 0
+            },
+            {
+              "unit": "receive",
+              "preflightD1Calls": null,
+              "d1Calls": 36,
+              "sqlStatements": 114,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "input-stage",
+              "preflightD1Calls": null,
+              "d1Calls": 1,
+              "sqlStatements": 2,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "transcript-wait",
+              "preflightD1Calls": null,
+              "d1Calls": 1,
+              "sqlStatements": 2,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "input-resume",
+              "preflightD1Calls": null,
+              "d1Calls": 1,
+              "sqlStatements": 2,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "input-confirm",
+              "preflightD1Calls": null,
+              "d1Calls": 1,
+              "sqlStatements": 2,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "stage-summary",
+              "preflightD1Calls": null,
+              "d1Calls": 3,
+              "sqlStatements": 4,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "task-summary",
+              "preflightD1Calls": null,
+              "d1Calls": 50,
+              "sqlStatements": 175,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 1,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "stage-child_candidates",
+              "preflightD1Calls": null,
+              "d1Calls": 9,
+              "sqlStatements": 19,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "task-child_candidates",
+              "preflightD1Calls": null,
+              "d1Calls": 47,
+              "sqlStatements": 193,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 1,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "stage-adult_candidates",
+              "preflightD1Calls": null,
+              "d1Calls": 9,
+              "sqlStatements": 19,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "task-adult_candidates",
+              "preflightD1Calls": null,
+              "d1Calls": 47,
+              "sqlStatements": 220,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 1,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "unit": "content-review",
+              "preflightD1Calls": null,
+              "d1Calls": 6,
+              "sqlStatements": 16,
+              "largestBatch": null,
+              "blockedCalls": 0,
+              "syntheticResponses": 0,
+              "requestBytes": null,
+              "responseBytes": null,
+              "paidCalls": 0
+            },
+            {
+              "preflightD1Calls": 6,
+              "d1Calls": 220,
+              "sqlStatements": 794,
+              "largestBatch": 32,
+              "blockedCalls": 0,
+              "syntheticResponses": 3,
+              "requestBytes": 120713,
+              "responseBytes": 13122,
+              "paidCalls": 0
+            }
+          ]
+        }
+      ]
+    },
+    "migration": {
+      "from": "0006",
+      "through": "0034",
+      "applied": 28,
+      "totalApplied": 35,
+      "originalTablesPreserved": 17,
+      "originalRowsPreserved": 14,
+      "foreignKeyErrors": 0,
+      "quickCheck": "ok",
+      "originalFilesEdited": false,
+      "compatibleTransport": true,
+      "failedNative0008RolledBack": true,
+      "failed0030TransportRolledBack": true
+    },
+    "artifacts": {
+      "directory": "/home/onegem/.local/state/biblequiz/p5-71-preview-20260929",
+      "directoryMode": "0700",
+      "fileMode": "0600",
+      "beforeSqlSha256": "df371f1c8939fc7096a577a26316476ba657af2fb46b263a5bde0bbca169f3bc",
+      "afterTrialSqlSha256": "8bda821b448a52820db6737bbf77f3ab34d064f142426f3a905abda0d2931f04",
+      "numericTailOnly": true
+    },
+    "stopped": {
+      "syntheticAllowlistCleared": true,
+      "measurementDisabled": true,
+      "firstWorkflowPaused": true,
+      "tailProcessesEnded": true,
+      "databaseRestoredOrDeleted": false
+    },
+    "newResponseArchive": {
+      "localImplemented": true,
+      "optIn": "AI_RESPONSE_ARCHIVE_ENABLED",
+      "remoteApplied": false,
+      "remoteTested": false,
+      "newMigration": "0035_ai_response_archives.sql",
+      "headersAndKeysStored": false,
+      "requestBeforeSend": true,
+      "rawBytesBeforeParse": true,
+      "usageBeforeArchiveFailureStop": true,
+      "existingSevenDayCleanupIntegrated": true
+    },
+    "historicalRecord": true,
+    "currentStateSee": "freeContinuation"
+  },
+  "issuesResolvedInRemoteExecution": [
+    "Global AI flag rejected by automatic approval review before execution; replaced with exact Preview origin and fixture-ID allowlist.",
+    "D1 REST parser rejected valid trigger CASE/comment SQL. Preserved original migration files; atomically sent parser-compatible equivalents and checked old rows after every file.",
+    "New archive migration no longer disables or expands previously scoped local recovery CLI."
+  ],
+  "freeContinuation": {
+    "operatorDecision": "free_only",
+    "usage": {
+      "usedPercent": 80,
+      "remainingPercent": 20,
+      "proMultiplier": 5,
+      "plusEquivalentRemaining": 100
+    },
+    "state": "three_remote_synthetic_scenarios_completed_free_cpu_verification_pending",
+    "remoteMutations": true,
+    "paidCalls": 0,
+    "originalMigrationFilesChanged": 0,
+    "newDependencies": 0,
+    "localFinishComparison": {
+      "source": "isolated after-trial.sql copies; original stored five responses reused",
+      "runs": [
+        {
+          "iteration": 0,
+          "version": "baseline",
+          "outcome": "review_ready",
+          "cpuMs": 267.525,
+          "wallMs": 203.033817
+        },
+        {
+          "iteration": 0,
+          "version": "current",
+          "outcome": "review_ready",
+          "cpuMs": 188.581,
+          "wallMs": 135.60281799999996
+        },
+        {
+          "iteration": 1,
+          "version": "current",
+          "outcome": "review_ready",
+          "cpuMs": 108.173,
+          "wallMs": 85.653596
+        },
+        {
+          "iteration": 1,
+          "version": "baseline",
+          "outcome": "review_ready",
+          "cpuMs": 169.514,
+          "wallMs": 134.21956999999998
+        },
+        {
+          "iteration": 2,
+          "version": "baseline",
+          "outcome": "review_ready",
+          "cpuMs": 199.515,
+          "wallMs": 151.47943600000008
+        },
+        {
+          "iteration": 2,
+          "version": "current",
+          "outcome": "review_ready",
+          "cpuMs": 131.873,
+          "wallMs": 91.30754499999989
+        },
+        {
+          "iteration": 3,
+          "version": "current",
+          "outcome": "review_ready",
+          "cpuMs": 91.672,
+          "wallMs": 78.00742500000001
+        },
+        {
+          "iteration": 3,
+          "version": "baseline",
+          "outcome": "review_ready",
+          "cpuMs": 155.792,
+          "wallMs": 125.77096299999994
+        },
+        {
+          "iteration": 4,
+          "version": "baseline",
+          "outcome": "review_ready",
+          "cpuMs": 234.366,
+          "wallMs": 144.73466800000006
+        },
+        {
+          "iteration": 4,
+          "version": "current",
+          "outcome": "review_ready",
+          "cpuMs": 99.522,
+          "wallMs": 77.2197819999999
+        },
+        {
+          "iteration": 5,
+          "version": "current",
+          "outcome": "review_ready",
+          "cpuMs": 91.958,
+          "wallMs": 75.13241399999993
+        },
+        {
+          "iteration": 5,
+          "version": "baseline",
+          "outcome": "review_ready",
+          "cpuMs": 135.413,
+          "wallMs": 114.68171299999995
+        }
+      ],
+      "warmupIterationsExcluded": 1,
+      "summary": {
+        "baseline": {
+          "medianCpuMs": 169.514,
+          "medianWallMs": 134.21956999999998,
+          "completed": 5
+        },
+        "current": {
+          "medianCpuMs": 99.522,
+          "medianWallMs": 78.00742500000001,
+          "completed": 5
+        },
+        "cpuReductionPercent": 41.3
+      },
+      "scope": "Offline Node including SQLite CPU; not native Worker",
+      "remoteCpuProof": false
+    },
+    "relatedChecks": {
+      "initialPassed": 129,
+      "afterSharingPassed": 46
+    },
+    "newChecks": [
+      "Every UTF-16 unit and surrogate combination matches UTF-8 byte counts",
+      "Canonical context serialized boundaries and legacy standalone scalar allowance",
+      "All 256 byte values roundtrip D1 hex projection; malformed/oversized/non-BLOB projections rejected",
+      "Large uncached BLOB preserved fully within scoped cache budget",
+      "Legacy corruption injection updated to mutate the actual hex projection"
+    ],
+    "changedPaths": [
+      "AGENTS.md",
+      "docs/DECISIONS.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/STATUS.md",
+      "docs/spec/architecture.md",
+      "docs/spec/testing.md",
+      "docs/work/P5-71-verification.json",
+      "docs/work/P5-71.md",
+      "scripts/check-cloudflare-config.mjs",
+      "scripts/p5-71-run-preview.mjs",
+      "shared/api/admin-content-final-check.ts",
+      "src/features/admin-sermon-input/ContentGeneration.tsx",
+      "src/features/admin-sermon-input/client.test.ts",
+      "src/features/admin-sermon-input/client.ts",
+      "tests/e2e/admin-content-generation.spec.ts",
+      "workers/_shared/db/client.ts",
+      "workers/_shared/repositories/generation-lifecycle-artifact.ts",
+      "workers/_shared/repositories/generation-lifecycle-data.ts",
+      "workers/_shared/repositories/generation-lifecycle-store.ts",
+      "workers/_shared/repositories/generation-read-session.ts",
+      "workers/_shared/repositories/human-content-runtime-store.ts",
+      "workers/_shared/services/content-final-check-workflow.ts",
+      "workers/_shared/services/generation-context-codec.ts",
+      "workers/_shared/services/generation-domain-codec.ts",
+      "workers/_shared/storage/d1-hex-blob.ts",
+      "workers/_shared/storage/utf8-byte-length.ts",
+      "workers/app/app.ts",
+      "workers/app/content-final-check-workflow.test.ts",
+      "workers/app/content-intent-generation.test.ts",
+      "workers/app/content-workflow.test.ts",
+      "workers/app/d1-hex-blob.test.ts",
+      "workers/app/generation-lifecycle-store.test.ts",
+      "workers/app/generation-read-session.test.ts",
+      "workers/app/utf8-byte-length.test.ts",
+      "workers/content/index.ts",
+      "workers/content/preview-measurement.ts",
+      "wrangler.jsonc"
+    ],
+    "preservation": {
+      "existingPrivateFiles": 4151,
+      "changedPrivateFiles": 5,
+      "missingPrivateFiles": 0,
+      "rootD1Files": 4,
+      "changedRootD1Files": 0,
+      "authorizedChangesOnly": true
+    },
+    "remoteMutationScope": "existing approved Preview only",
+    "migration0035": {
+      "explicitlyApproved": true,
+      "applied": true,
+      "oldTables": 82,
+      "oldRows": 219,
+      "preserved": true,
+      "foreignKeys": 0,
+      "quickCheck": "ok",
+      "migrationRecords": 36
+    },
+    "firstFixture": {
+      "characters": 11715,
+      "jobStatus": "review_ready",
+      "stage": "finish",
+      "workflowStatus": "complete",
+      "finishHttpStatus": 200,
+      "finishNativeCpuMs": 182,
+      "duplicateDispatch": "replayed",
+      "storedResponses": 5,
+      "usageRows": 5,
+      "paidCalls": 0
+    },
+    "secondFixture": {
+      "characters": 30000,
+      "jobId": "54601657-2709-4752-9c69-023fc9411c28",
+      "jobStatus": "review_ready",
+      "stage": "finish",
+      "workflowStatus": "complete",
+      "finishHttpStatus": 202,
+      "finishNativeOutcome": "ok",
+      "finishNativeCpuMs": 7,
+      "storedResponses": 5,
+      "usageRows": 5,
+      "requestAndResponseArchivesRecovered": 10,
+      "shaAndSizeVerified": true,
+      "initialD1Calls": 250,
+      "initialSqlStatements": 627,
+      "resumedD1Calls": 234,
+      "resumedSqlStatements": 804,
+      "maximumUnitD1Calls": 55,
+      "paidCalls": 0,
+      "priorSynchronousFailure": {
+        "finishHttpStatus": 503,
+        "finishNativeOutcome": "exceededCpu",
+        "finishNativeCpuMs": 200
+      },
+      "duplicateDispatch": "replayed",
+      "finalWorkflowStatus": "complete"
+    },
+    "invalidOutputFixture": {
+      "seeded": true,
+      "jobStarted": true,
+      "jobId": "6498cd20-8fbd-46f9-9f56-45fd2c63dc75",
+      "jobStatus": "failed",
+      "stage": "intent_analysis",
+      "workflowStatus": "complete",
+      "workflowOutput": "rejected",
+      "storedResponses": 1,
+      "usageRows": 1,
+      "duplicateDispatch": "replayed",
+      "requestBytes": 45155,
+      "responseBytes": 344,
+      "requestAndResponseArchivesRecovered": 2,
+      "shaAndSizeVerified": true,
+      "d1Calls": 166,
+      "sqlStatements": 364,
+      "maximumUnitD1Calls": 47,
+      "paidCalls": 0
+    },
+    "cloudflareOnlyDecision": {
+      "pcDependentExecutionRejected": true,
+      "paidPlanChangeApproved": false,
+      "newServices": 0,
+      "newDatabaseTablesForAsyncFinish": 0
+    },
+    "asyncFinalCheck": {
+      "flag": "CONTENT_FINAL_CHECK_WORKFLOW_ENABLED",
+      "defaultEnabled": false,
+      "localWorkflowTests": 4,
+      "browserTests": 8,
+      "browserProjects": [
+        "chromium",
+        "mobile-chromium"
+      ],
+      "clientTests": 4,
+      "boundaryTests": 7,
+      "remoteDeployed": true,
+      "remoteTested": true,
+      "finalWorkflowStatus": "complete",
+      "originalWorkflowStatus": "complete",
+      "finalSteps": 2,
+      "finalStepAttempts": [
+        1,
+        1
+      ],
+      "sameFinalRequestKeyReused": true,
+      "finishHttpStatus": 202,
+      "finishNativeCpuMs": 7,
+      "pollHttpStatus": 200,
+      "pollNativeCpuMs": [
+        6,
+        5,
+        6
+      ],
+      "originalJobResponsesUnchanged": 5,
+      "originalJobUsageUnchanged": 5
+    },
+    "postRemoteReadDedup": {
+      "relatedTests": 56,
+      "finishSqlStatementsBefore": 263,
+      "finishSqlStatementsAfter": 248,
+      "finishD1Calls": 48,
+      "cpuImprovementInsufficientForRetry": true,
+      "remoteDeployed": true
+    },
+    "remoteCurrent": {
+      "appVersion": "7ad8ecbf-6a03-4d3a-9f6b-4386163ded80",
+      "contentVersion": "9833d884-ac95-4fd8-8e22-dc601a0e9129",
+      "allowlistCount": 0,
+      "measurementEnabled": false,
+      "responseArchiveEnabled": false,
+      "openAiKeyPresent": false,
+      "asyncFinalCheckEnabled": false,
+      "aiGenerationEnabled": false,
+      "finalSettingsVerified": true
+    },
+    "preservationCurrent": {
+      "baselinePrivateFiles": 4151,
+      "baselineRootD1Files": 4,
+      "realDataOrPaidResultsChanged": 0,
+      "rootD1Changed": 0,
+      "oldMigrationFilesChanged": 0,
+      "missing": 0,
+      "authorizedPrivateFileChanges": 5,
+      "originalPreviewTablesPreserved": 17,
+      "originalPreviewRowsPreserved": 14,
+      "backupAfterStopTables": 84,
+      "backupAfterStopRows": 420,
+      "finalBackupTables": 84,
+      "finalBackupRows": 470,
+      "finalBackupForeignKeys": 0,
+      "finalBackupQuickCheck": "ok",
+      "sourceFilesAtBaseline": 689
+    },
+    "remainingFreeCpuVerification": {
+      "fullViewNativeCpuMs": [
+        221,
+        74,
+        25
+      ],
+      "fullViewOutcome": "ok",
+      "freeCpuMs": 10,
+      "perStepNativeCpuAvailable": false,
+      "currentPlanReconfirmed": false,
+      "billingReadHttpStatus": 403,
+      "freeStableOperationConfirmed": false,
+      "finalWorkflowInvocation": {
+        "cpuMs": 450,
+        "outcome": "canceled",
+        "completeCpuSample": false,
+        "perStepCpu": false
+      },
+      "invalidWorkflowInvocation": {
+        "cpuMs": 280,
+        "outcome": "canceled",
+        "completeCpuSample": false,
+        "perStepCpu": false
+      },
+      "sameTask": "P5-71",
+      "previousFullViewNativeCpuMs": [
+        212,
+        194
+      ],
+      "perStepGraphqlSchemaFieldAvailable": false,
+      "workerTracesEnabled": false
+    },
+    "checksFinal": {
+      "pnpmCheckExit": 0,
+      "browserPassed": 8,
+      "docLinksChecked": 125,
+      "docLinkErrors": 0,
+      "diffCheck": "passed",
+      "scope": "Earlier async final-check continuation; latest checks are in displayReadContinuation."
+    }
+  },
+  "displayReadContinuation": {
+    "date": "2026-09-29",
+    "state": "in_progress_free_cpu_unresolved",
+    "currentTask": "P5-71",
+    "parentState": "Phase 5 in progress",
+    "nextTask": "P5-71",
+    "session": "keep",
+    "usage": {
+      "basis": "user-confirmed Pro 5x; API planType prolite",
+      "startUsedPercent": 81,
+      "endUsedPercent": 91,
+      "separateFiveHourValueAvailable": false,
+      "startPlusEquivalentRemaining": 95,
+      "endPlusEquivalentRemaining": 45
+    },
+    "implemented": [
+      "Display-only sealed snapshot reader with byte/hash/owner/lineage checks and end-of-read freshness guards",
+      "Independent D1 read batches; pure preview/layout presenter separated from full write validation",
+      "Snapshot content_sequence order preserved",
+      "Runtime current-row schemas initialized once; Drizzle relation schema restricted to its actual relational-query users"
+    ],
+    "notImplemented": [
+      "Split HTTP display requests",
+      "Persisted display cache",
+      "New table or migration 0036"
+    ],
+    "authorization": "Existing approved Preview app/content changes and read-only checks; completed fixtures not reseeded or rerun",
+    "realAiCalls": 0,
+    "newSyntheticScenarios": 0,
+    "migrationsApplied": 0,
+    "paidPlanChanges": 0,
+    "productionChanges": 0,
+    "mainPushes": 0,
+    "remoteCurrent": {
+      "appVersion": "7ad8ecbf-6a03-4d3a-9f6b-4386163ded80",
+      "contentVersion": "9833d884-ac95-4fd8-8e22-dc601a0e9129",
+      "allowlistCount": 0,
+      "measurementEnabled": false,
+      "responseArchiveEnabled": false,
+      "openAiKeyPresent": false,
+      "asyncFinalCheckEnabled": false,
+      "aiGenerationEnabled": false,
+      "finalSettingsVerified": true
+    },
+    "remoteDisplay": {
+      "v1": {
+        "appVersion": "76d935fb-7d90-40ee-aa50-1b3eacf67185",
+        "firstCpuMs": [
+          162,
+          90,
+          20
+        ],
+        "laterCpuMs": [
+          194,
+          123,
+          37
+        ]
+      },
+      "v2": {
+        "profiles": [
+          "11715",
+          "30000",
+          "invalid_output"
+        ],
+        "firstCpuMs": [
+          221,
+          74,
+          25
+        ],
+        "firstOutcomes": [
+          "ok",
+          "ok",
+          "ok"
+        ],
+        "httpStatus": [
+          200,
+          200,
+          200
+        ],
+        "repeatedHttpStatus": [
+          200,
+          200,
+          200
+        ],
+        "repeatedNativeCpuAvailable": false,
+        "missingRepeatReason": "Tail had ended before repeat requests"
+      },
+      "freeLimitMs": 10,
+      "freeCpuPassed": false,
+      "consistentReductionClaimed": false,
+      "exactFullResponseParityIncludingOrder": [
+        true,
+        true,
+        true
+      ]
+    },
+    "workflowCpuEvidence": {
+      "rawRecords": 35,
+      "actualDataset": "AccountWorkflowsAdaptive",
+      "actualCpuMeaning": "CPU time in timestamp interval (ms)",
+      "actualStepCountMeaning": "Number of step.do operations during timestamp interval",
+      "stepNameFieldAvailable": false,
+      "individualStepCpuAvailable": false,
+      "intervalTotalsNotAssignedToSteps": true,
+      "evidence": "free-cpu/display-read-evidence/p571-graphql-workflow-fields.json"
+    },
+    "currentPlanReconfirmed": false,
+    "billingReadLastStatus": 403,
+    "tracesAlreadyDisabled": true,
+    "checks": {
+      "fullCheckRunsPassed": 2,
+      "latestFullCheck": {
+        "unit": 275,
+        "worker": 2095,
+        "workerFiles": 87,
+        "workflow": 4,
+        "recoveryCli": 2,
+        "node": 14,
+        "python": 6,
+        "lint": "passed",
+        "typecheck": "passed",
+        "build": "passed"
+      },
+      "provenanceFocusedPassed": 54,
+      "afterFinalSnapshotOrderFocusedPassed": 1,
+      "afterFinalSchemaInitializationFocusedPassed": 15,
+      "latestLint": "passed",
+      "latestTypecheck": "passed",
+      "previewBuild": "passed",
+      "appStrictDryRun": "passed",
+      "contentStrictDryRun": "passed",
+      "sourceManifestFiles": 389,
+      "sourceManifestMatchesDeploy": true,
+      "finalSmallEditsAfterFullCheck": true,
+      "e2eRerunThisContinuation": false,
+      "previousActualE2ePassed": 8,
+      "localLinksAndAnchors": 129,
+      "linkErrors": 0,
+      "diffCheck": "passed"
+    },
+    "preservation": {
+      "baselineRepoFiles": 696,
+      "baselinePrivateFiles": 4232,
+      "baselineRootD1Files": 4,
+      "changedPrivateFiles": 0,
+      "changedRootD1Files": 0,
+      "missingBaselineFiles": 0,
+      "migration0000to0034Changed": 0,
+      "lockfileChanged": false,
+      "previewTablesUnchanged": 84,
+      "previewRowsUnchanged": 470,
+      "foreignKeys": 0,
+      "quickCheck": "ok",
+      "migrationRecords": 36,
+      "latestExport": "free-cpu/after-display-reads.sql"
+    },
+    "changedPaths": [
+      "docs/DECISIONS.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/STATUS.md",
+      "docs/spec/architecture.md",
+      "docs/spec/testing.md",
+      "docs/work/P5-71-verification.json",
+      "docs/work/P5-71.md",
+      "workers/_shared/db/client.ts",
+      "workers/_shared/repositories/human-content-runtime-store.ts",
+      "workers/_shared/services/content-generation-display.ts",
+      "workers/_shared/services/content-generation-view.ts",
+      "workers/_shared/services/generation-final-validation.ts",
+      "workers/app/content-intent-generation.test.ts"
+    ],
+    "newSourceFiles": [
+      "workers/_shared/services/content-generation-display.ts"
+    ],
+    "git": {
+      "head": "0ab476e4281734f4eab64cc6231be09092221651",
+      "branch": "main",
+      "statusEntries": 391,
+      "commit": false,
+      "push": false,
+      "preexistingDirtyWorkPreserved": true
+    },
+    "privateEvidenceDirectory": "/home/onegem/.local/state/biblequiz/p5-71-preview-20260929/free-cpu/display-read-evidence",
+    "remaining": [
+      "Reduce work per administrator read request; do not retry unchanged monolithic computation",
+      "Resolve unavailable per-step CPU evidence and reconfirm current free plan before claiming stable USD 0 operation"
+    ]
+  },
+  "splitReadContinuation": {
+    "date": "2026-09-29",
+    "status": "split_reads_deployed_verified_free_cpu_unresolved",
+    "scope": "Existing Preview admin content read split and progressive display; no new AI, migration, service or persistent display cache.",
+    "usage": {
+      "planTypeFromApi": "prolite",
+      "userConfirmedPlan": "Pro 5x",
+      "separateFiveHourWindowAvailable": false,
+      "windowDurationMins": 10080,
+      "startUsedPercent": 93,
+      "startRemainingPercent": 7,
+      "startPlusEquivalentRemainingPercent": 35,
+      "implementationStoppedAtUsedPercent": 97,
+      "implementationStoppedAtPlusEquivalentRemainingPercent": 15,
+      "finalUsedPercent": 98,
+      "finalRemainingPercent": 2,
+      "finalPlusEquivalentRemainingPercent": 10,
+      "resetsAt": 1791118397,
+      "newImplementationAfterThreshold": false
+    },
+    "authorization": {
+      "initialDeploymentAutoReview": "rejected_before_execution_for_missing_specific_deployment_approval",
+      "userReply": "승인 — 기존 Preview 조회 분할 배포·읽기 검증",
+      "approvedScope": "Deploy split read app to existing biblequiz-app-preview; read existing three fixtures; browser and CPU verification.",
+      "retryAfterExplicitApproval": true,
+      "stillBlockedByApproval": false
+    },
+    "implementation": {
+      "sections": [
+        "state",
+        "content",
+        "costs",
+        "activity",
+        "placement"
+      ],
+      "actualIndependentHttpRequests": true,
+      "stateFirstThenFourConcurrent": true,
+      "showCompletedSectionsBeforePlacement": true,
+      "preservePartialResultsOnFailure": true,
+      "editingDisabledUntilComplete": true,
+      "explicitRefresh": true,
+      "coherenceMarkerIncludesQuality": true,
+      "stateAndCostsReadBody": false,
+      "contentComputesGrid": false,
+      "placementStillReconstructsContentAndComputesGrid": true,
+      "legacyAggregateResponsePreserved": true,
+      "writeAndPublicationChecksPreserved": true,
+      "newDependencies": 0,
+      "newMigration": false,
+      "persistentDisplayCache": false
+    },
+    "checks": {
+      "pnpmCheck": {
+        "exit": 0,
+        "unit": 278,
+        "worker": 2096,
+        "workerFiles": 87,
+        "workflow": 4,
+        "recoveryCli": 2,
+        "node": 14,
+        "python": 6,
+        "lint": true,
+        "typecheck": true,
+        "build": true,
+        "log": "p571-split-full-check-final.log"
+      },
+      "clientTests": 7,
+      "targetedWorkerTests": 2,
+      "chromiumE2E": {
+        "desktopAndMobile": 8,
+        "physicalDevices": false,
+        "log": "p571-split-e2e-final.log"
+      },
+      "previewBuild": true,
+      "appStrictDryRun": true,
+      "checkedAndDeployedSources": 452,
+      "allSourcesStillMatch": true,
+      "aggregateParityProfiles": 3,
+      "splitProjectionParityProfiles": 3,
+      "docLinks": {
+        "localLinksAndAnchors": 148,
+        "errors": []
+      },
+      "gitDiffCheck": true,
+      "failuresRepairedBeforeFinalCheck": [
+        "New Worker test omitted required adminNote; supplied valid synthetic note and reran targeted/full checks.",
+        "Initial browser assertions expected six decimal places instead of the existing four; corrected assertions."
+      ]
+    },
+    "deployment": {
+      "appVersion": "0d3b8e97-eb20-47fe-bed8-45cb35b0ecc7",
+      "contentVersionUnchanged": "9833d884-ac95-4fd8-8e22-dc601a0e9129",
+      "deploymentExit": 0,
+      "deploymentRecord": 14,
+      "log": "free-cpu/app-disabled-14.log",
+      "previewOnly": true,
+      "mainPush": false,
+      "afterSettingsRead": true,
+      "aiEnabled": false,
+      "syntheticAllowList": [],
+      "finalCheckTrialEnabled": false,
+      "contentMeasurementEnabled": false,
+      "responseArchiveTrialEnabled": false,
+      "openAiKeyOnEitherWorker": false,
+      "contentPublicUrl": false
+    },
+    "remoteReads": {
+      "profiles": [
+        "11715",
+        "30000",
+        "invalid_output"
+      ],
+      "directRequests": 30,
+      "allHttp200": true,
+      "aggregateEqualityPerProfileInBothPasses": true,
+      "phases": [
+        "first",
+        "serial"
+      ],
+      "newScenarios": 0,
+      "newAiCalls": 0,
+      "newPaidCalls": 0,
+      "firstConcurrentCpuNotAssignedToSections": true,
+      "firstConcurrentSampleMaximumMs": 169,
+      "serialCpu": {
+        "version": "0d3b8e97-eb20-47fe-bed8-45cb35b0ecc7",
+        "samples": [
+          {
+            "profile": "11715",
+            "section": "state",
+            "status": 200,
+            "cpuMs": 21,
+            "at": 1790675212390,
+            "start": "2026-09-29T09:46:51.989Z",
+            "end": "2026-09-29T09:46:53.551Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "11715",
+            "section": "content",
+            "status": 200,
+            "cpuMs": 71,
+            "at": 1790675213836,
+            "start": "2026-09-29T09:46:53.555Z",
+            "end": "2026-09-29T09:46:54.846Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "11715",
+            "section": "costs",
+            "status": 200,
+            "cpuMs": 9,
+            "at": 1790675215143,
+            "start": "2026-09-29T09:46:54.847Z",
+            "end": "2026-09-29T09:46:55.585Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "11715",
+            "section": "activity",
+            "status": 200,
+            "cpuMs": 7,
+            "at": 1790675215890,
+            "start": "2026-09-29T09:46:55.586Z",
+            "end": "2026-09-29T09:46:56.330Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "11715",
+            "section": "placement",
+            "status": 200,
+            "cpuMs": 69,
+            "at": 1790675216643,
+            "start": "2026-09-29T09:46:56.331Z",
+            "end": "2026-09-29T09:46:58.093Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "30000",
+            "section": "state",
+            "status": 200,
+            "cpuMs": 6,
+            "at": 1790675218437,
+            "start": "2026-09-29T09:46:58.098Z",
+            "end": "2026-09-29T09:46:58.686Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "30000",
+            "section": "content",
+            "status": 200,
+            "cpuMs": 29,
+            "at": 1790675219031,
+            "start": "2026-09-29T09:46:58.686Z",
+            "end": "2026-09-29T09:46:59.867Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "30000",
+            "section": "costs",
+            "status": 200,
+            "cpuMs": 7,
+            "at": 1790675220232,
+            "start": "2026-09-29T09:46:59.869Z",
+            "end": "2026-09-29T09:47:00.583Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "30000",
+            "section": "activity",
+            "status": 200,
+            "cpuMs": 8,
+            "at": 1790675220955,
+            "start": "2026-09-29T09:47:00.584Z",
+            "end": "2026-09-29T09:47:01.242Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "30000",
+            "section": "placement",
+            "status": 200,
+            "cpuMs": 46,
+            "at": 1790675221628,
+            "start": "2026-09-29T09:47:01.242Z",
+            "end": "2026-09-29T09:47:02.913Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "invalid_output",
+            "section": "state",
+            "status": 200,
+            "cpuMs": 8,
+            "at": 1790675223323,
+            "start": "2026-09-29T09:47:02.915Z",
+            "end": "2026-09-29T09:47:03.491Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "invalid_output",
+            "section": "content",
+            "status": 200,
+            "cpuMs": 11,
+            "at": 1790675223903,
+            "start": "2026-09-29T09:47:03.492Z",
+            "end": "2026-09-29T09:47:04.425Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "invalid_output",
+            "section": "costs",
+            "status": 200,
+            "cpuMs": 8,
+            "at": 1790675224856,
+            "start": "2026-09-29T09:47:04.426Z",
+            "end": "2026-09-29T09:47:05.134Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "invalid_output",
+            "section": "activity",
+            "status": 200,
+            "cpuMs": 7,
+            "at": 1790675225572,
+            "start": "2026-09-29T09:47:05.134Z",
+            "end": "2026-09-29T09:47:05.777Z",
+            "mapping": "single native sample in serial request interval"
+          },
+          {
+            "profile": "invalid_output",
+            "section": "placement",
+            "status": 200,
+            "cpuMs": 23,
+            "at": 1790675226233,
+            "start": "2026-09-29T09:47:05.777Z",
+            "end": "2026-09-29T09:47:06.784Z",
+            "mapping": "single native sample in serial request interval"
+          }
+        ],
+        "passed10ms": 8,
+        "total": 15,
+        "allHttp200": true,
+        "freeCpuComplete": false,
+        "concurrentFirstPassNotAssignedToSections": true
+      },
+      "tailFile": "free-cpu/tail-split.jsonl",
+      "tailClosed": true
+    },
+    "remoteBrowser": {
+      "ok": true,
+      "sections": [
+        {
+          "section": "state",
+          "status": 200
+        },
+        {
+          "section": "activity",
+          "status": 200
+        },
+        {
+          "section": "costs",
+          "status": 200
+        },
+        {
+          "section": "content",
+          "status": 200
+        },
+        {
+          "section": "placement",
+          "status": 200
+        }
+      ],
+      "articles": 5,
+      "pageErrors": 0,
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "mutations": 0
+    },
+    "remotePreservation": {
+      "allTablesUnchanged": 84,
+      "allRowsUnchanged": 470,
+      "foreignKeys": 0,
+      "quickCheck": "ok",
+      "migrationRecords": 36,
+      "newScenarios": 0,
+      "newAiCalls": 0
+    },
+    "remoteAfterExport": "free-cpu/after-split-reads.sql",
+    "localPreservation": {
+      "repoBaselineFiles": 697,
+      "changedFiles": [
+        "shared/api/admin-content-generation.ts",
+        "tests/e2e/admin-content-generation.spec.ts",
+        "docs/STATUS.md",
+        "workers/_shared/services/content-generation-view.ts",
+        "src/features/admin-sermon-input/ContentGeneration.tsx",
+        "src/features/admin-sermon-input/client.test.ts",
+        "src/features/admin-sermon-input/client.ts",
+        "docs/spec/api.md",
+        "docs/spec/testing.md",
+        "docs/spec/architecture.md",
+        "docs/DECISIONS.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/HANDOFF.md",
+        "workers/app/app.ts",
+        "workers/app/content-intent-generation.test.ts",
+        "docs/work/P5-71.md",
+        "docs/work/P5-71-verification.json"
+      ],
+      "changedFileCount": 17,
+      "missingRepoFiles": 0,
+      "privateBaselineFiles": 4232,
+      "privateChanged": 0,
+      "privateMissing": 0,
+      "rootD1BaselineFiles": 4,
+      "rootD1Changed": 0,
+      "rootD1Missing": 0,
+      "migrations0000Through0035AndLockfileUnchanged": true
+    },
+    "git": {
+      "statusEntries": 391,
+      "sameStatusAsStart": true,
+      "head": "0ab476e4281734f4eab64cc6231be09092221651",
+      "branch": "main"
+    },
+    "evidenceDirectory": "/home/onegem/.local/state/biblequiz/p5-71-preview-20260929/free-cpu/split-read-evidence",
+    "remaining": [
+      "Content restoration and placement computation still exceed 10ms in individual HTTP requests; first state sample also exceeds 10ms.",
+      "Workflow individual-step CPU is unavailable in the inspected GraphQL schema; invocation/interval CPU is not a substitute.",
+      "Current free plan could not be reconfirmed through prior Billing403; no paid plan was enabled."
+    ],
+    "next": "Remain P5-71. Once quota permits, remove repeated work in content/placement reads using existing saved results first; preserve all data/write checks and measure the changed requests. No new fixture generation or repeated unchanged deployment."
+  },
+  "latestContinuation": "displayReuseApplyContinuation",
+  "latestDate": "2026-10-01",
+  "displayReuseContinuation": {
+    "date": "2026-09-30",
+    "status": "local_validation_complete_remote_approval_pending",
+    "parentStatus": "Phase 5 in_progress",
+    "next": "P5-71 Preview 0036 + app/content deployment + existing-three display preparation + parity/preservation/native CPU verification",
+    "session": "keep",
+    "recommendedModel": {
+      "name": "GPT-6.1 Sol",
+      "reasoning": "high",
+      "reason": "Apply and measure the validated reuse implementation against preserved original results."
+    },
+    "usage": {
+      "plan": "USD 200 Pro",
+      "multiplier": 10,
+      "basis": "user-specified; not an official verified product multiplier",
+      "startUsedPercent": 0,
+      "latestUsedPercent": 1,
+      "latestRemainingPercent": 99,
+      "plusEquivalentRemaining": 990,
+      "separateFiveHourValueAvailable": false,
+      "resetCreditUsed": false
+    },
+    "authorization": {
+      "localImplementationAuthorized": true,
+      "previousSplitDeploymentApproval": "completed prior scope only",
+      "new0036RemoteApproved": false,
+      "newAppContentDeploymentApproved": false,
+      "existingDisplayPreparationApproved": false,
+      "remoteWritesThisContinuation": 0,
+      "remoteDeploymentsThisContinuation": 0,
+      "actualAiCalls": 0,
+      "paidPlanChanges": 0,
+      "productionChanges": 0,
+      "pushes": 0
+    },
+    "implementation": {
+      "migration": "0036_generation_display_projections.sql",
+      "migrationSha256": "d9ecacf484c7ec8711bd3b3cea89a5770fc9f0f39793a58feb0b8730c0912334",
+      "newPrivateTables": [
+        "generation_display_snapshots",
+        "generation_display_finals"
+      ],
+      "originalSql0000Through0035Changed": false,
+      "dependenciesAdded": false,
+      "newServicesAdded": false,
+      "pcServerDependency": false,
+      "getOriginalInputContentTicketChunks": false,
+      "getGridSearch": false,
+      "getAutomaticWriteFallback": false,
+      "displayCopiesAreWriteAuthority": false,
+      "missingOrCorruptCopy": "409",
+      "originalFullValidationOnCommandsPreserved": true,
+      "legacyOfflineRecoveryBoundary": "0034 retained; no display tables auto-created",
+      "preparationSteps": [
+        "owner",
+        "one original event per step",
+        "child grid",
+        "adult grid",
+        "preview versus original proof"
+      ],
+      "preparationFlagDefault": "false/[]"
+    },
+    "checks": {
+      "pnpmCheck": {
+        "exit": 0,
+        "unit": 278,
+        "worker": 2100,
+        "workerFiles": 87,
+        "workflow": 4,
+        "recoveryCli": 2,
+        "node": 14,
+        "python": 6,
+        "lint": true,
+        "typecheck": true,
+        "build": true,
+        "log": "final-check.log"
+      },
+      "recoveryCliAfterCompatibilityFix": {
+        "passed": 2,
+        "log": "recovery-cli.log"
+      },
+      "relatedRecoveryTests": 12,
+      "workflowAndAdminBoundaryTests": 9,
+      "chromiumE2E": {
+        "desktopAndMobile": 10,
+        "passed": true,
+        "log": "e2e-final.log",
+        "physicalDevices": false,
+        "durationSeconds": 26,
+        "afterLegacyCompatibilityFix": true
+      },
+      "previewBuild": {
+        "exit": 0,
+        "log": "preview-build.log"
+      },
+      "appStrictDryRun": {
+        "exit": 0,
+        "log": "app-dry-run.log",
+        "targetD1": "cb044032-7e26-452b-afae-b0cae3d93678"
+      },
+      "contentStrictDryRun": {
+        "exit": 0,
+        "log": "content-dry-run.log",
+        "target": "biblequiz-content-preview/biblequiz-d1-preview"
+      },
+      "migrationRehearsal": {
+        "passed": true,
+        "range": "0006 through 0036",
+        "count": 30,
+        "originalFixtureTables": 17,
+        "originalSyntheticFixtureRows": 13,
+        "foreignKeyErrors": 0,
+        "quickCheck": "ok",
+        "injectedFailureRollback": true,
+        "remoteRun": false
+      },
+      "existingFixtures": {
+        "profiles": [
+          "11715",
+          "30000",
+          "invalid_output"
+        ],
+        "combinedAndSplitResponsesExact": true,
+        "repeatedSectionGets": 45,
+        "originalInputContentTicketChunkReads": 0,
+        "getWrites": 0,
+        "originalSchemaRowsPreserved": true,
+        "originalTableCountIncludingSequence": 84,
+        "sqliteSequencePreserved": true,
+        "snapshotCopies": 20,
+        "gridCopies": 4,
+        "foreignKeyErrors": 0,
+        "quickCheck": "ok",
+        "remoteWrites": 0,
+        "originalFileWrites": 0,
+        "log": "existing-fixtures.log"
+      },
+      "preparationWorkflowTest": "real run branch with step adapter; not native durable execution of new branch",
+      "finalCheckTemporaryRun": "one process/log lost on session transition; not claimed passed",
+      "failuresFixed": [
+        "exact statement count for added display write",
+        "disabled config flag whitelist",
+        "actual full-v3 marker table versus virtual job field",
+        "exclude internal _cf_* metadata from test fingerprint",
+        "0034-bounded recovery compatibility without extending migration scope"
+      ],
+      "docLinks": {
+        "localLinksAndAnchors": 179,
+        "errors": []
+      },
+      "gitDiffCheck": true
+    },
+    "preservation": {
+      "thisTurnInitialVerification": {
+        "repositoryBaselineFiles": 697,
+        "privateBaselineFiles": 4371,
+        "rootD1Files": 4,
+        "privateChanged": 0,
+        "privateMissing": 0,
+        "rootD1Changed": 0,
+        "rootD1Missing": 0,
+        "repositoryMissing": 0,
+        "authorizedChangedAtThatTime": 27,
+        "evidence": "confirmed in earlier tool output; temporary baseline lost on session transition"
+      },
+      "persistentPreviousBaselineRecheck": {
+        "repo": {
+          "baselineCount": 697,
+          "missing": [],
+          "changed": [
+            "wrangler.p5-71-content.jsonc",
+            "workers/_shared/db/schema.ts",
+            "scripts/check-preview-generation-upgrade.mjs",
+            "scripts/check-cloudflare-config.mjs",
+            "shared/api/admin-content-generation.ts",
+            "tests/e2e/admin-content-generation.spec.ts",
+            "workers/_shared/repositories/human-content-runtime-store.ts",
+            "workers/_shared/repositories/generation-lifecycle-artifact.ts",
+            "workers/_shared/repositories/generation-lifecycle-store.ts",
+            "workers/_shared/services/content-final-check-workflow.ts",
+            "workers/_shared/services/content-generation-display.ts",
+            "workers/_shared/services/generation-domain-resources.ts",
+            "workers/_shared/services/content-generation.ts",
+            "workers/_shared/services/content-placement.ts",
+            "workers/_shared/services/generation-final-validation.ts",
+            "wrangler.jsonc",
+            "docs/STATUS.md",
+            "workers/_shared/services/content-generation-view.ts",
+            "src/features/admin-sermon-input/ContentGeneration.tsx",
+            "src/features/admin-sermon-input/client.test.ts",
+            "src/features/admin-sermon-input/client.ts",
+            "docs/spec/data-model.md",
+            "docs/spec/api.md",
+            "docs/spec/testing.md",
+            "docs/spec/architecture.md",
+            "docs/DECISIONS.md",
+            "docs/PROJECT_CONTEXT.md",
+            "docs/HANDOFF.md",
+            "workers/app/content-final-check-workflow.test.ts",
+            "workers/app/admin-generation.test.ts",
+            "workers/app/app.ts",
+            "workers/app/content-intent-generation.test.ts",
+            "docs/work/P5-71.md",
+            "docs/work/P5-71-verification.json",
+            "AGENTS.md",
+            "workers/content/index.ts",
+            "migrations/meta/_journal.json"
+          ]
+        },
+        "private": {
+          "baselineCount": 4232,
+          "missing": [],
+          "changed": []
+        },
+        "d1": {
+          "baselineCount": 4,
+          "missing": [],
+          "changed": []
+        }
+      },
+      "originalMigrationAndLockfilesUnchanged": true,
+      "p570PaidResultsAndKeysPreserved": true,
+      "paidCalls": 0
+    },
+    "git": {
+      "branch": "main",
+      "head": "0ab476e4281734f4eab64cc6231be09092221651",
+      "statusEntries": 395,
+      "commit": false,
+      "push": false,
+      "resetOrStash": false
+    },
+    "remoteUnchanged": {
+      "migrationRange": "0000 through 0035",
+      "count": 36,
+      "appVersion": "0d3b8e97-eb20-47fe-bed8-45cb35b0ecc7",
+      "contentVersion": "9833d884-ac95-4fd8-8e22-dc601a0e9129",
+      "allTrialFlagsDisabled": true,
+      "accessFilePreserved": true,
+      "accessExpiredAt": "2026-09-29T12:05:26Z",
+      "originalTableCount": 84,
+      "originalRows": 470,
+      "originalUserTables": 17,
+      "originalUserRows": 14,
+      "nativeCpuAfterReuse": "not measured",
+      "nativeWorkflowStepCpu": "unavailable in current observed API schema; invocation CPU is not step CPU",
+      "billingPlan": "not reconfirmed due prior 403"
+    },
+    "evidenceDirectory": ".wrangler/p571-display-reuse/",
+    "durableCopyDirectory": "/home/onegem/.local/state/biblequiz/p5-71-preview-20260929/free-cpu/display-reuse-evidence-20260930/",
+    "remaining": [
+      "new specific remote approval",
+      "Access login renewal before protected API verification",
+      "Preview migration/deploy/existing display preparation",
+      "native Preview CPU and browser/preservation verification",
+      "disable display preparation flags after verification"
+    ],
+    "discarded": [
+      "repeat source reconstruction/grid search on GET",
+      "expensive fallback on missing copy",
+      "PC-hosted operator server",
+      "paid switch",
+      "AI result repurchase",
+      "local/HTTP200 proves Free CPU",
+      "workflow invocation CPU equals per-step CPU"
+    ]
+  },
+  "displayReuseApplyContinuation": {
+    "date": "2026-09-30",
+    "status": "preview-applied-functional-and-preservation-passed-free-cpu-not-passed",
+    "authorization": "User confirmed 0036/application/prepare-existing-three/CPU validation scope, then said 시작하세요; Access renewed this turn",
+    "usageAtStart": {
+      "proRemainingPercent": 99,
+      "userSpecifiedMultiplier": 10,
+      "plusEquivalentRemainingPercent": 990,
+      "separate5HourAvailable": false
+    },
+    "scope": {
+      "environment": "existing Preview only",
+      "migration": "0036_generation_display_projections.sql",
+      "remoteMigrations": 37,
+      "actualAiCalls": 0,
+      "additionalAiCostUsd": 0,
+      "paidPlanChange": false,
+      "productionChange": false,
+      "mainPush": false
+    },
+    "currentDeployments": {
+      "app": {
+        "kind": "app",
+        "mode": "disabled",
+        "exit": 0,
+        "version": "5a54d5cd-c58d-41ed-acc1-a77109b0ac17",
+        "allowedOwnerCount": 0,
+        "actualAi": false,
+        "production": false
+      },
+      "content": {
+        "kind": "content",
+        "mode": "disabled",
+        "exit": 0,
+        "version": "8beffb3a-f0c3-4b6f-a2ec-137952876011",
+        "allowedOwnerCount": 0,
+        "actualAi": false,
+        "production": false
+      }
+    },
+    "preparation": {
+      "profiles": {
+        "11715": {
+          "instanceId": "display-cd4a2a629cec4c6265528355-4b0dcee5-5fe5-4372-a01b-37769dc841e9",
+          "status": "complete",
+          "stepCount": 14,
+          "output": {
+            "outcome": "prepared"
+          },
+          "stepNames": [
+            "display-owner-1",
+            "display-event-0-1",
+            "display-event-1-1",
+            "display-event-2-1",
+            "display-event-3-1",
+            "display-event-4-1",
+            "display-event-5-1",
+            "display-event-6-1",
+            "display-event-7-1",
+            "display-event-8-1",
+            "display-event-9-1",
+            "display-grid-child-1",
+            "display-grid-adult-1",
+            "display-verify-1"
+          ],
+          "errorNames": []
+        },
+        "30000": {
+          "instanceId": "display-9ced12e4f1c17f439442274e-ffdb132c-b1c7-4ff9-b570-2a7d159ec924",
+          "status": "complete",
+          "stepCount": 14,
+          "output": {
+            "outcome": "prepared"
+          },
+          "stepNames": [
+            "display-owner-1",
+            "display-event-0-1",
+            "display-event-1-1",
+            "display-event-2-1",
+            "display-event-3-1",
+            "display-event-4-1",
+            "display-event-5-1",
+            "display-event-6-1",
+            "display-event-7-1",
+            "display-event-8-1",
+            "display-event-9-1",
+            "display-grid-child-1",
+            "display-grid-adult-1",
+            "display-verify-1"
+          ],
+          "errorNames": []
+        },
+        "invalid_output": {
+          "instanceId": "display-7bf8493d5bc6e1332a2cf4bc-fb358ee4-5211-46b1-80ac-075a50557db7",
+          "status": "complete",
+          "stepCount": 1,
+          "output": {
+            "outcome": "prepared"
+          },
+          "stepNames": [
+            "display-owner-1"
+          ],
+          "errorNames": []
+        }
+      },
+      "snapshotCount": 20,
+      "gridCount": 4,
+      "calls": 11,
+      "usage": 11
+    },
+    "preservationAfterPreparation": {
+      "originalTablesIncludingInternal": 84,
+      "protectedOriginalTables": 82,
+      "originalRowsPreserved": true,
+      "newMigrationRows": 1,
+      "displaySnapshots": 20,
+      "displayGrids": 4,
+      "exportedTables": 86,
+      "foreignKeyErrors": 0,
+      "quickCheck": "ok",
+      "originalMigrationRecordsPreserved": 36,
+      "onlyD1MigrationSequenceAdvanced": true,
+      "originalSchemaDefinitionsPreserved": true
+    },
+    "preservationAfterReadOnly": {
+      "allPreparedRowsPreserved": true,
+      "changedTables": [],
+      "tables": 86,
+      "allSchemaDefinitionsUnchanged": true,
+      "foreignKeyErrors": 0,
+      "quickCheck": "ok"
+    },
+    "filePreservation": {
+      "private": {
+        "checked": 4386,
+        "missing": [],
+        "changed": []
+      },
+      "d1": {
+        "checked": 4,
+        "missing": [],
+        "changed": []
+      },
+      "repo": {
+        "missing": [],
+        "changed": [
+          "docs/spec/data-model.md",
+          "docs/spec/testing.md",
+          "docs/work/P5-71.md",
+          "shared/api/public-quiz.ts",
+          "workers/_shared/repositories/generation-display-store.ts",
+          "workers/_shared/repositories/generation-lifecycle-store.ts",
+          "workers/_shared/services/content-generation-display.ts",
+          "workers/_shared/services/content-generation-view.ts",
+          "workers/_shared/services/generation-final-validation.ts",
+          "workers/app/content-intent-generation.test.ts",
+          "docs/DECISIONS.md",
+          "docs/HANDOFF.md",
+          "docs/PROJECT_CONTEXT.md",
+          "docs/STATUS.md"
+        ]
+      }
+    },
+    "checks": {
+      "fullCheck": {
+        "exit": 0,
+        "log": ".wrangler/p571-display-apply/check-batched.log",
+        "unit": 278,
+        "worker": 2100,
+        "workflow": 4,
+        "recoveryCli": 2,
+        "node": 14,
+        "python": 6
+      },
+      "previewBuildExit": 0,
+      "appStrictDryRunExit": 0,
+      "contentStrictDryRunExit": 0,
+      "oldPreparedCopiesExactParity": true,
+      "networkAndProviderCallsInOfflineParity": 0,
+      "remoteBrowsers": [
+        {
+          "ok": true,
+          "sections": [
+            {
+              "section": "state",
+              "status": 200
+            },
+            {
+              "section": "activity",
+              "status": 200
+            },
+            {
+              "section": "costs",
+              "status": 200
+            },
+            {
+              "section": "placement",
+              "status": 200
+            },
+            {
+              "section": "content",
+              "status": 200
+            }
+          ],
+          "articles": 5,
+          "pageErrors": 0,
+          "viewport": {
+            "width": 1366,
+            "height": 900
+          },
+          "mutations": 0
+        },
+        {
+          "ok": true,
+          "sections": [
+            {
+              "section": "state",
+              "status": 200
+            },
+            {
+              "section": "activity",
+              "status": 200
+            },
+            {
+              "section": "costs",
+              "status": 200
+            },
+            {
+              "section": "placement",
+              "status": 200
+            },
+            {
+              "section": "content",
+              "status": 200
+            }
+          ],
+          "articles": 5,
+          "pageErrors": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "mutations": 0
+        },
+        {
+          "ok": true,
+          "sections": [
+            {
+              "section": "state",
+              "status": 200
+            },
+            {
+              "section": "activity",
+              "status": 200
+            },
+            {
+              "section": "costs",
+              "status": 200
+            },
+            {
+              "section": "placement",
+              "status": 200
+            },
+            {
+              "section": "content",
+              "status": 200
+            }
+          ],
+          "articles": 5,
+          "pageErrors": 0,
+          "viewport": {
+            "width": 1366,
+            "height": 900
+          },
+          "mutations": 0
+        },
+        {
+          "ok": true,
+          "sections": [
+            {
+              "section": "state",
+              "status": 200
+            },
+            {
+              "section": "activity",
+              "status": 200
+            },
+            {
+              "section": "costs",
+              "status": 200
+            },
+            {
+              "section": "placement",
+              "status": 200
+            },
+            {
+              "section": "content",
+              "status": 200
+            }
+          ],
+          "articles": 5,
+          "pageErrors": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "mutations": 0
+        }
+      ]
+    },
+    "nativeCpu": {
+      "initialPreparedSpaced": {
+        "timestampPaddingMs": 1000,
+        "phase": "enabled-spaced",
+        "tailPhase": "enabled-spaced",
+        "results": [
+          {
+            "profile": "11715",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 17,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 37,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 8,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 6,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 22,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 6,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 14,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 6,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 6,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 15,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 5,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 10,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 10,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 6,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 8,
+            "nativeOk": true
+          }
+        ],
+        "allMapped": true,
+        "over10ms": [
+          {
+            "profile": "11715",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 17,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 37,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 22,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 14,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 15,
+            "nativeOk": true
+          }
+        ]
+      },
+      "refinedRepeat": {
+        "timestampPaddingMs": 1000,
+        "phase": "refined-repeat-spaced",
+        "tailPhase": "refined-spaced",
+        "results": [
+          {
+            "profile": "11715",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 22,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 28,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 10,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 8,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 28,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 8,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 19,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 7,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 9,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 13,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 7,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 9,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 7,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 10,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 10,
+            "nativeOk": true
+          }
+        ],
+        "allMapped": true,
+        "over10ms": [
+          {
+            "profile": "11715",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 22,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 28,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 28,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 19,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 13,
+            "nativeOk": true
+          }
+        ]
+      },
+      "batchedFirst": {
+        "timestampPaddingMs": 1000,
+        "phase": "batched-spaced",
+        "tailPhase": "batched-spaced",
+        "results": [
+          {
+            "profile": "11715",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 30,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 45,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 12,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 10,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 39,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 0,
+            "cpuMs": null,
+            "nativeOk": false
+          },
+          {
+            "profile": "30000",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 24,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 10,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 12,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 21,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 0,
+            "cpuMs": null,
+            "nativeOk": false
+          },
+          {
+            "profile": "invalid_output",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 14,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 8,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 9,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 17,
+            "nativeOk": true
+          }
+        ],
+        "allMapped": false,
+        "over10ms": [
+          {
+            "profile": "11715",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 30,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 45,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 12,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 39,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 24,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 12,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 21,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 14,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 17,
+            "nativeOk": true
+          }
+        ]
+      },
+      "batchedRepeat": {
+        "timestampPaddingMs": 1000,
+        "phase": "batched-repeat-spaced",
+        "tailPhase": "batched-spaced",
+        "results": [
+          {
+            "profile": "11715",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 19,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 32,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 8,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 5,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 27,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 6,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 19,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 6,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 6,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 14,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 6,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 9,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "costs",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 5,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "activity",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 5,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 12,
+            "nativeOk": true
+          }
+        ],
+        "allMapped": true,
+        "over10ms": [
+          {
+            "profile": "11715",
+            "section": "state",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 19,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 32,
+            "nativeOk": true
+          },
+          {
+            "profile": "11715",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 27,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "content",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 19,
+            "nativeOk": true
+          },
+          {
+            "profile": "30000",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 14,
+            "nativeOk": true
+          },
+          {
+            "profile": "invalid_output",
+            "section": "placement",
+            "status": 200,
+            "nativeSamples": 1,
+            "cpuMs": 12,
+            "nativeOk": true
+          }
+        ]
+      },
+      "exactRayHashMapping11715": {
+        "exactRequestRayHashMapping": true,
+        "results": [
+          {
+            "section": "state",
+            "matches": 1,
+            "cpuMs": 21
+          },
+          {
+            "section": "content",
+            "matches": 1,
+            "cpuMs": 24
+          },
+          {
+            "section": "costs",
+            "matches": 1,
+            "cpuMs": 7
+          },
+          {
+            "section": "activity",
+            "matches": 1,
+            "cpuMs": 6
+          },
+          {
+            "section": "placement",
+            "matches": 1,
+            "cpuMs": 24
+          }
+        ]
+      },
+      "authenticationOnly": [
+        {
+          "probe": 0,
+          "matches": 1,
+          "cpuMs": 5
+        },
+        {
+          "probe": 1,
+          "matches": 1,
+          "cpuMs": 8
+        },
+        {
+          "probe": 2,
+          "matches": 1,
+          "cpuMs": 12
+        }
+      ],
+      "workflowInvocationMs": [
+        119,
+        225,
+        7
+      ],
+      "workflowStepCpuAvailable": false,
+      "billingPlanVerified": false,
+      "freeCpuPassed": false,
+      "limitations": [
+        "Initial/refined first time-window mapping incomplete; do not infer missing rows or relabel samples",
+        "Request ray hashes establish exact mapping for final 11715 five-section measurement",
+        "HTTP 200/native ok are functional evidence, not proof of Free 10ms compliance",
+        "Workflow invocation CPU is not per-step CPU"
+      ]
+    },
+    "issuesResolved": [
+      "OAuth 7403 resolved by refresh and target recheck",
+      "Generated JS helpers/bundles caused lint failure; moved outside repo lint scope",
+      "Unused type-only projection removed; full check passed",
+      "Deployment source hash guard stopped on documentation-only edits; confirmed code unchanged before deployment"
+    ],
+    "remaining": [
+      "Normal content and placement requests still exceed 10ms; task stays P5-71",
+      "Reassess read path using direct request mapping before more micro-optimizations; do not repeat existing generation or buy AI results",
+      "Billing403 and absence of individual Workflow step CPU prevent claiming those checks passed"
+    ],
+    "evidenceRoot": "/home/onegem/.local/state/biblequiz/p5-71-preview-20260929/free-cpu/display-reuse-apply-20260930"
+  },
+  "cpuProfileAndPartsContinuation": {
+    "date": "2026-09-30",
+    "status": "completed",
+    "appVersion": "24966870-4caa-4c74-9737-c6efac2e0ecb",
+    "contentVersion": "2df93f07-3703-42ec-b576-fd085e8c839f",
+    "checkExit": 0,
+    "unitTests": 278,
+    "workerTests": 2105,
+    "workflowTests": 4,
+    "recoveryCliTests": 2,
+    "nodeTests": 14,
+    "pythonTests": 6,
+    "localBrowserTests": 8,
+    "remoteBrowserChecks": 4,
+    "nativeCpu": {
+      "phase": "parts-lean-spaced",
+      "nativeExactMatches": 27,
+      "over10": [],
+      "maxCpuMs": 10,
+      "rows": [
+        {
+          "profile": "11715",
+          "request": "activity",
+          "cpuMs": 7,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "11715",
+          "request": "content-index",
+          "cpuMs": 8,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "11715",
+          "request": "costs",
+          "cpuMs": 5,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "11715",
+          "request": "layout-adult",
+          "cpuMs": 7,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "11715",
+          "request": "layout-child",
+          "cpuMs": 8,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "11715",
+          "request": "snapshot-0",
+          "cpuMs": 7,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "11715",
+          "request": "snapshot-1",
+          "cpuMs": 6,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "11715",
+          "request": "snapshot-2",
+          "cpuMs": 4,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "11715",
+          "request": "snapshot-3",
+          "cpuMs": 6,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "11715",
+          "request": "snapshot-4",
+          "cpuMs": 6,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "11715",
+          "request": "state",
+          "cpuMs": 10,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "activity",
+          "cpuMs": 4,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "content-index",
+          "cpuMs": 7,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "costs",
+          "cpuMs": 3,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "layout-adult",
+          "cpuMs": 7,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "layout-child",
+          "cpuMs": 5,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "snapshot-0",
+          "cpuMs": 4,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "snapshot-1",
+          "cpuMs": 5,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "snapshot-2",
+          "cpuMs": 3,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "snapshot-3",
+          "cpuMs": 6,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "snapshot-4",
+          "cpuMs": 5,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "30000",
+          "request": "state",
+          "cpuMs": 2,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "invalid_output",
+          "request": "activity",
+          "cpuMs": 5,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "invalid_output",
+          "request": "content-index",
+          "cpuMs": 4,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "invalid_output",
+          "request": "costs",
+          "cpuMs": 2,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "invalid_output",
+          "request": "layout-child",
+          "cpuMs": 4,
+          "completeNativeSample": true,
+          "status": 200
+        },
+        {
+          "profile": "invalid_output",
+          "request": "state",
+          "cpuMs": 3,
+          "completeNativeSample": true,
+          "status": 200
+        }
+      ]
+    },
+    "exactOriginalResults": true,
+    "preservation": {
+      "allRowsPreserved": true,
+      "tables": 86,
+      "allSchemaDefinitionsUnchanged": true,
+      "foreignKeyErrors": 0,
+      "quickCheck": "ok",
+      "files": {
+        "private": {
+          "count": 4386,
+          "changed": [],
+          "missing": []
+        },
+        "d1": {
+          "count": 4,
+          "changed": [],
+          "missing": []
+        }
+      }
+    },
+    "migrationCount": 37,
+    "lastMigration": "0036",
+    "newMigration": false,
+    "preparedSnapshotCount": 20,
+    "preparedGridCount": 4,
+    "providerCallsBeforeAfter": [
+      11,
+      11
+    ],
+    "usageBeforeAfter": [
+      11,
+      11
+    ],
+    "actualAiCalls": 0,
+    "additionalAiCostUsd": 0,
+    "productionChanges": 0,
+    "gitPush": false,
+    "evidenceDirectory": "/home/onegem/.local/state/biblequiz/p5-71-preview-20260929/free-cpu/cpu-profile-fix-20260930",
+    "failedAttemptsPreserved": [
+      "cpu-profile-exact.json",
+      "cpu-parts-exact.json",
+      "cpu-parts-final-spaced-exact.json",
+      "cpu-parts-light-spaced-exact.json"
+    ],
+    "executionFlags": "false/[]",
+    "startProRemainingPercent": 98,
+    "userCalculationMultiplier": 10,
+    "allSamplesAreGuaranteeForFutureRequests": false,
+    "additionalBrowserCpu": {
+      "capturedNativeSamples": 70,
+      "allCapturedOutcomeOk": true,
+      "capturedContentSamples": 34,
+      "additionalBrowserContentExactMatches": 7,
+      "additionalBrowserContentOver10": [
+        {
+          "section": "state",
+          "cpuMs": 12
+        }
+      ],
+      "allCapturedOver10Count": 6,
+      "allCapturedMaxCpuMs": 28,
+      "otherRequestsAreNotAssignedToGenerationSections": true,
+      "strictAllSamplesUnder10": false,
+      "officialLimitUrl": "https://developers.cloudflare.com/workers/platform/limits/",
+      "officialInfrequentOverrunFlexibility": true,
+      "guaranteeFutureFreeRequests": false
+    },
+    "strictEverySampleUnder10Passed": false,
+    "completionBasis": "Existing Preview functional flow and preservation validated; large repeat work removed. Official Free limit permits infrequent overruns. One exact browser state request was12ms, other unassigned page requests up to28ms, all captured native outcomes ok. Not a guarantee or verified billing plan."
+  },
+  "historicalUsageBeforeCpuContinuation": {
+    "planBasis": "user-specified Pro 5x",
+    "separateFiveHourValueAvailable": false,
+    "startUsedPercent": 47,
+    "latestUsedPercent": 91,
+    "startPlusEquivalentRemaining": 265,
+    "latestPlusEquivalentRemaining": 45,
+    "fixStartUsedPercent": 51,
+    "fixStartPlusEquivalentRemaining": 245,
+    "remoteStartUsedPercent": 59,
+    "remoteStartPlusEquivalentRemaining": 205,
+    "displayStartUsedPercent": 81,
+    "displayStartPlusEquivalentRemaining": 95
+  },
+  "adminComputeContinuation": {
+    "date": "2026-10-01",
+    "status": "completed_preview_deployed_and_verified",
+    "proRemainingPercent": 97,
+    "userMultiplier": 10,
+    "scope": "P5-71 administrator CPU optimization and internal SQLite Durable Object offload",
+    "implementation": {
+      "ordinaryWorker": "stream forwarding only for enabled administrator paths",
+      "do": "original authenticated admin router, no storage/alarm/result/identity cache",
+      "shards": {
+        "resource": 8,
+        "global": 1
+      },
+      "sections": "existing independent state/costs/activity/index/snapshot/difficulty requests",
+      "workflow": "existing split steps unchanged",
+      "optimization": "reuse invariant header validation schemas",
+      "newD1Migration": false,
+      "productionBinding": false
+    },
+    "checks": {
+      "pnpmCheck": {
+        "exitCode": 0,
+        "unit": 278,
+        "worker": 2113,
+        "workerFiles": 88,
+        "workflow": 4,
+        "recoveryCli": 2,
+        "nodeQuality": 14,
+        "pythonQuality": 6,
+        "lint": true,
+        "typecheck": true,
+        "build": true
+      },
+      "actualDoCases": 8,
+      "chromiumAndMobileBrowserCases": 8,
+      "previewBuildExitCode": 0,
+      "strictPreviewDryRunExitCode": 0,
+      "realFixtureDoVsDirect": [
+        {
+          "fixture": "11715",
+          "requests": 11,
+          "exactDirectParity": true
+        },
+        {
+          "fixture": "30000",
+          "requests": 11,
+          "exactDirectParity": true
+        },
+        {
+          "fixture": "invalid_output",
+          "requests": 5,
+          "exactDirectParity": true
+        }
+      ]
+    },
+    "cpu": {
+      "method": "DevTools V8 Profiler in local workerd, 100us sampling, 12 requests per group",
+      "baselineAndDistributedGroups": [
+        "auth",
+        "state",
+        "content",
+        "placement",
+        "direct-content",
+        "direct-placement"
+      ],
+      "observedFunctions": [
+        "authenticateAccessRequest",
+        "verify",
+        "inst._zod.parse",
+        "toJson",
+        "canonical JSON visit"
+      ],
+      "samplingIsNotNativeCpuMs": true,
+      "remoteNewCpu": {
+        "worker": {
+          "samples": 80,
+          "minCpuMs": 0,
+          "maxCpuMs": 2,
+          "outcomes": {
+            "ok": 80
+          },
+          "limitCpuMs": 10,
+          "overLimit": 0
+        },
+        "do": {
+          "samples": 86,
+          "minCpuMs": 0,
+          "maxCpuMs": 15,
+          "outcomes": {
+            "ok": 86
+          },
+          "limitCpuMs": 30000,
+          "overLimit": 0
+        }
+      },
+      "previousNativeSamples": {
+        "count": 70,
+        "above10": 6,
+        "histogramAbove10": {
+          "11": 1,
+          "12": 1,
+          "13": 2,
+          "19": 1,
+          "28": 1
+        },
+        "cpuTermination": 0,
+        "unidentifiedAbove10": 5
+      }
+    },
+    "preservation": {
+      "baselineFiles": 703,
+      "missingFiles": [],
+      "changedBaselineFiles": [
+        "docs/DELIVERY_PLAN.md",
+        "docs/spec/architecture.md",
+        "docs/work/P5-71-verification.json",
+        "docs/work/P5-71.md",
+        "workers/_shared/services/content-generation-parts.ts",
+        "docs/DECISIONS.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/STATUS.md",
+        "scripts/check-cloudflare-config.mjs",
+        "vitest.worker.config.ts",
+        "workers/app/index.ts",
+        "wrangler.jsonc"
+      ],
+      "D1SqlMigrations": 37,
+      "realOrPaidAiCalls": 0,
+      "remoteWritesOrDeployment": false,
+      "actualDataAndKeys": "read-only references; only in-memory SQL copies used",
+      "diffCheckPassed": true,
+      "localDocumentLinksChecked": true
+    },
+    "evidenceDirectory": "/home/onegem/.local/state/biblequiz/p5-71-preview-20260929/free-cpu/admin-compute-20261001",
+    "pending": [],
+    "testedSourceSha256": {
+      "workers/app/admin-compute.ts": "b747615fe77a2b0a1d9dc309ae256c564d7ac8e56fc88ce9efa9c280bd62503a",
+      "workers/app/admin-compute.test.ts": "c27132c5626e523655c109922fcb77396557ca58bcfaa09fd584a17661208092",
+      "workers/app/index.ts": "0c944f90650ee3bce5442c9dff03fc568c489b622bc37d758d8130b40d146fac",
+      "workers/_shared/services/content-generation-parts.ts": "017ed297da18c34751ebdacebc83eca758b72b6c372562b5802f9a1ada0f48db",
+      "wrangler.jsonc": "353b93d691fa67a807aa6da980d71233b4f05b385e7b2bca610165e8d18b87a3",
+      "wrangler.admin-compute-local.jsonc": "2834b41cb778f0879d35e89fa9d667540423138036aba0732e0069413ac8f7fd",
+      "scripts/check-cloudflare-config.mjs": "eb1ce968bcca0cb247d2514cd6c3718f15dbaa3afa1a13e64f8e97456b620b7c",
+      "vitest.worker.config.ts": "10de1beddf6e6a5cd5e774fc0cca24265a2af91a27c6e7cb23a2f30f6cabe465"
+    },
+    "remotePreview": {
+      "version": "219368c4-5d27-4ec7-8413-1dc4f0ce0db9",
+      "previousVersion": "24966870-4caa-4c74-9737-c6efac2e0ecb",
+      "contentVersionUnchanged": "2df93f07-3703-42ec-b576-fd085e8c839f",
+      "approvedScope": "User started the previously proposed existing Preview SQLite AdminCompute registration, deployment and read-only verification",
+      "namespaceId": "ef30fb3398324d4db1663152f8b5076a",
+      "class": "AdminCompute",
+      "sqlite": true,
+      "adminFlag": true,
+      "generationPreparationCleanupFlags": "false/[]",
+      "openAiSecret": false,
+      "sqlMigrationsApplied": 0,
+      "newAiCalls": 0,
+      "mainPush": false,
+      "productionChanges": false
+    },
+    "remoteChecks": {
+      "independentGetRequests": 54,
+      "profiles": [
+        "11715",
+        "30000",
+        "invalid_output"
+      ],
+      "exactPreviousResponseParity": true,
+      "remoteBrowsers": 4,
+      "browserGenerationGetRequests": 44,
+      "browserAllApiGetRequests": 88,
+      "browserArticlesEach": 5,
+      "pageErrors": 0,
+      "mutationRequests": 0,
+      "httpCpuCoverage": {
+        "do-first": {
+          "httpRequests": 27,
+          "workerSamples": 11,
+          "doSamples": 16,
+          "completePairs": 11
+        },
+        "do-spaced": {
+          "httpRequests": 27,
+          "workerSamples": 27,
+          "doSamples": 10,
+          "completePairs": 10
+        },
+        "browser-desktop": {
+          "httpRequests": 44,
+          "workerSamples": 20,
+          "doSamples": 36,
+          "completePairs": 19
+        },
+        "browser-mobile": {
+          "httpRequests": 44,
+          "workerSamples": 22,
+          "doSamples": 24,
+          "completePairs": 15
+        }
+      },
+      "missingNativeSamples": "62 Worker and 56 DO of 142 known GET requests were not captured; not interpreted as zero or success. All 166 captured native events exactly match known HTTP CF-Ray hashes. No retry of writes or fastest-sample selection."
+    },
+    "remotePreservation": {
+      "schemaEqual": true,
+      "allRowsEqual": true,
+      "tableCount": 86,
+      "rowCount": 495,
+      "tableCounts": {
+        "ai_final_audit_chunks": 0,
+        "ai_final_audit_results": 0,
+        "ai_provider_calls": 11,
+        "ai_response_archive_chunks": 17,
+        "ai_response_archives": 12,
+        "ai_usage_events": 11,
+        "ai_usage_observations": 11,
+        "ai_usage_settlements": 11,
+        "anonymous_sessions": 1,
+        "audit_logs": 1,
+        "bible_translations": 2,
+        "d1_migrations": 37,
+        "draft_activity": 3,
+        "draft_cleanup_records": 0,
+        "final_check_ticket_chunks": 2,
+        "final_check_ticket_inputs": 2,
+        "final_check_tickets": 2,
+        "generation_archived_intent_recoveries": 0,
+        "generation_context_chunks": 19,
+        "generation_contexts": 19,
+        "generation_control_commands": 0,
+        "generation_dispatch_attempts": 8,
+        "generation_dispatch_receipts": 8,
+        "generation_display_finals": 4,
+        "generation_display_snapshots": 20,
+        "generation_final_validation_proofs": 2,
+        "generation_full_v3_requests": 3,
+        "generation_intent_analysis_reuse": 0,
+        "generation_job_dispatches": 8,
+        "generation_job_events": 48,
+        "generation_jobs": 3,
+        "generation_placement_selections": 0,
+        "generation_request_contexts": 3,
+        "generation_step_contexts": 11,
+        "generation_step_outcomes": 11,
+        "generation_step_receipts": 11,
+        "generation_step_result_links": 10,
+        "generation_transition_evidence": 48,
+        "generation_wait_contexts": 5,
+        "leaderboard_snapshot_entries": 0,
+        "leaderboard_snapshots": 0,
+        "moderation_actions": 0,
+        "moderation_exceptions": 0,
+        "moderation_terms": 0,
+        "published_display_corrections": 0,
+        "published_quiz_content": 0,
+        "published_wording_corrections": 0,
+        "quiz_entries_public": 6,
+        "quiz_problem_cases": 0,
+        "quiz_problem_cleanup": 0,
+        "quiz_problem_drafts": 0,
+        "quiz_problem_outcomes": 0,
+        "quiz_republications": 0,
+        "quiz_revision_cleanup": 0,
+        "quiz_revision_drafts": 0,
+        "quiz_revision_sessions": 0,
+        "quiz_sets": 4,
+        "quiz_solutions": 1,
+        "quiz_variants": 1,
+        "quiz_withdrawals": 0,
+        "reserved_names": 0,
+        "sermon_content_chunks": 20,
+        "sermon_content_current": 2,
+        "sermon_content_domain_lineage": 20,
+        "sermon_content_events": 20,
+        "sermon_content_heads": 2,
+        "sermon_content_human_events": 10,
+        "sermon_content_payloads": 20,
+        "sermon_content_quality_reviews": 0,
+        "sermon_history_chunks": 0,
+        "sermon_history_commits": 0,
+        "sermon_history_heads": 0,
+        "sermon_history_payloads": 0,
+        "sermon_history_records": 0,
+        "sermon_history_references": 0,
+        "sermon_input_chunks": 7,
+        "sermon_input_events": 6,
+        "sermon_input_heads": 3,
+        "sermon_metadata_drafts": 3,
+        "sermon_transcripts": 0,
+        "sermons": 4,
+        "site_state": 0,
+        "sqlite_sequence": 1,
+        "submissions": 1,
+        "withdrawal_edit_cleanup": 0,
+        "withdrawal_edit_revisions": 0
+      },
+      "foreignKeyErrors": 0,
+      "quickCheck": "ok",
+      "files": {
+        "source": {
+          "checked": 706,
+          "changed": [],
+          "missing": [],
+          "verificationStage": "Before final authorized document edits; later changes limited to eight current documentation files, tested source hashes unchanged."
+        },
+        "private": {
+          "checked": 4940,
+          "changed": [],
+          "missing": []
+        },
+        "root-db": {
+          "checked": 5,
+          "changed": [],
+          "missing": []
+        }
+      },
+      "sqlMigrationsApplied": 0,
+      "aiCalls": 0,
+      "aiAdditionalCostUsd": 0
+    },
+    "freeOperatingVerification": {
+      "asOfUtc": "2026-10-01T04:28:03.347783+00:00",
+      "startUpperBoundUtc": "2026-10-01T04:05:41.457792+00:00",
+      "maxObjectsFromFixedShards": 9,
+      "assumedGbPerObject": 0.128,
+      "intervalSeconds": 1341.8899915218353,
+      "conservativeDurationUpperBoundGbSeconds": 1545.8572702331544,
+      "freeDurationPerDayGbSeconds": 13000,
+      "withinDurationBound": true,
+      "scope": "Only current verification interval since the previously empty DO namespace set; not actual metered duration or future forecast",
+      "graphqlDoRequestAndDuration": "empty rows; unavailable, not zero",
+      "graphQlWorkers": 144,
+      "graphQlErrors": 0,
+      "d1RowsRead": 10152,
+      "d1RowsWritten": 0,
+      "d1ReadQueries": 666,
+      "d1WriteQueries": 0,
+      "knownAdminHttpRequests": 142,
+      "plan": "Workers Free, user screenshot current US$0",
+      "paidPlanChange": false
+    },
+    "remoteEvidenceDirectory": "/home/onegem/.local/state/biblequiz/p5-71-preview-20260929/free-cpu/admin-compute-deploy-20261001",
+    "completionScope": "Same Preview Cloudflare-only split reads and DO offload, current Free plan, observed role-specific CPU and preserved original data. Not a guarantee of all future requests, invoice or exact DO/Workflow step usage.",
+    "closureDocumentChecks": {
+      "gitDiffCheck": true,
+      "localLinkTargetsChecked": 174,
+      "testedSourceFilesHashUnchanged": 8,
+      "onlyCurrentDocumentsChangedThisTurn": true
+    }
+  },
+  "latestAuthoritativeContinuation": "adminComputeContinuation",
+  "historicalMeasurementLimitationsBeforeAdminCompute": [
+    "D1 API executions, not native remote query billing metrics",
+    "Batch counted once for calls, statements separately",
+    "Synthetic 50-call allowance is not a Cloudflare observed error",
+    "Synthetic provider usage is not paid usage",
+    "50-call local windows are enforced per administrator request (including owner check) or actual Workflow unit callback, not the entire flow total",
+    "HTTP native CPU was observed including exceededCpu; Workflow per-step CPU was not obtained.",
+    "Workflow tail CPU 523/771 ms is invocation aggregate ending in operator pause/canceled, not per-step CPU or a CPU-limit failure.",
+    "Local 50-call figures and remote trial used archival disabled. The new 0035 archive path adds storage work and has not been remotely measured.",
+    "No current Billing plan confirmation: existing OAuth subscriptions read returned 403; last UI confirmation was Workers Free on 2026-08-27.",
+    "Current remote final success is not proof that full-view CPU 194–212ms or unmeasured Workflow steps meet Free 10ms. See freeContinuation.remainingFreeCpuVerification."
+  ]
+}

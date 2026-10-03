@@ -1,0 +1,13 @@
+.drawer { position: fixed; inset: 0 0 0 auto; margin: 0; max-height: 100dvh; height: 100dvh; width: min(720px, 100%); max-width: 100%; padding: clamp(1rem, 3vw, 2rem); overflow-y: auto; border: 1px solid var(--border); background: var(--page); color: var(--text); }
+.drawer::backdrop { background: rgb(0 0 0 / .45); }
+.header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; position: sticky; top: -1rem; background: var(--page); padding-block: .5rem; z-index: 1; }
+.service { border-block-end: 1px solid var(--border); padding-block: 1rem; }
+.service summary { cursor: pointer; font-weight: 650; padding: .4rem; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: .5rem; }
+.metrics dd { margin: .25rem 0; font-variant-numeric: tabular-nums; }
+.check { display: flex; gap: .6rem; align-items: start; margin-block: .8rem; }
+.check input { flex: none; width: 1.2rem; height: 1.2rem; }
+.manual { display: grid; gap: 1rem; line-height: 1.7; }
+.manual pre { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--surface); padding: 1rem; }
+.manual h2, .manual h3 { scroll-margin-top: 2rem; }
+.manual p, .manual li { overflow-wrap: anywhere; }

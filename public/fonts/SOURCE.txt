@@ -1,0 +1,14 @@
+Noto Sans KR Regular TrueType, self-hosted for exports only.
+Source CSS (weight 400): https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400
+Downloaded font: https://fonts.gstatic.com/s/notosanskr/v39/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLQ.ttf
+Retrieved: 2026-10-01
+License: SIL Open Font License 1.1, see OFL-NotoSansKR.txt.
+License source: https://github.com/google/fonts/blob/main/ofl/notosanskr/OFL.txt
+This static Regular font avoids the Thin default of the variable font.
+Runtime exports fetch only the local font; no request goes to Google or an AI provider.
+PDF embeds only the glyph subset used by that export.
+
+PDF compatibility: @pdf-lib/fontkit 1.1.1 is patched via pnpm to word-align
+TrueType subset glyph records before short loca encoding. The original font
+asset is unchanged; regression tests compare original and subset vector paths.
+See patches/@pdf-lib__fontkit@1.1.1.patch and docs/work/P6-01.md.

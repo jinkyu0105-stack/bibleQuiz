@@ -1,0 +1,79 @@
+{
+  "task": "P5-69",
+  "checked_on": "2026-09-24",
+  "scope": "documentation_only",
+  "head": "0ab476e4281734f4eab64cc6231be09092221651",
+  "baseline_files": 615,
+  "changed_existing_files": [
+    "docs/DECISIONS.md",
+    "docs/HANDOFF.md",
+    "docs/ROADMAP.md",
+    "docs/STATUS.md",
+    "docs/spec/generation.md",
+    "docs/spec/release.md",
+    "implementation.md"
+  ],
+  "new_documentation_files": [
+    "docs/work/P5-69.md",
+    "docs/work/P5-69-verification.json"
+  ],
+  "preserved_existing_files": 608,
+  "unexpected_changes": [],
+  "unexpected_new_files": [],
+  "migration_sql_snapshot_files": 60,
+  "migration_journal_files": 1,
+  "migration_sha_unchanged": true,
+  "d1_files": 13,
+  "d1_size_mtime_unchanged": true,
+  "d1_contents_read": false,
+  "git_diff_check_exit": 0,
+  "cost_arithmetic": [
+    {
+      "calls": 6,
+      "usd_low": "0.432",
+      "usd_high": "1.08"
+    },
+    {
+      "calls": 17,
+      "usd_low": "1.224",
+      "usd_high": "3.06"
+    },
+    {
+      "calls": 3,
+      "usd_low": "0.216",
+      "usd_high": "0.54"
+    },
+    {
+      "calls": 20,
+      "usd_low": "1.440",
+      "usd_high": "3.60"
+    },
+    {
+      "calls": 15,
+      "usd_low": "1.080",
+      "usd_high": "2.70"
+    },
+    {
+      "calls": 5,
+      "usd_low": "0.360",
+      "usd_high": "0.90"
+    }
+  ],
+  "code_tests": "not_run_documentation_only",
+  "real_provider_calls": 0,
+  "remote_operations": 0,
+  "deployment_commit_push": false,
+  "local_links_checked": 173,
+  "missing_local_targets": [],
+  "unresolved_anchors": [],
+  "changed_markdown_whitespace_errors": [],
+  "checker_note": "Initial checker retained middle dot and reported seven false anchor mismatches; corrected punctuation handling and all 173 local links/anchors pass.",
+  "checks_passed": true,
+  "usage": {
+    "pro_remaining_start_percent": 71,
+    "pro_remaining_end_percent": 70,
+    "agreed_multiplier": 5,
+    "plus_equivalent_end_percent": 350,
+    "separate_five_hour_window_available": false
+  }
+}

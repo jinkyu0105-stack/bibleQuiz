@@ -1,0 +1,134 @@
+# 프로젝트 맥락
+
+> 프로젝트: 다사랑교회 「이번 주의 말씀 : 낱말 퀴즈」  
+> 문서 역할: 제품 목표·사용자·범위·기술 구조의 짧은 입문서  
+> 마지막 확인: 2026-09-21, Asia/Seoul
+
+## 1. 한 문장 목표
+
+다사랑교회의 주간 설교 영상을 바탕으로 어린이용·장년용 한글 가로세로 낱말퀴즈를 만들고, 교인이 휴대전화·태블릿·PC에서 풀고 제출·채점·참여 현황·Top N을 확인하며, 주보용 빈 격자와 벽보용 결과물을 쉽게 출력하는 반응형 웹앱을 만든다.
+
+## 2. 사용자와 운영 규모
+
+- 방문자: 회원가입 없이 퀴즈를 풀어 보는 교인
+- 참여자: 이름, 일부 또는 전체 답안, 선택 코멘트를 제출하는 익명 브라우저 세션 사용자
+- 관리자: 매주 YouTube 링크에서 자막·설교 의도·문제 후보·격자·발행을 검수하는 운영자 1명
+- 출력 담당자: 컴퓨터 사용에 익숙하지 않아도 빈 격자와 Top N 결과물을 받을 수 있어야 하는 교회 담당자
+- 예상 규모: 주간 방문자 약 30명, 제출자 10~20명, 동시 접속은 몰려도 50명 이하
+- 프로젝트 성격: 교회 공식 웹앱이 아니라 개인이 교회 공동체를 위해 운영하는 프로젝트
+- 운영 방식: 사용자는 코드를 거의 직접 읽지 않고 앞으로도 AI 도움을 받아 운영·개발한다.
+
+## 3. 핵심 제품 흐름
+
+2026-09-21 P5-48 방향: 자막 교정은 수정된 문서 한 벌, 분석·요약·후보는 간결한 설명과 짧은 근거/실제 timestamp로 제공한다. 프롬프트·구조화된 출력과 사람 검토를 기본으로 하며 필요하면 관리자가 해당 버튼으로 다시 생성한다. 별도 최종 AI 감사는 제품 흐름에서 제외한다. 현재 코드는 옛 교정 항목/최종 감사 계약을 포함하므로 변경 구현은 아직이다. 근거 없는 출력 용량 수치·저장 실패 허용 정책의 승인 요청은 철회했다.
+
+```text
+관리자: YouTube 링크
+  → 공개 자막 가져오기 또는 텍스트 직접 붙여넣기
+  → 자막이면 사람 수정 / 선택적 AI 오타 교정과 diff
+    목사님 제공 설교 원고·요약본이면 받은 내용 그대로 사용(입력자료 수정 없음)
+  → 설교 의도 분석·관리자 수정·확정
+  → 문제 후보 생성·관리자 제외/수정
+  → 코드가 격자 크기·단어 조합·교차 배치를 계산
+  → 어린이용·장년용 검수 후 발행
+
+참여자: 퀴즈 풀이
+  → 한 글자 이상 작성한 부분 답안도 제출 가능
+  → 서버 채점과 내 답안/정답 비교
+  → 진행 중에는 제출자만 참여 현황·Top N·Top N 출력 접근
+  → 마감 뒤에는 누구나 정답·참여 현황·Top N·출력 접근
+```
+
+빈 문제지의 번호 있는 격자와 단서 텍스트는 누구나 사용할 수 있다. 주보 편집자는 빈 격자 PNG/SVG를 내려받고 단서 텍스트는 별도로 복사해 배치한다. Top N 화면은 완전 정답자를 제출 순으로 정렬해 A4 인쇄에 맞춘다.
+
+입력자료 수정 범위는 D-030(2026-09-15)을 따른다. 설교 자막·설교 원고·제공받은 설교 요약본을 통틀어 `설교 입력자료`라고 부른다. 원고·제공받은 요약본의 수정 금지는 이후 AI가 별도로 생성한 요약 초안 등의 수정/검수까지 금지하는 뜻이 아니다. 자료별 수정 차단은 새 `sermon-input` 경로에 반영됐고 기존 전체 state 경로는 자동 변환하지 않고 보존한다.
+
+D-031은 최초 자막 원본 단독 저장, 저장에 필요한 자료만 검사, 정상 성공 뒤 본문 재조회 생략, 요청 시 선택한 두 본문 diff를 채택했다. 수정본 3개 자동 삭제는 폐기하고 기존 이력은 보존한다. 2026-09-16 로컬 변경 승인으로 새 비공개 저장 경로/0009에 원본 단독 저장·선택 읽기·D-030 차단을 구현했다. 일반 텍스트 자막 수정은 과거 본문을 읽지 않는다. 당시에는 기존 형식의 자동 변환·runtime 연결·diff 화면·원격 CPU/메모리 통과 전이었다. 아래 계측 경과는 과거 기록이며 최신 완료 판정은4절을 따른다.
+
+같은 날 추가 승인한 [Preview 격리 계측](P5-27_SELECTED_MEASUREMENT.md)에서 전형/200KB 각100건 성공·동시20개 승자1/충돌19·query최대7을 두 번 확인했다. 최신 CPU p95는7/8/7ms, 최대13/15/7ms로 목표 미통과이며 메모리는 Access 진단 인증 부재로 미측정이다. 원래 Preview를 복구하고 임시 DB 두 개는 삭제했다. 다음은 처음 요청 CPU 진단/메모리 측정 연결 확인이며 같은 시험의 무변경 반복이 아니다.
+
+후속 [첫 요청 로컬 진단](P5-27_FIRST_REQUEST_DIAGNOSIS.md)에서 입력검사 규칙의 지연 초기화가 비용 일부임을 대조했다. 제품 적용/원격 CPU통과는 아직 아니다. Access 로그인은 성공했으나 설치Wrangler의remote inspector비지원으로 D-032의 **로컬동시부하 관측+원격메모리지표/초과오류** 분리검증을 사용자승인으로채택했다. [로컬메모리 검증](P5-27_MEMORY_D032.md)은20개동시·세상황각3회/총180건, 보수적관측합계최대22.34MiB로96MiB예산안을확인했다. 정확한원격순간peak가아니며원격지표는아직미확인이다. CPU개선과원격지표확인이남고Access보호는유지한다.
+
+## 4. 현재 기술 구조
+
+최신 P5-27은 D-033 자막3만 자 제한을 반영한 [단일 후보 계측](P5-27_CAPTION_30000.md)에서 CPU/query 기준을 통과했다. 전형/경계 각100성공·동시20개1성공19충돌, CPU p95 6/6/6ms·최대8/7/7ms·query최대5다. 전체1,676건·로컬메모리180건/14.87MiB 통과, 이번 버전의 원격P9996.84MB를 사진에서 직접 확인하고 버전은 사용자 확인으로 연결해 D-032 및 P5-27을 완료했다. Phase5는 실제 앱 연결 등 후속이 남아 진행 중이다. 기존Preview복구·합성DB1개삭제·공유DB/기존이력 보존을 완료했다. 이전200KB 후보 실패는 [CPU4 보고서](P5-27_CPU_IMPORTS.md)에 보존하며 이전 버전의 메모리 통과를 새 버전에 전용하지 않는다. 새 검사 라이브러리/컴파일 방식은 도입하지 않았다.
+
+P5-28은 새 `sermon-input` 경로를 Access 관리자 `GET/POST/PATCH`에 로컬 연결했다. 수동 입력자료 최초 원본 저장·현재 조회와 자막 편집/확정/복원/교정 명령이 exact 현재 version/source/document/hash를 사용하며, 원고·요약본 수정 차단·3만 자·원본/이력·비공개 경계를 유지한다. P5-29는 현재 source의 bounded metadata 이력, 선택한 두 document 본문, 선택 proposal과 연결 decision 상세를 Access 관리자 GET에 추가했다. 목록은 본문 chunk를 읽지 않고 actor/hash/excerpt를 반환하지 않으며 전체 이력 본문 replay를 하지 않는다. P5-30은 이 경계를 `/admin` 입력자료 화면에 연결했다. diff는 두 본문 응답을 받은 뒤 브라우저 메모리에서만 계산하고 proposal 상세는 선택 시에만 읽으며, 원고·요약본에는 수정 동작을 표시하지 않는다. Workflow/실제 AI·콘텐츠·source 교체·원격 migration/배포는 후속이다.
+
+P5-31은 generation job/event/step receipt/dispatch 저장과 J31-01~21 실패 주입을 설계했고, P5-32는 그중 DB로 검증 가능한 범위를 `0010`의 네 빈 표와 FK/CHECK/UNIQUE/partial active index/required-event guard로 구현했다. P5-33은 이 네 표 전용 private adapter와 외부 호출 없는 합성 dispatch/step transport·authority reader로 request/step replay, fixed-instance 응답 유실, effect uncertain, exact own result+receipt, resume/stale를 검증했다. P5-34는 correction의 기존 sealed proposal 참조, intent/summary/candidate append-only content event, final ticket 기반 audit 결과, provider call별 usage event와 task별 실제 FK link를 문서로 설계했다. P5-35는 이를 실제 다음 번호 `0011`의 빈 11개 표와 DB guard로 구현했고, P5-36은 task별 실제 payload SHA-256·result/usage/link/receipt/job event를 한 batch에 확정하는 private adapter와 전체 묶음 exact-own probe를 연결했다. P5-37은 사람 검수 event/current/final ticket의 실제 FK·CAS·seal·reader/probe를 설계했고, P5-38은 실제 다음 `0012`에 human detail/current/final ticket input 빈 표 3개와 operation별 transition·review 무효화·exact-current seal guard를 추가해 P37-01~09·12~13·19의 DB 범위를 격리 검증했다. P5-39는 이 0012 전용 사람 content/final ticket private writer, 최대 10개 event의 bounded current reader와 exact-own probe를 구현해 P37-10~11·14~18·20 runtime 의미를 합성 D1에서 확인했다. 유효 집계 version은 input head version과 content event count의 합으로 보존하며, 외부 effect 뒤 blind retry·usage $0 추정을 금지한다. 공개 runtime route나 `workers/content`, 실제 Workflow/D1 binding, provider/network/usage envelope·AI/콘텐츠에는 연결하지 않았고 0012를 개발·Preview·Production D1에도 적용하지 않았다. P5-40은 이 세 adapter의 전체 generation Workflow 조립을 문서로 설계했다. 저장 외곽/digest/FK 검증과 payload 내부 도메인 검증·실제 Workflow 연결은 구분하며, 과거 step replay·새 input lineage·최종 ticket의 생성/capture version·대기 중 교정/lifecycle 결손은 구현 게이트로 남겼다. P5-41은 authority/domain typed port·scope/단계·wait lineage·오류 분류·원래 generation binding/final capture 순수 판정을 무DB 409건으로 검증했다. 실제 reader/domain 전체 이식·저장/Workflow 연결은 후속이다. P5-42는 G02의 원래 context·수신/claim 복구·같은-job 교정·과거 outcome·finish/stale와 usage 관측/정산을 문서로 설계했다. P5-43은 원래 context codec/상한·전송/수신·교정/wait·과거 outcome/usage·finish/stale의 순수 판정을 무DB 545건으로 검증했다. 이는 주입 증거의 판정이며 실제 저장 검증이 아니다. G02 전체는 미완료다. P5-44는 0013 빈 구조/guard·교정 거부/성공/재대기·scope finish·비용·populated legacy upgrade의 로컬 물리 검증을 완료했다. 운영 DB에는 적용하지 않았다. P5-45는 저장 receiver 증거/완료 prefix를 정합화하고 0013 전용 private lifecycle writer·bounded reader/exact-own probe를 합성 D1에 연결했다. 원래 context, request/dispatch/wait/교정·outcome/전체 usage/late settlement·지원 scope finish/stale만 다루며 실제 domain/Workflow/provider는 비연결이다. 검증 수치는 STATUS/HANDOFF를 따른다. P5-46은 [G03 연결 상세 설계](../implementation.md#14331-p5-46-g03-저장도메인-연결-상세-설계--2026-09-19) 문서를 완료했다. 실제 domain 검증·혼합 lineage·critique 선택/current·사람 역사 증거·설정/선택 정본·nested ticket·HistoricalOutcome·비-AI 원자 경계를 정의했으며 구현하지 않았다. P5-47은 bounded basis·역할별 digest/소수 codec·실제 validator/공통 reducer·혼합 lineage/사람 무효화·nested/historical 순수 계약과 기존 메모리 동등성을 무DB619건으로 완료했다. 실제 저장 연결은 제외했다. 기존 여러 output schema에 유한 최대가 없어 공통 자원 산정/초과 거부와 저장 준비 불가를 명시했으며 새 제품 한도를 추가하지 않았다. P5-48은 [출력 예산·저장 연결 검토](../implementation.md#14333-p5-48-출력-예산-정책저장-연결-설계-검토--2026-09-21) I의 사용자 방향을 반영해 문서 정합화 진행 중이다. 초기 총량 중심 추천·수치/저장 실패 동의 요청은 철회했다. 교정 문서 한 벌·짧은 근거·사람 최종 판단과 기존 items/감사 코드·저장 계약의 차이를 정리하며, 코드/DB/원격 변경은 없다. G02 전체·G03 구현·Phase5는 진행 중이다. [migration 검토서](P5-44_MIGRATION_REVIEW.md)의 완료 범위와 후속 게이트를 먼저 확인한다. [순수 계약 구현](../implementation.md#14328-p5-43-generation-lifecyclecontext-순수-계약전이-판정--2026-09-17)을 따른다. [내구성 설계](../implementation.md#14327-p5-42-generation-lifecyclecontext-내구성-상세-설계--2026-09-17)를 따른다. 상세는 [implementation 14.3.25](../implementation.md#14325-p5-40-전체-generation-workflow-조립-상세-설계--2026-09-17)를 따른다.
+
+```text
+GitHub main
+  → Cloudflare Workers Builds
+  → Access 보호 biblequiz-app-preview
+     ├─ Static Assets: React SPA
+     ├─ Hono /api/*: TypeScript 백엔드
+     └─ D1 binding: biblequiz-d1-preview
+
+향후 내부 전용
+  ├─ biblequiz-content: 자막·OpenAI·초안 Workflow
+  └─ biblequiz-backup: D1 export·비공개 R2 백업 Workflow
+```
+
+- 프런트엔드: React 19, React Router Data Mode, Vite, TypeScript strict, Tailwind CSS v4
+- 백엔드: Cloudflare Worker, Hono
+- 데이터: Cloudflare D1, Drizzle ORM, 검토된 SQL migration
+- 비동기 작업: Cloudflare Workflows
+- 비공개 백업: D1 Time Travel + R2 Standard 주간 SQL 백업 정상본 8개 순환
+- 관리자 인증: Cloudflare Access의 `Cloudflare account / Allow`
+- 패키지: Node.js 24.18.0, pnpm 11.14.0, `pnpm-lock.yaml` 단일 lockfile
+- AI: OpenAI API, 설교 의도 품질을 우선하는 여러 단계 호출과 비용 기록
+
+## 5. 환경 분리
+
+| 환경 | 역할 | 현재 상태 |
+|---|---|---|
+| Local | fixture, Local D1, 단위·통합 테스트 | 사용 중 |
+| Preview | `biblequiz-app-preview`, `biblequiz-d1-preview`, Access 보호 | 연결·배포 완료 |
+| Production | 실제 공개 Worker·D1·도메인 | 아직 생성·연결하지 않음 |
+
+`main` push는 현재 Production이 아니라 고정 Preview Worker에 자동 배포된다. Production 자원은 별도 사용자 승인과 출시 리허설 전까지 만들지 않는다. Production 준비를 시작할 때는 자원을 만들기 전에 배포 트리거·승인 방식·migration·rollback 규칙을 사용자와 확정하고 상세 명세와 결정 기록에 남긴다.
+
+## 6. v1 범위
+
+포함:
+
+- 최신 퀴즈, 아직 참여 가능한 퀴즈, 지난 퀴즈 아카이브
+- 어린이용·장년용, 5×5~10×10 관리자 시험·선택
+- 한글 IME 입력, 로컬 임시 저장, 부분 답안 제출
+- 서버 채점, 내 답안/정답 비교, 참여 현황, 완전 정답자 Top N
+- 관리자 자막 수정, 선택적 AI 교정 diff, 설교 의도·문제 후보 검수, 발행·마감
+- 이름·코멘트 필터, 사칭 방지, 관리자 숨김·복구·삭제
+- 주보용 빈 격자 PNG/SVG와 복사 가능한 단서, A4 Top N PNG/PDF
+- 라이트 Everforest, 다크 Gruvbox, 크게 보기, 반응형·접근성
+- 문의·삭제 요청 폼과 접수번호 기반 처리 상태 확인
+
+제외 또는 보류:
+
+- 일반 사용자 회원가입과 교회 공식 계정 연동
+- 네이티브 모바일 앱
+- 교회 YouTube 계정 OAuth와 새 영상 자동 감지
+- 비공식 YouTube 음원 다운로드
+- 공개 이미지용 R2 또는 KV
+- 현금·상품이 걸린 대회 수준의 강한 신원 확인
+
+## 7. 변경하면 안 되는 핵심 경계
+
+- 성경 본문을 AI가 생성·번역·교정·보완하지 않는다.
+- v1은 개역개정 본문 전문을 저장·복사·인쇄하지 않고 장절, 판본명, 대한성서공회 공식 읽기 링크만 제공한다.
+- 제출 전 공개 브라우저에 공식 정답을 보내지 않는다.
+- AI 요약을 설교자의 원문처럼 표시하지 않는다.
+- 발행 후 첫 제출이 생긴 퍼즐의 격자와 정답을 직접 수정하지 않는다.
+- 사용자 입력을 HTML로 해석하지 않는다.
+- 이미지 다운로드를 위해 AI를 다시 호출하지 않는다.
+- Production, 결제 기능, 새 유료 외부 서비스는 사용자 승인 없이 추가하지 않는다.
+
+## 8. 프로젝트의 공식 기억
+
+- 실제 구현 사실: 코드, 테스트, migration, Wrangler 설정, Git 기록
+- 상세 제품 의도: 루트의 `implementation.md`
+- 중요한 선택 이유: `docs/DECISIONS.md`
+- 현재 완료 상태: `docs/STATUS.md`
+- 다음 task 인수인계: `docs/HANDOFF.md`
+
+요약 문서가 코드와 다르면 실제 구현 상태는 코드를 우선해 확인하되, 계획과 다른 구현을 정당화하지 않는다. 차이를 먼저 알리고 코드 또는 문서를 함께 고친다.

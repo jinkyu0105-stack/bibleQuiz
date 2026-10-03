@@ -1,100 +1,76 @@
-# 현재 구현 상태
+# 현재 상태
 
-> 기준 시각: 2026-08-29, Asia/Seoul  
-> 확인한 기준 커밋: `aa2d071` (`docs: record successful preview build`)  
-> 이 문서는 구현 여부를 요약한다. 상세 요구사항은 루트 `implementation.md`, 다음 작업은 `HANDOFF.md`를 본다.
+**2026-10-04 Git 기준점:** 사용자 승인으로 현재 작업/비공개 자료 보존과 커밋 포함 검토를 진행했다. 배포 소스657개 지문이 동일하며 코드 변경/재배포 없이 로컬 기준 커밋을 남긴다. P8-02/Phase8 진행 중. [보존·배포 대응](work/p8-02/git-baseline.md).
 
-## 1. 현재 위치
+마지막 확인: 2026-10-03. **현재 P8-02 진행 중 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 승인된 Production AI 키 연결·설정·검사·배포와 STATUS/HANDOFF 갱신을 완료했다. 최신 Pro 사용4%·잔여96%·10080분/별도5시간 없음 → 사용자 지정×10=960%(공식 상품 배수 아님). 새 유료 생성 시험·Paid 전환·구매·main push·실제 데이터 손실 복원은 제외했다. [실행 현황](work/P8-02.md)·[검증 JSON](work/P8-02-verification.json)을 따른다.
 
-- 현재 브랜치: `main`
-- 기준 커밋을 확인할 때 worktree: clean
-- 현재 단계: Phase 1 Cloudflare 기반 완료, Phase 2 퍼즐 도메인 엔진 시작 직전
-- 실제 공개 Production: 없음
-- 실제 공개 사용자 데이터: 없음
-- Preview 주소: `https://biblequiz-app-preview.jinkyu0105.workers.dev`
-- Preview 보호: Cloudflare Access `All traffic`, `Cloudflare account / Allow`, 세션 6시간
+Production/Preview D1 모두0000~0038·이력39개다. 별도 Production 앱/콘텐츠/백업·Turnstile·비공개 Standard R2 연결, 관리자 path Access/JWT·사용량 갱신·Workers Free 표시, 실제 수동 SQL 백업/격리 복원은 완료했다. 기존 한 편의341행 이전·표시 사본 복구와 실제 발행·두 난도 입력/부분 제출/0% 채점·새로고침 후 정답보기 복원도 완료했다. 참가 세션1·제출2·유료 call/usage7·기존860448micro USD와 원본/키는 보존됐다. 완료한 실제 입력/PDF 검사는 반복하지 않는다.
 
-## 2. 단계별 상태
+**Production 요청 제한과5분 자동 마감 예약을 적용했다.** 실제 Cloudflare binding에서 합성 공유망50개 참여자 모두200, 반복 actor20회 중13회429와Retry-After10/비공개 캐시 금지, 실제 제출 API 성공 replay8회/새Turnstile 호출0을 확인했다. session/guest는 같은 위치130회 중29회 제한됐다. 위치별 비동기 counter이므로 정확한 전체100회 상한이나 청구 차단으로 확대하지 않는다. 실제 Production 참여 현황 저장소의 두 난도 본인 시험/0점 검증과 Preview 대표 마감·순위2개/정답자3명·중복 실행 보존이 통과했다. 이는 서버 검수이며 사용자 참여 현황 화면 확인·실제 일반 공개 HTTP 검수와 구별한다. 합성7제출/8세션만 제거한 뒤 Preview90표 전체/스키마가 이전과 같았다.
 
-| 단계 | 상태 | 확인된 결과 |
-|---|---|---|
-| 기획·상세 명세 | 완료 | `implementation.md`에 제품·API·데이터·보안·출력·운영 정책 기록 |
-| Phase 0 출시 전 입력 | 일부 완료 | 계정·저작권 원칙·대표 자막 local spike 완료, Production 자막 provider·실제 예약 이름은 미확정 |
-| Phase 1 scaffold | 완료 | React/Vite/TypeScript, Hono Worker, 3개 Worker 골격, health API, CI |
-| Phase 1 D1 기초 | 완료 | Drizzle schema, 6개 기초 테이블, 첫 migration, repository 통합 검사 |
-| Phase 1 Preview D1 | 완료 | `biblequiz-d1-preview` 생성·migration·read/write 점검 |
-| Phase 1 Preview Worker | 완료 | Access 보호 고정 Worker, `/api/health`, `/api/health/database` 실점검 |
-| Workers Builds | 완료 | GitHub `main` → `biblequiz-app-preview` 자동 배포 2회 검증 |
-| Phase 2 퍼즐 엔진 | 미착수 | 다음 task의 첫 구현 대상 |
-| Phase 7A 디자인 시안 | 미착수 | Phase 2 뒤 수행 |
-| Phase 3~8 제품 기능·QA | 미착수 | 상세 순서는 `implementation.md` 17장 참고 |
+공개·자동 운영 단계의 pnpm check exit0(unit298/Worker2153/Workflow4/복구CLI2/Node14/Python6·lint/typecheck/Drizzle/build)와 Production build·strict dry-run·배포/예약·보존 검증이 통과했다. 현재 app **033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf**, content **95fbc7a6-95f5-4bcc-a85b-30dad3a59e56**, backup **3fb0e7c7-368b-45a9-89f9-2818739e415d**가100%다. 앱 요청 제한·운영 예약·백업·초안 정리와 앱/콘텐츠 AI 연결은true다. OpenAI 키는 비공개content에만 있고 새 생성 시험은0회다. 앱5분 예약, 삭제 manifest10분 예약, 주간 SQL 월요일04:00KST를 등록했다. app/backup의 실제 예약 실행과 삭제 manifest Workflow 완료·R2 저장 검증을 관측했다. 첫 주간 SQL 예약은2026-10-05 04:00KST로 아직 관측하지 않았으며 완료한 수동 SQL 백업/격리 복원은 재사용했다. 원격 합성7일 초안 정리·원본/확정 문서/삭제 기록 보존을 확인했고 소유 임시DB는 제거했다.
 
-## 3. 현재 코드로 동작하는 것
+사용자가 전체 Worker Access를 프리뷰만으로 바꿨다. **일반 공개200 / 관리자4개 path 보호 유지**를 확인했다. 두 난도 실제 브라우저 렌더·정답/비공개 정보 분리·미제출 조회 차단·Origin 검사와 공개 session50건이 통과했다. 소유 시험세션50건만 제거한 뒤 기존 참가1/제출2/유료call·usage7/비용860448micro USD는 불변이다. 자동 운영과 공개 검수의 상세 근거는 [검증 JSON](work/P8-02-verification.json)의automaticOperationsAndPublicRelease를 따른다.
 
-- `/`, `/archive`, `/quiz/:slug`, `/admin` React Router 경로와 임시 scaffold 화면
-- `/api/health` 표준 JSON envelope와 request ID
-- `/api/health/database` D1 migration 준비 상태 확인
-- 알 수 없는 `/api/*` 요청을 SPA HTML이 아닌 JSON 404로 처리
-- D1 외래키·CHECK constraint와 Drizzle repository 기본 read/write
-- Local D1 migration과 Preview D1 migration 명령 분리
-- Preview/Production D1 ID 혼동을 막는 설정 검사
-- GitHub Actions에서 pnpm 기반 `pnpm check`
-- Workers Builds에서 `main` push의 Access 보호 Preview 자동 배포
+두 난도 영문 알림은 이미 구현/배포됐으며 실제 사용자 재확인과 관리자 반복 테스트 방법 검토는 사용자가 모든 구현 완료 뒤로 보류했다. [향후 검토 기록10·11절](future/notes.md#10-모든-구현-완료-후--두-난도의-영문-입력-알림-재확인)을 따르며 P8-02에 새 필수 기능을 추가하지 않는다. 회원/계정 관련 기존 기록도 보존했다.
 
-현재 화면은 최종 UI가 아니라 연결 점검용이다. 실제 퀴즈, 제출, 관리자 발행, 참여 현황, 출력 기능은 아직 없다.
+**실제 브라우저의 ‘스크립트 표시’ 자동 클릭·자막 파일 저장에 성공했다.** 기존 WSL Chromium/Playwright가 로그인 없이269구간·12,792자(0:00~31:46)를 읽었고 DOM/저장 파일·해시·시간 순서를 검증했다. 사용자가 직접 복사해야 한다는 앞선 해석을 철회하고 자동화 목표를 유지한다. 운영 코드/DB/배포/유료 AI는 이번에 변경하지 않았다. 저장된 원본을 재사용하며 다음은 기존 관리자 입력과 반복 운영 실행 위치의 연결이다. 로컬 취득 성공이며 Cloudflare 자동 취득/운영 버튼 연결은 아직 완료되지 않았다. [실증과 남은 범위](work/p8-02/browser-transcript.md).
 
-## 4. Cloudflare 실제 자원
+**관리자 직접 생성 검수 중 발견한 영상 조회 오류를 복구했다.** 사용자가 새 영상에서watch/network·HTTP없음·bytes0 실패를 보고했다. 실제Workers native fetch의잘못된this호출을재현하고독립함수호출로고쳤다. 수정전native검사fail/수정후pass·관련82개·최종pnpm check exit0(Worker2154)·Production build/strict·앱615eb2cd-a899-4d36-996b-8b0793696a20100%·binding/Secret/다른Worker/예약/자료보존을확인했다. 새유료AI/실제영상agent조회0이다. 사용자 재시도에서 영상 정보·공개 한국어 자동 자막768구간/12,993자 조회 성공을 보고했다. 장절 예시/초기값을 설명하고 등록 정보 수동 확인을 이어간다. [복구와다음버튼](work/p8-02/video-fetch-recovery.md)을따른다.
 
-| 자원 | 상태 |
+**승인된 AI 연결 묶음은 완료했다.** 사용자가 기존 키 재사용·콘텐츠 서버 Secret·앱/콘텐츠 네 설정·필수 검사/배포를 명시 승인했다. 기존 키는 표준입력으로 content에만 전달했고 새 사본·키 출력은0이다. gpt-5.6-terra/high와 기존 결과를 유지한다. 필수 pnpm check exit0, 최종 매뉴얼 lint/typecheck·Production build·콘텐츠/앱 strict dry-run·후보 확인 후 content→app100%·공개200/관리자302·자료/기존 Secret/Preview/backup/예약 보존을 확인했다. 검사 소스657개 중4개만 변경하고653개를 보존했다. 실제 새 설교의 유료 Production 생성·공급자 청구 대조는 이번 승인에서 제외/미실행이다. 이 기존 출시 검수 항목이 남아 있어 P8-02/Phase8/v1을 전체 완료로 쓰지 않는다. 첫 주간 SQL 예약·계정 전체 청구/미관측 CPU/state의 한계도 유지한다.
+
+
+사용자가 Cloudflare MCP 추가를 요청해 Codex에 공식 서버 `cloudflare`를 등록했다. 최초 광범위 OAuth 요청은 중단했고 계정/Workers/Access 읽기 권한 인증이 CLI exit0/Successfully logged in으로 완료됐다. Cloudflare 실제 설정·AI 키·유료 호출은 변경하지 않았다. 새 MCP 도구가 현재 대화에 로드됐고 Access applications/Workers 목록 실제 조회 모두HTTP200으로 통과했다. Production Worker는preview_worker 보호, 관리자4개path와Preview Worker 전체보호를직접확인했다. resources/templates는미지원이지만API도구는정상이다. Cloudflare 설정 수정 권한은 요청하지 않았고쓰기0이다.
+
+## 기존 완료 결과와 관측 한계
+
+[P5-70](work/P5-70.md)의 실제 유료 결과/로컬 두 난도 발행·채점·재시작 보존, [P5-71](work/P5-71.md#preview-관리자-do-적용과-무료-검수-완료)의 기존 Preview 관리자DO/무료 플랜·native/집계 한계를 재사용한다. 당시0000~0036과 이전 조회 CPU는 과거 단계의 근거이며 현재 Preview는0038까지 적용됐다. 현재 구현을 그 이전 측정으로 판정하거나 완료 검사를 반복하지 않는다.
+
+P6-01 PDF 교정/실제 렌더, P7B-01 사용자 승인 기기, P8-01 백업/격리 복원·운영은 각 [작업 기록](../implementation.md)에 보존한다. macOS·개별 Android 키보드 미검수와 일부 Cloudflare 조회 권한/빈 집계·CPU/GB-s/state/build분 미관측은 알려진 한계다. 성공한 현재 표본을 계정 전체 청구 보장으로 확대하지 않는다.
+
+## 실제 완료와 다음 작업
+
+| 범위 | 상태 |
 |---|---|
-| `biblequiz-app-preview` | 배포·Access 보호·GitHub 자동 build 연결 완료 |
-| `biblequiz-d1-preview` | APAC, migration 적용·binding 완료 |
-| Workers Builds | Node 24.18.0, pnpm 11.14.0, build cache 사용, non-production branch build 꺼짐 |
-| `biblequiz-content` | 코드 골격만 존재, 공개 route와 원격 배포 없음 |
-| `biblequiz-backup` | 코드 골격만 존재, R2·export token·원격 배포 없음 |
-| Production Worker·D1·도메인 | 생성·연결하지 않음 |
-| R2 | 아직 활성화·bucket 생성하지 않음 |
-| OpenAI Secret | 아직 저장소·Preview에 등록하지 않음 |
-| Turnstile | 아직 생성·연결하지 않음 |
+| Phase 2 퍼즐·Phase 7A 시안 | 엔진 완료·시안 8종 승인, 기존 코드/자산 재사용 |
+| Phase 3 공개 풀이 | 로컬 완료 — 기존 Windows Chrome/Edge·iPhone 검수와 P7B-01 화면 마무리 완료. 원격 적용·출시 검수는 별도 |
+| Phase 4 제출/채점/마감/삭제 | P4-24 완료. 기존 Preview 검수와 권한·보존 정책 유지 |
+| P5-01~47 | 입력·생성·관리자 화면·저장 기반의 각 고정 범위 완료. 실제 전체 AI 실행은 아님 |
+| P5-48 | 출력/저장 검토·문서 재구성·교정/최종 감사 계약 대조 및 문서 검사 완료 |
+| P5-49 | 완료 — 문서형 교정 저장·사람 채택/별도 확정의 로컬 연결 |
+| P5-50 | 완료 — 현재 D1 코드 검사 증거와 새 full v3 finish 연결, 옛 감사·비용 보존 |
+| P5-51 | 완료 — provider/교정·full Workflow·사람 검수/재개·배치/최종 검사·관리자 UI 로컬 연결 및 검사 |
+| P5-52 | 완료 — 무료 배치 설정/대안 선택·선택 이력·발행 전 두 격자 검토·로컬 검사 |
+| P5-53 | 완료 — 개별 재생성·결과 선택·검수/배치 무효화 |
+| P5-54 | 완료 — 검수된 콘텐츠의 로컬 발행 저장·공개 연결·필수 검사·상태 문서 |
+| P5-55 | 완료 — 의도만 재생성, 비판 검토 1회 재시도, 새 결과 재확정 또는 기존 선택 유지 비교 종료 |
+| P5-56 | 완료 — 선택한 답·단서 하나 재생성·비교·선택, 대상 외 보존과 검수/배치 무효화 |
+| P5-57 | 완료 — 7일 초안 정리·정식 데이터 보존 로컬 구현·필수 검사·상태 문서 |
+| P5-58 | 완료 — 발행 후 제목·설교일 정정·감사·공개/아카이브 연결과 필수 검사 |
+| P5-59 | 완료 — 제출 0건 재검증·철회/검수 시작 자료·featured/감사 원자 저장과 필수 검사 |
+| P5-60 | 완료 — 철회본 편집·무료 재배치·사람 검토·재발행·반복 편집 수명·보존/정리·필수 검사·문서 |
+| P5-61 | 완료 — 접수 중지·영향 확인·검토된 교체본·옛 결과 보존·본인 기록·취소·7일 정리·필수 검사·문서 |
+| P5-62 | 완료 — 요약·단서 비의미 오탈자·사람 확인·감사·공개 표시·기존 정답/성적 보존·필수 검사·문서 |
+| P5-63 | 완료 — 일반 마감 변경·영향 확인·감사·원자 마감·보존 검사 로컬 연결·필수 검사·문서 |
+| P5-64 | 완료 — 통합 로컬 검수·남은 연결 식별·안내/합성 응답 정정·필수 검사·문서 |
+| P5-65 | 완료 — 새 등록·중복 안내·미발행 선택·발행 전 metadata 저장/검수 무효화·필수 검사·문서 |
+| P5-66 | 완료 — 공개 영상 정보·자막 조회, 중복 안내·사람 날짜 확인, 원본 저장·실패 시 붙여넣기 연결과 필수 검사·문서 |
+| P5-67 | 완료 — 원문 위치/시간 이동·근거 교체/추가/삭제·관리자 평가/메모·사람 확정/명시 재개·7일 정리 연결 및 검사 |
+| P5-68 | 완료 — 퀴즈별 관측 비용 pill·호출/모델/토큰/가격표 version 상세·Access 조회·합성/필수 검사·문서 |
+| P5-69 | 완료 — 실제 시험 자료·평가·예상 비용·운영 승인/rollback 계획 문서화·문서 검사 |
+| P5-70 | 완료 — 기존 한 편의 실제 AI 결과 채택·무료 오타 수정·두 난도 로컬 발행·브라우저 제출/채점·서버 재시작 보존, 추가 AI 0 |
+| P5-71 | 완료 — 승인된 Preview SQLite 관리자DO·분할 조회 적용, 실제 화면/역할별 CPU·현재 Free 플랜·기존 자료 불변 검수. native 누락/DO 집계 빈 결과는 관측 한계로 보존 |
+| P5-72 | 로컬 완료 — 주간 운영/6단계·재개·자동 저장·필터·제출 조치·Top N·문의, 필수 검사·PC/모바일/Firefox 검수. 원격0037/앱 미적용, WebKit 환경 제약은 작업 기록에 명시 |
+| Phase 5 전체 | 구현·로컬 검수 완료 — 고정 종점 P5-72. Preview0037/0038·앱 적용과 공개 v1 출시 검수는 승인된 P8-02 범위에서 진행하며 아직 완료는 아님. 출력·기기·운영/출시 범위는 [완료 실행안](DELIVERY_PLAN.md) 유지 |
+| P6-01 | 로컬 완료 — PDF 글자 누락을 fontkit 정렬 패치로 수정, 소수 인원 배치 확대·PDFium/PDF.js 직접 렌더 확인. 이전 표시 품질 완료 판정 철회. 기존 구현: 빈 격자 PNG/SVG·단서 복사·Top N A4 벡터 PDF/300dpi PNG/ZIP, 두 난도/공개 권한·분할·한글·생성 파일·기술 검사 유지. 교정·필수 검사까지 완료, 원격 미적용 |
+| Phase 6 전체 | 구현·교정·로컬 검수 완료 — P6-01 고정 범위 종료. 공통 시각 마무리·기기/출시 범위는 기존 P7B·P8에 유지 |
+| P7B-01 | 로컬 완료 — 반응형·접근성·공통 자산/동작·필수 검사·Chromium/Firefox/WebKit 자동 검수 완료. 기존 Windows/iPhone 증거와 노트10+ Chrome 실제 입력/회전/재터치 검수로 사용자 승인 종료. macOS·개별 Android 브라우저/키보드 미검수 한계 보존 |
+| P8-01 | 로컬 완료 — 백업/격리 복원·삭제 manifest·기존 Cron·공개 요청 제한·통합 비용/매뉴얼, 필수 검사·상태 문서. 원격 자원/0038/활성화 미적용 |
+| P8-02 | 진행 중 — Production/Preview0038·관리자/백업/복원·기존 한 편 실제 발행/두 난도 제출·원격 요청 제한/대표 마감·운영5분Cron 적용 완료. 자동 백업/정리·일반 공개/관리자 보호·매뉴얼 동기화 완료. AI 연결·검사·배포 완료. 조회 native/자동 입력/watch JSON 보완 완료. 실제 Cloudflare 자막 challenge는 미해결이며 제목 누락은 oEmbed 보완·검사·배포 완료. 실제 로컬 브라우저 스크립트 자동 취득/파일 보존 성공. 관리자 원본 저장 연결·실제 생성 검수 대기 |
 
-Workers Builds 첫 실행에서는 과거 조직 구성원 소유의 무효 build token 오류가 발생했다. `Settings → Builds → API token → Create new token`으로 새 자동 token을 만든 뒤 재시도해 해결했다. Preview version `38ae1c76-1d84-45ce-a634-3b0ebae70d50`, 이어진 자동 배포 version `b4db4631-1a6c-4bd5-b7d2-2a5e736b2da1`을 확인했다.
+이전 고정 번호·기존 하위 번호의 완료와 검사 기록은 [보관 STATUS](archive/2026-09-21-p5-48/docs/STATUS.md), [P5-48](work/P5-48.md)~[P5-55](work/P5-55.md)의 작업 기록에 보존한다. 과거 완료 검사를 새 작업처럼 반복하지 않는다.
 
-## 5. 2026-08-29 검증 결과
+## Git과 다음 재개
 
-- `pnpm check`: 성공
-  - lockfile 정책: 성공
-  - Cloudflare 환경 안전 검사: 성공
-  - Drizzle migration 검사: 성공
-  - ESLint: 성공
-  - TypeScript build: 성공
-  - Vitest unit: 1 file, 2 tests 성공
-  - Workers Vitest: 2 files, 6 tests 성공
-- `pnpm run build`: 성공
-  - Worker bundle과 React client production build 생성 확인
-- `pnpm test:e2e:list`: 성공
-  - Chromium 2건 + mobile Chromium 2건, 총 4건 등록 확인
-- `pnpm test:e2e`: 이번 task에서 실행하지 않음
-  - Playwright 브라우저를 실제로 내려받아 실행하는 E2E는 아직 검증되지 않았다.
-
-## 6. 알려진 위험과 게이트
-
-- 계정 없는 공개 자막 adapter는 대표 영상 local spike에서 773 segment를 얻었지만, Workers 데이터센터 환경 재검증과 약관·교회 사용 권한 확인 전에는 Production 채택할 수 없다.
-- 실제 설교 의도 분석 품질과 모델별 비용을 OpenAI non-production 환경에서 아직 평가하지 않았다.
-- 일반 사용자 보안, Turnstile, moderation, 제출 제약은 명세만 있고 구현되지 않았다.
-- Production 자원·백업·복원·출시 절차는 아직 만들지 않았다.
-- 개역개정 전문 사용 허가는 없으므로 `reference_only` 경계를 유지해야 한다.
-- 현재 Access 정책은 Cloudflare 계정 구성원 전체를 허용한다. 계정에 다른 구성원을 초대할 때 정책을 재검토해야 한다.
-- `implementation.md`가 크므로 새 task는 짧은 문서와 관련 절을 먼저 읽어야 한다. 요약 문서가 상세 정책을 대체하지 않는다.
-
-## 7. 다음 이정표
-
-Phase 2 퍼즐 도메인 엔진을 구현한다.
-
-- 한글 정답 표시형·격자형 정규화와 길이 validator
-- 5×5~10×10 설정형 배치 탐색기
-- 모든 단어 연결과 교차 밀도 report
-- public grid와 private solution 분리
-- seed 기반 재현 가능한 fixture
-- 불가능한 조합의 구조화된 이유
-
-종료 조건은 여러 크기·단어 수 fixture의 하드 게이트 통과, 조건 미달 발행 차단, public serialization 정답 비노출 자동 검사다.
+HEAD main / `0ab476e4281734f4eab64cc6231be09092221651`과 기존 큰 미커밋 변경을 보존했다. 이번 기본 정보 보완은 provider·폼·회귀/화면검사4개이며 나머지 검사소스653개·migration0000~0038/journal/snapshot·의존성/lock·폰트/fontkit·실제 원본/키/유료 결과는 보존했다. commit/push/reset/stash·새 유료 AI·새 migration0이다. 같은P8-02의 실제 생성/청구 대조 검수 경계와 다음 첫 동작은 [HANDOFF](HANDOFF.md)를 따른다.

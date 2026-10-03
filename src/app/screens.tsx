@@ -3,12 +3,10 @@ import {
   NavLink,
   Outlet,
   isRouteErrorResponse,
-  useLoaderData,
-  useParams,
   useRouteError,
 } from "react-router-dom";
 
-import type { HealthData } from "../lib/api-client/health";
+import { ThemeControl } from "../features/quiz/ThemeControl";
 
 const navigation = [
   { to: "/", label: "이번 주" },
@@ -17,18 +15,15 @@ const navigation = [
 ] as const;
 
 export function RootLayout() {
-  const health = useLoaderData<HealthData>();
-
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">본문으로 이동</a>
       <header className="site-header">
         <div>
           <p className="eyebrow">다사랑교회</p>
           <h1>이번 주의 말씀 : 낱말 퀴즈</h1>
         </div>
-        <span className="health" role="status">
-          <span aria-hidden="true" /> 기반 연결 정상 · {health.service}
-        </span>
+        <ThemeControl />
       </header>
 
       <nav aria-label="주요 메뉴">
@@ -44,49 +39,12 @@ export function RootLayout() {
         ))}
       </nav>
 
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Outlet />
       </main>
+      <footer><Link to="/privacy-requests">문의·삭제 요청 및 내 문의</Link></footer>
+      {import.meta.env.DEV && <footer className="development-footer">로컬 개발·검수 화면입니다. 실제 서비스 적용 여부는 운영 기록에서 확인합니다.</footer>}
     </div>
-  );
-}
-
-export function HomePage() {
-  return (
-    <section className="placeholder" aria-labelledby="development-title">
-      <p className="eyebrow">Phase 1 · 실행 골격</p>
-      <h2 id="development-title">개발 기반을 준비했습니다.</h2>
-      <p>
-        현재 화면은 디자인 시안이 아닌 연결 점검용 임시 화면입니다. 실제 설교
-        퀴즈와 참여 기능은 다음 단계부터 이 기반 위에 구현합니다.
-      </p>
-      <Link className="text-link" to="/quiz/test-slug">
-        퀴즈 경로 점검하기
-      </Link>
-    </section>
-  );
-}
-
-export function ArchivePlaceholder() {
-  return <Placeholder title="지난 퀴즈 목록" />;
-}
-
-export function AdminPlaceholder() {
-  return <Placeholder title="관리자 화면" />;
-}
-
-export function QuizPlaceholder() {
-  const { slug } = useParams();
-  return <Placeholder detail={`현재 시험 주소: ${slug ?? "없음"}`} title="퀴즈 화면" />;
-}
-
-function Placeholder({ title, detail }: { title: string; detail?: string }) {
-  return (
-    <section className="placeholder">
-      <p className="eyebrow">경로 연결 점검</p>
-      <h2>{title}</h2>
-      <p>{detail ?? "이 기능은 이후 구현 단계에서 채워집니다."}</p>
-    </section>
   );
 }
 

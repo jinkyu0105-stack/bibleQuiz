@@ -1,0 +1,195 @@
+{
+  "status": "passed",
+  "date": "2026-09-21",
+  "task": "P5-48",
+  "task_state": "in_progress; documentation reorganization complete; contract alignment remains",
+  "scope": "Documentation only; no product code/config/migration/DB/remote/deploy/commit/stage/push changes",
+  "preservation": {
+    "baseline_files": 390,
+    "original_main_documents_exact_sha256": 7,
+    "changed_existing_documentation_files": [
+      "AGENTS.md",
+      "README.md",
+      "docs/DECISIONS.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/STATUS.md",
+      "implementation.md"
+    ],
+    "unchanged_existing_files": 383,
+    "unchanged_existing_non_markdown_files": 362,
+    "new_documentation_files": 42,
+    "deleted_existing_files": 0,
+    "baseline_manifest": "worktree-baseline.json",
+    "original_documents_manifest": "manifest.json",
+    "limitation": "File hashes detect changes; they are not a backup of uncommitted code. Keep the working directory. Original document text snapshots are included."
+  },
+  "validation": {
+    "local_links_and_fragments": 643,
+    "source_heading_routes": 571,
+    "source_heading_coverage": 571,
+    "git_diff_check": true,
+    "new_active_document_whitespace_checks": 23,
+    "errors": [],
+    "code_fact_checks": {
+      "content_workflow_scaffold": true,
+      "provider_transport_injected": true,
+      "domain_resource_not_ready": true,
+      "last_migration_0013": true,
+      "historic_test_counts": true,
+      "all_33_decision_ids": true,
+      "no_archived_agents_instruction_file": true
+    },
+    "resume_content_checks": [
+      {
+        "question": "현재/부모/다음 작업",
+        "source": "docs/HANDOFF.md",
+        "required_information_present": true
+      },
+      {
+        "question": "시작 순서와 선택 읽기",
+        "source": "docs/HANDOFF.md",
+        "required_information_present": true
+      },
+      {
+        "question": "허용/제외 범위",
+        "source": "docs/HANDOFF.md",
+        "required_information_present": true
+      },
+      {
+        "question": "제품 방향/미구현 차이",
+        "source": "docs/work/P5-48.md",
+        "required_information_present": true
+      },
+      {
+        "question": "코드/테스트 진입점",
+        "source": "docs/work/P5-48.md",
+        "required_information_present": true
+      },
+      {
+        "question": "과거와 이번 검사 구별",
+        "source": "docs/STATUS.md",
+        "required_information_present": true
+      },
+      {
+        "question": "보존/복구 경계",
+        "source": "docs/HANDOFF.md",
+        "required_information_present": true
+      },
+      {
+        "question": "폐기한 접근",
+        "source": "docs/HANDOFF.md",
+        "required_information_present": true
+      }
+    ],
+    "limitation": "Resume checks verify documented state, scope, references and code entry paths; they do not run a new independent agent or prove future runtime behavior."
+  },
+  "reading_size": {
+    "unit": "Unicode characters, not tokens or billed usage",
+    "files": {
+      "AGENTS.md": {
+        "before_lines": 97,
+        "after_lines": 107,
+        "before_characters": 5566,
+        "after_characters": 6153
+      },
+      "docs/PROJECT_CONTEXT.md": {
+        "before_lines": 134,
+        "after_lines": 26,
+        "before_characters": 9424,
+        "after_characters": 1386
+      },
+      "docs/DECISIONS.md": {
+        "before_lines": 346,
+        "after_lines": 135,
+        "before_characters": 52075,
+        "after_characters": 8470
+      },
+      "docs/STATUS.md": {
+        "before_lines": 1552,
+        "after_lines": 41,
+        "before_characters": 213826,
+        "after_characters": 2329
+      },
+      "docs/HANDOFF.md": {
+        "before_lines": 1697,
+        "after_lines": 42,
+        "before_characters": 253747,
+        "after_characters": 2567
+      },
+      "implementation.md": {
+        "before_lines": 6933,
+        "after_lines": 42,
+        "before_characters": 568681,
+        "after_characters": 2141
+      }
+    },
+    "five_start_documents": {
+      "before_lines": 3826,
+      "after_lines": 351,
+      "before_characters": 534638,
+      "after_characters": 20905
+    },
+    "five_plus_spec_index": {
+      "before_lines": 10759,
+      "after_lines": 393,
+      "before_characters": 1103319,
+      "after_characters": 23046
+    },
+    "note": "Read relevant topic/work sections in addition. Archive bytes remain intact; no claim of equivalent token/cost percentage savings."
+  },
+  "git": {
+    "head": "0ab476e4281734f4eab64cc6231be09092221651",
+    "branch": "main",
+    "head_branch_index_unchanged": true,
+    "index_empty": true
+  },
+  "code_tests_this_change": {
+    "run": false,
+    "reason": "Documentation-only reorganization; all existing non-Markdown hashes unchanged. Historic P5-47 619 tests/lint/typecheck and P5-45 2016 tests remain historical evidence."
+  },
+  "new_documentation_paths": [
+    "docs/DEVELOPMENT_REVIEW.md",
+    "docs/ROADMAP.md",
+    "docs/archive/2026-09-21-p5-48/AGENTS.record.md",
+    "docs/archive/2026-09-21-p5-48/README.md",
+    "docs/archive/2026-09-21-p5-48/README.record.md",
+    "docs/archive/2026-09-21-p5-48/docs/DECISIONS.md",
+    "docs/archive/2026-09-21-p5-48/docs/HANDOFF.md",
+    "docs/archive/2026-09-21-p5-48/docs/PROJECT_CONTEXT.md",
+    "docs/archive/2026-09-21-p5-48/docs/STATUS.md",
+    "docs/archive/2026-09-21-p5-48/implementation.md",
+    "docs/archive/2026-09-21-p5-48/manifest.json",
+    "docs/archive/2026-09-21-p5-48/original/AGENTS.md.txt",
+    "docs/archive/2026-09-21-p5-48/original/README.md.txt",
+    "docs/archive/2026-09-21-p5-48/original/docs/DECISIONS.md.txt",
+    "docs/archive/2026-09-21-p5-48/original/docs/HANDOFF.md.txt",
+    "docs/archive/2026-09-21-p5-48/original/docs/PROJECT_CONTEXT.md.txt",
+    "docs/archive/2026-09-21-p5-48/original/docs/STATUS.md.txt",
+    "docs/archive/2026-09-21-p5-48/original/implementation.md.txt",
+    "docs/archive/2026-09-21-p5-48/source-map.json",
+    "docs/archive/2026-09-21-p5-48/verification.json",
+    "docs/archive/2026-09-21-p5-48/worktree-baseline.json",
+    "docs/spec/api.md",
+    "docs/spec/architecture.md",
+    "docs/spec/bible.md",
+    "docs/spec/data-model.md",
+    "docs/spec/design-workflow.md",
+    "docs/spec/design.md",
+    "docs/spec/export.md",
+    "docs/spec/generation.md",
+    "docs/spec/glossary.md",
+    "docs/spec/ime.md",
+    "docs/spec/leaderboard.md",
+    "docs/spec/product.md",
+    "docs/spec/puzzle.md",
+    "docs/spec/release.md",
+    "docs/spec/responsive.md",
+    "docs/spec/risks.md",
+    "docs/spec/scoring.md",
+    "docs/spec/submissions.md",
+    "docs/spec/testing.md",
+    "docs/spec/users.md",
+    "docs/work/P5-48.md"
+  ]
+}

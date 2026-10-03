@@ -1,0 +1,116 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2026-08-25",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": false
+    }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "biblequiz-d1",
+      "database_id": "fc0ae671-9300-49a2-a099-994b1446e9cc",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "name": "biblequiz-app",
+  "main": "workers/app/index.ts",
+  "keep_vars": true,
+  "assets": {
+    "directory": "dist/client",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "vars": {
+    "AI_GENERATION_ENABLED": "true",
+    "AI_RESPONSE_ARCHIVE_ENABLED": "false",
+    "CONTENT_FINAL_CHECK_WORKFLOW_ENABLED": "true",
+    "CONTENT_DISPLAY_PREPARATION_ENABLED": "false",
+    "DRAFT_CLEANUP_ENABLED": "true",
+    "BACKUP_ENABLED": "true",
+    "OPERATIONS_CRON_ENABLED": "true",
+    "PUBLIC_RATE_LIMIT_ENABLED": "true",
+    "CONTENT_DISPLAY_PREPARATION_SERMON_IDS": "[]",
+    "P571_SYNTHETIC_SERMON_IDS": "[]",
+    "ADMIN_COMPUTE_ENABLED": "true",
+    "OPERATIONS_ENVIRONMENT": "production",
+    "D1_DATABASE_ID": "fc0ae671-9300-49a2-a099-994b1446e9cc",
+    "BACKUP_BUCKET_NAME": "biblequiz-backups",
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAFLreMZWWeiwpbxO",
+    "TURNSTILE_EXPECTED_HOSTNAME": "biblequiz-app.jinkyu0105.workers.dev",
+    "ACCESS_TEAM_DOMAIN": "holy-paper-720a.cloudflareaccess.com",
+    "ACCESS_AUD": "cb2fa1cf406aa09f6fed52e9d00817b9bf83a274d9b878cb8502e97d7f95da68",
+    "CLOUDFLARE_ACCOUNT_ID": "c975020ce569ec52da63732ba0b94422"
+  },
+  "version_metadata": {
+    "binding": "CF_VERSION_METADATA"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ADMIN_COMPUTE",
+        "class_name": "AdminCompute"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "admin-compute-v1",
+      "new_sqlite_classes": [
+        "AdminCompute"
+      ]
+    }
+  ],
+  "workflows": [
+    {
+      "binding": "CONTENT_WORKFLOW",
+      "name": "biblequiz-content-workflow",
+      "class_name": "ContentWorkflow",
+      "script_name": "biblequiz-content"
+    },
+    {
+      "binding": "BACKUP_WORKFLOW",
+      "name": "biblequiz-backup-workflow",
+      "class_name": "BackupWorkflow",
+      "script_name": "biblequiz-backup"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "PUBLIC_SESSION_LIMIT",
+      "namespace_id": "80221",
+      "simple": {
+        "limit": 100,
+        "period": 10
+      }
+    },
+    {
+      "name": "PUBLIC_ACTOR_LIMIT",
+      "namespace_id": "80222",
+      "simple": {
+        "limit": 6,
+        "period": 10
+      }
+    },
+    {
+      "name": "PUBLIC_GUEST_LIMIT",
+      "namespace_id": "80223",
+      "simple": {
+        "limit": 100,
+        "period": 10
+      }
+    }
+  ],
+  "account_id": "c975020ce569ec52da63732ba0b94422",
+  "triggers": {
+    "crons": [
+      "*/5 * * * *"
+    ]
+  }
+}

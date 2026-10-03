@@ -13,3 +13,8 @@ coverage/
 *.tsbuildinfo
 .DS_Store
 *.log
+
+# Local browser profiles and Python caches (preserved outside Git)
+/C:*
+__pycache__/
+*.py[cod]

@@ -1,0 +1,186 @@
+{
+  "task": "P6-01",
+  "date": "2026-10-01",
+  "status": "local_complete_after_pdf_correction",
+  "parent": "Phase6 local implementation, correction and verification complete",
+  "next": "P7B-01",
+  "usage": {
+    "plan": "pro",
+    "windowMinutes": 10080,
+    "separateFiveHourAvailable": false,
+    "startRemainingPercent": 96,
+    "endRemainingPercent": 95,
+    "userMultiplier": 10,
+    "effectiveStart": 960,
+    "effectiveEnd": 950,
+    "officialProductMultiplier": false
+  },
+  "checks": {
+    "pnpmCheck": {
+      "exitCode": 0,
+      "unit": 296,
+      "worker": 2125,
+      "workflow": 4,
+      "recoveryCli": 2,
+      "node": 14,
+      "python": 6,
+      "log": "/tmp/p6-01-check-final.log"
+    },
+    "browser": {
+      "combinedChromiumAndMobile": {
+        "total": 40,
+        "initialPassed": 38,
+        "initialFailed": 2,
+        "failedRetryPassed": 2,
+        "failure": "Top N exact tab selector needed after adding Top N 출력 button",
+        "newExportScenariosPassed": 18
+      },
+      "firefox": {
+        "initialPassed": 8,
+        "viewerFallbackPassed": 1
+      },
+      "listedExportTests": 36,
+      "listIsExecution": false,
+      "webkitRunThisTask": false,
+      "physicalPrinterVerified": false,
+      "realDeviceImeVerified": false
+    },
+    "actualFiles": {
+      "offlineExistingPublishedQuiz": true,
+      "twoDifficultyPdfPages": 2,
+      "pdfPageMm": [
+        210,
+        297
+      ],
+      "pdfVectorWithoutImageXObjects": true,
+      "koreanTextAndSubsetFontVerified": true,
+      "blankPngPixels": [
+        1600,
+        1600
+      ],
+      "posterPngPixels": [
+        2480,
+        3508
+      ],
+      "pngPixelsPerMeter": 11811,
+      "syntheticZipPages": 5,
+      "zipAndPngCrcVerified": true,
+      "generatedArtifactsCommitted": false
+    }
+  },
+  "preservation": {
+    "checked": 5050,
+    "changed": 8,
+    "missing": 0,
+    "sqliteShmChanged": 8,
+    "durableChanged": 0,
+    "existingRepoFiles": 728,
+    "existingRepoMissing": 0,
+    "migrationSqlSnapshotJournalFiles": 77,
+    "migrationHashChanges": 0,
+    "changedExistingRepoFiles": [
+      "docs/DELIVERY_PLAN.md",
+      "docs/spec/api.md",
+      "docs/spec/export.md",
+      "src/features/quiz/ParticipationBoard.tsx",
+      "src/features/quiz/QuizWorkspace.tsx",
+      "src/features/quiz/public-page.tsx",
+      "tests/e2e/public-quiz.spec.ts",
+      "workers/app/participation-board.test.ts",
+      "docs/DECISIONS.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/STATUS.md",
+      "implementation.md",
+      "package.json",
+      "pnpm-lock.yaml",
+      "pnpm-workspace.yaml",
+      "src/app/router.tsx",
+      "workers/app/app.ts"
+    ],
+    "newRepoFiles": [
+      "docs/work/P6-01-verification.json",
+      "docs/work/P6-01.md",
+      "patches/@pdf-lib__fontkit@1.1.1.patch",
+      "public/fonts/NotoSansKR.ttf",
+      "public/fonts/OFL-NotoSansKR.txt",
+      "public/fonts/SOURCE.txt",
+      "shared/api/quiz-export.ts",
+      "src/features/export/BlankExportPanel.tsx",
+      "src/features/export/TopNPrintButton.tsx",
+      "src/features/export/blank-page.tsx",
+      "src/features/export/client.ts",
+      "src/features/export/export.css",
+      "src/features/export/export.test.ts",
+      "src/features/export/files.ts",
+      "src/features/export/print-page.tsx",
+      "src/features/export/render.ts",
+      "src/features/export/scene.ts",
+      "tests/e2e/export.spec.ts",
+      "tests/fixtures/export-response.ts"
+    ]
+  },
+  "externalActions": {
+    "remoteSql": 0,
+    "deploy": 0,
+    "push": 0,
+    "paidAi": 0,
+    "commit": 0,
+    "reset": 0,
+    "stash": 0
+  },
+  "approvedDependencies": {
+    "pdf-lib": "1.17.1",
+    "@pdf-lib/fontkit": "1.1.1",
+    "@resvg/resvg-wasm": "2.6.2",
+    "font": "Noto Sans KR static Regular TTF / OFL / self-hosted"
+  },
+  "limitations": [
+    "Temporary SQLite shm hashes changed in 8 files while locating the actual DB via read-only SQLite; no durable DB/WAL/material/key/paid-result change or missing file. Subsequent export reads used mode=ro&immutable=1; shm not restored.",
+    "P5-72 screens/migration0037 and P6 exports remain remotely unapplied.",
+    "Common celebration asset/motion and device/accessibility completion remain in existing P7B-01.",
+    "Fontkit dynamic chunk size warning remains; output dependencies absent from initial public quiz loading."
+  ],
+  "pdfDisplayCorrection": {
+    "cause": "Odd-length TrueType glyf records were not word-aligned by fontkit1.1.1; short loca offsets truncated byte positions.",
+    "priorCompletionWithdrawn": true,
+    "priorTextExtractionDidNotVerifyRendering": true,
+    "patch": "patches/@pdf-lib__fontkit@1.1.1.patch",
+    "patchedEntryPoints": [
+      "ESM",
+      "UMD"
+    ],
+    "existingFontUnchanged": true,
+    "subsetAndVectorPdfPreserved": true,
+    "outlineRegressionPassed": true,
+    "targetUnitPassed": 19,
+    "actualPdfRenderers": [
+      "PDFium",
+      "PDF.js"
+    ],
+    "actualBrowserDownloadedPdfRendered": true,
+    "smallGroupsReflowed": true,
+    "chromiumAndMobilePassed": 18,
+    "firefoxRerunAfterPatch": false,
+    "correctedPdf": "/tmp/p6-01-corrected-topn.pdf",
+    "pnpmCheck": {
+      "exitCode": 0,
+      "unit": 297,
+      "worker": 2125,
+      "workflow": 4,
+      "recoveryCli": 2,
+      "node": 14,
+      "python": 6,
+      "log": "/tmp/p6-01-check-repaired.log"
+    },
+    "sameTask": "P6-01 correction completed",
+    "session": "new_session_recommended_after_completion",
+    "gitDiffCheck": "passed",
+    "documentLinks": "passed",
+    "completion": "Correction, required checks and direct PDF visual rendering completed",
+    "extraUserAcceptanceRequired": false,
+    "nextTask": "P7B-01",
+    "sessionReason": "P6-01 correction, required checks and handoff are complete; P7B-01 is an independent Phase boundary after long tool work and context compaction."
+  },
+  "checksScope": "Initial format/function checks; PDF visual completion was withdrawn. Current corrected checks are in pdfDisplayCorrection."
+}

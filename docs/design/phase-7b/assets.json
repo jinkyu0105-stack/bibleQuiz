@@ -1,0 +1,265 @@
+[
+  {
+    "name": "adult-desktop",
+    "master": "docs/design/phase-7b/masters/adult-desktop.png",
+    "width": 1672,
+    "height": 941,
+    "hasAlpha": false,
+    "variants": [
+      {
+        "path": "public/images/garden-v1/adult-desktop-960.avif",
+        "bytes": 53921,
+        "width": 960,
+        "height": 540,
+        "hasAlpha": false,
+        "sha256": "2fe94b7e7d42c6413b011b5b6acd4b03426930b35cd8c2d7f2b4c7019c2cabc9"
+      },
+      {
+        "path": "public/images/garden-v1/adult-desktop-960.webp",
+        "bytes": 114264,
+        "width": 960,
+        "height": 540,
+        "hasAlpha": false,
+        "sha256": "ca9674ae2e893ea9725ad217bb05ce225f4861a04ddec25eb96c162f8701d712"
+      },
+      {
+        "path": "public/images/garden-v1/adult-desktop-960.jpg",
+        "bytes": 142831,
+        "width": 960,
+        "height": 540,
+        "hasAlpha": false,
+        "sha256": "43ae09de913e80aa8434c6b100d83f62460076f70142b790a91b580c4bfab933"
+      },
+      {
+        "path": "public/images/garden-v1/adult-desktop-1600.avif",
+        "bytes": 128108,
+        "width": 1600,
+        "height": 900,
+        "hasAlpha": false,
+        "sha256": "47e674ba69decd2c44d6a969239210bda42b96bb243ad15ce2346f389f6055cb"
+      },
+      {
+        "path": "public/images/garden-v1/adult-desktop-1600.webp",
+        "bytes": 262752,
+        "width": 1600,
+        "height": 900,
+        "hasAlpha": false,
+        "sha256": "aeac3f535e825d0f15f3cc999e66a37c4685363e7ca6c0f3cd65fcf62345c9bf"
+      },
+      {
+        "path": "public/images/garden-v1/adult-desktop-1600.jpg",
+        "bytes": 351161,
+        "width": 1600,
+        "height": 900,
+        "hasAlpha": false,
+        "sha256": "cfa0aa2f65bd8e2aae15dceb008f249a23f47eea35a69ccf6ea90a3b267eaa8f"
+      }
+    ],
+    "masterBytes": 2967816,
+    "masterSha256": "910035bf2ef55d750025873256dfbe788b014196d0d6feddfb327df6bd59cae3"
+  },
+  {
+    "name": "adult-mobile",
+    "master": "docs/design/phase-7b/masters/adult-mobile.png",
+    "width": 1122,
+    "height": 1402,
+    "hasAlpha": false,
+    "variants": [
+      {
+        "path": "public/images/garden-v1/adult-mobile-480.avif",
+        "bytes": 31849,
+        "width": 480,
+        "height": 600,
+        "hasAlpha": false,
+        "sha256": "4a07bacc3aebde14694567fd8b9ca71895e8207dff9f10cdc7262a0bd344ddd8"
+      },
+      {
+        "path": "public/images/garden-v1/adult-mobile-480.webp",
+        "bytes": 71054,
+        "width": 480,
+        "height": 600,
+        "hasAlpha": false,
+        "sha256": "79768a8ebc843fdfe86e52377bc4bd7855b059e62b1a4d49d89bbaf1762481f4"
+      },
+      {
+        "path": "public/images/garden-v1/adult-mobile-480.jpg",
+        "bytes": 85229,
+        "width": 480,
+        "height": 600,
+        "hasAlpha": false,
+        "sha256": "9c29490b3da9cfd28db8a0eebbd49e596b38d9396529e4dd5ef6514e490bfad3"
+      },
+      {
+        "path": "public/images/garden-v1/adult-mobile-960.avif",
+        "bytes": 112282,
+        "width": 960,
+        "height": 1200,
+        "hasAlpha": false,
+        "sha256": "cb416f2439a25ff1f6dc97d58034c28e5d7f488b07be6baf7e150f860165d4c1"
+      },
+      {
+        "path": "public/images/garden-v1/adult-mobile-960.webp",
+        "bytes": 236822,
+        "width": 960,
+        "height": 1200,
+        "hasAlpha": false,
+        "sha256": "c8816a9e58c8cf78494150ceacb9895f440540a6f539fff3eb8203d18dbe8e0c"
+      },
+      {
+        "path": "public/images/garden-v1/adult-mobile-960.jpg",
+        "bytes": 301949,
+        "width": 960,
+        "height": 1200,
+        "hasAlpha": false,
+        "sha256": "5a1d7a5356f01f3d9b774c03693127c4645f9b4b269326eeeb8bce22d565eb37"
+      }
+    ],
+    "masterBytes": 3045842,
+    "masterSha256": "435173cd7e7e84d2dc9762924bd2f9c4ffd3ff41eec0cd2e11eec10e89f3a865"
+  },
+  {
+    "name": "child-desktop",
+    "master": "docs/design/phase-7b/masters/child-desktop.png",
+    "width": 1672,
+    "height": 941,
+    "hasAlpha": false,
+    "variants": [
+      {
+        "path": "public/images/garden-v1/child-desktop-960.avif",
+        "bytes": 47362,
+        "width": 960,
+        "height": 540,
+        "hasAlpha": false,
+        "sha256": "e7c711d80419d289fe26acb4b16f1aae7172683b914649b4c5a2f719fbb9fbf4"
+      },
+      {
+        "path": "public/images/garden-v1/child-desktop-960.webp",
+        "bytes": 106178,
+        "width": 960,
+        "height": 540,
+        "hasAlpha": false,
+        "sha256": "42c1a7970a6463f6cd6eda2f56e3ee962100f1a2307d36f13c1f540239ee6f2d"
+      },
+      {
+        "path": "public/images/garden-v1/child-desktop-960.jpg",
+        "bytes": 142484,
+        "width": 960,
+        "height": 540,
+        "hasAlpha": false,
+        "sha256": "b21b60469c1f72caa6136068ce7cb2a16681879c89325ebccf479e5716273fcd"
+      },
+      {
+        "path": "public/images/garden-v1/child-desktop-1600.avif",
+        "bytes": 107796,
+        "width": 1600,
+        "height": 900,
+        "hasAlpha": false,
+        "sha256": "e84a9db8029458102453a6d33e68c4e6f800c995251b20029a5a0408c35e669f"
+      },
+      {
+        "path": "public/images/garden-v1/child-desktop-1600.webp",
+        "bytes": 230686,
+        "width": 1600,
+        "height": 900,
+        "hasAlpha": false,
+        "sha256": "f819f511ba30e4a23fd18f688f863ea7f1ba34a2e97c49749936dd65225e592b"
+      },
+      {
+        "path": "public/images/garden-v1/child-desktop-1600.jpg",
+        "bytes": 341332,
+        "width": 1600,
+        "height": 900,
+        "hasAlpha": false,
+        "sha256": "71402dc735a2cfab7a4aecdc7b27a1fde38ae7be161094328a1d2413b087f6ea"
+      }
+    ],
+    "masterBytes": 2912570,
+    "masterSha256": "570beb03a5377dfdc1371f7c78aa608f9f946ac07cd7a37fb0b2f73ff16cb105"
+  },
+  {
+    "name": "child-mobile",
+    "master": "docs/design/phase-7b/masters/child-mobile.png",
+    "width": 1122,
+    "height": 1402,
+    "hasAlpha": false,
+    "variants": [
+      {
+        "path": "public/images/garden-v1/child-mobile-480.avif",
+        "bytes": 31365,
+        "width": 480,
+        "height": 600,
+        "hasAlpha": false,
+        "sha256": "4f310a7426e5b60d2d91ba4bd2cc64f1277d3f43af3a16345ea5d6485deb6557"
+      },
+      {
+        "path": "public/images/garden-v1/child-mobile-480.webp",
+        "bytes": 70146,
+        "width": 480,
+        "height": 600,
+        "hasAlpha": false,
+        "sha256": "a010569a0e8a0f4901ee65ccf8e7d26d77a30ac757a0a92a1db965d332d847c6"
+      },
+      {
+        "path": "public/images/garden-v1/child-mobile-480.jpg",
+        "bytes": 88665,
+        "width": 480,
+        "height": 600,
+        "hasAlpha": false,
+        "sha256": "b3cf9a4ec573b7c97d1ef5565db9681b6163d34a22aa88fb5827030fbd3a90c0"
+      },
+      {
+        "path": "public/images/garden-v1/child-mobile-960.avif",
+        "bytes": 92042,
+        "width": 960,
+        "height": 1200,
+        "hasAlpha": false,
+        "sha256": "8a3e20c427e8c57ae282b7950ed3c020d9a749338bfc6bdbb6b72a9e44e82882"
+      },
+      {
+        "path": "public/images/garden-v1/child-mobile-960.webp",
+        "bytes": 186730,
+        "width": 960,
+        "height": 1200,
+        "hasAlpha": false,
+        "sha256": "95d0b081c473270cda012c5550818ce20692ab24b4b9324fc24e6bd024049f4e"
+      },
+      {
+        "path": "public/images/garden-v1/child-mobile-960.jpg",
+        "bytes": 280036,
+        "width": 960,
+        "height": 1200,
+        "hasAlpha": false,
+        "sha256": "6aaf11cc3be6849e118f5f4ef74df3633d46029ec412ad7222f6e76045a5f692"
+      }
+    ],
+    "masterBytes": 2818257,
+    "masterSha256": "cee00706e747a0ef0fd532d7a4c8f176c3a40baa698d7a31fdb8ab566704d6b1"
+  },
+  {
+    "name": "celebration",
+    "master": "docs/design/phase-7b/masters/celebration.png",
+    "width": 2172,
+    "height": 724,
+    "hasAlpha": true,
+    "variants": [
+      {
+        "path": "public/images/shared/celebration-screen.webp",
+        "bytes": 30156,
+        "width": 640,
+        "height": 213,
+        "hasAlpha": true,
+        "sha256": "c2bc11061b2c8d3155b7acfa05f14e7b326cfc4fe1d0cacc705379de2ad7fd4b"
+      },
+      {
+        "path": "public/images/shared/celebration-print.png",
+        "bytes": 767270,
+        "width": 2172,
+        "height": 724,
+        "hasAlpha": true,
+        "sha256": "7437cf67610c8810e801430227c74c5d3ec2e5611c1be1aa5d78bd3d41db52c5"
+      }
+    ],
+    "masterBytes": 679742,
+    "masterSha256": "359548cba4c79e2420578049854f67157463054d9fc1fc4f5c33324ef37f94f2"
+  }
+]

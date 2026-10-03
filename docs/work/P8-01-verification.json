@@ -1,0 +1,126 @@
+{
+  "task": "P8-01",
+  "date": "2026-10-01",
+  "status": "local_complete",
+  "scope": "backup / isolated restore / existing Cron / public rate limits / usage and operations manual",
+  "usage": {
+    "plan": "pro",
+    "usedPercent": 6,
+    "remainingPercent": 94,
+    "windowDurationMins": 10080,
+    "separateFiveHourWindowAvailable": false,
+    "userDefinedMultiplier": 10,
+    "adjustedRemainingPercent": 940
+  },
+  "checks": {
+    "pnpmCheck": {
+      "exitCode": 0,
+      "lint": true,
+      "typecheck": true,
+      "drizzleCheck": true,
+      "operationsContract": true,
+      "unitTests": 298,
+      "workerTests": 2150,
+      "contentWorkflowTests": 4,
+      "recoveryCliTests": 2,
+      "nodeQualityTests": 14,
+      "pythonQualityTests": 6,
+      "appAndClientBuild": true
+    },
+    "operationsBrowser": {
+      "exitCode": 0,
+      "tests": 4,
+      "projects": [
+        "chromium",
+        "mobile-chromium"
+      ],
+      "responses": "synthetic API fixtures; real browser rendering",
+      "inputPdfChecksRepeated": false
+    },
+    "backupWorkerStrictDryRun": {
+      "exitCode": 0,
+      "uploadKiB": 939.31,
+      "gzipKiB": 148.18,
+      "deployment": false
+    },
+    "isolatedRestore": {
+      "syntheticOnly": true,
+      "remoteCalls": 0,
+      "paidCalls": 0,
+      "directory": "/tmp/biblequiz-p8-restore-erGTqb",
+      "sqlBytes": 439513,
+      "gzipBytes": 54389,
+      "sha256": "01b05900ae26f225c1e88c6bbbbce7f5c84e56bb6f533d3c8936e31e6ce5dcf2",
+      "tables": 89,
+      "verified": {
+        "absentSubmissions": 0,
+        "deletedTombstones": 1,
+        "entries": 1
+      },
+      "idempotent": true,
+      "originalUnchanged": true,
+      "foreignKeyErrors": 0,
+      "quickCheck": "ok"
+    },
+    "documentation": {
+      "localLinksChecked": 262,
+      "linkErrors": 0,
+      "sourceHashesMatch": true,
+      "operationsContract": true,
+      "gitDiffCheck": true
+    }
+  },
+  "preservation": {
+    "baselineFiles": 5131,
+    "missing": 0,
+    "unexpectedChanges": 0,
+    "journalOnlyAppended": true,
+    "newMigration": "0038_phase8_operations",
+    "existingJournalEntries": 38,
+    "unchangedHashes": 5130
+  },
+  "remote": {
+    "resourcesCreated": 0,
+    "resourcesConnected": 0,
+    "migrationsApplied": 0,
+    "deployments": 0,
+    "paidAiCalls": 0,
+    "gitCommits": 0,
+    "gitPushes": 0,
+    "previewUnchanged": "P5-71 / migrations 0000-0036",
+    "productionCreated": false,
+    "newRemoteRateBackupCronFlagsEnabled": false
+  },
+  "limitations": [
+    "Remote export, Workflow checkpoints, analytics permissions and free limits are not verified by local tests.",
+    "Missing CPU, DO GB-s, Workflow billed storage/steps and exact Builds minutes remain unknown.",
+    "R2 analytics and an 8GB guard cannot guarantee a monthly zero-dollar bill.",
+    "Manual and pre-migration backups are not rotated with weekly backups; retention requires explicit operational review.",
+    "Restore requires current deletion manifest and separate public-reopen approval.",
+    "Existing P7B macOS and individual keyboard limitations remain preserved."
+  ],
+  "sourceSha256": {
+    "workers/backup/index.ts": "a1cde45481c349e2c71ad0c7d74d7534f62c611569849828f6a0a7b15e84fb25",
+    "workers/_shared/services/backup-storage.ts": "8ff7cbf9a7e0c79130a6c65ec132fea306890aa7e9112d9b48a18df329d5e736",
+    "workers/_shared/services/operations-usage.ts": "a0f4e8b0769e411f577a4fdd2f50c2a3d04f788c93e176a2278173cd079faadc",
+    "workers/_shared/services/public-rate-limit.ts": "b1fb18fff726fc4ba4c52c41b49bed991b6a3a30ee4fbcbebb76e036dd8aecf7",
+    "workers/app/operations-routes.ts": "beb0087aa2fc22db29762fc86bb6fb8227718397a725edd4a81a06f8e478d9ca",
+    "shared/api/admin-operations.ts": "35af5db62ca7e963bd8bdae88635594224ba81741735d4debf28c9752f3012d1",
+    "src/config/service-registry.ts": "a76cb35afe7d18e15f1d609814da9b07be65258585b053c4ed9a6fddb7d078cd",
+    "src/features/admin-operations/OperationsPanel.tsx": "a5555071d43756f8d2abf56cd7e577d124d5a231f15714c4c7fa017aac05cd3a",
+    "src/features/admin-operations/Manual.tsx": "73d8998365a042bcd410f9bda9f14421e67cfc656c6c63ecef67b2434e141bdc",
+    "workers/_shared/manual-content.ts": "3429ffba52d92e5a2c78c68bcb494b60a8b86661a12ac178625c84bcfb0126d4",
+    "docs/operations-manual.md": "6032e34891213c3eb510122b790df4211b7e540fc7c222c7ca4422ee7b60e807",
+    "scripts/check-isolated-backup-restore.mjs": "e951bc7a7868334325c545c041f645a6dcbf87538842a89b7fdf2abfe1517ec3",
+    "scripts/check-operations-contract.mjs": "928ebb5570d061bb38b0adfd2198fa9d856f5bb7496f353d0719eb1875c23774",
+    "scripts/build-operations-manual.mjs": "64e27a68034bbf022b0ff9510fc95a44349c8dab9204d80c09630e9d421e7d47",
+    "workers/app/operations-backup.test.ts": "9bc14a286d1045adeae02e8b8942c60bcab50924c2f3fdacd723942faf5f4bc2",
+    "workers/app/operations-usage.test.ts": "e5ded57a73a56023e21f6082d2f63fd3b5783a513373726b8381eec2d3a4ad5b",
+    "workers/app/submission-route.test.ts": "e72f63f53630cd65a7b747d2e6cc6aff3e958ce1def4b44144a8d654eb1cdb01",
+    "workers/app/quiz-finalization.test.ts": "1ae0cab9afea39cb31d029360443d3af9b482fbfae91ead197698e63fbc5c66d",
+    "tests/e2e/admin-operations.spec.ts": "a5b98f48a06949b2dde857228f440ac88ff7d3a2a796088212e1474140dd2b47",
+    "wrangler.p8-local.jsonc": "b82d03b9d9311a331c03c35a4c17a97a305c8e8a756d51efc6af6f675341cfb6",
+    "playwright.p8-local.config.ts": "b33902ea767d9cf697e9c3ee08b03b700d9b7d7d73e6d95b18f490bc545d93f7",
+    "migrations/0038_phase8_operations.sql": "13c578f1514e72b14d0f1fb9f1d3ec5a4b8c80e44fd9f35a02a7b2ead8ef60aa"
+  }
+}

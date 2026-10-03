@@ -1,0 +1,40 @@
+diff --git a/dist/fontkit.es.js b/dist/fontkit.es.js
+index 2711b07413d1eb095487d4fddc7273f4afc1d82b..e67edb23cf92978aa60fb1ed2155b2e4129e1e9e 100644
+--- a/dist/fontkit.es.js
++++ b/dist/fontkit.es.js
+@@ -32768,6 +32768,14 @@ var TTFSubset = /*#__PURE__*/function (_Subset) {
+       buffer = this.glyphEncoder.encodeSimple(glyph.path, glyf.instructions);
+     }
+ 
++    // Short loca offsets are divided by two: each glyph must start on an even byte.
++    // Google Noto Sans KR contains odd-length glyphs; truncation loses their outlines.
++    if (buffer.length % 2 !== 0) {
++      var aligned = new buffer_1(buffer.length + 1);
++      aligned.fill(0);
++      aligned.set(buffer);
++      buffer = aligned;
++    }
+     this.glyf.push(buffer);
+     this.loca.offsets.push(this.offset);
+     this.hmtx.metrics.push({
+diff --git a/dist/fontkit.umd.js b/dist/fontkit.umd.js
+index c18af0e3cfce5893cc0012cc3a4e2b69c78d4c95..a6669b9dbd2b33285a0279b98d93e5a129dab6d2 100644
+--- a/dist/fontkit.umd.js
++++ b/dist/fontkit.umd.js
+@@ -40918,7 +40918,15 @@
+ 	      buffer = this.glyphEncoder.encodeSimple(glyph.path, glyf.instructions);
+ 	    }
+ 
+-	    this.glyf.push(buffer);
++	    // Short loca offsets are divided by two: each glyph must start on an even byte.
++    // Google Noto Sans KR contains odd-length glyphs; truncation loses their outlines.
++    if (buffer.length % 2 !== 0) {
++      var aligned = new buffer_1(buffer.length + 1);
++      aligned.fill(0);
++      aligned.set(buffer);
++      buffer = aligned;
++    }
++    this.glyf.push(buffer);
+ 	    this.loca.offsets.push(this.offset);
+ 	    this.hmtx.metrics.push({
+ 	      advance: glyph.advanceWidth,

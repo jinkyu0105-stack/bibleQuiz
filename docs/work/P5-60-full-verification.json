@@ -1,0 +1,333 @@
+{
+  "task": "P5-60",
+  "status": "complete",
+  "head": "0ab476e4281734f4eab64cc6231be09092221651",
+  "branch": "main",
+  "baselineFileCount": 547,
+  "baselinePath": "/tmp/p5-60-full-baseline.json",
+  "changedExisting": [
+    {
+      "path": "docs/DECISIONS.md",
+      "before": "7b3667527e9acde80672be13fd8f6d33331cdb1f1bba711c6731f159411eaf23",
+      "after": "4f58a719e539698db72f8dbed404e163bc4c5c65d94eae2fe67b1def73d885eb"
+    },
+    {
+      "path": "docs/HANDOFF.md",
+      "before": "0029dc04b87782f3d82340f16b7ee9fc757ed852973e9959d6318a62f0611950",
+      "after": "003df0a122c251728a7126a9c0d6eb0d04b6d72f73532fcc073a8207088cbb3e"
+    },
+    {
+      "path": "docs/PROJECT_CONTEXT.md",
+      "before": "4b218a8e130ebd3dc617b90fe28394a5288d7ee1cf1982dbbacf83f729aac616",
+      "after": "8ce7b81e385a0adfe4767a6193c2d02689260d50170db4da41ba0dea51daacd9"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "before": "965fec0b4c4f996e8d4f8752ccc75bd243747158039e3e1f2061255e228f93de",
+      "after": "9bbc28c613edbde5fdfc8c96c59c6c6cc1709992b76b78a6b6b786247d7c1107"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "before": "d407b4551d1fdcf339dd92344ae293041967da84231d752a51c7806f2ae82f8b",
+      "after": "b18e0e39e933837fb39a700cedabf844619d08e6612dad805229bb8e4dfa0cf7"
+    },
+    {
+      "path": "docs/spec/api.md",
+      "before": "e35f9230fe46c887bc6780bb8160363f76710c8a899be27af51cfbd6a37c5103",
+      "after": "74835493c9caed707b257e18dfeb9e5da730dbb0618cdad3ded715be969e8b37"
+    },
+    {
+      "path": "docs/spec/data-model.md",
+      "before": "7548fb9eb9c3c9399d5654d9fa4893a869159e6c620e26f7618f5bacf12092b8",
+      "after": "79e56d7c728f380f0e9700fa9b2adc3fce72a642ec8ebc37033657526703db69"
+    },
+    {
+      "path": "docs/spec/generation.md",
+      "before": "55bf333739b266291308cee3718633fd09c855fa293d9350af30de57f1ccf710",
+      "after": "fb20538100f4c8a40eacd46694aed6f63d6ad6ecd6d6c1ad6efbf0ff360f5412"
+    },
+    {
+      "path": "docs/work/P5-60.md",
+      "before": "ebf46bfbc31cc97b7f53a5dca1f50a541644a5ba84051e8344721ca0b6b5dd87",
+      "after": "11195f84b99041febfe6650e67d53ab4508e9476aaf4326c4d37bc2c473c262d"
+    },
+    {
+      "path": "implementation.md",
+      "before": "9131a1ae9fa04561767d72d498254c4e0354821bdc61a8ad533a2da81f843a29",
+      "after": "b3844109bd1c2ff23c4844eddaed899f2e351e161066e252d086f5ed47a693c9"
+    },
+    {
+      "path": "migrations/meta/_journal.json",
+      "before": "16db7c0eac98d35733ec86e7fb031936ec3740962eb7d1531a87aef0f13d1edd",
+      "after": "aebb1003dc6063d5242bc0ae0ae99026614b96ea13621c99699894854edddc9a"
+    },
+    {
+      "path": "scripts/check-withdrawal-upgrade.mjs",
+      "before": "cf93ddb4764d0ae4360f6d3c8f76c310a128e68e7b28697bd1015f75ce4a6e5c",
+      "after": "a4f98f3d4dcabd7ff965b4dbbaad94605ddf05778d77718336bc727879e3c309"
+    },
+    {
+      "path": "src/features/admin-sermon-input/ContentPlacement.tsx",
+      "before": "dbb03b76f317055680ce12b67d0980ae5e1d9ed3088b25236c61dd3f0cad2c56",
+      "after": "b063adc6e61579a912811811a42467dd820d784e48e3bfdcef16a5c791cd2acf"
+    },
+    {
+      "path": "src/features/admin-sermon-input/WithdrawPublication.tsx",
+      "before": "50e725f40aa1f1f441fac5d42e9e2bd41135f51b51f673d3c97571f72099fc9f",
+      "after": "f5e5c5a89e6dc27b7965593575395150a9c8465de68c2393bb9ad087c7d3f347"
+    },
+    {
+      "path": "src/features/admin-sermon-input/admin-sermon-input.module.css",
+      "before": "a7f6a017dedb4c339a79e40d5bd815d6590c78a175b05a1132f5b856df5c08be",
+      "after": "c23a6860789f81eaee5eaf780d36cefe4ed5531087fb1cd70715885386e679b3"
+    },
+    {
+      "path": "workers/_shared/db/schema.ts",
+      "before": "541ca6b20cb22b8117e18b990bea7b02ff8c9229a7e2836ce754ab148c3b8a8d",
+      "after": "7ec47815cc99528d041493ffea6cd400d074b42d819dfc78f7d91d7ff82fc0a1"
+    },
+    {
+      "path": "workers/_shared/repositories/archive-repository.ts",
+      "before": "c9665bcc9c5360ab604be5c9f037b9f8d17423fbad98decb3a6b9b3ddeb32b3b",
+      "after": "332791f8d05a3aa89d2e33ba44d96da87510b3e68cf976c6feaedc5739690807"
+    },
+    {
+      "path": "workers/_shared/repositories/public-quiz-repository.ts",
+      "before": "855c8b3ac6e0349196de056fea9baf8caf5da3ab4d4fef3ce247f357c8f9cce2",
+      "after": "43b0f7c221c03ca583ba9c63642f0e8478e465be5a753ec18e78ce5db667093c"
+    },
+    {
+      "path": "workers/_shared/repositories/published-display-columns.ts",
+      "before": "32134319950c2bc3f47a24d5f21e4601dc20be99889b4a478821420788b0496d",
+      "after": "ebcdca5befdc791413a9697f0e038620f26e532f0e93c164a43ef005f48d9c07"
+    },
+    {
+      "path": "workers/_shared/services/content-generation-view.ts",
+      "before": "e07ff396e4c5e5356cdab861d5771efff2ce74e2545715389710b1ce502a33ee",
+      "after": "ece744401ddf374b17911f933b5aa39b1f5e79fa1b1ca6823c4315e80e630e1e"
+    },
+    {
+      "path": "workers/_shared/services/draft-cleanup.ts",
+      "before": "826d28b2c549a7b5b7401814a247355d6bd75655124b7c839c07655a33558c20",
+      "after": "b6fb94476916e04a716a4f1faae7e58d9f3275da2217901fd26ee368f53f2be1"
+    },
+    {
+      "path": "workers/_shared/services/published-display-text.ts",
+      "before": "d9d971d57947e13fe432387a703ad0e9e3013c30b36f8d625a9c8b7e6c06f7c8",
+      "after": "c47c7d0e2a05513123bbb8865a78afb3e9e3cbabc28b1f7ee0680fb86538088f"
+    },
+    {
+      "path": "workers/_shared/services/quiz-publication.ts",
+      "before": "28777bf6bb24ad6035c37c5e93e29d7bacf29128dd346ab93c7c5d9f16c94b85",
+      "after": "cf8be2bbb2ca85d13c94c646d3b9239cbe0fd984177f1576435a43012479e21a"
+    },
+    {
+      "path": "workers/_shared/services/quiz-withdrawal.ts",
+      "before": "2419e250d58939bb70ed3dc45cea965108873645426c2c04d844fbccfec50a5b",
+      "after": "b4d9dcabd5b681e8b8cd40b25dbae1eb48ea893714a47179010bd86af2315d45"
+    },
+    {
+      "path": "workers/_shared/services/withdrawal-edits.ts",
+      "before": "2bf19f53867999d378dc9b574114a1b3923bcef9b76bec15fb8774618f63101a",
+      "after": "95f50f1b119f8ef971f73d457224e4ff47ae8637685179115aedf41180f4a400"
+    },
+    {
+      "path": "workers/_shared/services/withdrawal-preview.ts",
+      "before": "297b22aa07bf1546e714c9e67ffc480442c10a9cbf4921d3aebb8a558ba68af6",
+      "after": "f6f6d4e82cbee54f1eb9f1cc1137ce902e2c55d6ae238fcc7af7629b0aba2ddf"
+    },
+    {
+      "path": "workers/app/app.ts",
+      "before": "086dfd10dc1d422c65a459bb108bdf1c91212fa22fd14fd1af33633300995880",
+      "after": "db4013b3f594c03a58af4c331b52fa274508a3fa77e0ef219c5f9211ddbc9754"
+    },
+    {
+      "path": "workers/app/content-intent-generation.test.ts",
+      "before": "807039617230182b8bb9b5bacf4aa70973bd23cbb6f842d0803cdf0bb33be944",
+      "after": "d358076c2ba245f8f10c25b241c788fdf9adb55146abcde3b56b9729be9777f2"
+    }
+  ],
+  "addedExcludingThisManifest": [
+    {
+      "path": "migrations/0026_phase5_quiz_republication.sql",
+      "sha256": "82a737faa43f0f2ed44bc2938d9f097d5d76755e377b0adfb1c8da2b028e3186"
+    },
+    {
+      "path": "migrations/meta/0026_snapshot.json",
+      "sha256": "ec44498644de564ae90832956ce4357c17b89d16636227851efd0ca6820bd79a"
+    },
+    {
+      "path": "shared/api/admin-quiz-revision.ts",
+      "sha256": "e8088aaf9c6846b13610109e460723678a7fa163206c6839d552b9e1cfa9d430"
+    },
+    {
+      "path": "src/features/admin-sermon-input/QuizRevisionEditor.tsx",
+      "sha256": "97c6edc13d0c886d31067ca2ac7108a2a232114145d680e9497380a3de261544"
+    },
+    {
+      "path": "tests/e2e/admin-quiz-revision.spec.ts",
+      "sha256": "a0a820fa452a2cae7d3320409bb20bc5ca60c36f3b38714a8f1b4c53b172d1b9"
+    },
+    {
+      "path": "workers/_shared/services/quiz-republication.ts",
+      "sha256": "a2cb0111b08eeda134874bd65cfe617c59ae529ff2f28a8a03d0f632587f2eda"
+    },
+    {
+      "path": "workers/_shared/services/quiz-revision-cleanup.ts",
+      "sha256": "fa7b20a0e7f9dfe16ac4b89381e3f548f7fed468375af33702a99a722badb08e"
+    },
+    {
+      "path": "workers/_shared/services/quiz-revision.ts",
+      "sha256": "43785fa040c1f0c92a59e9a01b843af414afdad2679a32e5197e685e48a9880d"
+    },
+    {
+      "path": "workers/app/quiz-republication.test.ts",
+      "sha256": "108517a27e22dffaef6f09f1fe7346bd9a7f50e8f9b27f30be92a8c9a2e2906e"
+    }
+  ],
+  "deleted": [],
+  "unchangedExistingCount": 519,
+  "protectedUnchanged": {
+    "AGENTS.md": "8e9d51141bf9c9c719c41e099f43022f62d10f75fba3d900863d5291c709886b",
+    "docs/design/phase-7a/01-adult-sermon-hero.png": "de4fefc5298553f09417531dc40300f6d2865fba7752035488ffc04fb1d2b3f3",
+    "docs/design/phase-7a/02-child-sermon-hero.png": "c611f80aae2e7fcc103f14b82b79dfc7e9853e8d05a73a8a88589675e76c0ab1",
+    "docs/design/phase-7a/03-adult-quiz-workspace.png": "af47a1cd436dbaaea5c02e6b229360ce4a02022fc63cbfdcc069f866002db485",
+    "docs/design/phase-7a/04-child-quiz-workspace.png": "00fe219f22eefd63b8c52b68e1e5cb5bd69d9565c26b7e248c03d402b3820d87",
+    "docs/design/phase-7a/05-submission-result.png": "9e344ba481126b450d5150b0287b35f6c727531d37f271b424301c9bf72ee65f",
+    "docs/design/phase-7a/06-participation-topn-print.png": "ec24e6cade0b2e9df1719f3fbab5a47a2120f2e9a752279a3fa8e322f2426f7c",
+    "docs/design/phase-7a/07-archive.png": "00f3f72d9e6a887287ed97d58b3d8c6357139c00c38eaa01de6876be1de50a07",
+    "docs/design/phase-7a/08-admin-workflow.png": "83e2206cb5deb7eed030fff9db7188e1fe29de06599f2817a245a175191569f7",
+    "docs/design/phase-7a/DESIGN_BRIEF.md": "5b7e25a24cf3d713743051b5192701ee52a62ea95abc4ddb5ecbb175533afe47",
+    "docs/design/phase-7a/PROMPTS.md": "3215218bc6500a81c4dc35cf544cb3085e4e29d35b10d56968beddc3bbf81f0d",
+    "docs/work/P5-60-cleanup-verification.json": "7de9334341f758b65f96a171f9fb621ff9544218020fefe21333a32b8c7cba86",
+    "docs/work/P5-60-storage-verification.json": "2a740f23df01a934ebc028a466e951041abf01403d1c9e0141ae2ef434671cb3",
+    "docs/work/P5-60-verification.json": "3783e71e28f62d6765b7ccd98b6aae93598566b371a12bcf2fe30ff47c3afc00",
+    "migrations/0000_foundation.sql": "58f8fa7d7ad40a635af9bca7cd508ceaeacd285e998fff745a1f17453b6f1a9a",
+    "migrations/0001_public_quiz_entries.sql": "e0308a4d02cd89f4a41a7ce7f3684a2e3b19126423f4f8dee493fa6db89b36d7",
+    "migrations/0002_phase4_submission_storage.sql": "537bc3571fb8f81ef43b5b88d7a2dafff67d616a8e751d0c5a67bde63a74d682",
+    "migrations/0003_phase4_moderation_policy.sql": "5184d2b7acb08d190a62eb755db78fddb7051ecc46a9f6e23e921bedbfd230f8",
+    "migrations/0004_phase4_leaderboard_snapshot.sql": "b4ac1a8596f200ff0d3955962b9b0b74ed8c163180c0fd04516cbeb9e364d8b5",
+    "migrations/0005_phase4_audit_logs.sql": "fcd42e32b58062f346ca606012f90e2754b548127833eec2a31ca02a6ebd9e20",
+    "migrations/0006_phase4_submission_moderation.sql": "5df9f1211a7f0a00709c8ccd21d2dc457bfaa4394495f08e41cc82044a49c46e",
+    "migrations/0007_phase5_private_sermon_metadata.sql": "c9680cd98542d175b6ec2ee478d74ba1ce02d4ab74b3ea3d5748d89c1f6e3072",
+    "migrations/0008_phase5_private_sermon_history.sql": "119b997a7f49d2b26408b14b01a793caec9673f39bc3d5420a6b39968958ea28",
+    "migrations/0009_sermon_input_selected_storage.sql": "53157112bba2bdc5f8ef19f25fc580f77480d07bd84c56308de63f16306220f7",
+    "migrations/0010_phase5_generation_jobs.sql": "1f7d311a5a5b7f20d114a60f4250aeea893d3967f84d214976f3566b52108995",
+    "migrations/0011_phase5_ai_result_usage_storage.sql": "1083df3650137f4101893347704ea21bd301528d8f530dcdf74826a6782e363b",
+    "migrations/0012_phase5_human_content_final_ticket.sql": "d8d8958cb7291de1cc3c39c644b310fe0ddb265686611e015f58b32c06a16ebe",
+    "migrations/0013_phase5_generation_lifecycle.sql": "a86b88e00bab22eb1228fa43ed1a538c0c824752ec04254114dd1409fdc9400a",
+    "migrations/0014_phase5_full_validation_finish.sql": "38bf25a9bca1390c658852ea11aa68e2b6165cb7f965a719bf37914c863284d7",
+    "migrations/0015_phase5_domain_content_lineage.sql": "614e53553c2cfb0e65fe2c750032fae2e447adf9273c2f47e5178af5fd04e59d",
+    "migrations/0016_phase5_placement_selections.sql": "beb463dd5dc9df062def7971991731328dbfd61eed717f350b408306768e071a",
+    "migrations/0017_phase5_individual_regeneration.sql": "c9d4623af6fade49a6876d70539b5f5e8cee4ebba83ab2efbf4a6151e3018e0b",
+    "migrations/0018_phase5_published_content.sql": "b322c747c266fa111d4ac7b5be36fcefc8167199926a80d1817229770e971730",
+    "migrations/0019_phase5_intent_regeneration.sql": "623533bfcda4aa44edfa4568d4f2a3034cd8830c4ba0e1da150012c4bc9b1b19",
+    "migrations/0020_phase5_intent_critique_retry.sql": "aafabc9d088a1a8f3ec469d5aab9c0153608a6154eb6dd351dff3753db03eb86",
+    "migrations/0021_phase5_draft_cleanup.sql": "0fdedc800ef6c4149faa174c5cb1b6e1ad57fe54a88d1fea79ecf913ccbfd118",
+    "migrations/0022_phase5_display_corrections.sql": "1c9c4eb6f3d3639d815550b242b6affe93c072486cd0ec7fe4008dde068c19a9",
+    "migrations/0023_phase5_withdrawals.sql": "207b7db40d69f8f784089e9806f5d857ac81f98ba3458eb891c6434931e0493c",
+    "migrations/0024_phase5_withdrawal_edits.sql": "2b49dd5cb44856637f39afd792ce02201b2ad8f9e6c9b9fc6d3e1d5c5d15a73a",
+    "migrations/0025_phase5_withdrawal_edit_cleanup.sql": "dd479568cf2ea1b5d8cc7f5445505765168d457bbcfc22179e73b71156b3639a",
+    "migrations/meta/0000_snapshot.json": "62a9c80fe37ed3861a276dcbbee85ba15cf384d639cd53a05d97646f8f0aa198",
+    "migrations/meta/0001_snapshot.json": "caf8f489c8720c4c790dd911c12e812b2eb5d1199a28b130fa8bd80778f97f4f",
+    "migrations/meta/0002_snapshot.json": "e4c83e23676fe448eb2054cd1361872e0a6ad02ef99e314e8bd1aa40732a0488",
+    "migrations/meta/0003_snapshot.json": "bf0eab7364fcfa084df482c2ac77f1e46645edd5b0fc4b213951855797d7393f",
+    "migrations/meta/0004_snapshot.json": "9055c8d32c4047df6dbe4e06cae35822bac766ea5e64301ade9cd005cd824df1",
+    "migrations/meta/0005_snapshot.json": "7ad52586b2a61ce7394b2efb9c33b51c52c78389e07c30b27cb7c90c19427fbc",
+    "migrations/meta/0006_snapshot.json": "e77f313ff1e6cea3d07d794cdfeff39a0031379f0f24e524e84c66f608ea7c99",
+    "migrations/meta/0007_snapshot.json": "518946dde13e17caaea5ed8369cc01077c1232ca822d505d90096232fb1b3b84",
+    "migrations/meta/0008_snapshot.json": "6a4c5945be883157a25515695d00162efff396829b49dcc91e88248d5b1173d3",
+    "migrations/meta/0009_snapshot.json": "8bd21374d2e5062a8a4ccc5da678bc7e4c9885a74f33f435c28c9062163962a9",
+    "migrations/meta/0010_snapshot.json": "78d29a412e8745c1ca0574ce68fdf2c2b98b46eb7d33a4402a7fbb2fb8c1a85e",
+    "migrations/meta/0011_snapshot.json": "33a1921daf615ecc75e2c87c2c5e038082b229e154593f96e2045a92c003c19a",
+    "migrations/meta/0012_snapshot.json": "a5149c5004ae17fb009bc56d356bdffef8ec691e24e73cebd3633999dbf40964",
+    "migrations/meta/0013_snapshot.json": "e74694c0e0b60f4fec568d2885f4cdf5acea2a61a1f983c3be79b4c02b147c62",
+    "migrations/meta/0014_snapshot.json": "efb02574913ab5792bc885bab431276f673f51c3b196cdd3f5a905a629f442c9",
+    "migrations/meta/0015_snapshot.json": "d6ffd914363502279c5019130dc72f33395d948d65c6dfb1586838447f6e110a",
+    "migrations/meta/0016_snapshot.json": "4f5bc7be55108ccf525ab14ffe90af9ad76a432d2e6b57b4f640ecbcdd5a58bb",
+    "migrations/meta/0017_snapshot.json": "34a8c205559796653bd58fa4a8633be1020180bcf8b2aac6fdf9c949a792560c",
+    "migrations/meta/0018_snapshot.json": "248610dc7e7dc317ce22b61146170c3ff70548f6e325ff723bfef4cfe8a4e466",
+    "migrations/meta/0019_snapshot.json": "e6aea7690124588464ef370d4482c94c441439d45c4f32582aeae710a5755d8c",
+    "migrations/meta/0020_snapshot.json": "b229bde4c71ad37ae92ff9d9406a08dcfa16463dc539ae6af35aada322942078",
+    "migrations/meta/0021_snapshot.json": "5c730a6fb827fc1cd3df1a6f28f53f3c532fc718bfd0410536abe937574bc557",
+    "migrations/meta/0022_snapshot.json": "e33f934cd8ed40cd23ce8f329703968d41613cc23f499a5d1df711c0d65e4f84",
+    "migrations/meta/0023_snapshot.json": "5155c66da40b5ccef53932a29eb0841da5a9eeb7fcfb903f674c98f4a162e6d3",
+    "migrations/meta/0024_snapshot.json": "25c51a81c7e928b341b1f5d24d2e83da46161af2605c43a223a9e9e1093488e7",
+    "migrations/meta/0025_snapshot.json": "71bedf47f30c74281c7f38b71bd041157da36025356e986d5fb77a7fc66056c7",
+    "package.json": "bf27034a102cff5dd148b53402bdbd087079c1a59246f600fb521eb6e532fc81",
+    "pnpm-lock.yaml": "4bf3abdff00dcb4a084bd024eb30b0a7981c004902386d87e748190aca15ae1f",
+    "wrangler.jsonc": "7587557d7ac980c2f446ae6847977e4aad4b3d7007dd74616397828b5e75a5cf"
+  },
+  "checks": {
+    "populatedMigration": {
+      "command": "node scripts/check-withdrawal-upgrade.mjs --republication",
+      "exitCode": 0,
+      "checks": 335,
+      "preservedTables": 69,
+      "log": "/tmp/p5-60-full-migration.log"
+    },
+    "initialFullCheck": {
+      "command": "pnpm check",
+      "exitCode": 1,
+      "unitPassed": 271,
+      "workerPassed": 1932,
+      "workerFailed": 1,
+      "failure": "New test fixture used UUID v4 where submission keys require v7. Fixture corrected; no product guard weakened.",
+      "log": "/tmp/p5-60-full-check.log"
+    },
+    "correctedRelatedSuite": {
+      "exitCode": 0,
+      "passed": 7,
+      "log": "/tmp/p5-60-republication-tests-final.log"
+    },
+    "workflow": {
+      "exitCode": 0,
+      "passed": 3,
+      "log": "/tmp/p5-60-full-workflow.log"
+    },
+    "lint": {
+      "exitCode": 0,
+      "log": "/tmp/p5-60-full-lint-final.log"
+    },
+    "typecheck": {
+      "exitCode": 0,
+      "log": "/tmp/p5-60-full-typecheck-final.log"
+    },
+    "build": {
+      "exitCode": 0,
+      "log": "/tmp/p5-60-full-build-final.log"
+    },
+    "browser": {
+      "uniquePassed": 10,
+      "newRevision": 2,
+      "existingPublication": 4,
+      "existingWithdrawal": 4,
+      "projects": [
+        "chromium",
+        "mobile-chromium"
+      ],
+      "logs": [
+        "/tmp/p5-60-full-e2e-revision-verified.log",
+        "/tmp/p5-60-full-e2e-final.log",
+        "/tmp/p5-60-full-e2e.log"
+      ]
+    },
+    "unresolvedFailures": []
+  },
+  "boundaries": {
+    "syntheticTemporaryD1Only": true,
+    "realDataMutations": false,
+    "paidProviderCalls": 0,
+    "remoteApply": false,
+    "deployment": false,
+    "exports": false,
+    "commitOrPush": false
+  },
+  "usage": {
+    "planBasis": "User-confirmed Pro 5x",
+    "startRemainingPercent": 100,
+    "finalRemainingPercent": 95,
+    "finalPlusEquivalentPercent": 475,
+    "separateFiveHourWindowAvailable": false
+  }
+}

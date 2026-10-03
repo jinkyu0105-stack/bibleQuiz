@@ -1,0 +1,19 @@
+# Local Worker only. Generate a private random 32-byte key encoded as 64 hex characters.
+# Do not commit the real value, print it in logs, or use a VITE_ variable.
+# ARCHIVE_CURSOR_SECRET=
+
+# Local Worker only. Generate a different private random 32-byte key encoded as
+# 64 lowercase hex characters. Store Preview/Production values as Worker secrets.
+# SESSION_PEPPER=
+
+# Cloudflare Turnstile server verification. Keep the secret server-only and set
+# the exact hostname issued for the local or Preview widget configuration.
+# The public browser site key belongs in .env.local; see .env.example.
+# TURNSTILE_SECRET=
+# TURNSTILE_EXPECTED_HOSTNAME=
+
+# Cloudflare Access administrator JWT verification. These identify the Access
+# organization/application and are not secret, but must match each environment.
+# Do not copy real account values into this example file.
+# ACCESS_TEAM_DOMAIN=
+# ACCESS_AUD=

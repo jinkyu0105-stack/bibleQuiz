@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "p5-27-selected-local-only",
+  "main": "./workers/app/p5-27-selected-probe.ts",
+  "compatibility_date": "2026-08-25",
+  "keep_vars": true,
+  "workers_dev": false,
+  "preview_urls": false,
+  "env": {
+    "preview": {
+      "name": "biblequiz-app-preview",
+      "workers_dev": true,
+      "preview_urls": false,
+      "observability": { "enabled": true, "head_sampling_rate": 1,
+        "logs": { "enabled": true, "head_sampling_rate": 1, "invocation_logs": true, "persist": true } },
+      "triggers": { "crons": [] },
+      "d1_databases": [{ "binding": "DB", "database_name": "biblequiz-d1-p527-selected-r2-20260916",
+        "database_id": "45ecfef7-73c7-46e3-b86b-e446d5e171ac",
+        "preview_database_id": "45ecfef7-73c7-46e3-b86b-e446d5e171ac", "migrations_dir": "migrations" }]
+    }
+  }
+}

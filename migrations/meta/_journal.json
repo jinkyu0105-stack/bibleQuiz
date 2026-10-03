@@ -8,6 +8,272 @@
       "when": 1787732059239,
       "tag": "0000_foundation",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1788182636911,
+      "tag": "0001_public_quiz_entries",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1788251588538,
+      "tag": "0002_phase4_submission_storage",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1788266981764,
+      "tag": "0003_phase4_moderation_policy",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1788300136268,
+      "tag": "0004_phase4_leaderboard_snapshot",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1788417951878,
+      "tag": "0005_phase4_audit_logs",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1788438762644,
+      "tag": "0006_phase4_submission_moderation",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1789008361687,
+      "tag": "0007_phase5_private_sermon_metadata",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1789034648729,
+      "tag": "0008_phase5_private_sermon_history",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1789519624782,
+      "tag": "0009_sermon_input_selected_storage",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1789618613450,
+      "tag": "0010_phase5_generation_jobs",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1789622618744,
+      "tag": "0011_phase5_ai_result_usage_storage",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1789629007671,
+      "tag": "0012_phase5_human_content_final_ticket",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "6",
+      "when": 1789687954786,
+      "tag": "0013_phase5_generation_lifecycle",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "6",
+      "when": 1790036692819,
+      "tag": "0014_phase5_full_validation_finish",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "6",
+      "when": 1790049934614,
+      "tag": "0015_phase5_domain_content_lineage",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "6",
+      "when": 1790061691278,
+      "tag": "0016_phase5_placement_selections",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "6",
+      "when": 1790074006598,
+      "tag": "0017_phase5_individual_regeneration",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "6",
+      "when": 1790077031791,
+      "tag": "0018_phase5_published_content",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "6",
+      "when": 1790080987720,
+      "tag": "0019_phase5_intent_regeneration",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "6",
+      "when": 1790085978582,
+      "tag": "0020_phase5_intent_critique_retry",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "6",
+      "when": 1790122246114,
+      "tag": "0021_phase5_draft_cleanup",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "6",
+      "when": 1790123628841,
+      "tag": "0022_phase5_display_corrections",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "6",
+      "when": 1790129154858,
+      "tag": "0023_phase5_withdrawals",
+      "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "6",
+      "when": 1790139204920,
+      "tag": "0024_phase5_withdrawal_edits",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "6",
+      "when": 1790140167776,
+      "tag": "0025_phase5_withdrawal_edit_cleanup",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "6",
+      "when": 1790141158004,
+      "tag": "0026_phase5_quiz_republication",
+      "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "6",
+      "when": 1790144156143,
+      "tag": "0027_phase5_problem_corrections",
+      "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "6",
+      "when": 1790149742100,
+      "tag": "0028_phase5_wording_corrections",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "6",
+      "when": 1790212970465,
+      "tag": "0029_phase5_content_quality_reviews",
+      "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "6",
+      "when": 1790515514503,
+      "tag": "0030_phase5_archived_intent_recovery",
+      "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "6",
+      "when": 1790593677801,
+      "tag": "0031_phase5_recovered_analysis_continuation",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "6",
+      "when": 1790605612260,
+      "tag": "0032_phase5_archived_critique_continuation",
+      "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "6",
+      "when": 1790637720864,
+      "tag": "0033_phase5_archived_summary_recovery",
+      "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "6",
+      "when": 1790640848487,
+      "tag": "0034_phase5_stored_content_continuation",
+      "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "6",
+      "when": 1790657905265,
+      "tag": "0035_ai_response_archives",
+      "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "6",
+      "when": 1790729120746,
+      "tag": "0036_generation_display_projections",
+      "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "6",
+      "when": 1790840787847,
+      "tag": "0037_phase5_privacy_requests",
+      "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "6",
+      "when": 1790861533950,
+      "tag": "0038_phase8_operations",
+      "breakpoints": true
     }
   ]
 }

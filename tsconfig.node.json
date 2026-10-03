@@ -15,6 +15,10 @@
     "vite.config.ts",
     "vitest.config.ts",
     "vitest.worker.config.ts",
-    "playwright.config.ts"
+    "vitest.content-workflow.config.ts",
+    "vitest.generation-bridge.config.ts",
+    "vitest.generation-lifecycle.config.ts",
+    "playwright.config.ts",
+    "vitest.recovery-cli.config.ts"
   ]
 }

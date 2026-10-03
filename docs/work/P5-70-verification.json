@@ -1,0 +1,3708 @@
+{
+  "task": "P5-70",
+  "checked_on": "2026-09-29",
+  "status": "completed_local_publication_play_submit_grade_restart",
+  "head": "0ab476e4281734f4eab64cc6231be09092221651",
+  "baseline_files": 619,
+  "changed_existing_files": [
+    "docs/HANDOFF.md",
+    "docs/ROADMAP.md",
+    "docs/STATUS.md",
+    "implementation.md"
+  ],
+  "added_files": [
+    "scripts/prepare-ai-quality-trial.mjs",
+    "docs/work/P5-70.md",
+    "docs/work/P5-70-evaluation-template.csv",
+    "docs/work/P5-70-verification.json",
+    "scripts/local-ai-quality-session.mjs",
+    "scripts/local-ai-quality-session.test.mjs",
+    "scripts/quality-trial-worker.ts",
+    "workers/app/quality-trial-worker.test.ts"
+  ],
+  "preserved_existing_files": 615,
+  "migration_sql_snapshot_files": 60,
+  "journal_files": 1,
+  "migration_sha_unchanged": true,
+  "real_d1_stat_files": 13,
+  "real_d1_size_mtime_unchanged": true,
+  "real_d1_contents_read": false,
+  "lint_exit": 0,
+  "node_syntax_check_exit": 0,
+  "git_diff_check_exit": 0,
+  "empty_local_rehearsal": {
+    "scope": "empty_local_preparation_only",
+    "checkedAt": "2026-09-24T09:54:49.250Z",
+    "trialPath": "/tmp/biblequiz-ai-trial-wXHDKd",
+    "configPath": "/tmp/biblequiz-ai-trial-wXHDKd/wrangler.json",
+    "persistPath": "/tmp/biblequiz-ai-trial-wXHDKd/state",
+    "health": 200,
+    "databaseHealth": 200,
+    "unauthenticatedAdmin": 401,
+    "unauthenticatedGeneration": 401,
+    "aiEnabled": false,
+    "cleanupEnabled": false,
+    "apiKeyProvided": false,
+    "realSourceImported": false,
+    "realProviderCallsRequested": 0,
+    "remoteMode": false,
+    "liveTrialReady": false,
+    "remaining": [
+      "source_and_permission",
+      "human_reviewer",
+      "local_authenticated_review_path",
+      "paid_call_approval"
+    ]
+  },
+  "empty_local_db_check": {
+    "migrations": 30,
+    "sermons": 0,
+    "quiz_sets": 0,
+    "ai_provider_calls": 0,
+    "ai_usage_observations": 0,
+    "foreign_key_violations": 0,
+    "integrity": "ok"
+  },
+  "csv_data_rows": 6,
+  "csv_columns": 27,
+  "real_provider_calls_requested": 1,
+  "real_source_received": true,
+  "source_mode": "public_unofficial",
+  "permission_confirmed": true,
+  "reviewer": "user",
+  "paid_execution_approved": true,
+  "remaining": [],
+  "full_tests": "not_run_no_application_typescript_or_config_change",
+  "remote_operations": 0,
+  "deploy_commit_push": false,
+  "local_links_checked": 66,
+  "missing_local_targets": [],
+  "unresolved_anchors": [],
+  "usage": {
+    "pro_remaining_start_percent": 69,
+    "pro_remaining_end_percent": 68,
+    "agreed_multiplier": 5,
+    "plus_equivalent_end_percent": 340,
+    "separate_five_hour_window_available": false
+  },
+  "checks_passed": true,
+  "real_ai_provider_calls_requested": 0,
+  "caption_extraction": {
+    "sourceAlias": "representative-transcript-1",
+    "checkedAt": "2026-09-24T10:15:56.547Z",
+    "automaticExtractionAuthorized": true,
+    "logicalAttempts": 1,
+    "httpRequests": 3,
+    "paidAiCalls": 0,
+    "databaseWrites": 0,
+    "cloudflareOperations": 0,
+    "outcome": "fetched",
+    "code": null,
+    "diagnostic": {
+      "providerId": "accountless-youtube-spike",
+      "providerVersion": "0.1.0",
+      "attempt": 1,
+      "startedAt": "2026-09-24T10:15:55.280Z",
+      "elapsedMs": 1267,
+      "stage": "parse",
+      "reason": "none",
+      "httpStatus": 200,
+      "contentType": "json",
+      "responseBytes": 369619,
+      "trackCount": 3,
+      "selectedTrack": "asr",
+      "timeline": [
+        {
+          "stage": "input",
+          "elapsedMs": 5
+        },
+        {
+          "stage": "watch",
+          "elapsedMs": 875
+        },
+        {
+          "stage": "player",
+          "elapsedMs": 184
+        },
+        {
+          "stage": "tracks",
+          "elapsedMs": 1
+        },
+        {
+          "stage": "timed_text",
+          "elapsedMs": 185
+        },
+        {
+          "stage": "parse",
+          "elapsedMs": 17
+        }
+      ]
+    },
+    "directory": "/tmp/biblequiz-caption-trial-HIt16J",
+    "sourceReceived": true,
+    "sourceSha256": "29fecec3e630fd7e5bbe725d8359a1ae6890bf891ffa797d868bb1556ad5cb5c",
+    "textSha256": "1c71d577d8c6747cc06a7e2439c5e4206c37aae153d3635d7545115d0597ad71",
+    "segmentCount": 694,
+    "textCodePoints": 11715,
+    "textBytes": 28303,
+    "within30000CodePoints": true,
+    "firstStartSeconds": 0.359,
+    "lastEndSeconds": 1794.039,
+    "language": "ko",
+    "generated": true,
+    "fullVideoCoverageVerified": false
+  },
+  "caption_followup_checks": {
+    "checked_on": "2026-09-24",
+    "baseline_files": 621,
+    "changed_existing_files": [
+      "docs/HANDOFF.md",
+      "docs/ROADMAP.md",
+      "docs/STATUS.md",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md",
+      "implementation.md"
+    ],
+    "preserved_existing_files": 615,
+    "missing_files": [],
+    "migration_files_unchanged": 61,
+    "real_d1_stat_files_unchanged": 13,
+    "real_d1_contents_read": false,
+    "local_links_checked": 68,
+    "missing_local_targets_or_anchors": [],
+    "git_diff_check_exit": 0,
+    "private_source_hash_and_permissions_verified": true,
+    "source_timeline_and_size_verified": true,
+    "source_content_quality_reviewed": false,
+    "usage": {
+      "pro_remaining_start_percent": 67,
+      "pro_remaining_end_percent": 67,
+      "agreed_multiplier": 5,
+      "plus_equivalent_remaining_percent": 335,
+      "separate_five_hour_window_available": false
+    },
+    "checks_passed": true
+  },
+  "local_session_preparation": {
+    "script": "scripts/local-ai-quality-session.mjs",
+    "tests": {
+      "local_tool_passed": 4,
+      "content_workflow_passed": 3,
+      "lint_exit": 0,
+      "typecheck_exit": 0,
+      "final_targeted_lint_exit": 0
+    },
+    "smoke": {
+      "schema": "biblequiz-local-quality-session-v1",
+      "directory": "/tmp/biblequiz-quality-session-9Ao2pr",
+      "origin": "http://127.0.0.1:38583",
+      "persistPath": "/tmp/biblequiz-quality-session-9Ao2pr/state",
+      "running": true,
+      "paidEnabled": false,
+      "cleanupEnabled": false,
+      "realSourceImported": false,
+      "authenticatedUserVerified": false,
+      "unauthenticatedAdmin": 401,
+      "remoteMode": false,
+      "databaseHealth": 200,
+      "unauthenticatedGeneration": 401,
+      "realAiCalls": 0
+    },
+    "post_shutdown": {
+      "running": false,
+      "state_retained": true
+    },
+    "empty_db": {
+      "migrations": 30,
+      "sermons": 0,
+      "quiz_sets": 0,
+      "ai_provider_calls": 0,
+      "ai_usage_observations": 0,
+      "foreign_key_violations": 0,
+      "quick_check": "ok"
+    },
+    "db_inspection_note": "Initial glob assertions stopped before opening files; corrected to D1 data file excluding metadata and other services.",
+    "source_review": {
+      "sourceSha256": "29fecec3e630fd7e5bbe725d8359a1ae6890bf891ffa797d868bb1556ad5cb5c",
+      "textSha256": "1c71d577d8c6747cc06a7e2439c5e4206c37aae153d3635d7545115d0597ad71",
+      "privateChecklist": "/tmp/biblequiz-caption-trial-HIt16J/human-review.md",
+      "privateSamples": "/tmp/biblequiz-caption-trial-HIt16J/human-review-samples.csv",
+      "sampleRows": 9,
+      "rawFilesUnchanged": true,
+      "humanReview": "pending",
+      "aiRequests": 0,
+      "databaseWrites": 0
+    },
+    "actual_access_verified": false,
+    "real_ai_calls": 0,
+    "new_transcript_fetches": 0,
+    "existing_session_reopen_supported": false
+  },
+  "review_preparation_checks": {
+    "checked_on": "2026-09-24",
+    "baseline_files": 621,
+    "changed_existing_files": [
+      "docs/HANDOFF.md",
+      "docs/ROADMAP.md",
+      "docs/STATUS.md",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md",
+      "implementation.md"
+    ],
+    "added_files": [
+      "scripts/local-ai-quality-session.mjs",
+      "scripts/local-ai-quality-session.test.mjs"
+    ],
+    "preserved_existing_files": 615,
+    "migration_files_sha_unchanged": 61,
+    "real_d1_stat_files_unchanged": 13,
+    "real_d1_contents_read": false,
+    "local_links_checked": 70,
+    "missing_local_targets_or_anchors": [],
+    "whitespace_checks_passed": true,
+    "git_diff_check_exit": 0,
+    "usage": {
+      "pro_remaining_start_percent": 67,
+      "pro_remaining_end_percent": 66,
+      "plus_equivalent_end_percent": 330,
+      "separate_five_hour_window_available": false
+    },
+    "checks_passed": true
+  },
+  "correction_selected": true,
+  "saved_capture_checks": {
+    "baseline_files": 623,
+    "changed_files": [
+      "docs/HANDOFF.md",
+      "docs/ROADMAP.md",
+      "docs/STATUS.md",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md",
+      "implementation.md",
+      "scripts/local-ai-quality-session.mjs",
+      "scripts/local-ai-quality-session.test.mjs"
+    ],
+    "added_files": [
+      "scripts/quality-trial-worker.ts",
+      "workers/app/quality-trial-worker.test.ts"
+    ],
+    "preserved_files": 615,
+    "migration_files_sha_unchanged": 61,
+    "real_d1_stat_files_unchanged": 13,
+    "local_links_checked": 74,
+    "missing_links": [],
+    "git_diff_check_exit": 0,
+    "worker_tests_passed": 6,
+    "node_tests_passed": 4,
+    "lint_exit": 0,
+    "typecheck_exit": 0,
+    "saved_capture_smoke": {
+      "schema": "biblequiz-local-quality-session-v1",
+      "directory": "/tmp/biblequiz-quality-session-yUitCA",
+      "origin": "http://127.0.0.1:38993",
+      "persistPath": "/tmp/biblequiz-quality-session-yUitCA/state",
+      "running": true,
+      "paidEnabled": false,
+      "cleanupEnabled": false,
+      "realSourceImported": false,
+      "savedSourceSha256": "d1298cac64a442389879a87f7bc5aad2185bdbe2fe64cec4e55db73ce670f37e",
+      "authenticatedUserVerified": false,
+      "unauthenticatedAdmin": 401,
+      "remoteMode": false,
+      "unauthenticatedSavedImport": 401,
+      "onlySyntheticCapture": true,
+      "realAiCalls": 0
+    },
+    "original_capture_unchanged": true,
+    "real_source_imported": false,
+    "new_youtube_fetches": 0,
+    "paid_ai_calls": 0,
+    "production_entry_exposes_saved_capture": false,
+    "access": {
+      "user_browser_preview_normal": true,
+      "unauthenticated_preview_get_status": 403,
+      "official_cli_download": {
+        "release": "2026.9.1",
+        "asset": "cloudflared-linux-amd64",
+        "sha256": "03f1f25d1cc93b9ad6c60569d44060bc4f17ed97075760ed8cfca4b12dcd68cc",
+        "official_digest_match": true
+      },
+      "login_url_delivered_to_browser_panel": true,
+      "actual_authentication_verified": false,
+      "state": "browser_completed_cli_token_not_received",
+      "remote_worker_d1_settings_changed": false,
+      "user_confirmed_login_complete": true,
+      "local_login_process_stopped": true
+    },
+    "usage": {
+      "pro_remaining_start_percent": 66,
+      "pro_remaining_end_percent": 64,
+      "plus_equivalent_end_percent": 320,
+      "separate_five_hour_window_available": false
+    },
+    "checks_passed": true
+  },
+  "authentication_diagnostics": {
+    "scope": "documentation_and_read_only_authentication_diagnostics",
+    "baseline_files": 625,
+    "changed_existing_files": [
+      "docs/HANDOFF.md",
+      "docs/ROADMAP.md",
+      "docs/STATUS.md",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md",
+      "implementation.md"
+    ],
+    "new_repository_files": [],
+    "preserved_existing_files": 619,
+    "real_d1_stat_files": 13,
+    "real_d1_size_mtime_unchanged": true,
+    "real_d1_contents_read": false,
+    "migration_files_checked": 61,
+    "migration_sha_unchanged": true,
+    "local_links_checked": 77,
+    "missing_local_targets": [],
+    "unresolved_anchors": [],
+    "source_text_sha_unchanged": true,
+    "python_http_error": 1010,
+    "official_cli_agent_login_redirect_statuses": [
+      302,
+      302,
+      200
+    ],
+    "user_browser_final_page": "app_home",
+    "default_browser_final_page": "app_home",
+    "official_cli_token_exit": 1,
+    "cli_token_received": false,
+    "actual_user_authentication_verified": true,
+    "application_metadata_signature_verified": true,
+    "ai_enabled": false,
+    "local_authenticated_list_check": {
+      "checkedAt": "2026-09-24T11:11:37.177Z",
+      "localSession": "/tmp/biblequiz-quality-session-uHAWv0",
+      "status": 200,
+      "actualAccessVerified": true,
+      "emptyDraftListVerified": true,
+      "aiEnabled": false,
+      "realSourceImported": false,
+      "remoteAppMutations": 0,
+      "paidAiCalls": 0
+    },
+    "login_process_stopped": true,
+    "manual_private_token_input": "completed_by_user",
+    "token_file_exists": true,
+    "paid_ai_calls": 0,
+    "new_caption_fetches": 0,
+    "real_source_imported": false,
+    "remote_configuration_mutations": 0,
+    "deploy_commit_push": false,
+    "tests": "not_repeated_documentation_only",
+    "temporary_input_helper_syntax": "passed",
+    "git_diff_check_exit": 0,
+    "usage": {
+      "pro_remaining_start_percent": 63,
+      "pro_remaining_end_percent": 61,
+      "agreed_multiplier": 5,
+      "plus_equivalent_end_percent": 305,
+      "separate_five_hour_window_available": false
+    },
+    "approval_review": {
+      "url_stdout_rejected": true,
+      "safer_direct_browser_transfer_approved": true,
+      "remaining_approval_block": false
+    },
+    "authenticated_session_stopped": true,
+    "authenticated_session_db_check": {
+      "d1_migrations": 30,
+      "sermons": 0,
+      "quiz_sets": 0,
+      "ai_provider_calls": 0,
+      "ai_usage_observations": 0,
+      "foreign_key_violations": 0,
+      "integrity": "ok"
+    },
+    "metadata_confirmed_by_user": true,
+    "first_correction_proposal_usd_assumption": [
+      0.072,
+      0.18
+    ],
+    "first_correction_calls_proposed": 1,
+    "paid_execution_approved": false,
+    "private_ai_key_connected": false,
+    "remaining": [
+      "private_nonproduction_ai_key_preparation",
+      "explicit_isolated_import_and_one_correction_approval",
+      "human_correction_review"
+    ]
+  },
+  "key_preparation": {
+    "scope": "private_key_input_and_offline_request_preparation",
+    "baseline_files": 625,
+    "changed_existing_files": [
+      "docs/HANDOFF.md",
+      "docs/STATUS.md",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md"
+    ],
+    "preserved_existing_files": 621,
+    "new_repository_files": [],
+    "migration_files_checked": 61,
+    "migration_sha_unchanged": true,
+    "real_d1_stat_files": 13,
+    "real_d1_size_mtime_unchanged": true,
+    "real_d1_contents_read": false,
+    "source_text_sha_unchanged": true,
+    "access_token_unexpired_at_start": true,
+    "metadata_confirmed": true,
+    "private_key_input_helper_syntax": "passed",
+    "registration_schema_reference_video_offline_check": "passed",
+    "initial_offline_check_failures": [
+      "esbuild_not_direct_dependency",
+      "incorrect_bible_reference_module_path"
+    ],
+    "dependency_added": false,
+    "api_key_preparation_status": "user_has_no_key_creation_and_private_input_guided_waiting",
+    "api_key_connected": false,
+    "paid_execution_approved": false,
+    "openai_api_requests": 0,
+    "real_source_imported": false,
+    "new_caption_requests": 0,
+    "remote_configuration_mutations": 0,
+    "deploy_commit_push": false,
+    "local_links_checked": 38,
+    "missing_local_targets": [],
+    "unresolved_anchors": [],
+    "git_diff_check_exit": 0,
+    "tests": "not_repeated_no_product_code_change",
+    "usage": {
+      "pro_remaining_start_percent": 61,
+      "pro_remaining_end_percent": 60,
+      "plus_equivalent_end_percent": 300,
+      "agreed_multiplier": 5,
+      "separate_five_hour_window_available": false
+    },
+    "official_key_page_open_requested": true
+  },
+  "key_readiness": {
+    "baseline_files": 625,
+    "changed_existing_files": [
+      "docs/HANDOFF.md",
+      "docs/STATUS.md",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md"
+    ],
+    "preserved_existing_files": 621,
+    "migration_files_preserved": 61,
+    "real_d1_stat_files_preserved": 13,
+    "real_d1_contents_read": false,
+    "source_text_sha_unchanged": true,
+    "user_confirmed_creation_and_save": true,
+    "api_key_owner_mode_format_valid": true,
+    "api_key_provider_validity_verified": false,
+    "access_token_unexpired_at_check": true,
+    "paid_enabled": false,
+    "execution_approved": false,
+    "openai_api_requests": 0,
+    "real_source_imported": false,
+    "remote_configuration_mutations": 0,
+    "deploy_commit_push": false,
+    "local_links_checked": 38,
+    "missing_local_targets": [],
+    "unresolved_anchors": [],
+    "git_diff_check_exit": 0,
+    "full_tests": "not_repeated_no_product_code_change",
+    "remaining": "explicit_isolated_import_and_one_correction_approval",
+    "pro_remaining_percent": 59,
+    "plus_equivalent_remaining_percent": 295
+  },
+  "first_correction_execution": {
+    "date": "2026-09-24",
+    "scope": "approved_isolated_import_and_one_correction",
+    "execution_approved": true,
+    "additional_paid_calls_approved": false,
+    "trial_path": "/tmp/biblequiz-quality-session-ZBiIFw",
+    "registration_status": 200,
+    "saved_caption_import_status": 200,
+    "input_version": 1,
+    "human_confirmed": false,
+    "generation_post_status": 202,
+    "dispatch": "sent",
+    "generation_posts": 1,
+    "job_id": "5b5e25fa-e21e-4697-b1ae-304066823eb0",
+    "call_id": "call-5b5e25fa-e21e-4697-b1ae-304066823eb0",
+    "status": "uncertain",
+    "reason": "usage_unknown",
+    "proposal_id": null,
+    "observed_usage_count": 0,
+    "actual_cost_usd": null,
+    "provider_processing_and_billing_confirmed": false,
+    "automatic_retries": 0,
+    "model_readonly_get": {
+      "method": "GET",
+      "operation": "model_metadata_only",
+      "generation_requested": false,
+      "status": 200,
+      "model_matches": true
+    },
+    "offline_body_check": {
+      "networkRequests": 0,
+      "inputValid": true,
+      "bodySerializes": true,
+      "bodyBytes": 86217,
+      "model": "gpt-5.6-terra",
+      "reasoning": "high",
+      "fakeFetchCalls": 1
+    },
+    "local_db_check": {
+      "calls": [
+        {
+          "state": "uncertain",
+          "model": "gpt-5.6-terra",
+          "reasoning_effort": "high",
+          "started_at": "2026-09-24T12:06:17.164Z",
+          "completed_at": "2026-09-24T12:06:17.377Z"
+        }
+      ],
+      "outcomes": [
+        {
+          "step_key": "correction",
+          "outcome": "uncertain",
+          "reason": "usage_unknown"
+        }
+      ],
+      "jobs": [
+        {
+          "status": "running",
+          "current_step": "correction",
+          "error_code": null,
+          "created_at": "2026-09-24T12:06:16.600Z",
+          "updated_at": "2026-09-24T12:06:17.377Z"
+        }
+      ],
+      "events": [
+        {
+          "event_code": "job_created",
+          "elapsed_ms": null,
+          "created_at": "2026-09-24T12:06:16.600Z"
+        },
+        {
+          "event_code": "received",
+          "elapsed_ms": null,
+          "created_at": "2026-09-24T12:06:16.970Z"
+        },
+        {
+          "event_code": "step_uncertain",
+          "elapsed_ms": null,
+          "created_at": "2026-09-24T12:06:17.377Z"
+        }
+      ],
+      "receipts": [
+        {
+          "state": "uncertain",
+          "error_code": null,
+          "started_at": "2026-09-24T12:06:17.164Z",
+          "completed_at": "2026-09-24T12:06:17.377Z"
+        }
+      ],
+      "counts": {
+        "d1_migrations": 30,
+        "sermons": 1,
+        "quiz_sets": 1,
+        "ai_provider_calls": 1,
+        "ai_usage_observations": 0,
+        "sermon_input_events": 1
+      },
+      "foreign_key_violations": 0,
+      "integrity": "ok",
+      "log_safe_markers": {
+        "error": 0,
+        "fetch failed": 0,
+        "certificate": 0,
+        "ECONN": 1,
+        "ENOTFOUND": 0,
+        "401": 0,
+        "403": 0,
+        "429": 0,
+        "model_not_found": 0,
+        "insufficient_quota": 0
+      }
+    },
+    "server_running": false,
+    "temporary_runtime_key_copy_cleared": true,
+    "original_key_preserved": true,
+    "application_code_changed": false,
+    "full_tests": "not_repeated_document_only_no_phase_completion",
+    "pro_remaining_start_percent": 59,
+    "plus_equivalent_start_percent": 295,
+    "baseline_files": 625,
+    "validation": "passed",
+    "changed_files": [
+      "docs/HANDOFF.md",
+      "docs/ROADMAP.md",
+      "docs/STATUS.md",
+      "docs/work/P5-70-evaluation-template.csv",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md",
+      "implementation.md"
+    ],
+    "preserved_existing_files": 618,
+    "migration_files_unchanged": 61,
+    "existing_d1_stat_files_unchanged": 13,
+    "source_text_sha_unchanged": true,
+    "local_links_checked": 66,
+    "missing_local_targets": [],
+    "unresolved_anchors": [],
+    "csv_data_rows": 6,
+    "csv_columns": 27,
+    "git_diff_check_exit": 0,
+    "pro_remaining_end_percent": 57,
+    "plus_equivalent_end_percent": 285,
+    "separate_five_hour_window_available": false
+  },
+  "failure_diagnostics": {
+    "scope": "safe_correction_failure_diagnostics_without_live_call",
+    "pro_remaining_start_percent": 57,
+    "plus_equivalent_start_percent": 285,
+    "baseline_files": 625,
+    "test_files": 3,
+    "tests_passed": 97,
+    "lint_exit": 0,
+    "typecheck_exit": 0,
+    "full_check": "not_run_phase_not_complete",
+    "browser_e2e": "not_run_no_ui_change",
+    "new_generation_calls": 0,
+    "new_model_metadata_calls": 0,
+    "real_db_writes": 0,
+    "original_usage_status": "unknown",
+    "user_reported_dashboard": "no_usage_data",
+    "dashboard_directly_verified": false,
+    "computer_use_error": "sandboxCwd is not a local file URI",
+    "remote_changes": false,
+    "deploy_commit_push": false,
+    "validation": "passed",
+    "changed_files": [
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/STATUS.md",
+      "docs/spec/generation.md",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md",
+      "workers/_shared/services/content-generation.ts",
+      "workers/_shared/services/openai-draft-transport.ts",
+      "workers/app/content-generation.test.ts",
+      "workers/app/openai-draft-transport.test.ts"
+    ],
+    "preserved_existing_files": 615,
+    "migration_files_unchanged": 61,
+    "existing_d1_stat_files_unchanged": 13,
+    "stopped_trial_state_files_unchanged": 21,
+    "source_text_sha_unchanged": true,
+    "local_links_checked": 69,
+    "missing_local_targets": [],
+    "unresolved_anchors": [],
+    "git_diff_check_exit": 0,
+    "pro_remaining_end_percent": 56,
+    "plus_equivalent_end_percent": 280,
+    "separate_five_hour_window_available": false,
+    "usage_screenshot_verified": {
+      "source": "user_supplied_screenshot",
+      "project": "biblequiz-nonprod",
+      "api_key_filter": "All API keys",
+      "date_filter": "Last 7 days",
+      "visible_axis_dates": [
+        "Sep 17",
+        "Sep 24"
+      ],
+      "total_spend_display": "No data",
+      "september_spend_display_usd": 0,
+      "total_tokens": 0,
+      "total_requests": 0,
+      "responses_chat_requests": 0,
+      "responses_chat_input_tokens": 0,
+      "conclusion": "no_usage_or_spend_shown_in_selected_dashboard_view",
+      "original_provider_failure_reason": "unknown",
+      "individual_call_billing_reconciled": false
+    },
+    "dashboard_screenshot_verified": true,
+    "logs_screenshot_verified": {
+      "source": "user_supplied_screenshot",
+      "selected_tab": "Responses",
+      "results": 0,
+      "search_text_entered": false,
+      "visible_filter_chips": false,
+      "project_and_date_not_visible_in_crop": true,
+      "failure_reason_visible": false,
+      "conclusion": "no_response_records_visible_not_proof_of_no_provider_request"
+    }
+  },
+  "approved_single_retry": {
+    "execution_approved": true,
+    "approval_source": "user_explicit_one_more_attempt_after_dashboard_action",
+    "additional_paid_attempts": 1,
+    "total_correction_attempts": 2,
+    "automatic_retries": 0,
+    "same_trial_database": true,
+    "backup_path": "/tmp/biblequiz-quality-session-ZBiIFw/before-approved-retry",
+    "new_migrations_applied": 0,
+    "new_source_imports": 0,
+    "job_id": "0d6e0c97-09f9-4ebd-b2d3-8ac440d9f8af",
+    "call_id": "call-0d6e0c97-09f9-4ebd-b2d3-8ac440d9f8af",
+    "status": "uncertain",
+    "reason": "usage_unknown",
+    "diagnostic": {
+      "phase": "network",
+      "httpStatus": null,
+      "providerCode": null
+    },
+    "observed_cost_usd": null,
+    "db_check": {
+      "counts": {
+        "d1_migrations": 30,
+        "sermons": 1,
+        "quiz_sets": 1,
+        "sermon_input_events": 1,
+        "ai_provider_calls": 2,
+        "ai_usage_observations": 0
+      },
+      "old_call_unchanged": true,
+      "source_and_history_rows_unchanged": true,
+      "foreign_key_violations": 0,
+      "integrity": "ok",
+      "calls": [
+        {
+          "id": "call-5b5e25fa-e21e-4697-b1ae-304066823eb0",
+          "state": "uncertain",
+          "model": "gpt-5.6-terra",
+          "reasoning_effort": "high",
+          "started_at": "2026-09-24T12:06:17.164Z",
+          "completed_at": "2026-09-24T12:06:17.377Z"
+        },
+        {
+          "id": "call-0d6e0c97-09f9-4ebd-b2d3-8ac440d9f8af",
+          "state": "uncertain",
+          "model": "gpt-5.6-terra",
+          "reasoning_effort": "high",
+          "started_at": "2026-09-24T12:40:07.895Z",
+          "completed_at": "2026-09-24T12:40:08.111Z"
+        }
+      ],
+      "jobs": [
+        {
+          "id": "5b5e25fa-e21e-4697-b1ae-304066823eb0",
+          "status": "stale",
+          "current_step": "correction"
+        },
+        {
+          "id": "0d6e0c97-09f9-4ebd-b2d3-8ac440d9f8af",
+          "status": "running",
+          "current_step": "correction"
+        }
+      ]
+    },
+    "network_probes": {
+      "workerd": {
+        "credentialSent": false,
+        "sourceSent": false,
+        "generationRequested": false,
+        "runtime": "workerd",
+        "gotHttpResponse": false,
+        "errorName": "TypeError",
+        "mentionsCertificate": false,
+        "mentionsTls": false,
+        "mentionsConnection": false,
+        "mentionsProxy": false
+      },
+      "python": {
+        "runtime": "python",
+        "credentialSent": false,
+        "sourceSent": false,
+        "generationRequested": false,
+        "proxyVariableNames": [
+          "HTTP_PROXY",
+          "HTTPS_PROXY"
+        ],
+        "gotHttpResponse": true,
+        "httpStatus": 401
+      },
+      "node": {
+        "runtime": "node",
+        "credentialSent": false,
+        "sourceSent": false,
+        "generationRequested": false,
+        "gotHttpResponse": true,
+        "httpStatus": 401
+      }
+    },
+    "probe_setup_failures_before_network": 3,
+    "server_running": false,
+    "runtime_key_copy_cleared": true,
+    "source_and_history_preserved": true,
+    "application_code_changed": false,
+    "full_tests": "not_repeated_no_code_change_no_phase_completion",
+    "pro_remaining_start_percent": 55,
+    "plus_equivalent_start_percent": 275,
+    "validation": "passed",
+    "changed_files": [
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/ROADMAP.md",
+      "docs/STATUS.md",
+      "docs/work/P5-70-evaluation-template.csv",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md",
+      "implementation.md"
+    ],
+    "baseline_files": 625,
+    "preserved_existing_files": 617,
+    "migration_files_unchanged": 61,
+    "existing_d1_stat_files_unchanged": 13,
+    "source_text_sha_unchanged": true,
+    "local_links_checked": 73,
+    "missing_targets_or_anchors": [],
+    "csv_data_rows": 7,
+    "csv_columns": 27,
+    "git_diff_check_exit": 0,
+    "pro_remaining_end_percent": 54,
+    "plus_equivalent_end_percent": 270,
+    "separate_five_hour_window_available": false
+  },
+  "local_worker_connectivity_fix": {
+    "status": "passed",
+    "root_cause": "workerd_rejects_redirect_error_before_network",
+    "change": "manual_redirect_and_reject_3xx_before_json",
+    "previous_network_diagnosis_corrected": true,
+    "keyless_http_statuses": [
+      401,
+      401
+    ],
+    "second_probe_environment": "same_minimal_environment_as_local_session_without_proxy_or_extra_ca",
+    "real_credentials_or_source_sent": false,
+    "additional_paid_generation_requests": 0,
+    "cumulative_correction_attempts": 2,
+    "existing_cost_status": "unknown",
+    "worker_tests": {
+      "files": 3,
+      "passed": 103
+    },
+    "lint_exit": 0,
+    "typecheck_exit": 0,
+    "full_check_e2e": "not_run_not_phase_deploy_or_ui_completion",
+    "usage": {
+      "pro_remaining_start_percent": 53,
+      "pro_remaining_end_percent": 52,
+      "agreed_multiplier": 5,
+      "plus_equivalent_end_percent": 260,
+      "separate_five_hour_window_available": false
+    },
+    "baseline": "/tmp/p5-70-connectivity-baseline.json",
+    "changed_existing_files": [
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/ROADMAP.md",
+      "docs/STATUS.md",
+      "docs/spec/generation.md",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md",
+      "implementation.md",
+      "workers/_shared/services/openai-draft-transport.ts",
+      "workers/app/openai-draft-transport.test.ts"
+    ],
+    "preserved_existing_files": 615,
+    "migration_files_unchanged": 61,
+    "real_d1_stat_files_unchanged": 13,
+    "trial_state_stat_files_unchanged": 24,
+    "trial_running": false,
+    "trial_key_copy_bytes": 0,
+    "source_segments_preserved": 694,
+    "source_sha256_preserved": true,
+    "csv_data_rows": 7,
+    "csv_columns": 27,
+    "local_links_checked": 110,
+    "missing_local_targets": [],
+    "unresolved_anchors": [],
+    "git_diff_check_exit": 0
+  },
+  "post_fix_correction_execution": {
+    "execution_approved": true,
+    "approval_source": "user_proceed_after_fix_and_one_correction_scope",
+    "additional_calls": 1,
+    "automatic_retries": 0,
+    "same_trial_database": true,
+    "new_migrations": 0,
+    "new_source_imports": 0,
+    "backup_path": "/tmp/biblequiz-quality-session-ZBiIFw/before-postfix-correction",
+    "result": {
+      "jobId": "e9b8a724-1965-4b3f-b55d-22249f992700",
+      "callId": "call-e9b8a724-1965-4b3f-b55d-22249f992700",
+      "status": "review_ready",
+      "proposalId": "proposal-e9b8a724-1965-4b3f-b55d-22249f992700",
+      "startedAt": "2026-09-24T13:07:12.035Z",
+      "finishedAt": "2026-09-24T13:08:59.931Z",
+      "durationSeconds": 107.896,
+      "cost": {
+        "model": "gpt-5.6-terra",
+        "state": "completed",
+        "inputTokens": 22592,
+        "cachedInputTokens": 0,
+        "outputTokens": 14237,
+        "reasoningTokens": 352,
+        "estimatedCostMicroUsd": 216028,
+        "pricingVersion": "openai-terra-2026-09-22"
+      },
+      "estimatedUsd": 0.216028,
+      "unknownPriorCalls": 2,
+      "calls": 3,
+      "usageObservations": 1,
+      "inputEvents": 2,
+      "preservedRows": {
+        "sermons": 1,
+        "quiz_sets": 1,
+        "sermon_input_events": 1,
+        "sermon_input_chunks": 3,
+        "sermon_history_records": 0,
+        "sermon_history_chunks": 0,
+        "ai_provider_calls": 2
+      },
+      "segmentIdsOrderTimesPreserved": true,
+      "changedSegments": 233,
+      "humanReviewed": false,
+      "adopted": false,
+      "foreignKeyViolations": 0,
+      "quickCheck": "ok",
+      "serverRunning": false,
+      "runtimeKeyBytes": 0
+    },
+    "review_artifact": "/tmp/biblequiz-quality-session-ZBiIFw/correction-review.html",
+    "review_open_status": "queued",
+    "application_code_changed": false,
+    "tests": "previous_103_lint_typecheck_passed_not_repeated_no_code_change",
+    "pro_remaining_start_percent": 52,
+    "pro_remaining_end_percent": 51,
+    "plus_equivalent_end_percent": 255,
+    "baseline": "/tmp/p5-70-postfix-baseline.json",
+    "validation": {
+      "changed_existing_files": [
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/ROADMAP.md",
+        "docs/STATUS.md",
+        "docs/work/P5-70-evaluation-template.csv",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "implementation.md"
+      ],
+      "preserved_existing_files": 617,
+      "migration_files_unchanged": 61,
+      "real_d1_stat_files_unchanged": 13,
+      "source_sha256_preserved": true,
+      "csv_data_rows": 8,
+      "csv_columns": 27,
+      "local_links_checked": 73,
+      "missing_local_targets": [],
+      "unresolved_anchors": [],
+      "git_diff_check_exit": 0
+    }
+  },
+  "reboot_readiness_2026_09_25": {
+    "status": "trial_artifacts_missing",
+    "source_present": false,
+    "correction_present": false,
+    "trial_database_present": false,
+    "private_key_file_present": false,
+    "access_file_present": false,
+    "receiver_present": false,
+    "head": "0ab476e4281734f4eab64cc6231be09092221651",
+    "migration_sql_count": 30,
+    "migration_snapshot_count": 30,
+    "existing_development_state_path_present": true,
+    "existing_development_state_contents_read": false,
+    "alternate_copy_found_in_checked_locations": false,
+    "search_limits": "workspace, accessible tmp and Windows Downloads; system-private tmp denied; not a whole-device search",
+    "paid_requests": 0,
+    "source_refetches": 0,
+    "pro_remaining_percent": 50,
+    "plus_equivalent_percent": 250,
+    "git_diff_check_exit": 0
+  },
+  "durable_recovery_preparation": {
+    "date": "2026-09-25",
+    "storage_root": "/home/onegem/.local/state/biblequiz",
+    "git_outside": true,
+    "temporary_directory": false,
+    "source_recovery": {
+      "outcome": "fetched",
+      "logicalAttempts": 1,
+      "httpRequests": 3,
+      "paidCalls": 0,
+      "segments": 694,
+      "characters": 11715,
+      "sourceSha256": "29fecec3e630fd7e5bbe725d8359a1ae6890bf891ffa797d868bb1556ad5cb5c",
+      "sameAsPrevious": true
+    },
+    "old_correction_and_trial_db_recovered": false,
+    "new_paid_calls": 0,
+    "credentials_file_received": true,
+    "local_access_verified": true,
+    "empty_rehearsal": "/home/onegem/.local/state/biblequiz/quality-session-NQBs7x",
+    "empty_db_check": {
+      "migrations": 30,
+      "sermons": 0,
+      "calls": 0,
+      "quickCheck": "ok",
+      "foreignKeyViolations": 0
+    },
+    "node_tests_passed": 6,
+    "python_tests_passed": 6,
+    "lint_exit": 0,
+    "typecheck_exit": 0,
+    "actual_reboot_test": false,
+    "setup_failure_before_network": "stdin import realpath dash; directory setup continued with Python",
+    "pro_remaining_start_percent": 50,
+    "validation": {
+      "changed_existing_files": [
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/ROADMAP.md",
+        "docs/STATUS.md",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "implementation.md",
+        "scripts/local-ai-quality-session.mjs",
+        "scripts/local-ai-quality-session.test.mjs",
+        "scripts/prepare-ai-quality-trial.mjs"
+      ],
+      "new_files": [
+        "scripts/receive-quality-secret.py",
+        "scripts/receive-quality-secret.test.py"
+      ],
+      "preserved_existing_files": 615,
+      "actual_d1_stat_preserved": true,
+      "migration_files_unchanged": 61,
+      "local_links_checked": 82,
+      "git_diff_check_exit_code": 0
+    },
+    "pro_remaining_end_percent": 48,
+    "plus_equivalent_remaining_end_percent": 240,
+    "access_verification": {
+      "status": 200,
+      "retry_performed": false,
+      "method": "GET",
+      "path": "/api/admin/sermon-drafts",
+      "session_directory": "/home/onegem/.local/state/biblequiz/quality-session-tvb6hp",
+      "running": false,
+      "dev_vars_bytes": 0,
+      "paid_enabled": false,
+      "cleanup_enabled": false,
+      "database": {
+        "sermons": 0,
+        "quick_check": "ok",
+        "foreign_key_violations": 0,
+        "ai_provider_calls": 0
+      }
+    }
+  },
+  "restart_proposal_preparation": {
+    "date": "2026-09-25",
+    "pro_remaining_start_percent": 48,
+    "plus_equivalent_start_percent": 240,
+    "offline_validation": {
+      "date": "2026-09-25",
+      "registrationSchemaValid": true,
+      "referenceValid": true,
+      "sourceHashMatches": true,
+      "segments": 694,
+      "characters": 11715,
+      "correctionShapeValidWithSyntheticIds": true,
+      "realCorrectionIdsNotYetBound": true,
+      "unapprovedCorrectionBlocked": true,
+      "settingsPaidEnabled": false,
+      "executionApproved": false,
+      "paidCalls": 0,
+      "databaseWrites": 0,
+      "networkRequests": 0,
+      "sourceSha256": "29fecec3e630fd7e5bbe725d8359a1ae6890bf891ffa797d868bb1556ad5cb5c",
+      "estimateUsd": [
+        0.184,
+        0.36
+      ]
+    },
+    "key_readiness": {
+      "openaiFileExists": true,
+      "ownerOnlyRegularFile": true,
+      "keyFormatValid": true,
+      "serverKeyValidityChecked": false,
+      "accessNotExpired": true,
+      "paidCalls": 0
+    },
+    "official_pricing_url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+    "official_pricing_usd_per_million": {
+      "input": 2,
+      "cached_input": 0.2,
+      "output": 12
+    },
+    "new_paid_calls": 0,
+    "new_source_registrations": 0,
+    "execution_approved": false,
+    "code_changed": false,
+    "full_tests_repeated": false,
+    "validation": {
+      "changed_files": [
+        "docs/HANDOFF.md",
+        "docs/STATUS.md",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md"
+      ],
+      "unchanged_baseline_files": 625,
+      "actual_d1_stat_preserved": true,
+      "migration_files_preserved": 61,
+      "local_links_checked": 40,
+      "anchors_checked": 6,
+      "git_diff_check_exit_code": 0
+    },
+    "pro_remaining_end_percent": 47,
+    "plus_equivalent_end_percent": 235
+  },
+  "durable_correction_execution": {
+    "date": "2026-09-25",
+    "user_approved_scope": "new isolated registration and one correction; save comparison and stop",
+    "approval_consumed": true,
+    "pro_remaining_start_percent": 47,
+    "plus_equivalent_start_percent": 235,
+    "session_directory": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F",
+    "new_paid_calls": 1,
+    "new_source_registrations": 1,
+    "result": {
+      "jobId": "dbc34364-4f08-4ed1-a2ba-bcfdf3d77373",
+      "proposalId": "proposal-dbc34364-4f08-4ed1-a2ba-bcfdf3d77373",
+      "status": "review_ready",
+      "costStatus": "observed",
+      "segments": 694,
+      "changed": 224,
+      "unchanged": 470,
+      "timingOrderIdsPreserved": true,
+      "selectedOriginalPreserved": true,
+      "confirmationId": null,
+      "knownCostUsd": 0.219664,
+      "newCalls": 1,
+      "newUnknownCalls": 0,
+      "call": {
+        "callId": "call-dbc34364-4f08-4ed1-a2ba-bcfdf3d77373",
+        "jobId": "dbc34364-4f08-4ed1-a2ba-bcfdf3d77373",
+        "purpose": "correction",
+        "scope": "transcript_correction",
+        "singleEntry": false,
+        "provider": "openai",
+        "model": "gpt-5.6-terra",
+        "startedAt": "2026-09-25T01:04:41.178Z",
+        "observedAt": "2026-09-25T01:07:04.753Z",
+        "state": "completed",
+        "inputVersion": 1,
+        "metadataRevision": 1,
+        "attemptNumber": 1,
+        "inputTokens": 22592,
+        "cachedInputTokens": 0,
+        "reasoningTokens": 649,
+        "outputTokens": 14540,
+        "audioInputTokens": null,
+        "audioSeconds": null,
+        "pricingVersion": "openai-terra-2026-09-22",
+        "estimatedCostMicroUsd": 219664,
+        "usageSource": "provider_reported"
+      },
+      "priorKnownCostUsd": 0.216028,
+      "priorUnknownCalls": 2,
+      "durationSeconds": 143.575,
+      "cumulativeKnownEstimateUsd": 0.435692
+    },
+    "database_and_shutdown": {
+      "running": false,
+      "devVarsBytes": 0,
+      "cleanupEnabled": false,
+      "paidServerStopped": true,
+      "counts": {
+        "sermons": 1,
+        "quiz_sets": 1,
+        "ai_provider_calls": 1,
+        "ai_usage_observations": 1,
+        "generation_jobs": 1,
+        "sermon_input_events": 2,
+        "d1_migrations": 30
+      },
+      "quickCheck": "ok",
+      "foreignKeyViolations": 0,
+      "jobs": [
+        [
+          "dbc34364-4f08-4ed1-a2ba-bcfdf3d77373",
+          "review_ready",
+          "transcript_correction"
+        ]
+      ],
+      "originalEventPreserved": true
+    },
+    "setup_issue": "registration helper expected 201, existing API returned 200/created; continued using saved registration without repeating POST",
+    "product_code_changed": false,
+    "tests_repeated": false,
+    "pnpm_check_run": false,
+    "e2e_run": false,
+    "panel_open_status": "queued",
+    "validation": {
+      "changed_files": [
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/ROADMAP.md",
+        "docs/STATUS.md",
+        "docs/work/P5-70-evaluation-template.csv",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "implementation.md"
+      ],
+      "unchanged_existing_files": 621,
+      "actual_d1_stat_preserved": true,
+      "actual_d1_files": 13,
+      "migration_files_preserved": 61,
+      "source_files_unchanged": true,
+      "csv_original_eight_rows_preserved": true,
+      "csv_data_rows": 9,
+      "csv_columns": 27,
+      "local_links_checked": 83,
+      "anchors_checked": 9,
+      "html_rows": 694,
+      "html_external_resources": 0,
+      "secret_values_absent_from_changed_files": true,
+      "git_diff_check_exit_code": 0
+    },
+    "pro_remaining_end_percent": 46,
+    "plus_equivalent_end_percent": 230
+  },
+  "character_review_fix": {
+    "date": "2026-09-25",
+    "pro_remaining_start_percent": 45,
+    "plus_equivalent_start_percent": 225,
+    "paid_calls": 0,
+    "raw_correction_changed": false,
+    "model_or_prompt_changed": false,
+    "configuration_comparison": {
+      "model": "gpt-5.6-terra",
+      "reasoning": "high",
+      "promptVersion": "sermon-draft-v1",
+      "store": false,
+      "sourceHashSame": true,
+      "codeUnchangedSinceFirstRecoveryBaseline": {
+        "workers/_shared/services/openai-draft-transport.ts": true,
+        "workers/_shared/services/ai-draft-provider.ts": true,
+        "workers/_shared/services/ai-draft-provider-contract.ts": true,
+        "workers/_shared/services/content-generation.ts": true,
+        "workers/_shared/services/transcript-correction-document.ts": true
+      },
+      "yesterdayCompletePayloadAvailable": false,
+      "exactFullRequestEqualityProven": false,
+      "yesterdayResultAvailable": false,
+      "todayInputTokens": 22592,
+      "yesterdayRecordedInputTokens": 22592
+    },
+    "display_validation": {
+      "synthetic_checks": 6,
+      "real_segments_text_preserved": 694,
+      "paid_calls": 0,
+      "raw_correction_changed": false,
+      "whole_cell_highlight_removed": true
+    },
+    "local_html_browser_validation": {
+      "rows": 694,
+      "visibleChangedRows": 224,
+      "cellBackground": "rgba(0, 0, 0, 0)",
+      "markBackground": "rgb(255, 225, 106)",
+      "spaceMarkWidth": 5.09375,
+      "commaMarkWidth": 5.09375,
+      "filterWorks": true
+    },
+    "product_e2e_run": false,
+    "validation": {
+      "changed_files": [
+        "docs/HANDOFF.md",
+        "docs/STATUS.md",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md"
+      ],
+      "unchanged_existing_files": 625,
+      "original_and_corrected_text_unchanged": true,
+      "trial_database_stat_unchanged": true,
+      "actual_database_stat_unchanged": true,
+      "migrations_unchanged": true,
+      "local_links_checked": 40,
+      "git_diff_check_exit_code": 0
+    }
+  },
+  "correction_adoption": {
+    "date": "2026-09-25",
+    "pro_remaining_start_percent": 44,
+    "plus_equivalent_start_percent": 220,
+    "user_instruction": "현재 교정안으로 사용해서 진행하세요",
+    "additional_paid_calls": 0,
+    "same_database_reused": true,
+    "no_migrations_run": true,
+    "result": {
+      "sermonId": "65cce845-7670-40a6-9f69-51a729c157be",
+      "quizSetId": "0abb8110-5eb2-4e6b-854c-1a51b983ca69",
+      "proposalId": "proposal-dbc34364-4f08-4ed1-a2ba-bcfdf3d77373",
+      "beforeVersion": 2,
+      "selectedVersion": 3,
+      "confirmedVersion": 4,
+      "selectedDocumentId": "848fd1d6-6301-430e-98f1-0f3fb65ee902",
+      "selectedDocumentSha256": "108fbdced2ac691b6c228cfe0883296fa13225fc3ea188023da66577f0ed4ed7",
+      "confirmationId": "f88e5f19-6698-46ab-aa18-100703742bc7",
+      "sourceId": "0e216279-5cbb-42ff-a858-2051a498e838",
+      "segments": 694,
+      "selectedMatchesProposal": true,
+      "costsUnchanged": true,
+      "totalCalls": 1,
+      "knownCostMicroUsd": 219664,
+      "unknownCalls": 0,
+      "newPaidCalls": 0,
+      "aiEnabled": false,
+      "confirmedAt": "2026-09-25T01:58:05.482Z",
+      "purpose": "development_trial",
+      "qualityNotCertifiedForPublication": true
+    },
+    "database": {
+      "running": false,
+      "devVarsBytes": 0,
+      "priorSourceAndProposalEventsPreserved": true,
+      "callAndUsageRowsUnchanged": true,
+      "registrationRowsUnchanged": true,
+      "migrationsUnchanged": true,
+      "eventCount": 4,
+      "quickCheck": "ok",
+      "foreignKeyViolations": 0,
+      "confirmedVersion": 4,
+      "confirmationId": "f88e5f19-6698-46ab-aa18-100703742bc7",
+      "eventKinds": [
+        "source",
+        "proposal",
+        "merge",
+        "confirm"
+      ]
+    },
+    "product_code_changed": false,
+    "tests_repeated": false,
+    "full_check_and_product_e2e_run": false,
+    "helper_errors": [
+      "POST rejected 400 before mutation; corrected to PATCH after rechecking version 2",
+      "history comparison initially used only one component of composite PK; corrected to all PK columns"
+    ],
+    "validation": {
+      "changed_files": [
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/ROADMAP.md",
+        "docs/STATUS.md",
+        "docs/work/P5-70-evaluation-template.csv",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "implementation.md"
+      ],
+      "unchanged_existing_files": 621,
+      "actual_d1_stat_preserved": true,
+      "migration_files_unchanged": 61,
+      "source_and_correction_text_unchanged": true,
+      "csv_only_current_trial_selection_and_rating_changed": true,
+      "html_status_updated": true,
+      "local_links_checked": 85,
+      "git_diff_check_exit_code": 0
+    },
+    "pro_remaining_end_percent": 43,
+    "plus_equivalent_end_percent": 215
+  },
+  "intent_trial_preparation": {
+    "date": "2026-09-25",
+    "plan": {
+      "preparedAt": "2026-09-25T06:28:57.255Z",
+      "approvalStatus": "pending",
+      "sent": false,
+      "newPaidCalls": 0,
+      "requestKey": "0d6cb980-a8af-469d-b89f-f5e364a03262",
+      "sermonId": "65cce845-7670-40a6-9f69-51a729c157be",
+      "quizSetId": "0abb8110-5eb2-4e6b-854c-1a51b983ca69",
+      "inputVersion": 4,
+      "aggregateVersion": 4,
+      "selectedDocumentId": "848fd1d6-6301-430e-98f1-0f3fb65ee902",
+      "selectedDocumentSha256": "108fbdced2ac691b6c228cfe0883296fa13225fc3ea188023da66577f0ed4ed7",
+      "confirmationId": "f88e5f19-6698-46ab-aa18-100703742bc7",
+      "model": "gpt-5.6-terra",
+      "reasoningEffort": "high",
+      "schemaValidation": "passed",
+      "networkDisabled": true,
+      "analysisInputJsonBytes": 75740,
+      "analysisWireBytes": 101166,
+      "analysisInstructionsSha256": "6216f26c748b46fee3ec6103c80fc78c041452bf6b9b9be8bcf8a6d82fb64807",
+      "tasks": [
+        "intent_analysis",
+        "intent_critique"
+      ],
+      "stopAt": "awaiting_intent_review",
+      "laterCallsExcluded": [
+        "summary",
+        "child_candidates",
+        "adult_candidates"
+      ],
+      "automaticRetry": false,
+      "estimate": {
+        "currency": "USD",
+        "analysis": {
+          "inputTokens": [
+            21000,
+            32000
+          ],
+          "outputTokensIncludingReasoning": [
+            4000,
+            12000
+          ],
+          "usd": [
+            0.09,
+            0.208
+          ]
+        },
+        "critique": {
+          "inputTokens": [
+            25000,
+            48000
+          ],
+          "outputTokensIncludingReasoning": [
+            6000,
+            18000
+          ],
+          "usd": [
+            0.122,
+            0.312
+          ]
+        },
+        "total": [
+          0.212,
+          0.52
+        ],
+        "hardCap": false,
+        "measuredTokenCounts": false,
+        "cachedDiscountAssumed": false,
+        "pricingUrl": "https://developers.openai.com/api/docs/models/gpt-5.6-terra"
+      }
+    },
+    "checks": {
+      "inputConfirmedVersion": 4,
+      "confirmedIdentityMatches": true,
+      "contentEvents": 0,
+      "aggregateVersion": 4,
+      "jobCount": 1,
+      "callCount": 1,
+      "usageCount": 1,
+      "newPaidCalls": 0,
+      "dbUnchanged": true,
+      "quickCheck": "ok",
+      "foreignKeyViolations": 0,
+      "serverStarted": false,
+      "keysInjected": false,
+      "schemaValidation": "passed",
+      "privateContentPrinted": false,
+      "priorWorkflowTests": "existing passed result retained; code and existing two-call pause assertions reviewed, not rerun",
+      "limitations": [
+        "no new authenticated API GET this preparation",
+        "no paid provider call",
+        "no measured tokenizer count",
+        "no OS reboot test",
+        "same-disk copies only"
+      ]
+    },
+    "privateDirectory": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/intent-preparation-2026-09-25",
+    "proRemainingPercent": {
+      "start": 43,
+      "end": 42
+    },
+    "plusEquivalentRemainingPercent": {
+      "start": 215,
+      "end": 210
+    },
+    "remaining": [
+      "explicit_approval_for_two_paid_calls",
+      "execute_once_then_human_intent_review",
+      "remaining_quality_trial"
+    ],
+    "productCodeChanged": false,
+    "documentChecks": {
+      "changedFiles": [
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "docs/HANDOFF.md",
+        "docs/STATUS.md"
+      ],
+      "unchangedBaselineFiles": 625,
+      "previousPrivateFilesPreserved": 132,
+      "rootStateFilesPreserved": 13,
+      "migrationFilesPreserved": 61,
+      "dbUnchanged": true,
+      "documentLinksExist": 42,
+      "newAnchorVerified": true,
+      "privateFilePermissions": "0600",
+      "paidCalls": 0,
+      "gitDiffCheck": "passed"
+    }
+  },
+  "intent_trial_execution": {
+    "date": "2026-09-25",
+    "report": {
+      "jobId": "0d6cb980-a8af-469d-b89f-f5e364a03262",
+      "status": "failed",
+      "step": "intent_analysis",
+      "outcome": "rejected",
+      "recordedReason": "domain_invalid",
+      "exactFailureReason": "not retained; generic rejected mapping cannot distinguish schema/domain/resource validation",
+      "analysisResponseRetained": false,
+      "callsThisRun": 1,
+      "critiqueCalls": 0,
+      "automaticRetries": 0,
+      "call": {
+        "callId": "call-0d6cb980-a8af-469d-b89f-f5e364a03262-intent_analysis",
+        "jobId": "0d6cb980-a8af-469d-b89f-f5e364a03262",
+        "purpose": "intent_analysis",
+        "scope": "full",
+        "singleEntry": false,
+        "provider": "openai",
+        "model": "gpt-5.6-terra",
+        "startedAt": "2026-09-25T12:33:18.989Z",
+        "observedAt": "2026-09-25T12:35:02.468Z",
+        "state": "completed",
+        "inputVersion": 4,
+        "metadataRevision": 1,
+        "attemptNumber": 1,
+        "inputTokens": 24752,
+        "cachedInputTokens": 0,
+        "reasoningTokens": 4170,
+        "outputTokens": 7932,
+        "audioInputTokens": null,
+        "audioSeconds": null,
+        "pricingVersion": "openai-terra-2026-09-22",
+        "estimatedCostMicroUsd": 144688,
+        "usageSource": "provider_reported"
+      },
+      "durationSeconds": 103.479,
+      "costThisRunMicroUsd": 144688,
+      "costThisDbMicroUsd": 364352,
+      "callsThisDb": 2,
+      "unknownCallsThisDb": 0,
+      "inputVersion": 4,
+      "contentSnapshots": 0,
+      "originalAppRowsPreserved": 78,
+      "missingOrChangedOriginalAppRows": [],
+      "internalMetadataChanged": {
+        "before": [
+          [
+            2,
+            553
+          ]
+        ],
+        "after": [
+          [
+            2,
+            1283
+          ]
+        ]
+      },
+      "quickCheck": "ok",
+      "foreignKeyViolations": 0,
+      "serverStopped": true,
+      "injectedKeyBytes": 0,
+      "aiEnabled": "false",
+      "cleanupEnabled": "false",
+      "offlineDiagnostic": {
+        "readOnly": true,
+        "networkDisabled": true,
+        "actualFailedResponseAvailable": false,
+        "capturedConfirmedInputVersion": 4,
+        "syntheticValidResult": "prepared",
+        "syntheticInvalidQuoteRange": "invalid",
+        "actualRootCause": "undetermined; rejected output and detailed reason were not persisted",
+        "syntheticResultsStoredInApp": false
+      },
+      "remaining": [
+        "improve failure diagnostics without paid calls",
+        "identify precise rejection before any explicitly approved retry",
+        "human intent review and later quality trial"
+      ]
+    },
+    "proRemainingPercent": {
+      "start": 41,
+      "end": 41
+    },
+    "plusEquivalentRemainingPercent": {
+      "start": 205,
+      "end": 205
+    },
+    "privateDirectory": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/approved-intent-run",
+    "checks": {
+      "gitDiffCheck": "passed",
+      "documentLinksExist": 74,
+      "newAnchorVerified": true,
+      "csvDataRows": 9,
+      "csvColumns": 27,
+      "changedFiles": [
+        "docs/work/P5-70-evaluation-template.csv",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/STATUS.md",
+        "implementation.md"
+      ],
+      "unchangedBaselineFiles": 622,
+      "preservedMigrationFiles": 61,
+      "rootStateFilesPreserved": 13,
+      "originalPrivateComparisonFilesPreserved": 4,
+      "privateArtifactsMode": "0600",
+      "productCodeChanged": false,
+      "stageCommitPush": false,
+      "newPaidCalls": 1,
+      "critiqueCalls": 0,
+      "automaticRetries": 0,
+      "newProductTestsRun": false
+    }
+  },
+  "intent_trial_access_wait": {
+    "date": "2026-09-25",
+    "approved": true,
+    "approvalUsed": false,
+    "approvalScope": [
+      "intent_analysis",
+      "intent_critique"
+    ],
+    "requestKey": "0d6cb980-a8af-469d-b89f-f5e364a03262",
+    "status": "awaiting_access_refresh",
+    "paidCalls": 0,
+    "databaseUnchanged": true,
+    "backup": "approved-intent-run/before-intent.sqlite",
+    "privateRunDirectory": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/approved-intent-run",
+    "privateScriptSyntaxChecks": "2 passed",
+    "serverStarted": false,
+    "keysInjected": false,
+    "accessExpired": true,
+    "openAiKeyPreserved": true,
+    "proRemainingPercent": 42,
+    "plusEquivalentRemainingPercent": 210,
+    "sourceCodeChanged": false,
+    "checks": {
+      "quickCheck": "ok",
+      "foreignKeyViolations": 0
+    },
+    "documentChecks": {
+      "gitDiffCheck": "passed",
+      "localLinksExist": 43,
+      "changedDocuments": [
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "docs/HANDOFF.md",
+        "docs/STATUS.md"
+      ],
+      "unchangedBaselineFiles": 625,
+      "rootStatePreserved": 13,
+      "comparisonFilesPreserved": 4
+    }
+  },
+  "diagnostic_improvement": {
+    "date": "2026-09-25",
+    "scope": "nonpaid_diagnostic_and_private_response_archive",
+    "paidCalls": 0,
+    "originalFailedResponseRecovered": false,
+    "actualFailureCause": "undetermined",
+    "proRemainingPercent": {
+      "start": 40,
+      "end": 38
+    },
+    "plusEquivalentRemainingPercent": {
+      "start": 200,
+      "end": 190
+    },
+    "tests": {
+      "lint": "passed",
+      "typecheck": "passed",
+      "relatedWorkerSuites": {
+        "files": 5,
+        "passed": 198,
+        "durationSeconds": 550.63,
+        "note": "includes initial 6 archive tests; final archive suite below includes the added integration test"
+      },
+      "finalArchiveWorkerSuite": {
+        "passed": 7,
+        "includesActualD1TwoSyntheticCallsAndIntentWait": true
+      },
+      "contentWorkflow": {
+        "passed": 3
+      },
+      "nodeArchiveAndOfflineCli": {
+        "passed": 3
+      },
+      "archivedWorkflowEntryBoot": {
+        "outcome": "passed",
+        "compatibilityDate": "2026-08-25",
+        "paidCalls": 0,
+        "appDbOpened": false
+      },
+      "fullPnpmCheck": "not run; Phase/deployment not complete",
+      "productE2E": "not run; no UI change"
+    },
+    "implementation": {
+      "safeStageCodes": true,
+      "exactExistingEvidenceChecksReused": true,
+      "productionArchiveEnabled": false,
+      "localOnlyAuthenticatedArchive": true,
+      "requestHeadersNotArchived": true,
+      "privateFileModes": "0700 directory/0600 files",
+      "duplicateOverwrite": false,
+      "archiveFailureBlocksFollowingProviderRequest": true,
+      "paidResponseStillReturnedForUsageAccounting": true,
+      "offlineReplayNoNetworkOrDbWrites": true,
+      "offlineReplayDoesNotProveOriginalDbAuthority": true,
+      "modelPromptChanged": false,
+      "migrationOrDependenciesChanged": false
+    },
+    "knownLimits": [
+      "prior rejected response is unavailable",
+      "real provider archival untested",
+      "OS reboot/external backup untested",
+      "archive must be explicitly connected to private trial entry before a newly approved run"
+    ],
+    "correctedCheckSetupErrors": [
+      "Direct Miniflare boot initially used v4 options and unsupported date; installed convertV4MiniflareOptions and project compatibility date resolved it without app config changes"
+    ],
+    "remaining": [
+      "connect archive to same private trial and prepare a new single request",
+      "obtain separate paid retry approval",
+      "inspect archived real response before changing acceptance logic",
+      "human intent review and remaining quality trial"
+    ],
+    "preservationAndDocs": {
+      "changedExistingFiles": [
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/STATUS.md",
+        "docs/spec/generation.md",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "implementation.md",
+        "workers/_shared/services/content-intent-generation.ts",
+        "workers/_shared/services/sermon-intent.ts",
+        "workers/app/content-intent-generation.test.ts",
+        "workers/content/index.ts"
+      ],
+      "newFiles": [
+        "scripts/ai-quality-response-archive.mjs",
+        "scripts/ai-quality-response-archive.test.mjs",
+        "scripts/quality-trial-response-archive.ts",
+        "scripts/quality-trial-response-replay.ts",
+        "scripts/replay-ai-quality-response.mjs",
+        "workers/_shared/services/content-generation-diagnostic.ts",
+        "workers/app/quality-trial-response-archive.test.ts"
+      ],
+      "unchangedBaselineFiles": 618,
+      "privateFilesUnchanged": 192,
+      "rootStateFilesUnchanged": 13,
+      "migrationFilesUnchanged": 61,
+      "localDocumentLinksExist": 113,
+      "newAnchorVerified": true,
+      "csvUnchanged": true,
+      "actualDbCountsUnchanged": {
+        "generation_jobs": 2,
+        "ai_provider_calls": 2,
+        "ai_usage_observations": 2,
+        "sermon_content_events": 0
+      },
+      "inputVersion": 4,
+      "gitDiffCheck": "passed",
+      "commitPushDeploy": false
+    }
+  },
+  "archived_retry_preparation": {
+    "date": "2026-09-25",
+    "status": "prepared_waiting_for_paid_approval",
+    "usageRemainingPercent": {
+      "start": 38,
+      "end": 37
+    },
+    "plusEquivalentRemainingPercent": {
+      "start": 190,
+      "end": 185
+    },
+    "paidCalls": 0,
+    "requestKey": "c4cbc0ab-d348-488e-a46d-ef027875e7a8",
+    "expectedUsd": [
+      0.212,
+      0.52
+    ],
+    "hardCostCap": false,
+    "checks": {
+      "privateScriptSyntax": "passed",
+      "requestSchema": "passed",
+      "unapprovedPaidStartup": "blocked_before_key_or_provider",
+      "unapprovedSend": "blocked_before_post",
+      "actualWorkerdLoopback": {
+        "realWorkerdToLoopback": true,
+        "realCollectorFileWrites": 2,
+        "syntheticUpstreamCalls": 1,
+        "actualProviderCalls": 0,
+        "apiHeaderStored": false,
+        "actualDbOpened": false,
+        "passed": true
+      },
+      "authenticatedGetCount": 3,
+      "unauthenticatedStatus": 401,
+      "preservation": {
+        "paidCalls": 0,
+        "authorization": "pending",
+        "requestKey": "c4cbc0ab-d348-488e-a46d-ef027875e7a8",
+        "confirmedInputVersion": 4,
+        "existingPrivateFiles": 192,
+        "privateFilesChanged": [
+          "state/v3/d1/miniflare-D1DatabaseObject/a36f84ea60804f30bb0c7f7cad9f5336a6cca0165abdab8b9241d93dbf0b6006.sqlite",
+          "state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite-shm",
+          "state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite-wal"
+        ],
+        "appRowsPreserved": 113,
+        "appTablesChanged": [],
+        "rootStateFiles": 13,
+        "rootStateChanged": [],
+        "counts": {
+          "ai_provider_calls": 2,
+          "ai_usage_observations": 2,
+          "generation_jobs": 2,
+          "sermon_content_events": 0
+        },
+        "quickCheck": "ok",
+        "foreignKeyViolations": 0,
+        "responseCaptureFiles": 0,
+        "syntheticCaptureFiles": 2,
+        "serverStopped": true,
+        "injectedKeyBytes": 0,
+        "aiEnabled": "false",
+        "cleanupEnabled": "false",
+        "sendMarkerAbsent": true,
+        "newRequestAbsent": true,
+        "privatePermissionsCorrect": true,
+        "unchangedPrivateFiles": 189,
+        "runtimeFilesChanged": [
+          "state/v3/d1/miniflare-D1DatabaseObject/a36f84ea60804f30bb0c7f7cad9f5336a6cca0165abdab8b9241d93dbf0b6006.sqlite",
+          "state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite-shm",
+          "state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite-wal"
+        ]
+      },
+      "internalD1Metadata": {
+        "before": 1283,
+        "after": 1333
+      }
+    },
+    "notRepeated": [
+      "previously_passed_product_tests",
+      "lint",
+      "typecheck"
+    ],
+    "notRun": [
+      "actual_provider_retry",
+      "full_pnpm_check",
+      "product_e2e",
+      "os_reboot",
+      "external_backup"
+    ],
+    "remaining": [
+      "new_paid_approval",
+      "single_request_and_archive_validation",
+      "human_intent_review",
+      "later_quality_trial"
+    ],
+    "documentVerification": {
+      "changedRepoFiles": [
+        "docs/HANDOFF.md",
+        "docs/STATUS.md",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md"
+      ],
+      "unchangedPreviousRepoFiles": 632,
+      "relativeLinksChecked": 35,
+      "newWorkAnchorExists": true,
+      "migrationFilesPreserved": 61,
+      "gitHead": "0ab476e4281734f4eab64cc6231be09092221651",
+      "gitShortStatusEntries": 342,
+      "diffCheck": "passed"
+    }
+  },
+  "archived_retry_execution": {
+    "date": "2026-09-25",
+    "usageRemainingPercent": {
+      "start": 37,
+      "end": 36
+    },
+    "plusEquivalentRemainingPercent": {
+      "start": 185,
+      "end": 180
+    },
+    "result": {
+      "jobId": "c4cbc0ab-d348-488e-a46d-ef027875e7a8",
+      "status": "failed",
+      "step": "intent_analysis",
+      "outcome": "rejected",
+      "exactDiagnostic": {
+        "stage": "evidence",
+        "issue": {
+          "code": "evidence_range",
+          "claimIndex": 0,
+          "evidenceIndex": 0
+        },
+        "usageObserved": true,
+        "paidCalls": 0,
+        "processExitCode": 1
+      },
+      "call": {
+        "callId": "call-c4cbc0ab-d348-488e-a46d-ef027875e7a8-intent_analysis",
+        "jobId": "c4cbc0ab-d348-488e-a46d-ef027875e7a8",
+        "purpose": "intent_analysis",
+        "scope": "full",
+        "singleEntry": false,
+        "provider": "openai",
+        "model": "gpt-5.6-terra",
+        "startedAt": "2026-09-25T13:22:54.291Z",
+        "observedAt": "2026-09-25T13:24:46.072Z",
+        "state": "completed",
+        "inputVersion": 4,
+        "metadataRevision": 1,
+        "attemptNumber": 1,
+        "inputTokens": 24752,
+        "cachedInputTokens": 0,
+        "reasoningTokens": 5247,
+        "outputTokens": 8261,
+        "audioInputTokens": null,
+        "audioSeconds": null,
+        "pricingVersion": "openai-terra-2026-09-22",
+        "estimatedCostMicroUsd": 148636,
+        "usageSource": "provider_reported"
+      },
+      "callsThisRun": 1,
+      "critiqueCalls": 0,
+      "automaticRetries": 0,
+      "durationSeconds": 111.781,
+      "costThisRunMicroUsd": 148636,
+      "costThisDbMicroUsd": 512988,
+      "callsThisDb": 3,
+      "unknownCallsThisDb": 0,
+      "confirmedInputVersion": 4,
+      "contentSnapshots": 0,
+      "originalAppRowsPreserved": 113,
+      "missingOrChangedOriginalRows": [],
+      "immutablePrivateFilesPreserved": 168,
+      "privateFilesChanged": [],
+      "rootStateFilesPreserved": 13,
+      "quickCheck": "ok",
+      "foreignKeyViolations": 0,
+      "internalMetadata": {
+        "before": [
+          [
+            2,
+            1381
+          ]
+        ],
+        "after": [
+          [
+            2,
+            2139
+          ]
+        ]
+      },
+      "archiveRequestResponsePairs": 1,
+      "archiveContainsCredentials": false,
+      "evidenceInspection": {
+        "claimCount": 25,
+        "evidenceCount": 42,
+        "invalidRangeCount": 4,
+        "quoteSliceMismatchCount": 7,
+        "timeMismatchCount": 0,
+        "exactQuoteInAssignedSegmentCount": 42,
+        "exactQuoteFoundInAnySingleSegmentCount": 42,
+        "firstEvidence": {
+          "field": "centralMessage",
+          "claimIndex": 0,
+          "evidenceIndex": 0,
+          "from": 0,
+          "to": 19,
+          "segmentUtf16Length": 18,
+          "quoteUtf16Length": 18,
+          "rangeValid": false,
+          "sliceEqualsQuote": true,
+          "timeMatches": true,
+          "exactOccurrenceCount": 1,
+          "sameSegmentOccurrenceCount": 1,
+          "matchesAdjacentJoinedNoSpace": true,
+          "matchesAdjacentJoinedWithSpace": true,
+          "exactLocations": [
+            {
+              "sameSegment": true,
+              "from": 0,
+              "to": 18
+            }
+          ]
+        },
+        "instructionsSha256": "6216f26c748b46fee3ec6103c80fc78c041452bf6b9b9be8bcf8a6d82fb64807",
+        "matchesPreparedPromptHash": true,
+        "reasoning": {
+          "effort": "high"
+        },
+        "model": "gpt-5.6-terra",
+        "actualProviderCallsDuringDiagnosis": 0
+      },
+      "offlineOffsetDiagnosis": {
+        "syntheticModificationOfSavedResponse": true,
+        "originalResponseUnchanged": true,
+        "onlyFromToChanged": true,
+        "uniqueExactQuotesInAssignedSegments": 42,
+        "offsetPairsChanged": 11,
+        "diagnostic": {
+          "stage": "content_valid_only",
+          "originalDbAuthorityVerified": false,
+          "usageObserved": true,
+          "paidCalls": 0
+        },
+        "processExitCode": 0,
+        "appDbWritten": false,
+        "providerCalls": 0,
+        "adopted": false
+      },
+      "serverStopped": true,
+      "injectedKeyBytes": 0,
+      "aiEnabled": false,
+      "cleanupEnabled": false,
+      "newPaidApprovalConsumed": true,
+      "paidResendForbidden": true,
+      "appCodeChanged": false,
+      "remaining": [
+        "deterministic exact-quote location mapping without weakening validation",
+        "offline regression using retained response",
+        "explicit recovery design preserving failed job and usage",
+        "human intent review and later quality trial"
+      ]
+    },
+    "testsNotRepeated": [
+      "previous_product_regression",
+      "lint",
+      "typecheck"
+    ],
+    "notRun": [
+      "full_pnpm_check",
+      "product_e2e",
+      "os_reboot",
+      "external_backup",
+      "billing_dashboard_reconciliation"
+    ],
+    "documentVerification": {
+      "changedFiles": [
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/STATUS.md",
+        "docs/work/P5-70-evaluation-template.csv",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "implementation.md"
+      ],
+      "unchangedPriorFiles": 629,
+      "productCodeUnchanged": true,
+      "migrationFilesPreserved": 61,
+      "oldCsvRowsPreserved": 9,
+      "newCsvDataRows": 10,
+      "csvColumns": 27,
+      "localLinksChecked": 73,
+      "newWorkAnchorExists": true,
+      "privatePermissionsPassed": true,
+      "launcherLockAbsent": true,
+      "gitHead": "0ab476e4281734f4eab64cc6231be09092221651",
+      "gitShortStatusEntries": 342,
+      "diffCheck": "passed"
+    }
+  },
+  "location_computation": {
+    "date": "2026-09-25",
+    "status": "implemented_and_verified_recovery_connection_pending",
+    "decision": "D-034",
+    "usageRemainingPercent": {
+      "start": 35,
+      "end": 34
+    },
+    "plusEquivalentRemainingPercent": {
+      "start": 175,
+      "end": 170
+    },
+    "paidCalls": 0,
+    "appDbWrites": 0,
+    "model": "gpt-5.6-terra",
+    "reasoningEffort": "high",
+    "newPromptVersion": "sermon-draft-v2",
+    "outputSchemaNames": "task_v2 / task_single_v2",
+    "checks": {
+      "lint": "passed",
+      "typecheck": "passed",
+      "worker": {
+        "files": 5,
+        "passed": 155,
+        "failed": 0,
+        "seconds": 521.57,
+        "command": "pnpm exec vitest run --config vitest.worker.config.ts workers/app/ai-evidence-location.test.ts workers/app/ai-draft-provider.test.ts workers/app/openai-draft-transport.test.ts workers/app/quality-trial-response-archive.test.ts workers/app/content-intent-generation.test.ts"
+      },
+      "node": {
+        "passed": 3,
+        "failed": 0,
+        "command": "node --test scripts/ai-quality-response-archive.test.mjs"
+      },
+      "originalArchiveReplay": {
+        "originalArchiveUsed": true,
+        "manualResponseRewrite": false,
+        "providerCalls": 0,
+        "dbWrites": 0,
+        "result": {
+          "stage": "content_valid_only",
+          "originalDbAuthorityVerified": false,
+          "usageObserved": true,
+          "paidCalls": 0
+        }
+      },
+      "actualReadOnlyDomain": {
+        "readOnly": true,
+        "networkDisabled": true,
+        "actualFailedResponseAvailable": true,
+        "originalArchivedInputMatchesDb": true,
+        "capturedConfirmedInputVersion": 4,
+        "providerResult": "structured_output",
+        "domainPrepareResult": "prepared",
+        "usageObservedInMemoryOnly": true,
+        "paidCalls": 0,
+        "appWrites": 0,
+        "originalFailedJobUnchanged": true,
+        "commitEligibilityNotTested": true
+      },
+      "privateFilesHashPreserved": 275,
+      "rootD1FilesHashPreserved": 13,
+      "migrationFilesPreserved": 61,
+      "evaluationCsvUnchanged": true
+    },
+    "notRun": [
+      "paid_v2_provider_request",
+      "real_data_recovery_commit",
+      "full_pnpm_check",
+      "product_e2e",
+      "os_reboot",
+      "external_backup"
+    ],
+    "remaining": [
+      "recover archived analysis through an explicit provenance-preserving path",
+      "human intent review",
+      "later quality trial"
+    ],
+    "documentVerification": {
+      "changedExistingFiles": [
+        "docs/DECISIONS.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/STATUS.md",
+        "docs/spec/generation.md",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "implementation.md",
+        "scripts/ai-quality-response-archive.test.mjs",
+        "scripts/quality-trial-response-replay.ts",
+        "workers/_shared/services/ai-draft-provider-contract.ts",
+        "workers/_shared/services/ai-draft-provider.ts",
+        "workers/_shared/services/openai-draft-transport.ts",
+        "workers/app/ai-draft-provider.test.ts",
+        "workers/app/content-intent-generation.test.ts",
+        "workers/app/openai-draft-transport.test.ts",
+        "workers/app/quality-trial-response-archive.test.ts"
+      ],
+      "newFiles": [
+        "workers/_shared/services/ai-evidence-location.ts",
+        "workers/app/ai-evidence-location.test.ts"
+      ],
+      "unchangedPriorRepoFiles": 619,
+      "relativeLinksChecked": 178,
+      "newAnchorsVerified": 3,
+      "diffCheck": "passed",
+      "gitHead": "0ab476e4281734f4eab64cc6231be09092221651",
+      "gitShortStatusEntries": 343
+    }
+  },
+  "recovery_preparation": {
+    "checked_on": "2026-09-27",
+    "status": "ready_for_local_review_not_committed",
+    "usage_remaining_percent_start": 100,
+    "pro_multiplier": 5,
+    "plus_equivalent_remaining_percent": 500,
+    "new_provider_calls": 0,
+    "real_db_writes": 0,
+    "claims": 25,
+    "evidence": 42,
+    "same_as_previous_computed_analysis": true,
+    "original_failed_job_preserved": true,
+    "settled_ledger_matched": true,
+    "prior_archive_inventory_matched": true,
+    "provider_signature_verified": false,
+    "app_recovery_commit_implemented": false,
+    "human_approved": false,
+    "critique_performed": false,
+    "existing_private_files_preserved": 283,
+    "root_state_files_preserved": 13,
+    "migration_files_preserved": 61,
+    "evaluation_csv_unchanged": true,
+    "evaluation_rows_excluding_header": 10,
+    "evaluation_columns": 27,
+    "db_calls": 3,
+    "db_usage_events": 3,
+    "db_content_events": 0,
+    "db_total_cost_micro_usd": 512988,
+    "db_quick_check": "ok",
+    "db_foreign_key_violations": 0,
+    "lint_exit": 0,
+    "typecheck_exit": 0,
+    "worker_tests_passed": 1,
+    "worker_duration_seconds": 37.88,
+    "node_tests_passed": 2,
+    "output_overwrite_rejected": true,
+    "existing_prepared_files_unchanged_on_repeat": 3,
+    "private_output_permissions": "0700 directories / 0600 files",
+    "full_check_run": false,
+    "e2e_run": false,
+    "initial_failures_resolved": [
+      "node sqlite row prototype assertion",
+      "D1 runtime metadata excluded from row preservation comparison",
+      "synthetic metadata table corrected",
+      "type-only lint declaration",
+      "fractional transcript timestamps compared with existing domain codec"
+    ],
+    "scope": "offline preparation and private review only; no credentials requested, paid calls, app writes, remote operations, deployment or publication",
+    "remaining": "separate atomic app recovery commit preserving original failure/usage; human review and any later paid critique require their own flow"
+  },
+  "recovery_storage": {
+    "checked_on": "2026-09-27",
+    "status": "internal_recovery_implemented_and_scoped_checks_passed_real_db_not_applied",
+    "usage_remaining_percent_start": 98,
+    "usage_remaining_percent_latest": 92,
+    "pro_multiplier": 5,
+    "plus_equivalent_remaining_percent_start": 490,
+    "plus_equivalent_remaining_percent_latest": 460,
+    "new_provider_calls": 0,
+    "real_db_writes": 0,
+    "real_db_migration_0030_applied": false,
+    "implementation": {
+      "new_migration": "0030_phase5_archived_intent_recovery",
+      "atomic_recovery_receipt_and_sealed_content": true,
+      "failed_job_outcome_call_usage_preserved": true,
+      "repeat_reuses_verified_event": true,
+      "original_archive_revalidated": true,
+      "serialized_package_is_write_permit": false,
+      "current_context_rechecked_inside_batch": true,
+      "existing_admin_content_read_connected": true,
+      "public_or_remote_route_added": false,
+      "critique_continuation_connected": false
+    },
+    "existing_private_files_preserved": 288,
+    "root_state_files_preserved": 13,
+    "old_migration_sql_snapshots_preserved": 60,
+    "old_journal_entries_preserved": 30,
+    "evaluation_csv_unchanged": true,
+    "evaluation_rows_excluding_header": 10,
+    "evaluation_columns": 27,
+    "db_calls": 3,
+    "db_usage_events": 3,
+    "db_content_events": 0,
+    "db_total_cost_micro_usd": 512988,
+    "db_quick_check": "ok",
+    "db_foreign_key_violations": 0,
+    "targeted_recovery_tests_passed": 4,
+    "targeted_recovery_test_files": 2,
+    "targeted_recovery_duration_seconds": 17.49,
+    "full_check_run": false,
+    "e2e_run": false,
+    "initial_failures_and_diagnostics": [
+      "D1 expression depth limit: split independent SQL assertions without weakening checks",
+      "Synthetic global trigger, row counts and rejection injection scoped to own sermon/job",
+      "Orphan receipt deferred-FK probe rejected as expected, but removed from shared suite because workerd resets the D1 actor",
+      "Initial broad run 84 passed / 8 failed; fixture isolation corrected. Later serial run 91 passed / 1 failed. Repeated synthetic diagnosis reproduced backward time (-161ms) and generation_jobs_time_check rejection twice. Date only was frozen per case in integration and recovery tests. Final unchanged generation/domain 88 passed in combined run; affected recovery 4 passed in targeted run."
+    ],
+    "scope": "Internal recovery storage/read implementation, synthetic tests and docs; no actual provider calls, real data writes, remote changes, deploy, publication or credential reentry",
+    "remaining": [
+      "Prepare concrete local trial DB application tool, pinned target, checks and rollback conditions",
+      "Apply to original persistent trial DB only within approved write scope",
+      "Connect explicit critique-only continuation for recovered full v3 without repeating analysis",
+      "Separate paid approval and human confirmation"
+    ],
+    "document_verification": {
+      "changed_existing_files": [
+        "docs/DECISIONS.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/STATUS.md",
+        "docs/spec/data-model.md",
+        "docs/spec/generation.md",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "implementation.md",
+        "migrations/meta/_journal.json",
+        "workers/_shared/db/schema.ts",
+        "workers/_shared/services/archived-intent-recovery.ts",
+        "workers/_shared/services/generation-domain-reader.ts",
+        "workers/app/archived-intent-recovery.test.ts",
+        "workers/app/content-intent-generation.test.ts"
+      ],
+      "new_files": [
+        "migrations/0030_phase5_archived_intent_recovery.sql",
+        "migrations/meta/0030_snapshot.json",
+        "workers/_shared/repositories/archived-intent-recovery-store.ts",
+        "workers/_shared/services/commit-archived-intent-recovery.ts",
+        "workers/app/archived-intent-recovery-storage.test.ts",
+        "workers/app/test/archived-intent-recovery-fixture.ts"
+      ],
+      "unchanged_prior_repo_files": 627,
+      "relative_links_checked": 207,
+      "missing_links": 0,
+      "new_anchors_verified": 2,
+      "existing_private_files_preserved": 288,
+      "root_state_files_preserved": 13,
+      "old_migration_sql_snapshots_preserved": 60,
+      "old_journal_entries_preserved": 30,
+      "evaluation_csv_unchanged": true,
+      "db_readonly_integrity_check": "passed",
+      "git_head": "0ab476e4281734f4eab64cc6231be09092221651",
+      "git_short_status_entries": 351,
+      "diff_check": "passed"
+    },
+    "lint_exit": 0,
+    "typecheck_exit": 0,
+    "db_check_exit": 0,
+    "diagnostic_source_restored": true,
+    "diagnostic_repeat_tests_removed": true,
+    "clock_targeted_tests_passed": 3,
+    "clock_targeted_duration_seconds": 74.53,
+    "test_clock_only_frozen_per_case": true,
+    "real_timers_and_database_guards_preserved": true,
+    "regression_before_clock_fix": {
+      "passed": 91,
+      "failed": 1,
+      "total": 92,
+      "duration_seconds": 652.72
+    },
+    "clock_diagnostic": {
+      "passed": 48,
+      "failed": 2,
+      "negative_duration_ms": -161,
+      "constraint": "generation_jobs_time_check",
+      "permanent_tests_added": 0
+    },
+    "synthetic_diagnostic_reports_saved_persistently": 5,
+    "worker_final_passed_by_scope": 92,
+    "worker_final_scope_results": [
+      {
+        "scope": "content-intent-generation",
+        "passed": 38,
+        "run": "combined after content clock fix"
+      },
+      {
+        "scope": "generation-domain",
+        "passed": 50,
+        "run": "combined after content clock fix"
+      },
+      {
+        "scope": "archived recovery preparation and storage",
+        "passed": 4,
+        "duration_seconds": 18.57,
+        "run": "targeted after recovery clock fix"
+      }
+    ],
+    "combined_after_content_clock_fix": {
+      "passed": 91,
+      "failed": 1,
+      "duration_seconds": 722.08,
+      "failed_scope": "recovery fixture preparation before Date freezing in those tests"
+    },
+    "all_92_passed_in_one_run": false,
+    "remaining_test_failures_after_scoped_fixes": 0
+  },
+  "recovery_application": {
+    "checked_on": "2026-09-28",
+    "status": "tool_and_real_readonly_plan_ready_pending_actual_application_approval",
+    "usage_remaining_percent_start": 91,
+    "pro_multiplier": 5,
+    "plus_equivalent_remaining_percent_start": 455,
+    "new_provider_calls": 0,
+    "real_db_writes": 0,
+    "actual_migration_0030_applied": false,
+    "input_version": 4,
+    "claims": 25,
+    "evidence": 42,
+    "plan_sha256": "e0e34284c7fdb56b32a423bd9a408b633b316c37967ad7db466c5d7093ce58cd",
+    "plan_directory": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/recovery-application-2026-09-28/prepared",
+    "physical_readonly_preflight": true,
+    "credentials_requested": false,
+    "new_keys_or_ai_outputs_created": false,
+    "synthetic_integration_tests_passed": 2,
+    "synthetic_integration_duration_seconds": 9.12,
+    "lint_exit": 0,
+    "typecheck_exit": 0,
+    "full_check_run": false,
+    "e2e_run": false,
+    "existing_92_worker_checks_repeated": false,
+    "tests_added_to_pnpm_test": true,
+    "new_production_dependencies": 0,
+    "tested": [
+      "unchanged DB during plan",
+      "wrong exact-plan confirmation rejected",
+      "real migrations and app recovery service on synthetic Node SQLite",
+      "late write failure rolls back migration and recovery together",
+      "backup fingerprint matches approved before-state",
+      "changed database rejected before migration",
+      "successful save preserves original failed jobs and usage",
+      "repeat verifies existing event without duplicate or provider call",
+      "changed archived response rejected",
+      "physical readonly mutation rejection",
+      "D1 batch savepoint rolls back all statements"
+    ],
+    "initial_issue_resolved": "SQLite SELECT changes() retained the previous statement count; adapter uses per-statement total_changes delta to report zero for reads",
+    "remaining": [
+      "User approval of the pinned local DB migration and one archived analysis recovery",
+      "Execute approved plan against original persistent trial DB and verify app view",
+      "Explicit critique-only continuation for recovered full v3; separately approved paid call and human review"
+    ],
+    "verification": {
+      "changed_existing_files": [
+        "docs/DECISIONS.md",
+        "docs/HANDOFF.md",
+        "docs/STATUS.md",
+        "docs/spec/generation.md",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "package.json",
+        "tsconfig.node.json"
+      ],
+      "new_files": [
+        "scripts/apply-archived-intent-recovery.mjs",
+        "scripts/archived-intent-application.test.mjs",
+        "scripts/local-recovery-d1.mjs",
+        "scripts/test/local-recovery-env.mjs",
+        "vitest.recovery-cli.config.ts"
+      ],
+      "unchanged_prior_repo_files": 640,
+      "private_files_preserved": 295,
+      "root_state_files_preserved": 13,
+      "migration_files_preserved": 63,
+      "evaluation_csv_preserved": true,
+      "relative_links_checked": 151,
+      "missing_links": 0,
+      "db_quick_check": "ok",
+      "foreign_key_violations": 0,
+      "actual_migration_0030_applied": false,
+      "actual_calls": 3,
+      "actual_usage_events": 3,
+      "actual_content_events": 0,
+      "actual_cost_micro_usd": 512988,
+      "git_status_entries": 356,
+      "git_head": "0ab476e4281734f4eab64cc6231be09092221651",
+      "diff_check": "passed"
+    }
+  },
+  "analysis_reuse_continuation": {
+    "checkedAt": "2026-09-28",
+    "scope": "P5-70 recovered analysis continuation; local implementation and execution preparation only",
+    "head": "0ab476e4281734f4eab64cc6231be09092221651",
+    "accountAtStart": {
+      "remainingPercent": 83,
+      "separateFiveHourWindowAvailable": false,
+      "userPlan": "Pro 5x",
+      "agreedPlusEquivalentRemaining": 415
+    },
+    "implementation": {
+      "newTables": 0,
+      "newMigration": "0031_phase5_recovered_analysis_continuation.sql",
+      "changedTriggers": 3,
+      "freshAnalysisCalls": 0,
+      "continuedCalls": [
+        "intent_critique",
+        "summary",
+        "child_candidates",
+        "adult_candidates"
+      ],
+      "oldFailureAndCostPreserved": true,
+      "oldIntentRetryPreserved": true
+    },
+    "validation": {
+      "pnpmCheck": {
+        "exitCode": 0,
+        "unit": 273,
+        "worker": 2051,
+        "workflow": 3,
+        "recoveryCli": 2,
+        "nodeTools": 12,
+        "pythonTools": 6,
+        "totalTests": 2347,
+        "lint": "passed",
+        "typecheck": "passed",
+        "build": "passed",
+        "locks": "passed",
+        "cloudflareConfig": "passed",
+        "drizzle": "passed",
+        "previewSyntheticFixture": "passed",
+        "workerDurationSeconds": 671.41
+      },
+      "focusedWorker": {
+        "files": 6,
+        "passed": 171,
+        "durationSeconds": 739.11
+      },
+      "finalReuse": {
+        "passed": 5,
+        "durationSeconds": 38.32
+      },
+      "browser": {
+        "projects": [
+          "chromium",
+          "mobile-chromium"
+        ],
+        "initial": {
+          "passed": 123,
+          "failed": 4,
+          "skipped": 1
+        },
+        "failedFileRerun": {
+          "passed": 8,
+          "failed": 0,
+          "durationSeconds": 27.9
+        },
+        "latestDistinctResults": {
+          "passed": 127,
+          "failed": 0,
+          "skipped": 1
+        },
+        "skipReason": "Desktop excludes coarse-pointer-only touch replacement test",
+        "fullRerunAfterFix": false,
+        "firefoxWebkitOrRealDevice": false
+      },
+      "finalLocalToolLint": "passed",
+      "pythonNoBytecode": {
+        "passed": 6,
+        "bytecodeGenerated": false
+      },
+      "remoteCiRun": false,
+      "buildWarnings": [
+        "existing ineffective dynamic import in admin-withdrawal-preview.ts",
+        "existing ineffective dynamic import in admin-problem-correction.ts"
+      ],
+      "issuesFixed": [
+        "deadline/JWT fixture used real Date after fixed closing time",
+        "old E2E labels and confirmation flow",
+        "old intent could enable compare-finish before selecting new analysis",
+        "new E2E fixture lacked required history events",
+        "protected fingerprint included the three intentionally replaced SQL trigger definitions"
+      ],
+      "finalStatic": {
+        "lint": "passed",
+        "typecheck": "passed",
+        "build": "passed"
+      },
+      "finalUi": {
+        "passed": 4,
+        "failed": 0,
+        "durationSeconds": 25.7,
+        "scope": "admin-content-generation desktop/mobile; running-state cost wording"
+      },
+      "documents": {
+        "changedMarkdownFiles": 9,
+        "localLinksAndAnchors": 243,
+        "missing": 0,
+        "gitDiffCheck": "passed",
+        "addedUntrackedLineWhitespace": "passed"
+      }
+    },
+    "actualTrial": {
+      "providerCallsPerformed": 0,
+      "databaseWritesPerformed": 0,
+      "inputVersion": 4,
+      "claims": 25,
+      "evidenceQuotes": 42,
+      "callsBeforeAndAfter": 3,
+      "usageEventsBeforeAndAfter": 3,
+      "contentEventsBeforeAndAfter": 0,
+      "knownCostMicroUsd": 512988,
+      "unknownCalls": 0,
+      "migrationsAppliedThrough": "0029",
+      "approved": false,
+      "remoteChanges": false,
+      "deployed": false,
+      "published": false,
+      "exported": false
+    },
+    "preservation": {
+      "existingRepositoryFilesAtStart": 657,
+      "existingPrivateFilesUnchanged": 299,
+      "rootD1FilesUnchanged": 13,
+      "existingMigrationFilesUnchanged": 62,
+      "existingJournalEntriesUnchanged": 31,
+      "customMigrationSnapshotTableStructureUnchanged": true,
+      "previousTmpLossMicroUsd": 216028,
+      "previousTmpUnknownCalls": 2,
+      "changedFiles": [
+        ".github/workflows/ci.yml",
+        "docs/DECISIONS.md",
+        "docs/DELIVERY_PLAN.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/STATUS.md",
+        "docs/spec/api.md",
+        "docs/spec/data-model.md",
+        "docs/spec/generation.md",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "migrations/meta/_journal.json",
+        "package.json",
+        "scripts/apply-archived-intent-recovery.mjs",
+        "scripts/archived-intent-application.test.mjs",
+        "scripts/local-ai-quality-session.mjs",
+        "scripts/local-ai-quality-session.test.mjs",
+        "scripts/local-recovery-d1.mjs",
+        "shared/api/admin-content-generation.ts",
+        "src/features/admin-sermon-input/ContentGeneration.tsx",
+        "tests/e2e/admin-content-generation.spec.ts",
+        "tests/e2e/admin-regeneration.spec.ts",
+        "tests/e2e/admin-single-candidate.spec.ts",
+        "workers/_shared/repositories/archived-intent-recovery-store.ts",
+        "workers/_shared/repositories/generation-lifecycle-store.ts",
+        "workers/_shared/services/content-generation-view.ts",
+        "workers/_shared/services/content-intent-generation.ts",
+        "workers/_shared/services/generation-lifecycle.ts",
+        "workers/app/quiz-deadline.test.ts"
+      ],
+      "newFiles": [
+        "migrations/0031_phase5_recovered_analysis_continuation.sql",
+        "migrations/meta/0031_snapshot.json",
+        "workers/app/recovered-analysis-continuation.test.ts"
+      ],
+      "unrelatedFilesUnchanged": true
+    },
+    "executionPreparation": {
+      "directory": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/continuation-2026-09-28",
+      "applicationPlanSha256": "3104b944db9549eedc2ea30771fbae7a968bf5ae84b15a9dc86606ef312445c8",
+      "applicationFormat": "local-archived-intent-application-v2",
+      "oldApplicationPlanPreserved": true,
+      "model": "gpt-5.6-terra",
+      "reasoningEffort": "high",
+      "expectedCalls": 4,
+      "estimatedUsd": [
+        0.288,
+        0.72
+      ],
+      "proposedReviewBudgetUsd": 1,
+      "hardCostCap": false,
+      "stagedAtHumanIntentReview": true,
+      "followingThreeCallsCostCheckpointBetweenCalls": false,
+      "automaticRetry": false,
+      "resumeScriptSyntax": "passed",
+      "actualNewLauncherStarted": false,
+      "remainingLocalSubmissionSetup": [
+        "session pepper",
+        "Turnstile hostname/action configuration"
+      ],
+      "apiKeyReentryRequired": false,
+      "accessRenewalOnlyAtActualProtectedRequest": true
+    },
+    "remaining": [
+      "bundled actual execution approval",
+      "apply 0030 and 0031 and recovery to preserved local DB",
+      "critique and human intent confirmation",
+      "three following generations and human content review",
+      "local placement/publish/play/submission/grading",
+      "process restart and preserved-results reuse"
+    ],
+    "logsDirectory": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/continuation-2026-09-28/verification-logs"
+  },
+  "approved_actual_execution": {
+    "checked_on": "2026-09-28",
+    "status": "in_progress_summary_reference_rejected_response_preserved",
+    "authorization": {
+      "source": "current_user_explicit_bundle",
+      "local_recovery": true,
+      "maximum_new_ai_calls": 4,
+      "local_publication_after_human_review": true,
+      "automatic_retry": false,
+      "remote": false,
+      "consumed_tasks": [
+        "intent_critique",
+        "summary"
+      ],
+      "remaining_tasks": [
+        "child_candidates",
+        "adult_candidates"
+      ]
+    },
+    "usage_at_start": {
+      "pro_remaining_percent": 76,
+      "separate_five_hour_window": false,
+      "agreed_5x_equivalent_percent": 380
+    },
+    "application": {
+      "outcome": "saved",
+      "eventId": "recovery-1e4a6d00d5c9b191d00568e08b05fa6db1791bbd557a9bbac253fd836d34cfcf",
+      "providerCalls": 0,
+      "backupPath": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/continuation-2026-09-28/application/before-application-d7cc94d3-a1c8-4468-a7e6-58cd03fec6b1.sqlite",
+      "planSha256": "3104b944db9549eedc2ea30771fbae7a968bf5ae84b15a9dc86606ef312445c8",
+      "migrations": [
+        "0030_phase5_archived_intent_recovery.sql",
+        "0031_phase5_recovered_analysis_continuation.sql"
+      ],
+      "protectedHistoryPreserved": true,
+      "humanApproved": false,
+      "critiquePerformed": false
+    },
+    "input_version": 4,
+    "content_event_count": 4,
+    "migrations": 33,
+    "calls": 5,
+    "usage": 5,
+    "cost_micro_usd": 688552,
+    "source_job_status": "failed",
+    "integrity": "ok",
+    "foreign_key_errors": 0,
+    "new_ai_calls": 2,
+    "human_intent_confirmed": true,
+    "human_content_reviewed": false,
+    "local_publication_performed": false,
+    "startup": {
+      "checkedAt": "2026-09-28T13:25:48.857Z",
+      "health": 200,
+      "adminWithoutIdentity": 401,
+      "publicApp": 200,
+      "paidEnabled": false,
+      "responseArchiveConnected": true,
+      "providerCallsStarted": 0,
+      "turnstileOfficialDummyProbe": {
+        "httpStatus": 200,
+        "success": true,
+        "hostname": "example.com",
+        "action": null,
+        "compatibleWithQuizSubmission": false,
+        "appValidationChanged": false
+      }
+    },
+    "shutdown": {
+      "running": false,
+      "dev_vars_bytes": 0,
+      "launcher_lock_exists": false
+    },
+    "remaining": [
+      "reuse_preserved_summary_without_paid_retry",
+      "child_and_adult_one_call_each",
+      "human_content_review",
+      "free_placement_local_publication",
+      "local_play_submit_grade_restart_preservation"
+    ],
+    "turnstile_limit": "Official dummy response actually returned hostname example.com without action; strict quiz_submission validation preserved. Local submission configuration remains unresolved; Preview or real Turnstile success not claimed.",
+    "application_code_changed": true,
+    "new_full_test_run": false,
+    "preexisting_files_preservation": {
+      "checked": 299,
+      "unchanged": 296,
+      "authorized_local_state_files_changed": [
+        "state/v3/d1/miniflare-D1DatabaseObject/a36f84ea60804f30bb0c7f7cad9f5336a6cca0165abdab8b9241d93dbf0b6006.sqlite",
+        "state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite-shm",
+        "state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite-wal"
+      ],
+      "unexpected_changes": [],
+      "missing": []
+    },
+    "documentation_checks": {
+      "git_diff_check_exit": 0,
+      "markdown_files": 5,
+      "local_links": 89,
+      "broken_links": 0,
+      "verification_json_valid": true
+    },
+    "critique_execution": {
+      "checkedAt": "2026-09-28T13:49:27.750215+00:00",
+      "jobId": "ad407f68-fcdf-4d3a-9037-053f865bcfdb",
+      "call": {
+        "id": "call-ad407f68-fcdf-4d3a-9037-053f865bcfdb-intent_critique",
+        "task": "intent_critique",
+        "state": "completed",
+        "model": "gpt-5.6-terra",
+        "reasoning_effort": "high",
+        "started_at": "2026-09-28T13:38:46.221Z",
+        "completed_at": "2026-09-28T13:39:31.515Z"
+      },
+      "job": {
+        "status": "failed",
+        "current_step": "intent_critique"
+      },
+      "providerStatus": "completed",
+      "httpStatus": 200,
+      "usage": {
+        "input_tokens": 28002,
+        "input_tokens_details": {
+          "cache_write_tokens": 27999,
+          "cached_tokens": 0
+        },
+        "output_tokens": 4292,
+        "output_tokens_details": {
+          "reasoning_tokens": 1466
+        },
+        "total_tokens": 32294
+      },
+      "responseSchema": "intent_critique_v2",
+      "requestSha256": "4f403e9cb1e6b7172311101151b3319e93b3793d384e22b07d533f0df6318f16",
+      "responseSha256": "21771247a97b1780834097a9baef75d173928ee7eff95a327f52b3d717c9f749",
+      "costMicroUsd": 107508,
+      "cumulativeCostMicroUsd": 620496,
+      "unknownCalls": 0,
+      "callsTotal": 4,
+      "usageTotal": 4,
+      "contentEvents": 1,
+      "diagnosticCode": "AI_DRAFT_EVIDENCE_NOT_FOUND",
+      "evidenceCount": 44,
+      "invalidEvidenceCount": 1,
+      "exactMatchOtherSegment": "segment-308",
+      "offlineRepairedProposal": "content_valid_only",
+      "originalResponseUnchanged": true,
+      "repairAppliedToDb": false,
+      "humanReview": "pending",
+      "remainingAuthorizedTasks": [
+        "summary",
+        "child_candidates",
+        "adult_candidates"
+      ],
+      "automaticRetry": false,
+      "review": {
+        "reviewPath": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/continuation-2026-09-28/intent-critique-review.html",
+        "changedFields": [
+          "audienceResponse"
+        ],
+        "oldClaims": 25,
+        "proposedClaims": 25,
+        "proposedEvidence": 44,
+        "proposalId": "archived-critique-review-proposal",
+        "jobId": "ad407f68-fcdf-4d3a-9037-053f865bcfdb",
+        "version": 5,
+        "costMicroUsd": 107508,
+        "unknownCalls": 0,
+        "assessment": {
+          "exaggeratedIntent": "clear",
+          "unsupportedConclusion": "clear",
+          "illustrationAsMainClaim": "clear",
+          "reversedMeaning": "clear"
+        },
+        "humanConfirmed": false,
+        "databaseApplied": false,
+        "referenceRepairProposal": {
+          "field": "argumentFlow",
+          "claimId": "flow-5",
+          "evidenceIndex": 0,
+          "before": {
+            "segmentId": "segment-307",
+            "start": 791.6,
+            "duration": 4.76
+          },
+          "proposed": {
+            "segmentId": "segment-308",
+            "start": 794.04,
+            "duration": 4.32
+          }
+        }
+      },
+      "renderCheck": {
+        "title": "설교 의도 비판 검토 — 변경 비교",
+        "comparisonSections": 9,
+        "changedSections": 1,
+        "exactChangeMarks": 4,
+        "evidenceDetails": 9,
+        "externalRequests": 0,
+        "horizontalOverflow": false,
+        "mobileHorizontalOverflow": false
+      },
+      "integrity": "ok",
+      "foreignKeyErrors": 0,
+      "finalChecks": {
+        "markdownFiles": 5,
+        "localLinks": 89,
+        "brokenLinks": [],
+        "csvDataRows": 11,
+        "csvColumns": 27,
+        "gitDiffCheckExit": 0,
+        "preexistingFiles": 299,
+        "unchangedFiles": 295,
+        "authorizedStateFilesChanged": [
+          "state/v3/d1/miniflare-D1DatabaseObject/a36f84ea60804f30bb0c7f7cad9f5336a6cca0165abdab8b9241d93dbf0b6006.sqlite",
+          "state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite-shm",
+          "state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite",
+          "state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite-wal"
+        ],
+        "missingFiles": [],
+        "shutdown": {
+          "running": false,
+          "temporaryKeyFileBytes": 0,
+          "launcherLockExists": false
+        },
+        "applicationCodeChanged": false,
+        "fullTestsRepeated": false
+      }
+    },
+    "latest_record": "location_policy_2026_09_28"
+  },
+  "current_record": "local_publication_2026_09_29",
+  "location_policy_2026_09_28": {
+    "checkedAt": "2026-09-28T15:02:22.949737+00:00",
+    "request": "program_finds_locations_unverified_nonblocking",
+    "status": "implemented_and_tested_p5_70_in_progress",
+    "scope": {
+      "wholeInputExactLookup": true,
+      "aiProvidesQuoteOnly": true,
+      "missingOrAmbiguousLocation": "unverified_null_coordinates",
+      "unverifiedBlocksSave": false,
+      "unverifiedBlocksContinuation": false,
+      "extraApprovalForUnverified": false,
+      "humanContentReviewRequired": true,
+      "historicalStoredLocationsPreserved": true,
+      "model": "gpt-5.6-terra",
+      "reasoning": "high",
+      "promptVersion": "sermon-draft-v3"
+    },
+    "usageAtStart": {
+      "proRemainingPercent": 72,
+      "separateFiveHourWindow": false,
+      "agreed5xEquivalentPercent": 360
+    },
+    "critiqueRecovery": {
+      "outcome": "saved",
+      "eventId": "recovery-6511bd72edd43dd8ee2c69324730a5cf2cd9919a6e6a7b494a0965a94076addc",
+      "providerCalls": 0,
+      "backupPath": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/continuation-2026-09-28/critique-application/before-application-b728639c-2357-4237-8a45-e6e29c751900.sqlite",
+      "planSha256": "d875e4ee64fc4f63f730485b36e4db8bcc76b5e516c8e8d82d3e34d9ae91966d",
+      "migrations": [
+        "0032_phase5_archived_critique_continuation.sql"
+      ],
+      "protectedHistoryPreserved": true,
+      "humanApproved": false,
+      "critiquePerformed": false,
+      "archivedCritiqueReused": true,
+      "evidenceCount": 44,
+      "uniquelyLocated": 44,
+      "manuallyRepairedResponseUsed": false,
+      "originalResponsePreserved": true,
+      "newAiCalls": 0
+    },
+    "intentAdoption": {
+      "jobId": "8f4e3430-5d37-486f-84dc-3520270c9f92",
+      "analysisId": "recovery-6511bd72edd43dd8ee2c69324730a5cf2cd9919a6e6a7b494a0965a94076addc",
+      "confirmationId": "013b8eac-2469-43ea-85bd-48f0cec58223",
+      "version": 8,
+      "userAdopted": true,
+      "providerCalls": 0
+    },
+    "summary": {
+      "checkedAt": "2026-09-28T14:54:49.770021+00:00",
+      "jobId": "8f4e3430-5d37-486f-84dc-3520270c9f92",
+      "providerStatus": "completed",
+      "httpStatus": 200,
+      "requestSha256": "4a67917bf4072cd706bf7851a068af58d168152e2ab66a5305ab9f484da950a7",
+      "responseSha256": "88e0135bf4b934a28254fe5279d275e5f52512a3ee50755201b98a941e37b622",
+      "schemaName": "summary_v3",
+      "paragraphCount": 7,
+      "evidenceCount": 20,
+      "locations": [
+        {
+          "paragraphId": "p-1",
+          "evidenceIndex": 0,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-1",
+          "evidenceIndex": 1,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-1",
+          "evidenceIndex": 2,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-2",
+          "evidenceIndex": 0,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-2",
+          "evidenceIndex": 1,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-3",
+          "evidenceIndex": 0,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-3",
+          "evidenceIndex": 1,
+          "location": "ambiguous",
+          "matches": 2
+        },
+        {
+          "paragraphId": "p-3",
+          "evidenceIndex": 2,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-4",
+          "evidenceIndex": 0,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-4",
+          "evidenceIndex": 1,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-4",
+          "evidenceIndex": 2,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-5",
+          "evidenceIndex": 0,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-5",
+          "evidenceIndex": 1,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-5",
+          "evidenceIndex": 2,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-5",
+          "evidenceIndex": 3,
+          "location": "not_found",
+          "matches": 0
+        },
+        {
+          "paragraphId": "p-6",
+          "evidenceIndex": 0,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-6",
+          "evidenceIndex": 1,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-7",
+          "evidenceIndex": 0,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-7",
+          "evidenceIndex": 1,
+          "location": "verified",
+          "matches": 1
+        },
+        {
+          "paragraphId": "p-7",
+          "evidenceIndex": 2,
+          "location": "verified",
+          "matches": 1
+        }
+      ],
+      "referenceIssues": [
+        {
+          "paragraphId": "p-2",
+          "unknownIntentClaimIds": [],
+          "knownClaimsWithoutSharedQuote": [
+            "emphasis-1"
+          ],
+          "evidenceWithoutSharedClaimQuoteIndices": []
+        },
+        {
+          "paragraphId": "p-3",
+          "unknownIntentClaimIds": [],
+          "knownClaimsWithoutSharedQuote": [
+            "bible-4"
+          ],
+          "evidenceWithoutSharedClaimQuoteIndices": [
+            1
+          ]
+        },
+        {
+          "paragraphId": "p-4",
+          "unknownIntentClaimIds": [
+            "warnings-1"
+          ],
+          "knownClaimsWithoutSharedQuote": [
+            "emphasis-3"
+          ],
+          "evidenceWithoutSharedClaimQuoteIndices": []
+        },
+        {
+          "paragraphId": "p-5",
+          "unknownIntentClaimIds": [],
+          "knownClaimsWithoutSharedQuote": [
+            "flow-6",
+            "emphasis-2"
+          ],
+          "evidenceWithoutSharedClaimQuoteIndices": [
+            3
+          ]
+        },
+        {
+          "paragraphId": "p-7",
+          "unknownIntentClaimIds": [
+            "warnings-2",
+            "warnings-3"
+          ],
+          "knownClaimsWithoutSharedQuote": [],
+          "evidenceWithoutSharedClaimQuoteIndices": [
+            1,
+            2
+          ]
+        }
+      ],
+      "usage": {
+        "task": "summary",
+        "model": "gpt-5.6-terra",
+        "reasoning_effort": "high",
+        "input_tokens": 25712,
+        "cached_input_tokens": 0,
+        "output_tokens": 1386,
+        "reasoning_tokens": 377,
+        "estimated_cost_micro_usd": 68056,
+        "started_at": "2026-09-28T14:43:22.293Z",
+        "observed_at": "2026-09-28T14:43:41.027Z"
+      },
+      "appStored": false,
+      "outcome": "summary_claim_reference_rejected_response_preserved",
+      "paidRetries": 0,
+      "humanReviewed": false,
+      "remainingAuthorizedTasks": [
+        "child_candidates",
+        "adult_candidates"
+      ]
+    },
+    "database": {
+      "migrations": 33,
+      "lastMigration": "0032_phase5_archived_critique_continuation.sql",
+      "inputVersion": 4,
+      "aggregateVersion": 8,
+      "contentEvents": 4,
+      "calls": 5,
+      "usageObservations": 5,
+      "costMicroUsd": 688552,
+      "unknownCalls": 0,
+      "integrity": "ok",
+      "foreignKeyErrors": 0,
+      "summaryStored": false,
+      "published": false
+    },
+    "authorization": {
+      "maximumCalls": 4,
+      "consumedTasks": [
+        "intent_critique",
+        "summary"
+      ],
+      "remainingTasks": [
+        "child_candidates",
+        "adult_candidates"
+      ],
+      "automaticRetry": false,
+      "mustNotResend": [
+        "correction",
+        "intent_analysis",
+        "intent_critique",
+        "summary"
+      ],
+      "localPublicationAfterHumanReview": true,
+      "remote": false
+    },
+    "tests": {
+      "workerLocationSuite": {
+        "files": 8,
+        "passed": 396
+      },
+      "workerRecoveryFirst": {
+        "files": 6,
+        "passed": 141,
+        "failed": 1,
+        "failure": "old_missing_quote_rejection_expectation"
+      },
+      "workerRecoveryAfterFix": {
+        "files": 3,
+        "passed": 12,
+        "failed": 0
+      },
+      "recoveryCliPassed": 2,
+      "nodeToolsPassed": 12,
+      "pythonToolsPassed": 6,
+      "browser": {
+        "projects": [
+          "chromium",
+          "mobile-chromium"
+        ],
+        "passed": 8
+      },
+      "lint": 0,
+      "typecheck": 0,
+      "dbCheck": 0,
+      "build": 0,
+      "fullPnpmCheckRepeated": false,
+      "realPublicationPerformed": false
+    },
+    "shutdown": {
+      "running": false,
+      "temporaryKeyFileBytes": 0,
+      "launcherLockExists": false,
+      "durableCredentialsPreserved": true
+    },
+    "remoteMutations": 0,
+    "commitPushDeploy": false,
+    "remaining": [
+      "reuse_preserved_summary_without_paid_retry",
+      "child_and_adult_one_call_each",
+      "human_content_review",
+      "free_placement_local_publication",
+      "local_play_submit_grade_restart_preservation"
+    ],
+    "limitations": [
+      "archived_summary_recovery_not_supported_yet",
+      "summary_claim_id_and_evidence_membership_validation_rejected",
+      "local_session_and_turnstile_submission_configuration_not_finished",
+      "real_user_content_review_publication_play_grading_restart_not_finished"
+    ],
+    "repositoryPreservation": {
+      "baselineFiles": 660,
+      "changedExistingFiles": [
+        "docs/DECISIONS.md",
+        "docs/DELIVERY_PLAN.md",
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/STATUS.md",
+        "docs/spec/api.md",
+        "docs/spec/data-model.md",
+        "docs/spec/generation.md",
+        "docs/work/P5-70-evaluation-template.csv",
+        "docs/work/P5-70-verification.json",
+        "docs/work/P5-70.md",
+        "migrations/meta/_journal.json",
+        "scripts/ai-quality-response-archive.test.mjs",
+        "scripts/apply-archived-intent-recovery.mjs",
+        "scripts/archived-intent-application.test.mjs",
+        "scripts/prepare-archived-intent-recovery.mjs",
+        "scripts/quality-trial-response-replay.ts",
+        "shared/api/admin-content-generation.ts",
+        "src/features/admin-sermon-input/ContentEvidence.tsx",
+        "src/features/admin-sermon-input/ContentGeneration.tsx",
+        "tests/e2e/admin-content-generation.spec.ts",
+        "workers/_shared/repositories/archived-intent-recovery-store.ts",
+        "workers/_shared/repositories/generation-lifecycle-store.ts",
+        "workers/_shared/services/ai-draft-provider.ts",
+        "workers/_shared/services/ai-evidence-location.ts",
+        "workers/_shared/services/archived-intent-recovery.ts",
+        "workers/_shared/services/commit-archived-intent-recovery.ts",
+        "workers/_shared/services/content-generation-view.ts",
+        "workers/_shared/services/content-intent-generation.ts",
+        "workers/_shared/services/generation-domain-reader.ts",
+        "workers/_shared/services/generation-lifecycle.ts",
+        "workers/_shared/services/openai-draft-transport.ts",
+        "workers/_shared/services/quiz-publication.ts",
+        "workers/_shared/services/sermon-intent-contract.ts",
+        "workers/_shared/services/sermon-intent.ts",
+        "workers/_shared/services/sermon-summary.ts",
+        "workers/_shared/storage/history-references.ts",
+        "workers/app/ai-draft-provider.test.ts",
+        "workers/app/ai-evidence-location.test.ts",
+        "workers/app/archived-intent-recovery.test.ts",
+        "workers/app/generation-bridge.test.ts",
+        "workers/app/openai-draft-transport.test.ts",
+        "workers/app/recovered-analysis-continuation.test.ts",
+        "workers/app/sermon-candidates.test.ts",
+        "workers/app/sermon-history-codec.test.ts",
+        "workers/app/sermon-intent.test.ts"
+      ],
+      "missingFiles": [],
+      "unchangedFiles": 614,
+      "oldMigrationChanges": [],
+      "newFiles": [
+        "migrations/0032_phase5_archived_critique_continuation.sql",
+        "migrations/meta/0032_snapshot.json"
+      ]
+    },
+    "documentationChecks": {
+      "markdownFiles": 9,
+      "localLinks": 242,
+      "missingTargets": [],
+      "unresolvedAnchors": [],
+      "changedFilesWithTrailingWhitespace": [],
+      "gitDiffCheckExit": 0,
+      "csvColumns": 27,
+      "csvDataRows": 11,
+      "verificationJsonValid": true
+    },
+    "usageAtEnd": {
+      "proRemainingPercent": 67,
+      "usedPercent": 33,
+      "windowDurationMins": 10080,
+      "separateFiveHourWindow": false,
+      "agreed5xEquivalentPercent": 335
+    }
+  },
+  "bedtime_preservation_2026_09_29": {
+    "checkpointPath": "/home/onegem/.local/state/biblequiz/checkpoints/p5-70-bedtime-20260928T151523Z",
+    "resumePath": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/shutdown-resume-2026-09-29.json",
+    "privateFilesVerified": 401,
+    "projectFilesVerified": 662,
+    "credentialsVerified": 2,
+    "database": {
+      "quickCheck": "ok",
+      "foreignKeyErrors": 0,
+      "migrations": 33,
+      "calls": 5,
+      "usage": 5,
+      "costMicroUsd": 688552,
+      "contentEvents": 4,
+      "job": [
+        "failed",
+        "summary"
+      ]
+    },
+    "separateDatabaseAllTablesEqual": true,
+    "primaryAndCopyHashesEqual": true,
+    "newAiCalls": 0,
+    "remoteOperations": 0,
+    "credentialsContentsLogged": false,
+    "checkedAt": "2026-09-28T15:16:50.243978+00:00",
+    "usage": {
+      "proRemainingPercent": 67,
+      "agreed5xEquivalentPercent": 335,
+      "separateFiveHourWindow": false
+    },
+    "applicationCodeChanged": false,
+    "repeatedFullCodeTests": false,
+    "physicalRebootTested": false,
+    "sourceDataMutated": false,
+    "serverRunning": false,
+    "temporaryKeyFileBytes": 0,
+    "nextAction": "offline_reuse_of_stored_summary_no_paid_retry",
+    "forbiddenRepeatedTasks": [
+      "caption_acquisition",
+      "correction",
+      "intent_analysis",
+      "intent_critique",
+      "summary",
+      "intent_adoption_confirmation"
+    ],
+    "remainingAuthorizedPaidTasks": [
+      "child_candidates",
+      "adult_candidates"
+    ],
+    "documentationChecks": {
+      "markdownFiles": 3,
+      "localLinks": 45,
+      "brokenLinks": 0,
+      "gitDiffCheckExit": 0,
+      "verificationJsonValid": true
+    }
+  },
+  "summary_and_candidates_2026_09_29": {
+    "checkedAt": "2026-09-28T23:49:21.781596+00:00",
+    "task": "P5-70",
+    "sourcePreserved": true,
+    "summary": {
+      "recoveredEventId": "recovery-b8e9486c9d7cb9ab1a102caf91bc65d48cfd00cc8abe48971a87125e2130f9f2",
+      "paragraphs": 7,
+      "quotes": 20,
+      "located": 18,
+      "unverified": 2,
+      "referenceSpellingRepairs": 3,
+      "unresolvedReferenceOmitted": 1,
+      "paragraphAndQuoteTextUnchanged": true,
+      "providerCalls": 0
+    },
+    "candidates": {
+      "child": {
+        "jobId": "1fe34a00-c91a-4d46-8a5a-a4803d433898",
+        "status": "review_ready",
+        "count": 15,
+        "unverifiedQuotes": 5,
+        "calls": 1,
+        "usage": {
+          "task": "child_candidates",
+          "model": "gpt-5.6-terra",
+          "input_tokens": 25981,
+          "cached_input_tokens": 0,
+          "output_tokens": 2757,
+          "reasoning_tokens": 214,
+          "estimated_cost_micro_usd": 85046
+        },
+        "reasoningEffort": "high",
+        "schema": "child_candidates_v4"
+      },
+      "adult": {
+        "jobId": "fe00d630-1371-4e2b-a43c-55b9639e9b2b",
+        "status": "review_ready",
+        "count": 16,
+        "unverifiedQuotes": 5,
+        "calls": 1,
+        "usage": {
+          "task": "adult_candidates",
+          "model": "gpt-5.6-terra",
+          "input_tokens": 25983,
+          "cached_input_tokens": 0,
+          "output_tokens": 2907,
+          "reasoning_tokens": 219,
+          "estimated_cost_micro_usd": 86850
+        },
+        "reasoningEffort": "high",
+        "schema": "adult_candidates_v4"
+      }
+    },
+    "localDatabase": {
+      "quickCheck": "ok",
+      "foreignKeyErrors": 0,
+      "migrations": 34,
+      "calls": 7,
+      "usage": 7,
+      "costMicroUsd": 860448,
+      "contentEvents": 7,
+      "aggregateVersion": 11
+    },
+    "newPaidCalls": 2,
+    "newCostMicroUsd": 171896,
+    "approvedFourCallsConsumed": 4,
+    "remainingPaidCalls": 0,
+    "humanContentReviewed": false,
+    "proposedLocalClueEdits": 1,
+    "localPublicationPerformed": false,
+    "remoteWrites": 0,
+    "deployments": 0,
+    "serverRunning": false,
+    "temporaryKeyBytes": 0,
+    "usageRemaining": {
+      "startProPercent": 66,
+      "endProPercent": 62,
+      "agreedMultiplier": 5,
+      "separateFiveHourValue": false
+    },
+    "validation": {
+      "workerRelatedFiles": 6,
+      "casesAcrossFinalRuns": 209,
+      "note": "Initial obsolete assertion and SQL meta-duration assertion corrected; affected continuation and references rerun. Last targeted continuation 1 passed; other 208 cases passed in related runs.",
+      "recoveryCliCases": 2,
+      "nodeToolCases": 9,
+      "lint": "passed",
+      "typecheck": "passed",
+      "dbCheck": "passed",
+      "privateReviewChromium": {
+        "summary": 7,
+        "child": 15,
+        "adult": 16,
+        "highlightedEdits": 1,
+        "widths": [
+          1200,
+          375
+        ],
+        "mobileOverflow": false
+      },
+      "pnpmCheck": "not rerun; phase not complete",
+      "appE2E": "not rerun; product UI unchanged"
+    },
+    "remaining": [
+      "User content review and one proposed clue correction",
+      "Free connection from stored outputs to review/finish/publication; original full job remains failed",
+      "Local trial publication, play, submission, grading and restart preservation; local Turnstile configuration unresolved"
+    ],
+    "unchangedPriorPaidArchivesAndSources": 8,
+    "existingMigrationFilesUnchanged": 66
+  },
+  "local_publication_2026_09_29": {
+    "status": "complete",
+    "new_paid_calls": 0,
+    "user_content_adopted": true,
+    "clue_typos_corrected": 1,
+    "density_policy_approved": true,
+    "publication": {
+      "slug": "2026-09-20-nf9963",
+      "child": {
+        "size": 5,
+        "words": 3,
+        "cells": 6,
+        "score_basis_points": 10000
+      },
+      "adult": {
+        "size": 6,
+        "words": 5,
+        "cells": 15,
+        "score_basis_points": 9333
+      },
+      "submissions": 2
+    },
+    "restart": {
+      "worker_process": true,
+      "os_reboot": false,
+      "paid_enabled": false,
+      "adult_own_submission_restored": true
+    },
+    "preservation": {
+      "schema": "p5-70-local-publication-progress-v1",
+      "protectedRowsUnchanged": {
+        "generation_jobs": true,
+        "generation_step_receipts": true,
+        "generation_step_outcomes": true,
+        "ai_provider_calls": true,
+        "ai_usage_events": true,
+        "ai_usage_observations": true,
+        "ai_usage_settlements": true,
+        "generation_archived_intent_recoveries": true,
+        "sermon_input_events": true,
+        "sermon_input_chunks": true
+      },
+      "paidArtifactFilesUnchanged": 16,
+      "inputVersion": 4,
+      "aggregateVersion": 15,
+      "humanReviewed": true,
+      "currentJobId": "49f1aa62-3665-40c6-93fc-0e264290197f",
+      "providerCallsForContinuation": 0,
+      "knownCostMicroUsd": 860448,
+      "paidCalls": 7,
+      "migrations": 35,
+      "quickCheck": "ok",
+      "foreignKeyErrors": 0,
+      "publicationCount": 1,
+      "policyChangePending": false,
+      "newPaidCalls": 0,
+      "verifiedAt": "2026-09-29T01:08:41.435192+00:00",
+      "submissionCount": 2,
+      "policyApproved": true,
+      "localWorkerRestartVerified": true,
+      "osRebootTested": false,
+      "slug": "2026-09-20-nf9963",
+      "variantWarningsSaved": true
+    },
+    "checkpoint": "/home/onegem/.local/state/biblequiz/checkpoints/p5-70-local-published-20260929T010841Z",
+    "checks": {
+      "unit": 274,
+      "stored_continuation": 2,
+      "publication_worker": 35,
+      "admin_warning_e2e": 2,
+      "workflow": 3,
+      "recovery_cli": 2,
+      "node_tools": 9,
+      "python_tools": 6,
+      "lint": true,
+      "typecheck": true,
+      "build": true,
+      "full_pnpm_check": {
+        "status": "failed_then_six_cases_repaired_and_targeted_rerun_passed",
+        "worker_cases": 2064,
+        "initial_passed": 2058,
+        "initial_failed": 6,
+        "fixed_cases_passed": 6,
+        "complete_command_rerun": false
+      }
+    },
+    "verification_limits": [
+      "Cloudflare official dummy test token only",
+      "No remote operations or deployment",
+      "No Firefox/WebKit/physical-device tests in this turn"
+    ],
+    "approval_review": {
+      "diagnostic_wrapper_rejected": true,
+      "wrapper_executed": false,
+      "resolution": "existing validation preserved; temporary error logging removed"
+    },
+    "usage": {
+      "pro_remaining_start": 61,
+      "pro_remaining_end": 54,
+      "multiplier": 5,
+      "separate_five_hour_value_available": false
+    },
+    "private_directory": "/home/onegem/.local/state/biblequiz/quality-session-4gdw2F/local-publication-2026-09-29",
+    "checkpoint_verification": {
+      "checkpoint": "/home/onegem/.local/state/biblequiz/checkpoints/p5-70-local-published-20260929T010841Z",
+      "artifacts": 525,
+      "projectFiles": 669,
+      "credentialFiles": 2,
+      "allCopiedFileHashesVerified": true,
+      "allDatabaseTablesAndRowsMatched": true,
+      "tables": 83,
+      "quickCheck": "ok",
+      "foreignKeyErrors": 0,
+      "diskSyncCompleted": true,
+      "aiCalls": 0
+    },
+    "changed_existing_files": [
+      "docs/DECISIONS.md",
+      "docs/DELIVERY_PLAN.md",
+      "docs/HANDOFF.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/STATUS.md",
+      "docs/spec/generation.md",
+      "docs/spec/puzzle.md",
+      "docs/work/P5-70-evaluation-template.csv",
+      "docs/work/P5-70-verification.json",
+      "docs/work/P5-70.md",
+      "migrations/meta/_journal.json",
+      "scripts/apply-archived-intent-recovery.mjs",
+      "scripts/archived-intent-application.test.mjs",
+      "scripts/local-ai-quality-session.mjs",
+      "scripts/quality-trial-worker.ts",
+      "shared/api/admin-placement.ts",
+      "shared/api/public-quiz.test.ts",
+      "shared/api/public-quiz.ts",
+      "shared/puzzle/generator.test.ts",
+      "shared/puzzle/generator.ts",
+      "shared/puzzle/layout.test.ts",
+      "shared/puzzle/layout.ts",
+      "shared/puzzle/pool-search.test.ts",
+      "shared/puzzle/pool-search.ts",
+      "shared/puzzle/types.ts",
+      "src/features/admin-sermon-input/ContentPlacement.tsx",
+      "tests/e2e/admin-placement.spec.ts",
+      "workers/_shared/repositories/generation-lifecycle-store.ts",
+      "workers/_shared/services/content-intent-generation.ts",
+      "workers/_shared/services/generation-lifecycle-contract.ts",
+      "workers/_shared/services/generation-lifecycle.ts",
+      "workers/_shared/services/placement-presentation.ts",
+      "workers/_shared/services/quiz-publication.ts",
+      "workers/_shared/services/quiz-republication.ts",
+      "workers/app/app.ts",
+      "workers/app/content-generation.test.ts",
+      "workers/app/content-intent-generation.test.ts",
+      "workers/app/quality-trial-response-archive.test.ts",
+      "workers/app/quality-trial-worker.test.ts"
+    ],
+    "added_files": [
+      "migrations/0034_phase5_stored_content_continuation.sql",
+      "migrations/meta/0034_snapshot.json",
+      "workers/_shared/services/content-stored-continuation.ts"
+    ],
+    "deleted_existing_files": [],
+    "prior_migration_sql_snapshots_preserved": 68,
+    "document_links_checked": 211,
+    "missing_links_or_anchors": []
+  }
+}

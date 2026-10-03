@@ -1,0 +1,3664 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "ef749af2-e2c1-4118-a2df-919d151c745e",
+  "prevId": "3a9253dd-597b-4de7-94dc-5f826209cd10",
+  "tables": {
+    "anonymous_sessions": {
+      "name": "anonymous_sessions",
+      "columns": {
+        "session_hash": {
+          "name": "session_hash",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "last_seen_at": {
+          "name": "last_seen_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "anonymous_sessions_expires_at_idx": {
+          "name": "anonymous_sessions_expires_at_idx",
+          "columns": [
+            "expires_at"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "anonymous_sessions_hash_check": {
+          "name": "anonymous_sessions_hash_check",
+          "value": "length(\"anonymous_sessions\".\"session_hash\") = 64 and \"anonymous_sessions\".\"session_hash\" not glob '*[^0-9a-f]*'"
+        },
+        "anonymous_sessions_time_check": {
+          "name": "anonymous_sessions_time_check",
+          "value": "\"anonymous_sessions\".\"last_seen_at\" >= \"anonymous_sessions\".\"created_at\" and \"anonymous_sessions\".\"expires_at\" > \"anonymous_sessions\".\"last_seen_at\""
+        }
+      }
+    },
+    "audit_logs": {
+      "name": "audit_logs",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "entity_type": {
+          "name": "entity_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "entity_id": {
+          "name": "entity_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "action": {
+          "name": "action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actor_type": {
+          "name": "actor_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actor_email": {
+          "name": "actor_email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "safe_metadata_json": {
+          "name": "safe_metadata_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "audit_logs_entity_created_idx": {
+          "name": "audit_logs_entity_created_idx",
+          "columns": [
+            "entity_type",
+            "entity_id",
+            "created_at",
+            "id"
+          ],
+          "isUnique": false
+        },
+        "audit_logs_created_idx": {
+          "name": "audit_logs_created_idx",
+          "columns": [
+            "created_at",
+            "id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "audit_logs_id_check": {
+          "name": "audit_logs_id_check",
+          "value": "length(\"audit_logs\".\"id\") between 1 and 128"
+        },
+        "audit_logs_entity_check": {
+          "name": "audit_logs_entity_check",
+          "value": "length(trim(\"audit_logs\".\"entity_type\")) between 1 and 64 and length(trim(\"audit_logs\".\"entity_id\")) between 1 and 128"
+        },
+        "audit_logs_action_check": {
+          "name": "audit_logs_action_check",
+          "value": "length(trim(\"audit_logs\".\"action\")) between 1 and 128"
+        },
+        "audit_logs_actor_type_check": {
+          "name": "audit_logs_actor_type_check",
+          "value": "\"audit_logs\".\"actor_type\" in ('access_admin', 'self_service', 'system')"
+        },
+        "audit_logs_actor_identity_check": {
+          "name": "audit_logs_actor_identity_check",
+          "value": "(\"audit_logs\".\"actor_type\" = 'access_admin' and \"audit_logs\".\"actor_email\" is not null and length(trim(\"audit_logs\".\"actor_email\")) between 3 and 320) or (\"audit_logs\".\"actor_type\" <> 'access_admin' and \"audit_logs\".\"actor_email\" is null)"
+        },
+        "audit_logs_safe_metadata_json_check": {
+          "name": "audit_logs_safe_metadata_json_check",
+          "value": "json_valid(\"audit_logs\".\"safe_metadata_json\") and json_type(\"audit_logs\".\"safe_metadata_json\") = 'object'"
+        }
+      }
+    },
+    "bible_translations": {
+      "name": "bible_translations",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "edition": {
+          "name": "edition",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "publication_year": {
+          "name": "publication_year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "publisher_or_rightsholder": {
+          "name": "publisher_or_rightsholder",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "mode": {
+          "name": "mode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'reference_only'"
+        },
+        "source_url": {
+          "name": "source_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "license_url": {
+          "name": "license_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "permission_evidence_path": {
+          "name": "permission_evidence_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "allowed_web": {
+          "name": "allowed_web",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "allowed_archive": {
+          "name": "allowed_archive",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "allowed_png": {
+          "name": "allowed_png",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "allowed_pdf": {
+          "name": "allowed_pdf",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "required_attribution": {
+          "name": "required_attribution",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "permission_territory": {
+          "name": "permission_territory",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "permission_starts_at": {
+          "name": "permission_starts_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "permission_expires_at": {
+          "name": "permission_expires_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "fee_amount": {
+          "name": "fee_amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "fee_currency": {
+          "name": "fee_currency",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "renewal_reminder_days": {
+          "name": "renewal_reminder_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cache_policy": {
+          "name": "cache_policy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "deletion_policy": {
+          "name": "deletion_policy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "source_sha256": {
+          "name": "source_sha256",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'pending'"
+        },
+        "approved_by": {
+          "name": "approved_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "approved_at": {
+          "name": "approved_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "bible_translations_mode_check": {
+          "name": "bible_translations_mode_check",
+          "value": "\"bible_translations\".\"mode\" in ('reference_only', 'licensed_api', 'licensed_local')"
+        },
+        "bible_translations_status_check": {
+          "name": "bible_translations_status_check",
+          "value": "\"bible_translations\".\"status\" in ('pending', 'approved', 'rejected')"
+        },
+        "bible_translations_permission_window_check": {
+          "name": "bible_translations_permission_window_check",
+          "value": "\"bible_translations\".\"permission_expires_at\" is null or \"bible_translations\".\"permission_starts_at\" is null or \"bible_translations\".\"permission_expires_at\" > \"bible_translations\".\"permission_starts_at\""
+        },
+        "bible_translations_fee_amount_check": {
+          "name": "bible_translations_fee_amount_check",
+          "value": "\"bible_translations\".\"fee_amount\" is null or \"bible_translations\".\"fee_amount\" >= 0"
+        },
+        "bible_translations_renewal_days_check": {
+          "name": "bible_translations_renewal_days_check",
+          "value": "\"bible_translations\".\"renewal_reminder_days\" is null or \"bible_translations\".\"renewal_reminder_days\" >= 0"
+        }
+      }
+    },
+    "leaderboard_snapshot_entries": {
+      "name": "leaderboard_snapshot_entries",
+      "columns": {
+        "snapshot_id": {
+          "name": "snapshot_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "rank": {
+          "name": "rank",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "submission_id": {
+          "name": "submission_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "leaderboard_snapshot_entries_submission_uidx": {
+          "name": "leaderboard_snapshot_entries_submission_uidx",
+          "columns": [
+            "snapshot_id",
+            "submission_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "leaderboard_snapshot_entries_snapshot_id_leaderboard_snapshots_id_fk": {
+          "name": "leaderboard_snapshot_entries_snapshot_id_leaderboard_snapshots_id_fk",
+          "tableFrom": "leaderboard_snapshot_entries",
+          "tableTo": "leaderboard_snapshots",
+          "columnsFrom": [
+            "snapshot_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "leaderboard_snapshot_entries_submission_id_submissions_id_fk": {
+          "name": "leaderboard_snapshot_entries_submission_id_submissions_id_fk",
+          "tableFrom": "leaderboard_snapshot_entries",
+          "tableTo": "submissions",
+          "columnsFrom": [
+            "submission_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "leaderboard_snapshot_entries_snapshot_id_rank_pk": {
+          "columns": [
+            "snapshot_id",
+            "rank"
+          ],
+          "name": "leaderboard_snapshot_entries_snapshot_id_rank_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "leaderboard_snapshot_entries_rank_check": {
+          "name": "leaderboard_snapshot_entries_rank_check",
+          "value": "\"leaderboard_snapshot_entries\".\"rank\" between 1 and 10"
+        }
+      }
+    },
+    "leaderboard_snapshots": {
+      "name": "leaderboard_snapshots",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "quiz_variant_id": {
+          "name": "quiz_variant_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "winner_count": {
+          "name": "winner_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "finalized_at": {
+          "name": "finalized_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "leaderboard_snapshots_variant_uidx": {
+          "name": "leaderboard_snapshots_variant_uidx",
+          "columns": [
+            "quiz_variant_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "leaderboard_snapshots_quiz_variant_id_quiz_variants_id_fk": {
+          "name": "leaderboard_snapshots_quiz_variant_id_quiz_variants_id_fk",
+          "tableFrom": "leaderboard_snapshots",
+          "tableTo": "quiz_variants",
+          "columnsFrom": [
+            "quiz_variant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "leaderboard_snapshots_id_check": {
+          "name": "leaderboard_snapshots_id_check",
+          "value": "length(\"leaderboard_snapshots\".\"id\") between 1 and 128"
+        },
+        "leaderboard_snapshots_winner_count_check": {
+          "name": "leaderboard_snapshots_winner_count_check",
+          "value": "\"leaderboard_snapshots\".\"winner_count\" between 1 and 10"
+        }
+      }
+    },
+    "moderation_actions": {
+      "name": "moderation_actions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "submission_id": {
+          "name": "submission_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "action": {
+          "name": "action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actor_email": {
+          "name": "actor_email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "reason": {
+          "name": "reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "moderation_actions_submission_created_idx": {
+          "name": "moderation_actions_submission_created_idx",
+          "columns": [
+            "submission_id",
+            "created_at",
+            "id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "moderation_actions_submission_id_submissions_id_fk": {
+          "name": "moderation_actions_submission_id_submissions_id_fk",
+          "tableFrom": "moderation_actions",
+          "tableTo": "submissions",
+          "columnsFrom": [
+            "submission_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "moderation_actions_id_check": {
+          "name": "moderation_actions_id_check",
+          "value": "length(\"moderation_actions\".\"id\") between 1 and 128"
+        },
+        "moderation_actions_action_check": {
+          "name": "moderation_actions_action_check",
+          "value": "\"moderation_actions\".\"action\" in ('hide', 'unhide', 'delete')"
+        },
+        "moderation_actions_actor_email_check": {
+          "name": "moderation_actions_actor_email_check",
+          "value": "length(trim(\"moderation_actions\".\"actor_email\")) between 3 and 320"
+        },
+        "moderation_actions_reason_check": {
+          "name": "moderation_actions_reason_check",
+          "value": "length(trim(\"moderation_actions\".\"reason\")) between 2 and 500 and instr(\"moderation_actions\".\"reason\", char(10)) = 0 and instr(\"moderation_actions\".\"reason\", char(13)) = 0"
+        }
+      }
+    },
+    "moderation_exceptions": {
+      "name": "moderation_exceptions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "normalized_value": {
+          "name": "normalized_value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "reason": {
+          "name": "reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "moderation_exceptions_normalized_value_uidx": {
+          "name": "moderation_exceptions_normalized_value_uidx",
+          "columns": [
+            "normalized_value"
+          ],
+          "isUnique": true
+        },
+        "moderation_exceptions_enabled_scope_idx": {
+          "name": "moderation_exceptions_enabled_scope_idx",
+          "columns": [
+            "enabled",
+            "scope",
+            "id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "moderation_exceptions_id_check": {
+          "name": "moderation_exceptions_id_check",
+          "value": "length(\"moderation_exceptions\".\"id\") between 1 and 128"
+        },
+        "moderation_exceptions_scope_check": {
+          "name": "moderation_exceptions_scope_check",
+          "value": "\"moderation_exceptions\".\"scope\" in ('name', 'comment', 'answer')"
+        },
+        "moderation_exceptions_value_check": {
+          "name": "moderation_exceptions_value_check",
+          "value": "length(\"moderation_exceptions\".\"normalized_value\") between 1 and 512 and \"moderation_exceptions\".\"normalized_value\" = trim(\"moderation_exceptions\".\"normalized_value\")"
+        },
+        "moderation_exceptions_reason_check": {
+          "name": "moderation_exceptions_reason_check",
+          "value": "length(trim(\"moderation_exceptions\".\"reason\")) between 1 and 1000"
+        },
+        "moderation_exceptions_enabled_check": {
+          "name": "moderation_exceptions_enabled_check",
+          "value": "\"moderation_exceptions\".\"enabled\" in (0, 1)"
+        },
+        "moderation_exceptions_created_by_check": {
+          "name": "moderation_exceptions_created_by_check",
+          "value": "length(trim(\"moderation_exceptions\".\"created_by\")) between 1 and 320"
+        },
+        "moderation_exceptions_time_check": {
+          "name": "moderation_exceptions_time_check",
+          "value": "\"moderation_exceptions\".\"updated_at\" >= \"moderation_exceptions\".\"created_at\""
+        }
+      }
+    },
+    "moderation_terms": {
+      "name": "moderation_terms",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "normalized_pattern": {
+          "name": "normalized_pattern",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "match_mode": {
+          "name": "match_mode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "moderation_terms_scope_pattern_mode_uidx": {
+          "name": "moderation_terms_scope_pattern_mode_uidx",
+          "columns": [
+            "scope",
+            "normalized_pattern",
+            "match_mode"
+          ],
+          "isUnique": true
+        },
+        "moderation_terms_enabled_scope_idx": {
+          "name": "moderation_terms_enabled_scope_idx",
+          "columns": [
+            "enabled",
+            "scope",
+            "id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "moderation_terms_id_check": {
+          "name": "moderation_terms_id_check",
+          "value": "length(\"moderation_terms\".\"id\") between 1 and 128"
+        },
+        "moderation_terms_scope_check": {
+          "name": "moderation_terms_scope_check",
+          "value": "\"moderation_terms\".\"scope\" in ('name', 'comment', 'answer', 'all')"
+        },
+        "moderation_terms_pattern_check": {
+          "name": "moderation_terms_pattern_check",
+          "value": "length(\"moderation_terms\".\"normalized_pattern\") between 1 and 512 and \"moderation_terms\".\"normalized_pattern\" = trim(\"moderation_terms\".\"normalized_pattern\")"
+        },
+        "moderation_terms_match_mode_check": {
+          "name": "moderation_terms_match_mode_check",
+          "value": "\"moderation_terms\".\"match_mode\" in ('exact', 'contains')"
+        },
+        "moderation_terms_enabled_check": {
+          "name": "moderation_terms_enabled_check",
+          "value": "\"moderation_terms\".\"enabled\" in (0, 1)"
+        },
+        "moderation_terms_created_by_check": {
+          "name": "moderation_terms_created_by_check",
+          "value": "length(trim(\"moderation_terms\".\"created_by\")) between 1 and 320"
+        },
+        "moderation_terms_time_check": {
+          "name": "moderation_terms_time_check",
+          "value": "\"moderation_terms\".\"updated_at\" >= \"moderation_terms\".\"created_at\""
+        }
+      }
+    },
+    "quiz_entries_public": {
+      "name": "quiz_entries_public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "quiz_variant_id": {
+          "name": "quiz_variant_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "number": {
+          "name": "number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "direction": {
+          "name": "direction",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "start_row": {
+          "name": "start_row",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "start_col": {
+          "name": "start_col",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "length": {
+          "name": "length",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "clue": {
+          "name": "clue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "transcript_evidence_json": {
+          "name": "transcript_evidence_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "display_order": {
+          "name": "display_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "quiz_entries_variant_number_direction_uidx": {
+          "name": "quiz_entries_variant_number_direction_uidx",
+          "columns": [
+            "quiz_variant_id",
+            "number",
+            "direction"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "quiz_entries_public_quiz_variant_id_quiz_variants_id_fk": {
+          "name": "quiz_entries_public_quiz_variant_id_quiz_variants_id_fk",
+          "tableFrom": "quiz_entries_public",
+          "tableTo": "quiz_variants",
+          "columnsFrom": [
+            "quiz_variant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "quiz_entries_number_check": {
+          "name": "quiz_entries_number_check",
+          "value": "\"quiz_entries_public\".\"number\" >= 1"
+        },
+        "quiz_entries_direction_check": {
+          "name": "quiz_entries_direction_check",
+          "value": "\"quiz_entries_public\".\"direction\" in ('across', 'down')"
+        },
+        "quiz_entries_coordinate_check": {
+          "name": "quiz_entries_coordinate_check",
+          "value": "\"quiz_entries_public\".\"start_row\" between 0 and 9 and \"quiz_entries_public\".\"start_col\" between 0 and 9"
+        },
+        "quiz_entries_length_check": {
+          "name": "quiz_entries_length_check",
+          "value": "\"quiz_entries_public\".\"length\" between 2 and 10"
+        },
+        "quiz_entries_order_check": {
+          "name": "quiz_entries_order_check",
+          "value": "\"quiz_entries_public\".\"display_order\" >= 0"
+        }
+      }
+    },
+    "quiz_sets": {
+      "name": "quiz_sets",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sermon_id": {
+          "name": "sermon_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "confirmed_transcript_id": {
+          "name": "confirmed_transcript_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "confirmed_transcript_sha256": {
+          "name": "confirmed_transcript_sha256",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'draft'"
+        },
+        "submission_state": {
+          "name": "submission_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'open'"
+        },
+        "submission_paused_at": {
+          "name": "submission_paused_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "submission_paused_by": {
+          "name": "submission_paused_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "submission_pause_reason": {
+          "name": "submission_pause_reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "published_from_revision_number": {
+          "name": "published_from_revision_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "published_ai_provenance_json": {
+          "name": "published_ai_provenance_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "published_at": {
+          "name": "published_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "opens_at": {
+          "name": "opens_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "closes_at": {
+          "name": "closes_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "archived_at": {
+          "name": "archived_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "quiz_sets_sermon_id_unique": {
+          "name": "quiz_sets_sermon_id_unique",
+          "columns": [
+            "sermon_id"
+          ],
+          "isUnique": true
+        },
+        "quiz_sets_state_closes_at_idx": {
+          "name": "quiz_sets_state_closes_at_idx",
+          "columns": [
+            "status",
+            "submission_state",
+            "closes_at"
+          ],
+          "isUnique": false
+        },
+        "quiz_sets_archive_idx": {
+          "name": "quiz_sets_archive_idx",
+          "columns": [
+            "status",
+            "\"id\" desc"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "quiz_sets_sermon_id_sermons_id_fk": {
+          "name": "quiz_sets_sermon_id_sermons_id_fk",
+          "tableFrom": "quiz_sets",
+          "tableTo": "sermons",
+          "columnsFrom": [
+            "sermon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "quiz_sets_confirmed_transcript_id_sermon_transcripts_id_fk": {
+          "name": "quiz_sets_confirmed_transcript_id_sermon_transcripts_id_fk",
+          "tableFrom": "quiz_sets",
+          "tableTo": "sermon_transcripts",
+          "columnsFrom": [
+            "confirmed_transcript_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "quiz_sets_publish_window_check": {
+          "name": "quiz_sets_publish_window_check",
+          "value": "\"quiz_sets\".\"status\" not in ('published', 'archived') or (\"quiz_sets\".\"opens_at\" is not null and \"quiz_sets\".\"closes_at\" is not null and \"quiz_sets\".\"closes_at\" > \"quiz_sets\".\"opens_at\")"
+        },
+        "quiz_sets_status_check": {
+          "name": "quiz_sets_status_check",
+          "value": "\"quiz_sets\".\"status\" in ('draft', 'review_ready', 'needs_revision', 'published', 'archived')"
+        },
+        "quiz_sets_submission_state_check": {
+          "name": "quiz_sets_submission_state_check",
+          "value": "\"quiz_sets\".\"submission_state\" in ('open', 'paused')"
+        },
+        "quiz_sets_pause_metadata_check": {
+          "name": "quiz_sets_pause_metadata_check",
+          "value": "\"quiz_sets\".\"submission_state\" <> 'paused' or \"quiz_sets\".\"submission_paused_at\" is not null"
+        }
+      }
+    },
+    "quiz_solutions": {
+      "name": "quiz_solutions",
+      "columns": {
+        "quiz_variant_id": {
+          "name": "quiz_variant_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "canonical_cell_order_json": {
+          "name": "canonical_cell_order_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "solution_cells_json": {
+          "name": "solution_cells_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "entry_answers_json": {
+          "name": "entry_answers_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "solution_sha256": {
+          "name": "solution_sha256",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "quiz_solutions_quiz_variant_id_quiz_variants_id_fk": {
+          "name": "quiz_solutions_quiz_variant_id_quiz_variants_id_fk",
+          "tableFrom": "quiz_solutions",
+          "tableTo": "quiz_variants",
+          "columnsFrom": [
+            "quiz_variant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "quiz_solutions_canonical_json_check": {
+          "name": "quiz_solutions_canonical_json_check",
+          "value": "json_valid(\"quiz_solutions\".\"canonical_cell_order_json\")"
+        },
+        "quiz_solutions_cells_json_check": {
+          "name": "quiz_solutions_cells_json_check",
+          "value": "json_valid(\"quiz_solutions\".\"solution_cells_json\")"
+        },
+        "quiz_solutions_entries_json_check": {
+          "name": "quiz_solutions_entries_json_check",
+          "value": "json_valid(\"quiz_solutions\".\"entry_answers_json\")"
+        },
+        "quiz_solutions_sha256_check": {
+          "name": "quiz_solutions_sha256_check",
+          "value": "length(\"quiz_solutions\".\"solution_sha256\") = 64 and \"quiz_solutions\".\"solution_sha256\" not glob '*[^0-9a-f]*'"
+        }
+      }
+    },
+    "quiz_variants": {
+      "name": "quiz_variants",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "quiz_set_id": {
+          "name": "quiz_set_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "difficulty": {
+          "name": "difficulty",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "revision": {
+          "name": "revision",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "lifecycle_status": {
+          "name": "lifecycle_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'active'"
+        },
+        "results_status": {
+          "name": "results_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'valid'"
+        },
+        "replaces_variant_id": {
+          "name": "replaces_variant_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "corrects_variant_id": {
+          "name": "corrects_variant_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lifecycle_reason": {
+          "name": "lifecycle_reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lifecycle_changed_at": {
+          "name": "lifecycle_changed_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grid_size": {
+          "name": "grid_size",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 5
+        },
+        "public_grid_json": {
+          "name": "public_grid_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "word_count": {
+          "name": "word_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "active_cell_count": {
+          "name": "active_cell_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "intersection_count": {
+          "name": "intersection_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "winner_count": {
+          "name": "winner_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 3
+        },
+        "validation_report_json": {
+          "name": "validation_report_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "desktop_background_path": {
+          "name": "desktop_background_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mobile_background_path": {
+          "name": "mobile_background_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "quiz_variants_set_difficulty_revision_uidx": {
+          "name": "quiz_variants_set_difficulty_revision_uidx",
+          "columns": [
+            "quiz_set_id",
+            "difficulty",
+            "revision"
+          ],
+          "isUnique": true
+        },
+        "quiz_variants_one_active_difficulty_uidx": {
+          "name": "quiz_variants_one_active_difficulty_uidx",
+          "columns": [
+            "quiz_set_id",
+            "difficulty"
+          ],
+          "isUnique": true,
+          "where": "\"quiz_variants\".\"lifecycle_status\" = 'active'"
+        },
+        "quiz_variants_results_status_idx": {
+          "name": "quiz_variants_results_status_idx",
+          "columns": [
+            "results_status"
+          ],
+          "isUnique": false
+        },
+        "quiz_variants_replaces_variant_id_idx": {
+          "name": "quiz_variants_replaces_variant_id_idx",
+          "columns": [
+            "replaces_variant_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "quiz_variants_quiz_set_id_quiz_sets_id_fk": {
+          "name": "quiz_variants_quiz_set_id_quiz_sets_id_fk",
+          "tableFrom": "quiz_variants",
+          "tableTo": "quiz_sets",
+          "columnsFrom": [
+            "quiz_set_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "quiz_variants_replaces_variant_id_quiz_variants_id_fk": {
+          "name": "quiz_variants_replaces_variant_id_quiz_variants_id_fk",
+          "tableFrom": "quiz_variants",
+          "tableTo": "quiz_variants",
+          "columnsFrom": [
+            "replaces_variant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "quiz_variants_corrects_variant_id_quiz_variants_id_fk": {
+          "name": "quiz_variants_corrects_variant_id_quiz_variants_id_fk",
+          "tableFrom": "quiz_variants",
+          "tableTo": "quiz_variants",
+          "columnsFrom": [
+            "corrects_variant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "quiz_variants_revision_check": {
+          "name": "quiz_variants_revision_check",
+          "value": "\"quiz_variants\".\"revision\" >= 1"
+        },
+        "quiz_variants_difficulty_check": {
+          "name": "quiz_variants_difficulty_check",
+          "value": "\"quiz_variants\".\"difficulty\" in ('child', 'adult')"
+        },
+        "quiz_variants_lifecycle_status_check": {
+          "name": "quiz_variants_lifecycle_status_check",
+          "value": "\"quiz_variants\".\"lifecycle_status\" in ('active', 'superseded', 'withdrawn')"
+        },
+        "quiz_variants_results_status_check": {
+          "name": "quiz_variants_results_status_check",
+          "value": "\"quiz_variants\".\"results_status\" in ('valid', 'invalidated', 'non_ranked_correction')"
+        },
+        "quiz_variants_grid_size_check": {
+          "name": "quiz_variants_grid_size_check",
+          "value": "\"quiz_variants\".\"grid_size\" between 5 and 10"
+        },
+        "quiz_variants_word_count_check": {
+          "name": "quiz_variants_word_count_check",
+          "value": "\"quiz_variants\".\"word_count\" >= 0"
+        },
+        "quiz_variants_active_cell_count_check": {
+          "name": "quiz_variants_active_cell_count_check",
+          "value": "\"quiz_variants\".\"active_cell_count\" >= 0"
+        },
+        "quiz_variants_intersection_count_check": {
+          "name": "quiz_variants_intersection_count_check",
+          "value": "\"quiz_variants\".\"intersection_count\" >= 0"
+        },
+        "quiz_variants_winner_count_check": {
+          "name": "quiz_variants_winner_count_check",
+          "value": "\"quiz_variants\".\"winner_count\" between 1 and 10"
+        }
+      }
+    },
+    "reserved_names": {
+      "name": "reserved_names",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "protected_group_id": {
+          "name": "protected_group_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "display_label": {
+          "name": "display_label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "normalized_value": {
+          "name": "normalized_value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "reserved_names_normalized_value_uidx": {
+          "name": "reserved_names_normalized_value_uidx",
+          "columns": [
+            "normalized_value"
+          ],
+          "isUnique": true
+        },
+        "reserved_names_enabled_value_idx": {
+          "name": "reserved_names_enabled_value_idx",
+          "columns": [
+            "enabled",
+            "normalized_value"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "reserved_names_id_check": {
+          "name": "reserved_names_id_check",
+          "value": "length(\"reserved_names\".\"id\") between 1 and 128"
+        },
+        "reserved_names_group_check": {
+          "name": "reserved_names_group_check",
+          "value": "\"reserved_names\".\"protected_group_id\" is null or length(\"reserved_names\".\"protected_group_id\") between 1 and 128"
+        },
+        "reserved_names_display_label_check": {
+          "name": "reserved_names_display_label_check",
+          "value": "length(trim(\"reserved_names\".\"display_label\")) between 1 and 200"
+        },
+        "reserved_names_normalized_value_check": {
+          "name": "reserved_names_normalized_value_check",
+          "value": "length(\"reserved_names\".\"normalized_value\") between 1 and 512 and \"reserved_names\".\"normalized_value\" = trim(\"reserved_names\".\"normalized_value\")"
+        },
+        "reserved_names_category_check": {
+          "name": "reserved_names_category_check",
+          "value": "\"reserved_names\".\"category\" in ('church', 'role', 'person', 'alias')"
+        },
+        "reserved_names_enabled_check": {
+          "name": "reserved_names_enabled_check",
+          "value": "\"reserved_names\".\"enabled\" in (0, 1)"
+        },
+        "reserved_names_created_by_check": {
+          "name": "reserved_names_created_by_check",
+          "value": "length(trim(\"reserved_names\".\"created_by\")) between 1 and 320"
+        },
+        "reserved_names_time_check": {
+          "name": "reserved_names_time_check",
+          "value": "\"reserved_names\".\"updated_at\" >= \"reserved_names\".\"created_at\""
+        }
+      }
+    },
+    "sermon_history_chunks": {
+      "name": "sermon_history_chunks",
+      "columns": {
+        "sermon_id": {
+          "name": "sermon_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "record_id": {
+          "name": "record_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "chunk_index": {
+          "name": "chunk_index",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "byte_length": {
+          "name": "byte_length",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "chunk_sha256": {
+          "name": "chunk_sha256",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "body": {
+          "name": "body",
+          "type": "blob",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "verified": {
+          "name": "verified",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "history_chunks_payload_fk": {
+          "name": "history_chunks_payload_fk",
+          "tableFrom": "sermon_history_chunks",
+          "tableTo": "sermon_history_payloads",
+          "columnsFrom": [
+            "sermon_id",
+            "record_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "record_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sermon_history_chunks_sermon_id_record_id_chunk_index_pk": {
+          "columns": [
+            "sermon_id",
+            "record_id",
+            "chunk_index"
+          ],
+          "name": "sermon_history_chunks_sermon_id_record_id_chunk_index_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "history_chunks_sermon_id_check": {
+          "name": "history_chunks_sermon_id_check",
+          "value": "length(sermon_id) between 1 and 128"
+        },
+        "history_chunks_record_id_check": {
+          "name": "history_chunks_record_id_check",
+          "value": "length(record_id) between 1 and 128"
+        },
+        "history_chunks_chunk_index_check": {
+          "name": "history_chunks_chunk_index_check",
+          "value": "(typeof(chunk_index) = 'integer' and chunk_index between 0 and 9007199254740991)"
+        },
+        "history_chunks_byte_length_check": {
+          "name": "history_chunks_byte_length_check",
+          "value": "(typeof(byte_length) = 'integer' and byte_length between 1 and 9007199254740991)"
+        },
+        "history_chunks_chunk_sha256_check": {
+          "name": "history_chunks_chunk_sha256_check",
+          "value": "length(chunk_sha256) between 1 and 128"
+        },
+        "history_chunks_verified_check": {
+          "name": "history_chunks_verified_check",
+          "value": "(typeof(verified) = 'integer' and verified between 0 and 1)"
+        },
+        "history_chunks_sha256_check": {
+          "name": "history_chunks_sha256_check",
+          "value": "length(chunk_sha256) = 64 and chunk_sha256 not glob '*[^0-9a-f]*'"
+        },
+        "history_chunks_body_check": {
+          "name": "history_chunks_body_check",
+          "value": "typeof(body) = 'blob' and byte_length = length(body) and byte_length between 1 and 65536"
+        }
+      }
+    },
+    "sermon_history_commits": {
+      "name": "sermon_history_commits",
+      "columns": {
+        "sermon_id": {
+          "name": "sermon_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "version": {
+          "name": "version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "commit_id": {
+          "name": "commit_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "current_source_id": {
+          "name": "current_source_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "current_revision_id": {
+          "name": "current_revision_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "current_confirmation_id": {
+          "name": "current_confirmation_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "attempt_id": {
+          "name": "attempt_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "previous_version": {
+          "name": "previous_version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "previous_commit_id": {
+          "name": "previous_commit_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "state": {
+          "name": "state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "required_seal_state": {
+          "name": "required_seal_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'sealed'"
+        },
+        "command": {
+          "name": "command",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sources_count": {
+          "name": "sources_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "revisions_count": {
+          "name": "revisions_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "confirmations_count": {
+          "name": "confirmations_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "correctionProposals_count": {
+          "name": "correctionProposals_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "correctionDecisions_count": {
+          "name": "correctionDecisions_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "intentEvents_count": {
+          "name": "intentEvents_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "summaryEvents_count": {
+          "name": "summaryEvents_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "candidateEvents_count": {
+          "name": "candidateEvents_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "record_count": {
+          "name": "record_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "reference_count": {
+          "name": "reference_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "manifest_count": {
+          "name": "manifest_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "chunk_count": {
+          "name": "chunk_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "byte_length": {
+          "name": "byte_length",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "history_commits_sealed_state_uidx": {
+          "name": "history_commits_sealed_state_uidx",
+          "columns": [
+            "sermon_id",
+            "version",
+            "state"
+          ],
+          "isUnique": true
+        },
+        "history_commits_id_uidx": {
+          "name": "history_commits_id_uidx",
+          "columns": [
+            "sermon_id",
+            "commit_id"
+          ],
+          "isUnique": true
+        },
+        "history_commits_version_id_uidx": {
+          "name": "history_commits_version_id_uidx",
+          "columns": [
+            "sermon_id",
+            "version",
+            "commit_id"
+          ],
+          "isUnique": true
+        },
+        "history_commits_attempt_uidx": {
+          "name": "history_commits_attempt_uidx",
+          "columns": [
+            "attempt_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "history_commits_required_seal_fk": {
+          "name": "history_commits_required_seal_fk",
+          "tableFrom": "sermon_history_commits",
+          "tableTo": "sermon_history_commits",
+          "columnsFrom": [
+            "sermon_id",
+            "version",
+            "required_seal_state"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "version",
+            "state"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "history_commits_sermon_fk": {
+          "name": "history_commits_sermon_fk",
+          "tableFrom": "sermon_history_commits",
+          "tableTo": "sermons",
+          "columnsFrom": [
+            "sermon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "history_commits_current_source_id_fk": {
+          "name": "history_commits_current_source_id_fk",
+          "tableFrom": "sermon_history_commits",
+          "tableTo": "sermon_history_records",
+          "columnsFrom": [
+            "sermon_id",
+            "current_source_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "record_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "history_commits_current_revision_id_fk": {
+          "name": "history_commits_current_revision_id_fk",
+          "tableFrom": "sermon_history_commits",
+          "tableTo": "sermon_history_records",
+          "columnsFrom": [
+            "sermon_id",
+            "current_revision_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "record_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "history_commits_current_confirmation_id_fk": {
+          "name": "history_commits_current_confirmation_id_fk",
+          "tableFrom": "sermon_history_commits",
+          "tableTo": "sermon_history_records",
+          "columnsFrom": [
+            "sermon_id",
+            "current_confirmation_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "record_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "history_commits_previous_fk": {
+          "name": "history_commits_previous_fk",
+          "tableFrom": "sermon_history_commits",
+          "tableTo": "sermon_history_commits",
+          "columnsFrom": [
+            "sermon_id",
+            "previous_version",
+            "previous_commit_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "version",
+            "commit_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sermon_history_commits_sermon_id_version_pk": {
+          "columns": [
+            "sermon_id",
+            "version"
+          ],
+          "name": "sermon_history_commits_sermon_id_version_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "history_commits_required_seal_check": {
+          "name": "history_commits_required_seal_check",
+          "value": "required_seal_state = 'sealed'"
+        },
+        "history_commits_sermon_id_check": {
+          "name": "history_commits_sermon_id_check",
+          "value": "length(sermon_id) between 1 and 128"
+        },
+        "history_commits_version_check": {
+          "name": "history_commits_version_check",
+          "value": "(typeof(version) = 'integer' and version between 1 and 9007199254740991)"
+        },
+        "history_commits_commit_id_check": {
+          "name": "history_commits_commit_id_check",
+          "value": "length(commit_id) between 1 and 128"
+        },
+        "history_commits_current_source_id_check": {
+          "name": "history_commits_current_source_id_check",
+          "value": "length(current_source_id) between 1 and 128"
+        },
+        "history_commits_current_revision_id_check": {
+          "name": "history_commits_current_revision_id_check",
+          "value": "length(current_revision_id) between 1 and 128"
+        },
+        "history_commits_current_confirmation_id_check": {
+          "name": "history_commits_current_confirmation_id_check",
+          "value": "current_confirmation_id is null or length(current_confirmation_id) between 1 and 128"
+        },
+        "history_commits_attempt_id_check": {
+          "name": "history_commits_attempt_id_check",
+          "value": "length(attempt_id) between 1 and 128"
+        },
+        "history_commits_previous_version_check": {
+          "name": "history_commits_previous_version_check",
+          "value": "previous_version is null or (typeof(previous_version) = 'integer' and previous_version between 1 and 9007199254740991)"
+        },
+        "history_commits_previous_commit_id_check": {
+          "name": "history_commits_previous_commit_id_check",
+          "value": "previous_commit_id is null or length(previous_commit_id) between 1 and 128"
+        },
+        "history_commits_state_check": {
+          "name": "history_commits_state_check",
+          "value": "length(state) between 1 and 128"
+        },
+        "history_commits_command_check": {
+          "name": "history_commits_command_check",
+          "value": "length(command) between 1 and 128"
+        },
+        "history_commits_sources_count_check": {
+          "name": "history_commits_sources_count_check",
+          "value": "(typeof(sources_count) = 'integer' and sources_count between 0 and 9007199254740991)"
+        },
+        "history_commits_revisions_count_check": {
+          "name": "history_commits_revisions_count_check",
+          "value": "(typeof(revisions_count) = 'integer' and revisions_count between 0 and 9007199254740991)"
+        },
+        "history_commits_confirmations_count_check": {
+          "name": "history_commits_confirmations_count_check",
+          "value": "(typeof(confirmations_count) = 'integer' and confirmations_count between 0 and 9007199254740991)"
+        },
+        "history_commits_correctionProposals_count_check": {
+          "name": "history_commits_correctionProposals_count_check",
+          "value": "(typeof(correctionProposals_count) = 'integer' and correctionProposals_count between 0 and 9007199254740991)"
+        },
+        "history_commits_correctionDecisions_count_check": {
+          "name": "history_commits_correctionDecisions_count_check",
+          "value": "(typeof(correctionDecisions_count) = 'integer' and correctionDecisions_count between 0 and 9007199254740991)"
+        },
+        "history_commits_intentEvents_count_check": {
+          "name": "history_commits_intentEvents_count_check",
+          "value": "(typeof(intentEvents_count) = 'integer' and intentEvents_count between 0 and 9007199254740991)"
+        },
+        "history_commits_summaryEvents_count_check": {
+          "name": "history_commits_summaryEvents_count_check",
+          "value": "(typeof(summaryEvents_count) = 'integer' and summaryEvents_count between 0 and 9007199254740991)"
+        },
+        "history_commits_candidateEvents_count_check": {
+          "name": "history_commits_candidateEvents_count_check",
+          "value": "(typeof(candidateEvents_count) = 'integer' and candidateEvents_count between 0 and 9007199254740991)"
+        },
+        "history_commits_record_count_check": {
+          "name": "history_commits_record_count_check",
+          "value": "(typeof(record_count) = 'integer' and record_count between 0 and 9007199254740991)"
+        },
+        "history_commits_reference_count_check": {
+          "name": "history_commits_reference_count_check",
+          "value": "(typeof(reference_count) = 'integer' and reference_count between 0 and 9007199254740991)"
+        },
+        "history_commits_manifest_count_check": {
+          "name": "history_commits_manifest_count_check",
+          "value": "(typeof(manifest_count) = 'integer' and manifest_count between 0 and 9007199254740991)"
+        },
+        "history_commits_chunk_count_check": {
+          "name": "history_commits_chunk_count_check",
+          "value": "(typeof(chunk_count) = 'integer' and chunk_count between 0 and 9007199254740991)"
+        },
+        "history_commits_byte_length_check": {
+          "name": "history_commits_byte_length_check",
+          "value": "(typeof(byte_length) = 'integer' and byte_length between 1 and 9007199254740991)"
+        },
+        "history_commits_state_enum_check": {
+          "name": "history_commits_state_enum_check",
+          "value": "state in ('assembling', 'sealed')"
+        },
+        "history_commits_previous_check": {
+          "name": "history_commits_previous_check",
+          "value": "(version = 1 and previous_version is null and previous_commit_id is null and command = 'import') or (version > 1 and previous_version is not null and previous_version = version - 1 and previous_commit_id is not null)"
+        },
+        "history_commits_command_enum_check": {
+          "name": "history_commits_command_enum_check",
+          "value": "command in ('import', 'revisions', 'confirmations', 'correctionProposals', 'correctionDecisions', 'intentEvents', 'summaryEvents', 'candidateEvents')"
+        }
+      }
+    },
+    "sermon_history_heads": {
+      "name": "sermon_history_heads",
+      "columns": {
+        "sermon_id": {
+          "name": "sermon_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "version": {
+          "name": "version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "commit_id": {
+          "name": "commit_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "current_source_id": {
+          "name": "current_source_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "current_revision_id": {
+          "name": "current_revision_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "current_confirmation_id": {
+          "name": "current_confirmation_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "storage_format_version": {
+          "name": "storage_format_version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "contract_version": {
+          "name": "contract_version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "history_heads_sermon_fk": {
+          "name": "history_heads_sermon_fk",
+          "tableFrom": "sermon_history_heads",
+          "tableTo": "sermons",
+          "columnsFrom": [
+            "sermon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "history_heads_current_source_id_fk": {
+          "name": "history_heads_current_source_id_fk",
+          "tableFrom": "sermon_history_heads",
+          "tableTo": "sermon_history_records",
+          "columnsFrom": [
+            "sermon_id",
+            "current_source_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "record_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "history_heads_current_revision_id_fk": {
+          "name": "history_heads_current_revision_id_fk",
+          "tableFrom": "sermon_history_heads",
+          "tableTo": "sermon_history_records",
+          "columnsFrom": [
+            "sermon_id",
+            "current_revision_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "record_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "history_heads_current_confirmation_id_fk": {
+          "name": "history_heads_current_confirmation_id_fk",
+          "tableFrom": "sermon_history_heads",
+          "tableTo": "sermon_history_records",
+          "columnsFrom": [
+            "sermon_id",
+            "current_confirmation_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "record_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "history_heads_commit_fk": {
+          "name": "history_heads_commit_fk",
+          "tableFrom": "sermon_history_heads",
+          "tableTo": "sermon_history_commits",
+          "columnsFrom": [
+            "sermon_id",
+            "version",
+            "commit_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "version",
+            "commit_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "history_heads_sermon_id_check": {
+          "name": "history_heads_sermon_id_check",
+          "value": "length(sermon_id) between 1 and 128"
+        },
+        "history_heads_version_check": {
+          "name": "history_heads_version_check",
+          "value": "(typeof(version) = 'integer' and version between 1 and 9007199254740991)"
+        },
+        "history_heads_commit_id_check": {
+          "name": "history_heads_commit_id_check",
+          "value": "length(commit_id) between 1 and 128"
+        },
+        "history_heads_current_source_id_check": {
+          "name": "history_heads_current_source_id_check",
+          "value": "length(current_source_id) between 1 and 128"
+        },
+        "history_heads_current_revision_id_check": {
+          "name": "history_heads_current_revision_id_check",
+          "value": "length(current_revision_id) between 1 and 128"
+        },
+        "history_heads_current_confirmation_id_check": {
+          "name": "history_heads_current_confirmation_id_check",
+          "value": "current_confirmation_id is null or length(current_confirmation_id) between 1 and 128"
+        },
+        "history_heads_storage_format_version_check": {
+          "name": "history_heads_storage_format_version_check",
+          "value": "(typeof(storage_format_version) = 'integer' and storage_format_version between 1 and 9007199254740991)"
+        },
+        "history_heads_contract_version_check": {
+          "name": "history_heads_contract_version_check",
+          "value": "(typeof(contract_version) = 'integer' and contract_version between 1 and 9007199254740991)"
+        },
+        "history_heads_format_check": {
+          "name": "history_heads_format_check",
+          "value": "storage_format_version = 1 and contract_version = 1"
+        }
+      }
+    },
+    "sermon_history_payloads": {
+      "name": "sermon_history_payloads",
+      "columns": {
+        "sermon_id": {
+          "name": "sermon_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "record_id": {
+          "name": "record_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "codec": {
+          "name": "codec",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "chunk_bytes": {
+          "name": "chunk_bytes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "chunk_count": {
+          "name": "chunk_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "byte_length": {
+          "name": "byte_length",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "payload_sha256": {
+          "name": "payload_sha256",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "verified": {
+          "name": "verified",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "history_payloads_record_fk": {
+          "name": "history_payloads_record_fk",
+          "tableFrom": "sermon_history_payloads",
+          "tableTo": "sermon_history_records",
+          "columnsFrom": [
+            "sermon_id",
+            "record_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "record_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sermon_history_payloads_sermon_id_record_id_pk": {
+          "columns": [
+            "sermon_id",
+            "record_id"
+          ],
+          "name": "sermon_history_payloads_sermon_id_record_id_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "history_payloads_sermon_id_check": {
+          "name": "history_payloads_sermon_id_check",
+          "value": "length(sermon_id) between 1 and 128"
+        },
+        "history_payloads_record_id_check": {
+          "name": "history_payloads_record_id_check",
+          "value": "length(record_id) between 1 and 128"
+        },
+        "history_payloads_codec_check": {
+          "name": "history_payloads_codec_check",
+          "value": "length(codec) between 1 and 128"
+        },
+        "history_payloads_chunk_bytes_check": {
+          "name": "history_payloads_chunk_bytes_check",
+          "value": "(typeof(chunk_bytes) = 'integer' and chunk_bytes between 1 and 9007199254740991)"
+        },
+        "history_payloads_chunk_count_check": {
+          "name": "history_payloads_chunk_count_check",
+          "value": "(typeof(chunk_count) = 'integer' and chunk_count between 0 and 9007199254740991)"
+        },
+        "history_payloads_byte_length_check": {
+          "name": "history_payloads_byte_length_check",
+          "value": "(typeof(byte_length) = 'integer' and byte_length between 1 and 9007199254740991)"
+        },
+        "history_payloads_payload_sha256_check": {
+          "name": "history_payloads_payload_sha256_check",
+          "value": "length(payload_sha256) between 1 and 128"
+        },
+        "history_payloads_verified_check": {
+          "name": "history_payloads_verified_check",
+          "value": "(typeof(verified) = 'integer' and verified between 0 and 1)"
+        },
+        "history_payloads_codec_enum_check": {
+          "name": "history_payloads_codec_enum_check",
+          "value": "codec = 'record-json-utf8-v1' and chunk_bytes = 65536 and chunk_count = (byte_length - 1) / 65536 + 1"
+        },
+        "history_payloads_sha256_check": {
+          "name": "history_payloads_sha256_check",
+          "value": "length(payload_sha256) = 64 and payload_sha256 not glob '*[^0-9a-f]*'"
+        }
+      }
+    },
+    "sermon_history_records": {
+      "name": "sermon_history_records",
+      "columns": {
+        "sermon_id": {
+          "name": "sermon_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "record_id": {
+          "name": "record_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "stream": {
+          "name": "stream",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "stream_position": {
+          "name": "stream_position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "commit_version": {
+          "name": "commit_version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "commit_slot": {
+          "name": "commit_slot",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "source_revision": {
+          "name": "source_revision",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "difficulty": {
+          "name": "difficulty",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "verified": {
+          "name": "verified",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "history_records_stream_position_uidx": {
+          "name": "history_records_stream_position_uidx",
+          "columns": [
+            "sermon_id",
+            "stream",
+            "stream_position"
+          ],
+          "isUnique": true
+        },
+        "history_records_commit_slot_uidx": {
+          "name": "history_records_commit_slot_uidx",
+          "columns": [
+            "sermon_id",
+            "commit_version",
+            "commit_slot"
+          ],
+          "isUnique": true
+        },
+        "history_records_source_revision_uidx": {
+          "name": "history_records_source_revision_uidx",
+          "columns": [
+            "sermon_id",
+            "source_revision"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "history_records_commit_fk": {
+          "name": "history_records_commit_fk",
+          "tableFrom": "sermon_history_records",
+          "tableTo": "sermon_history_commits",
+          "columnsFrom": [
+            "sermon_id",
+            "commit_version"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "version"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sermon_history_records_sermon_id_record_id_pk": {
+          "columns": [
+            "sermon_id",
+            "record_id"
+          ],
+          "name": "sermon_history_records_sermon_id_record_id_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "history_records_sermon_id_check": {
+          "name": "history_records_sermon_id_check",
+          "value": "length(sermon_id) between 1 and 128"
+        },
+        "history_records_record_id_check": {
+          "name": "history_records_record_id_check",
+          "value": "length(record_id) between 1 and 128"
+        },
+        "history_records_stream_check": {
+          "name": "history_records_stream_check",
+          "value": "length(stream) between 1 and 128"
+        },
+        "history_records_stream_position_check": {
+          "name": "history_records_stream_position_check",
+          "value": "(typeof(stream_position) = 'integer' and stream_position between 1 and 9007199254740991)"
+        },
+        "history_records_commit_version_check": {
+          "name": "history_records_commit_version_check",
+          "value": "(typeof(commit_version) = 'integer' and commit_version between 1 and 9007199254740991)"
+        },
+        "history_records_commit_slot_check": {
+          "name": "history_records_commit_slot_check",
+          "value": "(typeof(commit_slot) = 'integer' and commit_slot between 0 and 9007199254740991)"
+        },
+        "history_records_source_revision_check": {
+          "name": "history_records_source_revision_check",
+          "value": "source_revision is null or (typeof(source_revision) = 'integer' and source_revision between 1 and 9007199254740991)"
+        },
+        "history_records_difficulty_check": {
+          "name": "history_records_difficulty_check",
+          "value": "difficulty is null or length(difficulty) between 1 and 128"
+        },
+        "history_records_verified_check": {
+          "name": "history_records_verified_check",
+          "value": "(typeof(verified) = 'integer' and verified between 0 and 1)"
+        },
+        "history_records_stream_enum_check": {
+          "name": "history_records_stream_enum_check",
+          "value": "stream in ('sources', 'revisions', 'confirmations', 'correctionProposals', 'correctionDecisions', 'intentEvents', 'summaryEvents', 'candidateEvents')"
+        },
+        "history_records_projection_check": {
+          "name": "history_records_projection_check",
+          "value": "(stream = 'sources' and source_revision is not null and source_revision = stream_position) or (stream <> 'sources' and source_revision is null)"
+        },
+        "history_records_difficulty_enum_check": {
+          "name": "history_records_difficulty_enum_check",
+          "value": "(stream = 'candidateEvents' and difficulty is not null and difficulty in ('child','adult')) or (stream <> 'candidateEvents' and difficulty is null)"
+        }
+      }
+    },
+    "sermon_history_references": {
+      "name": "sermon_history_references",
+      "columns": {
+        "sermon_id": {
+          "name": "sermon_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "owner_record_id": {
+          "name": "owner_record_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "reference_position": {
+          "name": "reference_position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "relation": {
+          "name": "relation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "target_record_id": {
+          "name": "target_record_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "target_stream": {
+          "name": "target_stream",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "target_member_id": {
+          "name": "target_member_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "payload_path": {
+          "name": "payload_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "verified": {
+          "name": "verified",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "history_references_target_idx": {
+          "name": "history_references_target_idx",
+          "columns": [
+            "sermon_id",
+            "target_record_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "history_references_owner_record_id_fk": {
+          "name": "history_references_owner_record_id_fk",
+          "tableFrom": "sermon_history_references",
+          "tableTo": "sermon_history_records",
+          "columnsFrom": [
+            "sermon_id",
+            "owner_record_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "record_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "history_references_target_record_id_fk": {
+          "name": "history_references_target_record_id_fk",
+          "tableFrom": "sermon_history_references",
+          "tableTo": "sermon_history_records",
+          "columnsFrom": [
+            "sermon_id",
+            "target_record_id"
+          ],
+          "columnsTo": [
+            "sermon_id",
+            "record_id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sermon_history_references_sermon_id_owner_record_id_reference_position_pk": {
+          "columns": [
+            "sermon_id",
+            "owner_record_id",
+            "reference_position"
+          ],
+          "name": "sermon_history_references_sermon_id_owner_record_id_reference_position_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "history_references_sermon_id_check": {
+          "name": "history_references_sermon_id_check",
+          "value": "length(sermon_id) between 1 and 128"
+        },
+        "history_references_owner_record_id_check": {
+          "name": "history_references_owner_record_id_check",
+          "value": "length(owner_record_id) between 1 and 128"
+        },
+        "history_references_reference_position_check": {
+          "name": "history_references_reference_position_check",
+          "value": "(typeof(reference_position) = 'integer' and reference_position between 1 and 9007199254740991)"
+        },
+        "history_references_relation_check": {
+          "name": "history_references_relation_check",
+          "value": "length(relation) between 1 and 128"
+        },
+        "history_references_target_record_id_check": {
+          "name": "history_references_target_record_id_check",
+          "value": "length(target_record_id) between 1 and 128"
+        },
+        "history_references_target_stream_check": {
+          "name": "history_references_target_stream_check",
+          "value": "length(target_stream) between 1 and 128"
+        },
+        "history_references_target_member_id_check": {
+          "name": "history_references_target_member_id_check",
+          "value": "target_member_id is null or length(target_member_id) between 1 and 128"
+        },
+        "history_references_payload_path_check": {
+          "name": "history_references_payload_path_check",
+          "value": "length(payload_path) between 1 and 512"
+        },
+        "history_references_verified_check": {
+          "name": "history_references_verified_check",
+          "value": "(typeof(verified) = 'integer' and verified between 0 and 1)"
+        },
+        "history_references_target_stream_enum_check": {
+          "name": "history_references_target_stream_enum_check",
+          "value": "target_stream in ('sources', 'revisions', 'confirmations', 'correctionProposals', 'correctionDecisions', 'intentEvents', 'summaryEvents', 'candidateEvents')"
+        }
+      }
+    },
+    "sermon_metadata_drafts": {
+      "name": "sermon_metadata_drafts",
+      "columns": {
+        "sermon_id": {
+          "name": "sermon_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "contract_version": {
+          "name": "contract_version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "metadata_revision": {
+          "name": "metadata_revision",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sermon_date": {
+          "name": "sermon_date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "bible_reference_json": {
+          "name": "bible_reference_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sermon_metadata_drafts_sermon_id_sermons_id_fk": {
+          "name": "sermon_metadata_drafts_sermon_id_sermons_id_fk",
+          "tableFrom": "sermon_metadata_drafts",
+          "tableTo": "sermons",
+          "columnsFrom": [
+            "sermon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "sermon_metadata_drafts_contract_check": {
+          "name": "sermon_metadata_drafts_contract_check",
+          "value": "\"sermon_metadata_drafts\".\"contract_version\" = 1"
+        },
+        "sermon_metadata_drafts_revision_check": {
+          "name": "sermon_metadata_drafts_revision_check",
+          "value": "typeof(\"sermon_metadata_drafts\".\"metadata_revision\") = 'integer' and \"sermon_metadata_drafts\".\"metadata_revision\" between 1 and 9007199254740991"
+        },
+        "sermon_metadata_drafts_title_check": {
+          "name": "sermon_metadata_drafts_title_check",
+          "value": "length(\"sermon_metadata_drafts\".\"title\") between 1 and 300"
+        },
+        "sermon_metadata_drafts_reference_json_check": {
+          "name": "sermon_metadata_drafts_reference_json_check",
+          "value": "json_valid(\"sermon_metadata_drafts\".\"bible_reference_json\") and json_type(\"sermon_metadata_drafts\".\"bible_reference_json\") = 'object'"
+        }
+      }
+    },
+    "sermon_transcripts": {
+      "name": "sermon_transcripts",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sermon_id": {
+          "name": "sermon_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "source_revision": {
+          "name": "source_revision",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "language": {
+          "name": "language",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "track_id": {
+          "name": "track_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "provider": {
+          "name": "provider",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "provider_version": {
+          "name": "provider_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "source_mode": {
+          "name": "source_mode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "manual_source_kind": {
+          "name": "manual_source_kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "source_coverage": {
+          "name": "source_coverage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "is_auto_generated": {
+          "name": "is_auto_generated",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "raw_text": {
+          "name": "raw_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "raw_sha256": {
+          "name": "raw_sha256",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "raw_segments_json": {
+          "name": "raw_segments_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "confirmed_text": {
+          "name": "confirmed_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "confirmed_sha256": {
+          "name": "confirmed_sha256",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'imported'"
+        },
+        "confirmed_revision_id": {
+          "name": "confirmed_revision_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "confirmed_by": {
+          "name": "confirmed_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "confirmed_at": {
+          "name": "confirmed_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "retention_mode": {
+          "name": "retention_mode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'keep_private'"
+        },
+        "fetched_at": {
+          "name": "fetched_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "sermon_transcripts_sermon_revision_uidx": {
+          "name": "sermon_transcripts_sermon_revision_uidx",
+          "columns": [
+            "sermon_id",
+            "source_revision"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "sermon_transcripts_sermon_id_sermons_id_fk": {
+          "name": "sermon_transcripts_sermon_id_sermons_id_fk",
+          "tableFrom": "sermon_transcripts",
+          "tableTo": "sermons",
+          "columnsFrom": [
+            "sermon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "sermon_transcripts_source_revision_check": {
+          "name": "sermon_transcripts_source_revision_check",
+          "value": "\"sermon_transcripts\".\"source_revision\" >= 1"
+        },
+        "sermon_transcripts_source_mode_check": {
+          "name": "sermon_transcripts_source_mode_check",
+          "value": "\"sermon_transcripts\".\"source_mode\" in ('public_unofficial', 'manual_paste', 'manual_upload', 'sermon_notes', 'audio_transcription', 'youtube_oauth')"
+        },
+        "sermon_transcripts_manual_source_kind_check": {
+          "name": "sermon_transcripts_manual_source_kind_check",
+          "value": "\"sermon_transcripts\".\"manual_source_kind\" is null or \"sermon_transcripts\".\"manual_source_kind\" in ('youtube_visible_transcript', 'sermon_manuscript', 'sermon_summary')"
+        },
+        "sermon_transcripts_source_coverage_check": {
+          "name": "sermon_transcripts_source_coverage_check",
+          "value": "\"sermon_transcripts\".\"source_coverage\" in ('full_transcript', 'partial_notes')"
+        },
+        "sermon_transcripts_status_check": {
+          "name": "sermon_transcripts_status_check",
+          "value": "\"sermon_transcripts\".\"status\" in ('imported', 'editing', 'correction_pending', 'confirmed')"
+        },
+        "sermon_transcripts_retention_mode_check": {
+          "name": "sermon_transcripts_retention_mode_check",
+          "value": "\"sermon_transcripts\".\"retention_mode\" in ('keep_private', 'delete_text_after_publish')"
+        },
+        "sermon_transcripts_confirmed_fields_check": {
+          "name": "sermon_transcripts_confirmed_fields_check",
+          "value": "\"sermon_transcripts\".\"status\" <> 'confirmed' or (\"sermon_transcripts\".\"confirmed_text\" is not null and \"sermon_transcripts\".\"confirmed_sha256\" is not null and \"sermon_transcripts\".\"confirmed_at\" is not null)"
+        }
+      }
+    },
+    "sermons": {
+      "name": "sermons",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "slug_suffix": {
+          "name": "slug_suffix",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "church_name": {
+          "name": "church_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "youtube_url": {
+          "name": "youtube_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "youtube_video_id": {
+          "name": "youtube_video_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sermon_title": {
+          "name": "sermon_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sermon_date": {
+          "name": "sermon_date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "bible_translation_id": {
+          "name": "bible_translation_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "bible_reference_json": {
+          "name": "bible_reference_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "bible_reference_label": {
+          "name": "bible_reference_label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "bible_text_snapshot": {
+          "name": "bible_text_snapshot",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "bible_source_sha256": {
+          "name": "bible_source_sha256",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ai_summary": {
+          "name": "ai_summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ai_summary_disclosure": {
+          "name": "ai_summary_disclosure",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "sermons_slug_unique": {
+          "name": "sermons_slug_unique",
+          "columns": [
+            "slug"
+          ],
+          "isUnique": true
+        },
+        "sermons_slug_suffix_unique": {
+          "name": "sermons_slug_suffix_unique",
+          "columns": [
+            "slug_suffix"
+          ],
+          "isUnique": true
+        },
+        "sermons_youtube_video_id_unique": {
+          "name": "sermons_youtube_video_id_unique",
+          "columns": [
+            "youtube_video_id"
+          ],
+          "isUnique": true
+        },
+        "sermons_sermon_date_id_idx": {
+          "name": "sermons_sermon_date_id_idx",
+          "columns": [
+            "\"sermon_date\" desc",
+            "\"id\" desc"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "sermons_bible_translation_id_bible_translations_id_fk": {
+          "name": "sermons_bible_translation_id_bible_translations_id_fk",
+          "tableFrom": "sermons",
+          "tableTo": "bible_translations",
+          "columnsFrom": [
+            "bible_translation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "site_state": {
+      "name": "site_state",
+      "columns": {
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "value": {
+          "name": "value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "submissions": {
+      "name": "submissions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "quiz_variant_id": {
+          "name": "quiz_variant_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "quiz_revision": {
+          "name": "quiz_revision",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "session_hash": {
+          "name": "session_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "idempotency_key": {
+          "name": "idempotency_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "request_hash": {
+          "name": "request_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "comment": {
+          "name": "comment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "answers_json": {
+          "name": "answers_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "correctness_mask": {
+          "name": "correctness_mask",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "correct_cells": {
+          "name": "correct_cells",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "total_cells": {
+          "name": "total_cells",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "correct_words": {
+          "name": "correct_words",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "total_words": {
+          "name": "total_words",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "score_basis_points": {
+          "name": "score_basis_points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "is_fully_correct": {
+          "name": "is_fully_correct",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'visible'"
+        },
+        "submitted_at": {
+          "name": "submitted_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "hidden_at": {
+          "name": "hidden_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "submissions_variant_session_uidx": {
+          "name": "submissions_variant_session_uidx",
+          "columns": [
+            "quiz_variant_id",
+            "session_hash"
+          ],
+          "isUnique": true
+        },
+        "submissions_variant_session_idempotency_uidx": {
+          "name": "submissions_variant_session_idempotency_uidx",
+          "columns": [
+            "quiz_variant_id",
+            "session_hash",
+            "idempotency_key"
+          ],
+          "isUnique": true
+        },
+        "submissions_variant_status_submitted_idx": {
+          "name": "submissions_variant_status_submitted_idx",
+          "columns": [
+            "quiz_variant_id",
+            "status",
+            "submitted_at",
+            "id"
+          ],
+          "isUnique": false
+        },
+        "submissions_variant_full_correct_submitted_idx": {
+          "name": "submissions_variant_full_correct_submitted_idx",
+          "columns": [
+            "quiz_variant_id",
+            "status",
+            "is_fully_correct",
+            "submitted_at",
+            "id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "submissions_quiz_variant_id_quiz_variants_id_fk": {
+          "name": "submissions_quiz_variant_id_quiz_variants_id_fk",
+          "tableFrom": "submissions",
+          "tableTo": "quiz_variants",
+          "columnsFrom": [
+            "quiz_variant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "submissions_session_hash_anonymous_sessions_session_hash_fk": {
+          "name": "submissions_session_hash_anonymous_sessions_session_hash_fk",
+          "tableFrom": "submissions",
+          "tableTo": "anonymous_sessions",
+          "columnsFrom": [
+            "session_hash"
+          ],
+          "columnsTo": [
+            "session_hash"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "submissions_revision_check": {
+          "name": "submissions_revision_check",
+          "value": "\"submissions\".\"quiz_revision\" >= 1"
+        },
+        "submissions_request_hash_check": {
+          "name": "submissions_request_hash_check",
+          "value": "length(\"submissions\".\"request_hash\") = 64 and \"submissions\".\"request_hash\" not glob '*[^0-9a-f]*'"
+        },
+        "submissions_idempotency_key_check": {
+          "name": "submissions_idempotency_key_check",
+          "value": "length(\"submissions\".\"idempotency_key\") = 36 and \"submissions\".\"idempotency_key\" = lower(\"submissions\".\"idempotency_key\") and \"submissions\".\"idempotency_key\" glob '????????-????-7???-[89ab]???-????????????' and \"submissions\".\"idempotency_key\" not glob '*[^0-9a-f-]*'"
+        },
+        "submissions_answers_json_check": {
+          "name": "submissions_answers_json_check",
+          "value": "\"submissions\".\"answers_json\" is null or json_valid(\"submissions\".\"answers_json\")"
+        },
+        "submissions_cell_score_check": {
+          "name": "submissions_cell_score_check",
+          "value": "\"submissions\".\"total_cells\" between 1 and 100 and \"submissions\".\"correct_cells\" between 0 and \"submissions\".\"total_cells\""
+        },
+        "submissions_word_score_check": {
+          "name": "submissions_word_score_check",
+          "value": "\"submissions\".\"total_words\" between 1 and 100 and \"submissions\".\"correct_words\" between 0 and \"submissions\".\"total_words\""
+        },
+        "submissions_basis_points_check": {
+          "name": "submissions_basis_points_check",
+          "value": "\"submissions\".\"score_basis_points\" = round(\"submissions\".\"correct_cells\" * 10000.0 / \"submissions\".\"total_cells\")"
+        },
+        "submissions_correctness_mask_check": {
+          "name": "submissions_correctness_mask_check",
+          "value": "length(\"submissions\".\"correctness_mask\") = \"submissions\".\"total_cells\" and \"submissions\".\"correctness_mask\" not glob '*[^01]*' and length(\"submissions\".\"correctness_mask\") - length(replace(\"submissions\".\"correctness_mask\", '1', '')) = \"submissions\".\"correct_cells\""
+        },
+        "submissions_fully_correct_check": {
+          "name": "submissions_fully_correct_check",
+          "value": "\"submissions\".\"is_fully_correct\" = (\"submissions\".\"correct_cells\" = \"submissions\".\"total_cells\")"
+        },
+        "submissions_status_check": {
+          "name": "submissions_status_check",
+          "value": "\"submissions\".\"status\" in ('visible', 'hidden', 'deleted')"
+        },
+        "submissions_content_status_check": {
+          "name": "submissions_content_status_check",
+          "value": "(\"submissions\".\"status\" = 'visible' and \"submissions\".\"display_name\" is not null and \"submissions\".\"answers_json\" is not null and \"submissions\".\"hidden_at\" is null and \"submissions\".\"deleted_at\" is null) or (\"submissions\".\"status\" = 'hidden' and \"submissions\".\"display_name\" is not null and \"submissions\".\"answers_json\" is not null and \"submissions\".\"hidden_at\" is not null and \"submissions\".\"deleted_at\" is null) or (\"submissions\".\"status\" = 'deleted' and \"submissions\".\"display_name\" is null and \"submissions\".\"comment\" is null and \"submissions\".\"answers_json\" is null and \"submissions\".\"deleted_at\" is not null)"
+        }
+      }
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {
+      "quiz_sets_archive_idx": {
+        "columns": {
+          "\"id\" desc": {
+            "isExpression": true
+          }
+        }
+      },
+      "sermons_sermon_date_id_idx": {
+        "columns": {
+          "\"sermon_date\" desc": {
+            "isExpression": true
+          },
+          "\"id\" desc": {
+            "isExpression": true
+          }
+        }
+      }
+    }
+  }
+}

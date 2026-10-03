@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2026-08-25",
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": false
+    }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "biblequiz-d1-preview",
+      "database_id": "cb044032-7e26-452b-afae-b0cae3d93678",
+      "migrations_dir": "../../../migrations"
+    }
+  ],
+  "name": "biblequiz-backup-preview",
+  "main": "../../../workers/backup/index.ts",
+  "vars": {
+    "OPERATIONS_ENVIRONMENT": "preview",
+    "BACKUP_ENABLED": "false",
+    "D1_DATABASE_ID": "cb044032-7e26-452b-afae-b0cae3d93678",
+    "BACKUP_BUCKET_NAME": "biblequiz-backups-preview"
+  },
+  "r2_buckets": [
+    {
+      "binding": "BACKUP_BUCKET",
+      "bucket_name": "biblequiz-backups-preview"
+    }
+  ],
+  "workflows": [
+    {
+      "binding": "BACKUP_WORKFLOW",
+      "name": "biblequiz-backup-preview",
+      "class_name": "BackupWorkflow"
+    }
+  ]
+}

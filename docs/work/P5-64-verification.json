@@ -1,0 +1,283 @@
+{
+  "task": "P5-64",
+  "date": "2026-09-23",
+  "status": "complete-local-review-only",
+  "head": "0ab476e4281734f4eab64cc6231be09092221651",
+  "baselineFileCount": 588,
+  "unchangedExistingFileCount": 578,
+  "changedExistingFiles": {
+    "docs/HANDOFF.md": {
+      "before": "9b80effd460a9fe83966f9477230073d9cfd6ceaae4f53623cb2cd9e5c3af9f5",
+      "after": "5cd7827d7203ef6d53a6a5dac7e6918d98e9a9672b6c0cf8ff5ec04c2a9cb1ec"
+    },
+    "docs/PROJECT_CONTEXT.md": {
+      "before": "784481f6b78e37a91ec9fed21db6e0d1bd5eb2d8ae0f278d6792f329636b2d0c",
+      "after": "76c6c9519f28fc3d5952bf56ddd7883061f3b0c904ef0632f934568c4d358f1e"
+    },
+    "docs/ROADMAP.md": {
+      "before": "1fbf305090897bcd533159210e126f0fd3571afe96ac882293bac2f349130b80",
+      "after": "753db0540cbda3463408078b2423d25dc47b4cdd0d950233fd66e6be1f94c19d"
+    },
+    "docs/STATUS.md": {
+      "before": "f151b5671a663378e3c3dc7732db8d45912b3283f5ac784aa64e3038b00af302",
+      "after": "416889625c2a9f11f23e3086b83bc10c1f209592d45eae5cc33e7aeee799ee9b"
+    },
+    "docs/spec/generation.md": {
+      "before": "b3d9a17445e158c2c1c028e80cec8c0839adee2b1ef4078de57a427dda39a787",
+      "after": "0df50b92cfb84a41689f2ed83029ca9af07da4f8925753e5feb2cdb99895c092"
+    },
+    "docs/spec/release.md": {
+      "before": "3bfaca8c25adcfb107701bd522b886959711faa12cf1099c7c5fef2e9baa5e96",
+      "after": "70de43b70e09e79f5126c258c70e1e08223d57513e75c311ae44b26efb4f8098"
+    },
+    "implementation.md": {
+      "before": "d15e0e023203567152b0ebe1be02a5e009a74d9087c506d3eaa5ac8d40bfc69a",
+      "after": "2d278533b3162857ad0465c6a3b91052fe171832ec19a58f763764d4bc56c043"
+    },
+    "src/features/admin-sermon-input/AdminSermonInput.tsx": {
+      "before": "e822110f5f720e03379438ce138dbfa5cd2f0cb156f5c22352cd8b9280a0c4f3",
+      "after": "5065391ce5d331b01a7779a304994951f7c440234c731a8a7ad3d70aeb8a1b2e"
+    },
+    "tests/e2e/admin-content-generation.spec.ts": {
+      "before": "28016c58a4ed9e0873a0a748ffd082cb7d939a803f01a60420ab437427d74887",
+      "after": "2bad2747c2948b1631ea80bef33d76faf121035e42d808b1fb9c79bee6322120"
+    },
+    "workers/app/content-intent-generation.test.ts": {
+      "before": "d358076c2ba245f8f10c25b241c788fdf9adb55146abcde3b56b9729be9777f2",
+      "after": "eff3aef8213744da68979d2640f7e06e794bdf2daef2f7c64e06ee61b3cae7f8"
+    }
+  },
+  "newFiles": {
+    "docs/work/P5-64.md": "77d85276fb2ca4f9214546d95326e50396a8a3ba3706e0c09870f7dcd934cd6b"
+  },
+  "missingExistingFiles": [],
+  "preservedMigrationFiles": {
+    "migrations/0000_foundation.sql": "58f8fa7d7ad40a635af9bca7cd508ceaeacd285e998fff745a1f17453b6f1a9a",
+    "migrations/0001_public_quiz_entries.sql": "e0308a4d02cd89f4a41a7ce7f3684a2e3b19126423f4f8dee493fa6db89b36d7",
+    "migrations/0002_phase4_submission_storage.sql": "537bc3571fb8f81ef43b5b88d7a2dafff67d616a8e751d0c5a67bde63a74d682",
+    "migrations/0003_phase4_moderation_policy.sql": "5184d2b7acb08d190a62eb755db78fddb7051ecc46a9f6e23e921bedbfd230f8",
+    "migrations/0004_phase4_leaderboard_snapshot.sql": "b4ac1a8596f200ff0d3955962b9b0b74ed8c163180c0fd04516cbeb9e364d8b5",
+    "migrations/0005_phase4_audit_logs.sql": "fcd42e32b58062f346ca606012f90e2754b548127833eec2a31ca02a6ebd9e20",
+    "migrations/0006_phase4_submission_moderation.sql": "5df9f1211a7f0a00709c8ccd21d2dc457bfaa4394495f08e41cc82044a49c46e",
+    "migrations/0007_phase5_private_sermon_metadata.sql": "c9680cd98542d175b6ec2ee478d74ba1ce02d4ab74b3ea3d5748d89c1f6e3072",
+    "migrations/0008_phase5_private_sermon_history.sql": "119b997a7f49d2b26408b14b01a793caec9673f39bc3d5420a6b39968958ea28",
+    "migrations/0009_sermon_input_selected_storage.sql": "53157112bba2bdc5f8ef19f25fc580f77480d07bd84c56308de63f16306220f7",
+    "migrations/0010_phase5_generation_jobs.sql": "1f7d311a5a5b7f20d114a60f4250aeea893d3967f84d214976f3566b52108995",
+    "migrations/0011_phase5_ai_result_usage_storage.sql": "1083df3650137f4101893347704ea21bd301528d8f530dcdf74826a6782e363b",
+    "migrations/0012_phase5_human_content_final_ticket.sql": "d8d8958cb7291de1cc3c39c644b310fe0ddb265686611e015f58b32c06a16ebe",
+    "migrations/0013_phase5_generation_lifecycle.sql": "a86b88e00bab22eb1228fa43ed1a538c0c824752ec04254114dd1409fdc9400a",
+    "migrations/0014_phase5_full_validation_finish.sql": "38bf25a9bca1390c658852ea11aa68e2b6165cb7f965a719bf37914c863284d7",
+    "migrations/0015_phase5_domain_content_lineage.sql": "614e53553c2cfb0e65fe2c750032fae2e447adf9273c2f47e5178af5fd04e59d",
+    "migrations/0016_phase5_placement_selections.sql": "beb463dd5dc9df062def7971991731328dbfd61eed717f350b408306768e071a",
+    "migrations/0017_phase5_individual_regeneration.sql": "c9d4623af6fade49a6876d70539b5f5e8cee4ebba83ab2efbf4a6151e3018e0b",
+    "migrations/0018_phase5_published_content.sql": "b322c747c266fa111d4ac7b5be36fcefc8167199926a80d1817229770e971730",
+    "migrations/0019_phase5_intent_regeneration.sql": "623533bfcda4aa44edfa4568d4f2a3034cd8830c4ba0e1da150012c4bc9b1b19",
+    "migrations/0020_phase5_intent_critique_retry.sql": "aafabc9d088a1a8f3ec469d5aab9c0153608a6154eb6dd351dff3753db03eb86",
+    "migrations/0021_phase5_draft_cleanup.sql": "0fdedc800ef6c4149faa174c5cb1b6e1ad57fe54a88d1fea79ecf913ccbfd118",
+    "migrations/0022_phase5_display_corrections.sql": "1c9c4eb6f3d3639d815550b242b6affe93c072486cd0ec7fe4008dde068c19a9",
+    "migrations/0023_phase5_withdrawals.sql": "207b7db40d69f8f784089e9806f5d857ac81f98ba3458eb891c6434931e0493c",
+    "migrations/0024_phase5_withdrawal_edits.sql": "2b49dd5cb44856637f39afd792ce02201b2ad8f9e6c9b9fc6d3e1d5c5d15a73a",
+    "migrations/0025_phase5_withdrawal_edit_cleanup.sql": "dd479568cf2ea1b5d8cc7f5445505765168d457bbcfc22179e73b71156b3639a",
+    "migrations/0026_phase5_quiz_republication.sql": "82a737faa43f0f2ed44bc2938d9f097d5d76755e377b0adfb1c8da2b028e3186",
+    "migrations/0027_phase5_problem_corrections.sql": "f5ed93a0cb9aaf3f674542194c833226462f2d9b097819540237f98bc4eb8988",
+    "migrations/0028_phase5_wording_corrections.sql": "dbd4252abf26f93e7e8abc00810adfb54769b2779beef585ff24517140da1a8d",
+    "migrations/meta/0000_snapshot.json": "62a9c80fe37ed3861a276dcbbee85ba15cf384d639cd53a05d97646f8f0aa198",
+    "migrations/meta/0001_snapshot.json": "caf8f489c8720c4c790dd911c12e812b2eb5d1199a28b130fa8bd80778f97f4f",
+    "migrations/meta/0002_snapshot.json": "e4c83e23676fe448eb2054cd1361872e0a6ad02ef99e314e8bd1aa40732a0488",
+    "migrations/meta/0003_snapshot.json": "bf0eab7364fcfa084df482c2ac77f1e46645edd5b0fc4b213951855797d7393f",
+    "migrations/meta/0004_snapshot.json": "9055c8d32c4047df6dbe4e06cae35822bac766ea5e64301ade9cd005cd824df1",
+    "migrations/meta/0005_snapshot.json": "7ad52586b2a61ce7394b2efb9c33b51c52c78389e07c30b27cb7c90c19427fbc",
+    "migrations/meta/0006_snapshot.json": "e77f313ff1e6cea3d07d794cdfeff39a0031379f0f24e524e84c66f608ea7c99",
+    "migrations/meta/0007_snapshot.json": "518946dde13e17caaea5ed8369cc01077c1232ca822d505d90096232fb1b3b84",
+    "migrations/meta/0008_snapshot.json": "6a4c5945be883157a25515695d00162efff396829b49dcc91e88248d5b1173d3",
+    "migrations/meta/0009_snapshot.json": "8bd21374d2e5062a8a4ccc5da678bc7e4c9885a74f33f435c28c9062163962a9",
+    "migrations/meta/0010_snapshot.json": "78d29a412e8745c1ca0574ce68fdf2c2b98b46eb7d33a4402a7fbb2fb8c1a85e",
+    "migrations/meta/0011_snapshot.json": "33a1921daf615ecc75e2c87c2c5e038082b229e154593f96e2045a92c003c19a",
+    "migrations/meta/0012_snapshot.json": "a5149c5004ae17fb009bc56d356bdffef8ec691e24e73cebd3633999dbf40964",
+    "migrations/meta/0013_snapshot.json": "e74694c0e0b60f4fec568d2885f4cdf5acea2a61a1f983c3be79b4c02b147c62",
+    "migrations/meta/0014_snapshot.json": "efb02574913ab5792bc885bab431276f673f51c3b196cdd3f5a905a629f442c9",
+    "migrations/meta/0015_snapshot.json": "d6ffd914363502279c5019130dc72f33395d948d65c6dfb1586838447f6e110a",
+    "migrations/meta/0016_snapshot.json": "4f5bc7be55108ccf525ab14ffe90af9ad76a432d2e6b57b4f640ecbcdd5a58bb",
+    "migrations/meta/0017_snapshot.json": "34a8c205559796653bd58fa4a8633be1020180bcf8b2aac6fdf9c949a792560c",
+    "migrations/meta/0018_snapshot.json": "248610dc7e7dc317ce22b61146170c3ff70548f6e325ff723bfef4cfe8a4e466",
+    "migrations/meta/0019_snapshot.json": "e6aea7690124588464ef370d4482c94c441439d45c4f32582aeae710a5755d8c",
+    "migrations/meta/0020_snapshot.json": "b229bde4c71ad37ae92ff9d9406a08dcfa16463dc539ae6af35aada322942078",
+    "migrations/meta/0021_snapshot.json": "5c730a6fb827fc1cd3df1a6f28f53f3c532fc718bfd0410536abe937574bc557",
+    "migrations/meta/0022_snapshot.json": "e33f934cd8ed40cd23ce8f329703968d41613cc23f499a5d1df711c0d65e4f84",
+    "migrations/meta/0023_snapshot.json": "5155c66da40b5ccef53932a29eb0841da5a9eeb7fcfb903f674c98f4a162e6d3",
+    "migrations/meta/0024_snapshot.json": "25c51a81c7e928b341b1f5d24d2e83da46161af2605c43a223a9e9e1093488e7",
+    "migrations/meta/0025_snapshot.json": "71bedf47f30c74281c7f38b71bd041157da36025356e986d5fb77a7fc66056c7",
+    "migrations/meta/0026_snapshot.json": "ec44498644de564ae90832956ce4357c17b89d16636227851efd0ca6820bd79a",
+    "migrations/meta/0027_snapshot.json": "442d532b6ee58b2062e15ea9979947bd5569725db391306eb2993efdfc226b99",
+    "migrations/meta/0028_snapshot.json": "7f8cdd2192ad9c372f87a0080499582839a9bb9c936b3ba54ef18f30f478697c",
+    "migrations/meta/_journal.json": "819bfa1b5754cbaf29558a6308a5930a86987876d4d2eeefb090a5370b855cef"
+  },
+  "allOtherExistingFilesPreserved": true,
+  "existingD1StatOnlyChecks": {
+    ".wrangler/state/v3/d1/miniflare-D1DatabaseObject/5a8aa6127173de04a4324990f006c6141358576f999a6b0ef238dbea3080328e.sqlite": {
+      "before": {
+        "size": 131072,
+        "mtimeNs": 1788355526461944543
+      },
+      "after": {
+        "size": 131072,
+        "mtimeNs": 1788355526461944543
+      }
+    },
+    ".wrangler/state/v3/d1/miniflare-D1DatabaseObject/metadata.sqlite": {
+      "before": {
+        "size": 4096,
+        "mtimeNs": 1787732133001377323
+      },
+      "after": {
+        "size": 4096,
+        "mtimeNs": 1787732133001377323
+      }
+    },
+    ".wrangler/state/v3/d1/miniflare-D1DatabaseObject/metadata.sqlite-wal": {
+      "before": {
+        "size": 8272,
+        "mtimeNs": 1787732133005232175
+      },
+      "after": {
+        "size": 8272,
+        "mtimeNs": 1787732133005232175
+      }
+    },
+    ".wrangler/state/v3/d1/miniflare-D1DatabaseObject/metadata.sqlite-shm": {
+      "before": {
+        "size": 32768,
+        "mtimeNs": 1789613566548410109
+      },
+      "after": {
+        "size": 32768,
+        "mtimeNs": 1789613566548410109
+      }
+    },
+    ".wrangler/state/v3/cache/miniflare-CacheObject/metadata.sqlite": {
+      "before": {
+        "size": 4096,
+        "mtimeNs": 1787667974638592879
+      },
+      "after": {
+        "size": 4096,
+        "mtimeNs": 1787667974638592879
+      }
+    },
+    ".wrangler/state/v3/cache/miniflare-CacheObject/metadata.sqlite-wal": {
+      "before": {
+        "size": 8272,
+        "mtimeNs": 1787667974646433296
+      },
+      "after": {
+        "size": 8272,
+        "mtimeNs": 1787667974646433296
+      }
+    },
+    ".wrangler/state/v3/cache/miniflare-CacheObject/metadata.sqlite-shm": {
+      "before": {
+        "size": 32768,
+        "mtimeNs": 1789613566548410109
+      },
+      "after": {
+        "size": 32768,
+        "mtimeNs": 1789613566548410109
+      }
+    },
+    ".wrangler/state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite-shm": {
+      "before": {
+        "size": 32768,
+        "mtimeNs": 1789613566564917131
+      },
+      "after": {
+        "size": 32768,
+        "mtimeNs": 1789613566564917131
+      }
+    },
+    ".wrangler/state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite": {
+      "before": {
+        "size": 6672384,
+        "mtimeNs": 1789613566049072711
+      },
+      "after": {
+        "size": 6672384,
+        "mtimeNs": 1789613566049072711
+      }
+    },
+    ".wrangler/state/v3/observability/miniflare-wobs-trace-store/metadata.sqlite": {
+      "before": {
+        "size": 4096,
+        "mtimeNs": 1787667974654273712
+      },
+      "after": {
+        "size": 4096,
+        "mtimeNs": 1787667974654273712
+      }
+    },
+    ".wrangler/state/v3/observability/miniflare-wobs-trace-store/metadata.sqlite-wal": {
+      "before": {
+        "size": 8272,
+        "mtimeNs": 1787667974658193923
+      },
+      "after": {
+        "size": 8272,
+        "mtimeNs": 1787667974658193923
+      }
+    },
+    ".wrangler/state/v3/observability/miniflare-wobs-trace-store/a590acd76969f996ec6e4b599c3c09f58c283a76f2d61392b5d3046caf557602.sqlite-wal": {
+      "before": {
+        "size": 4169472,
+        "mtimeNs": 1789613566564917131
+      },
+      "after": {
+        "size": 4169472,
+        "mtimeNs": 1789613566564917131
+      }
+    },
+    ".wrangler/state/v3/observability/miniflare-wobs-trace-store/metadata.sqlite-shm": {
+      "before": {
+        "size": 32768,
+        "mtimeNs": 1789613566548410109
+      },
+      "after": {
+        "size": 32768,
+        "mtimeNs": 1789613566548410109
+      }
+    }
+  },
+  "tests": {
+    "pnpmCheck": {
+      "exitCode": 0,
+      "unit": 271,
+      "worker": 1967,
+      "workflow": 3,
+      "log": "/tmp/p5-64-check.log"
+    },
+    "newIntegration": {
+      "passed": 1,
+      "log": "/tmp/p5-64-targeted-v4.log"
+    },
+    "browser": {
+      "distinctCasesFinallyPassed": 12,
+      "firstRun": {
+        "passed": 10,
+        "failed": 2,
+        "log": "/tmp/p5-64-e2e.log"
+      },
+      "failedCasesRerun": {
+        "passed": 2,
+        "log": "/tmp/p5-64-e2e-repair.log"
+      }
+    },
+    "gitDiffCheck": "passed"
+  },
+  "scope": {
+    "actualDataMutation": false,
+    "paidProviderCalls": 0,
+    "remoteApply": false,
+    "deployment": false,
+    "exportImplementationOrExecution": false,
+    "gitStageCommitPushReset": false
+  },
+  "remaining": "P5-65 registration/draft selection/prepublication metadata; other gaps in P5-64.md; parent Phase 5 in progress"
+}

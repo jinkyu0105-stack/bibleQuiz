@@ -1,0 +1,129 @@
+{
+  "baselineFileCount": 599,
+  "changedExistingFiles": {
+    "docs/DECISIONS.md": {
+      "after": "1ce9d0d8ce7d2586db93436116b183bcc36b19af5e82e8e7acb0cb85aaad5499",
+      "before": "5e4e7ecce1e7e48338c5baac6ac80c691e3c3cd4cc2746a9e0d721954a2f271d"
+    },
+    "docs/HANDOFF.md": {
+      "after": "2c23f99194a14ca313cfeaf46d3cab49bdc0d5cae1b3ad4209ef2cdace533d5a",
+      "before": "6e3f7ff9a775fe8c0ad8846fb3d0f91500b2f56db46a48c15466fc234507497d"
+    },
+    "docs/PROJECT_CONTEXT.md": {
+      "after": "c4416f9d00f84b9db50b04f5a9437511d084e5c40565648098e09cd2ae305563",
+      "before": "b3fe7e41c772d9e51b32482f4d2e7a224cba5d0a7155def10af551fadce3f552"
+    },
+    "docs/ROADMAP.md": {
+      "after": "2be185274a4024694544730719bbcfd9e6f49a4bcb7caf4abccc99ec92fdd11c",
+      "before": "02849d77b305ca612336d7621765c939f45d1936f547138821219aabaf52b270"
+    },
+    "docs/STATUS.md": {
+      "after": "928bec31c0f11a1f28bb19319c1693c25cda74a9da9c4ec79f4216b5ece98993",
+      "before": "0a88faeccec2a3324b108c4a8097c89372358e3a24fb4078d33ea67e640d55f8"
+    },
+    "docs/spec/api.md": {
+      "after": "3cbaf3b26fea89dbd4dc619af06ee58a94952977627a143d2ad8f449fe09d149",
+      "before": "4e8e8c6da3f478fd35e04c25199fd8b34bd7a7bb27ed6adf231dec0288f41c1d"
+    },
+    "docs/spec/data-model.md": {
+      "after": "fcc83668c4d5229b25eceaaac66a9a1e3be887b30e6de73a1f4bbc855a4e3155",
+      "before": "38f402baafaa78bfa863a307a2c6a219f47da095dc8ec362876cbda451dd4354"
+    },
+    "docs/spec/generation.md": {
+      "after": "020b95a852b4a0e62873b725b4816e1f06313496242eae9ae83a297f749fe620",
+      "before": "5aec5a6654b6535c62ee8703ec4055400cd1d3dc8e17a4ab2efaab53dfe790e6"
+    },
+    "implementation.md": {
+      "after": "31404b595fa8c98f4c443a136db07b6a6d353695a561a3a64e3b3d8b6db211fb",
+      "before": "62bbd1730691091f2939116628d7b06c9c26a1f36380d11ef74b24880a85e42c"
+    },
+    "shared/api/admin-sermon-input.ts": {
+      "after": "5f45467e5b70613d3f88e13e77289ae0c45dfb890d9d1c3599ad159721487e6b",
+      "before": "a9856abf55dbda300e352296671170a598a78230386f67d3e8b6fcbd688251cd"
+    },
+    "src/features/admin-sermon-input/AdminSermonInput.tsx": {
+      "after": "a1df60cca2cbd364d3929ae1bc6466bd481cfdd9c75f813db018b47fdc53bb81",
+      "before": "7009574b93f3ea892d8339d9680eb8dec61a28083fea8924eed2af286a05c26f"
+    },
+    "src/features/admin-sermon-input/SermonDrafts.tsx": {
+      "after": "c2e4630872d17a3e696cf6f99c020edce0f1d6fb7e245d5315b096dd8cebd6bb",
+      "before": "d06d7964382a18c95da3f9a321b4185899c7fe685412cee62257c44a31727a54"
+    },
+    "src/features/admin-sermon-input/admin-sermon-input.module.css": {
+      "after": "fd881933ea98ef2e87f5b214f8ffb4ab3bd6081c81e0f70f8da1f640b7361514",
+      "before": "eb6bdcb4e4d1023848046647aae1d0364a2ae5641228ee40bfe54a932c5eef00"
+    },
+    "src/features/admin-sermon-input/client.ts": {
+      "after": "c6fe52cc3e7c9b3b5dbcd4305153819aa09f7b7256805083f3b09fb442b94d9d",
+      "before": "f4a9a82a0155bab25895d7c9c41da200a26f14ffcc75d8597e502a7b13331a07"
+    },
+    "workers/_shared/services/accountless-youtube-transcript.ts": {
+      "after": "47d025b184d68420b1b2e27ec2ac489ef61d9f6b2447cbf193a9a8160b51f4e4",
+      "before": "7681af91773b38e8db0c9a5d803e4a8130fd11568245b33b51318e5871a55ca2"
+    },
+    "workers/_shared/services/sermon-drafts.ts": {
+      "after": "865a3d21d09153c2150e0e7ef6a7380ab8d651a3acaa038b49a1a5bb191540b1",
+      "before": "4dcba578e98cdafb1b8d94de09f677fe86f503790a58f5818e55052d9cca53b1"
+    },
+    "workers/app/accountless-youtube-transcript.test.ts": {
+      "after": "a89c221e837183cb35afe5ce50ec074c91373d8e93cdec34ba8b4bd589a2fdf7",
+      "before": "70c2bcde18725596e9bc3b9bebe1c221ddaa1e98b30f469e8c12f8ee1907885a"
+    },
+    "workers/app/app.ts": {
+      "after": "3e1299596d4e7971b161f76666a693693e5bb66527471996b98b66cf32554cbd",
+      "before": "f86d48ebded82c37648c1d0d275cb179ebcc4e3e5c584701b57357b1478029dc"
+    }
+  },
+  "checks": {
+    "browser": {
+      "desktopChromiumPassed": 3,
+      "fullSuite": "interrupted after wrong argument separator; not a pass",
+      "mobileChromiumPassed": 1,
+      "syntheticApi": true
+    },
+    "gitDiffCheckExitCode": 0,
+    "pnpmCheckExitCode": 0,
+    "unit": {
+      "files": 31,
+      "passed": 273
+    },
+    "worker": {
+      "files": 74,
+      "passed": 1984
+    },
+    "workflow": {
+      "files": 1,
+      "passed": 3
+    }
+  },
+  "date": "2026-09-24",
+  "exclusions": [
+    "real data changes",
+    "paid calls",
+    "remote changes",
+    "deployment",
+    "export",
+    "commit",
+    "push"
+  ],
+  "head": "0ab476e4281734f4eab64cc6231be09092221651",
+  "localD1": {
+    "allOlderThanTask": true,
+    "compared": "mtime only; no data read",
+    "fileCount": 13,
+    "latestMtimeUtc": "2026-09-17T02:52:46.564917+00:00"
+  },
+  "newDependencies": false,
+  "newFiles": {
+    "docs/work/P5-66.md": "2e26ca2aee53338f6cd8fd6cb426cf4181958c6d694b1efbae898a3714afff4f",
+    "shared/api/admin-public-video.ts": "309c637552acef3ba4efe0451468a695b1ff9040edd83d797966be017d5213f8",
+    "tests/e2e/admin-public-video.spec.ts": "9c7c172fc11507789c90ce4e7d32897d60675c9f3f0441a452a6b6ca7cdc560d",
+    "workers/_shared/services/public-sermon-video.ts": "ef5a6a891c47ac1f98044cc1f35db6eedadb8fa3814e41c6d364a80726884d70",
+    "workers/app/public-sermon-video.test.ts": "59c0f5cc463333b7f1ec3fe385d32110aad2ec88c37b415d112db07e9557bfaa"
+  },
+  "newMigrations": false,
+  "status": "complete-local-only",
+  "task": "P5-66",
+  "unchangedExistingFileCount": 581,
+  "unchangedMigrationFileCount": 59
+}

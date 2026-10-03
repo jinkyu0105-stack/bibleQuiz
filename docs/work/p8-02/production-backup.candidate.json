@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2026-08-25",
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": false
+    }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "biblequiz-d1",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "migrations_dir": "../../../migrations"
+    }
+  ],
+  "name": "biblequiz-backup",
+  "main": "../../../workers/backup/index.ts",
+  "vars": {
+    "OPERATIONS_ENVIRONMENT": "production",
+    "BACKUP_ENABLED": "false",
+    "D1_DATABASE_ID": "00000000-0000-0000-0000-000000000001",
+    "BACKUP_BUCKET_NAME": "biblequiz-backups"
+  },
+  "r2_buckets": [
+    {
+      "binding": "BACKUP_BUCKET",
+      "bucket_name": "biblequiz-backups"
+    }
+  ],
+  "workflows": [
+    {
+      "binding": "BACKUP_WORKFLOW",
+      "name": "biblequiz-backup-workflow",
+      "class_name": "BackupWorkflow"
+    }
+  ]
+}

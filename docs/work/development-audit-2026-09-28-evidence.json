@@ -1,0 +1,216 @@
+{
+  "date": "2026-09-28",
+  "head_at_audit_start": "0ab476e4281734f4eab64cc6231be09092221651",
+  "inventory_files": 653,
+  "groups": {
+    "configuration_other": {
+      "files": 71,
+      "lines": 184316,
+      "bytes": 18829593
+    },
+    "current_document": {
+      "files": 71,
+      "lines": 7934,
+      "bytes": 1082648
+    },
+    "archived_document": {
+      "files": 26,
+      "lines": 25941,
+      "bytes": 3913743
+    },
+    "migration_sql": {
+      "files": 31,
+      "lines": 5760,
+      "bytes": 531072
+    },
+    "generated_migration_metadata": {
+      "files": 32,
+      "lines": 255196,
+      "bytes": 8268091
+    },
+    "development_script": {
+      "files": 37,
+      "lines": 4726,
+      "bytes": 366399
+    },
+    "test_fixture": {
+      "files": 155,
+      "lines": 29259,
+      "bytes": 1785315
+    },
+    "application_source": {
+      "files": 230,
+      "lines": 35847,
+      "bytes": 2044336
+    }
+  },
+  "sql_objects": {
+    "table": 80,
+    "index": 91,
+    "trigger": 303,
+    "view": 4
+  },
+  "logs": {
+    "files": 276,
+    "distinct_session_ids": 275,
+    "root_session_ids": 77,
+    "child_session_ids": 198,
+    "child_sources": {
+      "guardian": 192,
+      "delegated_thread": 6
+    },
+    "project_cwd_filter": "bibleQuiz",
+    "period": "2026-08-10 through 2026-09-28; current unfinished turn duration excluded",
+    "root": {
+      "sessions": 77,
+      "completed_turns_unique": 712,
+      "sum_completed_hours": 79.106,
+      "union_completed_hours": 79.881,
+      "median_completed_minutes": 1.006,
+      "turns_30min_or_more": 36,
+      "estimated_usage": {
+        "input_tokens": 1555721601,
+        "cached_input_tokens": 1501347840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7133115,
+        "reasoning_output_tokens": 1969061,
+        "total_tokens": 1562854716
+      },
+      "counter_methods": {
+        "per_response_record": 74,
+        "distinct_cumulative_last_usage": 3
+      },
+      "turns_at_least_10_minutes": 159,
+      "hours_in_turns_at_least_10_minutes": 66.404
+    },
+    "child": {
+      "sessions": 198,
+      "completed_turns_unique": 3003,
+      "sum_completed_hours": 4.024,
+      "union_completed_hours": 3.79,
+      "median_completed_minutes": 0.062,
+      "turns_30min_or_more": 0,
+      "estimated_usage": {
+        "input_tokens": 247942683,
+        "cached_input_tokens": 229349888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 383127,
+        "reasoning_output_tokens": 138069,
+        "total_tokens": 248356014
+      },
+      "counter_methods": {
+        "distinct_cumulative_last_usage": 80,
+        "per_response_record": 118
+      }
+    },
+    "method": "All complete-turn events deduplicated by session/turn/end; no complete-turn identity collisions remained. Root duration_ms summed; includes tool/user waits and planning. Token usage_record.usage deduplicated globally by response_id where available; otherwise distinct total_token_usage signatures summed via last_token_usage. Never add token_count and usage_record for the same session. Cache is a subset of input; reasoning is a subset of output. Local telemetry, not billing or exact active coding time. One session ID occurs in two nonidentical logs: session event summaries alone undercount; complete-turn records use both."
+  },
+  "limitations": [
+    "Static inventory is exhaustive for Git-tracked and unignored files present at start; not a manual line-by-line security audit.",
+    "SQL migrations applied only to a fresh in-memory SQLite database, not real D1.",
+    "Import graph uses literal relative imports; unreachable candidates are not proven dead code.",
+    "No actual provider call, remote configuration audit, private transcript or credential export.",
+    "No monetary conversion of Codex token telemetry."
+  ],
+  "validation": {
+    "pnpm_check": {
+      "outcome": "failed",
+      "exit_code": 1,
+      "locks_cloudflare_schema_preview_fixture_lint_typecheck": "passed",
+      "unit": {
+        "files": 31,
+        "passed": 273
+      },
+      "worker": {
+        "files": 79,
+        "passed": 2045,
+        "failed": 1,
+        "duration_seconds": 631.82
+      },
+      "failure": {
+        "file": "workers/app/quiz-deadline.test.ts",
+        "line": 206,
+        "expected_http": 200,
+        "actual_http": 409,
+        "finding": "Fixture closes 2026-09-28T00:00:00Z; HTTP path uses actual current clock. Service correctly rejects an already closed quiz; time-dependent test not fixed in audit."
+      }
+    },
+    "post_failure_unexecuted_stages_run_separately": {
+      "workflow_passed": 3,
+      "recovery_cli_passed": 2,
+      "build": "passed"
+    },
+    "extra_tests_not_in_default_check": {
+      "node_passed": 11,
+      "python_passed": 6,
+      "files": [
+        "scripts/ai-quality-response-archive.test.mjs",
+        "scripts/local-ai-quality-session.test.mjs",
+        "scripts/prepare-archived-intent-recovery.test.mjs",
+        "scripts/receive-quality-secret.test.py"
+      ]
+    },
+    "browser": {
+      "command": "pnpm exec playwright test --project=chromium --project=mobile-chromium --workers=2 --reporter=line",
+      "outcome": "failed",
+      "passed": 119,
+      "failed": 6,
+      "skipped": 1,
+      "duration_reported": "2.6m",
+      "failed_scenarios_per_project": [
+        {
+          "file": "tests/e2e/admin-regeneration.spec.ts",
+          "test_line": 5,
+          "assertion_line": 68,
+          "finding": "old checkbox wording"
+        },
+        {
+          "file": "tests/e2e/admin-regeneration.spec.ts",
+          "test_line": 93,
+          "assertion_line": 153,
+          "finding": "button expected inside old region before confirmation"
+        },
+        {
+          "file": "tests/e2e/admin-single-candidate.spec.ts",
+          "test_line": 12,
+          "assertion_line": 85,
+          "finding": "old checkbox wording"
+        }
+      ],
+      "not_run": [
+        "firefox",
+        "webkit"
+      ],
+      "not_run_reason": "Browser binaries not installed; no installation performed."
+    },
+    "real_provider_calls": 0,
+    "real_trial_database_writes": 0,
+    "remote_changes": 0,
+    "product_code_changes": 0,
+    "spec_or_decision_changes": 0,
+    "test_failures_fixed": false,
+    "documents": {
+      "git_diff_check": "passed",
+      "local_link_paths_checked": 117,
+      "missing_link_targets": [],
+      "existing_changed_files": [
+        "docs/HANDOFF.md",
+        "docs/PROJECT_CONTEXT.md",
+        "docs/ROADMAP.md",
+        "docs/STATUS.md",
+        "docs/work/P5-70.md",
+        "implementation.md"
+      ],
+      "baseline_files": 653,
+      "existing_files_unchanged": 647,
+      "missing_baseline_files": [],
+      "sql_and_generated_migration_files_unchanged": 63,
+      "new_audit_files": [
+        "docs/DEVELOPMENT_AUDIT_2026-09-28.md",
+        "docs/work/development-audit-2026-09-28-evidence.json",
+        "docs/work/development-audit-2026-09-28-inventory.csv"
+      ],
+      "no_product_files_changed": true
+    }
+  }
+}
