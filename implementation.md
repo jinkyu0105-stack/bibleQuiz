@@ -2,7 +2,7 @@
 
 제품 기준은 아래 분야별 정본과 [DECISIONS](docs/DECISIONS.md), 현재 상태는 [STATUS](docs/STATUS.md), 정확한 다음 동작은 [HANDOFF](docs/HANDOFF.md)를 따른다. 완료한 P5~P8-01 검수는 재사용하며 [DELIVERY_PLAN](docs/DELIVERY_PLAN.md)의 종료 조건은 유지한다.
 
-현재 **P8-02 진행 중**이다. Production 자원·관리자 보호·기존 설교 발행/참여·백업과 AI 키 연결은 적용됐으나 새 설교의 전체 AI 생성 검수는 남아 있다. 공개 자막 취득은 Supadata Free의 Cloudflare 시험에 성공했으며 [승인된 운영 연결 묶음](docs/work/p8-02/supadata-integration.md)을 두 서버에 적용했고 관리자 조회·최초 원본 저장 검수를 기다린다. 로컬 구현/검사와 원격 적용을 구분하고 기존 자료·키·유료 결과·0000~0038을 보존한다. [운영 합의](docs/work/P8-02.md)와 [운영 매뉴얼](docs/operations-manual.md)을 함께 따른다.
+현재 **P8-02 진행 중**이다. Production 자원·관리자 보호·기존 설교 발행/참여·백업과 AI 키 연결은 적용됐으나 새 설교의 전체 AI 생성 검수는 남아 있다. 공개 자막 취득은 Supadata Free의 Cloudflare 시험에 성공했으며 [승인된 운영 연결 묶음](docs/work/p8-02/supadata-integration.md)을 두 서버에 적용했고 관리자 조회·최초 원본 저장 검수를 통과했다. 다음은 본문 사람 검토와 새 설교 AI 생성 검수다. 로컬 구현/검사와 원격 적용을 구분하고 기존 자료·키·유료 결과·0000~0038을 보존한다. [운영 합의](docs/work/P8-02.md)와 [운영 매뉴얼](docs/operations-manual.md)을 함께 따른다.
 
 ## 분야별 정본
 

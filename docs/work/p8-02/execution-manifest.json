@@ -24406,7 +24406,7 @@
   },
   "supadataProductionIntegration": {
     "date": "2026-10-04",
-    "status": "production-preview-passed-awaiting-source-save",
+    "status": "production-transcript-preview-and-source-save-passed",
     "sourceCommit": "701475820e7d4281a4948bac820ff326d9e2ced1",
     "releaseDirectory": ".wrangler/releases/p8-02-supadata-integration-20261004",
     "workDocument": "docs/work/p8-02/supadata-integration.md",
@@ -24462,7 +24462,7 @@
         "maxCredits": 100,
         "usedCredits": 1
       },
-      "adminSmoke": "preview-passed-source-save-pending"
+      "adminSmoke": "passed"
     },
     "adminPreviewVerification": {
       "date": "2026-10-05",
@@ -24473,9 +24473,39 @@
       "usedCreditsBefore": 1,
       "usedCreditsAfter": 2,
       "creditsConsumed": 1,
-      "approvedSmokeCreditsRemaining": 1,
-      "sourceSaved": false,
+      "approvedSmokeCreditsRemaining": 0,
+      "sourceSaved": true,
       "draftRegistration": "confirmed by user screenshot 2026-10-05"
-    }
+    },
+    "adminSourceVerification": {
+      "date": "2026-10-05",
+      "outcome": "source-verified",
+      "sourceProvider": "supadata-native",
+      "segments": 768,
+      "characters": 12993,
+      "sourceSha256": "2916f025338f2ec08b15a8dffe93f83898b7023b101cde3855b5f0e58d127eeb",
+      "allTextAndTimingUnchanged": true,
+      "sealedSourceCount": 1,
+      "inputVersion": 1,
+      "humanConfirmed": false,
+      "plan": "Free (100/mo)",
+      "usedCredits": 3,
+      "creditsConsumedInApprovedSmoke": 2,
+      "counts": [
+        [
+          {
+            "submissions": 2,
+            "sessions": 1,
+            "calls": 7,
+            "usageEvents": 7,
+            "estimatedMicroUsd": 860448,
+            "migrations": 39
+          }
+        ],
+        []
+      ],
+      "externalTranscriptRequestsByAgent": 0
+    },
+    "approvedSmokeCreditsRemaining": 0
   }
 }
