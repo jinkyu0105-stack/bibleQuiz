@@ -44,3 +44,7 @@ Free 100크레딧/월, native 1요청=1크레딧은 현재 플랜 근거다. 제
 - app/content 설정은 허용한 app provider/Secret과 배포 annotations 외 동일, 두 서버 예약과 Preview/backup 전체 스냅샷은 동일하다. DB 세션1/제출2/call7/usage7/860448microUSD/migration39/FK0 유지. root·두 난도 URL200, 관리자4경로는 기대 Access 호스트302다. 이 HTTP 확인을 실제 자막 버튼 검수와 혼동하지 않는다.
 - Supadata `/v1/me` 검수 전 Free100·사용1·잔여99 확인. 배포 작업의 실제 native 요청0/새 AI0. 관리자 미리보기 한 번을 사용자에게 요청했고 최대2크레딧 범위를 유지한다. 아직 새 원본 저장/그 자료의 실제 AI 생성이 성공했다고 쓰지 않는다.
 - `approved-before-private.json`, `approved-after-private.json`, 후보별 private/proof, `deployed-proof.json`, `public-access-proof.json`, 업로드/배포 로그를 기존 release 폴더에 보존한다. 기본 dist/배포 포인터 복원 완료. 로그인 토큰401은 Wrangler 읽기 명령의 기존 로그인 갱신으로 해결했다. 기존 자료/키 재입력을 요구하지 않았다.
+
+## 운영 미리보기 확인 — 2026-10-05
+
+2026-10-05 사용자 운영 화면에서 공개 한국어 자막768구간·12,993자 표시를 확인했다. Supadata 계정 조회도 Free100·used1→2·잔여98로 이번 조회1크레딧을 확인했다. 원본 저장은 아직 미확인이다. 다음은 제목/설교일/장절 확인 체크→새 작업 등록→공개 자막 원본 저장이며, 승인된 검수에서 남은 native1크레딧만 사용한다. 영상 확인 버튼을 반복하지 않는다. 계정 응답은 Git 제외 `account-after-preview-20261005-private.json`에 보존했다. 게시일 미확인은 남지만 자막 조회 성공과는 별개이며 설교일은 제목에서 추출한 날짜를 확인한다. 새 AI 호출/배포/코드 변경은 없다.
