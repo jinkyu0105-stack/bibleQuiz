@@ -13,7 +13,7 @@ test('only native Korean captions are requested once; key stays out of results',
     assert.equal(u.searchParams.get('lang'), 'ko');
     assert.equal(u.searchParams.get('text'), 'false');
     assert.equal(init.headers['x-api-key'], 'SYNTHETIC_KEY');
-    assert.equal(init.redirect, 'error');
+    assert.equal(init.redirect, 'manual');
     return Response.json(good);
   });
   assert.equal(calls, 1); assert.equal(result.outcome, 'fetched');
@@ -44,4 +44,30 @@ test('invalid inputs and unauthorized remote requests make no external calls', a
   }
   const response = await worker.fetch(new Request('https://example.invalid/', { method: 'POST' }), { PROBE_AUTH: 'synthetic' });
   assert.equal(response.status, 401);
+});
+
+test('Cloudflare native fetch supports the request options and never follows redirects', async () => {
+  const { createRequire } = await import('node:module');
+  const requireFromWrangler = createRequire(import.meta.resolve('wrangler'));
+  const { Miniflare, convertV4MiniflareOptions } = requireFromWrangler('miniflare');
+  const { build } = requireFromWrangler('esbuild');
+  const { fileURLToPath } = await import('node:url');
+  const source = `import {probe} from './supadata-native.mjs'; export default {async fetch(){return Response.json(await probe({action:'fetch',videoId:'TEST_ONLY01'},'synthetic'));}}`;
+  const bundle = await build({ stdin: { contents: source, resolveDir: fileURLToPath(new URL('.', import.meta.url)) }, bundle: true, write: false, format: 'esm', platform: 'browser' });
+  for (const redirect of [false, true]) {
+    let calls = 0;
+    const runtime = new Miniflare(convertV4MiniflareOptions({
+      modules: true, script: bundle.outputFiles[0].text, compatibilityDate: '2026-08-25',
+      outboundService: async request => {
+        calls++;
+        assert.equal(new URL(request.url).searchParams.get('mode'), 'native');
+        return redirect ? new Response(null, { status: 302, headers: { Location: 'https://example.invalid/never-follow' } }) : Response.json(good);
+      },
+    }));
+    try {
+      const result = await (await runtime.dispatchFetch('https://example.invalid')).json();
+      assert.equal(result.outcome, redirect ? 'upstream_error' : 'fetched');
+      assert.equal(calls, 1);
+    } finally { await runtime.dispose(); }
+  }
 });

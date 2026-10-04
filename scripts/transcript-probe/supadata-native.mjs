@@ -48,7 +48,7 @@ export async function probe(requestInput, apiKey, fetcher = fetch) {
   let status = null;
   try {
     const response = await fetcher(url.toString(), {
-      headers: { 'x-api-key': apiKey }, redirect: 'error', signal: AbortSignal.timeout(30_000),
+      headers: { 'x-api-key': apiKey }, redirect: 'manual', signal: AbortSignal.timeout(30_000),
     });
     status = response.status;
     if (!response.ok) { await response.body?.cancel(); return { outcome: 'upstream_error', httpStatus: status, elapsedMs: Date.now() - started }; }
@@ -70,9 +70,10 @@ export async function probe(requestInput, apiKey, fetcher = fetch) {
     if (characters > 30_000) return { outcome: 'transcript_too_long', httpStatus: status, characters };
     return { outcome: 'fetched', httpStatus: status, elapsedMs: Date.now() - started,
       segments: rows.length, characters, privateTranscript: data.data };
-  } catch {
+  } catch (error) {
     // Do not echo upstream messages, URLs, API credentials, or response bodies.
-    return { outcome: 'network_or_response_failed', httpStatus: status, elapsedMs: Date.now() - started };
+    return { outcome: 'network_or_response_failed', httpStatus: status, elapsedMs: Date.now() - started,
+      errorType: error instanceof TypeError ? 'TypeError' : 'Error' };
   }
 }
 export default {
