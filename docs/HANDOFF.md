@@ -1,4 +1,4 @@
-# 인계 — P8-02 Supadata 운영 적용 완료 / 자동 자막 조회·원본 저장 완료 / 본문 확정 완료 / AI 분석·비판 완료 / 사용자 의도 검토 대기
+# 인계 — P8-02 Supadata 운영 적용 완료 / 자동 자막 조회·원본 저장 완료 / 본문 확정 완료 / 요약·두 난도 생성 완료 / 사용자 내용 검수 대기
 
 2026-10-04. **현재 P8-02 진행 중 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 추천 GPT-6.1-sol·높음 — 두 서버의 출처 호환과 실제 자료 보존을 확인해야 한다. Pro 사용11%·잔여89%·10080분/별도5시간 없음 → 사용자 지정×10=890%(공식 배수 아님). 위임 없음.
 
@@ -6,7 +6,7 @@
 
 사용자가 검토 가능한 두 서버/키 연결/무료2크레딧 묶음에 “진행하세요 그리고 두 서버가 어디어딘지 알려주세요”로 승인했다. 소스 `701475820e7d4281a4948bac820ff326d9e2ced1`를 content `66eb96c5-ad4c-4d01-85dd-a13aef598acf`100% → app `f8174f94-d983-4855-8d2d-d02756c41f44`100% 순으로 적용 완료했다. 새 AI/유료 전환/main push0. [배포·검수 범위와 복귀](work/p8-02/supadata-integration.md)를 따르며 같은 범위의 재승인을 받지 않는다.
 
-**다음 첫 동작은 저장된 분석·비판 결과를 사용자에게 표시하고 의도 검토를 안내하는 것이다.** 2026-10-05 사용자가 분석 시작을 눌렀다. Production D1 읽기에서 awaiting_intent_review / intent_review, 오류 없음, intent_analysis·intent_critique 완료2회, 이번 작업 usage2·214454microUSD를 확인했다. start와 resume_transcript_review 전달은 각각1회 acknowledged다. 새 생성이나 재시도 없이 기존 결과를 조회한다. 비공개 release의 `intent-analysis-proof.json`을 따른다. 사용자가 제공한 실제 스크린샷에는 이전 상태/호출0회와 초기 결과 전에 재생성 메뉴가 보여 상태 전달이 어렵다. UI 불편은 아래 정본에 기록했으며 이번에는 코드·배포를 변경하지 않았다. 자막 승인2크레딧은 이미 소진했으므로 재취득하지 않는다.
+**다음 첫 동작은 ‘생성 상태 확인’ 후3.요약과 문제에서 저장된 내용 검수를 안내하는 것이다.** 사용자가 비판 수정본을 선택하고 의도 확정·다음 생성 시작을 눌렀다. Production D1에서 summary·child_candidates·adult_candidates 모두 completed, job running/content_review, 오류 없음, 이번 설교 전체5호출·490526microUSD를 확인했다. 후속3호출 비용276072microUSD이며 agent 새 호출0이다. 비공개 release의 `content-generation-progress-private.json`에 읽기 증거를 보존했다. 조회401은 기존 Wrangler 읽기 명령으로 인증을 갱신해 해결했으며 사용자 재로그인/키 재입력은 없었다. UI 대대적 개편은 사용자 요청으로 나중에 진행하며 현재는 생성·선택을 반복하지 않는다. 자막 승인2크레딧도 이미 소진해 재취득하지 않는다. 다음 내용 검수·배치·최종 검사·발행은 아직 미완료다.
 
 
 승인된 native2크레딧은 모두 사용했다. 영상 확인/원본 저장 성공을 다시 호출해 검증하지 않는다. source SHA는 기존2916f025…127eeb, payload byte/hash와 구간별 원문/시간도 일치했다. `saved-source-readback-private.json`의 실제 설교 ID는 quiz_sets에서 관리자 URL의 퀴즈 작업 ID를 매핑한 값이며 URL UUID를 곧바로 sermon_id로 쓰지 않는다. 자동화 브라우저 로그인은 사용자가 나중에 하기로 했다.
