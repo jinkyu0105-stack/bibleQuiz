@@ -9220,13 +9220,13 @@
   },
   "supadataProductionIntegration": {
     "date": "2026-10-04",
-    "status": "local-verified-awaiting-production-approval",
+    "status": "production-deployed-awaiting-admin-smoke",
     "sourceCommit": "701475820e7d4281a4948bac820ff326d9e2ced1",
     "releaseDirectory": ".wrangler/releases/p8-02-supadata-integration-20261004",
     "workDocument": "docs/work/p8-02/supadata-integration.md",
     "externalTranscriptCalls": 0,
     "paidAiCalls": 0,
-    "remoteWrites": 0,
+    "remoteWrites": "approved app/content versions and app secret only",
     "mainPush": false,
     "tests": {
       "unit": 308,
@@ -9248,6 +9248,35 @@
     },
     "proposedSmokeCreditLimit": 2,
     "requiresCompatibleContentBeforeApp": true,
-    "rollback": "preserve new-source readers; change provider only"
+    "rollback": "preserve new-source readers; change provider only",
+    "approval": "User approved concrete two-worker/key/native-two-credit bundle with 진행하세요",
+    "deployment": {
+      "sourceCommit": "701475820e7d4281a4948bac820ff326d9e2ced1",
+      "appVersion": "f8174f94-d983-4855-8d2d-d02756c41f44",
+      "contentVersion": "66eb96c5-ad4c-4d01-85dd-a13aef598acf",
+      "appCodeOnlyCandidate": "f9d0c25a-5743-4965-a89c-f2347b404f4d",
+      "trafficPercent": 100,
+      "existingBindingsPreserved": true,
+      "explicitDefaultHtmlHandlingOnly": true,
+      "existingDataPreserved": true,
+      "previewBackupAndSchedulesUnchanged": true,
+      "publicHttpStatuses": [
+        200,
+        200,
+        200
+      ],
+      "adminHttpStatuses": [
+        302,
+        302,
+        302,
+        302
+      ],
+      "supadataPlanBeforeSmoke": {
+        "plan": "Free (100/mo)",
+        "maxCredits": 100,
+        "usedCredits": 1
+      },
+      "adminSmoke": "pending-user"
+    }
   }
 }

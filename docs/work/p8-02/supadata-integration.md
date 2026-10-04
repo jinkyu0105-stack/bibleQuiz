@@ -1,6 +1,6 @@
 # P8-02 운영 자막 연결 — 배포 검토 묶음
 
-2026-10-04. 무료 Cloudflare 시험 성공 뒤 사용자의 다음 작업 요청으로 운영 앱의 조회·원본 저장 연결을 구현했다. **로컬 구현·검사·배포 준비이며 원격 적용 전이다.** P8-02/Phase8은 진행 중이다. [앞선 실제 시험](transcript-comparison.md#cloudflare-무료-시험-성공)은 그대로 재사용한다.
+2026-10-04. 무료 Cloudflare 시험 성공 뒤 사용자의 다음 작업 요청으로 운영 앱의 조회·원본 저장 연결을 구현했다. 사용자가 구체적 묶음 설명 뒤 “진행하세요 그리고 두 서버가 어디어딘지 알려주세요”로 운영 적용을 승인했다. **content→app 배포·Secret 연결·공개/보호/자료 보존 확인까지 완료했고 관리자 조회·원본 저장 검수는 대기 중이다.** P8-02/Phase8은 진행 중이다. [앞선 실제 시험](transcript-comparison.md#cloudflare-무료-시험-성공)은 그대로 재사용한다.
 
 ## 사용자가 확인할 동작
 
@@ -12,13 +12,13 @@ Supadata는 canonical YouTube 주소, `mode=native`, `lang=ko`, `text=false`로�
 
 ## 대상과 적용 순서
 
-1. 검사한 소스 커밋과 두 Worker의 빌드 지문을 고정한다. 현재 기준 앱 `ad9ebbf0-be59-4941-af42-ea063e97f984`, content `95fbc7a6-95f5-4bcc-a85b-30dad3a59e56`. 적용 직전 다시 비교한다.
+1. 검사한 소스 커밋과 두 Worker의 빌드 지문을 고정한다. 배포 전 기준 앱 `ad9ebbf0-be59-4941-af42-ea063e97f984`, content `95fbc7a6-95f5-4bcc-a85b-30dad3a59e56`. 적용 직전 동일함을 확인했다.
 2. 비공개 `biblequiz-content`에 새 출처 읽기 호환 코드 후보를 올리고, 기존 모델·AI flag·OpenAI Secret·D1/Workflow binding·비공개 주소 상태를 대조한 후 100% 적용한다. 이 단계 자체는 AI를 호출하지 않는다.
 3. 운영 앱 `biblequiz-app`의 검사한 빌드와 `PUBLIC_TRANSCRIPT_PROVIDER=supadata`를 후보로만 올린다. 최신 후보가 방금 올린 소스/빌드와 일치하는지 확인한다. 기존 운영 traffic은 그대로 둔다.
 4. 이미 보관한 Supadata 키를 프로그램의 표준입력으로 `wrangler versions secret put SUPADATA_API_KEY`에 전달해 방금 후보를 복제한 Secret 포함 후보를 만든다. 자동 배포하는 `secret put`은 사용하지 않는다. 코드 지문·Secret 이름·기존 binding·D1/Access/DO/cron 보존을 다시 대조한 후 이 최종 후보를100% 적용한다. 키는 앱에만 두며 content/backup/Preview에는 주지 않는다. 공개 접속과 관리자 보호를 읽기 확인한다.
 5. 사용자 관리자 버튼으로 영상 확인 1회와 최초 원본 저장 1회를 확인한다. 기존 성공 시험은 반복하지 않는다. **검수 상한은 native 2크레딧**, 승인된 Free 잔여99에서 최대2를 사용하며 AI 생성·유료 전환·충전은 제외한다. 이미 저장돼 있으면 재취득하지 않는다. 새 설교의 AI 생성 검수는 기존 별도 사용자 단계로 유지한다.
 
-migration 없음(0000~0038 보존), main push 없음, Preview/backup 변경 없음. 원격 변경은 이 묶음에 대한 구체적 승인 뒤 실행한다. 무료 시험 승인을 운영 Secret 설치 완료로 해석하지 않는다.
+migration 없음(0000~0038 보존), main push 없음, Preview/backup 변경 없음. 이 묶음의 구체적 후속 승인으로 원격 변경을 실행했다. 무료 시험만으로 승인 범위를 확장하지 않았다.
 
 ## 복귀와 한계
 
@@ -35,3 +35,12 @@ Free 100크레딧/월, native 1요청=1크레딧은 현재 플랜 근거다. 제
 - 폐기한 접근: `redirect:error`(Workers 미지원), 무조건 AI fallback, 비한국어 fallback, Supadata 자막을 기존 공급자 ID/수동 자막으로 위장, 사용자 수동 복사를 자동화 목표로 대체.
 
 공식 근거: [Supadata API](https://docs.supadata.ai/get-transcript), [Free 가격](https://supadata.ai/pricing), [Wrangler 버전](https://developers.cloudflare.com/workers/configuration/versions-and-deployments/), Context7 `/cloudflare/workers-sdk`와 설치된 Wrangler 4.125.0 도움말. 새 SDK/의존성을 추가하지 않는다.
+
+## 승인 후 실제 적용 결과
+
+- 소스 `701475820e7d4281a4948bac820ff326d9e2ced1` → 비공개 content `66eb96c5-ad4c-4d01-85dd-a13aef598acf`100% → app `f8174f94-d983-4855-8d2d-d02756c41f44`100%. app 코드 후보 `f9d0c25a-5743-4965-a89c-f2347b404f4d`는 traffic 배포하지 않았고 동일 etag의 Secret 포함 후보만 적용했다.
+- Supadata 키는 기존0600 영속 파일에서 표준입력으로 app 후보에만 전달했다. 모델/명령 인자/로그에 키값을 출력하지 않았고 새 로컬 키 사본·content/backup/Preview 연결은 없다. OpenAI 키는 기존 content만 유지한다.
+- 후보의 모든 기존 binding/Secret 이름·D1/DO/Workflow·handler·호환일·설정을 보존했다. Secret 복제 후보에만 `html_handling=auto-trailing-slash`가 명시됐고, [공식 기본값](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/)과 같음을 확인해 그 한 항목만 정규화 후 동일성을 검사했다. 초기 비교에서 발견한 차이를 무시하거나 다른 설정 차이를 허용하지 않았다.
+- app/content 설정은 허용한 app provider/Secret과 배포 annotations 외 동일, 두 서버 예약과 Preview/backup 전체 스냅샷은 동일하다. DB 세션1/제출2/call7/usage7/860448microUSD/migration39/FK0 유지. root·두 난도 URL200, 관리자4경로는 기대 Access 호스트302다. 이 HTTP 확인을 실제 자막 버튼 검수와 혼동하지 않는다.
+- Supadata `/v1/me` 검수 전 Free100·사용1·잔여99 확인. 배포 작업의 실제 native 요청0/새 AI0. 관리자 미리보기 한 번을 사용자에게 요청했고 최대2크레딧 범위를 유지한다. 아직 새 원본 저장/그 자료의 실제 AI 생성이 성공했다고 쓰지 않는다.
+- `approved-before-private.json`, `approved-after-private.json`, 후보별 private/proof, `deployed-proof.json`, `public-access-proof.json`, 업로드/배포 로그를 기존 release 폴더에 보존한다. 기본 dist/배포 포인터 복원 완료. 로그인 토큰401은 Wrangler 읽기 명령의 기존 로그인 갱신으로 해결했다. 기존 자료/키 재입력을 요구하지 않았다.

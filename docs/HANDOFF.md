@@ -1,10 +1,12 @@
-# 인계 — P8-02 Supadata 운영 연결 로컬 검증 / 배포 묶음 승인 대기
+# 인계 — P8-02 Supadata 운영 적용 완료 / 관리자 조회·원본 저장 검수 대기
 
-2026-10-04. **현재 P8-02 진행 중 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 추천 GPT-6.1-sol·높음 — 두 서버의 출처 호환과 실제 자료 보존을 확인해야 한다. Pro 사용10%·잔여90%·10080분/별도5시간 없음 → 사용자 지정×10=900%(공식 배수 아님). 위임 없음.
+2026-10-04. **현재 P8-02 진행 중 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 추천 GPT-6.1-sol·높음 — 두 서버의 출처 호환과 실제 자료 보존을 확인해야 한다. Pro 사용11%·잔여89%·10080분/별도5시간 없음 → 사용자 지정×10=890%(공식 배수 아님). 위임 없음.
 
 ## 다음 첫 동작
 
-사용자의 “다음 작업 진행하세요”에 따라 기존 Supadata Free 성공 결과를 운영 조회/원본 저장에 연결하는 로컬 구현·필수 검사·검토 가능한 묶음을 완료했다. **소스 커밋 `701475820e7d4281a4948bac820ff326d9e2ced1`**, 원격 미적용. [구체적 배포 범위/순서/무료2크레딧 검수/복귀](work/p8-02/supadata-integration.md)를 승인받으면 content 호환 코드→app 코드 후보→저장된 Supadata 키를 versions secret put으로 최종 후보에 연결→binding/지문 비교→배포한다. 새 AI 호출·Paid 전환·main push는 제외한다. 기존 무료 시험 승인을 새 운영 Secret 설치의 완료/포괄 승인으로 기록하지 않는다. 사용자 승인 이후 같은 내부 단계마다 재승인받지 않는다.
+사용자가 검토 가능한 두 서버/키 연결/무료2크레딧 묶음에 “진행하세요 그리고 두 서버가 어디어딘지 알려주세요”로 승인했다. 소스 `701475820e7d4281a4948bac820ff326d9e2ced1`를 content `66eb96c5-ad4c-4d01-85dd-a13aef598acf`100% → app `f8174f94-d983-4855-8d2d-d02756c41f44`100% 순으로 적용 완료했다. 새 AI/유료 전환/main push0. [배포·검수 범위와 복귀](work/p8-02/supadata-integration.md)를 따르며 같은 범위의 재승인을 받지 않는다.
+
+**다음 첫 동작은 사용자 답변 확인이다.** 새 설교 화면을 새로고침하고 같은 새 영상의 ‘영상 정보·공개 자막 확인’을 한 번 눌러 768구간/12,993자가 보이는지 질문해 둔 상태다. 이미 등록된 영상이면 기존 초안을 선택해 원본 유무부터 읽기 확인하고 재취득하지 않는다. 사용자 성공 확인 뒤 최초 등록/원본 저장 버튼을 한 단계씩 안내한다. 검수 전 Supadata Free100·used1·잔여99; 승인된 자막 조회·저장 최대2크레딧을 넘기지 않고 `/v1/me`로 소비를 대조한다. 아직 사용자 실제 조회/새 원본 저장 성공을 확인하지 못했다. 사용자 Cloudflare 로그인 브라우저는 에이전트 별도 Chromium과 다르며 인증을 우회하지 않는다.
 
 실제 키는 `~/.local/state/biblequiz/credentials/supadata.key`0600에 그대로 있다. 프로그램 표준입력으로 전달하며 키값을 모델/명령 인자/로그/Git에 출력하지 않는다. 재입력을 요구하지 않는다. Supadata 키는 app에만, 기존 OpenAI 키는 content에만 둔다. 비공개 content는 새 공급자 source ID를 읽어야 하므로 앱과 함께 호환 배포가 필요하다. 새 Supadata 원본을 저장한 뒤 과거 Worker 버전으로 통째로 복귀하면 읽기가 실패한다. 새 출처 읽기 코드는 유지하면서 앱 provider만 전환한다.
 
@@ -12,16 +14,18 @@
 
 코드 진입점: `workers/_shared/services/supadata-transcript.ts`, app의 기존 video-preview/public-captions 두 라우트, 자막 source 계약2곳과 관리자 caption DTO/표시. oEmbed 제목 helper를 재사용하고 기존 공급자 경로는 보존한다. 새 의존성/migration 없음. source `supadata-native`, generated=null, 내부 track 표식으로 provenance를 유지한다. `202`는 동일 job만 전체30초 내 polling; 타임아웃 job의 영속 재개는 현재 구현하지 않았다. 별도 재요청을 자동 수행하지 않는다.
 
+배포 후 확인: root/두 난도 URL200, 관리자4경로Access302. 기존DB/Preview/backup/예약·비밀키 이름/handler/호환일 보존, app 코드 후보와 Secret 후보의 etag 일치. Secret 복제의 HTML 기본값 명시화만 공식 근거로 정규화했다. `approved-before/after-private.json`, 후보 proof와 `deployed-proof.json`을 보존했다. 빌드/검사는 이미 통과한 동일 소스라 반복하지 않았고 문서/JSON/diff만 다시 검사한다.
+
 보관: Git 제외 `.wrangler/releases/p8-02-supadata-integration-20261004/`에 check/build/dry-run 로그, `offline-proof.json`, `remote-before-private.json`, `artifact-proof.json`(소스437파일/산출물77파일), 두 환경 빌드가 있다. 기본 dist/배포 포인터는 저장본으로 복원했다. 이전 `.wrangler/releases/p8-02-supadata-native-20261004/`의 실제 결과/키는 그대로이며 새 외부 조회0·크레딧 추가소비0이다. 이번 원격 조회에서 기존5개 Worker 버전/AI7·usage7·비용860448microUSD·세션1·제출2·migration39/FK0가 그대로였다.
 
-기준 보존 커밋1ee9f36, 과거 비교c31c451, 복구 배포a5d4676, Supadata 시험bc976e3/기록43e406a를 유지한다. 현재 앱은 여전히 과거 복구 버전이며 새 연결을 배포했다고 말하지 않는다. 직접 YouTube 경로는 운영 challenge로 실패했고 Browser Run2회도 자막 대기 시간 초과였으며 Supadata Cloudflare native 시험만 성공했다. 수동 복사는 자동화 목표의 대체안이 아니다. 로컬 실제 원문·키·유료 결과·출력 의존성/폰트와0000~0038은 보존한다.
+기준 보존 커밋1ee9f36, 과거 비교c31c451, 복구 배포a5d4676, Supadata 시험bc976e3/기록43e406a를 유지한다. 현재 앱은 아래 Supadata 연결 버전이며 과거 복구 기록과 구분한다. 직접 YouTube 경로는 운영 challenge로 실패했고 Browser Run2회도 자막 대기 시간 초과였으며 Supadata Cloudflare native 시험만 성공했다. 수동 복사는 자동화 목표의 대체안이 아니다. 로컬 실제 원문·키·유료 결과·출력 의존성/폰트와0000~0038은 보존한다.
 
 사용자는AI API비용발생을안내받고“시작합시다”로관리자화면에서직접진행하는검수를시작했다. 한단계씩실제버튼을안내하고서버상태/비용을읽기확인한다. 기존키연결/활성화는완료했으므로다시승인받거나재입력/키사본을요구하지않는다. agent유료호출은하지않았고명시범위밖의자동생성/재호출·Paid전환·구매·mainpush·실제데이터손실복원은실행하지않는다. 기존입력/PDF·유료결과검사를반복하거나새번호/새감사프로젝트/완료조건을추가하지않는다.
 
 ## 현재 설치와 배포
 
-- Production app **ad9ebbf0-be59-4941-af42-ea063e97f984**100%, 소스 커밋 **a5d4676**. 직전 **033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf**는 이번 복구의 rollback 후보이며 기존 D1/DO와 호환된다; AI_GENERATION_ENABLED/CONTENT_FINAL_CHECK_WORKFLOW_ENABLED=true. 요청 제한·운영5분Cron·초안정리·백업=true를 유지했다. 직전 **602bb937-ab11-413e-b037-c89936f8e9f0**는 watch JSON 우선 사용 코드복귀후보다. 그전 **c6e396c0-44f8-4147-bc38-24e35cb8fdc0**는자동제목/장절보완완료·추가player POST 코드복귀후보다. 그전 **615eb2cd-a899-4d36-996b-8b0793696a20**는영상native조회복구완료/자동등록누락코드이며복귀후보다. 그전 **c0516ec1-1b0f-444e-8f3c-b0e54e1e4dd1**는AI연결완료/영상native오류가있는코드복귀후보다. 그전de4d4797-9ee9-483f-a96d-a7cfa5e68c5c는AI비활성호환후보다.
-- 비공개 content **95fbc7a6-95f5-4bcc-a85b-30dad3a59e56**100%; AI_GENERATION_ENABLED/AI_RESPONSE_ARCHIVE_ENABLED=true, OPENAI_API_KEY Secret만 추가했다. key-only 중간version **c21931a8-2d8f-4e3e-92c9-b18090474af7**는 AI=false였고 코드/기존binding을 보존했다. 이전 키 없는 비활성version210f95a2-37a1-46bd-b1ed-44e0835c4e8c도 보존했다. 주소/Preview URL/Cron 없음, display-preparation/cleanup=false·합성목록[] 유지. 모델 gpt-5.6-terra/high.
+- Production app **f8174f94-d983-4855-8d2d-d02756c41f44**100%, 소스 커밋 **7014758**. Supadata provider/Secret 추가. 과거 app ad9ebbf0의 소스는a5d4676이며 새 출처 원본 저장 뒤 그 버전으로 무조건 rollback하지 않는다. 직전 **033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf**는 이번 복구의 rollback 후보이며 기존 D1/DO와 호환된다; AI_GENERATION_ENABLED/CONTENT_FINAL_CHECK_WORKFLOW_ENABLED=true. 요청 제한·운영5분Cron·초안정리·백업=true를 유지했다. 직전 **602bb937-ab11-413e-b037-c89936f8e9f0**는 watch JSON 우선 사용 코드복귀후보다. 그전 **c6e396c0-44f8-4147-bc38-24e35cb8fdc0**는자동제목/장절보완완료·추가player POST 코드복귀후보다. 그전 **615eb2cd-a899-4d36-996b-8b0793696a20**는영상native조회복구완료/자동등록누락코드이며복귀후보다. 그전 **c0516ec1-1b0f-444e-8f3c-b0e54e1e4dd1**는AI연결완료/영상native오류가있는코드복귀후보다. 그전de4d4797-9ee9-483f-a96d-a7cfa5e68c5c는AI비활성호환후보다.
+- 비공개 content **66eb96c5-ad4c-4d01-85dd-a13aef598acf**100%, 소스7014758; 이전95fbc7a6보다 새 자막 출처 읽기 계약만 확장; AI_GENERATION_ENABLED/AI_RESPONSE_ARCHIVE_ENABLED=true, OPENAI_API_KEY Secret만 추가했다. key-only 중간version **c21931a8-2d8f-4e3e-92c9-b18090474af7**는 AI=false였고 코드/기존binding을 보존했다. 이전 키 없는 비활성version210f95a2-37a1-46bd-b1ed-44e0835c4e8c도 보존했다. 주소/Preview URL/Cron 없음, display-preparation/cleanup=false·합성목록[] 유지. 모델 gpt-5.6-terra/high.
 - backup **3fb0e7c7-368b-45a9-89f9-2818739e415d**100%; 비공개 Standard R2·기존 D1/Analytics Secret·삭제manifest10분/주간SQL 예약 유지. 첫 주간SQL **2026-10-05 04:00KST**는 아직 미관측이며 기존 정상SQL/격리복원 증거를 재사용했다.
 - Preview app7c356a97-f0f3-4793-ab7b-066b2ae2aeea/content2df93f07-3703-42ec-b576-fd085e8c839f·설정/자료 보존. Production/Preview SQL0000~0038·39개 유지.
 

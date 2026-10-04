@@ -60,7 +60,7 @@ AI는 교정 문서·의도·요약·답/단서를 만들고, 사람 확인 뒤 
 
 2026-10-04 과거 실행본/보관 TS와 첫 운영 수정 전 지문을 대조하고 같은 영상의 로컬·Cloudflare 시험에서 과거 요청은 성공, watch 자막 주소 우선 경로는 빈 응답임을 확인했다. 사용자 요청에 따라 운영 앱을 기존 단일 player POST 경로로 복구하되 native fetch 수정과 차단 시 제목 보완은 유지한다. Browser Run은 별도 소규모 시험이며 새 운영 의존성으로 채택하지 않는다. [비교·실험 결과](work/p8-02/transcript-comparison.md).
 
-2026-10-04 Supadata Free native 시험 성공 뒤 다음 작업 요청에 따라 운영 자막 공급자 연결을 로컬 구현한다. 한국어 기존 자막만 취득하고 auto/generate·유료 전환을 사용하지 않는다. 제목/날짜/장절 파서·중복 처리·불변 원본을 재사용하며 출처는 `supadata-native`, 자동/수동 미확인은 null로 보존한다. content도 새 출처 읽기 호환 버전이 필요하므로 content→app 순서로 적용하고, 저장 후 복귀 시 새 출처 읽기 호환 코드를 유지한다. 원격 Secret·배포는 구체적 묶음 승인 전 미실행이다. [정본](spec/generation.md#p8-02-supadata-운영-연결) · [검토 묶음](work/p8-02/supadata-integration.md).
+2026-10-04 Supadata Free native 시험 성공 뒤 다음 작업 요청에 따라 운영 자막 공급자 연결을 로컬 구현한다. 한국어 기존 자막만 취득하고 auto/generate·유료 전환을 사용하지 않는다. 제목/날짜/장절 파서·중복 처리·불변 원본을 재사용하며 출처는 `supadata-native`, 자동/수동 미확인은 null로 보존한다. content도 새 출처 읽기 호환 버전이 필요하므로 content→app 순서로 적용하고, 저장 후 복귀 시 새 출처 읽기 호환 코드를 유지한다. 사용자가 구체적 묶음에 “진행하세요 그리고 두 서버가 어디어딘지 알려주세요”로 후속 승인해 기존 키를 app Secret에 연결하고 content→app 순서로 적용했다. 새 AI/유료 전환/main push는 제외하며 관리자 조회·원본 저장 검수만 native 최대2크레딧 범위로 진행한다. [정본](spec/generation.md#p8-02-supadata-운영-연결) · [검토 묶음](work/p8-02/supadata-integration.md).
 
 ## D-012 — 출력은 웹 데이터에서 재현하고 AI를 다시 호출하지 않음
 
