@@ -74,3 +74,7 @@ Free 100크레딧/월, native 1요청=1크레딧은 현재 플랜 근거다. 제
 ## 최초 배치 실패와 무료 재현 — 2026-10-05
 
 사용자가 세 내용 검수 후4.격자 배치에서 어린이 기본5×5/목표5 시험의 DISCONNECTED_CANDIDATES 안내를 보고했다. 현재 선택한 표시 snapshot과 최초 request의 실제 selection 옵션을 D1 읽기로 Git 제외 release에 보존했다. 실제 draft 후보는 어린이16개·장년15개다(장년 statuses 항목16개를 후보 수와 혼동하지 않는다). 동일 seed/탐색 한도/정렬과 기존 searchCandidatePool로 로컬 오프라인 재현해 기본 어린이5×5/5개·장년5×5/6개가 모두 DISCONNECTED_CANDIDATES로 실패함을 확인했다. 같은 자료에서 두 난도 모두5×5/3개 및7×7/4개는 각각2개 배치가 성공했다. `placement-offline-proof.json`이 근거다. 사용자에게 어린이 목표만3으로 낮춰 시험하는 임시 검수 경로를 안내하며 운영 선택값은 agent가 변경하지 않는다. 이는 원래 목표 개수 충족이나 운영 배치 완료가 아니다. 목표 개수로 배치 가능한 후보 생성 문제는 미해결로 유지한다. 유료 재생성·자료 변경·배포0. 기존 CLI esbuild 래퍼가 네이티브 바이너리를 JS로 실행해 실패했고 설치된 바이너리 직접 실행으로 동일 엔진을 번들링했다. 문서만 수정해 diff 검사, 기존 코드 검사 재사용.
+
+## 두 배치 저장·최종 검사 통과 — 2026-10-05
+
+사용자가 어린이·장년 모두 목표3개 시험 후 두 배치 저장·검사를 진행했다. D1에서 placement selection1·final validation proof1, job review_ready/finish, error_code null, quiz draft를 읽기 확인했다. 비공개 `placement-final-state-private.json`에 보존했다. 다음은5.최종 확인에서 사용자가 공개할 내용을 검토하는 단계이며 아직 발행하지 않았다. 기존 목표 개수 문제는 미해결로 유지한다. 새 AI/agent 원격 쓰기0이며 문서 diff 검사 후 로컬 커밋했다.
