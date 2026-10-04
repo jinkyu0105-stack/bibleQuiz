@@ -109,7 +109,7 @@ function parseSegments(body: string) {
 }
 
 export interface AccountlessPublicTranscriptProvider {
-  readonly descriptor: typeof transcriptProvider;
+  readonly descriptor: { readonly id: "accountless-youtube-spike" | "supadata-native"; readonly version: "0.1.0" };
   fetchTranscript(input: unknown): Promise<AccountlessTranscriptResult>;
   inspectVideo(input: unknown): Promise<{ video: PublicVideoMetadata | null; result: AccountlessTranscriptResult }>;
 }
@@ -122,7 +122,7 @@ export interface PublicVideoMetadata {
 
 // oEmbed supplies public link metadata only. It cannot fetch captions or
 // resolve a player challenge, and its failure must not replace that diagnostic.
-async function readPublicVideoTitle(videoId: string, fetcher: typeof fetch, timeoutMs: number): Promise<string | null> {
+export async function readPublicVideoTitle(videoId: string, fetcher: typeof fetch, timeoutMs: number): Promise<string | null> {
   const controller = new AbortController();
   let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
   let timer: ReturnType<typeof setTimeout> | undefined;

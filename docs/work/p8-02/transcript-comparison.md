@@ -76,3 +76,7 @@ Python 요청 두 번과 GET 확인은 Cloudflare preview 입구403/1010으로 �
 Supadata 가입 화면의 `Pick integration`은 코드 안내 선택이고 환경/요금 설정이 아니었다. 키 입력을 마친 사용자는 `Go to dashboard`로 이동하면 된다. 스크린샷은 Windows 경로를 WSL `/mnt/c`로 변환해 실제 첨부 화면을 확인했다.
 
 **다음은 운영 연결 구현이다.** 현재 성공은 분리된 Cloudflare 시험이며 운영 `/admin/new` 버튼에는 아직 기존 provider가 연결돼 있다. 기존 자동 제목/날짜/장절과 중복 처리를 유지하고 native 자막 조회·원본 저장에 Supadata adapter를 붙이는 범위, 기존 자막/사용량 보존, 한국어 강제 확인·native 고정·Secret 저장 위치를 검토 가능한 코드/검사로 준비한다. 이 시험 승인을 유료 전환이나 새 AI 호출 승인으로 확대하지 않는다. 기존 키/원본/성공 결과는 재사용하며 같은 영상을 시험 목적만으로 다시 취득하지 않는다.
+
+## 운영 연결의 다음 범위
+
+무료 시험 결과를 재사용해 [운영 연결 검토 묶음](supadata-integration.md)을 구현했다. 새 API 호출로 시험을 반복하지 않았으며 원격 적용 여부는 해당 문서와 STATUS/HANDOFF를 따른다.

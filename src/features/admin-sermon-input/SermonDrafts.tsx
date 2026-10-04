@@ -106,7 +106,7 @@ function MetadataForm({ view, onSave, onSelectExisting, busy }: {
         <p>영상 제목: {preview.title ?? "확인되지 않음 · 직접 입력해 주세요"} · 게시일: {preview.publishedDate ?? "확인되지 않음"}</p>
         <p>영상 제목에서 인식한 날짜·장절은 자동 입력합니다. 인식하지 못한 항목은 직접 입력하고 확인해 주세요.</p>
         {preview.caption.status === "available"
-          ? <p>공개 한국어 {preview.caption.generated ? "자동" : "수동"} 자막 {preview.caption.segmentCount}구간 · {preview.caption.characterCount.toLocaleString("ko-KR")}자. 등록 후 원본 저장 단계에서 다시 취득합니다.{preview.caption.characterCount > 30_000 ? " 3만 자를 넘으므로 원본 저장은 차단됩니다." : ""}</p>
+          ? <p>공개 한국어 {preview.caption.generated === null ? "" : preview.caption.generated ? "자동 " : "수동 "}자막 {preview.caption.segmentCount}구간 · {preview.caption.characterCount.toLocaleString("ko-KR")}자. 등록 후 원본 저장 단계에서 다시 취득합니다.{preview.caption.characterCount > 30_000 ? " 3만 자를 넘으므로 원본 저장은 차단됩니다." : ""}</p>
           : <><p>{preview.caption.message} {preview.caption.code === "TRANSCRIPT_SOURCE_BLOCKED"
             ? "반복 조회해도 계속 차단될 수 있습니다. 설교 정보를 확인해 등록한 뒤 YouTube의 ‘스크립트 표시’ 내용을 직접 붙여넣을 수 있습니다."
             : "등록 후 다시 시도하거나 텍스트를 직접 붙여넣을 수 있습니다."}</p>

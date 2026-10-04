@@ -49,7 +49,7 @@ export const adminPublicVideoPreviewSchema = z.discriminatedUnion("outcome", [
       z.strictObject({
         status: z.literal("available"),
         language: z.enum(["ko", "ko-KR"]),
-        generated: z.boolean(),
+        generated: z.boolean().nullable(),
         segmentCount: z.int().positive(),
         characterCount: z.int().nonnegative(),
       }),

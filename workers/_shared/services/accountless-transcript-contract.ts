@@ -5,7 +5,13 @@ export const transcriptProvider = {
   version: "0.1.0",
 } as const;
 
+export const supadataTranscriptProvider = { id: "supadata-native", version: "0.1.0" } as const;
+export const transcriptProviderIdSchema = zEnum([transcriptProvider.id, supadataTranscriptProvider.id]);
+
 export const transcriptFailureMessages = {
+  TRANSCRIPT_PROVIDER_UNAVAILABLE: "자막 서비스 인증 또는 설정을 확인해 주세요.",
+  TRANSCRIPT_QUOTA_EXCEEDED: "자막 서비스의 사용 한도에 도달했습니다. 자동 유료 전환 없이 조회를 중단했습니다.",
+  TRANSCRIPT_TOO_LARGE: "자막이 3만 자를 초과하여 원본 저장을 중단했습니다.",
   INVALID_YOUTUBE_URL: "YouTube 영상 주소나 video ID 형식을 확인해 주세요.",
   VIDEO_UNAVAILABLE: "영상의 공개 여부와 로그인·연령·지역 제한을 확인해 주세요.",
   VIDEO_METADATA_FETCH_FAILED: "영상 기본 정보를 가져오는 단계에서 실패했습니다.",
@@ -18,8 +24,8 @@ export const transcriptFailureMessages = {
   CAPTION_TRACK_EMPTY: "자막 응답이 비어 있습니다. 나중에 다시 확인해 주세요.",
   TRANSCRIPT_SOURCE_BLOCKED: "현재 요청 경로가 차단되거나 인증·동의가 필요합니다. 자막 없음으로 판단하지 않습니다.",
   TRANSCRIPT_FORMAT_CHANGED: "응답 형식이나 안전 조건이 예상과 달라 자막 가져오기를 중단했습니다.",
-  TRANSCRIPT_TIMEOUT: "지정 시간 안에 YouTube 응답을 받지 못했습니다.",
-  TRANSCRIPT_NETWORK_FAILED: "YouTube 연결 또는 응답 읽기에 실패했습니다.",
+  TRANSCRIPT_TIMEOUT: "지정 시간 안에 자막 서비스 응답을 받지 못했습니다.",
+  TRANSCRIPT_NETWORK_FAILED: "자막 서비스 연결 또는 응답 읽기에 실패했습니다.",
   TRANSCRIPT_FETCH_FAILED: "자막 가져오기에 실패했습니다. 안전한 진단 정보를 확인해 주세요.",
 } as const;
 
@@ -30,7 +36,7 @@ export type TranscriptStage = z.infer<typeof transcriptStageSchema>;
 // Only bounded numbers and locally chosen enums enter diagnostics. Never copy
 // upstream strings, keys, Zod issues, exceptions, stack/cause, headers or URLs.
 export const transcriptDiagnosticSchema = strictObject({
-  providerId: literal(transcriptProvider.id),
+  providerId: transcriptProviderIdSchema,
   providerVersion: literal(transcriptProvider.version),
   attempt: literal(1),
   startedAt: iso.datetime(),
@@ -58,9 +64,9 @@ export const privateTranscriptSchema = strictObject({
   videoId: string().regex(/^[A-Za-z0-9_-]{11}$/u),
   language: zEnum(["ko", "ko-KR"]),
   trackId: string().min(1).max(128),
-  generated: boolean(),
+  generated: boolean().nullable(),
   retrievedAt: iso.datetime(),
-  providerId: literal(transcriptProvider.id),
+  providerId: transcriptProviderIdSchema,
   providerVersion: literal(transcriptProvider.version),
   // Hash of UTF-8 JSON.stringify(segments), not of the upstream transport body.
   sourceSha256: string().regex(/^[0-9a-f]{64}$/u),

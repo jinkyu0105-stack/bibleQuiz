@@ -150,9 +150,9 @@ const adminSermonInputSourceSchema = z.discriminatedUnion("sourceMode", [
     videoId: z.string().regex(/^[A-Za-z0-9_-]{11}$/u),
     language: z.enum(["ko", "ko-KR"]),
     trackId: z.string().regex(/^[.A-Za-z0-9_-]{1,128}$/u),
-    generated: z.boolean(),
+    generated: z.boolean().nullable(),
     retrievedAt: z.iso.datetime(),
-    providerId: z.literal("accountless-youtube-spike"),
+    providerId: z.enum(["accountless-youtube-spike", "supadata-native"]),
     providerVersion: z.literal("0.1.0"),
   }),
 ]);

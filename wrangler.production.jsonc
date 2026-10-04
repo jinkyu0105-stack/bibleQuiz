@@ -28,6 +28,7 @@
     ]
   },
   "vars": {
+    "PUBLIC_TRANSCRIPT_PROVIDER": "supadata",
     "AI_GENERATION_ENABLED": "true",
     "AI_RESPONSE_ARCHIVE_ENABLED": "false",
     "CONTENT_FINAL_CHECK_WORKFLOW_ENABLED": "true",

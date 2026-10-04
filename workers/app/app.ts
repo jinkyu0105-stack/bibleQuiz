@@ -9,7 +9,7 @@ import { generationReadSession } from "../_shared/repositories/generation-read-s
 import { fullGenerationEnabled } from "../_shared/services/preview-generation-access";
 import { listSermonDrafts, readSermonDraft, registerSermonDraft, saveSermonDraft, SermonDraftError } from "../_shared/services/sermon-drafts";
 import { importPublicSermonCaptions, previewPublicSermonVideo, PublicVideoError } from "../_shared/services/public-sermon-video";
-import { createAccountlessPublicTranscriptProvider } from "../_shared/services/accountless-youtube-transcript";
+import { createPublicTranscriptProvider } from "../_shared/services/supadata-transcript";
 import { readQuizDeadline, previewQuizDeadline, changeQuizDeadline } from "../_shared/services/quiz-deadline";
 import { readPublishedWording, correctPublishedWording } from "../_shared/services/published-wording";
 import { readProblemHistory } from "../_shared/services/problem-history";
@@ -154,6 +154,8 @@ import { adminFinalCheckRequestSchema, adminFinalCheckStatusSchema } from "../..
 import { createGenerationLifecycleStore } from "../_shared/repositories/generation-lifecycle-store";
 
 export interface AppBindings extends PublicRateBindings, BackupBindings {
+  PUBLIC_TRANSCRIPT_PROVIDER?: string;
+  SUPADATA_API_KEY?: string;
   DRAFT_CLEANUP_ENABLED?: string;
   OPERATIONS_CRON_ENABLED?: string;
   CONTENT_WORKFLOW?: Workflow<ContentWorkflowMessage>;
@@ -243,7 +245,7 @@ app.post("/api/admin/sermon-drafts/video-preview", async context => {
   try {
     if (new URL(context.req.url).search) throw new PublicVideoError("VIDEO_INVALID");
     const body = await readSameOriginJson(context.req.raw);
-    const provider = createAccountlessPublicTranscriptProvider({ fetcher: fetch });
+    const provider = createPublicTranscriptProvider(context.env, fetch);
     return context.json(success(await previewPublicSermonVideo(context.env.DB, body, provider)));
   } catch (error) { return publicVideoErrorResponse(context, error); }
 });
@@ -1014,7 +1016,7 @@ app.post("/api/admin/sermons/:id/input/public-captions", async context => {
     const sermonId = adminSermonIdSchema.safeParse(context.req.param("id"));
     if (!sermonId.success) throw new PublicVideoError("VIDEO_INVALID");
     const body = await readSameOriginJson(context.req.raw);
-    const provider = createAccountlessPublicTranscriptProvider({ fetcher: fetch });
+    const provider = createPublicTranscriptProvider(context.env, fetch);
     return context.json(success(await importPublicSermonCaptions(
       context.env.DB, sermonId.data, body, context.get("accessIdentity").email, provider,
     )));
