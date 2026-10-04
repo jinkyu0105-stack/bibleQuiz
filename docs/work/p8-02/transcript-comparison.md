@@ -58,3 +58,9 @@ Python 요청 두 번과 GET 확인은 Cloudflare preview 입구403/1010으로 �
 공식 Cloudflare FAQ와 Context7 `/cloudflare/cloudflare-docs`를 대조했다. Context7의 일반 네트워크/Challenge 문서는 이번 YouTube 차단 원인의 증거로 사용하지 않았다.
 
 이번 turn은 실제 검수 결과·대안 문서만 갱신했다. 운영 코드/배포/DB/서비스/Secret/AI 호출 변경0이며 기존 필수 검사와 입력/PDF 결과를 재사용한다. 문서 링크·JSON·diff 검사 후 로컬 커밋한다. P8-02/Phase8은 자막 자동 취득 미해결로 진행 중이다.
+
+### 무료 시험 승인과 준비
+
+사용자가 무료 한 편 시험을 승인하고 키를 기존 숨김 입력 도구로 저장했다. `receive-quality-secret.py supadata`는 기존 OpenAI/Access와 다른 `supadata.key`를0600으로 저장한다. 키 값은 대화/로그/Git에 표시하지 않는다. 별도 [시험 Worker](../../../scripts/transcript-probe/supadata-native.mjs)는 native/ko/text=false를 고정하며 다른 언어·빈 자막·잘못된 시간 순서·3만 자 초과를 거부한다. 임시 Worker에 난수 인증과 no-store를 적용하고 운영 DB/Worker/라우트에는 연결하지 않는다. 202는 job ID만 보존하고 새 자막 요청을 자동 재전송하지 않는다.
+
+합성 Node4개·비밀값 저장 Python7개·변경 JS ESLint가 통과했다. 새 의존성/제품 TypeScript/배포 단위 변경이 없어 전체 pnpm check와 입력/PDF 검사는 반복하지 않는다. 실제 무료 호출 결과는 아래 후속 기록을 따른다.

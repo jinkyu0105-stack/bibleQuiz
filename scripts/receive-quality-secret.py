@@ -28,6 +28,9 @@ def validate(kind, value):
     if kind == 'openai':
         if not value.startswith('sk-') or len(value) < 20:
             raise ValueError('INVALID_SECRET')
+    elif kind == 'supadata':
+        if len(value) < 16 or not value.isascii():
+            raise ValueError('INVALID_SECRET')
     elif kind == 'access':
         if not re.fullmatch(r'[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+', value):
             raise ValueError('INVALID_SECRET')
@@ -46,7 +49,7 @@ def save_secret(kind, value, root=ROOT):
     private_directory(root)
     directory = root / 'credentials'
     private_directory(directory)
-    target = directory / ('access.jwt' if kind == 'access' else 'openai-nonprod.key')
+    target = directory / {'access': 'access.jwt', 'openai': 'openai-nonprod.key', 'supadata': 'supadata.key'}[kind]
     if target.exists() or target.is_symlink():
         info = target.lstat()
         if not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o077:
@@ -71,7 +74,7 @@ def save_secret(kind, value, root=ROOT):
 
 def main():
     parser = argparse.ArgumentParser(description='비공개 시험 인증값 저장. 값은 명령 인자나 대화에 넣지 마세요.')
-    parser.add_argument('kind', choices=['access', 'openai'])
+    parser.add_argument('kind', choices=['access', 'openai', 'supadata'])
     args = parser.parse_args()
     if not sys.stdin.isatty():
         raise ValueError('TTY_REQUIRED')

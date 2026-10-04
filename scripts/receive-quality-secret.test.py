@@ -25,6 +25,19 @@ class SecretStorageTests(unittest.TestCase):
             self.assertEqual(target.read_text().strip(), 'sk-synthetic-only-replacement')
             self.assertEqual(len(list(target.parent.iterdir())), 1)
 
+    def test_supadata_uses_separate_private_file_and_preserves_other_key(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            original = receiver.save_secret('openai', 'sk-synthetic-only-original', root)
+            target = receiver.save_secret('supadata', 'synthetic-only-supadata-value', root)
+            self.assertEqual(target.name, 'supadata.key')
+            self.assertEqual(target.stat().st_mode & 0o777, 0o600)
+            self.assertEqual(original.read_text().strip(), 'sk-synthetic-only-original')
+            for invalid in ['short', 'synthetic invalid whitespace']:
+                with self.assertRaises(ValueError):
+                    receiver.save_secret('supadata', invalid, root)
+            self.assertEqual(target.read_text().strip(), 'synthetic-only-supadata-value')
+
     def test_invalid_input_does_not_replace_existing_key(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
