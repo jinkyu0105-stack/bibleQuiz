@@ -31,8 +31,30 @@ Python 요청 두 번과 GET 확인은 Cloudflare preview 입구403/1010으로 �
 
 ## 운영 앱 복구와 검사
 
-사용자가 운영 앱에서도 과거 코드로 시험하도록 요청했다. watch → 기존 player POST → 한국어 자막 조회 순서를 복구하고, native fetch 참조 분리·일치 video ID의 metadata 보존·제목 없는 차단 미리보기의 oEmbed 보완은 유지한다. 기존 한국어 track/파싱/저장·중복 처리·차단 자동 재시도 금지는 변경하지 않는다. watch에 오래된 caption URL이 있어도 새 player 응답을 사용하는 회귀 검사를 추가했다. 관련90개와 전체 `pnpm check`가 통과했다(unit308/Worker2165/Workflow4/복구CLI2/Node14/Python6·lint/typecheck/Drizzle/build). 소스 커밋 `a5d46765705f24446b9a8c083a33339015c42096`에서 운영 앱 `ad9ebbf0-be59-4941-af42-ea063e97f984`100%를 배포했다. 직전 `033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf`는 호환 rollback 후보다. Production build/strict·후보binding/runtime 대조·공개200/관리자4경로302가 통과했다. 모든vars/Secret명·content/backup/Preview/예약과 참가1/제출2/call7/usage7/860448microUSD/migration39/FK0을 보존했다. 소스657개 중2개변경·산출물73개를 고정했고 기본dist/deploypointer를 복구했다. 실제 관리자 조회는 사용자에게 새로고침 후 한 번 요청했으며 결과 대기다. 저장된 Access JWT가 만료돼 인증된 앱 조회를 agent가 완료했다고 쓰지 않는다. 배포 근거는 Git 제외 `.wrangler/releases/p8-02-transcript-restoration-20261004`다.
+사용자가 운영 앱에서도 과거 코드로 시험하도록 요청했다. watch → 기존 player POST → 한국어 자막 조회 순서를 복구하고, native fetch 참조 분리·일치 video ID의 metadata 보존·제목 없는 차단 미리보기의 oEmbed 보완은 유지한다. 기존 한국어 track/파싱/저장·중복 처리·차단 자동 재시도 금지는 변경하지 않는다. watch에 오래된 caption URL이 있어도 새 player 응답을 사용하는 회귀 검사를 추가했다. 관련90개와 전체 `pnpm check`가 통과했다(unit308/Worker2165/Workflow4/복구CLI2/Node14/Python6·lint/typecheck/Drizzle/build). 소스 커밋 `a5d46765705f24446b9a8c083a33339015c42096`에서 운영 앱 `ad9ebbf0-be59-4941-af42-ea063e97f984`100%를 배포했다. 직전 `033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf`는 호환 rollback 후보다. Production build/strict·후보binding/runtime 대조·공개200/관리자4경로302가 통과했다. 모든vars/Secret명·content/backup/Preview/예약과 참가1/제출2/call7/usage7/860448microUSD/migration39/FK0을 보존했다. 소스657개 중2개변경·산출물73개를 고정했고 기본dist/deploypointer를 복구했다. 사용자가 운영 관리자 조회 결과를 제공했다. 제목·설교일·성경 장절·책 선택은 정상이며 자막은 player challenge로 실패했다. 아래 실제 운영 검수 결과를 따른다. agent의 인증된 조회 성공으로 쓰지 않는다. 배포 근거는 Git 제외 `.wrangler/releases/p8-02-transcript-restoration-20261004`다.
 
-과거 직접 요청이 Cloudflare에서 성공했으므로 두 방식 모두 실패했다는 조건은 성립하지 않는다. 별도 서비스 도입보다 기존 경로 복구를 우선하며 장기 성공률은 보장하지 않는다.
+과거 직접 요청의 임시 Worker 성공은 사실이나 운영 앱의 재현 성공을 뜻하지 않는다. 운영 직접 요청과 Browser Run 모두 현재 자동 원본 취득에 실패했으므로 같은 경로의 반복 배포/사용자 재시도 대신 아래 대안을 검토한다.
 
 공식 근거: [CDP/Playwright](https://developers.cloudflare.com/browser-run/cdp/playwright/), [요금](https://developers.cloudflare.com/browser-run/pricing/), [한도](https://developers.cloudflare.com/browser-run/limits/), Context7 `/cloudflare/cloudflare-docs`. 실행된 Wrangler4.125.0의 browser create/list/close 및 auth create 구현도 대조했다.
+
+## 운영 검수 결과와 다음 자동 취득 후보 — 2026-10-04
+
+사용자 진단 시각 `2026-10-04T12:41:45.590Z`에서 복구 앱은 `TRANSCRIPT_SOURCE_BLOCKED`, player/challenge, HTTP200 JSON 6,988bytes, 총853ms(watch706ms/player147ms)였다. track 선택 전에 실패했다. 이 code는 현재 provider에서 `LOGIN_REQUIRED`와 “Sign in to confirm you're not a bot” 응답 조합으로만 나온다. HTTP200을 자막 취득 성공으로 해석하지 않는다. 제목·일자·장절·책 dropdown 자동 입력은 사용자가 정상 확인했다. 게시일은 미확인이다. 기본 정보 조회와 자막 원본 취득을 분리한다.
+
+운영/임시 Worker 모두 같은 watch→ANDROID player POST→timedtext 순서와 요청 본문을 쓴다. 운영 호출은 전역 fetch를 직접 전달하고 내부에서 참조를 분리하며 관리자 요청의 cookie/Authorization을 YouTube에 전달하지 않는다. 임시 Worker는 전역 fetch wrapper였다. 임시 성공 시각과 이번 운영 실패 시각/실행 요청 위치가 다르므로 IP 평판·출발 위치·시간 중 어느 것이 원인인지는 입증되지 않았다. Cloudflare 브라우저도 해당 사이트의 접근 허용을 보장하지 않는다. [Cloudflare FAQ](https://developers.cloudflare.com/browser-run/faq/).
+
+사용자는 채널을 시청할 수만 있고 영상/자막 편집 권한이 없다고 확인했다. [공식 captions.download](https://developers.google.com/youtube/v3/docs/captions/download)는 편집 권한이 필요하므로 현재 해결 후보에서 제외한다. 로그인 cookie 수집이나 반복 challenge 재시도를 새 해결책으로 추가하지 않는다.
+
+### 검토 가능한 작은 시험 제안 — 아직 채택/호출하지 않음
+
+운영 서버 단독 자동화를 우선하려면 **Supadata의 기존 자막 전용 무료 시험 1건**을 후보로 제안한다. [공식 요금](https://supadata.ai/pricing)은 Free 월100credits/카드 불필요, 기존 자막 취득1건=1credit, Free 소진 시 추가 요청 차단이다. 주1편·미리보기1회/원본저장1회라면 월4~5편은8~10credits라는 계산이며 실패/재요청은 별도다. 유료 최저안은 Basic 월환산USD5지만 연USD60 결제이며 자동 도입하지 않는다. 새 외부 서비스이므로 사용자의 채택 결정 전 가입/키 저장/실제 영상 전달/운영 연결을 하지 않는다.
+
+승인 시 먼저 무료 계정과 API 키를 준비하고, 운영 DB와 분리한 Cloudflare 시험에서 `GET /v1/transcript`에 같은 공개 영상 URL·`mode=native`·`lang=ko`·`text=false`로 한 번 요청한다. 외부에 전달할 자료는 공개 영상 URL이며 기존 원문·AI 결과·관리자 인증은 전달하지 않는다. 기본 mode=auto는 AI 전사로 전환될 수 있으므로 사용하지 않는다. 응답의 실제 언어가 한국어인지 확인하고, 시간 구간/전체 텍스트/빈 결과/기존 보관 자막과의 대조를 수행한다. 다른 언어가 fallback될 수 있으므로 요청 lang만으로 한국어 성공이라 판정하지 않는다. 202라면 job ID를 보존하고 새 생성 요청 없이 같은 job 상태만 확인한다. 수신 결과는 비공개 보존하며 이 시험 자체는 등록/원본 DB를 수정하지 않는다. [API 계약](https://docs.supadata.ai/get-transcript).
+
+이 후보의 해당 영상 성공은 아직 미검증이다. 무료 시험 성공 뒤에만 기존 관리자 provider/불변 원본 저장에 연결할 구현 범위를 정한다. 별도 SDK는 필수 아님(기존 fetch 사용 가능). 서비스 종료/무료 한도/접근 제한이라는 의존성이 생긴다.
+
+새 서비스 없이 가려면 이미 성공한 로컬 브라우저 프로그램을 관리자 화면과 연결할 수 있다. 프로그램이 자막을 읽어 운영 서버로 보내므로 사용자 수동 복사는 필요 없으나 사용자 PC가 켜져 있어야 하며 설치/실행·인증 연결 구현이 남는다. 서버만으로 실행된다는 목표와는 다른 운영 조건이므로 자동 채택하지 않는다. 이번 설교만 진행하려면 이미 저장한 원본을 재사용할 수 있으나 매주 서버 자동 취득 문제가 해결됐다고 쓰지 않는다.
+
+공식 Cloudflare FAQ와 Context7 `/cloudflare/cloudflare-docs`를 대조했다. Context7의 일반 네트워크/Challenge 문서는 이번 YouTube 차단 원인의 증거로 사용하지 않았다.
+
+이번 turn은 실제 검수 결과·대안 문서만 갱신했다. 운영 코드/배포/DB/서비스/Secret/AI 호출 변경0이며 기존 필수 검사와 입력/PDF 결과를 재사용한다. 문서 링크·JSON·diff 검사 후 로컬 커밋한다. P8-02/Phase8은 자막 자동 취득 미해결로 진행 중이다.

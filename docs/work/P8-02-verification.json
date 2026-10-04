@@ -2193,7 +2193,7 @@
     "scope": "Historical installation baseline; current input-notice source preservation in inputModeNoticeRelease.documentationAndGit"
   },
   "pending": [
-    "Verify restored production transcript preview once through the authenticated admin screen, then resume existing original-storage/AI-generation acceptance. Do not repeat completed input/PDF checks or paid results."
+    "Choose the reviewed next automation trial: free native-only external caption API (not connected/called), or local browser integration with a PC-on requirement. Production historical player request failed; do not request blind retries. Reuse saved transcripts and completed input/PDF checks."
   ],
   "previousUsageBeforeD1EditApproval": {
     "plan": "pro",
@@ -9090,7 +9090,7 @@
   },
   "historicalTranscriptRestoration": {
     "task": "P8-02",
-    "status": "deployed_operator_caption_check_pending",
+    "status": "deployed_operator_caption_failed",
     "sourceCommit": "a5d46765705f24446b9a8c083a33339015c42096",
     "version": "ad9ebbf0-be59-4941-af42-ea063e97f984",
     "previousVersion": "033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf",
@@ -9155,7 +9155,27 @@
         "redirectHost": "holy-paper-720a.cloudflareaccess.com"
       }
     ],
-    "operatorVerification": "pending; saved Access token expired; no bypass",
+    "operatorVerification": {
+      "source": "operator_report",
+      "startedAt": "2026-10-04T12:41:45.590Z",
+      "metadataFieldsConfirmed": [
+        "title",
+        "sermonDate",
+        "bibleReference",
+        "bookDropdown"
+      ],
+      "publishedDateConfirmed": false,
+      "code": "TRANSCRIPT_SOURCE_BLOCKED",
+      "stage": "player",
+      "reason": "challenge",
+      "httpStatus": 200,
+      "contentType": "json",
+      "responseBytes": 6988,
+      "elapsedMs": 853,
+      "trackCount": null,
+      "captionFetched": false,
+      "channelEditingPermission": false
+    },
     "cloudBrowserProbe": {
       "attempts": 2,
       "outcome": "transcript_rows_timeout",
