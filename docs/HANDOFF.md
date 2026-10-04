@@ -1,16 +1,20 @@
-# 인계 — P8-02 Supadata Cloudflare 무료 자막 시험 성공 / 운영 연결 준비
+# 인계 — P8-02 Supadata 운영 연결 로컬 검증 / 배포 묶음 승인 대기
 
-2026-10-04. **현재 P8-02 진행 중 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 추천 GPT-6.1-sol·높음 — 실제 AI 생성/비용과 기존 자료 보존을 함께 확인해야 한다. Pro 사용8%·잔여92%·10080분/별도5시간 없음 → 사용자 지정×10=920%(공식 배수 아님). 위임 없음.
+2026-10-04. **현재 P8-02 진행 중 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 추천 GPT-6.1-sol·높음 — 두 서버의 출처 호환과 실제 자료 보존을 확인해야 한다. Pro 사용10%·잔여90%·10080분/별도5시간 없음 → 사용자 지정×10=900%(공식 배수 아님). 위임 없음.
 
 ## 다음 첫 동작
 
-사용자가 Supadata 무료 한 편 시험을 승인하고 기존 숨김 입력 도구로 키를 저장했다. Cloudflare 분리 시험에서 native 한국어768구간/12,993자·7,798ms에 성공했다. 이전 보관본과 전체 글자/시간/정규 SHA 일치, `/v1/me` Free0→1/100·잔여99다. 실행 소스 `bc976e3`, 키는 `~/.local/state/biblequiz/credentials/supadata.key`0600, 결과는 Git 제외 `.wrangler/releases/p8-02-supadata-native-20261004`에 보존한다. 키값/원문을 출력하거나 같은 영상 성공 시험을 반복하지 않는다. 임시 Worker 종료/임시 키 사본 제거 완료. 운영 앱/DB/Secret/유료AI/main push는 변경0이다.
+사용자의 “다음 작업 진행하세요”에 따라 기존 Supadata Free 성공 결과를 운영 조회/원본 저장에 연결하는 로컬 구현·필수 검사·검토 가능한 묶음을 완료했다. **소스 커밋 `701475820e7d4281a4948bac820ff326d9e2ced1`**, 원격 미적용. [구체적 배포 범위/순서/무료2크레딧 검수/복귀](work/p8-02/supadata-integration.md)를 승인받으면 content 호환 코드→app 코드 후보→저장된 Supadata 키를 versions secret put으로 최종 후보에 연결→binding/지문 비교→배포한다. 새 AI 호출·Paid 전환·main push는 제외한다. 기존 무료 시험 승인을 새 운영 Secret 설치의 완료/포괄 승인으로 기록하지 않는다. 사용자 승인 이후 같은 내부 단계마다 재승인받지 않는다.
 
-다음은 기존 관리자 미리보기·원본 저장에 native 전용 Supadata 경로를 연결할 로컬 코드/검사와 배포 묶음을 준비하는 것이다. 이번 승인은 무료 시험이며 운영 앱 연결은 아직 하지 않았다. 기존 제목/일자/장절 자동 입력, 중복 처리, 한국어 검증, 불변 원본과 실제 결과를 재사용한다. [정본·검사·실행 한계](work/p8-02/transcript-comparison.md#cloudflare-무료-시험-성공). Node5개(실제 workerd 포함)·Python7개·변경JS ESLint·문서/JSON/diff 검사를 통과했다. 제품 TS/Phase/배포 단위 변경이 아니라 전체pnpm check/입력/PDF 검사는 반복하지 않았다.
+실제 키는 `~/.local/state/biblequiz/credentials/supadata.key`0600에 그대로 있다. 프로그램 표준입력으로 전달하며 키값을 모델/명령 인자/로그/Git에 출력하지 않는다. 재입력을 요구하지 않는다. Supadata 키는 app에만, 기존 OpenAI 키는 content에만 둔다. 비공개 content는 새 공급자 source ID를 읽어야 하므로 앱과 함께 호환 배포가 필요하다. 새 Supadata 원본을 저장한 뒤 과거 Worker 버전으로 통째로 복귀하면 읽기가 실패한다. 새 출처 읽기 코드는 유지하면서 앱 provider만 전환한다.
 
-과거 경로 복구 앱 `ad9ebbf0-be59-4941-af42-ea063e97f984`(소스 `a5d4676`)의 운영 검수에서 사용자 기본 정보 입력은 통과했지만 player challenge(HTTP200 JSON6988bytes·853ms)로 자막은 실패했다. Cloudflare Browser Run2회도 자막 행 대기 시간 초과였다. 이번 Supadata 성공과 혼동하지 않는다. 첫 Supadata 시험 실행 오류는 미지원 redirect:error였고 외부 호출/credit소비0, manual·3xx실패 처리와 native workerd 회귀 검사 후 성공했다. 사용자 채널 편집 권한은 없으므로 공식 OAuth 자막 경로는 제외한다.
+검사: 새 회귀22개와 기존 관련93개, 전체 `pnpm check` exit0(unit308/Worker2187/Workflow4/recovery CLI2/Node14/Python7), 최종 typecheck/변경시험 ESLint, Production build, 두 Worker strict dry-run, diff/link/JSON 검사를 통과했다. 초기 새 테스트의 dispatch 누락·교정 응답에 시간 필드를 넣은 fixture 오류를 고친 뒤 최종 전체 검사에서 통과했다. 실제 AI 요청은0이다. 실제 보관 자막768구간/12,993자 전체 글자/시간/정규 SHA 오프라인 대조도 일치했다. 실제 입력/PDF/E2E는 반복하지 않았다. 기존 큰 번들 경고는 남아 있다.
 
-기준 커밋1ee9f36/비교 시험c31c451과 보존한 `.wrangler/releases/p8-02-transcript-comparison-20261004`를 재사용한다. 실제 원문/키를 Git에 넣지 않는다. 복구 배포 자료는 `.wrangler/releases/p8-02-transcript-restoration-20261004`에 둔다. 앞선 로컬 브라우저 성공269구간/12,792자는 [이전 실증](work/p8-02/browser-transcript.md)이며 Cloudflare 브라우저 성공과 혼동하지 않는다. 완료한 입력/PDF 검사는 반복하지 않는다. 사용자 수동 자막 복사는 자동화 목표의 대체안으로 삼지 않는다.
+코드 진입점: `workers/_shared/services/supadata-transcript.ts`, app의 기존 video-preview/public-captions 두 라우트, 자막 source 계약2곳과 관리자 caption DTO/표시. oEmbed 제목 helper를 재사용하고 기존 공급자 경로는 보존한다. 새 의존성/migration 없음. source `supadata-native`, generated=null, 내부 track 표식으로 provenance를 유지한다. `202`는 동일 job만 전체30초 내 polling; 타임아웃 job의 영속 재개는 현재 구현하지 않았다. 별도 재요청을 자동 수행하지 않는다.
+
+보관: Git 제외 `.wrangler/releases/p8-02-supadata-integration-20261004/`에 check/build/dry-run 로그, `offline-proof.json`, `remote-before-private.json`, `artifact-proof.json`(소스437파일/산출물77파일), 두 환경 빌드가 있다. 기본 dist/배포 포인터는 저장본으로 복원했다. 이전 `.wrangler/releases/p8-02-supadata-native-20261004/`의 실제 결과/키는 그대로이며 새 외부 조회0·크레딧 추가소비0이다. 이번 원격 조회에서 기존5개 Worker 버전/AI7·usage7·비용860448microUSD·세션1·제출2·migration39/FK0가 그대로였다.
+
+기준 보존 커밋1ee9f36, 과거 비교c31c451, 복구 배포a5d4676, Supadata 시험bc976e3/기록43e406a를 유지한다. 현재 앱은 여전히 과거 복구 버전이며 새 연결을 배포했다고 말하지 않는다. 직접 YouTube 경로는 운영 challenge로 실패했고 Browser Run2회도 자막 대기 시간 초과였으며 Supadata Cloudflare native 시험만 성공했다. 수동 복사는 자동화 목표의 대체안이 아니다. 로컬 실제 원문·키·유료 결과·출력 의존성/폰트와0000~0038은 보존한다.
 
 사용자는AI API비용발생을안내받고“시작합시다”로관리자화면에서직접진행하는검수를시작했다. 한단계씩실제버튼을안내하고서버상태/비용을읽기확인한다. 기존키연결/활성화는완료했으므로다시승인받거나재입력/키사본을요구하지않는다. agent유료호출은하지않았고명시범위밖의자동생성/재호출·Paid전환·구매·mainpush·실제데이터손실복원은실행하지않는다. 기존입력/PDF·유료결과검사를반복하거나새번호/새감사프로젝트/완료조건을추가하지않는다.
 
@@ -25,7 +29,7 @@
 
 ## 이번 기본 정보 보완 검사
 
-제목이 없는 자막 차단 미리보기에만 공개 oEmbed 제목을 보완해 자동 제목·설교일·장절 입력으로 이어가도록 수정했다. 운영 app **033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf**100%, 직전 **602bb937-ab11-413e-b037-c89936f8e9f0** 보존. 관련96개·최종 `pnpm check` exit0(unit308/Worker2168/Workflow4/복구CLI2/Node14/Python6·lint/typecheck/Drizzle/build)·데스크톱/모바일 Chromium의 새 차단 화면 검사2개·Production build/strict/후보binding·공개200/관리자302 통과. 초기 타입 오류는 Workers RequestInit/TextDecoder 옵션을 바로잡아 최종 통과했다. 공개 HTTP 확인은 기본 Python UA403 뒤 기존 브라우저형 UA로200을 확인했고 보안 설정은 변경하지 않았다. 소스657개 중4개변경/653개동일, 산출물73개, 기본dist/deploypointer복구. 모든vars/Secret명·content/backup/Preview/Cron과 발행/참가1/제출2/call7/usage7/860448microUSD/migration39/FK0을 보존했다. 이번 agent의 실제 자막 요청0·oEmbed 로컬조회1·새AI/새migration/mainpush0. 운영에서의 제목 보완 결과와 새 원본 저장/사용자 AI 생성은 아직 미확인이다. `.wrangler/releases/p8-02-metadata-fallback-20261003`와 검증JSON의metadataFallbackRelease가 근거다.
+이전 제목 보완 단계의 기록이다. 당시 제목이 없는 자막 차단 미리보기에 공개 oEmbed 제목을 보완했다. 당시 운영 app **033e9ead-1e0c-4c37-b9e1-75e7b9cbdfbf**100%, 직전 **602bb937-ab11-413e-b037-c89936f8e9f0** 보존. 관련96개·최종 `pnpm check` exit0(unit308/Worker2168/Workflow4/복구CLI2/Node14/Python6·lint/typecheck/Drizzle/build)·데스크톱/모바일 Chromium의 새 차단 화면 검사2개·Production build/strict/후보binding·공개200/관리자302 통과. 초기 타입 오류는 Workers RequestInit/TextDecoder 옵션을 바로잡아 최종 통과했다. 공개 HTTP 확인은 기본 Python UA403 뒤 기존 브라우저형 UA로200을 확인했고 보안 설정은 변경하지 않았다. 소스657개 중4개변경/653개동일, 산출물73개, 기본dist/deploypointer복구. 모든vars/Secret명·content/backup/Preview/Cron과 발행/참가1/제출2/call7/usage7/860448microUSD/migration39/FK0을 보존했다. 이번 agent의 실제 자막 요청0·oEmbed 로컬조회1·새AI/새migration/mainpush0. 운영에서의 제목 보완 결과와 새 원본 저장/사용자 AI 생성은 아직 미확인이다. `.wrangler/releases/p8-02-metadata-fallback-20261003`와 검증JSON의metadataFallbackRelease가 근거다.
 
 ## 이번 watch JSON 우선 사용 검사
 
