@@ -9320,6 +9320,17 @@
       ],
       "externalTranscriptRequestsByAgent": 0
     },
-    "approvedSmokeCreditsRemaining": 0
+    "approvedSmokeCreditsRemaining": 0,
+    "humanConfirmation": {
+      "date": "2026-10-05",
+      "humanConfirmed": true,
+      "inputVersion": 2,
+      "sameSavedDocument": true,
+      "calls": 7,
+      "usageEvents": 7,
+      "estimatedMicroUsd": 860448,
+      "agentAiCalls": 0
+    },
+    "nextStep": "user-paid-consent-and-analysis-critique-start"
   }
 }
