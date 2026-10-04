@@ -1,12 +1,14 @@
-# 인계 — P8-02 과거 자막 요청 복구 / 운영 조회 검수
+# 인계 — P8-02 Supadata Cloudflare 무료 자막 시험 성공 / 운영 연결 준비
 
 2026-10-04. **현재 P8-02 진행 중 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 추천 GPT-6.1-sol·높음 — 실제 AI 생성/비용과 기존 자료 보존을 함께 확인해야 한다. Pro 사용8%·잔여92%·10080분/별도5시간 없음 → 사용자 지정×10=920%(공식 배수 아님). 위임 없음.
 
 ## 다음 첫 동작
 
-사용자가 “운영 앱에서도 과거 코드로 다시 한 번 테스트”를 명시 승인하고 Browser Run Authorize를 완료했다. 과거 요청 로직 복구·관련90개·전체 `pnpm check`(unit308/Worker2165/Workflow4/복구CLI2/Node14/Python6)·Production build/strict가 통과했다. 소스 커밋 `a5d46765705f24446b9a8c083a33339015c42096`에서 앱 `ad9ebbf0-be59-4941-af42-ea063e97f984`100%를 배포했다. 공개200/관리자4경로302·모든binding/Secret명/다른Worker/Cron·참가1/제출2/call7/usage7/860448microUSD/migration39/FK0 보존을 확인했다. 소스657개 중2개변경·산출물73개를 고정했고 기본dist/deploypointer를 복구했다. 사용자가 관리자 실제 결과를 제공했다: 제목/날짜/장절/책 dropdown은 정상, 자막은 `2026-10-04T12:41:45.590Z` player/challenge·HTTP200 JSON6988bytes·853ms로 실패했다. 더 이상 사용자 조회 결과 대기나 자동 취득 성공으로 쓰지 않는다. 다음은 검토한 Supadata Free 기존 자막 전용1회 시험(새 서비스 미채택/호출0)과 PC가 필요한 로컬 브라우저 연결안 중 사용자의 선택을 받는 것이다. 구체적 무료 시험 묶음은 비교 문서 말미에 있다. 저장된 Access JWT는 만료됐으며 인증을 우회하지 않는다. 새 AI/키/서비스/migration/main push는0이다. [복구·Cloudflare 비교 결과](work/p8-02/transcript-comparison.md)가 정본이다.
+사용자가 Supadata 무료 한 편 시험을 승인하고 기존 숨김 입력 도구로 키를 저장했다. Cloudflare 분리 시험에서 native 한국어768구간/12,993자·7,798ms에 성공했다. 이전 보관본과 전체 글자/시간/정규 SHA 일치, `/v1/me` Free0→1/100·잔여99다. 실행 소스 `bc976e3`, 키는 `~/.local/state/biblequiz/credentials/supadata.key`0600, 결과는 Git 제외 `.wrangler/releases/p8-02-supadata-native-20261004`에 보존한다. 키값/원문을 출력하거나 같은 영상 성공 시험을 반복하지 않는다. 임시 Worker 종료/임시 키 사본 제거 완료. 운영 앱/DB/Secret/유료AI/main push는 변경0이다.
 
-Browser Run 최소 별도 프로필 인증은 성공했다. 실제2회 모두 watch200/스크립트 표시 클릭 후 자막 행 대기 시간 초과다. 총49.249초, 세션 명시 종료, 화면상 명시 차단 문구 없음. 실패를 challenge로 단정하지 않는다. 직접 요청의 과거 로직은 임시 Worker에서 성공했으나 실제 운영 앱에서는 실패했다. 시간/실행 위치/IP의 인과관계는 미입증이며 같은 코드 재배포나 무작정 반복 조회로 해결됐다고 하지 않는다. 사용자에게 채널 편집 권한은 없으므로 공식 OAuth 자막 API는 현재 제외한다. 기본 Wrangler 인증·실제 자료·키·다른 Worker는 보존한다.
+다음은 기존 관리자 미리보기·원본 저장에 native 전용 Supadata 경로를 연결할 로컬 코드/검사와 배포 묶음을 준비하는 것이다. 이번 승인은 무료 시험이며 운영 앱 연결은 아직 하지 않았다. 기존 제목/일자/장절 자동 입력, 중복 처리, 한국어 검증, 불변 원본과 실제 결과를 재사용한다. [정본·검사·실행 한계](work/p8-02/transcript-comparison.md#cloudflare-무료-시험-성공). Node5개(실제 workerd 포함)·Python7개·변경JS ESLint·문서/JSON/diff 검사를 통과했다. 제품 TS/Phase/배포 단위 변경이 아니라 전체pnpm check/입력/PDF 검사는 반복하지 않았다.
+
+과거 경로 복구 앱 `ad9ebbf0-be59-4941-af42-ea063e97f984`(소스 `a5d4676`)의 운영 검수에서 사용자 기본 정보 입력은 통과했지만 player challenge(HTTP200 JSON6988bytes·853ms)로 자막은 실패했다. Cloudflare Browser Run2회도 자막 행 대기 시간 초과였다. 이번 Supadata 성공과 혼동하지 않는다. 첫 Supadata 시험 실행 오류는 미지원 redirect:error였고 외부 호출/credit소비0, manual·3xx실패 처리와 native workerd 회귀 검사 후 성공했다. 사용자 채널 편집 권한은 없으므로 공식 OAuth 자막 경로는 제외한다.
 
 기준 커밋1ee9f36/비교 시험c31c451과 보존한 `.wrangler/releases/p8-02-transcript-comparison-20261004`를 재사용한다. 실제 원문/키를 Git에 넣지 않는다. 복구 배포 자료는 `.wrangler/releases/p8-02-transcript-restoration-20261004`에 둔다. 앞선 로컬 브라우저 성공269구간/12,792자는 [이전 실증](work/p8-02/browser-transcript.md)이며 Cloudflare 브라우저 성공과 혼동하지 않는다. 완료한 입력/PDF 검사는 반복하지 않는다. 사용자 수동 자막 복사는 자동화 목표의 대체안으로 삼지 않는다.
 

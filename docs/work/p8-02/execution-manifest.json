@@ -12838,7 +12838,7 @@
     "newReleaseField": "productionAiReadinessRelease"
   },
   "pending": [
-    "Choose the reviewed next automation trial: free native-only external caption API (not connected/called), or local browser integration with a PC-on requirement. Production historical player request failed; do not request blind retries. Reuse saved transcripts and completed input/PDF checks."
+    "Prepare production adapter integration for the successful native-only Supadata trial, preserving metadata and immutable source storage. Reuse saved key/transcript; no repeat success trial, AI calls or paid plan changes. Production app is not connected yet."
   ],
   "historicalBeforeAutomaticOperationsFullCheckSourceSha256": {
     ".github/workflows/ci.yml": "be431dab011a2e7414782fe21006a1ed0f89cd9901a9ea1e36372f36c02b185b",
@@ -24371,5 +24371,37 @@
       "billingVerified": false
     },
     "privateProofDirectory": ".wrangler/releases/p8-02-transcript-restoration-20261004"
+  },
+  "supadataNativeCloudTrial": {
+    "task": "P8-02",
+    "runtime": "Cloudflare remote preview Worker",
+    "sourceCommit": "bc976e304979c80147ece13b3db95577f42e1c8c",
+    "status": "native_transcript_trial_passed_not_integrated",
+    "mode": "native",
+    "language": "ko",
+    "segments": 768,
+    "characters": 12993,
+    "elapsedMs": 7798,
+    "allTextAndTimingMatchArchivedTranscript": true,
+    "normalizedSourceSha256": "2916f025338f2ec08b15a8dffe93f83898b7023b101cde3855b5f0e58d127eeb",
+    "plan": "Free (100/mo)",
+    "maxCredits": 100,
+    "usedCreditsBefore": 0,
+    "usedCreditsAfter": 1,
+    "creditsConsumed": 1,
+    "newAiCalls": 0,
+    "productionAppChanged": false,
+    "productionDatabaseWrites": 0,
+    "productionSecretsChanged": false,
+    "mainPush": false,
+    "workerStopped": true,
+    "checks": {
+      "node": 5,
+      "python": 7,
+      "eslint": true
+    },
+    "initialFailure": "Unsupported Workers redirect:error; no upstream call, credits remained zero; corrected to manual and native workerd test passed",
+    "temporaryCredentialCopiesRemoved": true,
+    "originalPrivateCredentialPreserved": true
   }
 }

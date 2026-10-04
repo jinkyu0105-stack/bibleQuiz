@@ -45,9 +45,9 @@ Python 요청 두 번과 GET 확인은 Cloudflare preview 입구403/1010으로 �
 
 사용자는 채널을 시청할 수만 있고 영상/자막 편집 권한이 없다고 확인했다. [공식 captions.download](https://developers.google.com/youtube/v3/docs/captions/download)는 편집 권한이 필요하므로 현재 해결 후보에서 제외한다. 로그인 cookie 수집이나 반복 challenge 재시도를 새 해결책으로 추가하지 않는다.
 
-### 검토 가능한 작은 시험 제안 — 아직 채택/호출하지 않음
+### 당시 검토한 작은 시험 제안 — 후속 무료 시험 승인/결과는 아래 참조
 
-운영 서버 단독 자동화를 우선하려면 **Supadata의 기존 자막 전용 무료 시험 1건**을 후보로 제안한다. [공식 요금](https://supadata.ai/pricing)은 Free 월100credits/카드 불필요, 기존 자막 취득1건=1credit, Free 소진 시 추가 요청 차단이다. 주1편·미리보기1회/원본저장1회라면 월4~5편은8~10credits라는 계산이며 실패/재요청은 별도다. 유료 최저안은 Basic 월환산USD5지만 연USD60 결제이며 자동 도입하지 않는다. 새 외부 서비스이므로 사용자의 채택 결정 전 가입/키 저장/실제 영상 전달/운영 연결을 하지 않는다.
+운영 서버 단독 자동화를 우선하려면 **Supadata의 기존 자막 전용 무료 시험 1건**을 후보로 제안한다. [공식 요금](https://supadata.ai/pricing)은 Free 월100credits/카드 불필요, 기존 자막 취득1건=1credit, Free 소진 시 추가 요청 차단이다. 주1편·미리보기1회/원본저장1회라면 월4~5편은8~10credits라는 계산이며 실패/재요청은 별도다. 유료 최저안은 Basic 월환산USD5지만 연USD60 결제이며 자동 도입하지 않는다. 제안 당시에는 미승인이었으며 아래 후속 승인으로 무료 한 편 시험만 수행했다. 운영 앱 연결은 아직 하지 않았다.
 
 승인 시 먼저 무료 계정과 API 키를 준비하고, 운영 DB와 분리한 Cloudflare 시험에서 `GET /v1/transcript`에 같은 공개 영상 URL·`mode=native`·`lang=ko`·`text=false`로 한 번 요청한다. 외부에 전달할 자료는 공개 영상 URL이며 기존 원문·AI 결과·관리자 인증은 전달하지 않는다. 기본 mode=auto는 AI 전사로 전환될 수 있으므로 사용하지 않는다. 응답의 실제 언어가 한국어인지 확인하고, 시간 구간/전체 텍스트/빈 결과/기존 보관 자막과의 대조를 수행한다. 다른 언어가 fallback될 수 있으므로 요청 lang만으로 한국어 성공이라 판정하지 않는다. 202라면 job ID를 보존하고 새 생성 요청 없이 같은 job 상태만 확인한다. 수신 결과는 비공개 보존하며 이 시험 자체는 등록/원본 DB를 수정하지 않는다. [API 계약](https://docs.supadata.ai/get-transcript).
 
@@ -57,10 +57,22 @@ Python 요청 두 번과 GET 확인은 Cloudflare preview 입구403/1010으로 �
 
 공식 Cloudflare FAQ와 Context7 `/cloudflare/cloudflare-docs`를 대조했다. Context7의 일반 네트워크/Challenge 문서는 이번 YouTube 차단 원인의 증거로 사용하지 않았다.
 
-이번 turn은 실제 검수 결과·대안 문서만 갱신했다. 운영 코드/배포/DB/서비스/Secret/AI 호출 변경0이며 기존 필수 검사와 입력/PDF 결과를 재사용한다. 문서 링크·JSON·diff 검사 후 로컬 커밋한다. P8-02/Phase8은 자막 자동 취득 미해결로 진행 중이다.
+앞선 대안 조사 단계에서는 실제 검수 결과·대안 문서만 갱신했다. 운영 코드/배포/DB/서비스/Secret/AI 호출 변경0이며 기존 필수 검사와 입력/PDF 결과를 재사용한다. 문서 링크·JSON·diff 검사 후 로컬 커밋한다. P8-02/Phase8은 자막 자동 취득 미해결로 진행 중이다.
 
 ### 무료 시험 승인과 준비
 
 사용자가 무료 한 편 시험을 승인하고 키를 기존 숨김 입력 도구로 저장했다. `receive-quality-secret.py supadata`는 기존 OpenAI/Access와 다른 `supadata.key`를0600으로 저장한다. 키 값은 대화/로그/Git에 표시하지 않는다. 별도 [시험 Worker](../../../scripts/transcript-probe/supadata-native.mjs)는 native/ko/text=false를 고정하며 다른 언어·빈 자막·잘못된 시간 순서·3만 자 초과를 거부한다. 임시 Worker에 난수 인증과 no-store를 적용하고 운영 DB/Worker/라우트에는 연결하지 않는다. 202는 job ID만 보존하고 새 자막 요청을 자동 재전송하지 않는다.
 
 합성 Node4개·비밀값 저장 Python7개·변경 JS ESLint가 통과했다. 새 의존성/제품 TypeScript/배포 단위 변경이 없어 전체 pnpm check와 입력/PDF 검사는 반복하지 않는다. 실제 무료 호출 결과는 아래 후속 기록을 따른다.
+
+### Cloudflare 무료 시험 성공
+
+사용자가 제공한 키의 계정을 `/v1/me`로 조회해 **Free (100/mo), 사용0/최대100**을 확인했다. Cloudflare 임시 remote Worker가 기존 자막 전용 `mode=native`로 실제 영상 한 편을 취득했다. 결과는 HTTP200, 한국어 **768구간·12,993자·7,798ms**(왕복8,147ms)다. 모든 텍스트와 밀리초→초 변환 후 시간 구간을 이전 직접 취득 보관본과 대조했고 전체 배열/정규 SHA가 정확히 일치했다. 응답을 잘라 쓰거나 AI로 보완하지 않았다.
+
+완료 뒤 계정은 Free 그대로 사용1/최대100·잔여99이며 시험 소모는 정확히1credit다. 원본은 Git 제외 `.wrangler/releases/p8-02-supadata-native-20261004/corrected-result-private.json`, 검증은 같은 폴더 `verification.json`에0600으로 보존한다. 실행 소스 커밋은 `bc976e304979c80147ece13b3db95577f42e1c8c`다. 임시 Worker를 종료했고 임시 `.dev.vars`/시험 인증 사본은 제거했으며 원래 비공개 `credentials/supadata.key`는 유지한다. Production 앱/DB/Secret·Preview·유료 AI·main push는 변경0이다.
+
+첫 시도는 Cloudflare가 지원하지 않는 `redirect:error` 때문에 외부 호출 전 즉시 실패했고 사용0을 재확인했다. `manual`로 바꾸어 3xx를 실패로 처리하고 실제 workerd native fetch와 리디렉션 미추종 합성 검사를 추가한 뒤 위1건을 수행했다. 초기 Node 합성 검사만으로 런타임 호환을 보장하지 않았음을 기록한다. 최종 Node5개(실제 workerd 포함)·Python7개·변경 JS ESLint·문서/JSON/diff 검사가 통과했다. Miniflare5의 기존 옵션 입력 실패는 설치된 `convertV4MiniflareOptions`로 교정했다. 새 패키지는 설치하지 않았다.
+
+Supadata 가입 화면의 `Pick integration`은 코드 안내 선택이고 환경/요금 설정이 아니었다. 키 입력을 마친 사용자는 `Go to dashboard`로 이동하면 된다. 스크린샷은 Windows 경로를 WSL `/mnt/c`로 변환해 실제 첨부 화면을 확인했다.
+
+**다음은 운영 연결 구현이다.** 현재 성공은 분리된 Cloudflare 시험이며 운영 `/admin/new` 버튼에는 아직 기존 provider가 연결돼 있다. 기존 자동 제목/날짜/장절과 중복 처리를 유지하고 native 자막 조회·원본 저장에 Supadata adapter를 붙이는 범위, 기존 자막/사용량 보존, 한국어 강제 확인·native 고정·Secret 저장 위치를 검토 가능한 코드/검사로 준비한다. 이 시험 승인을 유료 전환이나 새 AI 호출 승인으로 확대하지 않는다. 기존 키/원본/성공 결과는 재사용하며 같은 영상을 시험 목적만으로 다시 취득하지 않는다.
