@@ -24474,7 +24474,8 @@
       "usedCreditsAfter": 2,
       "creditsConsumed": 1,
       "approvedSmokeCreditsRemaining": 1,
-      "sourceSaved": false
+      "sourceSaved": false,
+      "draftRegistration": "confirmed by user screenshot 2026-10-05"
     }
   }
 }
