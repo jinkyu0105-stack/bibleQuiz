@@ -78,3 +78,7 @@ Free 100크레딧/월, native 1요청=1크레딧은 현재 플랜 근거다. 제
 ## 두 배치 저장·최종 검사 통과 — 2026-10-05
 
 사용자가 어린이·장년 모두 목표3개 시험 후 두 배치 저장·검사를 진행했다. D1에서 placement selection1·final validation proof1, job review_ready/finish, error_code null, quiz draft를 읽기 확인했다. 비공개 `placement-final-state-private.json`에 보존했다. 다음은5.최종 확인에서 사용자가 공개할 내용을 검토하는 단계이며 아직 발행하지 않았다. 기존 목표 개수 문제는 미해결로 유지한다. 새 AI/agent 원격 쓰기0이며 문서 diff 검사 후 로컬 커밋했다.
+
+## 사용자 발행 완료 — 2026-10-05
+
+사용자가 지금 발행과 확인창의 지금 발행을 눌렀다. D1 published/open·발행시각2026-10-04T16:14:32.707Z·slug2026-09-27-dpfa9h를 확인했다. 공개 어린이/장년 페이지는 각각HTTP200이며 실제 브라우저 렌더·새 제출 검수와 구별한다. 비공개 `publication-state-private.json`에 DB 근거를 보존했다. 새 설교 자동 자막→분석/비판→사람 확정→요약/두 난도 생성→검수→3단어 배치→발행 경로는 완료됐으나 원래 목표 개수와 UI 한계는 남는다. 기존 완료한 입력/PDF 검수를 반복하지 않았고 agent 새 AI/원격 쓰기0이다. 문서 diff 확인 후 로컬 커밋하며 push/배포는 하지 않는다.

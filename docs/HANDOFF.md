@@ -1,4 +1,4 @@
-# 인계 — P8-02 Supadata 운영 적용 완료 / 자동 자막 조회·원본 저장 완료 / 본문 확정 완료 / 두 난도3단어 배치·최종 검사 통과 / 사용자 최종 확인 대기
+# 인계 — P8-02 Supadata 운영 적용 완료 / 자동 자막 조회·원본 저장 완료 / 본문 확정 완료 / 새 설교3단어 시험 발행 완료 / 목표 개수·UI 한계 유지
 
 2026-10-04. **현재 P8-02 진행 중 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 추천 GPT-6.1-sol·높음 — 두 서버의 출처 호환과 실제 자료 보존을 확인해야 한다. Pro 사용11%·잔여89%·10080분/별도5시간 없음 → 사용자 지정×10=890%(공식 배수 아님). 위임 없음.
 
@@ -6,7 +6,7 @@
 
 사용자가 검토 가능한 두 서버/키 연결/무료2크레딧 묶음에 “진행하세요 그리고 두 서버가 어디어딘지 알려주세요”로 승인했다. 소스 `701475820e7d4281a4948bac820ff326d9e2ced1`를 content `66eb96c5-ad4c-4d01-85dd-a13aef598acf`100% → app `f8174f94-d983-4855-8d2d-d02756c41f44`100% 순으로 적용 완료했다. 새 AI/유료 전환/main push0. [배포·검수 범위와 복귀](work/p8-02/supadata-integration.md)를 따르며 같은 범위의 재승인을 받지 않는다.
 
-**다음 첫 동작은5.최종 확인에서 두 난도 시험지와 공개할 내용을 사용자에게 확인받는 것이다.** 사용자가 두 난도5×5/목표3개로 배치 시험 후 저장·검사를 수행했다. D1 읽기에서 placement selection1·final validation proof1, review_ready/finish, 오류 없음, quiz draft를 확인했다. `placement-final-state-private.json`에 근거를 보존했다. 아직 발행하지 않았다. 원래 기본 목표 어린이5·장년6을 충족할 후보 생성 문제와 UI 대대적 개편은 남으며,3개로 줄인 임시 검수 성공과 구별한다. agent 원격 변경/AI 재호출0. 아래는 직전 생성 완료의 근거다. 사용자가 비판 수정본을 선택하고 의도 확정·다음 생성 시작을 눌렀다. Production D1에서 summary·child_candidates·adult_candidates 모두 completed, job running/content_review, 오류 없음, 이번 설교 전체5호출·490526microUSD를 확인했다. 후속3호출 비용276072microUSD이며 agent 새 호출0이다. 비공개 release의 `content-generation-progress-private.json`에 읽기 증거를 보존했다. 조회401은 기존 Wrangler 읽기 명령으로 인증을 갱신해 해결했으며 사용자 재로그인/키 재입력은 없었다. UI 대대적 개편은 사용자 요청으로 나중에 진행하며 현재는 생성·선택을 반복하지 않는다. 자막 승인2크레딧도 이미 소진해 재취득하지 않는다. 다음 내용 검수·배치·최종 검사·발행은 아직 미완료다.
+**새 설교의3단어 시험 발행까지 완료했다.** 사용자가 최종 확인 후 ‘지금 발행’을 두 번 눌렀다. D1 published/open, published_at=2026-10-04T16:14:32.707Z(한국10월5일01:14), slug=2026-09-27-dpfa9h를 확인했고 어린이·장년 공개 URL은 모두 HTTP200이다. 비공개 `publication-state-private.json`에 DB 근거를 보존했다. HTTP 확인을 실제 브라우저 렌더/신규 제출 검수로 확대하지 않는다. 완료한 입력·PDF 검수를 반복하지 않는다. 다음에는 남은 목표 개수 충족 문제를 다루되 유료 재생성을 자동 수행하지 않는다. 관리자 UI 대대적 개편은 사용자가 나중으로 보류했으며 공개 링크를 직접 안내해 긴 화면 탐색을 줄인다. P8-02/Phase8 전체 완료는 아니다. agent 원격 쓰기/AI 재호출0. 아래는 직전 생성 완료의 근거다. 사용자가 비판 수정본을 선택하고 의도 확정·다음 생성 시작을 눌렀다. Production D1에서 summary·child_candidates·adult_candidates 모두 completed, job running/content_review, 오류 없음, 이번 설교 전체5호출·490526microUSD를 확인했다. 후속3호출 비용276072microUSD이며 agent 새 호출0이다. 비공개 release의 `content-generation-progress-private.json`에 읽기 증거를 보존했다. 조회401은 기존 Wrangler 읽기 명령으로 인증을 갱신해 해결했으며 사용자 재로그인/키 재입력은 없었다. UI 대대적 개편은 사용자 요청으로 나중에 진행하며 현재는 생성·선택을 반복하지 않는다. 자막 승인2크레딧도 이미 소진해 재취득하지 않는다. 다음 내용 검수·배치·최종 검사·발행은 아직 미완료다.
 
 
 승인된 native2크레딧은 모두 사용했다. 영상 확인/원본 저장 성공을 다시 호출해 검증하지 않는다. source SHA는 기존2916f025…127eeb, payload byte/hash와 구간별 원문/시간도 일치했다. `saved-source-readback-private.json`의 실제 설교 ID는 quiz_sets에서 관리자 URL의 퀴즈 작업 ID를 매핑한 값이며 URL UUID를 곧바로 sermon_id로 쓰지 않는다. 자동화 브라우저 로그인은 사용자가 나중에 하기로 했다.
