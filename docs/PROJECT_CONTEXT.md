@@ -19,10 +19,10 @@
 
 ## 기술과 현재 위치
 
-React/TypeScript/Vite 웹앱과 Hono API를 Cloudflare Workers + Static Assets로 제공한다. D1/Drizzle을 사용하고 Node 24.18.0·pnpm 11.14.0을 맞춘다. Content Workflow와 백업 Worker는 비공개이며 R2는 백업 Worker에만 연결한다. 추가 AI 호출은 실행하지 않았다.
+React/TypeScript/Vite·Hono를 Cloudflare Workers + Static Assets로 제공하고 D1/Drizzle을 사용한다. Node24.18.0·pnpm11.14.0. 공개 app, 비공개 content/backup, Preview를 분리한다. Supadata 자동 자막은 app, OpenAI는 content, R2는 backup에만 연결한다.
 
-Phase5·P6-01 출력·P7B-01 기기/화면·P8-01 운영은 구현과 필수 검사까지 완료했다. 기존 실제 입력/PDF와 사용자 승인한 기기 검수는 재사용하며 macOS·개별 Android 키보드 미검수 한계는 보존한다. P8-02는 운영 합의·실제 서버/저장소·관리자/백업 연결·배포/공개를 승인받아 진행 중이다. Production과 Preview 모두0000~0038이 적용됐고 최신 화면/출력/운영 코드가 배포됐다. 관리자 Access 로그인·사용량 갱신·Workers Free 표시·수동 SQL 백업/격리 복원과 기존 검수 자료 한 편의 선택 이전·실제 발행·두 난도 제출/채점/결과 복원이 완료됐다.
+Phase5·출력·기기·운영 구현/필수 검사는 완료했고 P8-02 운영 출시 마무리 준비 중이다. 실제 새 설교의 자막→AI 생성→사람 검수→3단어 시험 발행과 기존 공개 입력/제출/결과 복원·PDF·백업/격리 복원 근거가 있다. 첫 주간 SQL 예약도2026-10-05 04:00KST에 verified됐다. 완료한 검사는 반복하지 않는다.
 
-Production 요청 제한·5분 자동 마감/초안 정리·10분 삭제 manifest·주간 SQL 백업 예약과 일반 공개/관리자 보호 검수를 완료했다. 매뉴얼도 현재 설치 상태로 동기화했다. 예약 실행/manifest 완료를 실제 관측했고 첫 주간 SQL은2026-10-05 04:00KST로 아직 관측하지 않았다. Production AI는 승인된 기존 키를 비공개content에만 연결하고 앱/콘텐츠 설정·필수검사·배포까지 완료했다. [연결 묶음](work/p8-02/ai-readiness-review.md)의 새 유료 생성 시험은 제외/미실행이다. 사용자가 관리자 직접 검수를 시작했고 영상 조회 native 오류의 수정·필수 검사·앱 배포를 마쳤다. [현재 복구와 다음 동작](work/p8-02/video-fetch-recovery.md)에서 실제 영상 재확인·AI 생성/청구 대조를 이어간다. 사용자 영상 조회 성공 뒤 자동 제목 정리·장절 추출 누락을 보완하고 필수 검사·운영 앱 배포를 마쳤다. [자동 등록 확인부터](work/p8-02/automatic-registration.md) 같은 P8-02를 이어간다. 이후 실제 YouTube player 차단에 watch JSON 우선 사용을 보완·검사·배포했으나 최신 운영 조회도 watch 내 challenge로 실패해 자동 취득은 미해결이며 [원격 재확인](work/p8-02/video-fetch-recovery.md#실제-player-차단과-watch-응답-재사용--2026-10-03)이 남는다. 이후 제목이 없는 차단 응답에는 공개 기본 정보로 자동 등록 항목을 보완·검사·배포했고, 자막 자동 취득은 미해결이다. 사용자 직접 복사로 오해한 안내는 철회했고 실제 로컬 브라우저 자동 클릭·자막269구간/12,792자 저장에 성공했다. [원본 보존과 운영 연결](work/p8-02/browser-transcript.md)을 이어간다. P8-02/Phase8/v1은 아직 전체 완료가 아니다. 영문 알림 사용자 재확인과 관리자 반복 테스트 방법은 모든 구현 완료 뒤 [향후 검토 기록](future/notes.md)에서 다시 확인한다.
+기본5×5의 목표 개수 실패는 후보 길이·교차 연결 문제이며 같은 저장 후보로 어린이8×8/5개·장년9×9/6개가 오프라인 성공했다. 프로그램의 크기 제안/후보 조건 전달은 수정안 단계다. 실제 공급자 청구 대조와 권한 밖 일부 계정 지표는 미확인이므로 전체v1 완료로 쓰지 않는다. 관리자 UI 전면 개편·영문 알림 재확인·반복 시험 방법은 사용자 요청으로 향후 기록에 둔다.
 
-[현재 상태](STATUS.md) · [재개](HANDOFF.md) · [P8 코드·한계](work/P8-01.md) · [운영 매뉴얼](operations-manual.md) · [출력 검증](work/P6-01.md) · [Preview 근거](work/P5-71.md#preview-관리자-do-적용과-무료-검수-완료).
+[현재 상태](STATUS.md) · [재개](HANDOFF.md) · [원인·출시 점검](work/p8-02/closeout-review.md) · [운영 매뉴얼](operations-manual.md) · [향후 계획](future/notes.md).

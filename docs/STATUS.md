@@ -1,39 +1,22 @@
 # 현재 상태
 
-**2026-10-05 자동 자막 연결 검수 완료:** 2026-10-05 운영 자막 조회·최초 원본 저장 검수를 완료했다. 사용자 성공 안내와 D1 읽기 대조에서 supadata-native 원본1개/sealed·입력v1,768구간/12,993자,기존 보관본의 모든 글자/시간과 정규 SHA 일치를 확인했다. Free 사용1→3으로 승인된 조회/저장2크레딧 소진·잔여97, 새 AI0·기존 call/usage7·비용860448microUSD·세션1/제출2·migration39/FK0 보존. 같은 원본에 대한 사람 확정(sealed confirm·입력v2)도 확인했다. **사용자가 비판 수정본 선택·의도 확정 후 시작한 요약·어린이·장년 생성도 완료됐다. 현재 content_review(내용 검수 대기), 오류 없음, 이번 설교 전체5호출·490526microUSD(약USD0.490526)다. 세 내용 검수 뒤 최초 배치에서 기본5×5/어린이5·장년6개의 연결성 부족을 재현했다. 같은 저장 후보·운영 옵션의 오프라인 시험에서 두 난도 모두5×5/3개는 성공했다. 사용자가 두 난도 목표3개 시험 후 저장·검사를 수행했고 D1에서 selection1·final proof1·review_ready/finish·오류 없음·quiz draft를 확인했다. 사용자가 최종 확인 후 발행을 두 번 확인했고 D1 published/open·공개 slug 저장 및 두 난도 페이지 HTTP200을 확인했다. 새 설교의 자동 자막→AI 생성→사람 검수→3단어 배치→발행 경로는 완료됐다. 원래 목표 개수 충족과 관리자 UI 문제는 미해결이며 전체 P8-02 완료로 확대하지 않는다.** P8-02/Phase8 전체는 진행 중이며 새 번호로 넘어가지 않는다. [원본 검증](work/p8-02/supadata-integration.md#원본-저장-확인--2026-10-05).
+2026-10-05. **현재 P8-02 마무리 준비 중 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 최신 Pro 사용14%·잔여86%·10080분/별도5시간 없음 → 사용자 지정×10=860%(공식 상품 배수 아님). 추천 GPT-6.1-sol·높음 — 실제 배치·운영 증거와 미확인 청구 경계를 함께 판단해야 한다.
 
-**2026-10-04 Supadata 운영 적용 기록:** 사용자가 구체적 묶음을 승인했다. 검사한 소스 `7014758` → content `66eb96c5-ad4c-4d01-85dd-a13aef598acf`100% → app `f8174f94-d983-4855-8d2d-d02756c41f44`100%로 적용하고 Supadata 키는 app에만 연결했다. 기존 키/설정/자료/두 Preview/backup/예약 보존, 공개3경로200·관리자4경로Access302 확인. 검수 전 Supadata Free100·사용1·잔여99, 이번 배포의 자막/AI 호출0. 당시 다음 범위였던 조회1회/저장1회 검수는 위2026-10-05 결과로 완료됐다. [승인·정확한 버전·검사·복귀](work/p8-02/supadata-integration.md). 새 출처 저장 뒤에도 새 출처 읽기 호환 코드는 유지하는 복귀를 따른다. 전체 필수 검사와 운영 빌드/strict dry-run은 같은 소스로 통과한 직전 결과를 재사용했고 같은 시험을 반복하지 않았다.
+## 현재 결과와 남은 범위
 
-**2026-10-04 자막 복구:** 과거 실제 실행본을 찾아 첫 운영 수정 전 TS와 로직 일치를 확인했다. 같은 새 영상에서 과거 로직은 로컬/Cloudflare 임시 Worker 모두768구간·12,993자 성공, watch 우선 로직은 둘 다 빈 자막 응답이었다. 사용자 승인으로 운영 앱의 요청 순서를 과거 단일 player POST로 복구했다. native fetch/제목 보완은 유지한다. 관련90개·전체 `pnpm check`/Production build/strict 검사 통과. 소스 `a5d4676` → 운영 앱 `ad9ebbf0-be59-4941-af42-ea063e97f984`100% 적용, 공개200/관리자302·설정/다른Worker/예약/기존 자료 보존 확인. 사용자가 제목/일자/장절/책 선택 정상과 player challenge 실패(853ms)를 확인했다. 자동 자막 취득은 미해결이다. 채널 편집 권한 없음도 확인했다. 후속으로 Supadata 무료 한 편 시험을 승인받아 위 성공을 확인했다. 운영 연결은 아직 미구현이다. Browser Run 인증 완료; 실제2회 모두 자막 행 대기 시간 초과, 총49.249초/명시 종료. [결과·한계](work/p8-02/transcript-comparison.md).
+- Supadata 자동 자막 조회·원본 저장·사람 확정 → 의도 분석/비판 → 요약/두 난도 생성 → 사람 검수 →5×5/3단어 시험 발행까지 실제 Production에서 완료했다. 새 설교 AI5회·USD0.490526, Supadata Free100 중3사용·97잔여다. [실행 근거](work/p8-02/supadata-integration.md).
+- **3단어만 가능한 것은 아니었다.** 저장 후보와 운영 옵션으로 어린이8×8/5개·장년9×9/6개 오프라인 성공을 확인했다.5×5에서 길이에 맞는 후보의 최대 연결 묶음이4개인 것이 최초 실패 원인이다. 앞선3개 축소 안내는 더 큰 격자 대안을 놓쳐 정정했다. 현재 발행본은 바꾸지 않았다. [원인·수정안](work/p8-02/closeout-review.md#1-원하는-문제-수가-안-나온-이유).
+- 첫 실제 주간 SQL 백업2026-10-05 04:00 KST 실행·517,648bytes verified, 최근 삭제 manifest도 verified. 기존 정상 SQL/격리 복원 검수는 재사용했다.
+- 운영 D1 AI12호출·사용량 누락0·금액 재계산 불일치0·합계USD1.350974. 최신 R2/D1/Workers 관측량은 무료 포함량보다 작다. Cloudflare subscriptions/Builds/Access 조회403, OpenAI 공급자 청구 대조와 DO GB-s/Workflow 과금 step·state 등은 미확인이다. 과거 실패/관측 한계를 숨기지 않는다. [전체 점검과 종료 경계](work/p8-02/closeout-review.md#3-비용사용량-대조).
+- 관리자 UI 전면 개편은 [향후12절](future/notes.md#12-향후-개발--관리자-주간-작업-ui-전면-개편)에 기록했다. 영문 알림·관리자 반복 시험은 같은 문서10·11절에 유지한다. 이번에는 조사·문서화만 했고 제품 코드 변경·새 AI·배포·main push는 없다.
 
-**Git 기준점:** 기존 누적 변경·비공개 자료를 보존하고 기준 커밋 `1ee9f36`, 비교 시험 `c31c451`을 남겼다. 검증한 변경마다 로컬 커밋하며 main push는 하지 않는다. [보존·배포 대응](work/p8-02/git-baseline.md).
+## 현재 환경·검사·보존
 
-마지막 확인: 2026-10-04. **현재 P8-02 진행 중 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 최신 Pro 사용11%·잔여89%·10080분/별도5시간 없음 → 사용자 지정×10=890%(공식 상품 배수 아님). 새 유료 생성·Paid 전환·구매·main push·실제 데이터 손실 복원은 제외했다. [실행 현황](work/P8-02.md)·[검증 JSON](work/P8-02-verification.json)을 따른다.
+Production/Preview migration0000~0038·이력39개를 유지한다. 운영 app `f8174f94-d983-4855-8d2d-d02756c41f44`, content `66eb96c5-ad4c-4d01-85dd-a13aef598acf`는 소스 `7014758`; backup `3fb0e7c7-368b-45a9-89f9-2818739e415d`는 기존 배포를 유지한다. Preview app/content와 실제 자료·키·출력 의존성/폰트/fontkit도 보존한다. 상세는 [배포 정본](work/p8-02/supadata-integration.md).
 
-Production/Preview D1 모두0000~0038·이력39개다. 별도 Production 앱/콘텐츠/백업·Turnstile·비공개 Standard R2 연결, 관리자 path Access/JWT·사용량 갱신·Workers Free 표시, 실제 수동 SQL 백업/격리 복원은 완료했다. 기존 한 편의341행 이전·표시 사본 복구와 실제 발행·두 난도 입력/부분 제출/0% 채점·새로고침 후 정답보기 복원도 완료했다. 참가 세션1·제출2·유료 call/usage7·기존860448micro USD와 원본/키는 보존됐다. 완료한 실제 입력/PDF 검사는 반복하지 않는다.
+원격 관리자 Access·공개 접속·기존 두 난도 입력/제출/채점/결과 복원, PDF 교정/실제 렌더·승인된 기기·백업/격리 복원·대표 마감·요청 제한·초안 정리는 완료 증거를 재사용한다. 완료한 실제 입력/PDF 검사는 반복하지 않는다. macOS·개별 Android 키보드·계정 전체 청구 보장 등 기존 관측 한계는 유지한다.
 
-**Production 요청 제한과5분 자동 마감 예약을 적용했다.** 실제 Cloudflare binding에서 합성 공유망50개 참여자 모두200, 반복 actor20회 중13회429와Retry-After10/비공개 캐시 금지, 실제 제출 API 성공 replay8회/새Turnstile 호출0을 확인했다. session/guest는 같은 위치130회 중29회 제한됐다. 위치별 비동기 counter이므로 정확한 전체100회 상한이나 청구 차단으로 확대하지 않는다. 실제 Production 참여 현황 저장소의 두 난도 본인 시험/0점 검증과 Preview 대표 마감·순위2개/정답자3명·중복 실행 보존이 통과했다. 이는 서버 검수이며 사용자 참여 현황 화면 확인·실제 일반 공개 HTTP 검수와 구별한다. 합성7제출/8세션만 제거한 뒤 Preview90표 전체/스키마가 이전과 같았다.
-
-공개·자동 운영 단계의 pnpm check exit0(unit298/Worker2153/Workflow4/복구CLI2/Node14/Python6·lint/typecheck/Drizzle/build)와 Production build·strict dry-run·배포/예약·보존 검증이 통과했다. 현재 app **f8174f94-d983-4855-8d2d-d02756c41f44**, content **66eb96c5-ad4c-4d01-85dd-a13aef598acf**, backup **3fb0e7c7-368b-45a9-89f9-2818739e415d**가100%다. 앱 요청 제한·운영 예약·백업·초안 정리와 앱/콘텐츠 AI 연결은true다. OpenAI 키는 비공개content에만 있고 새 생성 시험은0회다. 앱5분 예약, 삭제 manifest10분 예약, 주간 SQL 월요일04:00KST를 등록했다. app/backup의 실제 예약 실행과 삭제 manifest Workflow 완료·R2 저장 검증을 관측했다. 첫 주간 SQL 예약은2026-10-05 04:00KST로 아직 관측하지 않았으며 완료한 수동 SQL 백업/격리 복원은 재사용했다. 원격 합성7일 초안 정리·원본/확정 문서/삭제 기록 보존을 확인했고 소유 임시DB는 제거했다.
-
-사용자가 전체 Worker Access를 프리뷰만으로 바꿨다. **일반 공개200 / 관리자4개 path 보호 유지**를 확인했다. 두 난도 실제 브라우저 렌더·정답/비공개 정보 분리·미제출 조회 차단·Origin 검사와 공개 session50건이 통과했다. 소유 시험세션50건만 제거한 뒤 기존 참가1/제출2/유료call·usage7/비용860448micro USD는 불변이다. 자동 운영과 공개 검수의 상세 근거는 [검증 JSON](work/P8-02-verification.json)의automaticOperationsAndPublicRelease를 따른다.
-
-두 난도 영문 알림은 이미 구현/배포됐으며 실제 사용자 재확인과 관리자 반복 테스트 방법 검토는 사용자가 모든 구현 완료 뒤로 보류했다. [향후 검토 기록10·11절](future/notes.md#10-모든-구현-완료-후--두-난도의-영문-입력-알림-재확인)을 따르며 P8-02에 새 필수 기능을 추가하지 않는다. 회원/계정 관련 기존 기록도 보존했다.
-
-**실제 브라우저의 ‘스크립트 표시’ 자동 클릭·자막 파일 저장에 성공했다.** 기존 WSL Chromium/Playwright가 로그인 없이269구간·12,792자(0:00~31:46)를 읽었고 DOM/저장 파일·해시·시간 순서를 검증했다. 사용자가 직접 복사해야 한다는 앞선 해석을 철회하고 자동화 목표를 유지한다. 운영 코드/DB/배포/유료 AI는 이번에 변경하지 않았다. 저장된 원본을 재사용하며 다음은 기존 관리자 입력과 반복 운영 실행 위치의 연결이다. 로컬 취득 성공이며 Cloudflare 자동 취득/운영 버튼 연결은 아직 완료되지 않았다. [실증과 남은 범위](work/p8-02/browser-transcript.md).
-
-**관리자 직접 생성 검수 중 발견한 영상 조회 오류를 복구했다.** 사용자가 새 영상에서watch/network·HTTP없음·bytes0 실패를 보고했다. 실제Workers native fetch의잘못된this호출을재현하고독립함수호출로고쳤다. 수정전native검사fail/수정후pass·관련82개·최종pnpm check exit0(Worker2154)·Production build/strict·앱615eb2cd-a899-4d36-996b-8b0793696a20100%·binding/Secret/다른Worker/예약/자료보존을확인했다. 새유료AI/실제영상agent조회0이다. 사용자 재시도에서 영상 정보·공개 한국어 자동 자막768구간/12,993자 조회 성공을 보고했다. 장절 예시/초기값을 설명하고 등록 정보 수동 확인을 이어간다. [복구와다음버튼](work/p8-02/video-fetch-recovery.md)을따른다.
-
-**승인된 AI 연결 묶음은 완료했다.** 사용자가 기존 키 재사용·콘텐츠 서버 Secret·앱/콘텐츠 네 설정·필수 검사/배포를 명시 승인했다. 기존 키는 표준입력으로 content에만 전달했고 새 사본·키 출력은0이다. gpt-5.6-terra/high와 기존 결과를 유지한다. 필수 pnpm check exit0, 최종 매뉴얼 lint/typecheck·Production build·콘텐츠/앱 strict dry-run·후보 확인 후 content→app100%·공개200/관리자302·자료/기존 Secret/Preview/backup/예약 보존을 확인했다. 검사 소스657개 중4개만 변경하고653개를 보존했다. 실제 새 설교의 유료 Production 생성·공급자 청구 대조는 이번 승인에서 제외/미실행이다. 이 기존 출시 검수 항목이 남아 있어 P8-02/Phase8/v1을 전체 완료로 쓰지 않는다. 첫 주간 SQL 예약·계정 전체 청구/미관측 CPU/state의 한계도 유지한다.
-
-
-사용자가 Cloudflare MCP 추가를 요청해 Codex에 공식 서버 `cloudflare`를 등록했다. 최초 광범위 OAuth 요청은 중단했고 계정/Workers/Access 읽기 권한 인증이 CLI exit0/Successfully logged in으로 완료됐다. Cloudflare 실제 설정·AI 키·유료 호출은 변경하지 않았다. 새 MCP 도구가 현재 대화에 로드됐고 Access applications/Workers 목록 실제 조회 모두HTTP200으로 통과했다. Production Worker는preview_worker 보호, 관리자4개path와Preview Worker 전체보호를직접확인했다. resources/templates는미지원이지만API도구는정상이다. Cloudflare 설정 수정 권한은 요청하지 않았고쓰기0이다.
-
-## 기존 완료 결과와 관측 한계
-
-[P5-70](work/P5-70.md)의 실제 유료 결과/로컬 두 난도 발행·채점·재시작 보존, [P5-71](work/P5-71.md#preview-관리자-do-적용과-무료-검수-완료)의 기존 Preview 관리자DO/무료 플랜·native/집계 한계를 재사용한다. 당시0000~0036과 이전 조회 CPU는 과거 단계의 근거이며 현재 Preview는0038까지 적용됐다. 현재 구현을 그 이전 측정으로 판정하거나 완료 검사를 반복하지 않는다.
-
-P6-01 PDF 교정/실제 렌더, P7B-01 사용자 승인 기기, P8-01 백업/격리 복원·운영은 각 [작업 기록](../implementation.md)에 보존한다. macOS·개별 Android 키보드 미검수와 일부 Cloudflare 조회 권한/빈 집계·CPU/GB-s/state/build분 미관측은 알려진 한계다. 성공한 현재 표본을 계정 전체 청구 보장으로 확대하지 않는다.
+배포 소스7014758의 `pnpm check`(unit308/Worker2187/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/build), Production build와 두 Worker strict dry-run은 통과한 기존 결과다. 이번은 문서/매뉴얼 텍스트 동기화와 링크/JSON/diff 검사만 진행한다. 전체 Phase 완료나 새 배포로 확대하지 않는다.
 
 ## 실제 완료와 다음 작업
 
@@ -67,16 +50,16 @@ P6-01 PDF 교정/실제 렌더, P7B-01 사용자 승인 기기, P8-01 백업/격
 | P5-69 | 완료 — 실제 시험 자료·평가·예상 비용·운영 승인/rollback 계획 문서화·문서 검사 |
 | P5-70 | 완료 — 기존 한 편의 실제 AI 결과 채택·무료 오타 수정·두 난도 로컬 발행·브라우저 제출/채점·서버 재시작 보존, 추가 AI 0 |
 | P5-71 | 완료 — 승인된 Preview SQLite 관리자DO·분할 조회 적용, 실제 화면/역할별 CPU·현재 Free 플랜·기존 자료 불변 검수. native 누락/DO 집계 빈 결과는 관측 한계로 보존 |
-| P5-72 | 로컬 완료 — 주간 운영/6단계·재개·자동 저장·필터·제출 조치·Top N·문의, 필수 검사·PC/모바일/Firefox 검수. 원격0037/앱 미적용, WebKit 환경 제약은 작업 기록에 명시 |
+| P5-72 | 로컬 완료 — 주간 운영/6단계·재개·자동 저장·필터·제출 조치·Top N·문의, 필수 검사·PC/모바일/Firefox 검수. P8-02에서 원격0038/앱 적용 완료, WebKit 환경 제약은 작업 기록에 명시 |
 | Phase 5 전체 | 구현·로컬 검수 완료 — 고정 종점 P5-72. Preview0037/0038·앱 적용과 공개 v1 출시 검수는 승인된 P8-02 범위에서 진행하며 아직 완료는 아님. 출력·기기·운영/출시 범위는 [완료 실행안](DELIVERY_PLAN.md) 유지 |
-| P6-01 | 로컬 완료 — PDF 글자 누락을 fontkit 정렬 패치로 수정, 소수 인원 배치 확대·PDFium/PDF.js 직접 렌더 확인. 이전 표시 품질 완료 판정 철회. 기존 구현: 빈 격자 PNG/SVG·단서 복사·Top N A4 벡터 PDF/300dpi PNG/ZIP, 두 난도/공개 권한·분할·한글·생성 파일·기술 검사 유지. 교정·필수 검사까지 완료, 원격 미적용 |
+| P6-01 | 로컬 완료 — PDF 글자 누락을 fontkit 정렬 패치로 수정, 소수 인원 배치 확대·PDFium/PDF.js 직접 렌더 확인. 이전 표시 품질 완료 판정 철회. 기존 구현: 빈 격자 PNG/SVG·단서 복사·Top N A4 벡터 PDF/300dpi PNG/ZIP, 두 난도/공개 권한·분할·한글·생성 파일·기술 검사 유지. 교정·필수 검사 완료, P8-02에서 원격 적용 |
 | Phase 6 전체 | 구현·교정·로컬 검수 완료 — P6-01 고정 범위 종료. 공통 시각 마무리·기기/출시 범위는 기존 P7B·P8에 유지 |
 | P7B-01 | 로컬 완료 — 반응형·접근성·공통 자산/동작·필수 검사·Chromium/Firefox/WebKit 자동 검수 완료. 기존 Windows/iPhone 증거와 노트10+ Chrome 실제 입력/회전/재터치 검수로 사용자 승인 종료. macOS·개별 Android 브라우저/키보드 미검수 한계 보존 |
-| P8-01 | 로컬 완료 — 백업/격리 복원·삭제 manifest·기존 Cron·공개 요청 제한·통합 비용/매뉴얼, 필수 검사·상태 문서. 원격 자원/0038/활성화 미적용 |
-| P8-02 | 진행 중 — Production/Preview0038·관리자/백업/복원·기존 한 편 실제 발행/두 난도 제출·원격 요청 제한/대표 마감·운영5분Cron 적용 완료. 자동 백업/정리·일반 공개/관리자 보호·매뉴얼 동기화 완료. AI 연결·검사·배포 완료. 조회 native/자동 입력/watch JSON 보완 완료. 실제 Cloudflare 자막 challenge는 미해결이며 제목 누락은 oEmbed 보완·검사·배포 완료. 실제 로컬 브라우저 스크립트 자동 취득/파일 보존 성공. 관리자 원본 저장 연결·실제 생성 검수 대기 |
+| P8-01 | 로컬 완료 — 백업/격리 복원·삭제 manifest·기존 Cron·공개 요청 제한·통합 비용/매뉴얼, 필수 검사·상태 문서. P8-02에서 원격 자원/0038/활성화 완료 |
+| P8-02 | 마무리 준비 중 — 운영 자동 자막·새 설교 AI 생성·검수·3단어 시험 발행 완료. 첫 주간 SQL 예약 verified. 목표 개수는 기존 후보의 더 큰 격자에서 오프라인 성공, 원인/개선안 조사 완료. 실제 공급자 청구 대조·권한 밖 지표 확인과 최종 완료 판정은 남음. UI 전면 개편은 향후 계획 |
 
 이전 고정 번호·기존 하위 번호의 완료와 검사 기록은 [보관 STATUS](archive/2026-09-21-p5-48/docs/STATUS.md), [P5-48](work/P5-48.md)~[P5-55](work/P5-55.md)의 작업 기록에 보존한다. 과거 완료 검사를 새 작업처럼 반복하지 않는다.
 
 ## Git과 다음 재개
 
-HEAD main / `0ab476e4281734f4eab64cc6231be09092221651`과 기존 큰 미커밋 변경을 보존했다. 이번 기본 정보 보완은 provider·폼·회귀/화면검사4개이며 나머지 검사소스653개·migration0000~0038/journal/snapshot·의존성/lock·폰트/fontkit·실제 원본/키/유료 결과는 보존했다. commit/push/reset/stash·새 유료 AI·새 migration0이다. 같은P8-02의 실제 생성/청구 대조 검수 경계와 다음 첫 동작은 [HANDOFF](HANDOFF.md)를 따른다.
+누적 변경은 기준 커밋1ee9f36부터 보존했고 검증 단위로 로컬 커밋한다. 이번 시작 HEAD는e3ecc15·main, 시작 worktree는 clean이었다. 정확한 현재 HEAD는 git log로 확인하며 문서 커밋을 배포 소스로 쓰지 않는다. push하지 않는다. 다음 한 작업과 승인/미확인 경계는 [HANDOFF](HANDOFF.md), 고정 완료 조건은 [DELIVERY_PLAN](DELIVERY_PLAN.md)과 [release](spec/release.md)를 따른다.

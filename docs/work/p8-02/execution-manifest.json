@@ -24517,6 +24517,61 @@
       "estimatedMicroUsd": 860448,
       "agentAiCalls": 0
     },
-    "nextStep": "user-paid-consent-and-analysis-critique-start"
+    "nextStep": "See releaseCloseoutReview: user generation and publication completed; closeout reconciliation remains."
+  },
+  "releaseCloseoutReview": {
+    "date": "2026-10-05",
+    "scope": "read-only investigation and documentation; no deployment or new AI",
+    "workDocument": "docs/work/p8-02/closeout-review.md",
+    "status": "P8-02 closeout preparation, not complete",
+    "placement": {
+      "cause": "maximum connected component of candidates fitting 5x5 is 4 for both difficulties",
+      "childCandidates": 16,
+      "adultCandidates": 15,
+      "childTarget": 5,
+      "adultTarget": 6,
+      "offlineWorkingSizes": {
+        "child": 8,
+        "adult": 9
+      },
+      "productionPublicationUnchanged": true,
+      "providerReceivesPlacementConstraints": false,
+      "implementation": "proposal only"
+    },
+    "weeklyBackup": {
+      "startedAt": "2026-10-04T19:00:28.000Z",
+      "completedAt": "2026-10-04T19:00:41.049Z",
+      "status": "verified",
+      "bytes": 517648
+    },
+    "cost": {
+      "ledgerCalls": 12,
+      "missingUsage": 0,
+      "arithmeticMismatches": 0,
+      "ledgerMicroUsd": 1350974,
+      "newSermonCalls": 5,
+      "newSermonMicroUsd": 490526,
+      "providerInvoiceReconciled": false,
+      "supadataUsed": 3,
+      "supadataRemaining": 97
+    },
+    "observedLimits": {
+      "r2Bytes": 571141,
+      "r2ClassA": 565,
+      "r2ClassB": 857,
+      "d1AccountBytes": 7131136,
+      "workersRequests20261004": 780,
+      "workersRequests20261005Partial": 77
+    },
+    "unverified": [
+      "provider invoice reconciliation",
+      "Cloudflare subscriptions/Builds/Access seats: HTTP403",
+      "DO GB-s and Workflow billed steps/state",
+      "full CPU/whole-account billing assurance"
+    ],
+    "futureUiDocument": "docs/future/notes.md#12-향후-개발--관리자-주간-작업-ui-전면-개편",
+    "agentPaidCalls": 0,
+    "agentRemoteWrites": 0,
+    "mainPush": false
   }
 }
