@@ -43,11 +43,11 @@ test('dashboard resumes one existing weekly work and new-work URL reuses it with
   await expect(page.getByRole('link',{name:'답변할 문의·삭제 요청 2건'})).toBeVisible();
   await page.screenshot({path:`/tmp/p5-72-dashboard-${testInfo.project.name}.png`,fullPage:true});
   await page.goto('/admin/new');await expect(page).toHaveURL(/\/admin\/quiz\/weekly$/u);
-  await expect(page.getByRole('heading',{name:'3. 요약과 문제',exact:true})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'요약과 문제',exact:true})).toBeVisible();
   await expect(page.getByLabel('설교 ID',{exact:true})).toHaveCount(0);
-  await expect(page.getByRole('button',{name:/4\. 격자 배치/u})).toBeDisabled();
-  await page.getByRole('button',{name:/2\. 설교 의도/u}).click();await expect(page).toHaveURL(/step=2/u);
-  await page.reload();await expect(page.getByRole('heading',{name:'2. 설교 의도',exact:true})).toBeVisible();
+  await expect(page.getByRole('button',{name:/^격자 배치/u})).toBeDisabled();
+  await page.getByRole('button',{name:/^설교 의도/u}).click();await expect(page).toHaveURL(/step=2/u);
+  await page.reload();await expect(page.getByRole('heading',{name:'설교 의도',exact:true})).toBeVisible();
   expect(f.mutations).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 test('two edited snapshots autosave sequentially without losing the second draft and survive reload',async({page})=>{
@@ -65,9 +65,12 @@ test('two edited snapshots autosave sequentially without losing the second draft
   });
   await page.goto('/admin/quiz/weekly?step=3');
   const summary=page.getByRole('textbox',{name:'요약 문단 1',exact:true}),child=page.locator('article').filter({has:page.getByRole('heading',{name:'어린이 문제',exact:true})}).getByRole('textbox',{name:'단서 1',exact:true});
-  await summary.fill('자동 저장한 합성 요약');await child.fill('함께 살아가는 마음');
+  await summary.fill('자동 저장한 합성 요약');
+  await page.getByRole('group',{name:'검수할 내용'}).getByRole('button',{name:/어린이 문제/u}).click();
+  await child.fill('함께 살아가는 마음');
   await expect.poll(()=>saved.length).toBe(2);expect(saved).toEqual(['summary','child']);
   await page.reload();await expect(summary.last()).toHaveValue('자동 저장한 합성 요약');
+  await page.getByRole('group',{name:'검수할 내용'}).getByRole('button',{name:/어린이 문제/u}).click();
   await expect(page.locator('article').filter({has:page.getByRole('heading',{name:'어린이 문제',exact:true})}).getByRole('textbox',{name:'단서 1',exact:true}).last()).toHaveValue('함께 살아가는 마음');
   expect(f.mutations.every(p=>p.endsWith('/review'))).toBe(true);
 });
@@ -76,6 +79,7 @@ test('autosave conflict keeps the draft, avoids automatic retry, and guards navi
   const field=page.getByRole('textbox',{name:'요약 문단 1',exact:true});await field.fill('충돌에도 남아야 하는 합성 초안');
   await expect(page.getByText('다른 저장이 처리됐습니다. 입력을 보존했습니다.',{exact:true})).toBeVisible();
   await expect(field).toHaveValue('충돌에도 남아야 하는 합성 초안');
+  if (!await page.getByRole('link',{name:'이름·문구 필터',exact:true}).isVisible()) await page.locator('summary').filter({hasText:'관리자 운영 메뉴'}).click();
   await page.getByRole('link',{name:'이름·문구 필터',exact:true}).click();await expect(page.getByText('저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.',{exact:true})).toBeVisible();
   await page.getByRole('button',{name:'작업 계속하기',exact:true}).click();await expect(page).toHaveURL(/\/admin\/quiz\/weekly/u);expect(f.mutations).toHaveLength(1);
 });
@@ -137,4 +141,44 @@ test('filter management registers aliases, warns before exceptions and tests tex
   await page.getByLabel('이 문구가 기존 금지 규칙을 건너뛰는 영향을 확인했습니다.').check();await page.getByRole('button',{name:'필터 등록',exact:true}).click();
   await page.getByLabel('시험 문구',{exact:true}).fill('금 지 어');await page.getByRole('button',{name:'저장 없이 시험'}).click();await expect(page.getByText('차단 · 정규화: 금지어 · 일치 규칙: rule',{exact:true})).toBeVisible();expect(creates).toBe(2);expect(testCalls).toBe(1);
   await page.getByLabel('화면 테마').selectOption('dark');await page.screenshot({path:`/tmp/p5-72-policy-${testInfo.project.name}.png`,fullPage:true});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+});
+
+test('review targets preserve a failed draft and every candidate control without triggering generation', async ({page}) => {
+  const f = await workspace(page, () => false);
+  await page.goto('/admin/quiz/weekly?step=3');
+  const field = page.getByRole('textbox', {name:'요약 문단 1', exact:true});
+  await field.fill('전환 뒤에도 보존할 검수 초안');
+  await expect(page.getByText('다른 저장이 처리됐습니다. 입력을 보존했습니다.', {exact:true})).toBeVisible();
+  const targets = page.getByRole('group', {name:'검수할 내용'});
+  for (const name of ['어린이 문제', '장년 문제']) {
+    await targets.getByRole('button', {name:new RegExp(name)}).click();
+    await expect(page.getByRole('textbox', {name:'답 1', exact:true})).toBeVisible();
+    await expect(page.getByRole('textbox', {name:'단서 1', exact:true})).toBeVisible();
+    await expect(page.getByRole('combobox', {name:'배치에 사용할지 선택'})).toBeVisible();
+    await page.locator('summary:visible').filter({hasText:'원문 근거 확인 (1)'}).click();
+    await expect(page.getByRole('button', {name:'원문 위치 보기', exact:true})).toBeVisible();
+  }
+  await targets.getByRole('button', {name:/요약/u}).click();
+  await expect(field).toHaveValue('전환 뒤에도 보존할 검수 초안');
+  expect(f.mutations).toHaveLength(1);
+  expect(f.mutations[0]).toMatch(/review$/u);
+});
+
+test('weekly header exposes review status and keyboard navigation at narrow widths',async({page})=>{
+  const f=await workspace(page,()=>{throw new Error('navigation must not mutate');});
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/admin/quiz/weekly?step=3');
+  await expect(page.getByText('내용 검수 대기',{exact:true}).first()).toBeVisible();
+  const jump=page.getByRole('link',{name:'검수할 내용 선택',exact:true});
+  await expect(jump).toBeInViewport();
+  const menu=page.locator('summary').filter({hasText:'관리자 운영 메뉴'});
+  const manual=page.getByRole('link',{name:'운영 매뉴얼',exact:true});
+  await expect(manual).toBeHidden();
+  await menu.focus();await page.keyboard.press('Enter');await expect(manual).toBeVisible();
+  await menu.focus();await page.keyboard.press('Enter');await expect(manual).toBeHidden();
+  await jump.click();await expect(page.getByRole('button',{name:/^어린이 문제/})).toBeInViewport();
+  await page.setViewportSize({width:320,height:844});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.setViewportSize({width:1366,height:768});await expect(manual).toBeVisible();
+  expect(f.mutations).toEqual([]);
 });

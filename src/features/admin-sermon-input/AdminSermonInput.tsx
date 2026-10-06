@@ -519,14 +519,18 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
     if (changedInput || contentDirty || feedback.state === "loading") { setFeedback({state:"error",error:{code:"SAVE_REQUIRED",message:"편집한 초안의 저장을 먼저 확인해 주세요."}}); return; }
     setQuery({step:String(next)});
   }
+  const reviewStatus = generation ? ({ awaiting_intent_review: "의도 검수 대기", awaiting_content_review: "내용 검수 대기", review_ready: "최종 검사 완료", failed: "생성 실패: 결과 확인 필요", stale: "입력 변경: 다시 확인 필요", uncertain: "응답 확인 필요", running: "생성 진행 중" } as Record<string, string>)[generation.status] : null;
+  const selectedIntent = generation?.snapshots.find(snapshot => snapshot.kind === "intent" && snapshot.value.id === c?.intent?.selectedId);
+  const selectionLabel = selectedIntent?.kind === "intent" ? selectedIntent.value.kind === "analysis" ? "최초 분석" : selectedIntent.value.kind === "critique" ? "비판 수정본" : "직접 수정한 분석" : null;
   const currentTimedSegment = current?.content.format === "timed_segments" ? current.content.segments[timedSegmentIndex] : undefined;
 
-  return <section className={styles.page} aria-labelledby="sermon-input-title">
+  return <section className={`${styles.page} ${weekly ? styles.weeklyPage : ""}`} aria-labelledby="sermon-input-title">
     <header className={styles.hero}>
       <div>
-        <p className={styles.kicker}>현재 관리자 작업</p>
-        <h2 id="sermon-input-title">{weekly ? `${step}. ${stepNames[step - 1]}` : "설교 입력자료 검토"}</h2>
-        <p>현재 본문을 확인하고 수정, 비교, 복원, 교정, 사람 확정을 한 화면에서 이어갑니다.</p>
+        {!weekly && <p className={styles.kicker}>현재 관리자 작업</p>}
+        {weekly && reviewStatus && <p className={styles.workStatus} role="status">{reviewStatus}{step === 2 && selectionLabel ? ` · 현재 선택: ${selectionLabel}` : ""}</p>}
+        <h2 id="sermon-input-title">{weekly ? stepNames[step - 1] : "설교 입력자료 검토"}</h2>
+        <p>{weekly ? ["영상과 본문을 확인하고 자막을 확정해 주세요.", "현재 선택한 분석과 원문 근거를 확인해 주세요.", "요약과 두 난도의 문제를 각각 검토해 주세요.", "격자 크기와 문제 수를 골라 무료로 배치를 비교하세요.", "공개할 내용과 두 난도 격자를 확인해 주세요.", "공개 범위를 확인한 뒤 발행해 주세요."][step - 1] : "현재 본문을 확인하고 수정, 비교, 복원, 교정, 사람 확정을 한 화면에서 이어갑니다."}</p>
       </div>
       {!weekly && <ol className={styles.steps} aria-label="주간 발행 6단계">
         <li aria-current="step"><span>1</span>입력자료 <small>현재</small></li>
@@ -536,10 +540,12 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
         <li><span>5</span>최종 확인 <small>미리보기</small></li>
         <li><span>6</span>발행 <small>검수 후 발행</small></li>
       </ol>}
+      {weekly && (step === 2 && selectedIntent || step === 3) && <a className={styles.reviewJump} href={step === 2 ? `#snapshot-${c?.intent?.selectedId}` : "#review-targets"}>{step === 2 ? "현재 선택본 확인" : "검수할 내용 선택"}</a>}
+      {weekly && step < 6 && <button type="button" className="primary-button" disabled={!available[step] || changedInput || contentDirty || feedback.state === "loading"} onClick={() => selectStep(step + 1)}>다음: {stepNames[step]}</button>}
     </header>
-    {weekly && <ol className={weeklyStyles.stepper} aria-label="주간 발행 6단계">{stepNames.map((label,index)=><li key={label}><button type="button" disabled={!available[index]} aria-current={step===index+1?"step":undefined} onClick={()=>selectStep(index+1)}>{index+1}. {label}<small>{!available[index]?reasons[index]:index+1<recommended?"완료 · 수정 가능":step===index+1?"현재 단계":"이동 가능"}</small></button></li>)}</ol>}
+    {weekly && <ol className={weeklyStyles.stepper} aria-label="주간 발행 6단계">{stepNames.map((label,index)=><li key={label}><button type="button" disabled={!available[index]} aria-current={step===index+1?"step":undefined} onClick={()=>selectStep(index+1)}><span className={weeklyStyles.stepNumber} aria-hidden="true">{index+1<recommended ? "✓" : index+1}</span><span>{label}</span><small>{!available[index]?reasons[index]:index+1<recommended?"완료 · 수정 가능":step===index+1?"현재 단계":"이동 가능"}</small></button></li>)}</ol>}
     {blocker.state === "blocked" && <div role="alert"><p>저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.</p><button type="button" onClick={() => blocker.reset()}>작업 계속하기</button><button type="button" onClick={() => blocker.proceed()}>저장하지 않고 이동</button></div>}
-    {weekly && <p role="status">편집은 잠시 멈추면 자동 저장됩니다. 확정·AI 재생성·발행은 각 버튼으로 직접 실행합니다.</p>}
+    {weekly && <p className={styles.saveGuidance} role="status">{changedInput || contentDirty ? "저장 확인 필요. " : ""}편집은 잠시 멈추면 자동 저장됩니다. 확정·AI 재생성·발행은 직접 실행합니다.</p>}
 
     {costQuizSetId && <AiCostDetails key={`${costQuizSetId}-${costRefresh}`} quizSetId={costQuizSetId} refreshKey={costRefresh} />}
     <div hidden={weekly && step !== 1}>

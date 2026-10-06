@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import { submissionListSchema, weeklyDashboardSchema } from "../../../shared/api/admin-weekly";
 import { deletedSubmissionAsAdminDataSchema, moderatedSubmissionDataSchema } from "../../../shared/api/admin-submission-moderation";
 import { weeklyRequest } from "./client";
-import { AdminNavigation } from "./Dashboard";
 import styles from "./weekly.module.css";
 export function Component(){
   const [query,setQuery]=useSearchParams(),id=query.get('quiz')??'';
@@ -19,7 +18,7 @@ export function Component(){
       else await weeklyRequest(`/api/admin/submissions/${item.id}`,moderatedSubmissionDataSchema,'PATCH',{action:kind,reason});
       setMessage('제출 조치를 저장했습니다.');setAttempt(a=>a+1);
     }catch(error){setMessage(error instanceof Error?error.message:'처리 결과를 확인하지 못했습니다.');}finally{setBusy(false);}}
-  return <div className={styles.page}><AdminNavigation/><header className={styles.hero}><h2>제출 기록 관리</h2><p>기존 성적과 확정 순위는 보존하고 공개 표시 또는 개인정보만 조치합니다.</p></header>{message&&<p role="status">{message}</p>}
+  return <div className={styles.page}><header className={styles.hero}><h2>제출 기록 관리</h2><p>기존 성적과 확정 순위는 보존하고 공개 표시 또는 개인정보만 조치합니다.</p></header>{message&&<p role="status">{message}</p>}
     <div className={styles.fields}><label>관리할 퀴즈<select value={id} disabled={busy} onChange={e=>{setResult(null);setQuery({quiz:e.target.value});}}><option value="">퀴즈 선택</option>{quizzes.filter(q=>['published','archived'].includes(q.status)).map(q=><option key={q.quizSetId} value={q.quizSetId}>{q.sermonDate} · {q.title}</option>)}</select></label>
     <label>난이도 필터<select value={level} onChange={e=>setLevel(e.target.value)}><option value="all">모두</option><option value="child">어린이</option><option value="adult">장년</option></select></label><label>상태 필터<select value={state} onChange={e=>setState(e.target.value)}><option value="all">모두</option><option value="visible">공개</option><option value="hidden">숨김</option><option value="deleted">삭제</option></select></label><button disabled={busy} onClick={()=>setAttempt(a=>a+1)}>제출 목록 새로고침</button></div>
     {id&&items===null&&<p role="status">제출 기록을 불러오고 있습니다.</p>}{items&&items.length===0&&<p>이 퀴즈에는 제출이 없습니다.</p>}

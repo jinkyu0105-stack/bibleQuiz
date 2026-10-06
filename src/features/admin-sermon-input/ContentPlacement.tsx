@@ -43,7 +43,7 @@ function LayoutReview({ layout, title, answers, large }: { layout: AdminPlacemen
         </div>)}</dl>
       </section>)}
       <p>배치에서 빠진 후보: {layout.omitted.join(", ") || "없음"}</p><p>관리자가 제외한 후보: {layout.excluded.join(", ") || "없음"}</p>
-      {answers && <details><summary>정답 표현 검토</summary>{layout.words.map(w => <p key={w.id}>{w.answer} — {w.phrase}</p>)}</details>}
+      {answers && <details><summary>정답 표현 검토</summary>{layout.words.map(w => <p key={w.id}>{w.answer}: {w.phrase}</p>)}</details>}
     </div>
   </div>;
 }
@@ -140,6 +140,7 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
     {trialBusy && <p role="status">요청을 처리하고 있습니다.</p>}{message && <p role="status">{message}</p>}
     </div>
     {view.preview && view.reviewLayouts && <section hidden={step === 4} aria-label="최종 검사 미리보기" className={styles.placementLevel}>
+      {step !== 5 && view.status === "review_ready" && placement.current && !publishedSlug && <button type="button" className="primary-button" disabled={disabled} onClick={() => setConfirmPublish(true)}>지금 발행</button>}
       <h4>{placement.selected ? "선택한 배치의 최종 검사 통과" : "기본 배치의 최종 검사 통과"}</h4>
       <h5>{view.preview.metadata.title}</h5><p>설교일 {view.preview.metadata.date} · {view.preview.metadata.bibleReferenceLabel} ({view.preview.metadata.translation})</p>
       <a href={view.preview.metadata.bibleReadingUrl} target="_blank" rel="noreferrer">대한성서공회에서 읽기</a>
@@ -149,7 +150,7 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
       <p>두 난이도의 현재 입력·내용 검수·연결·교차·정답 일치 검사를 통과했습니다. 아직 발행하지 않았습니다.</p>
       {step === 5 && <ul aria-label="발행 검수표"><li>입력자료·설교 의도 사람 확정</li><li>요약·어린이·장년 문제 검수</li><li>두 난도 격자·연결·교차·정답 검사 통과</li><li>아래 Top N 설정과 공개할 내용을 확인해 주세요.</li></ul>}
       {step === 5 && view.quizSetId && <WinnerSettings quizSetId={view.quizSetId}/>}
-      {step !== 5 && view.status === "review_ready" && placement.current && !publishedSlug && <button type="button" className="primary-button" disabled={disabled} onClick={() => setConfirmPublish(true)}>지금 발행</button>}
+
       {confirmPublish && !publishedSlug && <PublicationConfirmation view={view} disabled={disabled} message={message}
         cancel={() => setConfirmPublish(false)} publish={() => void publish()} />}
       {publishedSlug && <a href={`/quiz/${publishedSlug}`}>공개된 퀴즈 보기</a>}

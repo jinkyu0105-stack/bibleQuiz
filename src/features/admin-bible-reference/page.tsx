@@ -1,4 +1,3 @@
-import { AdminNavigation } from "../admin-weekly/Dashboard";
 import { ProblemCorrection } from "../admin-sermon-input/ProblemCorrection";
 import { WithdrawPublication } from "../admin-sermon-input/WithdrawPublication";
 import { PublishedMetadata } from "../admin-sermon-input/PublishedMetadata";
@@ -199,7 +198,7 @@ function BibleReferenceTool() {
 
 export function Component() {
   return <>
-    <AdminNavigation />
+
     <PublishedMetadata />
     <WithdrawPublication />
     <ProblemCorrection />

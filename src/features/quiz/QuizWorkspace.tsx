@@ -352,7 +352,20 @@ export function QuizWorkspace({
             </li>)}</ol>
           </section>)}
         </aside>
-      </div> : <ResultComparisonGrids answers={displayedAnswers} grid={quiz.grid} solution={displayedSolution} />}
+      </div> : <div className={styles.resultOverview}><div className={styles.resultSummary}>
+        {submissionResult !== null ? <>
+        <SubmissionResultSummary result={submissionResult} />
+        {submissionDeletion && <SubmissionDeletionControl
+          difficultyLabel={difficultyLabel}
+          onDeleted={handleDeleted}
+          target={submissionDeletion}
+        />}
+      </> : practiceResult !== null ? <PracticeResultSummary
+        result={practiceResult}
+      /> : practiceSolution !== null ? <ArchivedSolutionSummary
+        answers={practiceAnswers}
+      /> : null}
+      </div><ResultComparisonGrids answers={displayedAnswers} grid={quiz.grid} solution={displayedSolution} /></div>}
       <div className={styles.progressPanel}>
         <div><strong data-testid="progress">{progress.filled} / {progress.total}칸 작성</strong><progress aria-label="작성 진행률" value={progress.filled} max={progress.total} /></div>
         <p role="status" className={styles.saved}>{submissionResult !== null ? "제출한 답안의 채점 결과를 표시하고 있습니다." : hasVerifiedSubmission ? "제출한 답안이 확인되었습니다. 정답보기를 눌러 결과를 복원할 수 있습니다." : practiceResult !== null ? "지난 퀴즈 답안의 채점 결과를 표시하고 있습니다." : practiceSolution !== null ? "현재 답안과 공식 정답을 비교하고 있습니다." : deletedSubmission !== null && practiceCheck === undefined ? saved : saveBlocked ? "기존 저장 확인이 필요합니다. 새 입력은 아직 저장하지 않습니다." : saved}</p>
@@ -387,18 +400,7 @@ export function QuizWorkspace({
         <p>이름, 답안과 한줄평을 공개 기록에서 제거했습니다. 이 퀴즈의 {difficultyLabel}에는 다시 제출할 수 없습니다.</p>
         <p className={styles.submittedAt}><time dateTime={deletedSubmission.deletedAt}>{new Intl.DateTimeFormat("ko-KR", { dateStyle: "long", timeStyle: "short", timeZone: "Asia/Seoul" }).format(new Date(deletedSubmission.deletedAt))}</time> 삭제</p>
       </section>}
-      {submissionResult !== null ? <>
-        <SubmissionResultSummary result={submissionResult} />
-        {submissionDeletion && <SubmissionDeletionControl
-          difficultyLabel={difficultyLabel}
-          onDeleted={handleDeleted}
-          target={submissionDeletion}
-        />}
-      </> : practiceResult !== null ? <PracticeResultSummary
-        result={practiceResult}
-      /> : practiceSolution !== null ? <ArchivedSolutionSummary
-        answers={practiceAnswers}
-      /> : hasVerifiedSubmission ? <section className={styles.confirmPanel} aria-labelledby="confirmed-submission-title">
+      {displayedSolution !== null ? null : hasVerifiedSubmission ? <section className={styles.confirmPanel} aria-labelledby="confirmed-submission-title">
         <div><h3 id="confirmed-submission-title">제출한 답안이 확인되었습니다</h3><p>정답보기를 누르면 저장된 답안과 공식 정답을 다시 비교합니다.</p></div>
       </section> : practiceCheck !== undefined ? <PracticeCheckPanel
         cells={state.cellValues}

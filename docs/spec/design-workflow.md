@@ -44,7 +44,7 @@
 
 웹 reference와 이 문서가 승인된 뒤 실제 코드를 구현할 때 사용한다.
 
-- greenfield editorial interactive web app으로 pre-flight를 수행한다.
+- 최초 구현은 greenfield editorial interactive web app으로 pre-flight를 수행했다. P9-02 같은 기존 앱 개편은 현재 화면·승인 시안·기능을 먼저 대조하고 기존 토큰과 컴포넌트를 재사용한다. 현재 사용자의 명시적 구현 요청과 기능 보존 조건이 skill의 기본 새 시안 생성 절차보다 우선한다.
 - 제품 성격: 교회 가족용, 접근성 우선, 장년은 사색적, 어린이는 따뜻하되 유아적이지 않음
 - 추천 dials: visual intensity `5/10`, motion `3/10`, density `5/10`
 - 디자인 토큰과 컴포넌트 구조를 먼저 세운다.

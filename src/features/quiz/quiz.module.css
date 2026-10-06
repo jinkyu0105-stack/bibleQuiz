@@ -285,3 +285,43 @@
   .boardCelebration { animation: celebrationReveal 240ms ease-out; }
 }
 @keyframes celebrationReveal { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* The approved workspace is a single reading surface around the real puzzle and clues. */
+.workspace { padding: clamp(16px, 2.4vw, 32px); border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+.tools { padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.tools .help { width: auto; margin-left: auto; }
+.tools .help[open] { flex-basis: 100%; }
+.cluePanel { background: var(--page); border-radius: 10px; padding: clamp(16px, 2vw, 24px); }
+.clue { background: transparent; }
+.progressPanel { margin-top: 24px; padding: 20px; border: 1px solid var(--border); border-radius: 10px; background: var(--page); }
+.resultPanel { background: var(--page); }
+.comparisonFigure { padding: 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--page); }
+.boardList { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.participantCard { height: 100%; grid-template-columns: minmax(0,1fr) minmax(96px,140px); gap: 16px; padding: 20px; background: var(--page); }
+.participantTitle h4 { font-size: 1.25rem; }
+.participantComment { padding: 10px; background: var(--surface); }
+.boardSection { padding-top: 32px; }
+@media (max-width: 1023px) {
+ .boardList { grid-template-columns: minmax(0,1fr); }
+}
+@media (max-width: 767px) {
+ .workspace { padding: 12px; border-radius: 12px; }
+ .columns { gap: 20px; }
+ .progressPanel { padding: 16px; }
+ .tools { gap: 8px 12px; }
+ .tools .help { margin-left: 0; }
+ .participantCard { grid-template-columns: minmax(0,1fr); padding: 16px; }
+ .comparisonFigure { padding: 10px; }
+}
+/* Decorative leaving copies must not enlarge the page during a viewport change. */
+.boardList { overflow: clip; overflow-clip-margin: 4px; }
+
+.resultOverview { display: grid; grid-template-columns: minmax(0,1fr) 260px; gap: 24px; align-items: start; }
+.resultSummary { grid-column: 2; grid-row: 1; min-width: 0; }
+.resultOverview > :last-child { grid-column: 1; grid-row: 1; min-width: 0; }
+.resultSummary .resultPanel { grid-template-columns: minmax(0,1fr); gap: 16px; margin-top: 0; padding: 24px 20px; }
+.resultSummary .score { font-size: clamp(2rem, 3vw, 3rem); }
+@media (max-width: 1023px) {
+ .resultOverview { grid-template-columns: minmax(0,1fr); gap: 16px; }
+ .resultSummary, .resultOverview > :last-child { grid-column: auto; grid-row: auto; }
+}

@@ -4,8 +4,10 @@ import {
   Outlet,
   isRouteErrorResponse,
   useRouteError,
+  useLocation,
 } from "react-router-dom";
 
+import { AdminNavigation } from "../features/admin-weekly/AdminNavigation";
 import { ThemeControl } from "../features/quiz/ThemeControl";
 
 const navigation = [
@@ -15,8 +17,9 @@ const navigation = [
 ] as const;
 
 export function RootLayout() {
+  const admin = useLocation().pathname.startsWith("/admin");
   return (
-    <div className="app-shell">
+    <div className={`app-shell${admin ? " admin-shell" : ""}`}>
       <a className="skip-link" href="#main-content">본문으로 이동</a>
       <header className="site-header">
         <div>
@@ -24,9 +27,7 @@ export function RootLayout() {
           <h1>이번 주의 말씀 : 낱말 퀴즈</h1>
         </div>
         <ThemeControl />
-      </header>
-
-      <nav aria-label="주요 메뉴">
+      <nav className="site-navigation" aria-label="주요 메뉴">
         {navigation.map((item) => (
           <NavLink
             className={({ isActive }) => (isActive ? "active" : undefined)}
@@ -38,10 +39,14 @@ export function RootLayout() {
           </NavLink>
         ))}
       </nav>
+      </header>
 
+      <div className={admin ? "admin-layout" : "public-layout"}>
+      {admin && <AdminNavigation />}
       <main id="main-content" tabIndex={-1}>
         <Outlet />
       </main>
+      </div>
       <footer><Link to="/privacy-requests">문의·삭제 요청 및 내 문의</Link></footer>
       {import.meta.env.DEV && <footer className="development-footer">로컬 개발·검수 화면입니다. 실제 서비스 적용 여부는 운영 기록에서 확인합니다.</footer>}
     </div>

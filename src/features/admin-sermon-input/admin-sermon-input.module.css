@@ -812,3 +812,50 @@
   .costDialog { border-radius: 0; }
   .costMetrics { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* P9: compact workflow chrome; one sticky layer, no competing cost strip. */
+.weeklyPage { margin: 0; gap: 16px; }
+.weeklyPage > .hero { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 16px 20px; border: 0; border-left: 3px solid var(--accent); border-radius: 0; }
+.weeklyPage > .hero h2 { margin: 0 0 6px; }
+.weeklyPage > .hero p { margin: 0; font-size: .875rem; }
+.weeklyPage > .hero > button { flex: 0 0 auto; }
+.saveGuidance { margin: 0; font-size: .8125rem; }
+.weeklyPage .costStrip { position: static; padding-block: 4px; border-radius: 8px; }
+.weeklyPage .costButton small { flex-basis: auto; }
+.reviewTargets { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; padding: 6px; margin-block: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--page); }
+.reviewTargets button { border: 0; padding: 12px 8px; background: transparent; font-weight: 700; }
+.reviewTargets small { display: block; margin-top: 4px; font-size: .75rem; font-weight: 400; }
+.reviewTargets [aria-pressed="true"] { background: var(--accent); color: var(--button-text); }
+.snapshotDisclosure { margin-top: 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+.snapshotDisclosure > summary { min-height: 48px; padding: 14px 20px; color: var(--text-strong); font-weight: 750; }
+.snapshotDisclosure > summary span { margin-left: 12px; font-size: .8125rem; font-weight: 400; }
+.snapshotDisclosure > .panel { border: 0; padding-top: 4px; }
+.snapshotDisclosure .sectionHeading { margin-block: 8px 12px; }
+.reviewActions { padding: 16px; margin-block: 12px 20px; border: 1px solid var(--border); border-radius: 8px; background: var(--page); }
+.reviewActions > p { font-size: .875rem; margin-bottom: 12px; }
+.reviewActions .formGrid { margin: 0 0 12px; }
+.reviewActions .checkbox { margin: 12px 0; }
+.reviewActions > button { background: var(--accent); border-color: var(--accent); color: var(--button-text); font-weight: 700; }
+.reviewActions > button:disabled { background: var(--surface); color: var(--text); border-color: var(--border); }
+.claimGroup { margin-block: 12px; padding-block: 0; }
+.claimGroup > summary { padding-block: 16px; min-height: 48px; color: var(--text-strong); font-weight: 700; }
+.claimGroup > summary span { margin-left: 8px; font-size: .8125rem; font-weight: 400; color: var(--text); }
+.evidenceDisclosure, .qualityDisclosure, .regenerationDisclosure { border-top: 1px solid var(--border); padding-block: 8px; margin-block: 12px; }
+.evidenceDisclosure > summary, .qualityDisclosure > summary, .regenerationDisclosure > summary { min-height: 44px; padding-block: 10px; color: var(--text-strong); font-size: .875rem; font-weight: 650; }
+.regenerationDisclosure > section { margin-top: 12px; }
+.weeklyPage .panel { padding: clamp(16px, 2vw, 24px); }
+@media (max-width: 767px) {
+ .weeklyPage > .hero { padding: 12px; }
+ .weeklyPage > .hero > button { width: 100%; }
+ .reviewActions .formGrid { grid-template-columns: 1fr; }
+ .reviewActions button { width: 100%; }
+ .snapshotDisclosure > summary { padding: 12px; }
+ .snapshotDisclosure > summary span { display: block; margin: 4px 0 0; }
+}
+.generationGuide { margin-bottom: 12px; font-size: .875rem; }
+.generationGuide > summary { min-height: 44px; padding-block: 10px; color: var(--text-strong); }
+.generationGuide[open] > summary { margin-bottom: 8px; }
+.weeklyPage > .hero .workStatus { margin-bottom: 6px; font-size: .8125rem; color: var(--accent); font-weight: 700; }
+.reviewJump { display: inline-flex; align-items: center; min-height: 44px; font-size: .875rem; font-weight: 700; color: var(--text-strong); text-underline-offset: 4px; }
+.snapshotDisclosure article, .reviewTargets { scroll-margin-top: 144px; }
+@media (max-width: 767px) { .snapshotDisclosure article, .reviewTargets { scroll-margin-top: 16px; } }

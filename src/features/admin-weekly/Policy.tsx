@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { policyListSchema, policyTestResultSchema } from "../../../shared/api/admin-weekly";
 import { weeklyRequest } from "./client";
-import { AdminNavigation } from "./Dashboard";
 import styles from "./weekly.module.css";
 const paths={reserved:'reserved-names',term:'moderation-terms',exception:'moderation-exceptions'} as const;
 export function Component(){
@@ -10,7 +9,7 @@ export function Component(){
   const [test,setTest]=useState(''),[testScope,setTestScope]=useState('comment'),[result,setResult]=useState<ReturnType<typeof policyTestResultSchema.parse>|null>(null);
   useEffect(()=>{const controller=new AbortController();void Promise.all(Object.values(paths).map(path=>weeklyRequest(`/api/admin/${path}`,policyListSchema,'GET',undefined,controller.signal))).then(data=>{if(!controller.signal.aborted){setItems(data.flatMap(d=>d.items));setLoaded(true);}}).catch(()=>{if(!controller.signal.aborted)setMessage('보호 목록을 불러오지 못했습니다. 다시 시도해 주세요.');});return()=>controller.abort();},[attempt]);
   async function mutate(path:string,method:string,body:unknown){if(busy)return;setBusy(true);setMessage('');try{setItems((await weeklyRequest(`/api/admin/${path}`,policyListSchema,method,body)).items);setMessage('필터 목록을 저장했습니다.');return true;}catch(error){setMessage(error instanceof Error?error.message:'저장을 확인하지 못했습니다.');return false;}finally{setBusy(false);}}
-  return <div className={styles.page}><AdminNavigation/><header className={styles.hero}><h2>이름·문구 필터 관리</h2><p>보호 이름은 이름 입력에만 적용합니다. 금지 문구와 정확한 예외는 범위를 나누어 관리합니다.</p></header>
+  return <div className={styles.page}><header className={styles.hero}><h2>이름·문구 필터 관리</h2><p>보호 이름은 이름 입력에만 적용합니다. 금지 문구와 정확한 예외는 범위를 나누어 관리합니다.</p></header>
     {message&&<p role="status">{message}</p>}<button type="button" disabled={busy} onClick={()=>setAttempt(a=>a+1)}>목록 다시 불러오기</button>
     <section className={styles.panel}><h3>필터 등록</h3><form onSubmit={e=>{e.preventDefault();void mutate(paths[kind],'POST',kind==='reserved'?{label:value,aliases:aliases.split('\n').map(a=>a.trim()).filter(Boolean)}:kind==='term'?{value,scope,matchMode:mode}:{value,scope,reason,acknowledged:ack});}}>
       <fieldset disabled={busy||!loaded} className={styles.fields}><legend>실제 이름과 목록은 관리자만 볼 수 있습니다.</legend><label>등록 종류<select value={kind} onChange={e=>{setKind(e.target.value as typeof kind);setScope('comment');setAck(false);}}><option value="reserved">보호 이름</option><option value="term">금지 문구</option><option value="exception">정확한 예외</option></select></label>

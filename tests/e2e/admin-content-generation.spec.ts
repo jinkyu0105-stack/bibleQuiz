@@ -180,7 +180,7 @@ for (const unverified of [false, true]) test(`administrator compares, edits, con
   await panel.getByRole("button", { name: "분석·비판 검토 시작" }).click();
   const comparison = panel.getByRole("article").filter({ has: page.getByRole("heading", { name: "비판 수정본", exact: true }) });
   await comparison.getByRole("button", { name: "이 자료 선택" }).click();
-  const central = comparison.getByRole("heading", { name: "중심 메시지", exact: true }).locator("..");
+  const central = comparison.locator("details").filter({ has: page.locator("summary").filter({ hasText: /^중심 메시지/u }) });
   if (unverified) {
     await expect(comparison.getByText("위치 미확인", { exact: true })).toHaveCount(2);
     await expect(central.getByRole("button", { name: "원문 위치 보기" })).toHaveCount(0);

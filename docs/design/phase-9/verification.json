@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-06",
+  "scope": "P9-02 local synthetic UI; no deployment or paid calls",
+  "lighthouse": {
+    "mode": "mobile default simulated throttling, Chromium, optimized local build with gzip and synthetic GET responses",
+    "performance": 93.0,
+    "accessibility": 100,
+    "metrics": {
+      "first-contentful-paint": "2.0 s",
+      "largest-contentful-paint": "3.0 s",
+      "cumulative-layout-shift": "0",
+      "total-blocking-time": "40 ms"
+    },
+    "limitations": [
+      "No production/CDN measurement",
+      "No real-device measurement",
+      "No INP measurement",
+      "LCP is above 2.5 seconds"
+    ]
+  },
+  "adminCaptures": 14,
+  "adminErrors": 0,
+  "adminUnexpectedRequests": 0,
+  "adminMutations": 0,
+  "adminOverflow": 0,
+  "check": {
+    "unit": 308,
+    "worker": 2195,
+    "workflow": 4,
+    "recoveryCli": 2,
+    "node": 14,
+    "python": 7,
+    "exitCode": 0
+  },
+  "distAndDeploymentPointerRestored": true
+}
