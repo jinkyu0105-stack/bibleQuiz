@@ -9403,15 +9403,21 @@
       "source": "user report",
       "projectName": "biblequiz-nonprod",
       "displayUsd": 0.57,
-      "selectedDateRangeConfirmed": false,
+      "selectedDateRangeConfirmed": true,
       "duplicateProjectNameReported": true,
       "secondProjectUnusedReported": true,
-      "projectCreationCauseVerified": false
+      "projectCreationCauseVerified": false,
+      "selectedDateRange": {
+        "from": "2026-09-29",
+        "through": "2026-10-06"
+      },
+      "costDisplayedOn": "2026-10-04",
+      "providerRequestCountConfirmed": false
     },
     "openaiReconciled": false,
     "cloudflareBillingConfirmed": false,
     "remaining": [
-      "confirm OpenAI date/scope and explain difference from saved ledger",
+      "confirm provider request count and reconcile approximately USD0.08 difference",
       "Cloudflare billable usage period and amount",
       "record final completion assessment after billing reconciliation"
     ],
@@ -9437,6 +9443,12 @@
       "warning": "existing bundle chunks over 500kB",
       "actualInputPdfChecksRepeated": false,
       "nodeTests": 14
+    },
+    "savedProductionCalls": {
+      "count": 5,
+      "startedAtUtc": "2026-10-04T15:34:11.680Z",
+      "completedAtUtc": "2026-10-04T15:56:08.523Z",
+      "microUsd": 490526
     }
   }
 }
