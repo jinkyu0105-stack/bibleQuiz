@@ -1,0 +1,61 @@
+{
+  "task": "P9-02",
+  "date": "2026-10-06",
+  "authorization": "사용자가 배경4종 교체 및 실제 배경 적용을 직접 지시",
+  "tool": "built-in imagegen",
+  "calls": 4,
+  "recordType": "생성 지시 요약; 기존 prompts.json은 최초 생성 기록으로 보존",
+  "preserved": [
+    "phase-7a original references",
+    "celebration master and variants",
+    "garden-v1 variants",
+    "export fonts and fontkit patch"
+  ],
+  "assets": [
+    {
+      "name": "adult-desktop",
+      "input": "docs/design/phase-7a/01-adult-sermon-hero.png",
+      "output": "docs/design/phase-7b/masters/adult-desktop.png",
+      "generationInstructionSummary": "원본 Phase7A 시안을 직접 이미지 입력으로 사용. 화면/UI 모형을 만들지 말고 실제 웹 배경 파일 한 장을 제작. 원본의 재료와 색상/광원/장면 구도를 보존. 상단 메뉴, 세로 UI 메뉴, 버튼, 제목/설명 막대, 정보 패널, UI 테두리와 빈칸을 제거하고 그 자리를 배경으로 복원. 글자/성경 구절/숫자/로고/워터마크/인물/십자가 없음. 어두운 안개 낀 소나무 숲, 왼쪽 위 황금빛 새벽, 아래 계곡과 이끼를 원본과 같은 사진 질감으로 유지. UI 금색 격자선은 제거. 가로 16:9 구도."
+    },
+    {
+      "name": "adult-mobile",
+      "input": "docs/design/phase-7a/01-adult-sermon-hero.png",
+      "output": "docs/design/phase-7b/masters/adult-mobile.png",
+      "generationInstructionSummary": "원본 Phase7A 시안을 직접 이미지 입력으로 사용. 화면/UI 모형을 만들지 말고 실제 웹 배경 파일 한 장을 제작. 원본의 재료와 색상/광원/장면 구도를 보존. 상단 메뉴, 세로 UI 메뉴, 버튼, 제목/설명 막대, 정보 패널, UI 테두리와 빈칸을 제거하고 그 자리를 배경으로 복원. 글자/성경 구절/숫자/로고/워터마크/인물/십자가 없음. 어두운 안개 낀 소나무 숲, 왼쪽 위 황금빛 새벽, 아래 계곡과 이끼를 원본과 같은 사진 질감으로 유지. UI 금색 격자선은 제거. 가로 이미지의 단순 잘라내기가 아닌 별도 세로 2:3 구도. 실제 HTML을 놓을 조용한 공간을 남김."
+    },
+    {
+      "name": "child-desktop",
+      "input": "docs/design/phase-7a/02-child-sermon-hero.png",
+      "output": "docs/design/phase-7b/masters/child-desktop.png",
+      "generationInstructionSummary": "원본 Phase7A 시안을 직접 이미지 입력으로 사용. 화면/UI 모형을 만들지 말고 실제 웹 배경 파일 한 장을 제작. 원본의 재료와 색상/광원/장면 구도를 보존. 상단 메뉴, 세로 UI 메뉴, 버튼, 제목/설명 막대, 정보 패널, UI 테두리와 빈칸을 제거하고 그 자리를 배경으로 복원. 글자/성경 구절/숫자/로고/워터마크/인물/십자가 없음. 크림 종이 질감, 올리브 잎과 흰 꽃, 파란 하늘과 흰 비둘기, 곡선 정원 길과 오른쪽 황동 랜턴. 원본의 겹친 종이/과슈 표현, 3D 장난감 느낌 금지. 정원 자체의 나무 격자는 유지. 가로 16:9 구도."
+    },
+    {
+      "name": "child-mobile",
+      "input": "docs/design/phase-7a/02-child-sermon-hero.png",
+      "output": "docs/design/phase-7b/masters/child-mobile.png",
+      "generationInstructionSummary": "원본 Phase7A 시안을 직접 이미지 입력으로 사용. 화면/UI 모형을 만들지 말고 실제 웹 배경 파일 한 장을 제작. 원본의 재료와 색상/광원/장면 구도를 보존. 상단 메뉴, 세로 UI 메뉴, 버튼, 제목/설명 막대, 정보 패널, UI 테두리와 빈칸을 제거하고 그 자리를 배경으로 복원. 글자/성경 구절/숫자/로고/워터마크/인물/십자가 없음. 크림 종이 질감, 올리브 잎과 흰 꽃, 파란 하늘과 흰 비둘기, 곡선 정원 길과 오른쪽 황동 랜턴. 원본의 겹친 종이/과슈 표현, 3D 장난감 느낌 금지. 정원 자체의 나무 격자는 유지. 가로 이미지의 단순 잘라내기가 아닌 별도 세로 2:3 구도. 실제 HTML을 놓을 조용한 공간을 남김."
+    }
+  ],
+  "optimization": {
+    "tool": "sharp 0.35.5 (temporary pnpm dlx, no project dependency)",
+    "formats": {
+      "avif": 65,
+      "webp": 82,
+      "jpeg": 82
+    },
+    "desktopWidths": [
+      960,
+      1600
+    ],
+    "mobileWidths": [
+      480,
+      960
+    ],
+    "catalog": "assets.json",
+    "references": [
+      "https://sharp.pixelplumbing.com/api-resize/",
+      "https://sharp.pixelplumbing.com/api-output/"
+    ]
+  }
+}

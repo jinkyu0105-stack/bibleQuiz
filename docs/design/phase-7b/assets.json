@@ -7,115 +7,115 @@
     "hasAlpha": false,
     "variants": [
       {
-        "path": "public/images/garden-v1/adult-desktop-960.avif",
-        "bytes": 53921,
+        "path": "public/images/garden-v2/adult-desktop-960.avif",
+        "bytes": 90928,
         "width": 960,
         "height": 540,
         "hasAlpha": false,
-        "sha256": "2fe94b7e7d42c6413b011b5b6acd4b03426930b35cd8c2d7f2b4c7019c2cabc9"
+        "sha256": "0c2a55147f9ab395e97bb82c3f5e49bf7f14c1c80ec2fe7ec95d49fabc44e5b3"
       },
       {
-        "path": "public/images/garden-v1/adult-desktop-960.webp",
-        "bytes": 114264,
+        "path": "public/images/garden-v2/adult-desktop-960.webp",
+        "bytes": 109188,
         "width": 960,
         "height": 540,
         "hasAlpha": false,
-        "sha256": "ca9674ae2e893ea9725ad217bb05ce225f4861a04ddec25eb96c162f8701d712"
+        "sha256": "f5fe9ef6c005b6ff3246500caf9c863cfa6f0480e24c5fa147ae3e39ab4e4a56"
       },
       {
-        "path": "public/images/garden-v1/adult-desktop-960.jpg",
-        "bytes": 142831,
+        "path": "public/images/garden-v2/adult-desktop-960.jpg",
+        "bytes": 123753,
         "width": 960,
         "height": 540,
         "hasAlpha": false,
-        "sha256": "43ae09de913e80aa8434c6b100d83f62460076f70142b790a91b580c4bfab933"
+        "sha256": "dfa6f0cd03b05e25700bff961bed0c86dcf2849764ff269913f2c34fd987b939"
       },
       {
-        "path": "public/images/garden-v1/adult-desktop-1600.avif",
-        "bytes": 128108,
+        "path": "public/images/garden-v2/adult-desktop-1600.avif",
+        "bytes": 188398,
         "width": 1600,
         "height": 900,
         "hasAlpha": false,
-        "sha256": "47e674ba69decd2c44d6a969239210bda42b96bb243ad15ce2346f389f6055cb"
+        "sha256": "a62ed225d6edc9fffbab501427780f4af80d6799798ef2f77ab82aac116d9054"
       },
       {
-        "path": "public/images/garden-v1/adult-desktop-1600.webp",
-        "bytes": 262752,
+        "path": "public/images/garden-v2/adult-desktop-1600.webp",
+        "bytes": 227638,
         "width": 1600,
         "height": 900,
         "hasAlpha": false,
-        "sha256": "aeac3f535e825d0f15f3cc999e66a37c4685363e7ca6c0f3cd65fcf62345c9bf"
+        "sha256": "07dd22d98abb91b091ce4a7551c9b4619a5851159589d7c7c27de9bc9efa4588"
       },
       {
-        "path": "public/images/garden-v1/adult-desktop-1600.jpg",
-        "bytes": 351161,
+        "path": "public/images/garden-v2/adult-desktop-1600.jpg",
+        "bytes": 293824,
         "width": 1600,
         "height": 900,
         "hasAlpha": false,
-        "sha256": "cfa0aa2f65bd8e2aae15dceb008f249a23f47eea35a69ccf6ea90a3b267eaa8f"
+        "sha256": "086f96ba26567e0f033715d285f94bbb0b1bc2686d3957bdd5397c077ac066bb"
       }
     ],
-    "masterBytes": 2967816,
-    "masterSha256": "910035bf2ef55d750025873256dfbe788b014196d0d6feddfb327df6bd59cae3"
+    "masterBytes": 2627334,
+    "masterSha256": "eea790f9b46f9b911613391f79f5e20a8c21957d11e877d4691735d0187a35bb"
   },
   {
     "name": "adult-mobile",
     "master": "docs/design/phase-7b/masters/adult-mobile.png",
-    "width": 1122,
-    "height": 1402,
+    "width": 1024,
+    "height": 1536,
     "hasAlpha": false,
     "variants": [
       {
-        "path": "public/images/garden-v1/adult-mobile-480.avif",
-        "bytes": 31849,
+        "path": "public/images/garden-v2/adult-mobile-480.avif",
+        "bytes": 60018,
         "width": 480,
-        "height": 600,
+        "height": 720,
         "hasAlpha": false,
-        "sha256": "4a07bacc3aebde14694567fd8b9ca71895e8207dff9f10cdc7262a0bd344ddd8"
+        "sha256": "6928ff6bf934262fdb5d3ff819781dfe23b729471645cfca634af3273de53689"
       },
       {
-        "path": "public/images/garden-v1/adult-mobile-480.webp",
-        "bytes": 71054,
+        "path": "public/images/garden-v2/adult-mobile-480.webp",
+        "bytes": 71764,
         "width": 480,
-        "height": 600,
+        "height": 720,
         "hasAlpha": false,
-        "sha256": "79768a8ebc843fdfe86e52377bc4bd7855b059e62b1a4d49d89bbaf1762481f4"
+        "sha256": "d3fc63ce89a20f23f1bbd3fdc92ba918ec13c557ddbee60576851767094293b6"
       },
       {
-        "path": "public/images/garden-v1/adult-mobile-480.jpg",
-        "bytes": 85229,
+        "path": "public/images/garden-v2/adult-mobile-480.jpg",
+        "bytes": 80681,
         "width": 480,
-        "height": 600,
+        "height": 720,
         "hasAlpha": false,
-        "sha256": "9c29490b3da9cfd28db8a0eebbd49e596b38d9396529e4dd5ef6514e490bfad3"
+        "sha256": "2367c9f47b1e381f16e5b524ba56d8efddc628d2dee5d7214f68cc7685e6f6fc"
       },
       {
-        "path": "public/images/garden-v1/adult-mobile-960.avif",
-        "bytes": 112282,
+        "path": "public/images/garden-v2/adult-mobile-960.avif",
+        "bytes": 188161,
         "width": 960,
-        "height": 1200,
+        "height": 1440,
         "hasAlpha": false,
-        "sha256": "cb416f2439a25ff1f6dc97d58034c28e5d7f488b07be6baf7e150f860165d4c1"
+        "sha256": "9e7687f0df581fef822d24d0ef382d1a3ca17f23e6060bda713f423de8241fad"
       },
       {
-        "path": "public/images/garden-v1/adult-mobile-960.webp",
-        "bytes": 236822,
+        "path": "public/images/garden-v2/adult-mobile-960.webp",
+        "bytes": 228246,
         "width": 960,
-        "height": 1200,
+        "height": 1440,
         "hasAlpha": false,
-        "sha256": "c8816a9e58c8cf78494150ceacb9895f440540a6f539fff3eb8203d18dbe8e0c"
+        "sha256": "9af13e346a62a08731064c4b13660e909329dc5abeb780a26e7f17c573eeab39"
       },
       {
-        "path": "public/images/garden-v1/adult-mobile-960.jpg",
-        "bytes": 301949,
+        "path": "public/images/garden-v2/adult-mobile-960.jpg",
+        "bytes": 281391,
         "width": 960,
-        "height": 1200,
+        "height": 1440,
         "hasAlpha": false,
-        "sha256": "5a1d7a5356f01f3d9b774c03693127c4645f9b4b269326eeeb8bce22d565eb37"
+        "sha256": "85631beebbf5ed1523789adb620403e0116808bfa085538a5c900e440561ebad"
       }
     ],
-    "masterBytes": 3045842,
-    "masterSha256": "435173cd7e7e84d2dc9762924bd2f9c4ffd3ff41eec0cd2e11eec10e89f3a865"
+    "masterBytes": 2767376,
+    "masterSha256": "d286e003292dfb1c9337723341fe2f7b2c6ae445b5ce88836a362e267cd28d21"
   },
   {
     "name": "child-desktop",
@@ -125,115 +125,115 @@
     "hasAlpha": false,
     "variants": [
       {
-        "path": "public/images/garden-v1/child-desktop-960.avif",
-        "bytes": 47362,
+        "path": "public/images/garden-v2/child-desktop-960.avif",
+        "bytes": 75276,
         "width": 960,
         "height": 540,
         "hasAlpha": false,
-        "sha256": "e7c711d80419d289fe26acb4b16f1aae7172683b914649b4c5a2f719fbb9fbf4"
+        "sha256": "b87a184a076e8c09e90a625e3fea44157293e42a9c5c5c05ff5e871b24afcee1"
       },
       {
-        "path": "public/images/garden-v1/child-desktop-960.webp",
-        "bytes": 106178,
+        "path": "public/images/garden-v2/child-desktop-960.webp",
+        "bytes": 91384,
         "width": 960,
         "height": 540,
         "hasAlpha": false,
-        "sha256": "42c1a7970a6463f6cd6eda2f56e3ee962100f1a2307d36f13c1f540239ee6f2d"
+        "sha256": "6c98107f593d4c122cb4ae537248de56dd8c5a4866a5ff47ebb195a792643399"
       },
       {
-        "path": "public/images/garden-v1/child-desktop-960.jpg",
-        "bytes": 142484,
+        "path": "public/images/garden-v2/child-desktop-960.jpg",
+        "bytes": 120483,
         "width": 960,
         "height": 540,
         "hasAlpha": false,
-        "sha256": "b21b60469c1f72caa6136068ce7cb2a16681879c89325ebccf479e5716273fcd"
+        "sha256": "f5c95768536e064323954a917b3883eb2c36d48d8c371c258c2e093f234d3a5b"
       },
       {
-        "path": "public/images/garden-v1/child-desktop-1600.avif",
-        "bytes": 107796,
+        "path": "public/images/garden-v2/child-desktop-1600.avif",
+        "bytes": 173145,
         "width": 1600,
         "height": 900,
         "hasAlpha": false,
-        "sha256": "e84a9db8029458102453a6d33e68c4e6f800c995251b20029a5a0408c35e669f"
+        "sha256": "0c872a59d5d3069c15f6ea689aad1d52597748fdc5fb28319069819594db1eb5"
       },
       {
-        "path": "public/images/garden-v1/child-desktop-1600.webp",
-        "bytes": 230686,
+        "path": "public/images/garden-v2/child-desktop-1600.webp",
+        "bytes": 204392,
         "width": 1600,
         "height": 900,
         "hasAlpha": false,
-        "sha256": "f819f511ba30e4a23fd18f688f863ea7f1ba34a2e97c49749936dd65225e592b"
+        "sha256": "e0295f0da812aef0c85954487e7546b56824f542bcaae881c5f55262f199a0db"
       },
       {
-        "path": "public/images/garden-v1/child-desktop-1600.jpg",
-        "bytes": 341332,
+        "path": "public/images/garden-v2/child-desktop-1600.jpg",
+        "bytes": 290157,
         "width": 1600,
         "height": 900,
         "hasAlpha": false,
-        "sha256": "71402dc735a2cfab7a4aecdc7b27a1fde38ae7be161094328a1d2413b087f6ea"
+        "sha256": "1ab63ee23a87968efa3a8a3415f181c02816083ca9160171f5b1688383860606"
       }
     ],
-    "masterBytes": 2912570,
-    "masterSha256": "570beb03a5377dfdc1371f7c78aa608f9f946ac07cd7a37fb0b2f73ff16cb105"
+    "masterBytes": 2661056,
+    "masterSha256": "6d76206e43a2bea2986e841f8c2b8ac207b1ea34302dbc728c4178cefd04250a"
   },
   {
     "name": "child-mobile",
     "master": "docs/design/phase-7b/masters/child-mobile.png",
-    "width": 1122,
-    "height": 1402,
+    "width": 1024,
+    "height": 1536,
     "hasAlpha": false,
     "variants": [
       {
-        "path": "public/images/garden-v1/child-mobile-480.avif",
-        "bytes": 31365,
+        "path": "public/images/garden-v2/child-mobile-480.avif",
+        "bytes": 52770,
         "width": 480,
-        "height": 600,
+        "height": 720,
         "hasAlpha": false,
-        "sha256": "4f310a7426e5b60d2d91ba4bd2cc64f1277d3f43af3a16345ea5d6485deb6557"
+        "sha256": "b1ba4a3efbb8a75bf274a547467b411b5f4dcae31a1407b9c5d24e8be1c25359"
       },
       {
-        "path": "public/images/garden-v1/child-mobile-480.webp",
-        "bytes": 70146,
+        "path": "public/images/garden-v2/child-mobile-480.webp",
+        "bytes": 65614,
         "width": 480,
-        "height": 600,
+        "height": 720,
         "hasAlpha": false,
-        "sha256": "a010569a0e8a0f4901ee65ccf8e7d26d77a30ac757a0a92a1db965d332d847c6"
+        "sha256": "b70e4436876b3b71b01b15c528aeb376c51e90059cdc80458ee4e0e4cebde792"
       },
       {
-        "path": "public/images/garden-v1/child-mobile-480.jpg",
-        "bytes": 88665,
+        "path": "public/images/garden-v2/child-mobile-480.jpg",
+        "bytes": 81087,
         "width": 480,
-        "height": 600,
+        "height": 720,
         "hasAlpha": false,
-        "sha256": "b3cf9a4ec573b7c97d1ef5565db9681b6163d34a22aa88fb5827030fbd3a90c0"
+        "sha256": "7e1e99525bb2a99668b2315ee746cee5cc37f2329c4fa1c40b251cd78ab9a819"
       },
       {
-        "path": "public/images/garden-v1/child-mobile-960.avif",
-        "bytes": 92042,
+        "path": "public/images/garden-v2/child-mobile-960.avif",
+        "bytes": 178580,
         "width": 960,
-        "height": 1200,
+        "height": 1440,
         "hasAlpha": false,
-        "sha256": "8a3e20c427e8c57ae282b7950ed3c020d9a749338bfc6bdbb6b72a9e44e82882"
+        "sha256": "95502c5bd7812b54ad57bab2fd5e4a0f49e8d4f3ea378602ea1defbce320e41e"
       },
       {
-        "path": "public/images/garden-v1/child-mobile-960.webp",
-        "bytes": 186730,
+        "path": "public/images/garden-v2/child-mobile-960.webp",
+        "bytes": 211066,
         "width": 960,
-        "height": 1200,
+        "height": 1440,
         "hasAlpha": false,
-        "sha256": "95d0b081c473270cda012c5550818ce20692ab24b4b9324fc24e6bd024049f4e"
+        "sha256": "b5353bdd6578ad75254ed244a26b0a7e3eb709394a5b064a5cde95fe0ddd424b"
       },
       {
-        "path": "public/images/garden-v1/child-mobile-960.jpg",
-        "bytes": 280036,
+        "path": "public/images/garden-v2/child-mobile-960.jpg",
+        "bytes": 287250,
         "width": 960,
-        "height": 1200,
+        "height": 1440,
         "hasAlpha": false,
-        "sha256": "6aaf11cc3be6849e118f5f4ef74df3633d46029ec412ad7222f6e76045a5f692"
+        "sha256": "eedb62635a1c0a8c7a452f91a8a9ef2a8d9e829612c1735a2bf16958d0295cba"
       }
     ],
-    "masterBytes": 2818257,
-    "masterSha256": "cee00706e747a0ef0fd532d7a4c8f176c3a40baa698d7a31fdb8ab566704d6b1"
+    "masterBytes": 2964367,
+    "masterSha256": "ac0d132dfbe3a7ab6421a29ac3d2a6f2ae1a37bcfb15b9431b598542a7b6fac8"
   },
   {
     "name": "celebration",

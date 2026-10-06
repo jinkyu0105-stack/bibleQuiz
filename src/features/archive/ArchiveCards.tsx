@@ -6,8 +6,8 @@ export function ArchiveCards({ items, compact = false, onNavigate }: { items: Ar
   return <ol className={`${styles.cards} ${compact ? styles.compact : ""}`} aria-label="지난 퀴즈 목록">
     {items.map((item, index) => <li className={styles.card} key={item.slug} data-testid="archive-card">
       <picture className={styles.artwork} aria-hidden="true">
-        <source type="image/avif" srcSet={`/images/garden-v1/${index % 2 === 0 ? "adult" : "child"}-desktop-960.avif`} />
-        <img src={`/images/garden-v1/${index % 2 === 0 ? "adult" : "child"}-desktop-960.jpg`} width="960" height="540" loading="lazy" alt="" />
+        <source type="image/avif" srcSet={`/images/garden-v2/${index % 2 === 0 ? "adult" : "child"}-desktop-960.avif`} />
+        <img src={`/images/garden-v2/${index % 2 === 0 ? "adult" : "child"}-desktop-960.jpg`} width="960" height="540" loading="lazy" alt="" />
       </picture>
       <div className={styles.cardBody}>
         <p className={styles.date}><time dateTime={item.sermonDate}>{item.sermonDate.replaceAll("-", ". ")}</time>{index === 0 && <span>가장 최근</span>}</p>

@@ -26,7 +26,7 @@
   --input-bg: #fffbef;
   --button-text: #fdf6e3;
   line-height: 1.5;
-  font-synthesis: none;
+  font-synthesis: weight;
 }
 
 :root[data-theme="dark"], [data-preview-theme="dark"] {
@@ -281,21 +281,6 @@ footer a { display: inline-flex; align-items: center; min-height: 44px; }
   .primary-button, .difficulty-tabs button[aria-selected="true"] { border: 2px solid Highlight; }
 }
 
-/* Approved garden references: image-led header, real HTML on an opaque reading panel. */
-.sermon-visual { position: relative; display: grid; align-items: end; min-height: 480px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--surface); padding: 32px; }
-.sermon-artwork { position: absolute; inset: 0; display: block; }
-.sermon-artwork img { width: 100%; height: 100%; object-fit: cover; }
-.sermon-visual .sermon-title { position: relative; justify-self: end; width: min(100%, 580px); border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 28px; border-radius: 12px; background: var(--surface); }
-.sermon-visual h2 { margin: 0; font-size: clamp(1.6rem, 2.8vw, 2.4rem); line-height: 1.4; }
-.sermon-visual .sermon-meta { gap: 16px 24px; margin: 20px 0; padding: 16px 0; }
-.sermon-visual .sermon-meta dd { font-size: .9375rem; }
-.hero-action { display: inline-flex; justify-content: space-between; align-items: center; gap: 32px; border-radius: 8px; padding: 12px 20px; text-decoration: none; }
-.quiz-page[data-difficulty="child"] .sermon-title { justify-self: start; }
-.sermon-summary { max-width: 76ch; margin-block: 28px 16px; }
-.sermon-summary h3 { color: var(--text-strong); font-size: 1.125rem; }
-.sermon-summary p { line-height: 1.8; }
-.sermon-header { padding-block: 24px 28px; }
-#quiz-panel { scroll-margin-top: 24px; }
 /* Shared layout. Layer 2: workflow steps; dialogs retain the native top layer. */
 .site-header { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 24px; min-height: 72px; padding-bottom: 16px; }
 .site-header .eyebrow { margin: 0 0 4px; letter-spacing: 0; }
@@ -317,10 +302,4 @@ footer a { display: inline-flex; align-items: center; min-height: 44px; }
  .site-header h1 { max-width: 13em; }
  .site-header .theme-control { justify-content: end; font-size: .75rem; max-width: 9rem; }
  .site-navigation { justify-content: space-between; }
- .sermon-visual { min-height: 0; padding: 180px 0 0; border-radius: 12px; }
- .sermon-artwork img { object-position: center 65%; }
- .sermon-visual .sermon-title { width: 100%; border-inline: 0; border-bottom: 0; border-radius: 0; padding: 20px 16px; }
- .sermon-visual .sermon-meta { display: flex; }
- .sermon-visual .sermon-meta > div:last-child { flex-basis: 100%; }
- .hero-action { display: flex; }
 }

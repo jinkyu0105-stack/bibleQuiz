@@ -17,9 +17,11 @@ const navigation = [
 ] as const;
 
 export function RootLayout() {
-  const admin = useLocation().pathname.startsWith("/admin");
+  const pathname = useLocation().pathname;
+  const admin = pathname.startsWith("/admin");
+  const quiz = pathname === "/" || pathname.startsWith("/quiz/") || pathname === "/dev/quiz";
   return (
-    <div className={`app-shell${admin ? " admin-shell" : ""}`}>
+    <div className={`app-shell${admin ? " admin-shell" : quiz ? " quiz-shell" : pathname === "/archive" ? " archive-shell" : ""}`}>
       <a className="skip-link" href="#main-content">본문으로 이동</a>
       <header className="site-header">
         <div>

@@ -859,3 +859,14 @@
 .reviewJump { display: inline-flex; align-items: center; min-height: 44px; font-size: .875rem; font-weight: 700; color: var(--text-strong); text-underline-offset: 4px; }
 .snapshotDisclosure article, .reviewTargets { scroll-margin-top: 144px; }
 @media (max-width: 767px) { .snapshotDisclosure article, .reviewTargets { scroll-margin-top: 16px; } }
+
+/* Main action stays visually stronger than review details. */
+.weeklyPage > .hero { padding: 24px; border: 1px solid var(--border); border-top: 3px solid var(--accent); background: var(--surface); border-radius: 6px; }
+.weeklyPage .panel { border-radius: 6px; }
+.weeklyPage .panel .panel { border: 0; border-top: 1px solid var(--border); border-radius: 0; padding-inline: 0; }
+.weeklyPage .costStrip { border: 0; border-bottom: 1px solid var(--border); border-radius: 0; padding: 8px 0; background: transparent; }
+.snapshotDisclosure { border-radius: 6px; }
+.reviewTargets { border-radius: 6px; padding: 4px; }
+.reviewTargets button { border-radius: 4px; }
+.reviewActions { border-radius: 4px; border-inline: 0; }
+.weeklyPage > .hero > button:not(:disabled) { background: var(--accent); border-color: var(--accent); color: var(--button-text); font-weight: 700; }

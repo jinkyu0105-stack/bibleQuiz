@@ -1,4 +1,4 @@
-import { QuizArtwork } from "./QuizArtwork";
+import { SermonHero } from "./SermonHero";
 import { BlankExportPanel } from "../export/BlankExportPanel";
 import { ProblemHistory } from "./ProblemHistory";
 import { useMemo } from "react";
@@ -80,15 +80,11 @@ function PublicQuizContent() {
   const restoredSubmission = ownSubmission?.state === "ready" ? ownSubmission.data ?? undefined : undefined;
   const currentSubmissionAccess = submissionAccess(quiz, ownSubmission!);
   return <article className="quiz-page" data-difficulty={difficulty}>
-    <section className="sermon-header" aria-labelledby="sermon-heading">
-      <div className="sermon-visual"><QuizArtwork difficulty={difficulty} desktopPath={quiz.variant.desktopBackgroundPath} mobilePath={quiz.variant.mobileBackgroundPath} /><div className="sermon-title"><h2 id="sermon-heading">{quiz.sermon.title}</h2>
-      <dl className="sermon-meta">
-        <div><dt>설교일</dt><dd><time dateTime={quiz.sermon.date}>{quiz.sermon.date}</time></dd></div>
-        <div><dt>성경 장절</dt><dd>{quiz.sermon.bibleReferenceLabel} <span>{quiz.sermon.translation}</span></dd></div>
-        <div><dt>성경 읽기</dt><dd><a href={quiz.sermon.bibleReadingUrl} target="_blank" rel="noreferrer">대한성서공회에서 읽기 <span className="sr-only">(새 창, 장절을 선택해 주세요)</span></a></dd></div>
-      </dl>
-      <a className="primary-button hero-action" href="#quiz-panel">퀴즈 풀기 <span aria-hidden="true">↓</span></a>
-      </div></div>
+    <SermonHero difficulty={difficulty} title={quiz.sermon.title} date={quiz.sermon.date}
+      reference={quiz.sermon.bibleReferenceLabel} translation={quiz.sermon.translation}
+      readingUrl={quiz.sermon.bibleReadingUrl} excerpt={quiz.sermon.summary?.text}
+      desktopPath={quiz.variant.desktopBackgroundPath} mobilePath={quiz.variant.mobileBackgroundPath} />
+    <section className="sermon-details" id="sermon-details" aria-label="설교 내용과 발행 정보">
       {quiz.sermon.summary && <section className="sermon-summary" aria-labelledby="summary-heading">
         <h3 id="summary-heading">AI가 요약한 설교 핵심 내용</h3>
         <p className="summary-copy">{quiz.sermon.summary.text}</p><p>{quiz.sermon.summary.disclosure}</p>

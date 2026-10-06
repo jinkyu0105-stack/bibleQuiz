@@ -6,8 +6,8 @@ export function QuizArtwork({ difficulty, desktopPath, mobilePath }: {
   desktopPath?: string | null;
   mobilePath?: string | null;
 }) {
-  const base = `/images/garden-v1/${difficulty}`;
-  const sizes = '(max-width: 1023px) calc(100vw - 32px), min(100vw - 128px, 1312px)';
+  const base = `/images/garden-v2/${difficulty}`;
+  const sizes = '100vw';
   return <picture className="sermon-artwork" aria-hidden="true">
     {mobilePath ? <source media="(max-width: 767px)" srcSet={mobilePath} /> : <>
       <source media="(max-width: 767px)" type="image/avif" srcSet={`${base}-mobile-480.avif 480w, ${base}-mobile-960.avif 960w`} sizes={sizes} />

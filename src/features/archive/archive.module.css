@@ -57,3 +57,17 @@
  .card:first-child:not(.compact .card) .actions { grid-column: 2; }
 }
 @media (max-width: 580px) { .artwork { height: 128px; } }
+
+/* Reference 07: one featured issue, a smaller companion, then a library grid. */
+@media (min-width: 1100px) {
+ .cards:not(.compact) { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 20px; }
+ .cards:not(.compact) .card:first-child, .cards:not(.compact) .card:nth-child(2) { grid-column: span 2; }
+ .cards:not(.compact) .card:first-child { grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); }
+ .cards:not(.compact) .card:nth-child(n+3) .cardBody { padding: 20px; }
+ .cards:not(.compact) .card:nth-child(n+3) h3 { font-size: 20px; }
+ .cards:not(.compact) .card:nth-child(n+3) .actions a { font-size: 12px; padding-inline: 12px; }
+}
+.card { border-radius: 6px; }
+.heading h2 { color: var(--accent); }
+.filters { padding: 20px; border: 1px solid var(--border); background: var(--surface); border-radius: 6px; }
+.date { font-size: 12px; }

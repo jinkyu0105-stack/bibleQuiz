@@ -30,7 +30,7 @@
 - 장년 desktop landscape
 - 장년 mobile portrait
 
-본문 10장의 art direction을 사용한다. 글자·로고·성경 구절을 이미지 안에 생성하지 않는다. 생성 후 원본을 눈으로 검수하고, 적절한 자산만 최적화한다.
+본문 10장의 art direction을 사용한다. P9-02에서 사용자가 기존 4종을 교체하도록 명시했으므로 Phase7A 01/02 원본 이미지를 직접 입력으로 사용해 같은 숲·종이 정원 배경을 재구성한다. 기존 화면 reference 8종과 celebration은 다시 생성하지 않는다. 글자·로고·성경 구절을 이미지 안에 생성하지 않는다. 생성 후 원본을 눈으로 검수하고, 적절한 자산만 최적화한다.
 
 ### 18.3 `imagegen-frontend-mobile`
 

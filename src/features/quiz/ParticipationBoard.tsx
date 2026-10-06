@@ -194,7 +194,7 @@ export function ParticipationBoard({
     });
   }
 
-  return <section className={styles.boardSection} aria-labelledby={headingId} data-testid="participation-board">
+  return <section className={styles.boardSection} aria-labelledby={headingId} data-testid="participation-board" data-view={view}>
     <div className={styles.boardHeader}>
       <div>
         <p className={styles.boardKicker}>함께 푼 답안</p>
@@ -279,7 +279,7 @@ export function ParticipationBoard({
               const rank = rankBySubmissionOrder.get(participant.submissionOrder);
               const participantHeadingId = `${headingId}-${participant.submissionOrder}`;
               return <li key={participant.submissionOrder} data-participant={participant.submissionOrder}>
-                <article className={styles.participantCard} data-mine={participant.isMine} aria-labelledby={participantHeadingId}>
+                <article className={styles.participantCard} data-mine={participant.isMine} data-rank={view === "top" ? rank : undefined} aria-labelledby={participantHeadingId}>
                   <div className={styles.participantCopy}>
                     {rank !== undefined && view === "top" && <p className={styles.participantRank}>{rank}위</p>}
                     <p className={styles.submissionOrder}>{participant.submissionOrder}번째 제출</p>
