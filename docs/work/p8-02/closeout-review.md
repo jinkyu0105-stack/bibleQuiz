@@ -1,6 +1,6 @@
-# P8-02 배치 원인 조사와 출시 마무리 준비
+# P8-02 출시 점검과 완료 기록
 
-2026-10-05. 사용자 요청 범위는 원인·수정안 설명, 백업/비용 미확인 항목 점검, 향후 UI 계획 기록이다. 제품 코드 수정·유료 재생성·발행본 교체·배포·main push는 하지 않는다. 현재 P8-02/Phase8은 마무리 준비 중이며 완료 선언은 하지 않는다.
+2026-10-06. **P8-02·Phase8 완료.** 비용 수정 소스 `56bb1bf71124b0c0391100cb89becb73b5f2d418`의 운영 적용과 사용자 청구 대조를 마쳤다. 최신 판정은 맨 아래 [운영 반영·청구 대조·종료](#운영-반영청구-대조종료--2026-10-06)를 따른다. 아래 날짜별 조사·오류 정정 과정은 당시 증거로 보존하며 과거 대기 문구를 현재 미완료로 해석하지 않는다.
 
 ## 1. 원하는 문제 수가 안 나온 이유
 
@@ -146,3 +146,23 @@ Supadata 앱 표시 보류는 [D-041](../../DECISIONS.md)·release/architecture�
 - 적용 대상은 앱(관리자 안내)과 비공개 content(새 생성 비용 계산)이다. backup·DB0000~0038·Secret·유료 결과·출력 의존성/폰트는 변경하지 않는다. migration은 없다. 새 AI 호출과 main push는 없다.
 - 운영 반영 전 검사 완료 소스 커밋을 고정한다. 기존 운영 app `f8174f94-d983-4855-8d2d-d02756c41f44`, content `66eb96c5-ad4c-4d01-85dd-a13aef598acf`를 rollback 기준으로 유지한다. 새 묶음의 원격 배포는 아직 실행하지 않았다. 되돌릴 때 Worker 버전만 복구하며 DB 원장은 건드리지 않는다.
 - 이번 검증은 합성 응답과 비용 화면에 한정하며, 완료한 실제 입력/PDF·백업 복원·실제 AI 생성 검수는 반복하지 않는다. `pnpm check` exit0(unit308/Worker2195/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/Drizzle/build), 비용 상세 Chromium1건과 diff/문서 링크 검사 통과. 기존500kB 번들 경고 외 실패 없음. 상세 근거는 HANDOFF에 기록한다.
+
+
+### 운영 반영·청구 대조·종료 — 2026-10-06
+
+사용자는 검토 가능한 수정본 설명 뒤 “네 반영하고 cloudflare 청구 대조하세요”로 운영 앱/content 적용을 승인했다. 검사 완료 소스 `56bb1bf71124b0c0391100cb89becb73b5f2d418`를 고정하고 Production 빌드·strict dry-run 후 content→app 순서로 새 버전을100% 적용했다.
+
+| 대상 | 현재100% 버전 | 직전 정상 버전(코드 rollback) |
+|---|---|---|
+| biblequiz-app |27f75159-4019-4afc-b871-048e4e9d15f7|f8174f94-d983-4855-8d2d-d02756c41f44|
+| biblequiz-content |48a1269d-a9b2-4405-8bbc-745cdabec1b0|66eb96c5-ad4c-4d01-85dd-a13aef598acf|
+
+원격 deployment API로 버전/100%를 확인했다. 앱33개/content11개 binding은 이전 버전과 같으며 Secret 이름 구성을 보존했다. 공개/health200·관리자/usage API302, 배포된 비용 안내 JS와 로컬 산출물 SHA 일치를 확인했다. 최초 Python urllib 공개 probe는403이었지만 같은 경로의 curl은200/302였다. 앱 장애로 단정하거나 Access를 변경하지 않았고 curl로 검증했다.
+
+전후 AI 호출12·사용량 이벤트12·원장합계1,350,974microUSD·실행 중 job0·migration39가 동일하다. 원장 재작성·DB 변경·새 AI 호출·main push0. backup/Preview는 배포하지 않았다. Production 산출물과 검증 JSON은 `.wrangler/releases/p8-02-cache-cost-20261006/`에 보존하고 기본 dist/CLI 배포 포인터를 복구했다. 직전 필수 검사(unit308/Worker2195/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/Drizzle/build), 비용 상세 Chromium1건을 재사용했으며 제품 코드 변경 없이 같은 전체 검사를 반복하지 않았다.
+
+**Cloudflare 대조:** 사용자가 Billable Usage 화면을 `Oct 2025 · 예상비용0`이라고 보고한 뒤 연도 확인 질문에 `2026`으로 정정했다. 따라서2026년10월 화면의 현재 예상 사용료0으로 기록한다. 공급자 화면을 직접 읽거나 확정 invoice/고정 구독료 총액을 API로 검증한 것은 아니다. 기존 Workers Free 확인과 무료 포함량 이내의 원격 사용량 관측에 부합한다. 공식 [Billable Usage 설명](https://developers.cloudflare.com/billing/manage/billable-usage/)에 따라 사용량 요금과 고정 구독료·미래 사용료 보장은 구분한다. 청구 권한403을 반복하거나 새 권한/키를 요구하지 않았다.
+
+**종료 판정:** OpenAI는2026-09-29~10-06의5회·표시USD0.57와 저장 응답 재계산을 대조했고, 누락된 새 계산과 과거 금액 안내는 운영에 반영했다. Cloudflare는2026년10월 예상0을 사용자 확인했다. 실제 자동 자막→생성→검수→발행, 두 난도 공개/제출/복원, 출력/승인 기기, 관리자 보호, 자동 마감/삭제·주간 SQL/격리 복원의 기존 완료 근거와 함께 P8-02·Phase8의 합의된 v1 출시 범위를 완료로 판정한다.
+
+DO GB-s·Workflow 과금 step/state·일부 CPU/Builds/Access 수치와 macOS/개별 키보드는 기존 관측 한계다. 이를0이나 모든 환경/미래 청구 보장으로 바꾸지 않는다. 관리자 UI·영문 알림 재확인·관리자 반복 시험·격자/후보 개선·Supadata 사용량 표시는 사용자 지정 향후 계획이며 완료로 위장하지 않는다. 새 작업 번호나 유료 자동 실행을 만들지 않는다.
