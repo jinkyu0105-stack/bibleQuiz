@@ -1,12 +1,16 @@
-# 인계 — P8-02 완료·운영 버전 고정
+# 인계 — 관리자 UI 조사·제안 완료 / Phase8 완료 유지
 
-2026-10-06. **현재 P8-02 완료 / 부모 Phase8 완료 / 다음 사용자 선택 향후 개선(미착수) / 세션 유지.** Pro18% 사용·82% 잔여·별도5시간 없음 → 사용자 지정×10=820%. 위임 없음. 다음 작업 추천 GPT-6.1-sol·high — 기존 향후 계획과 구현 진입점을 대조하되 실제 선택한 범위에 맞춰 조정한다.
+2026-10-06. **현재 P9-01(제안 ID) 조사·범위 제안 완료 / P8-02·부모 Phase8 완료 / Phase9 후속 개편은 제안·미착수 / 다음 P9-02 시안 검토(사용자 수락 대기) / 세션 유지.** 최신 Pro19% 사용·81% 잔여·별도5시간 없음 → 사용자 지정×10=810%. 위임 없음. 다음 추천 GPT-6.1-sol·high — 선택본·진행 상태·다음 행동을 PC/모바일 시안에서 일관되게 비교하기에 적합하다.
 
-## 완료와 다음 첫 행동
+## 이번 완료와 정확한 다음 한 작업
 
-사용자가 “네 반영하고 cloudflare 청구 대조하세요”로 커밋56bb1bf의 운영 앱/content 적용을 승인했다. 비용 수정 운영 배포·접속/자료 보존 확인과 사용자 청구 대조를 마쳐 합의된 v1 출시 범위의 P8-02·Phase8을 완료했다. [최종 근거](work/p8-02/closeout-review.md#운영-반영청구-대조종료--2026-10-06)가 정본이다. 과거 문서의 청구/배포 대기 문구는 당시 이력이다.
+사용자는 관리자 UI 개편 **조사와 제안만** 요청했다. [P9-01](work/P9-01.md)이 화면 관찰·문제 근거·추천 범위·완료 조건·새 번호 제안의 정본이다. 후속 시안·제품 구현·운영 배포·유료 호출은 하지 않았다. 현재 단계/주 행동 통합, 현재 선택본 중심 검수, 요약/어린이/장년 대상 분리와 상태 안내를 제안했다. 필터/제출/문의 전체 개편·공개 풀이·출력·격자 자동 제안/후보 조건·Supadata 사용량·영문 알림·관리자 반복 시험은 제외했다.
 
-다음은 사용자가 [향후 계획](future/notes.md)에서 개선 범위를 선택하는 것이다. 새 작업 ID는 아직 정하지 않았다. 관리자 UI12절, 격자 자동 제안/후보 조건13절, Supadata 사용량14절, 영문 입력 안내 재확인10절, 관리자 반복 시험11절을 자동 착수하거나 출시 필수로 되돌리지 않는다. 새 요구 없이 같은 출시 검수·실제 입력/PDF·AI 생성·백업 복원을 반복하지 않는다.
+P9-01~04/Phase9는 사용자 검토용 번호 제안이다. **다음은 사용자 수락 후 P9-02의 PC/모바일 주간 흐름 시안 한 작업만** 시작한다. 기존 디자인/테마/자산을 재사용하고 무료 HTML/CSS 등으로 시안을 보여줄 수 있다. 시안 단계의 앱 소스 구현·원격 연결·AI/imagegen 호출·발행은 승인 범위로 간주하지 않는다. P9-03 로컬 개편과 P9-04 운영 반영은 자동으로 이어서 착수하지 않는다. 번호 수락 전 구현 목록이나 DELIVERY_PLAN의 출시 종료 조건을 확정 변경하지 않는다.
+
+재개 순서는 AGENTS → PROJECT_CONTEXT → DECISIONS → STATUS → HANDOFF → implementation의 users2.6/2.7·generation11.2/11.5·responsive/design와 P9-01 → Git status/diff/log다. 시작 전 최신 Pro와 사용자 지정×10을 다시 확인한다. 기존 미커밋 변경이 생겼으면 보존한다. 사용자 질문은 범위 변경 승인으로 해석하지 않는다.
+
+P8-02의 소스56bb1bf 운영 반영·검사·청구 대조·종료 문서3e5e470은 완료했다. [최종 근거](work/p8-02/closeout-review.md#운영-반영청구-대조종료--2026-10-06)를 재사용한다. 출시 검수·실제 입력/PDF·AI 생성·백업 복원·청구 조회를 반복하지 않는다.
 
 ## 현재 운영 버전
 
@@ -27,14 +31,20 @@ Cloudflare는 사용자가 Billable Usage의 `Oct 2025 · 예상비용0`을 보�
 
 DO GB-s·Workflow 과금 step/state·일부 CPU/Builds/Access 수치, macOS/개별 Android 키보드는 기존 관측 한계다.0이나 전수 검증으로 바꾸지 않는다. 사용자 지정 보류는 구현 완료가 아니다.
 
-## 검사·보존·Git
+## 이번 화면 조사·문서 검사·Git
 
-56bb1bf 수정본의 `pnpm check` exit0(unit308/Worker2195/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/Drizzle/build), 비용 상세 Chromium1건 통과. 이번에는 Production build/두 strict dry-run·버전 upload/100% 적용·원격 읽기 검증을 실행했다. 공개/health200·관리자/usage API302, 비용 안내 JS의 SHA 일치, app33/content11 binding의 전후 동일을 확인했다. Python urllib 공개 probe403 뒤 curl로 동일 경로200/302를 확인했으며 Access 설정은 바꾸지 않았다.
+시작 main·HEAD3e5e470·clean, 56bb1bf→HEAD의 src/shared/workers diff0이었다. 보관한 운영 production-dist/client를 로컬에서 직접 렌더하고 합성 GET만 응답했다. Production Access 로그인·사용자 화면 연결·실제 설교 검수는 하지 않았다. PC1366×768/모바일390×844의7상태·첫14화면 관찰에서 page error·외부 요청·쓰기0, 가로 넘침0. 의도 화면 약13,421/14,795px·확정 버튼y13,041/14,487, 비용 strip/단계표 겹침을 확인했다. 합성 자료의 수치이며 E2E/실기기 검수의 통과가 아니다. 추가 본문 캡처는 PC 일부를 저장한 뒤30초 버튼 대기 timeout으로 중단했고, 그 실행 전체 성공으로 기록하지 않았다. 필요한 상단·선택본·확정 위치는 직접 확인했다.
 
-AI calls12/usage events12/기존cost1350974microUSD/active jobs0/migration39가 전후 동일하다. 유료 실행 검수는 재실행하지 않았다. 비공개 증거는 `.wrangler/releases/p8-02-cache-cost-20261006/verification.json`, before/versions JSON, build/dry/upload/deploy 로그와 Production 산출물이다. 이전 청구 숫자 근거·전체검사 로그는 `.wrangler/releases/p8-02-supadata-integration-20261004/`에 유지한다. 모두 Git 제외이며 키/본문을 출력하지 않는다.
+임시 이미지/측정/조사 도구는 `/tmp/biblequiz-admin-ui-audit-20261006/`와 P9-01에 적힌 /tmp 파일이며 Git 제외다. 이 임시 자료는 향후 세션에 없어질 수 있으므로 재개는 조사 문서의 근거와 코드 진입점을 따른다. 원격·실자료 읽기나 새 인증 연결을 조사 완료 조건으로 늘리지 않는다.
 
-이번 시작 HEAD56bb1bf·main clean. 이번 tracked 변경은 배포/완료 기록과 상태·인계·명세 목차·계획의 문서뿐이며 제품 소스는 바꾸지 않았다. 문서 링크와 `git diff --check`를 확인한 뒤 로컬 커밋한다. 전체 코드를 다시 검사하거나 main push하지 않는다.
+변경 파일은 P9-01 새 문서, future/notes의 조사 링크, PROJECT_CONTEXT·ROADMAP의 종료 사실 정정, implementation의 안내, STATUS/HANDOFF다. PROJECT_CONTEXT의 비용/청구 대기와 ROADMAP의 Phase5/6 원격 대기는 P8-02 완료와 달라 사용자에게 설명하고 함께 정정했다. 새 제품 결정·spec·DECISIONS·DELIVERY_PLAN·앱/서버 소스는 변경하지 않았다. 제품 코드·0000~0038·lockfile·실제 자료·키·유료 결과·폰트/fontkit·dist·배포 포인터를 보존했다. 배포·main push·유료 호출0.
 
-## 도구 재개
+이번 필수 검사는 `git diff --check`와 변경 문서 링크/소스·숫자·운영 버전 사실 대조이며 완료 후 로컬 문서 커밋을 남긴다. 코드 변경이 없어 lint/typecheck/전체 pnpm check·출시 검수는 재실행하지 않았다. 미완료 구현/검사를 성공으로 표시하지 않는다. P9-02~04는 미착수 제안이고 현재 개편 시안/사용자 동작 검수는 아직 없다.
 
-검증된 실행은 `/bin/bash`, `login:false`, 명시 workdir와 `require_escalated`다. 시작 실패는 codex-exec-recovery로 대응하고 같은 실패를 반복하지 않는다. 사용자 화면을 실제로 읽지 않았으면 읽었다고 하지 않는다. Windows 파일은 /mnt/c 경로로 확인할 수 있다. Playwright의 사용자 로그인 연결은 보류다. 이번 배포 명령은 Context7의 Cloudflare 공식 문서와 Wrangler4.125.0을 대조했다. 다음 작업도 기존 문서 확인 순서와 최신 Pro×10 기준을 따른다.
+후속 구현의 관련 검사·lint/typecheck·변경 브라우저 검수·완료 단위 pnpm check·STATUS/HANDOFF·로컬 커밋은 P9-01 완료 조건을 따른다. 사용자가 시안을 확인하지 않았거나 사용자 동작 검수가 남으면 같은 번호를 검수 대기로 유지한다. 운영 소스56bb1bf와 종료 문서3e5e470, 이번 새 문서 커밋을 구분하고 새 문서 커밋에서 운영 배포했다고 쓰지 않는다.
+
+## 도구 재개와 폐기한 접근
+
+검증된 실행은 `/bin/bash`·login:false·명시workdir·require_escalated다. 이번 기본 실행은 셸 시작 전 ENOENT였고 같은pwd가 승인 검토 경로에서 성공했다. codex-exec-recovery를 적용했으며 저장소 단절이나 앱 설정 복구로 단정하지 않았다. 승인 거절은 없었고 실행 경로 확인은 배포/실자료/유료 호출 승인이 아니다. pnpm/Node가 PATH에 없으면 현재 WSL Node24.18.0 bin을 실행 환경 PATH에만 추가해 사용한다. 이 기기 경로를 앱/CI에 넣지 않는다.
+
+현재 문제는 글꼴 교체나 새 저장 계층보다 정보 구조·주 행동 위치에 있으므로 앱 전체 재작성·font swap·모든 내용 단순 접기·새 자동 AI/상태조회 도입을 기본 해법으로 채택하지 않았다. 첫 조사 이후 추가 캡처 전체 재실행은 timeout으로 중단했고 출시/전체 테스트로 확대하지 않았다. 사용자 Production 화면 연결은 기존 보류를 유지한다.
