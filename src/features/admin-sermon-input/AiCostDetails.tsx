@@ -42,12 +42,14 @@ export function AiCostDetails({ quizSetId, refreshKey = 0 }: { quizSetId: string
     dialog.current?.showModal();
     refresh();
   }
+  const legacyPricing = data?.calls.some(call => call.pricingVersion === "openai-terra-2026-09-22") ?? false;
   return <div className={styles.costStrip}>
     <button type="button" className={styles.costButton} onClick={open} aria-haspopup="dialog">
       <span>이번 주 AI 예상 비용</span>
       <strong>{loading && !data ? "확인 중" : data ? money(data.knownCostMicroUsd) : "확인 실패"}</strong>
       {data && <small>이 퀴즈 전체 · 호출 {data.totalCalls}회{data.unknownCalls > 0 ? ` · 사용량 미확인 ${data.unknownCalls}회` : ""}</small>}
     </button>
+    {legacyPricing && <p className={styles.helper}>캐시 저장 요금이 빠질 수 있는 과거 추정치가 포함되어 있습니다. 실제 청구액과 다를 수 있습니다.</p>}
     {error && <button type="button" onClick={refresh}>비용 다시 확인</button>}
     <dialog ref={dialog} className={styles.costDialog} aria-labelledby="ai-costs-title">
       <div className={styles.costDialogHeader}>
@@ -63,6 +65,7 @@ export function AiCostDetails({ quizSetId, refreshKey = 0 }: { quizSetId: string
           {data.unknownCalls > 0 && <p>미확인 호출의 비용은 합계에 포함되지 않았습니다. 0원이라는 뜻이 아닙니다.</p>}
         </div>
         <p className={styles.helper}>AI API 사용료는 월 USD 0 인프라 운영 목표와 별도입니다. 금액은 공급자 사용량과 호출 당시 저장한 가격표 버전으로 계산한 추정치이며 실제 청구서와 소수점 차이가 날 수 있습니다.</p>
+        {legacyPricing && <p role="note">과거 가격표(openai-terra-2026-09-22)는 캐시 저장 요금을 반영하지 않았습니다. 원래 기록을 보존한 금액이며, 캐시 저장이 발생한 호출은 과소 표시됩니다. 새 가격표는 공급자가 보고한 캐시 저장량을 반영합니다.</p>}
         <h3>모델별 소계</h3>
         {data.models.length === 0 ? <p>아직 AI 호출 기록이 없습니다.</p> : <dl className={styles.costModels}>{data.models.map(group => <div key={`${group.provider}:${group.model}`}>
           <dt>{group.provider} · {group.model}</dt><dd>{money(group.knownCostMicroUsd)} · {group.totalCalls}회{group.unknownCalls > 0 && ` · 사용량 미확인 ${group.unknownCalls}회`}</dd>

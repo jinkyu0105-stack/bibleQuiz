@@ -112,6 +112,37 @@ describe("OpenAI transport", () => {
       reasoningTokens: 5, pricingVersion: "openai-terra-2026-09-22" });
     expect(() => estimateOpenAiDraftCost({ model: "other", responseId: "synthetic", usage })).toThrow("AI_PRICING_MODEL_UNKNOWN");
   });
+  it("retains cache writes through transport and charges their replacement rate", async () => {
+    const measured = { ...usage, input_tokens_details: { cached_tokens: 10, cache_write_tokens: 60 } };
+    const observe = vi.fn(async () => {});
+    const fetcher = vi.fn(async () => Response.json(response({ usage: measured })));
+    await createOpenAiDraftTransport({ apiKey: "synthetic", fetch: fetcher, observe }).complete(input, new AbortController().signal);
+    expect(observe).toHaveBeenCalledWith({ model: "gpt-5.6-terra", responseId: "synthetic-response", usage: measured });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(estimateOpenAiDraftCost({ model: "gpt-5.6-terra", responseId: "synthetic", usage: measured })).toMatchObject({
+      estimatedCostMicroUsd: 452, pricingVersion: "openai-terra-2026-10-06-cache-write", usageSource: "provider_reported",
+    });
+  });
+  it("keeps missing cache writes distinguishable from an explicit zero", () => {
+    const observation = { model: "gpt-5.6-terra", responseId: "synthetic", usage };
+    expect(estimateOpenAiDraftCost(observation)).toMatchObject({ pricingVersion: "openai-terra-2026-09-22", usageSource: "provider_partial" });
+    expect(estimateOpenAiDraftCost({ ...observation, usage: { ...usage, input_tokens_details: { cached_tokens: 10, cache_write_tokens: 0 } } }))
+      .toMatchObject({ estimatedCostMicroUsd: 422, pricingVersion: "openai-terra-2026-10-06-cache-write", usageSource: "provider_reported" });
+  });
+  it.each([-1, 91, 0.5])("rejects invalid cache-write usage %s", cache_write_tokens => {
+    expect(() => estimateOpenAiDraftCost({ model: "gpt-5.6-terra", responseId: "synthetic",
+      usage: { ...usage, input_tokens_details: { cached_tokens: 10, cache_write_tokens } } })).toThrow();
+  });
+  it.each([[272000, 683100], [272001, 1364405]])("uses the correct context tier at %s input tokens", (input_tokens, expected) => {
+    expect(estimateOpenAiDraftCost({ model: "gpt-5.6-terra", responseId: "synthetic", usage: {
+      input_tokens, output_tokens: 300, input_tokens_details: { cached_tokens: 0, cache_write_tokens: input_tokens - 1000 },
+    } }).estimatedCostMicroUsd).toBe(expected);
+  });
+  it("rounds each call up to one micro-dollar without double charging cache writes", () => {
+    expect(estimateOpenAiDraftCost({ model: "gpt-5.6-terra", responseId: "synthetic", usage: {
+      input_tokens: 1, output_tokens: 0, input_tokens_details: { cached_tokens: 0, cache_write_tokens: 1 },
+    } }).estimatedCostMicroUsd).toBe(3);
+  });
   it.each([
     [400, "invalid_json_schema"], [401, "invalid_api_key"], [403, "permission_denied"],
     [429, "credit_balance_exhausted"], [429, "project_spend_limit_exceeded"],

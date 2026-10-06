@@ -136,3 +136,13 @@ Supadata 앱 표시 보류는 [D-041](../../DECISIONS.md)·release/architecture�
 **재현된 원인:** `openai-draft-transport.ts`의 usage schema는 `cached_tokens`만 채택하고 `cache_write_tokens`를 누락한다. `openai-draft-cost.ts`는 읽기 캐시 외 입력 전체에USD2를 적용한다. 실제 응답의 쓰기 요금을 잃어 과소 표시한 것으로, 중복 호출이나 추론 토큰 이중 청구가 원인이 아니다. 이전 ‘산술 불일치0’은 기존 불완전 산식과 DB의 일치였으며 공급자 과금의 정확성 증명이 아니므로 정정한다.
 
 증거는 비공개 `billing-day-usage-20261006.json`과 `billing-cache-write-20261006.json`이다. OAuth401은 기존 읽기 갱신 후 정상 조회했다. 새 AI·원격 쓰기·원장 덮어쓰기0이다. **앱 비용 계산/캐시 쓰기 관측 보완이 같은P8-02의 실제 결함으로 남는다.** 과거 원장·당시 가격 version은 보존하고 보관 응답에 근거한 정정 표시와 향후 계산을 구분해야 한다. 무조건 모든 입력에1.25를 곱하거나 과거 원장을 조용히 덮어쓰는 수정은 하지 않는다. 이번 turn은 대조·원인 확인·기록이며 제품 수정/배포를 완료했다고 쓰지 않는다. Supadata 표시 등 명시적 보류는 유지한다. Cloudflare 청구 기간/금액은 계속 답변 대기다.
+
+
+### 비용 계산 수정의 로컬 배포 묶음 — 2026-10-06
+
+- transport에서 공급자의 `cache_write_tokens`를 버리지 않고 검증한다. 새 Standard 계산은 일반/캐시 읽기/캐시 저장/출력을 분리하고, 명시적 쓰기0과 미보고를 구별한다. 272,000 경계·추론 중복 방지·호출별 올림을 검사한다.
+- 새 가격 버전은 `openai-terra-2026-10-06-cache-write`. 쓰기량 미보고는 기존 가격 버전의 부분 추정이다. 기존 원장·관측 fingerprint·가격 버전·공개 발행 근거는 보존한다.
+- 퀴즈 비용 상세와 월별 합계에 과거 캐시 저장 요금 누락 안내를 추가한다. 원장을 정정 금액으로 덮거나 조회 때마다 비공개 응답 BLOB을 읽지 않는다. 확인된5회 재계산은 앞 절의 대조 근거로 유지한다. 정확한 토큰 합산액USD0.565168과 호출별 micro-USD 올림을 합친USD0.565169는 모두 공급자 표시USD0.57과 맞는다.
+- 적용 대상은 앱(관리자 안내)과 비공개 content(새 생성 비용 계산)이다. backup·DB0000~0038·Secret·유료 결과·출력 의존성/폰트는 변경하지 않는다. migration은 없다. 새 AI 호출과 main push는 없다.
+- 운영 반영 전 검사 완료 소스 커밋을 고정한다. 기존 운영 app `f8174f94-d983-4855-8d2d-d02756c41f44`, content `66eb96c5-ad4c-4d01-85dd-a13aef598acf`를 rollback 기준으로 유지한다. 새 묶음의 원격 배포는 아직 실행하지 않았다. 되돌릴 때 Worker 버전만 복구하며 DB 원장은 건드리지 않는다.
+- 이번 검증은 합성 응답과 비용 화면에 한정하며, 완료한 실제 입력/PDF·백업 복원·실제 AI 생성 검수는 반복하지 않는다. `pnpm check` exit0(unit308/Worker2195/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/Drizzle/build), 비용 상세 Chromium1건과 diff/문서 링크 검사 통과. 기존500kB 번들 경고 외 실패 없음. 상세 근거는 HANDOFF에 기록한다.

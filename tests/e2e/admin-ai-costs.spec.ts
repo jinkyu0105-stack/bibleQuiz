@@ -21,7 +21,7 @@ test("selected quiz cost opens its call ledger and changes with the selected wor
     calls: [call("known", 524), call("unknown", null)] });
   const second = adminAiCostsSchema.parse({ quizSetId: "quiz-second", knownCostMicroUsd: 1200, unknownCalls: 0, totalCalls: 1,
     models: [{ provider: "openai", model: "gpt-5.6-terra", knownCostMicroUsd: 1200, unknownCalls: 0, totalCalls: 1 }],
-    calls: [call("second", 1200)] });
+    calls: [{ ...call("second", 1200), pricingVersion: "openai-terra-2026-10-06-cache-write" }] });
   await page.route("**/api/admin/sermon-drafts**", route => {
     const path = new URL(route.request().url()).pathname;
     if (path.endsWith("/sermon-drafts")) return route.fulfill({ json: { data: { items } } });
@@ -45,6 +45,7 @@ test("selected quiz cost opens its call ledger and changes with the selected wor
   await expect(drawer).toBeVisible();
   await expect(drawer.getByText("openai · gpt-5.6-terra").first()).toBeVisible();
   await expect(drawer.getByText(/가격표 openai-terra-2026-09-22/)).toBeVisible();
+  await expect(drawer.getByRole("note")).toContainText("캐시 저장 요금을 반영하지 않았습니다");
   await expect(drawer.getByText("미확인 호출의 비용은 합계에 포함되지 않았습니다. 0원이라는 뜻이 아닙니다.")).toBeVisible();
   await expect(drawer.getByText(/입력 v2 · 설교 정보 v1 · 시도 1/).first()).toBeVisible();
   await drawer.getByRole("button", { name: "닫기" }).click();
@@ -52,6 +53,7 @@ test("selected quiz cost opens its call ledger and changes with the selected wor
   await expect(costButton).toContainText("USD 0.001200");
   await expect(costButton).not.toContainText("사용량 미확인");
   await costButton.click();
+  await expect(drawer.getByRole("note")).toHaveCount(0);
   await expect(drawer.getByText("전체 1회 · 사용량 미확인 0회")).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

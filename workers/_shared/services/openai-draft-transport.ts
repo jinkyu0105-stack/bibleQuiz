@@ -9,9 +9,9 @@ const token = z.int().nonnegative();
 export const openAiUsageSchema = z.object({
   input_tokens: token,
   output_tokens: token,
-  input_tokens_details: z.object({ cached_tokens: token }).optional(),
+  input_tokens_details: z.object({ cached_tokens: token, cache_write_tokens: token.optional() }).optional(),
   output_tokens_details: z.object({ reasoning_tokens: token }).optional(),
-}).refine(u => (u.input_tokens_details?.cached_tokens ?? 0) <= u.input_tokens &&
+}).refine(u => (u.input_tokens_details?.cached_tokens ?? 0) + (u.input_tokens_details?.cache_write_tokens ?? 0) <= u.input_tokens &&
   (u.output_tokens_details?.reasoning_tokens ?? 0) <= u.output_tokens);
 export type OpenAiUsage = z.infer<typeof openAiUsageSchema>;
 export type OpenAiObservation = { model: string; responseId: string; usage: OpenAiUsage };
