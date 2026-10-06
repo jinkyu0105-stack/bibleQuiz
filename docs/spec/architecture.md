@@ -345,6 +345,8 @@ R2 업로드는 계정 순간 bytes에 새 객체 크기를 더하고 최근 31�
 - 개발 상세·전체 요구사항: 기존 `implementation.md`
 - 변경 이력: Git history와 매뉴얼의 사람이 읽는 `주요 변경 기록`
 
+2026-10-06 사용자 요청으로 Supadata의 service registry/앱 사용량 표시 연결만 출시 후로 보류한다. 기존 자동 자막 취득·Free 설정과 다른 서비스의 아래 계약은 유지한다. 구현되지 않은 표시를 완료로 기록하지 않고 [향후14절](../future/notes.md#14-향후-개발--supadata-사용량-표시)에 둔다.
+
 `service-registry`는 사용량 dashboard와 manual 서비스 사전이 함께 사용한다. 새 서비스가 dashboard에는 있는데 manual에 설명이 없거나 반대인 상태를 CI에서 실패시킨다. 매뉴얼 HTML을 관리자가 직접 편집하게 하지 않고 Git에서 version 관리하여 잘못된 변경을 review·복구할 수 있게 한다.
 
 매뉴얼의 필수 구성:
