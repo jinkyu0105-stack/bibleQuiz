@@ -9387,5 +9387,56 @@
     "agentPaidCalls": 0,
     "agentRemoteWrites": 0,
     "mainPush": false
+  },
+  "releaseCloseoutDecision": {
+    "date": "2026-10-06",
+    "checkedSourceCommit": "6ad6931",
+    "status": "billing reconciliation pending",
+    "userDeferred": [
+      "admin UI redesign",
+      "grid suggestions and candidate generation constraints",
+      "Supadata in-app usage display",
+      "English-input notice user recheck",
+      "administrator repeat testing"
+    ],
+    "providerUsageReport": {
+      "source": "user report",
+      "projectName": "biblequiz-nonprod",
+      "displayUsd": 0.57,
+      "selectedDateRangeConfirmed": false,
+      "duplicateProjectNameReported": true,
+      "secondProjectUnusedReported": true,
+      "projectCreationCauseVerified": false
+    },
+    "openaiReconciled": false,
+    "cloudflareBillingConfirmed": false,
+    "remaining": [
+      "confirm OpenAI date/scope and explain difference from saved ledger",
+      "Cloudflare billable usage period and amount",
+      "record final completion assessment after billing reconciliation"
+    ],
+    "newAiCalls": 0,
+    "remoteWrites": 0,
+    "deployment": false,
+    "mainPush": false,
+    "mandatoryCheck": {
+      "date": "2026-10-06",
+      "command": "pnpm check",
+      "exitCode": 0,
+      "sourceCommit": "6ad6931c3d825aca3bdf0b3ae681cbdc205517eb",
+      "unitTests": 308,
+      "workerTests": 2187,
+      "workflowTests": 4,
+      "recoveryCliTests": 2,
+      "pythonTests": 7,
+      "lint": "pass",
+      "typecheck": "pass",
+      "build": "pass",
+      "logSha256": "5032f504878cdce9e63024e785da7fd50bea11a1355967004e48a8d87f81e981",
+      "privateLog": ".wrangler/releases/p8-02-supadata-integration-20261004/final-closeout-check-20261006.log",
+      "warning": "existing bundle chunks over 500kB",
+      "actualInputPdfChecksRepeated": false,
+      "nodeTests": 14
+    }
   }
 }

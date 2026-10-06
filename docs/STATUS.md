@@ -1,6 +1,6 @@
 # 현재 상태
 
-2026-10-06. **현재 P8-02 청구 검수 대기 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 최신 Pro 사용15%·잔여85%·10080분/별도5시간 없음 → 사용자 지정×10=850%(공식 상품 배수 아님). 추천 GPT-6.1-sol·높음 — 실제 배치·운영 증거와 미확인 청구 경계를 함께 판단해야 한다.
+2026-10-06. **현재 P8-02 청구 검수 대기 / 부모 Phase8 진행 중 / 다음 P8-02 / 세션 유지.** 최신 Pro 사용16%·잔여84%·10080분/별도5시간 없음 → 사용자 지정×10=840%(공식 상품 배수 아님). 추천 GPT-6.1-sol·높음 — 실제 배치·운영 증거와 미확인 청구 경계를 함께 판단해야 한다.
 
 ## 현재 결과와 남은 범위
 
@@ -10,7 +10,7 @@
 - 운영 D1 AI12호출·사용량 누락0·금액 재계산 불일치0·합계USD1.350974. 최신 R2/D1/Workers 관측량은 무료 포함량보다 작다. Cloudflare subscriptions/Builds/Access 조회403, OpenAI 공급자 청구 대조와 DO GB-s/Workflow 과금 step·state 등은 미확인이다. 과거 실패/관측 한계를 숨기지 않는다. [전체 점검과 종료 경계](work/p8-02/closeout-review.md#3-비용사용량-대조).
 - 격자 자동 제안·후보 생성 조건 개선도 [향후13절](future/notes.md#13-향후-개발--가능한-격자-제안과-후보-생성-조건-개선)에 이관했다. 관리자 UI 전면 개편은 [향후12절](future/notes.md#12-향후-개발--관리자-주간-작업-ui-전면-개편)에 기록했다. 영문 알림·관리자 반복 시험은 같은 문서10·11절에 유지한다. 이번에는 조사·문서화만 했고 제품 코드 변경·새 AI·배포·main push는 없다.
 
-**종료 판단:** 사용자가 OpenAI `biblequiz-nonprod`의 표시 금액USD0.57와 동명 프로젝트2개 중 하나 미사용을 보고했다. 선택 기간은 후속 확인 중이며 새 설교USD0.490526와 바로 일치 처리하지 않는다. 생성 경위/프로젝트ID·Cloudflare 청구는 미확인이다. Supadata 사용량 표시는 사용자의 명시 요청으로 [향후14절](future/notes.md#14-향후-개발--supadata-사용량-표시)에 이관하고 출시 필수 범위에서 제외했다. 남은 것은 청구 대조·최종 필수 검사·종료 판정이다. [대조 기록](work/p8-02/closeout-review.md#5-종료-판단--2026-10-06).
+**종료 판단:** 사용자가 OpenAI `biblequiz-nonprod`의 표시 금액USD0.57와 동명 프로젝트2개 중 하나 미사용을 보고했다. 선택 기간은 후속 확인 중이며 새 설교USD0.490526와 바로 일치 처리하지 않는다. 생성 경위/프로젝트ID·Cloudflare 청구는 미확인이다. Supadata 사용량 표시는 사용자의 명시 요청으로 [향후14절](future/notes.md#14-향후-개발--supadata-사용량-표시)에 이관하고 출시 필수 범위에서 제외했다. 남은 것은 청구 대조와 그 결과에 따른 종료 판정이다. [대조 기록](work/p8-02/closeout-review.md#5-종료-판단--2026-10-06).
 
 ## 현재 환경·검사·보존
 
@@ -18,7 +18,7 @@ Production/Preview migration0000~0038·이력39개를 유지한다. 운영 app `
 
 원격 관리자 Access·공개 접속·기존 두 난도 입력/제출/채점/결과 복원, PDF 교정/실제 렌더·승인된 기기·백업/격리 복원·대표 마감·요청 제한·초안 정리는 완료 증거를 재사용한다. 완료한 실제 입력/PDF 검사는 반복하지 않는다. macOS·개별 Android 키보드·계정 전체 청구 보장 등 기존 관측 한계는 유지한다.
 
-배포 소스7014758의 `pnpm check`(unit308/Worker2187/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/build), Production build와 두 Worker strict dry-run은 통과한 기존 결과다. 이번은 문서/매뉴얼 텍스트 동기화와 링크/JSON/diff 검사만 진행한다. 전체 Phase 완료나 새 배포로 확대하지 않는다.
+최신 문서/보류 범위를 포함한 소스6ad6931에서2026-10-06 최종 `pnpm check`가 exit0으로 통과했다(unit308/Worker2187/Workflow4/recoveryCLI2/Python7 및 Node 도구 검사·lint/typecheck/Drizzle/build). 기존500kB 초과 번들 경고만 있다. 실제 입력/PDF·원격 백업/복원은 반복하지 않았고 배포하지 않았다. 저장 로그/해시와 소스 관계는 검증 JSON의 `releaseCloseoutDecision.mandatoryCheck`에 보존한다. 청구 답변 수신만으로 코드가 바뀌지 않으면 같은 전체 검사를 다시 실행할 필요 없다.
 
 ## 실제 완료와 다음 작업
 
@@ -58,10 +58,10 @@ Production/Preview migration0000~0038·이력39개를 유지한다. 운영 app `
 | Phase 6 전체 | 구현·교정·로컬 검수 완료 — P6-01 고정 범위 종료. 공통 시각 마무리·기기/출시 범위는 기존 P7B·P8에 유지 |
 | P7B-01 | 로컬 완료 — 반응형·접근성·공통 자산/동작·필수 검사·Chromium/Firefox/WebKit 자동 검수 완료. 기존 Windows/iPhone 증거와 노트10+ Chrome 실제 입력/회전/재터치 검수로 사용자 승인 종료. macOS·개별 Android 브라우저/키보드 미검수 한계 보존 |
 | P8-01 | 로컬 완료 — 백업/격리 복원·삭제 manifest·기존 Cron·공개 요청 제한·통합 비용/매뉴얼, 필수 검사·상태 문서. P8-02에서 원격 자원/0038/활성화 완료 |
-| P8-02 | 마무리 준비 중 — 운영 자동 자막·새 설교 AI 생성·검수·3단어 시험 발행 완료. 첫 주간 SQL 예약 verified. 목표 개수는 기존 후보의 더 큰 격자에서 오프라인 성공, 원인/개선안 조사 완료. OpenAI 화면USD0.57 수신·기간/범위 대조와 Cloudflare 청구 확인·마무리 필수 검사/종료 판정이 남음. Supadata 표시·격자/후보 개선·UI 전면 개편은 사용자 지정 향후 계획 |
+| P8-02 | 마무리 준비 중 — 운영 자동 자막·새 설교 AI 생성·검수·3단어 시험 발행 완료. 첫 주간 SQL 예약 verified. 목표 개수는 기존 후보의 더 큰 격자에서 오프라인 성공, 원인/개선안 조사 완료. OpenAI 화면USD0.57 수신·기간/범위 대조와 Cloudflare 청구 확인·최종 종료 판정이 남음(필수 검사 통과). Supadata 표시·격자/후보 개선·UI 전면 개편은 사용자 지정 향후 계획 |
 
 이전 고정 번호·기존 하위 번호의 완료와 검사 기록은 [보관 STATUS](archive/2026-09-21-p5-48/docs/STATUS.md), [P5-48](work/P5-48.md)~[P5-55](work/P5-55.md)의 작업 기록에 보존한다. 과거 완료 검사를 새 작업처럼 반복하지 않는다.
 
 ## Git과 다음 재개
 
-누적 변경은 기준 커밋1ee9f36부터 보존했고 검증 단위로 로컬 커밋한다. 이번 시작 HEAD는fbb5a81·main, 시작 worktree는 clean이었다. 정확한 현재 HEAD는 git log로 확인하며 문서 커밋을 배포 소스로 쓰지 않는다. push하지 않는다. 다음 한 작업과 승인/미확인 경계는 [HANDOFF](HANDOFF.md), 고정 완료 조건은 [DELIVERY_PLAN](DELIVERY_PLAN.md)과 [release](spec/release.md)를 따른다.
+누적 변경은 기준 커밋1ee9f36부터 보존했고 검증 단위로 로컬 커밋한다. 이번 시작 HEAD는6ad6931·main, 시작 worktree는 clean이었다. 정확한 현재 HEAD는 git log로 확인하며 문서 커밋을 배포 소스로 쓰지 않는다. push하지 않는다. 다음 한 작업과 승인/미확인 경계는 [HANDOFF](HANDOFF.md), 고정 완료 조건은 [DELIVERY_PLAN](DELIVERY_PLAN.md)과 [release](spec/release.md)를 따른다.
