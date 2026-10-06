@@ -85,3 +85,24 @@
 문서/생성 매뉴얼 동기화(`build-operations-manual.mjs --check`), 운영 계약(`check-operations-contract.mjs`), 로컬 링크72개·JSON·git diff --check가 통과했다. 문서 작업이므로 완료한 전체 pnpm check·입력/PDF 검수를 반복하지 않는다. 최종 Phase 완료/새 배포 때에는 해당 기준대로 pnpm check를 실행한다. 후속 구현/적용은 이번 조사 승인을 자동 확대하지 않는다.
 
 공식 확인: [R2 가격](https://developers.cloudflare.com/r2/pricing/), [D1 가격](https://developers.cloudflare.com/d1/platform/pricing/), [Workers 가격](https://developers.cloudflare.com/workers/platform/pricing/), [Terra 가격](https://developers.openai.com/api/docs/models/gpt-5.6-terra), [OpenAI 관리자 인증](https://developers.openai.com/api/docs/guides/admin-apis), [GitHub Actions](https://docs.github.com/en/billing/concepts/product-billing/github-actions). Context7 `/cloudflare/cloudflare-docs`에서 R2·Workers 지표 계약도 확인했다.
+
+
+## 5. 종료 판단 — 2026-10-06
+
+사용자는 격자 자동 제안·후보 생성 조건 개선을 향후 계획으로 이관하고 실제 청구 대조와 남은 항목 정리를 요청했다. 두 개선안은 [향후13절](../../future/notes.md#13-향후-개발--가능한-격자-제안과-후보-생성-조건-개선)에 기록했으며 P8-02 구현 범위에 추가하지 않는다.
+
+| 구분 | 판단·남은 행동 |
+|---|---|
+| 실제 출시 경로 | 자동 자막·AI 생성·검수·발행, 공개/관리자 권한, 기존 제출/채점/결과 복원·출력/기기 근거 재사용. 반복 검수 불필요 |
+| 백업·운영 | 주간 SQL 예약 verified와 기존 격리 복원·삭제 목록·마감/정리·요청 제한 근거 확인. 새 복원 실험 불필요 |
+| 공급자 청구 | OpenAI Usage의 조회 기간·프로젝트·금액과 Cloudflare 실제 청구 항목 확인 대기. 내부 원장의 산술 일치를 공급자 청구 일치로 대체하지 않음 |
+| 기존 비용 화면 요구의 누락 | `src/config/service-registry.ts`의10서비스에 Supadata가 없다. 실제 `/v1/me` Free 잔여량 확인은 했지만 앱 서비스 목록·사용량 표시의 통합 완료는 아님. 기존 서비스별 비용/사용량 조건의 보완이며 새 제품 요구나 새 작업 ID가 아님 |
+| 관측 한계 | DO GB-s·Workflow 과금 step/state·일부 CPU/Builds/Access 수치는 미확인으로 보존. 모든 지표 수집을 위한 새 권한/감사 프로젝트를 자동 추가하지 않으며 청구 화면 증거와 함께 판단 |
+| 향후로 분리 | 관리자 UI 전면 개편, 영문 알림 실사용 재확인, 관리자 반복 시험, 격자 자동 제안·후보 조건 개선. 사용자가 이미 보류한 범위를 출시 필수 구현으로 되돌리지 않음 |
+| 최종 검사 | Phase 종료를 실제로 확정할 때 `pnpm check` 실행. 이번 문서·판정 작업은 문서/생성 매뉴얼 검사만 수행하며 전체 Phase 완료 검사를 했다고 쓰지 않음 |
+
+**판정: 현재는 운영 배포·대표 사용 경로 확인 완료, P8-02는 청구 검수와 비용 화면 누락 보완이 남아 종료 보류다.** 청구 대조만 남았다는 앞선 설명을 정정한다. 구현 여부를 묻는 새 승인 절차나 별도 작업 번호를 추가한 것은 아니며, 이번 요청의 조사·향후 기록과 구분해 다음 구현 범위를 명시한다. 전체 v1 완료 조건을 조용히 면제하지 않는다.
+
+이번 Cloudflare MCP의 subscriptions 읽기는 Authentication error10000으로 실패했다. 기존 Wrangler OAuth도 처음401이었으나 `versions list` 읽기로 갱신한 뒤 billing/history는403이었다. 인증 만료와 청구 권한 부족을 구분하며 결제 정보·개인 정보·토큰은 출력하지 않았다. 권한 확대나 플랜 변경은 실행하지 않았다. OpenAI는 기존 D-041에 따라 Admin key를 새로 만들지 않고 공식 Usage 화면의 기간/프로젝트/금액을 요청했다. 화면 숫자를 받기 전 실제 공급자 청구는 미확인이다.
+
+청구 화면 해석은 [OpenAI 공식 비용 안내](https://developers.openai.com/api/docs/guides/production-best-practices#managing-costs), [Cloudflare Billable Usage](https://developers.cloudflare.com/billing/manage/billable-usage/), [청구 구조](https://developers.cloudflare.com/billing/understand/how-billing-works/)를 확인했다. Cloudflare 사용량 요금은 고정 구독료를 포함하지 않고 청구 주기를 기준으로 하므로 달력 월/총 청구서와 구별한다.
