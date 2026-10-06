@@ -24598,14 +24598,15 @@
         "through": "2026-10-06"
       },
       "costDisplayedOn": "2026-10-04",
-      "providerRequestCountConfirmed": false
+      "providerRequestCountConfirmed": true,
+      "providerRequestCount": 5
     },
-    "openaiReconciled": false,
+    "openaiReconciled": true,
     "cloudflareBillingConfirmed": false,
     "remaining": [
-      "confirm provider request count and reconcile approximately USD0.08 difference",
+      "fix missing cache-write observation and cost calculation with preserved historical records",
       "Cloudflare billable usage period and amount",
-      "record final completion assessment after billing reconciliation"
+      "required validation and release assessment for cost fix"
     ],
     "newAiCalls": 0,
     "remoteWrites": 0,
@@ -24635,6 +24636,21 @@
       "startedAtUtc": "2026-10-04T15:34:11.680Z",
       "completedAtUtc": "2026-10-04T15:56:08.523Z",
       "microUsd": 490526
+    },
+    "openaiReconciliationBasis": "user-reported date/count/two-decimal display plus sealed response usage and official standard pricing; invoice not fetched",
+    "cacheWriteReconciliation": {
+      "model": "gpt-5.6-terra",
+      "serviceTier": "default",
+      "inputTokens": 149299,
+      "cachedTokens": 0,
+      "cacheWriteTokens": 149284,
+      "outputTokens": 15994,
+      "recalculatedUsd": "0.565168",
+      "previousEstimatedUsd": "0.490526",
+      "underestimateUsd": "0.074642",
+      "displayUsd": "0.57",
+      "productFixApplied": false,
+      "historicalLedgerUnchanged": true
     }
   }
 }

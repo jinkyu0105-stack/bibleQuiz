@@ -6,14 +6,17 @@
 
 격자 자동 제안·후보 생성 조건 개선은 향후13절에 보관했다. 이어 사용자가 Supadata 사용량 표시도 보류하도록 명시해 [향후14절](future/notes.md#14-향후-개발--supadata-사용량-표시)에 기록하고 D-041·release/architecture의 출시 범위를 맞췄다. Supadata 표시 때문에 종료를 다시 막지 않는다. 기존 자막 취득과 Free 연결은 유지한다. 관리자 UI/영문 알림/반복 시험도 기존 보류를 유지한다.
 
-## 다음 첫 작업 — 공급자 청구 범위를 맞춘다
+## 다음 첫 작업 — 확인된 비용 계산 누락 보완
 
-OpenAI `biblequiz-nonprod`의 표시 금액USD0.57를 사용자에게 받았다. 같은 이름 프로젝트2개 중 하나는 미사용이라는 보고도 받았다.9월24일 기존 프로젝트 선택/없으면 생성 안내는 기록에 있지만 두 번 생성한 경위는 미확인이다. 프로젝트 변경/삭제를 하지 않았고 중복 원인 조사를 새 출시 조건으로 넣지 않는다.
+OpenAI 사용자 확인:2026-09-29~10-06,10월4일 발생,5회,USD0.57, 프로젝트biblequiz-nonprod. 운영 sealed 응답5회 모두 Terra/default, 입력149299·캐시 읽기0·캐시 쓰기149284·출력15994다. 공식 Standard 단가2/0.2/2.5/12로USD0.565168 → 표시USD0.57가 일치한다. OpenAI 기간/횟수/토큰을 사용자에게 다시 묻지 않는다. 세부 invoice 원금을 읽었다는 의미는 아니다.
 
-- OpenAI 기간은 사용자 확인2026-09-29~10-06이고 비용 표시일은10월4일이다. 날짜를 다시 묻지 않는다. 보관5호출은10월4일15:34~15:56UTC(한국10월5일00:34~00:56)에 완료됐다. USD0.57와 앱USD0.490526의 약USD0.08 차이는 아직 설명되지 않았다. **현재 질문은 같은 기간의 Total requests가 몇 회인지**다. 호출 수부터 대조하고 필요할 때 해당 모델/비용 세부만 확인한다. 기존 공유 키의 다른 환경 호출 가능성을 확정 원인으로 쓰거나 미확인 차이를 반올림으로 지우지 않는다.
-- Cloudflare Billing → Billable Usage의 표시 기간·총금액 질문은 아직 답변 대기다. 고정 구독료/발행 청구서는 구별한다. MCP 인증10000·OAuth 갱신 후 billing/history403 근거는 조사 문서에 있다. 같은 실패를 반복하거나 새 키/권한 확대를 요구하지 않는다.
+**앱 비용 계산 결함이 확인됐다.** `openai-draft-transport.ts` usage schema가 cache_write_tokens를 채택하지 않고 `openai-draft-cost.ts`가 쓰기 입력도USD2로 계산해 USD0.490526로 과소 표시했다(차이USD0.074642). 기존 원장·과거 가격 version·sealed 응답을 보존하며 향후 계산과 근거 있는 정정 표시를 구분해 보완해야 한다. 모든 입력을 쓰기로 추정하거나 과거 값을 일괄 덮지 않는다. 새 AI 호출은 불필요하다. 이번에는 조사·기록만 했으며 제품 수정/배포는 미실행이다. 새 작업 ID/감사 프로젝트를 만들지 않는다.
 
-남은 범위는 **공급자 청구 대조·상태/인계와 종료 판정(최종 pnpm check 통과)**이다. 이번은 문서 변경뿐이므로 기능 배포를 새로 요구하지 않는다. DO/Workflow/CPU/Builds/Access 미관측은 알려진 한계로 보존하며 새 감사 프로젝트로 늘리지 않는다. 완료한 실제 입력/PDF·백업/복원을 반복하지 않는다.
+증거는 `.wrangler/releases/p8-02-supadata-integration-20261004/billing-day-usage-20261006.json` 및 `billing-cache-write-20261006.json`. 실제 응답의 숫자만 SQL로 추출했다. OAuth401은 기존 버전 목록 읽기로 갱신 후 성공했다. 원문·키 출력/원격 쓰기는0이다. 공식 가격표와 prompt caching 문서를 확인했다. 자세한 식과 링크는 [대조 기록](work/p8-02/closeout-review.md)에 있다.
+
+Cloudflare Billing → Billable Usage의 기간/총금액은 여전히 답변 대기다. 기존 MCP 인증10000·OAuth 청구403은 반복하지 않는다. 동명 프로젝트 생성 경위는 미확인이지만 새 출시 조건으로 추가하지 않는다. 보류한 Supadata 표시·격자/후보 개선·UI/영문 알림/관리자 반복 시험도 되돌리지 않는다.
+
+남은 범위는 **앱 비용 누락 보완·해당 검사/배포 검토, Cloudflare 청구 대조, 상태/인계와 종료 판정**이다. 현재 `pnpm check` 통과는 수정 전6ad6931 근거이며 기능 수정 후 필요한 검사를 대신하지 않는다. 실제 입력/PDF·백업/복원을 반복하지 않는다.
 
 ## 현재 설치·보존
 
@@ -29,4 +32,4 @@ OpenAI `biblequiz-nonprod`의 표시 금액USD0.57를 사용자에게 받았다.
 
 스크린샷 Windows 경로는 /mnt/c로 읽을 수 있다. 별도 WSL Chromium과 사용자 Chrome/내장 브라우저 로그인은 다르다. Playwright 로그인 연결은 사용자가 나중으로 보류했다. 도구가 없는데 사용자 화면을 보고/조작했다고 말하지 않는다.
 
-비공개 근거는 `.wrangler/releases/p8-02-supadata-integration-20261004/`의 closeout/placement JSON이다. 실제 후보·원문·계정 응답은 Git 제외다. 이번 시작 HEAD d97bfbc, main clean. 변경은 조사 문서·현재 안내·향후 계획·생성 매뉴얼 문자열이며 Git diff와 마지막 commit으로 확인한다. main push/배포하지 않는다.
+비공개 근거는 `.wrangler/releases/p8-02-supadata-integration-20261004/`의 closeout/placement JSON이다. 실제 후보·원문·계정 응답은 Git 제외다. 이번 시작 HEAD 9608f58, main clean. 변경은 조사 문서·현재 안내·향후 계획·생성 매뉴얼 문자열이며 Git diff와 마지막 commit으로 확인한다. main push/배포하지 않는다.
