@@ -1,5 +1,12 @@
 # 현재 상태
 
+## 현재 Preview 푸시 — 2026-10-07
+
+사용자가 main 푸시와 Git 기반 Preview 자동 배포 경로를 승인했다. 현재 로컬 코드02691d7와 미전송34개 커밋·이번 결정 문서를 GitHub에 반영한다. 푸시 직전 worktree clean·기존 필수 검사와 개발 실행 lint/typecheck·Chromium1건 통과를 확인했다. 추가 lockfile/Cloudflare 설정/Preview 합성 발행 fixture 검사는 통과했다. 선택 실행한 과거 check:preview-generation은0036까지만 예상해 현재0038 목록에서 중단됐다(필수 pnpm check에 포함되지 않는 과거 업그레이드 도구, 이번 migration 없음). Cloudflare Builds trigger 조회는API10000 인증 오류로 미확인이고 직접 배포로 대체하지 않는다. Workers 목록의 Preview app 최종 수정2026-10-02/Production2026-10-06을 읽기 확인했다. 푸시 성공과 자동 배포 성공은 별도로 판정하며 완료 결과를 후속 기록한다. 새 schema/원격 migration·실자료/키·새 AI·운영 배포는 제외한다. 새 폰트/배경은 정적 자산이고 로컬 시험 DB는 Git 제외다.
+
+부모 Phase9 진행 중·현재 P9-02 검수 대기·다음 P9-02 Preview 화면 확인·세션 유지. 시작 Pro0% 사용/100% 잔여·7일 값·별도5시간 없음·사용자 지정×10=1,000%. 다음 추천 GPT-6.1-sol/High. 운영 배포는 사용자 다음 요청 전 실행하지 않는다. 배포 정본은 [Preview 반영 경로](spec/architecture.md#preview-반영-경로).
+
+
 2026-10-07. **현재 P9-02 UI 재작업·로컬 검사 완료 / 기본 개발 실행 수정 완료·사용자 화면 검수 대기 / 부모 Phase9 진행 중 / 이전 P8-02·Phase8 완료 / 다음 P9-02 화면 검수 / 세션 유지.** 이번 시작 Pro 사용25%·잔여75%·별도5시간 없음 → 사용자 지정×10=750%(공식 상품 배수 아님). 이번 추가 AI/API 호출·운영 반영0.
 
 사용자 요청으로 어제4177의 장년·어린이 시험 화면을 `pnpm dev` 기본 결과로 연결했다. 영속 `.wrangler/ui-demo-state/`를 자동 준비하고 재실행 시 기록/수정을 보존한다. 기존 로컬 자료는 `pnpm dev:local`, E2E는 기존 임시 DB 격리를 유지한다. [실행 안내](../README.md#실행)·[로컬 계약](spec/architecture.md#로컬-ui-개발-실행). 새 기본 실행의 두 난도 이미지/풀이 이동·재실행 API200·중복 없음/수정 보존, lint/typecheck 및 변경된 E2E launcher의 격리 D1→Worker→브라우저 Chromium1건 통과를 확인했다. 사용자 기존5173은 임의 종료하지 않았으므로 사용자가 Ctrl+C 후 `pnpm dev`로 재시작해야 새 기본이 적용된다.
