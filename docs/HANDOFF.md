@@ -1,4 +1,12 @@
-# 인계 — P9-02 시안 재작업·사용자 검수 대기 / 부모 Phase9 진행 중
+# 인계 — P9-02 CI 수정·검증 / 부모 Phase9 진행 중
+
+## P9-02 CI 수정 검증 — 2026-10-07
+
+사용자의 CI 통과 지시에 따라 인증 시계·제목·격자 폭·철회 완료 메시지 검사를 수정했다. 전체 실행에서 추가 확인한 영문 안내 검사도 브라우저 시계를 제어하도록 수정했다. 제품/인증 실행 코드·데이터·migration·키·유료 결과·이미지·폰트/fontkit은 변경하지 않았다. 원인과 수정 범위는 [P9-02](work/P9-02.md#github-ci-검사-수정--2026-10-07)를 따른다.
+
+`pnpm check` 통과(unit308/Worker2197/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/DB검사/build). 후속 브라우저 테스트 수정 뒤 lint/typecheck도 다시 통과했다. 영문 안내 시간 제어는 PC·모바일 반복8건 통과했고 최종 독립 전체 브라우저193건 통과·기존 터치 전용1건 건너뜀(PC에서만 해당)·실패/재시도0이다. 기존500kB 출력 번들 경고만 남는다. 기존dist/배포 포인터는 검사 후 복구했다. GitHub CI는 수정본 푸시 후 확인하며 아직 성공으로 기록하지 않는다.
+
+현재 P9-02 진행 중(검사 수정/검증), 부모 Phase9 진행 중. 다음은 같은 P9-02의 GitHub CI 통과 확인과 사용자 화면 검수다. 세션 유지, 다음 추천 Astra·High(실제 실패와 검사 기준 구분). 시작 Pro0% 사용/100% 잔여·별도5시간 없음·사용자 지정×10=1,000%. 이번 main 푸시는 Preview 자동 배포이며 운영 배포·원격DB 변경·유료 호출은 제외한다.
 
 ## 현재 Preview 자동 배포 완료 — 2026-10-07
 
@@ -6,7 +14,7 @@
 
 일반 Preview는 GitHub main 푸시 → 자동 배포로 통일하고 직접 배포하지 않는다. Cloudflare Builds trigger 조회API10000은 인증 오류였으나 GitHub check와 Cloudflare deployments GET으로 실제 성공을 확인했다. 비로그인 Python 이미지 요청403은 실제 로그인 화면 검수로 간주하지 않는다. 사용자 검수는 [Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/) Access 로그인 뒤 장년/어린이 첫 화면, [푸시 커밋 검사](https://github.com/jinkyu0105-stack/bibleQuiz/commit/f7359e5456774344785a6415103a1a5a512dcd58)의 Workers Builds Success 대조로 진행한다. 로컬 시험 데이터와 원격 시험 내용은 같지 않다.
 
-기존 pnpm check와 추가 개발 실행 lint/typecheck·Chromium1건 근거를 재사용했다. 이번 lockfile/Cloudflare 설정/Preview 발행 fixture 검사 통과. 선택 실행한 과거 check:preview-generation은0036 예상 목록과 현재0038 차이로 실패했다(필수 pnpm check에 미포함, 이번 migration 없음). GitHub CI validate/browser는 마지막 확인에서 진행 중이며 통과로 쓰지 않는다. [CI](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/37593642253). 이번 결과 기록은 후속 로컬 문서 커밋으로 보존하고 불필요한 재배포를 만들지 않도록 재푸시하지 않는다.
+기존 pnpm check와 추가 개발 실행 lint/typecheck·Chromium1건 근거를 재사용했다. 이번 lockfile/Cloudflare 설정/Preview 발행 fixture 검사 통과. 선택 실행한 과거 check:preview-generation은0036 예상 목록과 현재0038 차이로 실패했다(필수 pnpm check에 미포함, 이번 migration 없음). GitHub CI37593642253은 완료 후 validate 실패(인증 캐시 만료 검사1건), browser 실패(제목·격자 폭4건, 철회 메시지2건은 재시도 통과)로 확인됐다. 사용자 지시로 같은 P9-02에서 검사 수정·로컬 전체 검사·GitHub CI 재확인을 진행한다. [CI](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/37593642253). 직전 배포 결과 문서 e5ebc46은 로컬에 보존했다. 이번 CI 수정 지시에는 수정 커밋의 main 푸시·Preview 자동 배포·GitHub CI 통과 확인을 포함하며 운영 배포는 제외한다.
 
 부모 Phase9 진행 중·현재 P9-02 사용자 검수 대기·다음 P9-02 Preview 화면 확인·세션 유지. 시작 Pro0% 사용/100% 잔여·7일 값·별도5시간 없음·사용자 지정×10=1,000%. 다음 추천 GPT-6.1-sol/High. 운영 배포는 사용자 다음 요청 전 실행하지 않는다. 배포 정본은 [Preview 반영 경로](spec/architecture.md#preview-반영-경로).
 
@@ -26,7 +34,7 @@
 
 ## 정확한 다음 한 작업
 
-사용자는 918dba4의 시안 재현과 기존 배경4종을 거절했다. Phase7A 01/02 원본에서 배경을 다시 만들고 장년/어린이를 별개 구도로 구현하라는 직접 지시로 같은 P9-02를 재작업했다. 새 내장 imagegen4회는 이 지시의 범위이며, 실제 설교 AI 실행이나 배포 승인이 아니다. 다음은 **같은 P9-02의 사용자 화면 검수**다. [실제 PC/모바일 화면](design/phase-9/README.md)과 [구현·기능 대응](work/P9-02.md)을 확인한다. P9-03은 통합된 제안으로 번호를 재사용하지 않는다. P9-04 운영 반영은 별도 승인 전 착수하지 않는다.
+사용자는 918dba4의 시안 재현과 기존 배경4종을 거절했다. Phase7A 01/02 원본에서 배경을 다시 만들고 장년/어린이를 별개 구도로 구현하라는 직접 지시로 같은 P9-02를 재작업했다. 새 내장 imagegen4회는 이 지시의 범위이며, 실제 설교 AI 실행이나 배포 승인이 아니다. 다음은 **같은 P9-02의 수정본 GitHub CI 통과 확인 뒤 사용자 화면 검수**다. [실제 PC/모바일 화면](design/phase-9/README.md)과 [구현·기능 대응](work/P9-02.md)을 확인한다. P9-03은 통합된 제안으로 번호를 재사용하지 않는다. P9-04 운영 반영은 별도 승인 전 착수하지 않는다.
 
 재개 순서: AGENTS → PROJECT_CONTEXT → DECISIONS → STATUS → HANDOFF → implementation의 design/responsive·관련 users/generation·P9-02 → Git status/diff/log. 최신 Pro와 사용자 지정×10을 확인한다. 새 미커밋 변경은 보존하고 완료한 실제 입력/PDF/백업/청구/출시 검수를 반복하지 않는다.
 

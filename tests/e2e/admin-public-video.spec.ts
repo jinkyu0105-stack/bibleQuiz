@@ -8,11 +8,11 @@ test("administrator confirms fetched video fields and imports public captions af
   if (!reference.ok) throw new Error("synthetic reference");
   const draft = draftMetadataViewSchema.parse({
     sermonId: "video-sermon", quizSetId: "video-quiz", youtubeUrl: "https://www.youtube.com/watch?v=abcdefghijk",
-    metadataRevision: 1, title: "260920 합성 영상 제목", sermonDate: "2026-09-20",
+    metadataRevision: 1, title: "합성 영상 제목", sermonDate: "2026-09-20",
     bibleReference: reference.value, referenceLabel: reference.value.canonicalLabel, slugPreview: "2026-09-20-abc234",
   });
   const preview = adminPublicVideoPreviewSchema.parse({
-    outcome: "inspected", videoId: "abcdefghijk", title: draft.title, publishedDate: "2026-09-21",
+    outcome: "inspected", videoId: "abcdefghijk", title: "260920 합성 영상 제목", publishedDate: "2026-09-21",
     caption: { status: "available", language: "ko", generated: false, segmentCount: 1, characterCount: 9 },
   });
   let registered = false, imported = false, attempts = 0;

@@ -109,21 +109,40 @@ describe("Cloudflare Access authentication", () => {
     await authenticateAccessRequest(request(next.token), options);
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
-  it("honors no-store and does not use expired public keys when refresh fails", async () => {
-    const fixture = await createAccessFixture(now, { exp: Math.floor(now.getTime() / 1000) + 1000 });
-    const uncached = vi.fn(async () => Response.json(fixture.jwks, { headers: { "Cache-Control": "no-store" } }));
-    const options = { audience, teamDomain: issuer, now };
-    await authenticateAccessRequest(request(fixture.token), { ...options, fetcher: uncached });
-    await authenticateAccessRequest(request(fixture.token), { ...options, fetcher: uncached });
-    expect(uncached).toHaveBeenCalledTimes(2);
+  it("honors no-store when reading public keys", async () => {
+    const fixture = await createAccessFixture(now);
+    const fetcher = vi.fn(async () => Response.json(fixture.jwks, { headers: { "Cache-Control": "no-store" } }));
+    const options = { audience, teamDomain: issuer, now, fetcher };
+    const clock = vi.spyOn(Date, "now").mockReturnValue(now.getTime());
+    try {
+      await authenticateAccessRequest(request(fixture.token), options);
+      await authenticateAccessRequest(request(fixture.token), options);
+      expect(fetcher).toHaveBeenCalledTimes(2);
+    } finally { clock.mockRestore(); }
+  });
+
+  it.each([0, 5_000])("expires public keys from their load time after %i ms of setup, even when refresh fails", async (setupDelay) => {
+    const fixtureTime = new Date("2026-09-01T00:00:00.000Z");
+    const fixture = await createAccessFixture(fixtureTime, { exp: Math.floor(fixtureTime.getTime() / 1000) + 1000 });
+    const loadedAt = fixtureTime.getTime() + setupDelay;
+    // Freeze before loading keys: CI scheduling must not consume the expiry margin.
+    const clock = vi.spyOn(Date, "now").mockReturnValue(loadedAt);
     let available = true;
     const fetcher = vi.fn(async () => available ? Response.json(fixture.jwks) : new Response(null, { status: 503 }));
-    await authenticateAccessRequest(request(fixture.token), { ...options, fetcher });
-    available = false;
-    const clock = vi.spyOn(Date, "now").mockReturnValue(now.getTime() + 301_000);
-    try { await expect(authenticateAccessRequest(request(fixture.token), { ...options, fetcher })).rejects.toBeInstanceOf(AccessAuthenticationUnavailable); }
-    finally { clock.mockRestore(); }
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    const authenticate = (time: number) => {
+      clock.mockReturnValue(time);
+      return authenticateAccessRequest(request(fixture.token), { audience, teamDomain: issuer, now: new Date(time), fetcher });
+    };
+    try {
+      expect(await authenticate(loadedAt)).toEqual({ email: "admin@example.com" });
+      available = false;
+      expect(await authenticate(loadedAt + 299_999)).toEqual({ email: "admin@example.com" });
+      expect(fetcher).toHaveBeenCalledTimes(1);
+      await expect(authenticate(loadedAt + 300_000)).rejects.toBeInstanceOf(AccessAuthenticationUnavailable);
+      expect(fetcher).toHaveBeenCalledTimes(2);
+      await expect(authenticate(loadedAt + 300_001)).rejects.toBeInstanceOf(AccessAuthenticationUnavailable);
+      expect(fetcher).toHaveBeenCalledTimes(3);
+    } finally { clock.mockRestore(); }
   });
 
 });

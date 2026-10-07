@@ -242,7 +242,14 @@ test("themes and large view persist, with bounded page width at 320px", async ({
   await page.setViewportSize({ width: 320, height: 720 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   const cell = await page.locator('[data-cell="r0c0"]').boundingBox();
-  expect(cell!.width).toBeCloseTo(28.6, 1);
+  const availableWidth = await page.getByTestId("grid-boundary").evaluate((boundary) => {
+    const panel = boundary.parentElement!;
+    const panelStyle = getComputedStyle(panel);
+    const border = getComputedStyle(boundary);
+    return panel.clientWidth - parseFloat(panelStyle.paddingLeft) - parseFloat(panelStyle.paddingRight)
+      - parseFloat(border.borderLeftWidth) - parseFloat(border.borderRightWidth);
+  });
+  expect(cell!.width * 10).toBeCloseTo(availableWidth, 0);
   await expectWholeGridFits(page);
   await nativeInput(page).focus();
   for (let index = 0; index < 8; index += 1) await nativeInput(page).press("Tab");

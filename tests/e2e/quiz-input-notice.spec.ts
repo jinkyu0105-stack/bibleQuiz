@@ -2,7 +2,9 @@ import { expect, test } from "@playwright/test";
 
 for (const difficulty of ["child", "adult"] as const) {
   test(`${difficulty}: English guidance preserves answers and keyboard focus`, async ({ page }) => {
+    await page.clock.install({ time: new Date("2026-09-01T00:00:00.000Z") });
     await page.goto(`/dev/quiz?level=${difficulty}`);
+    await page.clock.pauseAt(new Date("2026-09-01T01:00:00.000Z"));
     const input = page.getByRole("textbox", { name: /^낱말 입력:/ });
     const setBuffer = async (value: string) => input.evaluate((element, text) => {
       const native = element as HTMLInputElement;
@@ -24,7 +26,11 @@ for (const difficulty of ["child", "adult"] as const) {
     expect(box!.x).toBeGreaterThanOrEqual(0);
     expect(box!.x + box!.width).toBeLessThanOrEqual(page.viewportSize()!.width);
     await page.screenshot({ path: test.info().outputPath(`${difficulty}-english-notice.png`) });
-    await expect(toast).toBeHidden({ timeout: 6000 });
+    await page.clock.runFor(3999);
+    await expect(toast).toBeVisible();
+    await page.clock.runFor(1);
+    await expect(toast).toBeHidden();
+    await expect(input).toBeFocused();
     await page.keyboard.type("d");
     await expect(toast).toBeVisible();
     await setBuffer("가나");

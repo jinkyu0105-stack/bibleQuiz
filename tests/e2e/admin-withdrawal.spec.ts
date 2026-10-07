@@ -34,7 +34,7 @@ test("confirms withdrawal, retries a lost response exactly and restores private 
   await expect(panel.getByLabel("철회 사유")).toHaveValue(review.reason);
   await panel.getByRole("button", { name: "지금 발행 철회", exact: true }).click();
   expect(commands).toHaveLength(2); expect(commands[0]).toEqual(commands[1]);
-  await expect(panel.getByRole("status")).toContainText("검수 대기로 돌렸습니다");
+  await expect(panel.getByRole("status").filter({ hasText: "발행을 철회하고 검수 대기로 돌렸습니다." })).toBeVisible();
   await expect(panel.getByRole("article", { name: "철회 후 검수 시작 자료" })).toContainText("보존된 합성 요약");
   await panel.getByText("어린이 문제·정답 보존 자료", { exact: true }).click();
   await expect(panel).toContainText("합성 단서 · 정답: 가나");
