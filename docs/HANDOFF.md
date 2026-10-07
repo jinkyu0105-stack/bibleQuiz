@@ -1,26 +1,20 @@
-# 인계 — P9-02 CI 수정·검증 / 부모 Phase9 진행 중
+# 인계 — P9-02 CI 통과·사용자 화면 검수 대기 / 부모 Phase9 진행 중
 
-## P9-02 CI 수정 검증 — 2026-10-07
+## P9-02 CI 수정·GitHub 검증 완료 — 2026-10-07
 
-사용자의 CI 통과 지시에 따라 인증 시계·제목·격자 폭·철회 완료 메시지 검사를 수정했다. 전체 실행에서 추가 확인한 영문 안내 검사도 브라우저 시계를 제어하도록 수정했다. 제품/인증 실행 코드·데이터·migration·키·유료 결과·이미지·폰트/fontkit은 변경하지 않았다. 원인과 수정 범위는 [P9-02](work/P9-02.md#github-ci-검사-수정--2026-10-07)를 따른다.
+수정 소스 **21b81dee578c6dad5decc3add9d71102a3595df6**를 main에 푸시했다. [GitHub CI37604052032](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/37604052032)는 **completed/success**, **validate·browser 모두 success**다. 로컬과 GitHub에서 `pnpm check` 통과(unit308/Worker2197/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/DB검사/build), PC·모바일 Chromium193건 통과·기존 터치 전용1건 PC에서만 건너뜀·실패/재시도0을 확인했다. 최종 테스트 수정 뒤 lint/typecheck도 통과했다.
 
-`pnpm check` 통과(unit308/Worker2197/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/DB검사/build). 후속 브라우저 테스트 수정 뒤 lint/typecheck도 다시 통과했다. 영문 안내 시간 제어는 PC·모바일 반복8건 통과했고 최종 독립 전체 브라우저193건 통과·기존 터치 전용1건 건너뜀(PC에서만 해당)·실패/재시도0이다. 기존500kB 출력 번들 경고만 남는다. 기존dist/배포 포인터는 검사 후 복구했다. GitHub CI는 수정본 푸시 후 확인하며 아직 성공으로 기록하지 않는다.
+테스트5개 파일에서 인증 공개키 만료 시계, 영상 원제/등록 제목, 실제 가용 폭의 전체 격자, 철회 완료 메시지 선택, 영문 안내 타이머를 수정했다. 제품/인증 실행 코드·데이터·migration·키·유료 결과·이미지·폰트/fontkit은 변경하지 않았다. 영문 안내 반복8건 통과. 중간 전체 실행의 관리자 초안 보존1건 간헐 실패는 동일 검사8회·최종 독립 전체·GitHub 모두 통과했으나 원인을 확정하지 않았다. 해당 assertion과 제품 코드는 유지했다. [원인·수정·검사 로그](work/P9-02.md#github-ci-검사-수정--2026-10-07).
 
-현재 P9-02 진행 중(검사 수정/검증), 부모 Phase9 진행 중. 다음은 같은 P9-02의 GitHub CI 통과 확인과 사용자 화면 검수다. 세션 유지, 다음 추천 Astra·High(실제 실패와 검사 기준 구분). 시작 Pro0% 사용/100% 잔여·별도5시간 없음·사용자 지정×10=1,000%. 이번 main 푸시는 Preview 자동 배포이며 운영 배포·원격DB 변경·유료 호출은 제외한다.
+현재 P9-02의 CI 수정 범위 완료·사용자 화면 검수 대기, 부모 Phase9 진행 중. 다음은 같은 P9-02의 Preview 화면 검수와 기존 LCP 한계 검토다. 세션 유지, 다음 추천 Astra·High(시안과 실제 화면/동작 대조). 시작 Pro0% 사용/100% 잔여·별도5시간 없음·사용자 지정×10=1,000%. 새 운영 배포·원격DB 변경·유료 호출은 하지 않았다. 최종 결과 문서는 후속 로컬 커밋으로 보존하며 재배포만 일으키는 문서 푸시는 하지 않는다.
 
 ## 현재 Preview 자동 배포 완료 — 2026-10-07
 
-사용자 승인으로 미전송34개 커밋과 배포 경로 결정 문서를 main에 푸시했다. GitHub 원격 소스는 **f7359e5456774344785a6415103a1a5a512dcd58**. Workers Builds `fd0b1362-01a4-444d-800d-a58529cacd58`의 동일 커밋 check가 **completed/success**이며, Preview app 활성 version **00fa46eb-ead1-49f4-8a22-4118f62c11fb**·traffic100%·deployment8daa53c1-475b-42b5-a174-92520604c6f1·2026-10-07 17:26:11KST를 API 읽기로 대조했다. 직전 Preview7c356a97은 이전 버전이다. Production app27f75159·소스56bb1bf는 불변이다. content/backup·DB migration·Secret·실제 AI는 변경하지 않았다.
+GitHub 소스 **21b81de**의 Workers Builds **e7707d59-9c79-477a-8241-7f26e1f6fc6a** check가 completed/success다. Preview app version **3dc36ff6-f6d0-4627-bc43-6beeb3495391**, traffic100%, deployment **9956f978-69b2-45ea-9175-c51ee72b2ff3**, **2026-10-07 18:57:53KST**를 Cloudflare deployments GET으로 대조했다. 직전 f7359e5의00fa46eb는 이전 버전이다. Production app27f75159·소스56bb1bf는 이번 배포 대상이 아니며 content/backup·DB migration·Secret·실제 AI도 변경하지 않았다.
 
-일반 Preview는 GitHub main 푸시 → 자동 배포로 통일하고 직접 배포하지 않는다. Cloudflare Builds trigger 조회API10000은 인증 오류였으나 GitHub check와 Cloudflare deployments GET으로 실제 성공을 확인했다. 비로그인 Python 이미지 요청403은 실제 로그인 화면 검수로 간주하지 않는다. 사용자 검수는 [Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/) Access 로그인 뒤 장년/어린이 첫 화면, [푸시 커밋 검사](https://github.com/jinkyu0105-stack/bibleQuiz/commit/f7359e5456774344785a6415103a1a5a512dcd58)의 Workers Builds Success 대조로 진행한다. 로컬 시험 데이터와 원격 시험 내용은 같지 않다.
+일반 Preview는 GitHub main 푸시 → Workers Builds 자동 배포로 통일한다. 이번에도 로컬 직접 배포하지 않았다. [Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/)의 Access 로그인 후 사용자 화면 검수는 남아 있다. 로컬 시험 데이터와 Preview DB는 다르며 비로그인 이미지403을 화면 검수 통과로 쓰지 않는다. 배포 계약은 [Preview 반영 경로](spec/architecture.md#preview-반영-경로)를 따른다.
 
-기존 pnpm check와 추가 개발 실행 lint/typecheck·Chromium1건 근거를 재사용했다. 이번 lockfile/Cloudflare 설정/Preview 발행 fixture 검사 통과. 선택 실행한 과거 check:preview-generation은0036 예상 목록과 현재0038 차이로 실패했다(필수 pnpm check에 미포함, 이번 migration 없음). GitHub CI37593642253은 완료 후 validate 실패(인증 캐시 만료 검사1건), browser 실패(제목·격자 폭4건, 철회 메시지2건은 재시도 통과)로 확인됐다. 사용자 지시로 같은 P9-02에서 검사 수정·로컬 전체 검사·GitHub CI 재확인을 진행한다. [CI](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/37593642253). 직전 배포 결과 문서 e5ebc46은 로컬에 보존했다. 이번 CI 수정 지시에는 수정 커밋의 main 푸시·Preview 자동 배포·GitHub CI 통과 확인을 포함하며 운영 배포는 제외한다.
-
-부모 Phase9 진행 중·현재 P9-02 사용자 검수 대기·다음 P9-02 Preview 화면 확인·세션 유지. 시작 Pro0% 사용/100% 잔여·7일 값·별도5시간 없음·사용자 지정×10=1,000%. 다음 추천 GPT-6.1-sol/High. 운영 배포는 사용자 다음 요청 전 실행하지 않는다. 배포 정본은 [Preview 반영 경로](spec/architecture.md#preview-반영-경로).
-
-
-
-2026-10-07. **현재 P9-02 기본 개발 실행 수정 완료·사용자 화면 검수 대기 / 부모 Phase9 진행 중 / 이전 P8-02·Phase8 완료 / 다음 P9-02 화면 검수 / 세션 유지.** 시작 Pro25% 사용·75% 잔여·별도5시간 없음 → 사용자 지정×10=750%. 위임 없음. 다음 추천 **GPT-6.1-sol·High** — 실행/데이터 연결과 사용자 화면 검수 수정에 적합하다.
+직전 f7359e5의 CI37593642253 실패는 이번 성공으로 대체했다. 별도 과거 `check:preview-generation`은0036 예상과 현재0038 차이로 실패한 기록을 유지하며 필수 `pnpm check`에는 포함되지 않는다. 이번 검사 수정 범위에 그 옛 리허설 도구나 원격 migration은 넣지 않았다. 기존dist/배포 포인터는 로컬 검사 뒤 복구했다.
 
 ## 이번 기본 개발 실행 수정
 
@@ -34,7 +28,7 @@
 
 ## 정확한 다음 한 작업
 
-사용자는 918dba4의 시안 재현과 기존 배경4종을 거절했다. Phase7A 01/02 원본에서 배경을 다시 만들고 장년/어린이를 별개 구도로 구현하라는 직접 지시로 같은 P9-02를 재작업했다. 새 내장 imagegen4회는 이 지시의 범위이며, 실제 설교 AI 실행이나 배포 승인이 아니다. 다음은 **같은 P9-02의 수정본 GitHub CI 통과 확인 뒤 사용자 화면 검수**다. [실제 PC/모바일 화면](design/phase-9/README.md)과 [구현·기능 대응](work/P9-02.md)을 확인한다. P9-03은 통합된 제안으로 번호를 재사용하지 않는다. P9-04 운영 반영은 별도 승인 전 착수하지 않는다.
+사용자는 918dba4의 시안 재현과 기존 배경4종을 거절했다. Phase7A 01/02 원본에서 배경을 다시 만들고 장년/어린이를 별개 구도로 구현하라는 직접 지시로 같은 P9-02를 재작업했다. 새 내장 imagegen4회는 이 지시의 범위이며, 실제 설교 AI 실행이나 배포 승인이 아니다. 다음은 **같은 P9-02의 Preview 사용자 화면 검수**다. [실제 PC/모바일 화면](design/phase-9/README.md)과 [구현·기능 대응](work/P9-02.md)을 확인한다. P9-03은 통합된 제안으로 번호를 재사용하지 않는다. P9-04 운영 반영은 별도 승인 전 착수하지 않는다.
 
 재개 순서: AGENTS → PROJECT_CONTEXT → DECISIONS → STATUS → HANDOFF → implementation의 design/responsive·관련 users/generation·P9-02 → Git status/diff/log. 최신 Pro와 사용자 지정×10을 확인한다. 새 미커밋 변경은 보존하고 완료한 실제 입력/PDF/백업/청구/출시 검수를 반복하지 않는다.
 
@@ -59,7 +53,7 @@
 | Production app |27f75159-4019-4afc-b871-048e4e9d15f7|f8174f94-d983-4855-8d2d-d02756c41f44|
 | Production content |48a1269d-a9b2-4405-8bbc-745cdabec1b0|66eb96c5-ad4c-4d01-85dd-a13aef598acf|
 
-backup3fb0e7c7-368b-45a9-89f9-2818739e415d, Preview app7c356a97-f0f3-4793-ab7b-066b2ae2aeea/content2df93f07-3703-42ec-b576-fd085e8c839f는 보존했다. 두 환경0000~0038, 실제 자료·키·유료 결과·출력 의존성/폰트/fontkit을 유지했다. main push/새 migration/Secret 변경/새 AI 호출0. 기본dist/배포포인터 복구 완료. DB 데이터 복원을 Worker rollback과 혼동하지 않는다.
+backup3fb0e7c7-368b-45a9-89f9-2818739e415d와 Preview content2df93f07-3703-42ec-b576-fd085e8c839f는 보존했다. 현재 Preview app은 상단의 GitHub 자동 배포 버전을 따른다. 두 환경0000~0038, 실제 자료·키·유료 결과·출력 의존성/폰트/fontkit을 유지했다. 이번에는 승인된 main push/Preview 자동 배포만 수행했고 새 migration/Secret 변경/새 AI 호출은0이다. 기본dist/배포포인터 복구 완료. DB 데이터 복원을 Worker rollback과 혼동하지 않는다.
 
 ## 비용과 남는 한계
 
@@ -79,4 +73,4 @@ DO GB-s·Workflow 과금 step/state·일부 CPU/Builds/Access 수치, macOS/개�
 
 합성 E2E 서버를 새로 시작하려던 시도는4173 포트가 이미 사용 중이어서 종료했다. 기존 서버의 환경이 임시 격리 E2E D1을 가리키는지 확인한 뒤 해당 로컬 서버와 합성 응답을 재사용했다. 기존4173 서버는 종료하지 않았다. 이번에 만든 성능 측정 전용4175/4176 서버만 종료했다. 문서 로컬 링크185개와 `git diff --check`를 통과했다.
 
-같은 틀의 좌우 반전, 기능을 빼서 시안에 맞추기, 새 이미지가 실제 화면에 연결되지 않은 상태, 자동 검사만으로 디자인 완료 판정하기는 채택하지 않는다. P9-02 사용자 검수 전까지 세션을 유지한다. 로컬 커밋은 운영 배포 소스가 아니며 push하지 않는다.
+같은 틀의 좌우 반전, 기능을 빼서 시안에 맞추기, 새 이미지가 실제 화면에 연결되지 않은 상태, 자동 검사만으로 디자인 완료 판정하기는 채택하지 않는다. P9-02 사용자 검수 전까지 세션을 유지한다. 운영 배포 소스와 최신 Preview 소스는 상단 기록을 구분해 따른다. 결과 기록 문서만 후속 로컬 커밋으로 남긴다.
