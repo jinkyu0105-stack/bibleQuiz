@@ -1,10 +1,15 @@
 # 현재 상태
 
-## 현재 Preview 푸시 — 2026-10-07
+## 현재 Preview 자동 배포 완료 — 2026-10-07
 
-사용자가 main 푸시와 Git 기반 Preview 자동 배포 경로를 승인했다. 현재 로컬 코드02691d7와 미전송34개 커밋·이번 결정 문서를 GitHub에 반영한다. 푸시 직전 worktree clean·기존 필수 검사와 개발 실행 lint/typecheck·Chromium1건 통과를 확인했다. 추가 lockfile/Cloudflare 설정/Preview 합성 발행 fixture 검사는 통과했다. 선택 실행한 과거 check:preview-generation은0036까지만 예상해 현재0038 목록에서 중단됐다(필수 pnpm check에 포함되지 않는 과거 업그레이드 도구, 이번 migration 없음). Cloudflare Builds trigger 조회는API10000 인증 오류로 미확인이고 직접 배포로 대체하지 않는다. Workers 목록의 Preview app 최종 수정2026-10-02/Production2026-10-06을 읽기 확인했다. 푸시 성공과 자동 배포 성공은 별도로 판정하며 완료 결과를 후속 기록한다. 새 schema/원격 migration·실자료/키·새 AI·운영 배포는 제외한다. 새 폰트/배경은 정적 자산이고 로컬 시험 DB는 Git 제외다.
+사용자 승인으로 미전송34개 커밋과 배포 경로 결정 문서를 main에 푸시했다. GitHub 원격 소스는 **f7359e5456774344785a6415103a1a5a512dcd58**. Workers Builds `fd0b1362-01a4-444d-800d-a58529cacd58`의 동일 커밋 check가 **completed/success**이며, Preview app 활성 version **00fa46eb-ead1-49f4-8a22-4118f62c11fb**·traffic100%·deployment8daa53c1-475b-42b5-a174-92520604c6f1·2026-10-07 17:26:11KST를 API 읽기로 대조했다. 직전 Preview7c356a97은 이전 버전이다. Production app27f75159·소스56bb1bf는 불변이다. content/backup·DB migration·Secret·실제 AI는 변경하지 않았다.
 
-부모 Phase9 진행 중·현재 P9-02 검수 대기·다음 P9-02 Preview 화면 확인·세션 유지. 시작 Pro0% 사용/100% 잔여·7일 값·별도5시간 없음·사용자 지정×10=1,000%. 다음 추천 GPT-6.1-sol/High. 운영 배포는 사용자 다음 요청 전 실행하지 않는다. 배포 정본은 [Preview 반영 경로](spec/architecture.md#preview-반영-경로).
+일반 Preview는 GitHub main 푸시 → 자동 배포로 통일하고 직접 배포하지 않는다. Cloudflare Builds trigger 조회API10000은 인증 오류였으나 GitHub check와 Cloudflare deployments GET으로 실제 성공을 확인했다. 비로그인 Python 이미지 요청403은 실제 로그인 화면 검수로 간주하지 않는다. 사용자 검수는 [Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/) Access 로그인 뒤 장년/어린이 첫 화면, [푸시 커밋 검사](https://github.com/jinkyu0105-stack/bibleQuiz/commit/f7359e5456774344785a6415103a1a5a512dcd58)의 Workers Builds Success 대조로 진행한다. 로컬 시험 데이터와 원격 시험 내용은 같지 않다.
+
+기존 pnpm check와 추가 개발 실행 lint/typecheck·Chromium1건 근거를 재사용했다. 이번 lockfile/Cloudflare 설정/Preview 발행 fixture 검사 통과. 선택 실행한 과거 check:preview-generation은0036 예상 목록과 현재0038 차이로 실패했다(필수 pnpm check에 미포함, 이번 migration 없음). GitHub CI validate/browser는 마지막 확인에서 진행 중이며 통과로 쓰지 않는다. [CI](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/37593642253). 이번 결과 기록은 후속 로컬 문서 커밋으로 보존하고 불필요한 재배포를 만들지 않도록 재푸시하지 않는다.
+
+부모 Phase9 진행 중·현재 P9-02 사용자 검수 대기·다음 P9-02 Preview 화면 확인·세션 유지. 시작 Pro0% 사용/100% 잔여·7일 값·별도5시간 없음·사용자 지정×10=1,000%. 다음 추천 GPT-6.1-sol/High. 운영 배포는 사용자 다음 요청 전 실행하지 않는다. 배포 정본은 [Preview 반영 경로](spec/architecture.md#preview-반영-경로).
+
 
 
 2026-10-07. **현재 P9-02 UI 재작업·로컬 검사 완료 / 기본 개발 실행 수정 완료·사용자 화면 검수 대기 / 부모 Phase9 진행 중 / 이전 P8-02·Phase8 완료 / 다음 P9-02 화면 검수 / 세션 유지.** 이번 시작 Pro 사용25%·잔여75%·별도5시간 없음 → 사용자 지정×10=750%(공식 상품 배수 아님). 이번 추가 AI/API 호출·운영 반영0.
