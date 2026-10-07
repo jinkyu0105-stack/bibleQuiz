@@ -1,31 +1,39 @@
 # 현재 상태
 
+## P9-04 운영 배포 완료 — 2026-10-07
+
+사용자의 명시 배포 지시에 따라 운영 앱을 소스 **37b7254**로 갱신했다. 실행 파일은 CI 통과21b81de와 동일하며 차이는 문서뿐이다. Production version **7aea6843-5288-42da-9bef-bc673e1d9dfe**·100%·2026-10-07 **19:46:57KST**. 직전 정상 버전27f75159가 코드 복귀 대상이다. [운영 사이트](https://biblequiz-app.jinkyu0105.workers.dev/) · [실제 명령·배포/검증 근거](work/P9-04.md).
+
+운영 build/strict dry-run, binding33개 동일, 공개/DB/두 난도 API200·퀴즈 응답 배포 전후 동일, PC·모바일 두 난도 화면/새 배경/풀이 이동4조합·pageerror0, 관리자 로그인 이동을 확인했다. 기존 CI validate/browser 성공을 재사용했다. 실제 DB/키/유료 결과·0000~0038·content/backup·폰트/fontkit을 보존하고 원격 migration·유료 호출·새 GitHub push는 하지 않았다. content/backup의 기존 버전도 그대로다.
+
+**P9-02 구현·CI 수정과 P9-04 운영 반영, Phase9의 이번 승인 범위는 완료**다. 추가 디자인 검수를 새 배포 조건이나 다음 필수 작업으로 두지 않는다. 기존 LCP5.4초/기기·관측 한계는 유지하고 향후 개선은 별도 요청 때 진행한다. 다음 필수 작업 없음·세션 유지·필요 시 추천 GPT-6.1-sol/Medium(운영 확인·작은 유지보수). 시작 Pro98% 잔여×사용자 지정10=980%. 결과 문서를 로컬 커밋하며 운영 소스와 구분한다.
+
 ## P9-02 CI 수정·GitHub 검증 완료 — 2026-10-07
 
 수정 소스 **21b81dee578c6dad5decc3add9d71102a3595df6**를 main에 푸시했다. [GitHub CI37604052032](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/37604052032)는 **completed/success**, **validate·browser 모두 success**다. 로컬과 GitHub에서 `pnpm check` 통과(unit308/Worker2197/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/DB검사/build), PC·모바일 Chromium193건 통과·기존 터치 전용1건 PC에서만 건너뜀·실패/재시도0을 확인했다. 최종 테스트 수정 뒤 lint/typecheck도 통과했다.
 
 테스트5개 파일에서 인증 공개키 만료 시계, 영상 원제/등록 제목, 실제 가용 폭의 전체 격자, 철회 완료 메시지 선택, 영문 안내 타이머를 수정했다. 제품/인증 실행 코드·데이터·migration·키·유료 결과·이미지·폰트/fontkit은 변경하지 않았다. 영문 안내 반복8건 통과. 중간 전체 실행의 관리자 초안 보존1건 간헐 실패는 동일 검사8회·최종 독립 전체·GitHub 모두 통과했으나 원인을 확정하지 않았다. 해당 assertion과 제품 코드는 유지했다. [원인·수정·검사 로그](work/P9-02.md#github-ci-검사-수정--2026-10-07).
 
-현재 P9-02의 CI 수정 범위 완료·사용자 화면 검수 대기, 부모 Phase9 진행 중. 다음은 같은 P9-02의 Preview 화면 검수와 기존 LCP 한계 검토다. 세션 유지, 다음 추천 Astra·High(시안과 실제 화면/동작 대조). 시작 Pro0% 사용/100% 잔여·별도5시간 없음·사용자 지정×10=1,000%. 새 운영 배포·원격DB 변경·유료 호출은 하지 않았다. 최종 결과 문서는 후속 로컬 커밋으로 보존하며 재배포만 일으키는 문서 푸시는 하지 않는다.
+CI 수정 결과 문서37b7254 뒤 사용자가 운영 배포를 명시 승인했다. 현재 작업/배포 사실은 상단 P9-04를 따른다.
 
 ## 현재 Preview 자동 배포 완료 — 2026-10-07
 
-GitHub 소스 **21b81de**의 Workers Builds **e7707d59-9c79-477a-8241-7f26e1f6fc6a** check가 completed/success다. Preview app version **3dc36ff6-f6d0-4627-bc43-6beeb3495391**, traffic100%, deployment **9956f978-69b2-45ea-9175-c51ee72b2ff3**, **2026-10-07 18:57:53KST**를 Cloudflare deployments GET으로 대조했다. 직전 f7359e5의00fa46eb는 이전 버전이다. Production app27f75159·소스56bb1bf는 이번 배포 대상이 아니며 content/backup·DB migration·Secret·실제 AI도 변경하지 않았다.
+GitHub 소스 **21b81de**의 Workers Builds **e7707d59-9c79-477a-8241-7f26e1f6fc6a** check가 completed/success다. Preview app version **3dc36ff6-f6d0-4627-bc43-6beeb3495391**, traffic100%, deployment **9956f978-69b2-45ea-9175-c51ee72b2ff3**, **2026-10-07 18:57:53KST**를 Cloudflare deployments GET으로 대조했다. 직전 f7359e5의00fa46eb는 이전 버전이다. Preview 반영 당시 Production app27f75159·소스56bb1bf는 배포 대상이 아니었으며 content/backup·DB migration·Secret·실제 AI도 변경하지 않았다.
 
-일반 Preview는 GitHub main 푸시 → Workers Builds 자동 배포로 통일한다. 이번에도 로컬 직접 배포하지 않았다. [Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/)의 Access 로그인 후 사용자 화면 검수는 남아 있다. 로컬 시험 데이터와 Preview DB는 다르며 비로그인 이미지403을 화면 검수 통과로 쓰지 않는다. 배포 계약은 [Preview 반영 경로](spec/architecture.md#preview-반영-경로)를 따른다.
+일반 Preview는 GitHub main 푸시 → Workers Builds 자동 배포로 통일한다. 이번에도 로컬 직접 배포하지 않았다. [Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/)는 사용자 확인용 주소이며 현재 운영 반영은 상단 P9-04를 따른다. 로컬 시험 데이터와 Preview DB는 다르며 비로그인 이미지403을 화면 검수 통과로 쓰지 않는다. 배포 계약은 [Preview 반영 경로](spec/architecture.md#preview-반영-경로)를 따른다.
 
 직전 f7359e5의 CI37593642253 실패는 이번 성공으로 대체했다. 별도 과거 `check:preview-generation`은0036 예상과 현재0038 차이로 실패한 기록을 유지하며 필수 `pnpm check`에는 포함되지 않는다. 이번 검사 수정 범위에 그 옛 리허설 도구나 원격 migration은 넣지 않았다. 기존dist/배포 포인터는 로컬 검사 뒤 복구했다.
 
-## Phase9 승인 시안 기반 UI 개편 — 진행 중
+## Phase9 승인 시안 기반 UI 개편 — 이번 승인 범위 완료
 
 [P9-01 조사](work/P9-01.md) 뒤 사용자가 docs/design에 맞춘 실제 프런트엔드 수정을 직접 요청했다. [P9-02 구현·기능 보존·검사](work/P9-02.md)와 [실제 화면 캡처](design/phase-9/README.md)가 현재 정본이다. 사용자가 918dba4의 시안 재현을 거절해 같은 P9-02에서 다시 구현했다. Phase7A 01/02를 직접 입력한 새 배경4종을 적용하고, 장년은 숲/오른쪽 아래 패널, 어린이는 종이 정원/왼쪽 제목/아래 정보 띠로 구조를 분리했다. 풀이/결과/참여/지난 퀴즈와 관리자 메뉴·6단계·다음 행동도 원본 구도로 보완했다. 시안에 없는 기능도 보존한다.
 
 | 작업 ID | 범위 | 현재 상태 |
 |---|---|---|
 | P9-01 | UI 조사·범위/완료 조건·작업 제안 | 완료 |
-| P9-02 | 기존 승인 시안에 따른 공개·관리자 UI 구현·로컬 검수 | 시안 재작업·CI 수정·로컬/GitHub 전체 검사 통과·Preview 자동 배포 완료, 사용자 화면 검수 대기 |
+| P9-02 | 기존 승인 시안에 따른 공개·관리자 UI 구현·로컬 검수 | 완료 — 구현·로컬/GitHub 검사 통과, 사용자 직접 지시에 따라 P9-04 운영 반영 |
 | P9-03 | 앞서 제안한 별도 구현 작업 | 직접 구현 요청에 따라 P9-02에 통합. 별도 착수·완료 아님, 번호 재사용 없음 |
-| P9-04 | 검수한 UI 운영 반영·인계 | 제안·이번 배포 승인 없음 |
+| P9-04 | 검수한 UI 운영 반영·인계 | 완료 — 사용자 명시 승인·운영 앱 배포·읽기/화면 확인·문서 인계 |
 
 현재 선택본 우선, 요약·어린이·장년 검수 전환, 상세 접기와 편집 상태 보존은 유지한다. 두 난도 요약 전문·고지/입력/제출/삭제/출력/공개 권한과 관리자 확정·발행 확인을 보존했다. Phase7A 원본·celebration·garden-v1·출력 TTF/fontkit·0000~0038·실제 자료/키/유료 결과는 변경하지 않았다.
 
@@ -46,7 +54,7 @@ GitHub 소스 **21b81de**의 Workers Builds **e7707d59-9c79-477a-8241-7f26e1f6fc
 
 ## 현재 환경·검사·보존
 
-Production/Preview migration0000~0038·이력39개를 유지한다. 운영 app `27f75159-4019-4afc-b871-048e4e9d15f7`, content `48a1269d-a9b2-4405-8bbc-745cdabec1b0`는 소스 `56bb1bf`; backup `3fb0e7c7-368b-45a9-89f9-2818739e415d`는 기존 배포를 유지한다. Preview app/content와 실제 자료·키·출력 의존성/폰트/fontkit도 보존한다. 상세는 [배포 정본](work/p8-02/supadata-integration.md).
+Production/Preview migration0000~0038·이력39개를 유지한다. 운영 app `7aea6843-5288-42da-9bef-bc673e1d9dfe`는 소스 `37b7254`, content `48a1269d-a9b2-4405-8bbc-745cdabec1b0`는 소스 `56bb1bf`; backup `3fb0e7c7-368b-45a9-89f9-2818739e415d`는 기존 배포를 유지한다. Preview app/content와 실제 자료·키·출력 의존성/폰트/fontkit도 보존한다. 상세는 [배포 정본](work/p8-02/supadata-integration.md).
 
 원격 관리자 Access·공개 접속·기존 두 난도 입력/제출/채점/결과 복원, PDF 교정/실제 렌더·승인된 기기·백업/격리 복원·대표 마감·요청 제한·초안 정리는 완료 증거를 재사용한다. 완료한 실제 입력/PDF 검사는 반복하지 않는다. macOS·개별 Android 키보드·계정 전체 청구 보장 등 기존 관측 한계는 유지한다.
 
@@ -97,4 +105,4 @@ Production/Preview migration0000~0038·이력39개를 유지한다. 운영 app `
 
 ## Git과 다음 재개
 
-누적 변경은 기준 커밋1ee9f36부터 보존했고 검증 단위로 로컬 커밋한다. 현재 운영 배포 소스는56bb1bf·main이며 종료 문서 커밋은3e5e470다. 이번 재작업 시작 HEAD918dba4·worktree clean이었다. 검증한 소스·새 배경/웹 글꼴·문서·합성 캡처를 로컬 커밋하고, 검사 뒤 기존dist/배포 포인터를 복구했다. 정확한 현재 HEAD는 git log로 확인하며 문서 커밋을 배포 소스로 쓰지 않는다. 현재 push/Preview 소스는 상단 CI·배포 기록을 따른다. 다음 한 작업과 승인/미확인 경계는 [HANDOFF](HANDOFF.md), 고정 완료 조건은 [DELIVERY_PLAN](DELIVERY_PLAN.md)과 [release](spec/release.md)를 따른다.
+운영 앱 소스37b7254·Preview 소스21b81de, content의 기존 소스56bb1bf를 구분한다. P9-04 시작 worktree clean이며 로컬에는 직전 CI 결과 문서1커밋만 미푸시였다. 이번에는 운영 배포 기록 문서만 로컬 커밋하고 GitHub를 재푸시하지 않는다. 정확한 HEAD는 git log로 확인한다. 필수 후속 작업은 없으며 새 요청 시 [HANDOFF](HANDOFF.md)·[P9-04](work/P9-04.md)를 따른다. 실제 자료·키·유료 결과와 기존 미커밋 변경을 보존한다.

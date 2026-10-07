@@ -32,6 +32,8 @@ P5-69는 기존 경계를 적용한 [실제 시험·환경별 승인·rollback �
 
 2026-10-07 사용자는 앞으로 Preview를 GitHub main 푸시를 통한 Workers Builds 자동 배포로 통일하고, 현재 변경을 먼저 푸시한 뒤 Preview 최신화를 확인하도록 승인했다. 일반 Preview 반영에 로컬 직접 배포를 사용하지 않는다. 자동 배포가 실패하면 원인을 확인하고 같은 Git 기반 경로를 복구하며 직접 배포로 조용히 대체하지 않는다. 운영 서버 최신화는 Preview 확인 이후 별도 요청으로 진행하며 이번 승인은 운영 배포·유료 호출·DB migration 승인이 아니다. [배포 계약](spec/architecture.md#preview-반영-경로).
 
+2026-10-07 P9-04: 사용자는 CI 통과 뒤 별도 디자인 검수 단계를 추가하지 말고 운영 서버를 최신화하도록 정정했고, “운영 서버 배포하세요”로 실행을 명시 승인했다. 기존 수동 승인·versions upload/traffic 적용·직전 버전 복귀 계약을 사용한다. 앱 UI/자산/매뉴얼만 반영하며 DB migration·Secret 변경·content/backup 재배포·유료 호출을 추가하지 않는다. [실제 소스·명령·검증](work/P9-04.md).
+
 ## D-006 — 관리자 인증은 Cloudflare Access
 
 관리자 UI/API는 Cloudflare Access로 보호하고 Worker에서도 JWT를 검증한다. 현재 계정 구성원 정책과 6시간 세션을 사용한다. 적용 범위는 현재 코드/환경으로 확인한다. [이유·원문](archive/2026-09-21-p5-48/docs/DECISIONS.md#d-006--관리자-인증은-cloudflare-access).

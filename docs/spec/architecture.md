@@ -87,6 +87,8 @@ Worker 이름과 연결 대상도 환경별로 분리한다.
 
 자동 배포 대상은 `biblequiz-app-preview`이고 build command는 `pnpm run build:preview`, deploy command는 `pnpm exec wrangler deploy --strict --autoconfig=false`다. 기존 Preview D1·CONTENT_WORKFLOW·ADMIN_COMPUTE·Access 설정을 유지한다. 이 연결은 app만 갱신하며 별도 content/backup Worker를 최신 소스로 자동 배포했다고 주장하지 않는다. 해당 Worker 변경이 필요한 실제 AI/백업 작업은 별도 검토한다. GitHub CI 성공과 Cloudflare 배포 성공은 별개로 확인한다. 사용자 확인은 Cloudflare Workers & Pages → biblequiz-app-preview → Builds/Deployments에서 푸시 커밋과 성공 상태를 대조하고, Access 로그인 뒤 장년/어린이 첫 화면을 보는 순서다.
 
+2026-10-07 P9-04에서 사용자의 명시 지시에 따라 최신 UI를 운영 앱에 반영했다. 추가 시안 검수를 새 배포 조건으로 두지 않는다. 실제 production 빌드·버전 업로드·100% 적용 명령과 직전 버전 복귀는 [P9-04](../work/P9-04.md#배포-명령)를 따른다.
+
 Production은 별도 production 설정·소스 커밋·승인·배포/rollback 확인을 유지한다. 로컬 시험 SQL/데이터 저장소는 원격으로 업로드하거나 실행하지 않는다. DB migration은 코드 푸시와 별개다. [Workers Builds 공식 안내](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/).
 
 ### 로컬 UI 개발 실행
