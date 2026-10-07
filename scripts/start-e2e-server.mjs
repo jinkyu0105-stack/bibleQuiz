@@ -28,7 +28,7 @@ try {
   throw error;
 }
 
-const server = spawn("pnpm", ["dev", "--host", "127.0.0.1", "--port", "4173", "--strictPort"], {
+const server = spawn("pnpm", ["dev:local", "--host", "127.0.0.1", "--port", "4173", "--strictPort"], {
   env: { ...process.env, BIBLEQUIZ_E2E_D1_PATH: persistPath },
   stdio: "inherit",
 });

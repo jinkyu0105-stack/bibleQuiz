@@ -2,7 +2,7 @@
 
 다사랑교회 주간 설교를 바탕으로 어린이용·장년용 한글 낱말 퀴즈를 제공하는 웹앱입니다.
 
-현재 저장소에는 Phase 1 기반·보호된 Preview 연결, Phase 2 퍼즐 엔진, 승인된 Phase 7A 디자인 reference, Phase 3 한글 입력·공개 퀴즈/아카이브, 완료된 Phase 4 제출·채점·moderation과 Phase 5 성경 장절 도메인·관리자 API·입력 화면·허가형 본문 provider 계약이 구현되어 있습니다. 본문 없는 66권 metadata와 자연어/선택 장절 정규형은 계속 `reference_only`로 동작합니다. 미래의 허가형 provider 계약은 Worker 전용이며 승인 증빙·기간·사용 목적·source checksum·연속 절 응답을 검증하지만, 실제 provider나 본문은 연결하지 않았습니다. Preview에는 migration `0000`~`0006`과 runtime 설정을 연결했고 실제 Turnstile→부분 제출→결과·정답→참여 현황→본인 삭제→재방문 차단 흐름을 검수했습니다. 실제 설교 콘텐츠와 moderation 목록은 Phase 5 후속, 빈 격자·Top N 출력은 Phase 6, Cron·private R2·Production 요청 제한은 후속 운영/출시 단계로 남아 있습니다. 최신 검증 상태는 [`docs/STATUS.md`](./docs/STATUS.md), 상세 제품 결정은 [`implementation.md`](./implementation.md) 목차가 안내하는 분야별 명세를 정본으로 사용합니다.
+공개 풀이·제출/채점·지난 퀴즈·출력·관리자 발행과 운영 연결을 구현했고 Phase8 출시 범위는 완료했습니다. 현재 Phase9의 P9-02에서 승인 시안에 맞춘 UI를 로컬 검수하고 있습니다. 최신 상태는 [STATUS](docs/STATUS.md), 정확한 재개는 [HANDOFF](docs/HANDOFF.md), 제품 계약은 [implementation](implementation.md)을 따릅니다. 기본 개발 실행은 아래 `pnpm dev`이며 장년·어린이 시험 화면을 자동 준비합니다.
 
 ## 프로젝트 문서 지도
 
@@ -53,11 +53,20 @@ D1 데이터베이스
 
 ```bash
 pnpm install
-pnpm db:migrate:local
 pnpm dev
 ```
 
-브라우저에서 `http://localhost:5173`을 열면 공개 최신 퀴즈를 불러옵니다. 발행된 데이터가 없으면 준비 안내를 표시하며 샘플 퀴즈를 실제 콘텐츠처럼 노출하지 않습니다. `http://localhost:5173/api/health`는 Worker 백엔드 상태를 JSON으로 반환합니다.
+`pnpm dev`는 장년·어린이 시험 퀴즈를 자동 준비하고 개발 서버를 시작합니다. 터미널의 `Local` 주소(기본 `http://localhost:5173`)를 엽니다. 이미 실행 중인 서버가 있다면 그 터미널에서 `Ctrl+C`로 종료한 뒤 다시 실행합니다.
+
+- 어린이 첫 화면: `http://localhost:5173/?level=child`
+- 장년 첫 화면: `http://localhost:5173/?level=adult`
+- 종료: 실행한 터미널에서 `Ctrl+C`
+
+어제의 임시 `4177` 화면과 같은 코드·시험 데이터를 기본 실행에 연결했습니다. 포트는 접속 번호이며 디자인 버전이 아닙니다. 이 데이터는 실제 설교가 아닌 명시적인 시험 자료입니다. `.wrangler/ui-demo-state/`에 보관하므로 재시작해도 같은 퀴즈와 기록을 사용합니다. 이미 있는 기록은 덮어쓰지 않습니다. 기존 `.wrangler/state/` 자료·키·운영 데이터는 변경하지 않습니다. 관리자 Access 인증과 제출용 Turnstile 조건도 유지하므로 첫 화면 확인을 관리자 로그인·제출·실제 AI 실행 검수로 간주하지 않습니다.
+
+기존 로컬 자료를 사용하는 별도 개발 실행은 `pnpm dev:local`입니다. 해당 명령은 시험 데이터를 자동 입력하지 않습니다. 일반 화면 확인에는 `pnpm dev`만 사용하면 됩니다. 포트를 직접 지정하려면 `pnpm dev --port 4177`로 실행할 수 있습니다. 시험 데이터/저장 위치의 구현은 [로컬 개발 계약](docs/spec/architecture.md#로컬-ui-개발-실행)에 둡니다.
+
+`http://localhost:5173/api/health`는 Worker 백엔드 상태를 JSON으로 반환합니다.
 
 공개 읽기 API는 `/api/quizzes/latest?difficulty=child`, `/api/quizzes/YYYY-MM-DD-고유문자6자리?difficulty=adult`, `/api/archive`입니다. 현재 퀴즈의 본인 제출은 `/api/quizzes/:slug/:difficulty/me`, 참여 현황은 `/api/quizzes/:slug/:difficulty/board`, 공식 정답은 `/api/quizzes/:slug/:difficulty/solution`에서 읽고, 본인 제출 서버 삭제는 `DELETE /api/quizzes/:slug/:difficulty/me/submission`입니다. 진행 중 참여 현황과 정답은 해당 난이도를 제출한 활성 session에만 허용하고, 지난 퀴즈에서는 제출 없이 공개합니다. 브라우저는 진행 중 퀴즈의 즉시 제출 결과를 바로 표시하고, 재방문에서는 검증된 본인 제출에만 `정답보기`를 복원합니다. 지난 퀴즈의 `POST /api/quizzes/:slug/:difficulty/practice/check`는 최소 한 칸의 현재 임시 답안만 서버 메모리에서 채점하고 이름·동의·session·Turnstile·제출·참여 수·순위를 만들거나 갱신하지 않습니다. `POST /api/admin/quiz-sets/:id/close-now`는 Access JWT 서명·issuer·audience와 명시적 확인·사유를 다시 검증한 뒤 마감 시각·순위 snapshot·archive·감사 로그를 한 D1 batch로 확정합니다. Access 관리자 제출 관리는 `PATCH /api/admin/submissions/:id`의 숨김·복구와 `DELETE /api/admin/submissions/:id`의 PII 제거를 exact 상태 변경·moderation action·감사 기록으로 함께 확정합니다. 화면 공유 주소에는 `?level=child|adult`, 지난 퀴즈 검색에는 `?q=...&year=YYYY&month=M`을 사용합니다. 정답은 전용 권한 경계를 통과한 `/solution` 또는 archived 전용 채점 응답에만 포함하며 초기 공개 퀴즈·참여 현황 응답에는 본문·비공개 자막과 함께 섞지 않습니다. `0001`~`0006` migration은 격리 테스트 D1과 Preview D1에서 순서 적용·후검사를 완료했습니다. 개발 Local D1과 Production에는 적용하지 않았으므로 각 환경에서 실행하기 전에 migration 현황과 정확한 대상을 다시 확인해야 합니다.
 

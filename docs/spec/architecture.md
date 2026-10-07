@@ -81,6 +81,16 @@ Worker 이름과 연결 대상도 환경별로 분리한다.
 - Preview D1/R2/secret은 non-production 자원만 사용한다. Production D1 export token과 production R2 bucket은 `biblequiz-backup`에만 존재한다.
 - `biblequiz-app-preview`는 Worker-level Access의 `All traffic` 보호가 확인된 뒤 `workers_dev = true`로 전환하고, 고정 주소 하나만 사용하도록 버전별 `preview_urls = false`를 유지한다. 브라우저가 직접 호출하지 않는 콘텐츠·백업 Worker는 단순히 링크를 숨기는 것이 아니라 Wrangler에서 `workers_dev`와 preview URL을 끄고 route/custom domain도 등록하지 않는다.
 
+### 로컬 UI 개발 실행
+
+2026-10-07 사용자 요청: 어제의4177 장년·어린이 화면을 `pnpm dev`의 기본 결과로 삼는다. 기본 명령은 `scripts/start-dev-server.mjs`이며 기존39개 migration을 **로컬 전용** `.wrangler/ui-demo-state/`에 적용하고 `scripts/fixtures/dev-ui.sql`의 두 난도 합성 발행 자료를 넣은 뒤 Vite를 시작한다. SQL은 `INSERT OR IGNORE`를 사용해 이미 있는 기록/수정을 덮어쓰지 않는다. 종료 시 데이터를 삭제하지 않는다. 별도 새 migration은 만들지 않는다.
+
+기존 `.wrangler/state/`와 실제 자료·키·유료 결과는 재사용/삭제/복사하지 않는다. 원래 로컬 자료의 실행은 `pnpm dev:local`(Vite 직접 실행)로 남긴다. E2E는 이 명령과 `BIBLEQUIZ_E2E_D1_PATH`로 매번 새 `/tmp` 데이터를 쓰며 기존 격리를 유지한다. 기본 개발 명령은 별도 Cloudflare 환경/설정/E2E override가 주어지면 중단한다. 운영/Preview seed·배포·AI 호출은 실행하지 않는다. 관리자 Access와 제출 Turnstile 게이트를 우회하지 않는다.
+
+개발 서버의 기본 포트는5173이고 `--port`로 변경할 수 있다.4173/4177은 과거 시험 서버의 접속 번호일 뿐 다른 디자인 버전이 아니다. 브라우저 임시 답안/설정은 주소별 저장소이므로 과거4177의 브라우저 기록이5173으로 자동 이전되지는 않는다. 같은 화면과 새 기본 시험 데이터를 재현하는 범위다.
+
+Cloudflare Vite plugin1.53.1의 `persistState: { path }`와 Wrangler4.125.0의 `--local --persist-to`를 사용한다. [Vite 공식 API](https://developers.cloudflare.com/workers/vite-plugin/reference/api/)·[D1 공식 명령](https://developers.cloudflare.com/d1/wrangler-commands/)을 확인했다. Context7 library 검색은 해당 플러그인 대신 무관한 플러그인을 반환해 공식 문서로 확인을 이어갔다.
+
 ### 13.5 관리자 인증
 
 일반 회원 시스템을 만들지 않고 Cloudflare Access로 `/admin`, `/admin/*`, `/api/admin/*`를 보호한다.

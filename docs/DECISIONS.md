@@ -18,6 +18,8 @@ D1 + Drizzle을 사용한다. schema 변경은 SQL migration을 생성·검토�
 
 Node 24.18.0·pnpm 11.14.0을 local/CI/Workers Builds에 맞춘다. pnpm-lock.yaml만 사용한다. [이유·원문](archive/2026-09-21-p5-48/docs/DECISIONS.md#d-004--node-24와-pnpm-11-단일화).
 
+2026-10-07 사용자 요청으로 `pnpm dev`의 기본을 P9-02의 장년·어린이 UI 시험 실행으로 바꾼다. 별도 영속 로컬 저장소를 자동 준비해 매번 같은 화면을 확인하고 기존 자료/기록은 보존한다. 기존 로컬 실행은 `pnpm dev:local`, E2E 격리는 유지한다. 실제 콘텐츠·운영 반영·인증 우회 승인이 아니다. [로컬 개발 계약](spec/architecture.md#로컬-ui-개발-실행).
+
 ## D-005 — Preview와 Production을 물리적으로 분리
 
 main은 Access 보호 Preview에 자동 배포된다. Production은 별도 자원과 수동 승인으로 배포하며, 운영 트리거·승인·migration·rollback은 아래 P8-02 합의를 따른다. [이유·원문](archive/2026-09-21-p5-48/docs/DECISIONS.md#d-005--preview와-production을-물리적으로-분리).
