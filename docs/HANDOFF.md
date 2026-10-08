@@ -1,36 +1,34 @@
-# 인계 — P9-06 첫 화면 구름 밀도 복원, 사용자 검수 대기
+# 인계 — P9-06 영상 하늘·글래스모피즘 조사 완료
 
 ## 현재와 다음 한 작업
 
-2026-10-08 사용자는 직전 보정의 나머지는 좋지만 첫 화면이 듬성듬성하다고 지적했다. **원래 빽빽한 양옆 구름을 복원하고 같은 위치의 분리 요소로 삼아 좌우로만 조금씩 움직이기**가 최신 지시다. 해당 보정/관련 검사를 마쳤고 **현재P9-06은 사용자 시각 검수 대기, 부모 전체UI개편은 진행 중**이다. 다음은 첫 화면의 구름 밀도/흐름 확인·필요 보정이며 대표 시안 확정 뒤 기존 앱 연결이다. P9-04와 이전Phase9 완료는 유지한다.
+2026-10-08 사용자는 **첫 화면의 빽빽한 구름 복원은 확인**했으나 움직임은 만족스럽지 않다고 평가했다. 원본 이미지를 영상 AI로 만드는 경로(Flow/Gemini API·단독 수행·네 시간대)와 전체 UI 글래스모피즘의 AI 참조 문서를 **먼저 조사**하도록 요청했다. 조사는 완료했으며 UI 구현과 영상 생성은 미착수다. **P9-06과 부모 전체 UI 개편은 진행 중**, P9-04와 이전 Phase 9 완료는 유지한다.
 
-[작업·검사 근거](work/P9-06.md#첫-화면의-원래-구름-밀도-복원--2026-10-08) · [현재 디자인](spec/design.md).
+다음 첫 동작은 [조사 보고서](work/p9-06/video-glass-research.md)를 바탕으로 제작 경로·초기 연결·생성 범위를 정하는 것이다. 추천은 Gemini API·Veo3.1 Fast 낮1080p·8초1편 시험($0.96), 이후 낮/밤2편과 새벽/노을 색 보정이다. 이는 모델·편수·예산 승인이 아니다. 이어 유리 재질 기준과 검토본을 보정하고 확정 뒤 실제 앱에 연결한다. 같은 P9-06을 유지한다.
 
-## 직접 볼 화면과 복귀
+[작업](work/P9-06.md#영상-하늘글래스모피즘-조사--2026-10-08) · [현재 디자인](spec/design.md#108-영상-하늘과-전체-ui의-유리-재질--조사-후-구현).
 
-- **첫 화면:** `http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day` — 새로고침 후 맨 위에서 원래 구름 구도와 느린 수평 이동을 본다. 밤도 같은 원본 구름 밀도를 유지한다.
-- 스크롤하면 앞서 만든 구름5종/산/잔디로 이어진다. 콘텐츠 최대1440px·잔디 양끝 보정·산4K는 유지한다. 기존 사진 버튼과`mountains=off` 비교도 그대로다.
-- 이번 보정 전 기준**95cc314**, 넓은 화면 보정 전aa6d1d0. 이번 첫 화면/문서만 독립 커밋하므로 필요하면 해당 커밋을 확인해revert한다. 기존이미지 삭제/reset이 필요 없다.
+## 이번 확인과 변경
 
-loopback4189 정적 서버를 재사용했다. 없을 때만 실행한다.
+- 첫 하늘은 낮/밤 원본2장, 새벽·노을은 낮 원본 필터/광원이다. 영상1개로 네 색을 만들 수 있지만 기존 밤 표현에는2개가 합리적이라는 제안이다.
+- Google 공식 문서에서 Flow 구독과 API 과금,4K/워터마크/모델 조건을 확인했다. Fast4K·8초2편은 공개 단가 기준$4.80(세금/재시도 제외)이다. 사용자 계정의 실제 잔액·모델 권한은 미확인이다.
+- AI 참조는 Microsoft 프로젝트의 DESIGN.md, Google Labs 문서 형식, Apple/Fluent 재질 가이드, OriginKit Light Glass Button MCP 설명/소스다. 디자인 정본은 docs/spec/design.md를 유지한다. 유리 토큰과 실제 UI는 변경하지 않았다.
+- 변경은 조사 문서·P9-06·DECISIONS·design 명세·STATUS·HANDOFF뿐이다. 문서 검사에서 발견한 과거 P7B 디자인 링크1개는 당시 명세 보관본으로 연결했다. git diff --check와 로컬 링크/앵커185개, 코드/출처 대조를 확인했다.
+- 코드 변경이 없어 lint/typecheck/전체 pnpm check/E2E/Lighthouse를 반복하지 않는다. 새 영상/이미지·유료 호출·업로드·계정 설정·패키지·push/배포도 없다. 기존12영역 이동의 수치 검증을 사용자 만족으로 대체하지 않는다.
+
+## 화면과 보존
+
+현재 검토본은 `http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dusk` 이다. 첫 구도·하강 구름5종·산4K·OriginKit 잔디/마우스·사진 복귀/mountains=off·콘텐츠1440px를 유지한다. 검토본과 실제 앱 코드/자산의 이번 diff는0이다. loopback4189 서버는 없을 때만 실행한다.
 
 ```sh
 python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bibleQuiz
 ```
 
-수정 위치는`docs/design/phase-9/sky-v2/`다. 실제 앱/저장/API와 연결하지 않았다. 시작순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련spec/work→Git status/diff/log다.
+직전 구현70669c8의 브라우저/원본 대조·멈춤/OS감소·WebGL복원·JS/lint/typecheck 근거는 [P9-06](work/P9-06.md#첫-화면의-원래-구름-밀도-복원--2026-10-08)과 Git 제외 `.wrangler/design-references/p9-06-dense/`에 보존한다. 실제 GPU/배터리·앱 IME/WebKit·OS 폴백 검수는 남아 있다. 이번 조사에서 기능 검사를 새로 통과했다고 보고하지 않는다. 앞선 듬성듬성한 첫 배경은 폐기 상태를 유지한다.
 
-## 변경·검사·한계
+## Git과 배포
 
-- `sky-banks.js`/index canvas: 기존day/night 이미지를 같은 좌표의12개 구름군 마스크 영역으로 나눠 수평으로만 약22px 이내 이동한다. 원본좌표의 연속 보간이며 구름별PNG 추출/새 생성/완전3D 분리는 아니다. 중앙하늘/달·구도·색상을 유지한다. 별도RAF 없이world 공통시계를 쓰고 표시 중30Hz·최대2560×1440으로 제한한다.
-- `world.js`/style: 공개 첫 화면의 원본opacity14%→100%, 새 전경구름은 하강에 따라 등장, 자동 상하흔들림 제거. 첫 스크롤 검수에서 보인 아래쪽 직선 경계는 진행도 마스크로 이어줬다. 맨위는 완전불투명이다. 원본picture는 로딩/그래픽실패 복귀용으로 유지하고context복원/resize에도 재연결한다.
-- Chromium1440×900/2560×1080/2560×1440/390×844 구도/넘침0·네 시간대. 원본 대비 평균채널오차 낮0.54/밤0.63미만(255기준).45초 샘플의 세 구름영역은수평+3/+12/−8px·수직0px, 위빈중앙픽셀차0. 실제 공통시계/정지draw중단·OS감소·정지중GL복원·작은창→큰창 원본교체·하강/상단복귀·기존 산/잔디를 확인했다. Firefox2560px밤도 통과, runtime error0·외부요청0.
-- JS 구문·lint/typecheck 통과. 최종diff/문서 로컬 링크/기존23개 자산해시와 보존 경로 확인도 통과했다. 검증한 변경을 로컬 커밋한다. 기존 전체pnpm check/출시E2E/Lighthouse/유료호출은 반복하지 않았다. 실제GPU/배터리/IME/WebKit/OS폴백 한계는 유지한다. 기존99/91은 최초사진시안 점수다.
-- 근거는 Git 제외`.wrangler/design-references/p9-06-dense/`의visual-review/pixel-review/verification/edge-review JSON과PNG. 원본을 흐리게 낮추고 새 구름 몇 개로 채우는 첫 구도는 폐기했다. 기존이미지/잔디코드/산/폰트와 실제앱 경로는 변경하지 않았다.
-
-## Git·배포·보존
-
-시작HEAD**95cc314**, main/worktree clean, origin/main21b81de보다8커밋 앞섬. 이번 첫 화면/관련 문서를 하나의 로컬 커밋으로 남긴다. 해당 커밋의 부모는95cc314이며 정확한 종료HEAD/clean/미푸시수는 최종Git log/status를 따른다. push없음. 원격배포는 재검수하지 않았다.
+시작 HEAD **70669c8**, main/worktree clean, origin/main **21b81de**보다9커밋 앞섬. 이번 조사 문서를 별도 커밋하면 미푸시10커밋이다. 정확한 종료 HEAD/clean/커밋수는 최종 Git log/status를 따른다. 화면 구현 커밋70669c8과 조사 문서 커밋을 구분한다. push와 원격 배포 재검수는 없다.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -40,10 +38,14 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 | Preview app |3dc36ff6-f6d0-4627-bc43-6beeb3495391 / GitHub21b81de 자동 배포|
 | Preview content |2df93f07-3703-42ec-b576-fd085e8c839f / 기존 배포|
 
-배포 기록을 재사용했으며 원격재검수/배포/migration/Secret/실제AI를 실행하지 않았다. Preview는main push 자동배포만, Production은 별도요청이다. `src/public`·Worker/설정/SQL/package/lockfile·0000~0038·실제자료/키/유료결과·기존이미지/폰트/fontkit을 보존한다. 이전검사·LCP5.4초·rollback 근거는[P9-04](work/P9-04.md)를 따른다.
+배포 기록을 재사용한다. Preview는 main push 자동 경로, Production은 별도 요청이다. 실제 자료/키/유료 결과·0000~0038·이미지·폰트/fontkit·Worker 설정/package/lockfile을 보존한다. [P9-04](work/P9-04.md)의 운영/rollback 근거는 유지한다.
 
 ## 실행·사용량·세션
 
-시작Pro9%사용/91%잔여, 별도5시간없음, 사용자 지정×10=910%. 추천**Astra·Max**이며 모델설정을 변경했다고 주장하지 않는다. codex-exec-recovery 검증 경로인`/bin/bash`·login:false·명시workdir·승인검토를 재사용했다. Node24.18.0/pnpm11.14.0은 현재프로세스PATH에만`/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다.
+시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git status/diff/log다. 시작 Pro10% 사용/90% 잔여, 별도5시간 없음, 사용자 지정×10=900%. **세션 유지**, 다음 추천 **Astra·Max** — 영상 구도/반복과 네 시간대 유리 표면의 가독성을 함께 판단한다.
 
-Windows bundled Python/Pillow는 캡처의 픽셀 대조에만 사용했다. 이미지파일 편집/새생성·새설치/의존성은 없다. 같은P9-06 시각검수/앱연결이 남아**세션유지**. 다음 추천**Astra·Max** — 원래 구도와 움직이는 구름의 연결감을 함께 판단한다.
+검증된 shell은 `/bin/bash`·login:false·명시 workdir·승인 검토 경로다. Node24.18.0/pnpm11.14.0의 PATH는 현재 프로세스에만 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다.
+
+Windows computer-use의 node_repl은 실행 전에 `codex/sandbox-state-meta: sandboxCwd is not a local file URI: file:///home/onegem/work/bibleQuiz`로 실패했다. codex-exec-recovery에 따라 같은 경로를 반복하지 않고 WSL/기존 Chromium에서 Flow 공개 소개 페이지HTTP200을 확인했다. **사용자의 로그인 세션/잔액 접근 성공은 아니다.** 저장소 접근은 정상이다.
+
+현재 프로세스와 프로젝트 루트 표준 환경파일에는 Google/Gemini 키 설정이 없었다. 비밀값은 출력하지 않았으며 다른 영속 위치/계정에 키가 없다는 뜻이 아니다. 다음 실행에서 기존 키 위치를 재사용하고 채팅/Git에 노출하지 않는다. ffmpeg는 기존 설치됨, 새 도구 설치는 없다. Context7 SDK 조회에 일부 오래된 Veo2/1080p 예시가 있어 최신 Veo 전용 가이드의 지원표를 우선했다.
