@@ -6,6 +6,8 @@
 
 **다음P9-06: 공개 첫 화면 낮/밤·모바일 풀이·관리자 생성/검수 대표 시안.** 이번에는 착수하지 않았다. 사용자가 승인한 시작 흐름에 따라 대표 시안을 만들고 확인한 뒤 전체 앱 UI/기능 검사로 이어간다. 내부 단계마다 같은 승인을 재요청하지 않으며 새로운 비용·production 의존성/서비스·배포 경계는 별도다. `imagegen-frontend-web`/필요한 모바일 참고 skill은 현재 AGENTS catalog를 읽는다. 이미지 한 장에 여러 화면/섹션을 압축하지 않고 글자/성경 구절을 합성하지 않는다. 실제 한글 레이블은 HTML/명세로 다룬다. 기존 기능·정답/Access·한글입력·영속자료·출력 폰트/fontkit을 유지한다. 최종 타이포/표면/패널은 아직 확정하지 않았다.
 
+후속 참조/글꼴 질문은 [P9-05 확인 근거](work/P9-05.md#참조-경로적용-범위한글-글꼴-확인--2026-10-08)·[한글 서체 기준](spec/design.md#참조와-한글-서체-적용-기준)에 정리했다. Refero 수동 DESIGN.md/CSS 참조이며 Tailwind/MCP 적용이나 전체 디자인 준수는 아니다. 실제 fonts.css는 Noto Sans KR400/Noto Serif KR600이고 독립 검토본은 이를 연결하지 않았다. 미지원 원본/대체를 이름만 넣지 말고 다음 시안에서 실제 한글 폰트·굵기·OS 폴백을 검수한다. Pretendard/Nanum Pen Script는 비교 후보이며 설치/확정하지 않았다. 이번 후속은 문서만 변경, P9-06 미착수다.
+
 ## 직접 확인할 검토본
 
 주소: `http://localhost:4189/docs/design/phase-9/air-sky-study/`. 네 시간대 버튼을 누르고 스크롤하면 같은 하늘의 구름을 지나 정원으로 내려간다. 구름은 스크롤 없이도 움직이며 멈춤/재개·움직임 감소 설정을 지원한다. PC 우측 세로/390px 모바일 하단 가로 제어다. 기본 리뷰 시점은 낮이며 최종 앱의 자동 초기 시간 정책은 미확정이다.
@@ -24,7 +26,7 @@ loopback 정적 서버4189를 열어 두었다. 재개 시 먼저 주소 응답�
 
 ## Git·배포·보존
 
-시작 HEAD **2a12e0b**, main/worktree clean. 실제 원격 main **21b81dee578c6dad5decc3add9d71102a3595df6**, 로컬 문서2커밋 미푸시를 확인했다. 이번에는 검토본과 관련 문서만 로컬 커밋한다. 정확한 종료HEAD/미푸시 수는 git log/status로 확인한다. src/public/Worker/설정/SQL/package/lockfile은 변경하지 않는다.
+시작 HEAD **2a12e0b**, main/worktree clean. 실제 원격 main **21b81dee578c6dad5decc3add9d71102a3595df6**, 로컬 문서2커밋 미푸시를 확인했다. P9-05 검토본/문서는52b0614로 로컬 커밋했다(ahead3). 후속 참조/글꼴 확인은 같은 완료 작업의 문서 보완이며 시작 HEAD52b0614·clean/ahead3를 확인했다. 문서 diff whitespace·로컬 링크168개/새 절 제목·공식 글꼴 목록과 코드 대조를 확인했다. 문서만 변경했고 기존 코드/출시 검사를 반복하지 않는다. 별도 로컬 커밋 뒤 미푸시4개이며 push/배포하지 않는다. 정확한 종료HEAD/미푸시 수는 git log/status로 확인한다. src/public/Worker/설정/SQL/package/lockfile은 변경하지 않는다.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
