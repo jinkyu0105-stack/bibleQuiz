@@ -2,7 +2,7 @@
   "task": "P9-06",
   "date": "2026-10-08",
   "generationTool": "Codex built-in image_gen.imagegen",
-  "purpose": "Original sky assets and separate text-free screen references. No Air assets copied.",
+  "purpose": "Original generated sky assets and text-free screen references, plus an attributed real mountain photograph. No Air assets copied.",
   "masters": "Original generation files preserved; additional local copies under .wrangler/design-references/p9-06-air/masters (Git ignored).",
   "optimization": "Pillow WebP quality87/method6; day/night/meadow small960px quality84. Encoding/size only, no artistic manipulation.",
   "images": [
@@ -101,6 +101,23 @@
       "sha256": "179247ad1dd715c5d0f3fb72dde59dc551ed0e6e5e687ab9b0b991b6e64f522d",
       "transparent": true,
       "prompt": "One isolated extremely realistic voluminous sunlit cumulus cloud cluster on a TRUE TRANSPARENT background, cinematic natural photography, rich fine fluffy vapor details. Unique asymmetrical shape: a TALL rounded wispy tower at far LEFT leaning slightly right, with a long low tapering soft flat cloud base that trails off toward the RIGHT. The left two thirds heavier with three uneven overlapping lobes, the right third thin delicate dissipating filaments. Photoreal subtle blue-gray shade underneath, luminous soft warm white rim sunlight from upper left. Deep convincing billowy depth with airy semi-transparent ragged edges. Broad horizontal composition, cloud fills roughly80%width and65%height with empty transparent margins all around, do not crop any portion. Not cotton, not fantasy, not painterly, no repeated identical lobes. Designed as a high-quality depth-layer billboard sprite for a website. Nothing else: NO sky, ground, plane, text, words, logo, watermarks. Actual RGBA transparent background."
+    }
+  ],
+  "photographs": [
+    {
+      "name": "distant-mountains",
+      "file": "assets/mountains.webp",
+      "author": "Le Mucky (@mucky)",
+      "source": "https://unsplash.com/photos/distant-mountain-ranges-with-atmospheric-blue-haze-HHKD3m3eouo",
+      "download": "https://images.unsplash.com/photo-1782150042477-e2911268b35c?auto=format&fit=max&fm=webp&q=82&w=1600",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "retrieved": "2026-10-08",
+      "width": 1600,
+      "height": 900,
+      "bytes": 107914,
+      "sha256": "68fab81cb27f5baf368aa4c0a93886684b22588662817b5949b65eb01ce7bcf1",
+      "processing": "Downloaded as 1600px WebP via source CDN. No AI generation or bitmap retouching. CSS crop, edge mask, tint and brightness integrate with existing sky."
     }
   ]
 }

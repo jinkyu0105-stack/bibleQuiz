@@ -34,3 +34,13 @@
 ## 검증
 
 관련 브라우저 검사와 남은 기기 한계는 [P9-06 작업 문서](../../../work/P9-06.md#originkit-잔디-비교--2026-10-08)에 기록한다. 기존 사진 버전의 Lighthouse 점수를 움직이는 잔디의 성능 점수로 사용하지 않는다.
+
+## 먼 산 사진 — 2026-10-08
+
+사용자는 움직이는 잔디와 마우스 반응을 채택하고 먼 곳에 일반 사진으로 산을 추가하도록 요청했다. 잔디 원본/바람/마우스 코드는 유지하고 뒤에 실제 촬영 사진 한 층을 추가했다. 구름은 그 앞을 지나가며 지면과 같은 스크롤 진행도로 산이 나타난다. CSS 마스크·시간대 색/밝기로 접합하며 bitmap을 AI로 생성/보정하지 않았다.
+
+사진은 **Le Mucky (@mucky)**의 [Distant mountain ranges with atmospheric blue haze](https://unsplash.com/photos/distant-mountain-ranges-with-atmospheric-blue-haze-HHKD3m3eouo)다. [Unsplash License](https://unsplash.com/license)의 무료 사용/수정/배포 조건을2026-10-08 확인했다. 사진 자체의 재판매나 경쟁 이미지 서비스 구축 용도가 아니다. 로컬 자산은1600×900 WebP,107,914bytes이며 정확한 URL/해시는 [assets.json](assets.json)의 `photographs`에 기록했다. 생성 이미지 목록과 구분한다.
+
+첫 화면/사진 모드/풀이·관리자에서는 새 사진을 요청하지 않고 잔디가 지면에서 표시될 때1회 로드한다. 별도 반복 애니메이션이나 GPU draw를 추가하지 않았다. 사진 로드 실패에는 산을 숨겨 기존 잔디/하늘을 유지한다. OS 움직임 감소에서는 색상 전환도 끈다.
+
+[산 없는 이전 잔디 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&mountains=off#ground-controls)는 `mountains=off`만 사용하며 산 파일도 요청하지 않는다. 잔디까지 되돌릴 때는 기존 사진 버튼을 쓴다. 이번 산 추가 전 기준은 **aafcf08**이며 별도 로컬 커밋으로 복귀 경계를 남긴다. 최종 산의 높이/색 검수와 실제 앱 연결·기기 검수는 구분한다.

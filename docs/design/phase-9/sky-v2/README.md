@@ -21,6 +21,8 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 사용자가 좋아한 기존 사진을 기본으로 보존하고, [움직이는 잔디 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass#ground-controls)를 추가했다. 맨 아래 **기존 사진 / 움직이는 잔디**로 즉시 전환한다. 시간대와 선택은 URL에 유지한다. 설치된 OriginKit MCP에서 받은 base 코드의 지형·잔디·바람·마우스 반응을 기존 하늘에 연결했다. [사용한 MCP/원본과 조정점/되돌리기](ORIGINKIT.md).
 
+움직이는 잔디는 사용자 확인을 받았고, 후속 요청으로 **먼 산의 실제 촬영 사진**을 추가했다. 같은 잔디 주소에서 바로 보인다. [산 없는 이전 모습](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&mountains=off#ground-controls)과 비교할 수 있다. 사진 출처·사용 조건·원본 해시는 [산 사진 기록](ORIGINKIT.md#먼-산-사진--2026-10-08)에 있다.
+
 ## 새로 만든 부분
 
 - 낮/밤 원경과 들판, 형태가 다른 투명 구름 3종. 구름은 깊이별 투영과 자동 흐름을 가진 독립 WebGL 층이다. 스크롤을 가로채지 않고 하나의 카메라가 내려간다. 지면도 같은 진행도에 따라 아래에서 접근한다.

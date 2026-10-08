@@ -4,6 +4,11 @@ export function createWorld() {
   const canvas = document.querySelector('#clouds');
   const vault = document.querySelector('.sky-vault');
   const meadow = document.querySelector('.meadow');
+  const mountains = document.querySelector('.distant-mountains');
+  const mountainImage = mountains.querySelector('img');
+  let mountainRequested = false, mountainReady = false;
+  mountainImage.addEventListener('load', () => { mountainReady = true; wake(); });
+  mountainImage.addEventListener('error', () => { mountainReady = false; wake(); });
   const grassCanvas = document.querySelector('#origin-grass');
   let groundMode = 'photo', grassField = null, grassLoading = false, grassFailed = false;
   const grassStatus = document.querySelector('#grass-status');
@@ -111,6 +116,12 @@ export function createWorld() {
         grassVisible = grassField.render({ time, ground, theme: document.body.dataset.time, moving: !paused && !media.matches, reduced: media.matches, width, height });
       }
     }
+    // A local photograph sits behind the unchanged interactive grass.
+    const showMountains = grassVisible && document.body.dataset.mountains !== 'off';
+    if (showMountains && !mountainRequested) { mountainRequested = true; mountainImage.src = 'assets/mountains.webp'; }
+    mountains.hidden = !showMountains || !mountainReady;
+    mountains.style.transform = `translate3d(-50%,${height * (1 - ground) * .95}px,0)`;
+    mountains.style.opacity = String(Math.min(1, Math.max(0, (ground - .40) / .22)));
     grassCanvas.hidden = !grassVisible;
     grassCanvas.dataset.active = String(grassVisible);
     meadow.style.opacity = grassVisible ? '0' : String(Math.min(1, ground * 2));

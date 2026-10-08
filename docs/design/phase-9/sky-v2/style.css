@@ -29,3 +29,17 @@ body:has(input:focus,textarea:focus) .review-switch{visibility:hidden}
 .ground-comparison button[aria-pressed=true]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 #grass-status{font-size:10px;line-height:1.8;margin-top:9px;color:var(--muted);max-width:280px}
 @media(prefers-reduced-motion:reduce){#origin-grass{will-change:auto}}
+
+/* A photographic distant ridge, beneath the grass and shared cloud layers. */
+.distant-mountains{position:absolute;left:50%;top:40%;width:max(100%,900px);height:43%;pointer-events:none;will-change:transform;mask-image:linear-gradient(transparent 0%,#000 19%,#000 88%,transparent 100%);filter:saturate(.66) brightness(1.12);transition:filter var(--duration)}
+.distant-mountains img{object-fit:cover;object-position:center top}
+.distant-mountains:after{content:'';position:absolute;inset:0;background:rgba(146,204,231,.22);transition:background var(--duration)}
+body[data-time=dawn] .distant-mountains{filter:saturate(.45) brightness(.97)}
+body[data-time=dawn] .distant-mountains:after{background:rgba(173,168,194,.25)}
+body[data-time=dusk] .distant-mountains{filter:saturate(.45) brightness(.98)}
+body[data-time=dusk] .distant-mountains:after{background:rgba(218,158,148,.35)}
+body[data-time=night] .distant-mountains{filter:brightness(.44)}
+body[data-time=night] .distant-mountains img{filter:grayscale(1)}
+body[data-time=night] .distant-mountains:after{background:rgba(17,47,79,.52)}
+@media(max-width:700px){.distant-mountains{top:41%;height:39%;width:900px}}
+@media(prefers-reduced-motion:reduce){.distant-mountains,.distant-mountains:after{transition:none}.distant-mountains{will-change:auto}}

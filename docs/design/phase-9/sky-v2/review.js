@@ -5,6 +5,7 @@ const params = new URLSearchParams(window.location.search);
 const view = ['home', 'quiz', 'admin'].includes(params.get('view')) ? params.get('view') : 'home';
 const level = params.get('level') === 'adults' ? 'adults' : 'children';
 document.body.dataset.view = view;
+document.body.dataset.mountains = params.get('mountains') === 'off' ? 'off' : 'on';
 for (const panel of document.querySelectorAll('.view')) panel.hidden = panel.id !== `${view}-view`;
 for (const link of document.querySelectorAll('[data-view-link]')) if (link.dataset.viewLink === view) link.setAttribute('aria-current', 'page');
 if (view !== 'home') {
