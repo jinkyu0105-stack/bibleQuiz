@@ -17,6 +17,17 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 오른쪽 시간대 버튼(모바일 공개 화면은 아래쪽)으로 새벽·낮·노을·밤을 바꾼다. 풀이/관리자 모바일에서는 제어를 내용 위로 옮겨 입력 영역을 가리지 않는다. 멈춤 버튼은 구름과 선택한 잔디의 자동 움직임을 함께 멈춘다. OS 움직임 감소 설정에서는 자동 이동/전환을 끄고 시간대·스크롤 조작은 유지한다.
 
+## Apple 참고 유리 UI
+
+사용자가 선택한3번 **Apple Liquid Glass**의 원리를 웹으로 구현했다. 공개·풀이·관리자의 둥근 표면, 빛나는 가장자리, 배경 흐림과 이동하는 선택 표시를 함께 볼 수 있다. 헤더/시간대/첫 버튼은 더 맑게, 퀴즈와 편집 영역은 읽기 쉬운 밀도로 구분한다. 한글 글자와 입력칸 자체를 굴절시키지 않는다.
+
+- [새 유리 UI](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day) · [이전 모습 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day&glass=off)
+- **선명하게** 버튼은 투명도를 줄인다. 선택은 `clarity=high`로 URL/검토 화면 이동에 남으며 다시 누르면 복원한다. OS 투명도/움직임 감소와 기존 멈춤도 따른다.
+- Chromium에서는 제어의 가장자리 굴절을 더하고 다른 브라우저는 CSS 흐림으로 표시한다. Apple 시스템 재질과 동일한 SDK가 아니다. Safari/WebKit 실검증은 현재 실행 라이브러리 부재로 남아 있다.
+- 영상은 사용자가 준비 중이다. 이번 변경은 기존 구름/잔디/산 위에 적용한 UI이며 영상 연결은 아직 하지 않았다.
+
+[AI가 참조할 재질/토큰/상태 명세](../../../spec/design.md#apple-참고-유리-검토본의-재현-기준) · [검사와 남은 범위](../../../work/P9-06.md#apple-참고-유리-ui--2026-10-08).
+
 ## OriginKit 잔디 비교
 
 사용자가 좋아한 기존 사진을 기본으로 보존하고, [움직이는 잔디 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass#ground-controls)를 추가했다. 맨 아래 **기존 사진 / 움직이는 잔디**로 즉시 전환한다. 시간대와 선택은 URL에 유지한다. 설치된 OriginKit MCP에서 받은 base 코드의 지형·잔디·바람·마우스 반응을 기존 하늘에 연결했다. [사용한 MCP/원본과 조정점/되돌리기](ORIGINKIT.md).
@@ -34,7 +45,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 ## 새로 만든 부분
 
 - 낮/밤 원경과 들판, 형태가 다른 풍성한 투명 구름5종. 구름은 깊이별 투영과 자동 흐름을 가진 독립 WebGL 층이다. 스크롤을 가로채지 않고 하나의 카메라가 내려간다. 지면도 같은 진행도에 따라 아래에서 접근한다.
-- 공개 화면은 큰 한글 제목과 여백, 퀴즈 선택의 단순한 두 행, 지난 퀴즈 목록으로 구성한다. 풀이/관리자는 거의 불투명한 안정된 읽기 표면을 쓴다.
+- 공개 화면은 큰 한글 제목과 여백, 퀴즈 선택의 단순한 두 행, 지난 퀴즈 목록으로 구성한다. 풀이/관리자는 배경 빛이 은은하게 통과하는 안정된 유리 읽기 표면을 쓴다.
 - Noto Sans KR400을 실제 자체 호스팅 파일로 연결한다. 파일 없는 굵기를 합성하지 않는다. Noto Serif/출력 폰트/fontkit은 그대로 보존했다.
 - 풀이는 별도 예시 8×8 격자이며 실제 제품 퍼즐 엔진이나 채점 기능이 아니다. 관리자 입력은 현재 화면 메모리에만 반영하며 새로고침하면 초기 예시로 돌아간다. 일부 대표 화면 밖 메뉴는 범위를 알리는 설명창을 연다.
 
@@ -50,6 +61,8 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 - [index.html](index.html): 실제 한글/레이아웃/입력 요소
 - [style.css](style.css): 네 시간대와 공개/풀이/관리자 반응형
+- [liquid-glass.css](liquid-glass.css): 역할별 유리 재질·네 시간대·접근성 대체 표시
+- [liquid-glass.js](liquid-glass.js): 배경 전용 가장자리 굴절·선택 표시·마우스 빛·투명도/이전 모습 전환
 - [originkit-grass.js](originkit-grass.js): OriginKit shader/잔디 geometry와 검토본 연결
 - [sky-banks.js](sky-banks.js): 원래 낮/밤 배경의 구름군12영역·수평 이동·원본 fallback
 - [world.js](world.js): 독자적인 깊이별 구름 투영과 지면 이동, 멈춤/감소/fallback

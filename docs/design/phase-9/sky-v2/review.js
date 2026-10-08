@@ -1,5 +1,6 @@
 /* global window, document, URLSearchParams, setTimeout, structuredClone */
 import { createWorld } from './world.js';
+import { installLiquidGlass } from './liquid-glass.js';
 
 const params = new URLSearchParams(window.location.search);
 const view = ['home', 'quiz', 'admin'].includes(params.get('view')) ? params.get('view') : 'home';
@@ -169,5 +170,6 @@ document.querySelector('#restore-example').addEventListener('click', () => { dra
 document.querySelector('#review-check').addEventListener('change', event => { document.querySelector('#review-next').disabled = !event.target.checked; });
 document.querySelector('#review-next').addEventListener('click', () => explain('검수 흐름 확인', '확인 표시와 다음 단계 버튼의 동작을 확인했습니다. 실제 격자 배치·검사·발행은 기존 앱 연결 단계에서 이어집니다.'));
 for (const button of document.querySelectorAll('[data-admin-page]')) button.addEventListener('click', () => { if (button.dataset.adminPage !== 'weekly') explain(button.textContent.trim(), '기존 운영 메뉴를 보존한 디자인 검토본입니다. 이 메뉴의 실제 작업은 현재 운영 앱에서 계속 이용할 수 있습니다.'); });
+installLiquidGlass();
 world.reset();
 if (['#weekly', '#archive', '#ground-controls'].includes(window.location.hash) && view === 'home') setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView(), 100);
