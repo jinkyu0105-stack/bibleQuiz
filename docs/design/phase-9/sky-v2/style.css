@@ -19,3 +19,13 @@ body[data-time=night] .cell:not(.block){background:#f1f5fb;color:#14283d}
 body[data-time=night] .cell.highlight{background:#e6f0ff}
 body[data-time=night] .cell.chosen{background:#d8e8ff;outline-color:#195bcf}
 body:has(input:focus,textarea:focus) .review-switch{visibility:hidden}
+
+/* P9-06 optional OriginKit comparison. No existing meadow asset is replaced. */
+#origin-grass{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;will-change:transform}
+.ground-comparison{margin-top:22px;align-self:flex-start;background:var(--air-panel);padding:14px 18px;border:1px solid var(--line);border-radius:9px;max-width:100%}
+.ground-comparison>span{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}
+.ground-comparison>div{display:flex;gap:6px;flex-wrap:wrap}
+.ground-comparison button{min-height:44px;padding:10px 17px;border-radius:6px;border:1px solid var(--line);font-size:12px}
+.ground-comparison button[aria-pressed=true]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+#grass-status{font-size:10px;line-height:1.8;margin-top:9px;color:var(--muted);max-width:280px}
+@media(prefers-reduced-motion:reduce){#origin-grass{will-change:auto}}

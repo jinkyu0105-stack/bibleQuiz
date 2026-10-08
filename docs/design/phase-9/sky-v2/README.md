@@ -15,7 +15,11 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 | [풀이](http://localhost:4189/docs/design/phase-9/sky-v2/?view=quiz) | 모바일 전체 격자, 단서 선택, 예시 한글 입력, 이전/다음, 초기화 |
 | [관리자](http://localhost:4189/docs/design/phase-9/sky-v2/?view=admin) | 기존 메뉴/6단계의 배치, 요약·두 난도 탭, 편집 미리보기와 확인 표시 |
 
-오른쪽 시간대 버튼(모바일 공개 화면은 아래쪽)으로 새벽·낮·노을·밤을 바꾼다. 풀이/관리자 모바일에서는 제어를 내용 위로 옮겨 입력 영역을 가리지 않는다. 멈춤 버튼은 구름의 자동 이동을 멈춘다. OS 움직임 감소 설정에서는 자동 이동/전환을 끄고 시간대·스크롤 조작은 유지한다.
+오른쪽 시간대 버튼(모바일 공개 화면은 아래쪽)으로 새벽·낮·노을·밤을 바꾼다. 풀이/관리자 모바일에서는 제어를 내용 위로 옮겨 입력 영역을 가리지 않는다. 멈춤 버튼은 구름과 선택한 잔디의 자동 움직임을 함께 멈춘다. OS 움직임 감소 설정에서는 자동 이동/전환을 끄고 시간대·스크롤 조작은 유지한다.
+
+## OriginKit 잔디 비교
+
+사용자가 좋아한 기존 사진을 기본으로 보존하고, [움직이는 잔디 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass#ground-controls)를 추가했다. 맨 아래 **기존 사진 / 움직이는 잔디**로 즉시 전환한다. 시간대와 선택은 URL에 유지한다. 설치된 OriginKit MCP에서 받은 base 코드의 지형·잔디·바람·마우스 반응을 기존 하늘에 연결했다. [사용한 MCP/원본과 조정점/되돌리기](ORIGINKIT.md).
 
 ## 새로 만든 부분
 
@@ -36,6 +40,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 - [index.html](index.html): 실제 한글/레이아웃/입력 요소
 - [style.css](style.css): 네 시간대와 공개/풀이/관리자 반응형
+- [originkit-grass.js](originkit-grass.js): OriginKit shader/잔디 geometry와 검토본 연결
 - [world.js](world.js): 독자적인 깊이별 구름 투영과 지면 이동, 멈춤/감소/fallback
 - [review.js](review.js): 예시 화면 조작과 검토 경계
 - [fonts.css](fonts.css): 기존 Noto Sans KR400 `unicode-range`의 경로만 검토 서버에 맞춤

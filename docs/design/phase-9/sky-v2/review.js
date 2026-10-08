@@ -12,10 +12,26 @@ if (view !== 'home') {
   destination.before(document.querySelector('.time-rail'));
 }
 const world = createWorld();
+function setGround(mode) {
+  const choice = mode === 'grass' ? 'grass' : 'photo';
+  world.setGround(choice);
+  for (const button of document.querySelectorAll('button[data-ground]')) button.setAttribute('aria-pressed', String(button.dataset.ground === choice));
+  const query = new URLSearchParams(window.location.search); query.set('ground', choice);
+  window.history.replaceState(null, '', `?${query}${window.location.hash}`);
+  for (const link of document.querySelectorAll('a[href^="?view="]')) {
+    const [path, hash] = link.getAttribute('href').split('#');
+    const linkParams = new URLSearchParams(path.slice(1)); linkParams.set('ground', choice);
+    link.setAttribute('href', `?${linkParams}${hash ? `#${hash}` : ''}`);
+  }
+}
+setGround(params.get('ground'));
+for (const button of document.querySelectorAll('button[data-ground]')) button.addEventListener('click', () => setGround(button.dataset.ground));
 const validThemes = ['dawn', 'day', 'dusk', 'night'];
 function setTheme(theme) {
   if (!validThemes.includes(theme)) return;
   document.body.dataset.time = theme;
+  const query = new URLSearchParams(window.location.search); query.set('time', theme);
+  window.history.replaceState(null, '', `?${query}${window.location.hash}`);
   for (const button of document.querySelectorAll('.time-options button')) button.setAttribute('aria-pressed', String(button.dataset.time === theme));
   world.setTheme(theme);
   // Keep the choice across this independent review's views without altering app storage.
@@ -153,4 +169,4 @@ document.querySelector('#review-check').addEventListener('change', event => { do
 document.querySelector('#review-next').addEventListener('click', () => explain('검수 흐름 확인', '확인 표시와 다음 단계 버튼의 동작을 확인했습니다. 실제 격자 배치·검사·발행은 기존 앱 연결 단계에서 이어집니다.'));
 for (const button of document.querySelectorAll('[data-admin-page]')) button.addEventListener('click', () => { if (button.dataset.adminPage !== 'weekly') explain(button.textContent.trim(), '기존 운영 메뉴를 보존한 디자인 검토본입니다. 이 메뉴의 실제 작업은 현재 운영 앱에서 계속 이용할 수 있습니다.'); });
 world.reset();
-if (['#weekly', '#archive'].includes(window.location.hash) && view === 'home') setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView(), 100);
+if (['#weekly', '#archive', '#ground-controls'].includes(window.location.hash) && view === 'home') setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView(), 100);

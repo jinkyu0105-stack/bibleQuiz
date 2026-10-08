@@ -4,6 +4,9 @@ export function createWorld() {
   const canvas = document.querySelector('#clouds');
   const vault = document.querySelector('.sky-vault');
   const meadow = document.querySelector('.meadow');
+  const grassCanvas = document.querySelector('#origin-grass');
+  let groundMode = 'photo', grassField = null, grassLoading = false, grassFailed = false;
+  const grassStatus = document.querySelector('#grass-status');
   const home = document.querySelector('#home-view');
   const header = document.querySelector('.site-header');
   const media = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -94,7 +97,26 @@ export function createWorld() {
     vault.style.opacity = String(Math.max(0, 1 - progress * 2.8));
     const ground = Math.max(0, Math.min(1, (progress - .40) / .60));
     meadow.style.transform = `translate3d(0,${height * (1 - ground) * .95}px,0) scale(${1.01 + .12 * ground})`;
-    meadow.style.opacity = String(Math.min(1, ground * 2));
+    let grassVisible = false;
+    if (groundMode === 'grass' && !quiet && ground > .40) {
+      if (!grassField && !grassLoading && !grassFailed) {
+        grassLoading = true;
+        import('./originkit-grass.js').then(module => {
+          grassField = module.createGrassField(grassCanvas, wake);
+          grassFailed = !grassField;
+        }).catch(() => { grassFailed = true; }).finally(() => { grassLoading = false; wake(); });
+      }
+      if (grassField) {
+        grassCanvas.style.transform = `translate3d(0,${height * ((1 - ground) * .95 + .17)}px,0)`;
+        grassVisible = grassField.render({ time, ground, theme: document.body.dataset.time, moving: !paused && !media.matches, reduced: media.matches, width, height });
+      }
+    }
+    grassCanvas.hidden = !grassVisible;
+    grassCanvas.dataset.active = String(grassVisible);
+    meadow.style.opacity = grassVisible ? '0' : String(Math.min(1, ground * 2));
+    const failed = groundMode === 'grass' && (grassFailed || grassCanvas.dataset.renderer === 'photo-fallback');
+    const grassMessage = failed ? '움직이는 잔디를 표시할 수 없어 기존 사진을 보여 드립니다.' : groundMode === 'grass' ? 'OriginKit · 바람에 흔들리는 잔디' : '기존 사진 · 언제든 다시 선택할 수 있어요';
+    if (grassStatus.textContent !== grassMessage) grassStatus.textContent = grassMessage;
     canvas.dataset.progress = progress.toFixed(4); canvas.dataset.time = time.toFixed(3);
     canvas.dataset.camera = cameraY.toFixed(3); canvas.dataset.ground = ground.toFixed(4);
     if (!ready || lost) return;
@@ -133,7 +155,7 @@ export function createWorld() {
   function updateMotion() {
     document.body.dataset.motion = paused || media.matches ? 'off' : 'on';
     motionButton.setAttribute('aria-pressed', String(paused || media.matches));
-    const label = media.matches ? '움직임 감소 설정 적용 중' : paused ? '구름 움직임 재개' : '구름 움직임 멈춤';
+    const label = media.matches ? '움직임 감소 설정 적용 중' : paused ? '배경 움직임 재개' : '배경 움직임 멈춤';
     motionButton.setAttribute('aria-label', label); motionButton.title = label;
     motionButton.querySelector('span').textContent = paused || media.matches ? '▷' : 'Ⅱ';
     motionButton.disabled = media.matches;
@@ -147,8 +169,10 @@ export function createWorld() {
   window.addEventListener('resize', measure);
   canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); lost = true; ready = false; canvas.dataset.renderer = 'static-fallback'; });
   canvas.addEventListener('webglcontextrestored', () => { lost = false; setup(); measure(); });
+  window.addEventListener('pagehide', event => { if (!event.persisted) grassField?.dispose(); });
   setup(); measure(); updateMotion();
   return {
+    setGround(mode) { groundMode = mode === 'grass' ? 'grass' : 'photo'; document.body.dataset.ground = groundMode; wake(); },
     setTheme(theme) { targetColor = themes[theme] || themes.day; wake(); },
     reset() { readProgress(); progress = targetProgress; lastScrollY = -1; wake(); },
   };
