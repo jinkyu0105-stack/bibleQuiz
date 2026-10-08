@@ -43,3 +43,11 @@ body[data-time=night] .distant-mountains img{filter:grayscale(1)}
 body[data-time=night] .distant-mountains:after{background:rgba(17,47,79,.52)}
 @media(max-width:700px){.distant-mountains{top:41%;height:39%;width:900px}}
 @media(prefers-reduced-motion:reduce){.distant-mountains,.distant-mountains:after{transition:none}.distant-mountains{will-change:auto}}
+
+/* Original dense sky, partitioned into cloud banks at their source coordinates. */
+#sky-banks{position:absolute;inset:0;width:100%;height:100%;transition:filter var(--duration)}
+.sky-vault[data-banks=ready]>picture{visibility:hidden}
+body[data-time=dawn] #sky-banks{filter:saturate(.65) sepia(.08) hue-rotate(7deg)}
+body[data-time=dusk] #sky-banks{filter:sepia(.25) hue-rotate(319deg) saturate(.8)}
+
+.sky-vault{mask-image:linear-gradient(#000 78%,rgb(0 0 0 / var(--sky-edge-alpha,1)) 100%)}

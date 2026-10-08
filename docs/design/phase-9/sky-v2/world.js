@@ -1,4 +1,5 @@
 /* global window, document, Image, performance, requestAnimationFrame, cancelAnimationFrame */
+import { createSkyBanks } from './sky-banks.js';
 // Original billboard world: no Air assets/code, no rendering dependencies.
 export function createWorld() {
   const canvas = document.querySelector('#clouds');
@@ -37,6 +38,7 @@ export function createWorld() {
   let lastScrollY = -1;
   let width = window.innerWidth;
   let height = window.innerHeight;
+  const skyBanks = createSkyBanks(vault, wake);
   const themes = { dawn: [.94, .89, .94], day: [.99, 1, 1], dusk: [1, .81, .76], night: [.24, .36, .55] };
   // x/y are world coordinates; depth determines apparent size and camera parallax.
   const cloudNames = ['cumulus-crown', 'cumulus-tower', 'cumulus-island', 'cumulus-drift', 'cumulus-billow'];
@@ -122,7 +124,10 @@ export function createWorld() {
     const cameraY = 15 - progress * 18;
     const quiet = document.body.dataset.view !== 'home';
     vault.style.transform = `translate3d(0,${-progress * height * .58}px,0) scale(${1.015 + progress * .1})`;
-    vault.style.opacity = String(Math.max(0, 1 - progress * 2.8) * (ready ? .14 : 1));
+    const vaultOpacity = Math.max(0, 1 - progress * 2.8) * (quiet ? .14 : 1);
+    vault.style.opacity = String(vaultOpacity);
+    vault.style.setProperty('--sky-edge-alpha', String(quiet ? 1 : 1 - Math.min(1, progress / .045)));
+    skyBanks.render({ time, width, height, theme: document.body.dataset.time, visible: !quiet && vaultOpacity > 0, moving: !paused && !media.matches });
     const ground = Math.max(0, Math.min(1, (progress - .40) / .60));
     meadow.style.transform = `translate3d(0,${height * (1 - ground) * .95}px,0) scale(${1.01 + .12 * ground})`;
     let grassVisible = false;
@@ -156,13 +161,16 @@ export function createWorld() {
     if (!ready || lost) return;
     gl.clear(gl.COLOR_BUFFER_BIT); gl.useProgram(program); gl.uniform3fv(tint, color);
     const aspect = width / height;
+    const reveal = quiet ? 1 : Math.max(0, Math.min(1, progress / .22));
+    const cloudArrival = reveal * reveal * (3 - 2 * reveal);
+    if (cloudArrival === 0) return;
     clouds.forEach((cloud, index) => {
       const focal = cloud.depth * .75;
-      // Independent banks drift through the same world from the first screen.
+      // Foreground banks join the same world as the camera descends.
       const drift = Math.sin(time * cloud.speed + index * .7) * 1.35;
       const span = Math.max(1, aspect / 1.78);
       const x = (cloud.x * span + drift) / focal / Math.max(.83, aspect);
-      const y = (cloud.y - cameraY) / focal + Math.sin(time * .025 + index) * .012;
+      const y = (cloud.y - cameraY) / focal;
       const projectedWidth = cloud.size / focal / aspect * width / 2;
       // Never stretch a 1672px sprite beyond its useful texel density at desktop DPR.
       const displayWidth = Math.min(projectedWidth, width < 700 ? width * 1.15 : Math.min(width * .58, 1120));
@@ -170,7 +178,7 @@ export function createWorld() {
       const h = displayWidth / (1672 / 941) / height * 2;
       if (y - h / 2 > 1.1 || y + h / 2 < -1.1 || !textures[cloud.image]) return;
       gl.bindTexture(gl.TEXTURE_2D, textures[cloud.image]);
-      gl.uniform4f(rect, x, y, w, h); gl.uniform1f(alpha, cloud.opacity * (quiet ? .32 : 1)); gl.uniform1f(flip, index % 2);
+      gl.uniform4f(rect, x, y, w, h); gl.uniform1f(alpha, cloud.opacity * cloudArrival * (quiet ? .32 : 1)); gl.uniform1f(flip, index % 2);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     });
   }
@@ -207,7 +215,7 @@ export function createWorld() {
   window.addEventListener('resize', measure);
   canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); lost = true; ready = false; textureGeneration++; canvas.dataset.renderer = 'static-fallback'; wake(); });
   canvas.addEventListener('webglcontextrestored', () => { lost = false; setup(); measure(); });
-  window.addEventListener('pagehide', event => { if (!event.persisted) grassField?.dispose(); });
+  window.addEventListener('pagehide', event => { if (!event.persisted) { grassField?.dispose(); skyBanks.dispose(); } });
   setup(); measure(); updateMotion();
   return {
     setGround(mode) { groundMode = mode === 'grass' ? 'grass' : 'photo'; document.body.dataset.ground = groundMode; wake(); },

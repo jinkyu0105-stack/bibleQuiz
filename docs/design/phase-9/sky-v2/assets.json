@@ -19,7 +19,8 @@
         "file": "assets/day-small.webp",
         "bytes": 48762,
         "sha256": "4a91a76b34496bcce53ad51cce3f93c18ea8b3570ca728b136be09401684c9e0"
-      }
+      },
+      "usage": "Original dense hero artwork. sky-banks.js reuses this texture in 12 soft cloud-bank regions at the same source coordinates; horizontal motion only. No bitmap changes or new generation."
     },
     {
       "name": "cloud",
@@ -46,7 +47,8 @@
         "file": "assets/night-small.webp",
         "bytes": 57406,
         "sha256": "44dd3ea73aaad23025d5a4dcd33c41f0af4be14eddd23a7d899edeab80df818f"
-      }
+      },
+      "usage": "Original dense hero artwork. sky-banks.js reuses this texture in 12 soft cloud-bank regions at the same source coordinates; horizontal motion only. No bitmap changes or new generation."
     },
     {
       "name": "meadow",

@@ -23,6 +23,10 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 움직이는 잔디는 사용자 확인을 받았고, 후속 요청으로 **먼 산의 실제 촬영 사진**을 추가했다. 같은 잔디 주소에서 바로 보인다. [산 없는 이전 모습](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&mountains=off#ground-controls)과 비교할 수 있다. 사진 출처·사용 조건·원본 해시는 [산 사진 기록](ORIGINKIT.md#먼-산-사진--2026-10-08)에 있다.
 
+## 첫 화면의 빽빽한 구름 복원
+
+원래 낮/밤 배경을100% 밀도로 복원했다. 원본 구름군12개 영역을 원래 좌표에 둔 채 서로 다른 속도로 좌우로만 약22px 이내에서 움직인다. 새 이미지를 만들거나 몇 개의 구름을 반복 복사한 것이 아니라 기존 이미지를 GPU 마스크로 나눠 표시한다. 첫 화면의 구성·밝기·달을 유지하며 하강 중에는 앞서 만든 구름5종으로 이어진다. 공통 멈춤·움직임 감소도 적용한다. [동작/검사 근거](../../../work/P9-06.md#첫-화면의-원래-구름-밀도-복원--2026-10-08).
+
 ## 넓은 화면 보정
 
 콘텐츠 최대 폭1440px를 유지하고 배경만2560px 이상의 화면에 맞췄다. 잔디 양끝의 지형 노출을 없애고, 구름5종의 형태·위치·속도를 나누어 오른쪽 반복과 잘린 가장자리를 보완했다. 산은 같은 사진의3840×2160 파일을 넓은 화면에서 선택한다. 모바일은 작은 자산을 사용한다. 새 구름 원본은1672×941이며4K 업스케일 결과가 아니다. 기존 자산은 보존했다. [실제 해상도/공식4K 지원/검사 근거](../../../work/P9-06.md#넓은-화면과-구름-보정--2026-10-08).
@@ -47,6 +51,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 - [index.html](index.html): 실제 한글/레이아웃/입력 요소
 - [style.css](style.css): 네 시간대와 공개/풀이/관리자 반응형
 - [originkit-grass.js](originkit-grass.js): OriginKit shader/잔디 geometry와 검토본 연결
+- [sky-banks.js](sky-banks.js): 원래 낮/밤 배경의 구름군12영역·수평 이동·원본 fallback
 - [world.js](world.js): 독자적인 깊이별 구름 투영과 지면 이동, 멈춤/감소/fallback
 - [review.js](review.js): 예시 화면 조작과 검토 경계
 - [fonts.css](fonts.css): 기존 Noto Sans KR400 `unicode-range`의 경로만 검토 서버에 맞춤

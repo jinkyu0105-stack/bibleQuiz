@@ -1,38 +1,36 @@
-# 인계 — P9-06 넓은 화면·구름 보정, 사용자 검수 대기
+# 인계 — P9-06 첫 화면 구름 밀도 복원, 사용자 검수 대기
 
 ## 현재와 다음 한 작업
 
-2026-10-08 사용자는2560px 화면의 양쪽 지형 꺼짐·잘린/반복 구름·해상도·첫 화면 구름의 흐름 보정을 요청했다. 이어 **콘텐츠 최대 폭1440px 유지, 배경만 수정**으로 정정했다. 해당 보정과 관련 검사를 마쳤고 **현재P9-06은 사용자 시각 검수 대기, 부모 전체 UI 개편은 진행 중**이다. 다음은 같은 P9-06의2560px 실제 화면 확인/필요 보정이며 대표 시안 확정 뒤 기존 앱에 연결한다. P9-04와 이전 Phase9 승인 범위 완료는 유지한다.
+2026-10-08 사용자는 직전 보정의 나머지는 좋지만 첫 화면이 듬성듬성하다고 지적했다. **원래 빽빽한 양옆 구름을 복원하고 같은 위치의 분리 요소로 삼아 좌우로만 조금씩 움직이기**가 최신 지시다. 해당 보정/관련 검사를 마쳤고 **현재P9-06은 사용자 시각 검수 대기, 부모 전체UI개편은 진행 중**이다. 다음은 첫 화면의 구름 밀도/흐름 확인·필요 보정이며 대표 시안 확정 뒤 기존 앱 연결이다. P9-04와 이전Phase9 완료는 유지한다.
 
-[작업/검사·4K 문의 근거](work/P9-06.md#넓은-화면과-구름-보정--2026-10-08) · [현재 디자인](spec/design.md) · [1440px 기준](spec/responsive.md#31-고정-수치).
+[작업·검사 근거](work/P9-06.md#첫-화면의-원래-구름-밀도-복원--2026-10-08) · [현재 디자인](spec/design.md).
 
 ## 직접 볼 화면과 복귀
 
-- 새벽 잔디/산: **`http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn#ground-controls`**. 상단으로 이동해 새 구름 흐름도 확인한다.
-- `mountains=off`는 산 제외, 하단 **기존 사진 / 움직이는 잔디**는 즉시 지면 비교다. 매개변수 없는 주소는 원래 사진이 기본이다. 시간대/멈춤은 그대로다.
-- 이번 보정 전 기준은**aa6d1d0**, 산 추가 전aafcf08, 잔디 추가 전8d5752b다. 이번 배경/자산/문서만 독립 커밋하므로 필요 시 해당 커밋을 확인해revert한다. 기존 자산 삭제나reset이 필요 없다.
+- **첫 화면:** `http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day` — 새로고침 후 맨 위에서 원래 구름 구도와 느린 수평 이동을 본다. 밤도 같은 원본 구름 밀도를 유지한다.
+- 스크롤하면 앞서 만든 구름5종/산/잔디로 이어진다. 콘텐츠 최대1440px·잔디 양끝 보정·산4K는 유지한다. 기존 사진 버튼과`mountains=off` 비교도 그대로다.
+- 이번 보정 전 기준**95cc314**, 넓은 화면 보정 전aa6d1d0. 이번 첫 화면/문서만 독립 커밋하므로 필요하면 해당 커밋을 확인해revert한다. 기존이미지 삭제/reset이 필요 없다.
 
-loopback4189 정적 서버를 재사용했다. 없을 때만 다음 명령을 실행한다.
+loopback4189 정적 서버를 재사용했다. 없을 때만 실행한다.
 
 ```sh
 python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bibleQuiz
 ```
 
-수정 위치는 `docs/design/phase-9/sky-v2/`다. 실제 앱/저장/API와 연결하지 않았다. 문서 확인 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련spec/work→Git status/diff/log다.
+수정 위치는`docs/design/phase-9/sky-v2/`다. 실제 앱/저장/API와 연결하지 않았다. 시작순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련spec/work→Git status/diff/log다.
 
 ## 변경·검사·한계
 
-- `originkit-grass.js`: 지면과 풀잎에 동일한 가로 배율을 적용해 화면 양끝까지 연결했다. 원본 조명/바람/마우스와 blade 개수는 유지한다. 현재 shader 전체가 OriginKit 원문과 동일하다고 보고하지 않는다. 구름/잔디 buffer는3840×2160 이하로 제한한다.
-- `world.js`: 풍성한 투명5종·10개 위치, 원본 경계 fade·표시 크기 제한·창 확대 시 큰 texture로 교체·첫 화면 독립 흐름. 산은1600/3840px srcset·디코딩 후 표시다. 실제 콘텐츠 CSS와 검토본 레이아웃 CSS의 diff0.
-- 구름 새 원본5개는**1672×941**, 모바일960px이며4K가 아니다. 산은 실제 사진의CDN3840×2160 응답으로AI업스케일이 아니다. 새11개WebP 총2,596,482bytes. 기존3구름/사진/폰트를 보존했다. 프롬프트/해시/크기와 출처는assets.json, PNG원본은 Git 제외p9-06-wide/masters에 있다.
-- 공식 문서는GPT Image2.5의3840×2160 출력·편집을 지원하며QHD초과는실험적이라고 설명한다. 현재 내장 도구는 모델/정확한size를 노출하지 않고 실제 반환은1672px였다. 유료API 경로·별도 모델/4K 실행은 요청하지 않았다. 질문을 실행 승인으로 해석하지 않는다.
-- Chromium1440×900/2560×1080/2560×1440/3440×1440/3840×2160/390×844: 넘침0, 잔디9열 하단opaque·윗선 차1.7%미만, 오른쪽 세 구름 서로다름, 모바일→넓은창 texture교체, 반응형 산 선택/지연 로딩. 네 시간대·마우스·공통 정지/감소 왕복·정지 중WebGL복원·구름/산 실패·풀이/관리자 넓은창을 확인했다. Firefox2560px 밤도 통과했다. runtime error0·외부 요청0.
-- JS 구문·최종 `pnpm run lint`·`pnpm run typecheck` 통과. 최종diff/문서 로컬 링크·자산23파일의 해시/크기·기존 경로 보존 확인도 통과했다. 검증한 이번 변경을 로컬 커밋한다. 기존전체pnpm check/출시E2E/Lighthouse/유료 호출은 반복하지 않았다. 실제GPU/배터리·IME·WebKit·OS폴백 한계는 남아 있다. 기존99/91은 최초 사진 시안 점수다.
-- 검증 근거는 Git 제외 `.wrangler/design-references/p9-06-wide/verification.json`, `photo-decode-verification.json`, 최종PNG다. 첫 시간대 검사 선택자 오타를 고쳐 이어갔고, 산 표시 전 캡처 문제는 디코딩 완료 후 표시로 보완했다. 콘텐츠2560px 확장은 사용자 정정에 따라 되돌렸다.4K를 프롬프트에 쓰는 것만으로 실제4K를 받았다고 주장하는 접근은 사용하지 않는다.
+- `sky-banks.js`/index canvas: 기존day/night 이미지를 같은 좌표의12개 구름군 마스크 영역으로 나눠 수평으로만 약22px 이내 이동한다. 원본좌표의 연속 보간이며 구름별PNG 추출/새 생성/완전3D 분리는 아니다. 중앙하늘/달·구도·색상을 유지한다. 별도RAF 없이world 공통시계를 쓰고 표시 중30Hz·최대2560×1440으로 제한한다.
+- `world.js`/style: 공개 첫 화면의 원본opacity14%→100%, 새 전경구름은 하강에 따라 등장, 자동 상하흔들림 제거. 첫 스크롤 검수에서 보인 아래쪽 직선 경계는 진행도 마스크로 이어줬다. 맨위는 완전불투명이다. 원본picture는 로딩/그래픽실패 복귀용으로 유지하고context복원/resize에도 재연결한다.
+- Chromium1440×900/2560×1080/2560×1440/390×844 구도/넘침0·네 시간대. 원본 대비 평균채널오차 낮0.54/밤0.63미만(255기준).45초 샘플의 세 구름영역은수평+3/+12/−8px·수직0px, 위빈중앙픽셀차0. 실제 공통시계/정지draw중단·OS감소·정지중GL복원·작은창→큰창 원본교체·하강/상단복귀·기존 산/잔디를 확인했다. Firefox2560px밤도 통과, runtime error0·외부요청0.
+- JS 구문·lint/typecheck 통과. 최종diff/문서 로컬 링크/기존23개 자산해시와 보존 경로 확인도 통과했다. 검증한 변경을 로컬 커밋한다. 기존 전체pnpm check/출시E2E/Lighthouse/유료호출은 반복하지 않았다. 실제GPU/배터리/IME/WebKit/OS폴백 한계는 유지한다. 기존99/91은 최초사진시안 점수다.
+- 근거는 Git 제외`.wrangler/design-references/p9-06-dense/`의visual-review/pixel-review/verification/edge-review JSON과PNG. 원본을 흐리게 낮추고 새 구름 몇 개로 채우는 첫 구도는 폐기했다. 기존이미지/잔디코드/산/폰트와 실제앱 경로는 변경하지 않았다.
 
 ## Git·배포·보존
 
-시작HEAD**aa6d1d0**, main/worktree clean, origin/main21b81de보다7커밋 앞섬. 이번 넓은 화면 보정/관련 문서를 하나의 로컬 커밋으로 남긴다. 해당 커밋의 부모는aa6d1d0이며 정확한 종료HEAD/clean/미푸시수는 최종 Git log/status를 따른다. push없음. 직전 실제GitHub조회21b81de를 재사용하며 배포를 다시 검사하지 않았다.
+시작HEAD**95cc314**, main/worktree clean, origin/main21b81de보다8커밋 앞섬. 이번 첫 화면/관련 문서를 하나의 로컬 커밋으로 남긴다. 해당 커밋의 부모는95cc314이며 정확한 종료HEAD/clean/미푸시수는 최종Git log/status를 따른다. push없음. 원격배포는 재검수하지 않았다.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -42,12 +40,10 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 | Preview app |3dc36ff6-f6d0-4627-bc43-6beeb3495391 / GitHub21b81de 자동 배포|
 | Preview content |2df93f07-3703-42ec-b576-fd085e8c839f / 기존 배포|
 
-배포 기록을 재사용했으며 원격 재검수/배포/migration/Secret/실제AI를 실행하지 않았다. 일반Preview는main push 자동 배포만, Production은 별도 요청이다. `src/public`·Worker/설정/SQL/package/lockfile·0000~0038·실제 자료/키/유료 결과·기존 이미지/폰트/fontkit을 보존한다. 이전 검사·LCP5.4초·rollback 근거는[P9-04](work/P9-04.md)에 둔다.
-
-`pnpm dev`는 영속 합성 `.wrangler/ui-demo-state/`, 실제 로컬은`pnpm dev:local`, E2E는 임시DB격리다. 이번 정적 검토본과 구분한다.
+배포 기록을 재사용했으며 원격재검수/배포/migration/Secret/실제AI를 실행하지 않았다. Preview는main push 자동배포만, Production은 별도요청이다. `src/public`·Worker/설정/SQL/package/lockfile·0000~0038·실제자료/키/유료결과·기존이미지/폰트/fontkit을 보존한다. 이전검사·LCP5.4초·rollback 근거는[P9-04](work/P9-04.md)를 따른다.
 
 ## 실행·사용량·세션
 
-시작Pro8%사용/92%잔여, 별도5시간 없음, 사용자 지정×10=920%. 추천 **Astra·Max**이며 모델설정을 변경했다고 주장하지 않는다. `codex-exec-recovery`의 검증된 `/bin/bash`·login:false·명시workdir·승인 검토 경로를 재사용했다. Node24.18.0/pnpm11.14.0은 현재 프로세스PATH에만 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다.
+시작Pro9%사용/91%잔여, 별도5시간없음, 사용자 지정×10=910%. 추천**Astra·Max**이며 모델설정을 변경했다고 주장하지 않는다. codex-exec-recovery 검증 경로인`/bin/bash`·login:false·명시workdir·승인검토를 재사용했다. Node24.18.0/pnpm11.14.0은 현재프로세스PATH에만`/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다.
 
-원본WebP 인코딩은 기존Windows bundled Python/Pillow를 사용했다. 비트맵 내용 수정/AI업스케일이 아닌 크기/포맷 처리다. 새 설치/의존성 없음. 같은P9-06 시각 검수/앱 연결이 남아 **세션 유지**. 다음 추천 **Astra·Max** — 하늘·산·잔디와 화면 비율의 시각 완성도를 함께 판단한다.
+Windows bundled Python/Pillow는 캡처의 픽셀 대조에만 사용했다. 이미지파일 편집/새생성·새설치/의존성은 없다. 같은P9-06 시각검수/앱연결이 남아**세션유지**. 다음 추천**Astra·Max** — 원래 구도와 움직이는 구름의 연결감을 함께 판단한다.
