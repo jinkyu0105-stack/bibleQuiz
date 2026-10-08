@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-08",
+  "purpose": "User-operated 4K image-to-video input references; no video generated",
+  "inputResolution": "1672x941",
+  "intendedVideoOutput": "3840x2160",
+  "method": "Chromium export of existing sky-v2 CSS background using original PNG masters; full original bounds, no hero overscan, no UI, no canvas motion, no resampling or new AI generation. Existing color filters and light overlays are baked into each frame.",
+  "cssSource": "docs/design/phase-9/sky-v2/style.css",
+  "cssSha256": "da3cfa42329af9f351302f53619f22df37b5e67685b5b389ddda916aca5fe21d",
+  "sources": {
+    "day": {
+      "path": ".wrangler/design-references/p9-06-air/masters/exec-f057b93e-ce70-4b54-8503-d171698f71c8.png",
+      "sha256": "210a185575fc8e138f0c6159a48d349247d92a79dfbc7c5c969afdf08b17a584",
+      "width": 1672,
+      "height": 941
+    },
+    "night": {
+      "path": ".wrangler/design-references/p9-06-air/masters/exec-dffe05b9-42f8-45d4-bd71-b7d41b7d0f17.png",
+      "sha256": "eafb15a7be455bc675dcd99ad3030bccb221cf253b0da7cf771b9a37ea921102",
+      "width": 1672,
+      "height": 941
+    }
+  },
+  "outputs": [
+    {
+      "time": "dawn",
+      "file": "references/sky-dawn.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1834496,
+      "sha256": "c54745c2f40e8b95cd2119aa6765b12f9680c2ce3347f29b2789eb29fb158ef4",
+      "source": "day",
+      "computed": {
+        "theme": "dawn",
+        "filter": "saturate(0.65) sepia(0.08) hue-rotate(7deg)",
+        "sunlight": "radial-gradient(at 20% 56%, rgba(255, 206, 169, 0.29), rgba(0, 0, 0, 0) 70%)",
+        "sunlightOpacity": "1",
+        "moonlightOpacity": "0",
+        "text": ""
+      }
+    },
+    {
+      "time": "day",
+      "file": "references/sky-day.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1867091,
+      "sha256": "44aec35afc99c2db164c76cc4f22abf39c085d675f5ed8d50501c98f347d278e",
+      "source": "day",
+      "computed": {
+        "theme": "day",
+        "filter": "none",
+        "sunlight": "radial-gradient(at 42% 35%, rgba(229, 246, 255, 0.58) 0%, rgba(221, 243, 255, 0.3) 28%, rgba(0, 0, 0, 0) 65%)",
+        "sunlightOpacity": "1",
+        "moonlightOpacity": "0",
+        "text": ""
+      }
+    },
+    {
+      "time": "dusk",
+      "file": "references/sky-dusk.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1669586,
+      "sha256": "6fd74f6072407ae25b68573e88d4270a77dd492262f481ad8e1bd8615df45be4",
+      "source": "day",
+      "computed": {
+        "theme": "dusk",
+        "filter": "sepia(0.25) hue-rotate(319deg) saturate(0.8)",
+        "sunlight": "linear-gradient(20deg, rgba(255, 201, 142, 0.52), rgba(250, 203, 204, 0.2))",
+        "sunlightOpacity": "1",
+        "moonlightOpacity": "0",
+        "text": ""
+      }
+    },
+    {
+      "time": "night",
+      "file": "references/sky-night.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2050717,
+      "sha256": "671b0c3a756460717cb23bddd06ea4aec6a8d921a0acd53c3bfdcefc650056e0",
+      "source": "night",
+      "computed": {
+        "theme": "night",
+        "filter": "none",
+        "sunlight": "radial-gradient(at 42% 35%, rgba(229, 246, 255, 0.58) 0%, rgba(221, 243, 255, 0.3) 28%, rgba(0, 0, 0, 0) 65%)",
+        "sunlightOpacity": "0",
+        "moonlightOpacity": "1",
+        "text": ""
+      }
+    }
+  ]
+}
