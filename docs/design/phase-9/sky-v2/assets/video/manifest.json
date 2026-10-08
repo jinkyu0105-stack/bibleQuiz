@@ -1,0 +1,94 @@
+{
+  "task": "P9-06",
+  "importedAt": "2026-10-09",
+  "purpose": "User-provided dawn video for the independent sky-v2 design review",
+  "source": {
+    "filename": "Generated Video October 08, 2026 - 11_25PM.mp4",
+    "preservedOriginal": ".wrangler/design-references/p9-06-video/masters/sky-dawn-4k-original.mp4",
+    "gitIgnored": true,
+    "bytes": 12690270,
+    "sha256": "dff61262318ee1f13054cc95c0c78db6b54bc4cbc167e04559a15f3bbb84d7b4",
+    "movedAfterHashVerification": true,
+    "width": 3840,
+    "height": 2160,
+    "videoSeconds": 10,
+    "containerSeconds": 10.005,
+    "frameRate": "24/1",
+    "frames": 240,
+    "videoCodec": "h264",
+    "audioCodec": "aac",
+    "model": "Not verified from the supplied file"
+  },
+  "colorMetadata": {
+    "matrix": "smpte170m",
+    "transfer": "iec61966-2-1",
+    "primaries": "bt709",
+    "policy": "Preserve supplied color metadata; no additional dawn CSS grade or sunlight overlay"
+  },
+  "ffmpegVersion": "6.1.1-3ubuntu5",
+  "preservedVideoStreamSha256": "d02b4fb30ae05c52f713f6a9c0ee30b7bd5265a96f704d1983053a7bf5cae7cd",
+  "files": {
+    "sky-dawn-1080p.mp4": {
+      "bytes": 3063758,
+      "sha256": "9ed8af013d462ac443d6ff60572c27eb7222bb304bf05ff89e5ab2eaa789bf0a",
+      "width": 1920,
+      "height": 1080,
+      "durationSeconds": 10,
+      "frameRate": "24/1",
+      "codec": "h264",
+      "audio": false,
+      "videoReencoded": true
+    },
+    "sky-dawn-4k.mp4": {
+      "bytes": 12518618,
+      "sha256": "cb3fad5822493be8d09fdf8bc42fca945b15c976c43072635078781e1db9ad00",
+      "width": 3840,
+      "height": 2160,
+      "durationSeconds": 10,
+      "frameRate": "24/1",
+      "codec": "h264",
+      "audio": false,
+      "videoReencoded": false
+    },
+    "sky-dawn-poster-4k.webp": {
+      "bytes": 393370,
+      "sha256": "79b73ed2d9b02ce3991477b04145f2a82de2f89008253098a17595cb4092f30d",
+      "width": 3840,
+      "height": 2160,
+      "frame": 0
+    },
+    "sky-dawn-poster-small.webp": {
+      "bytes": 84544,
+      "sha256": "00b3414264176d5df29266942fe0ecb0804cb086e96233a774da5ed1d4e2a609",
+      "width": 1280,
+      "height": 720,
+      "frame": 0
+    }
+  },
+  "playback": {
+    "eligible": "Visible dawn hero in home review only",
+    "smallViewportMaxWidth": 700,
+    "smallVideo": "sky-dawn-1080p.mp4",
+    "wideVideo": "sky-dawn-4k.mp4",
+    "responsivePosters": {
+      "1280w": "sky-dawn-poster-small.webp",
+      "3840w": "sky-dawn-poster-4k.webp"
+    },
+    "autoplay": "muted, inline, pause on scroll out, theme switch, hidden tab, common pause or reduced motion",
+    "loop": "Native 10s loop; smoothstep fade to the first-frame poster during the last 0.9s. Display blend only; source endpoints differ.",
+    "rollbackQuery": "video=off"
+  },
+  "commands": {
+    "sky-dawn-4k.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -c:v copy -an -movflags +faststart OUTPUT",
+    "sky-dawn-1080p.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -an -vf scale=1920:1080:flags=lanczos -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart OUTPUT",
+    "sky-dawn-poster-4k.webp": "ffmpeg -i ORIGINAL -frames:v 1 -c:v libwebp -quality 88 OUTPUT",
+    "sky-dawn-poster-small.webp": "ffmpeg -i ORIGINAL -frames:v 1 -vf scale=1280:720:flags=lanczos -c:v libwebp -quality 86 OUTPUT"
+  },
+  "references": [
+    "https://ffmpeg.org/ffmpeg-all.html",
+    "https://ffmpeg.org/ffmpeg-formats.html",
+    "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video",
+    "https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Autoplay",
+    "https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play"
+  ]
+}

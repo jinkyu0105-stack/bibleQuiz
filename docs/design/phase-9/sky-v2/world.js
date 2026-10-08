@@ -1,5 +1,6 @@
 /* global window, document, Image, performance, requestAnimationFrame, cancelAnimationFrame */
 import { createSkyBanks } from './sky-banks.js';
+import { createSkyVideo } from './sky-video.js';
 // Original billboard world: no Air assets/code, no rendering dependencies.
 export function createWorld() {
   const canvas = document.querySelector('#clouds');
@@ -39,6 +40,7 @@ export function createWorld() {
   let width = window.innerWidth;
   let height = window.innerHeight;
   const skyBanks = createSkyBanks(vault, wake);
+  const skyVideo = createSkyVideo(vault, wake, updateMotion);
   const themes = { dawn: [.94, .89, .94], day: [.99, 1, 1], dusk: [1, .81, .76], night: [.24, .36, .55] };
   // x/y are world coordinates; depth determines apparent size and camera parallax.
   const cloudNames = ['cumulus-crown', 'cumulus-tower', 'cumulus-island', 'cumulus-drift', 'cumulus-billow'];
@@ -127,7 +129,8 @@ export function createWorld() {
     const vaultOpacity = Math.max(0, 1 - progress * 2.8) * (quiet ? .14 : 1);
     vault.style.opacity = String(vaultOpacity);
     vault.style.setProperty('--sky-edge-alpha', String(quiet ? 1 : 1 - Math.min(1, progress / .045)));
-    skyBanks.render({ time, width, height, theme: document.body.dataset.time, visible: !quiet && vaultOpacity > 0, moving: !paused && !media.matches });
+    const videoVisible = skyVideo.update({ theme: document.body.dataset.time, visible: !quiet && vaultOpacity > 0, moving: !paused && !media.matches, width });
+    skyBanks.render({ time, width, height, theme: document.body.dataset.time, visible: !quiet && vaultOpacity > 0 && !videoVisible, moving: !paused && !media.matches });
     const ground = Math.max(0, Math.min(1, (progress - .40) / .60));
     meadow.style.transform = `translate3d(0,${height * (1 - ground) * .95}px,0) scale(${1.01 + .12 * ground})`;
     let grassVisible = false;
@@ -200,14 +203,19 @@ export function createWorld() {
   }
   function updateMotion() {
     document.body.dataset.motion = paused || media.matches ? 'off' : 'on';
-    motionButton.setAttribute('aria-pressed', String(paused || media.matches));
-    const label = media.matches ? '움직임 감소 설정 적용 중' : paused ? '배경 움직임 재개' : '배경 움직임 멈춤';
+    const videoBlocked = skyVideo.blocked;
+    motionButton.setAttribute('aria-pressed', String(paused || media.matches || videoBlocked));
+    const label = media.matches ? '움직임 감소 설정 적용 중' : videoBlocked ? '새벽 영상 재생' : paused ? '배경 움직임 재개' : '배경 움직임 멈춤';
     motionButton.setAttribute('aria-label', label); motionButton.title = label;
-    motionButton.querySelector('span').textContent = paused || media.matches ? '▷' : 'Ⅱ';
+    motionButton.querySelector('span').textContent = paused || media.matches || videoBlocked ? '▷' : 'Ⅱ';
     motionButton.disabled = media.matches;
     wake();
   }
-  motionButton.addEventListener('click', () => { paused = !paused; updateMotion(); });
+  motionButton.addEventListener('click', () => {
+    if (skyVideo.blocked) { paused = false; skyVideo.retry(); }
+    else paused = !paused;
+    updateMotion();
+  });
   media.addEventListener('change', updateMotion);
   document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(animation); animation = 0; canvas.dataset.suspended = 'true'; } else { delete canvas.dataset.suspended; wake(); } });
   // A passive wake-up only: layout and drawing are coalesced into the next frame.
@@ -215,7 +223,7 @@ export function createWorld() {
   window.addEventListener('resize', measure);
   canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); lost = true; ready = false; textureGeneration++; canvas.dataset.renderer = 'static-fallback'; wake(); });
   canvas.addEventListener('webglcontextrestored', () => { lost = false; setup(); measure(); });
-  window.addEventListener('pagehide', event => { if (!event.persisted) { grassField?.dispose(); skyBanks.dispose(); } });
+  window.addEventListener('pagehide', event => { if (!event.persisted) { grassField?.dispose(); skyBanks.dispose(); skyVideo.dispose(); } });
   setup(); measure(); updateMotion();
   return {
     setGround(mode) { groundMode = mode === 'grass' ? 'grass' : 'photo'; document.body.dataset.ground = groundMode; wake(); },

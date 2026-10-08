@@ -1,6 +1,6 @@
 # BibleQuiz 하늘 영상 입력 자료
 
-2026-10-08 · P9-06 · 사용자가 Google AI Studio / Gemini API에서 직접 생성하기 위한 자료다. 영상 생성과 사이트 연결은 아직 하지 않았다.
+2026-10-08 제작 · P9-06 · 사용자가 Google AI Studio / Gemini API에서 직접 생성하기 위한 자료다.2026-10-09 제공받은 새벽4K 영상은 [하늘 검토본](../sky-v2/README.md#새벽-4k-영상)에 연결했다. 아래 PNG/프롬프트는 변경하지 않았으며 나머지 시간대 영상은 아직 수령하지 않았다.
 
 ## 이미지와 프롬프트
 
@@ -41,6 +41,6 @@
 | [Apple Meet Liquid Glass 영상](https://developer.apple.com/videos/play/wwdc2025/219/) | 투명 재질이 배경·움직임에 반응하는 실제 UI | 공통 유리 질감과 조작부의 시각적 위계 |
 | [OriginKit Liquid Glass Carousel](https://www.originkit.dev/components/liquid-glass-carousel) | 유리 렌즈와 강한 굴절이 움직이는 데모 | 일부 강조 요소의 재질 참고 |
 
-추천은 **OriginKit의 맑은 조작부 + Fluent Acrylic의 읽기 쉬운 패널** 조합이다. 마지막 렌즈형은 강한 굴절을 비교하기 위한 예제이며 모든 퀴즈/입력 영역에 그대로 쓰자는 의미가 아니다. 아직 어느 예제도 최종 채택하거나 우리 UI에 적용하지 않았다. 새로운 UI 시안은 선택한 방향을 듣고 이어서 만든다.
+사용자는 **3번 Apple Liquid Glass**를 선택했고 [공개·풀이·관리자 검토본](../sky-v2/README.md#apple-참고-유리-ui)에 적용했다. 맑은 제어와 안정된 읽기 표면을 구분한다. 다른 링크는 비교 참고로 남기며 마지막 렌즈형의 강한 굴절을 입력 글자에 그대로 적용하지 않는다.
 
 AI가 읽는 기존 정본은 [docs/spec/design.md](../../../spec/design.md)다. [이전 조사](../../../work/p9-06/video-glass-research.md)에서 찾은 DESIGN.md/공식 자료와 구분해, 이 목록은 직접 눈으로 볼 수 있는 예제를 우선했다.

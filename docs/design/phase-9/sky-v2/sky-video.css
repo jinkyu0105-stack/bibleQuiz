@@ -1,0 +1,19 @@
+/* First-frame poster and movie share the original sky's crop, descent and edge mask. */
+.sky-video, .sky-video > img, .sky-video > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.sky-video > img, .sky-video > video {
+  object-fit: cover;
+  object-position: 50% 50%;
+  filter: none;
+}
+.sky-video > img { z-index: 1; }
+/* The supplied movie already contains its dawn grade and light. */
+body[data-sky-video=on] .sunlight { opacity: 0; transition: none; }
+@media (max-width:700px) {
+  .sky-video > img, .sky-video > video { object-position: 53% 50%; }
+}

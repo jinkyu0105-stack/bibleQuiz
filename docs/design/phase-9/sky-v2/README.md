@@ -24,9 +24,19 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 - [새 유리 UI](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day) · [이전 모습 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day&glass=off)
 - **선명하게** 버튼은 투명도를 줄인다. 선택은 `clarity=high`로 URL/검토 화면 이동에 남으며 다시 누르면 복원한다. OS 투명도/움직임 감소와 기존 멈춤도 따른다.
 - Chromium에서는 제어의 가장자리 굴절을 더하고 다른 브라우저는 CSS 흐림으로 표시한다. Apple 시스템 재질과 동일한 SDK가 아니다. Safari/WebKit 실검증은 현재 실행 라이브러리 부재로 남아 있다.
-- 영상은 사용자가 준비 중이다. 이번 변경은 기존 구름/잔디/산 위에 적용한 UI이며 영상 연결은 아직 하지 않았다.
+- 사용자가 제공한 새벽4K 영상을 연결했다. 낮·노을·밤은 기존 이미지 방식이며 아래 새벽 영상 링크에서 비교한다.
 
 [AI가 참조할 재질/토큰/상태 명세](../../../spec/design.md#apple-참고-유리-검토본의-재현-기준) · [검사와 남은 범위](../../../work/P9-06.md#apple-참고-유리-ui--2026-10-08).
+
+## 새벽 4K 영상
+
+[새벽 영상 보기](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn) · [원래 사진/구름군 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=off)
+
+2026-10-09 제공받은3840×2160·24fps·10초 영상을 새벽 첫 화면에 연결했다.4K는 원본 영상 스트림을 보존하고 소리만 제거했으며 모바일700px 이하에서는1080p·3.06MB 파일을 쓴다. 원본 새벽색을 그대로 표시하고 기존 필터/빛을 이중 적용하지 않는다. 마지막과 첫 구름 모양의 차이는 끝0.9초 동안 첫 장면을 겹쳐 완화한다.
+
+오른쪽 멈춤으로 영상·구름·잔디를 함께 멈춘다. 다른 시간대, 화면 아래쪽, 숨은 탭에서는 영상만 자동 정지한다. OS 움직임 감소 설정에서는 처음부터 영상 대신 정지 이미지를 보여 준다. 자동 재생이 제한되면 **새벽 영상 재생** 버튼을 누른다. 낮·노을·밤과 풀이/관리자에는 영상 파일을 요청하지 않는다. `video=off`로 이미지 방식을 즉시 비교하며 파일을 지울 필요가 없다.
+
+[원본 보존 위치·해시·화면용 파일](assets/video/README.md) · [연결 검사/한계](../../../work/P9-06.md#새벽-4k-영상-연결--2026-10-09). 나머지 시간대 영상은 수령 뒤 같은 경로로 연결한다.
 
 ## OriginKit 잔디 비교
 
@@ -36,7 +46,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 ## 첫 화면의 빽빽한 구름 복원
 
-원래 낮/밤 배경을100% 밀도로 복원했다. 원본 구름군12개 영역을 원래 좌표에 둔 채 서로 다른 속도로 좌우로만 약22px 이내에서 움직인다. 새 이미지를 만들거나 몇 개의 구름을 반복 복사한 것이 아니라 기존 이미지를 GPU 마스크로 나눠 표시한다. 첫 화면의 구성·밝기·달을 유지하며 하강 중에는 앞서 만든 구름5종으로 이어진다. 공통 멈춤·움직임 감소도 적용한다. [동작/검사 근거](../../../work/P9-06.md#첫-화면의-원래-구름-밀도-복원--2026-10-08).
+영상이 없는 시간대와 `video=off` 비교에서는 원래 낮/밤 배경을100% 밀도로 복원한 방식을 유지한다. 원본 구름군12개 영역을 원래 좌표에 둔 채 서로 다른 속도로 좌우로만 약22px 이내에서 움직인다. 새 이미지를 만들거나 몇 개의 구름을 반복 복사한 것이 아니라 기존 이미지를 GPU 마스크로 나눠 표시한다. 첫 화면의 구성·밝기·달을 유지하며 하강 중에는 앞서 만든 구름5종으로 이어진다. 공통 멈춤·움직임 감소도 적용한다. [동작/검사 근거](../../../work/P9-06.md#첫-화면의-원래-구름-밀도-복원--2026-10-08).
 
 ## 넓은 화면 보정
 
@@ -64,6 +74,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 - [liquid-glass.css](liquid-glass.css): 역할별 유리 재질·네 시간대·접근성 대체 표시
 - [liquid-glass.js](liquid-glass.js): 배경 전용 가장자리 굴절·선택 표시·마우스 빛·투명도/이전 모습 전환
 - [originkit-grass.js](originkit-grass.js): OriginKit shader/잔디 geometry와 검토본 연결
+- [sky-video.js](sky-video.js) / [sky-video.css](sky-video.css): 새벽 영상 지연 요청·정지/대체 이미지·반복 경계 합성
 - [sky-banks.js](sky-banks.js): 원래 낮/밤 배경의 구름군12영역·수평 이동·원본 fallback
 - [world.js](world.js): 독자적인 깊이별 구름 투영과 지면 이동, 멈춤/감소/fallback
 - [review.js](review.js): 예시 화면 조작과 검토 경계
