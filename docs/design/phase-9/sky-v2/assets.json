@@ -3,8 +3,8 @@
   "date": "2026-10-08",
   "generationTool": "Codex built-in image_gen.imagegen",
   "purpose": "Original generated sky assets and text-free screen references, plus an attributed real mountain photograph. No Air assets copied.",
-  "masters": "Original generation files preserved; additional local copies under .wrangler/design-references/p9-06-air/masters (Git ignored).",
-  "optimization": "Pillow WebP quality87/method6; day/night/meadow small960px quality84. Encoding/size only, no artistic manipulation.",
+  "masters": "Initial masters: .wrangler/design-references/p9-06-air/masters; new cloud masters: .wrangler/design-references/p9-06-wide/masters. Both Git ignored; original native generation files preserved.",
+  "optimization": "Initial assets: WebP quality87/method6, small960px quality84. New cumulus variants: quality92, small960px quality88. Encoding/size only; per-image metadata records exact output dimensions and source.",
   "images": [
     {
       "name": "day",
@@ -29,7 +29,8 @@
       "bytes": 162664,
       "sha256": "e77d8dddc802919274cc9889787335054540fc52c6bff8ab2a82244a9b07947e",
       "transparent": true,
-      "prompt": "Use case: photorealistic-natural. Asset type: a single isolated cloud sprite for a photorealistic WebGL sky. Generate one large, horizontally stretched, realistic sunlit white cumulus cloud on a genuinely transparent RGBA background, no background sky. Landscape 3:2 canvas. Cloud occupies about 90% width, 66% height centered with FULLY TRANSPARENT MARGINS on all sides; no edge cropped. An asymmetrical low bank with three rising turrets, the tallest slightly left of center. Extremely rich natural atmospheric detail: fine fraying vapor edges, sunlit rounded upper lobes, subtle warm-white highlights from upper left, soft pale-blue and cool-gray undersides, semi-transparent outer wisps. Form should be dense and brilliant in the middle, less dense at the fringes, cloud base fairly horizontal but ragged, not a series of evenly spaced circles. This is a believable photographed atmospheric cloud, NOT smoke, explosion, wool, bubbles, illustration or a gray gradient blob. No drop shadow, no floor, no text, no logo, no watermark, no other objects. Preserve useful soft natural alpha transparency in the wispy edges."
+      "prompt": "Use case: photorealistic-natural. Asset type: a single isolated cloud sprite for a photorealistic WebGL sky. Generate one large, horizontally stretched, realistic sunlit white cumulus cloud on a genuinely transparent RGBA background, no background sky. Landscape 3:2 canvas. Cloud occupies about 90% width, 66% height centered with FULLY TRANSPARENT MARGINS on all sides; no edge cropped. An asymmetrical low bank with three rising turrets, the tallest slightly left of center. Extremely rich natural atmospheric detail: fine fraying vapor edges, sunlit rounded upper lobes, subtle warm-white highlights from upper left, soft pale-blue and cool-gray undersides, semi-transparent outer wisps. Form should be dense and brilliant in the middle, less dense at the fringes, cloud base fairly horizontal but ragged, not a series of evenly spaced circles. This is a believable photographed atmospheric cloud, NOT smoke, explosion, wool, bubbles, illustration or a gray gradient blob. No drop shadow, no floor, no text, no logo, no watermark, no other objects. Preserve useful soft natural alpha transparency in the wispy edges.",
+      "usage": "Preserved original; replaced in world.js by the five cumulus assets below."
     },
     {
       "name": "night",
@@ -90,7 +91,8 @@
       "bytes": 302668,
       "sha256": "3f7668e435c9976c8090fb7d49cc7d8b79d801b19884649bb5cb2d70e15d0ce8",
       "transparent": true,
-      "prompt": "A single very broad asymmetrical photorealistic bank of thin luminous stratocumulus clouds, horizontal length roughly 3 times height, isolated on a TRUE transparent background. One continuous natural wispy cloud bank, extremely feathery translucent torn fringes, soft subtle pale silver-blue shadows, brighter white sunlit top-left, detailed realistic vapor. The central part lower and flatter with fine broken wisps extending far left; the right part slightly taller with one subtle cumulus mound. NOT the repeated identical cartoon turrets, not a solid cotton mountain, not smoke, not fog flat sheet. Natural atmospheric fine mist around edges that fades all the way to alpha0. Keep generous empty transparent padding on every side, completely inside the frame, no crop. A physically believable photographic cloud sprite for a 3D browser sky, soft aerial depth. No sky, no horizon, no ground, no text, no words, no symbols, no watermark. White/lightblue cloud only, use actual RGBA transparency."
+      "prompt": "A single very broad asymmetrical photorealistic bank of thin luminous stratocumulus clouds, horizontal length roughly 3 times height, isolated on a TRUE transparent background. One continuous natural wispy cloud bank, extremely feathery translucent torn fringes, soft subtle pale silver-blue shadows, brighter white sunlit top-left, detailed realistic vapor. The central part lower and flatter with fine broken wisps extending far left; the right part slightly taller with one subtle cumulus mound. NOT the repeated identical cartoon turrets, not a solid cotton mountain, not smoke, not fog flat sheet. Natural atmospheric fine mist around edges that fades all the way to alpha0. Keep generous empty transparent padding on every side, completely inside the frame, no crop. A physically believable photographic cloud sprite for a 3D browser sky, soft aerial depth. No sky, no horizon, no ground, no text, no words, no symbols, no watermark. White/lightblue cloud only, use actual RGBA transparency.",
+      "usage": "Preserved original; replaced in world.js by the five cumulus assets below."
     },
     {
       "name": "cloud-near",
@@ -100,7 +102,248 @@
       "bytes": 178600,
       "sha256": "179247ad1dd715c5d0f3fb72dde59dc551ed0e6e5e687ab9b0b991b6e64f522d",
       "transparent": true,
-      "prompt": "One isolated extremely realistic voluminous sunlit cumulus cloud cluster on a TRUE TRANSPARENT background, cinematic natural photography, rich fine fluffy vapor details. Unique asymmetrical shape: a TALL rounded wispy tower at far LEFT leaning slightly right, with a long low tapering soft flat cloud base that trails off toward the RIGHT. The left two thirds heavier with three uneven overlapping lobes, the right third thin delicate dissipating filaments. Photoreal subtle blue-gray shade underneath, luminous soft warm white rim sunlight from upper left. Deep convincing billowy depth with airy semi-transparent ragged edges. Broad horizontal composition, cloud fills roughly80%width and65%height with empty transparent margins all around, do not crop any portion. Not cotton, not fantasy, not painterly, no repeated identical lobes. Designed as a high-quality depth-layer billboard sprite for a website. Nothing else: NO sky, ground, plane, text, words, logo, watermarks. Actual RGBA transparent background."
+      "prompt": "One isolated extremely realistic voluminous sunlit cumulus cloud cluster on a TRUE TRANSPARENT background, cinematic natural photography, rich fine fluffy vapor details. Unique asymmetrical shape: a TALL rounded wispy tower at far LEFT leaning slightly right, with a long low tapering soft flat cloud base that trails off toward the RIGHT. The left two thirds heavier with three uneven overlapping lobes, the right third thin delicate dissipating filaments. Photoreal subtle blue-gray shade underneath, luminous soft warm white rim sunlight from upper left. Deep convincing billowy depth with airy semi-transparent ragged edges. Broad horizontal composition, cloud fills roughly80%width and65%height with empty transparent margins all around, do not crop any portion. Not cotton, not fantasy, not painterly, no repeated identical lobes. Designed as a high-quality depth-layer billboard sprite for a website. Nothing else: NO sky, ground, plane, text, words, logo, watermarks. Actual RGBA transparent background.",
+      "usage": "Preserved original; replaced in world.js by the five cumulus assets below."
+    },
+    {
+      "name": "cumulus-crown",
+      "file": "assets/cumulus-crown.webp",
+      "masterFile": "exec-2f0acd9f-2c18-45df-842e-2d7d08372f61.png",
+      "masterSha256": "9dd35c0570f96e938cd079c8a6ded46ab75ad28de990b717eb207c31b0d016e9",
+      "width": 1672,
+      "height": 941,
+      "bytes": 253028,
+      "sha256": "cdf65e92621d4a7b23693777423cbe37d780322ac9e78e72fba1fb40e24ff0c2",
+      "alphaBBox": [
+        112,
+        123,
+        1561,
+        850
+      ],
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "small": {
+        "file": "assets/cumulus-crown-small.webp",
+        "bytes": 88982,
+        "sha256": "489e7b2ed377c227e3c0ec68f0c05389975a4ea6b192ec809b05d06b3e4f2db7",
+        "width": 960,
+        "height": 540
+      },
+      "transparent": true,
+      "prompt": "Use case: photorealistic-natural. Production WebGL cloud sprite for a 2560px-wide premium sky website. Output ONE isolated photorealistic natural sunlit white cumulus cloud on a genuinely transparent RGBA background. Request high-detail 4K 3840x2160 landscape output if supported. Completely detached silhouette: EVERY outer wisp ends inside the image, generous 12% transparent margin on ALL FOUR edges. No cropped or straight-cut edges. Rich dense billowing volume with many softly irregular cauliflower turrets, delicate fringes, warm-white upper-left sunlight and cool blue-gray shaded undersides. Natural photographic water-vapor texture, not wool, smoke, cotton, bubbles, illustration or 3D toy. Visually full, substantial and buoyant rather than stringy or thin. No background sky, no ground, no checkerboard painted in, no text, logo or shadow on a surface. A broad irregular crown rising highest just LEFT of center, with a heavy rounded lower body and a smaller right shoulder. Cloud occupies 76% width and 64% height; one continuous mass.",
+      "generationTool": "Codex built-in image_gen.imagegen",
+      "model": "Not exposed by the native tool response; do not label as GPT Image 2.5.",
+      "resolutionNote": "4K requested in prompt; actual returned PNG is 1672x941. Not a 4K generation or AI upscale.",
+      "processing": "Format encoding only: WebP quality92/method6; small960px quality88/method6. No content retouching or upscaling.",
+      "alphaNote": "Master alpha>16 bounding box; edges list min/max alpha for top, bottom, left, right. No cloud silhouette reaches an image edge."
+    },
+    {
+      "name": "cumulus-tower",
+      "file": "assets/cumulus-tower.webp",
+      "masterFile": "exec-4b32733d-6dcf-4012-81f0-afbe39b647f5.png",
+      "masterSha256": "190d449944033770a15c96e9b43930efd8e6c99533070eec9af08fc28148f3ce",
+      "width": 1672,
+      "height": 941,
+      "bytes": 202546,
+      "sha256": "5db89bf6ffff461a16a758ef830f9fcc7ed8d82880767e8cdd7711d5f07c56b7",
+      "alphaBBox": [
+        205,
+        114,
+        1496,
+        868
+      ],
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "small": {
+        "file": "assets/cumulus-tower-small.webp",
+        "bytes": 74036,
+        "sha256": "7df5c1c53e274d9fba27d70f9169b566ced6bd234a06a4efa1b13639df021cd8",
+        "width": 960,
+        "height": 540
+      },
+      "transparent": true,
+      "prompt": "Use case: photorealistic-natural. Production WebGL cloud sprite for a 2560px-wide premium sky website. Output ONE isolated photorealistic natural sunlit white cumulus cloud on a genuinely transparent RGBA background. Request high-detail 4K 3840x2160 landscape output if supported. Completely detached silhouette: EVERY outer wisp ends inside the image, generous 12% transparent margin on ALL FOUR edges. No cropped or straight-cut edges. Rich dense billowing volume with many softly irregular cauliflower turrets, delicate fringes, warm-white upper-left sunlight and cool blue-gray shaded undersides. Natural photographic water-vapor texture, not wool, smoke, cotton, bubbles, illustration or 3D toy. Visually full, substantial and buoyant rather than stringy or thin. No background sky, no ground, no checkerboard painted in, no text, logo or shadow on a surface. A proud tall cumulus rising highest on the RIGHT, three uneven large lobes and a flowing broad left flank, a convex dense base. Distinct from a symmetric cloud. Cloud occupies 74% width and 72% height.",
+      "generationTool": "Codex built-in image_gen.imagegen",
+      "model": "Not exposed by the native tool response; do not label as GPT Image 2.5.",
+      "resolutionNote": "4K requested in prompt; actual returned PNG is 1672x941. Not a 4K generation or AI upscale.",
+      "processing": "Format encoding only: WebP quality92/method6; small960px quality88/method6. No content retouching or upscaling.",
+      "alphaNote": "Master alpha>16 bounding box; edges list min/max alpha for top, bottom, left, right. No cloud silhouette reaches an image edge."
+    },
+    {
+      "name": "cumulus-island",
+      "file": "assets/cumulus-island.webp",
+      "masterFile": "exec-4ae6418d-062a-4cf8-b2f5-6b6d8d000d40.png",
+      "masterSha256": "0eab580090049208b24271bb7184e3a380e191e891cb03686e1c2fa5226b3c90",
+      "width": 1672,
+      "height": 941,
+      "bytes": 219766,
+      "sha256": "48412b40ad1f8838bb2aac832c4f49f4d8b8ddbb6a5a7f8f1d50212cbf6bde2f",
+      "alphaBBox": [
+        65,
+        166,
+        1612,
+        785
+      ],
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "small": {
+        "file": "assets/cumulus-island-small.webp",
+        "bytes": 80852,
+        "sha256": "6308946454c616d2500c2cc76409021709919e7e2ffb5e4d459e44789755af57",
+        "width": 960,
+        "height": 540
+      },
+      "transparent": true,
+      "prompt": "Use case: photorealistic-natural. Production WebGL cloud sprite for a 2560px-wide premium sky website. Output ONE isolated photorealistic natural sunlit white cumulus cloud on a genuinely transparent RGBA background. Request high-detail 4K 3840x2160 landscape output if supported. Completely detached silhouette: EVERY outer wisp ends inside the image, generous 12% transparent margin on ALL FOUR edges. No cropped or straight-cut edges. Rich dense billowing volume with many softly irregular cauliflower turrets, delicate fringes, warm-white upper-left sunlight and cool blue-gray shaded undersides. Natural photographic water-vapor texture, not wool, smoke, cotton, bubbles, illustration or 3D toy. Visually full, substantial and buoyant rather than stringy or thin. No background sky, no ground, no checkerboard painted in, no text, logo or shadow on a surface. A low but very thick horizontally expansive cumulus island, five overlapping irregular domes, tallest near middle, fat luminous volume; asymmetrical frayed base and slightly curling left tip. Occupies 78% width and 55% height.",
+      "generationTool": "Codex built-in image_gen.imagegen",
+      "model": "Not exposed by the native tool response; do not label as GPT Image 2.5.",
+      "resolutionNote": "4K requested in prompt; actual returned PNG is 1672x941. Not a 4K generation or AI upscale.",
+      "processing": "Format encoding only: WebP quality92/method6; small960px quality88/method6. No content retouching or upscaling.",
+      "alphaNote": "Master alpha>16 bounding box; edges list min/max alpha for top, bottom, left, right. No cloud silhouette reaches an image edge."
+    },
+    {
+      "name": "cumulus-drift",
+      "file": "assets/cumulus-drift.webp",
+      "masterFile": "exec-fbb3878b-14ae-4fca-88bd-ded923e6352a.png",
+      "masterSha256": "47a96afcb8330ef2484df9fb21bdfb2d5cb2441d9634060945d9107fe7a9c10b",
+      "width": 1672,
+      "height": 941,
+      "bytes": 255450,
+      "sha256": "ebc88b46a1ef64bd1ae05775ac4d5d7431f56db70e7052e4e3d73eb55bcd94ff",
+      "alphaBBox": [
+        102,
+        67,
+        1567,
+        874
+      ],
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "small": {
+        "file": "assets/cumulus-drift-small.webp",
+        "bytes": 94812,
+        "sha256": "8590fe439e72e654c07d93b2158e6039171f2920b124a66cdf6df7ebb02c8111",
+        "width": 960,
+        "height": 540
+      },
+      "transparent": true,
+      "prompt": "Use case: photorealistic-natural. Production WebGL cloud sprite for a 2560px-wide premium sky website. Output ONE isolated photorealistic natural sunlit white cumulus cloud on a genuinely transparent RGBA background. Request high-detail 4K 3840x2160 landscape output if supported. Completely detached silhouette: EVERY outer wisp ends inside the image, generous 12% transparent margin on ALL FOUR edges. No cropped or straight-cut edges. Rich dense billowing volume with many softly irregular cauliflower turrets, delicate fringes, warm-white upper-left sunlight and cool blue-gray shaded undersides. Natural photographic water-vapor texture, not wool, smoke, cotton, bubbles, illustration or 3D toy. Visually full, substantial and buoyant rather than stringy or thin. No background sky, no ground, no checkerboard painted in, no text, logo or shadow on a surface. An oblique deep rounded cumulus with the broadest bulbous mass on the LEFT, sloping down to a small detached vapor puff near the right shoulder; beautiful soft airy edge but solid dense body. Occupies 76% width and 63% height.",
+      "generationTool": "Codex built-in image_gen.imagegen",
+      "model": "Not exposed by the native tool response; do not label as GPT Image 2.5.",
+      "resolutionNote": "4K requested in prompt; actual returned PNG is 1672x941. Not a 4K generation or AI upscale.",
+      "processing": "Format encoding only: WebP quality92/method6; small960px quality88/method6. No content retouching or upscaling.",
+      "alphaNote": "Master alpha>16 bounding box; edges list min/max alpha for top, bottom, left, right. No cloud silhouette reaches an image edge."
+    },
+    {
+      "name": "cumulus-billow",
+      "file": "assets/cumulus-billow.webp",
+      "masterFile": "exec-62587779-edbf-4201-af15-1ebc78643fae.png",
+      "masterSha256": "296ab31af8b3e1a413688ac49d86d185b6a841044eec29ebad16d252fa3b5bc8",
+      "width": 1672,
+      "height": 941,
+      "bytes": 230608,
+      "sha256": "e251196f3d29bb174ccc3f30c2820c56db5dcff0baa74612d19a3e99717b831f",
+      "alphaBBox": [
+        163,
+        74,
+        1510,
+        879
+      ],
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "small": {
+        "file": "assets/cumulus-billow-small.webp",
+        "bytes": 83618,
+        "sha256": "baace777d452298516c009005f96d3e44e25d0493f6f99233bd9e5b8df85beef",
+        "width": 960,
+        "height": 540
+      },
+      "transparent": true,
+      "prompt": "Use case: photorealistic-natural. Production WebGL cloud sprite for a 2560px-wide premium sky website. Output ONE isolated photorealistic natural sunlit white cumulus cloud on a genuinely transparent RGBA background. Request high-detail 4K 3840x2160 landscape output if supported. Completely detached silhouette: EVERY outer wisp ends inside the image, generous 12% transparent margin on ALL FOUR edges. No cropped or straight-cut edges. Rich dense billowing volume with many softly irregular cauliflower turrets, delicate fringes, warm-white upper-left sunlight and cool blue-gray shaded undersides. Natural photographic water-vapor texture, not wool, smoke, cotton, bubbles, illustration or 3D toy. Visually full, substantial and buoyant rather than stringy or thin. No background sky, no ground, no checkerboard painted in, no text, logo or shadow on a surface. A compact majestic sculptural cumulus with a large round central turret, a small upper-left turret and a low rounded right lobe, broad deep shaded base. Organic detailed contour unlike a simple semicircle. Occupies 72% width and 70% height.",
+      "generationTool": "Codex built-in image_gen.imagegen",
+      "model": "Not exposed by the native tool response; do not label as GPT Image 2.5.",
+      "resolutionNote": "4K requested in prompt; actual returned PNG is 1672x941. Not a 4K generation or AI upscale.",
+      "processing": "Format encoding only: WebP quality92/method6; small960px quality88/method6. No content retouching or upscaling.",
+      "alphaNote": "Master alpha>16 bounding box; edges list min/max alpha for top, bottom, left, right. No cloud silhouette reaches an image edge."
     }
   ],
   "photographs": [
@@ -118,6 +361,21 @@
       "bytes": 107914,
       "sha256": "68fab81cb27f5baf368aa4c0a93886684b22588662817b5949b65eb01ce7bcf1",
       "processing": "Downloaded as 1600px WebP via source CDN. No AI generation or bitmap retouching. CSS crop, edge mask, tint and brightness integrate with existing sky."
+    },
+    {
+      "name": "distant-mountains-4k",
+      "file": "assets/mountains-4k.webp",
+      "author": "Le Mucky (@mucky)",
+      "source": "https://unsplash.com/photos/distant-mountain-ranges-with-atmospheric-blue-haze-HHKD3m3eouo",
+      "download": "https://images.unsplash.com/photo-1782150042477-e2911268b35c?auto=format&fit=max&fm=webp&q=88&w=3840",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "retrieved": "2026-10-08",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 1012784,
+      "sha256": "116287c4394248959bb1d688c461f47b6bdfd8413c674e7e4c9f611807ef80d4",
+      "processing": "Requested a larger 3840px rendition of the same photograph from its original CDN. No AI upscale or bitmap retouching. Native sensor resolution not verified. Selected via srcset for wide screens; original 1600px file preserved."
     }
   ]
 }

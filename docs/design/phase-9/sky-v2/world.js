@@ -7,7 +7,11 @@ export function createWorld() {
   const mountains = document.querySelector('.distant-mountains');
   const mountainImage = mountains.querySelector('img');
   let mountainRequested = false, mountainReady = false;
-  mountainImage.addEventListener('load', () => { mountainReady = true; wake(); });
+  mountainImage.addEventListener('load', async () => {
+    // Large responsive photographs should be decoded before their layer is revealed.
+    try { await mountainImage.decode(); mountainReady = true; } catch { mountainReady = false; }
+    wake();
+  });
   mountainImage.addEventListener('error', () => { mountainReady = false; wake(); });
   const grassCanvas = document.querySelector('#origin-grass');
   let groundMode = 'photo', grassField = null, grassLoading = false, grassFailed = false;
@@ -19,6 +23,7 @@ export function createWorld() {
   const gl = canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, premultipliedAlpha: true, powerPreference: 'low-power' });
   let program, rect, tint, alpha, flip;
   const textures = [];
+  let textureSize = '', textureGeneration = 0;
   let ready = false;
   let lost = false;
   let animation = 0;
@@ -34,15 +39,18 @@ export function createWorld() {
   let height = window.innerHeight;
   const themes = { dawn: [.94, .89, .94], day: [.99, 1, 1], dusk: [1, .81, .76], night: [.24, .36, .55] };
   // x/y are world coordinates; depth determines apparent size and camera parallax.
+  const cloudNames = ['cumulus-crown', 'cumulus-tower', 'cumulus-island', 'cumulus-drift', 'cumulus-billow'];
   const clouds = [
-    { x: -17, y: 11, depth: 22, size: 24, ratio: 3, image: 2, opacity: .39, speed: .033 },
-    { x: 17, y: 6, depth: 19, size: 22, ratio: 3, image: 2, opacity: .43, speed: -.029 },
-    { x: -9.5, y: 4, depth: 13, size: 15, ratio: 1.5, image: 0, opacity: .5, speed: .048 },
-    { x: 13, y: 1, depth: 14, size: 19, ratio: 3, image: 2, opacity: .42, speed: -.042 },
-    { x: -7.4, y: 12.4, depth: 7.5, size: 11.2, ratio: 1.5, image: 1, opacity: .82, speed: .042 },
-    { x: 7.8, y: 10.7, depth: 7, size: 11, ratio: 1.5, image: 0, opacity: .75, speed: -.043 },
-    { x: -6.2, y: 1.8, depth: 6.5, size: 10.3, ratio: 1.5, image: 1, opacity: .65, speed: .038 },
-    { x: 7.8, y: -2, depth: 8, size: 13, ratio: 3, image: 2, opacity: .52, speed: -.035 },
+    { x: -14, y: 21, depth: 20, size: 13, image: 2, opacity: .32, speed: .027 },
+    { x: 16, y: 24, depth: 24, size: 17, image: 4, opacity: .43, speed: -.024 },
+    { x: -18, y: 6, depth: 23, size: 16, image: 0, opacity: .34, speed: .028 },
+    { x: 14, y: 5, depth: 20, size: 16, image: 2, opacity: .38, speed: -.031 },
+    { x: 16, y: 8, depth: 18, size: 13, image: 1, opacity: .50, speed: .034 },
+    { x: -2, y: 23, depth: 10, size: 8, image: 3, opacity: .54, speed: .041 },
+    { x: -9.8, y: 15, depth: 9, size: 10, image: 0, opacity: .93, speed: .065 },
+    { x: 9.6, y: 17, depth: 10, size: 11, image: 1, opacity: .87, speed: -.052 },
+    { x: -10, y: -1, depth: 10, size: 13, image: 3, opacity: .76, speed: .050 },
+    { x: 8, y: 0, depth: 12, size: 12, image: 4, opacity: .72, speed: -.043 },
   ];
   function compile(type, source) {
     const shader = gl.createShader(type);
@@ -54,7 +62,7 @@ export function createWorld() {
     if (!gl) { canvas.dataset.renderer = 'static-fallback'; return; }
     textures.length = 0;
     const vertex = compile(gl.VERTEX_SHADER, 'attribute vec2 aPosition; uniform vec4 uRect; uniform float uFlip; varying vec2 vUv; void main(){vUv=vec2(mix(aPosition.x,1.0-aPosition.x,uFlip),1.0-aPosition.y); gl_Position=vec4(uRect.xy+(aPosition-0.5)*uRect.zw,0.0,1.0);}');
-    const fragment = compile(gl.FRAGMENT_SHADER, 'precision mediump float; uniform sampler2D uTexture; uniform vec3 uTint; uniform float uAlpha; varying vec2 vUv; void main(){vec4 c=texture2D(uTexture,vUv); gl_FragColor=vec4(c.rgb*uTint,c.a)*uAlpha;}');
+    const fragment = compile(gl.FRAGMENT_SHADER, 'precision mediump float; uniform sampler2D uTexture; uniform vec3 uTint; uniform float uAlpha; varying vec2 vUv; void main(){vec4 c=texture2D(uTexture,vUv); vec2 edge=smoothstep(vec2(0.0),vec2(0.025),vUv)*smoothstep(vec2(0.0),vec2(0.025),1.0-vUv); gl_FragColor=vec4(c.rgb*uTint,c.a)*uAlpha*edge.x*edge.y;}');
     if (!vertex || !fragment) { canvas.dataset.renderer = 'static-fallback'; return; }
     program = gl.createProgram(); gl.attachShader(program, vertex); gl.attachShader(program, fragment); gl.linkProgram(program);
     gl.deleteShader(vertex); gl.deleteShader(fragment);
@@ -65,29 +73,44 @@ export function createWorld() {
     const position = gl.getAttribLocation(program, 'aPosition'); gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
     rect = gl.getUniformLocation(program, 'uRect'); tint = gl.getUniformLocation(program, 'uTint'); alpha = gl.getUniformLocation(program, 'uAlpha'); flip = gl.getUniformLocation(program, 'uFlip');
     gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.clearColor(0,0,0,0);
+    textureSize = '';
+    loadTextures();
+  }
+  function loadTextures() {
+    const size = width < 700 ? 'small' : 'full';
+    // Upgrade after widening the window; keep the full source when narrowing again.
+    if (textureSize === 'full' || textureSize === size) return;
+    textureSize = size;
+    const generation = ++textureGeneration;
     let finished = 0;
-    ['cloud', 'cloud-near', 'cloud-bank'].forEach((name, index) => {
-      const image = new Image(); image.src = `assets/${name}.webp`;
+    cloudNames.forEach((name, index) => {
+      const image = new Image();
       image.onload = () => {
-        if (lost) return;
-        const texture = gl.createTexture(); textures[index] = texture;
+        if (lost || generation !== textureGeneration) return;
+        const texture = gl.createTexture();
+        if (textures[index]) gl.deleteTexture(textures[index]);
+        textures[index] = texture;
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-        finished++; ready = true; canvas.dataset.renderer = finished === 3 ? 'webgl-billboards' : 'webgl-partial'; wake();
+        finished++; ready = true; canvas.dataset.renderer = finished === cloudNames.length ? 'webgl-billboards' : 'webgl-partial'; wake();
       };
-      image.onerror = () => { canvas.dataset.renderer = ready ? 'webgl-partial' : 'static-fallback'; };
+      image.onerror = () => {
+        if (lost || generation !== textureGeneration) return;
+        canvas.dataset.renderer = ready ? 'webgl-partial' : 'static-fallback';
+      };
+      image.src = `assets/${name}${size === 'small' ? '-small' : ''}.webp`;
     });
   }
 
   function measure() {
     width = window.innerWidth; height = window.innerHeight;
     // Cap fill rate on high-DPI mobile displays. Fine texture supplies detail.
-    const dpr = Math.min(window.devicePixelRatio || 1, width < 700 ? 1.15 : 1.4);
+    const dpr = Math.min(window.devicePixelRatio || 1, width < 700 ? 1.15 : 1.4, 3840 / width, 2160 / height);
     canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
-    if (gl && !lost) gl.viewport(0, 0, canvas.width, canvas.height);
+    if (gl && !lost) { gl.viewport(0, 0, canvas.width, canvas.height); if (program) loadTextures(); }
     lastScrollY = -1; wake();
   }
   function readProgress() {
@@ -99,7 +122,7 @@ export function createWorld() {
     const cameraY = 15 - progress * 18;
     const quiet = document.body.dataset.view !== 'home';
     vault.style.transform = `translate3d(0,${-progress * height * .58}px,0) scale(${1.015 + progress * .1})`;
-    vault.style.opacity = String(Math.max(0, 1 - progress * 2.8));
+    vault.style.opacity = String(Math.max(0, 1 - progress * 2.8) * (ready ? .14 : 1));
     const ground = Math.max(0, Math.min(1, (progress - .40) / .60));
     meadow.style.transform = `translate3d(0,${height * (1 - ground) * .95}px,0) scale(${1.01 + .12 * ground})`;
     let grassVisible = false;
@@ -116,9 +139,9 @@ export function createWorld() {
         grassVisible = grassField.render({ time, ground, theme: document.body.dataset.time, moving: !paused && !media.matches, reduced: media.matches, width, height });
       }
     }
-    // A local photograph sits behind the unchanged interactive grass.
+    // A local photograph sits behind the interactive grass.
     const showMountains = grassVisible && document.body.dataset.mountains !== 'off';
-    if (showMountains && !mountainRequested) { mountainRequested = true; mountainImage.src = 'assets/mountains.webp'; }
+    if (showMountains && !mountainRequested) { mountainRequested = true; mountainImage.srcset = 'assets/mountains.webp 1600w, assets/mountains-4k.webp 3840w'; mountainImage.sizes = '100vw'; mountainImage.src = 'assets/mountains.webp'; }
     mountains.hidden = !showMountains || !mountainReady;
     mountains.style.transform = `translate3d(-50%,${height * (1 - ground) * .95}px,0)`;
     mountains.style.opacity = String(Math.min(1, Math.max(0, (ground - .40) / .22)));
@@ -135,12 +158,16 @@ export function createWorld() {
     const aspect = width / height;
     clouds.forEach((cloud, index) => {
       const focal = cloud.depth * .75;
-      // Gentle continuous oscillation keeps clouds inside their original world bank.
-      const drift = Math.sin(time * cloud.speed + index * .7) * .75;
-      const x = (cloud.x + drift) / focal / Math.max(.83, aspect);
-      const y = (cloud.y - cameraY) / focal;
-      const w = cloud.size / focal / aspect;
-      const h = cloud.size / cloud.ratio / focal;
+      // Independent banks drift through the same world from the first screen.
+      const drift = Math.sin(time * cloud.speed + index * .7) * 1.35;
+      const span = Math.max(1, aspect / 1.78);
+      const x = (cloud.x * span + drift) / focal / Math.max(.83, aspect);
+      const y = (cloud.y - cameraY) / focal + Math.sin(time * .025 + index) * .012;
+      const projectedWidth = cloud.size / focal / aspect * width / 2;
+      // Never stretch a 1672px sprite beyond its useful texel density at desktop DPR.
+      const displayWidth = Math.min(projectedWidth, width < 700 ? width * 1.15 : Math.min(width * .58, 1120));
+      const w = displayWidth / width * 2;
+      const h = displayWidth / (1672 / 941) / height * 2;
       if (y - h / 2 > 1.1 || y + h / 2 < -1.1 || !textures[cloud.image]) return;
       gl.bindTexture(gl.TEXTURE_2D, textures[cloud.image]);
       gl.uniform4f(rect, x, y, w, h); gl.uniform1f(alpha, cloud.opacity * (quiet ? .32 : 1)); gl.uniform1f(flip, index % 2);
@@ -178,7 +205,7 @@ export function createWorld() {
   // A passive wake-up only: layout and drawing are coalesced into the next frame.
   window.addEventListener('scroll', wake, { passive: true });
   window.addEventListener('resize', measure);
-  canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); lost = true; ready = false; canvas.dataset.renderer = 'static-fallback'; });
+  canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); lost = true; ready = false; textureGeneration++; canvas.dataset.renderer = 'static-fallback'; wake(); });
   canvas.addEventListener('webglcontextrestored', () => { lost = false; setup(); measure(); });
   window.addEventListener('pagehide', event => { if (!event.persisted) grassField?.dispose(); });
   setup(); measure(); updateMotion();

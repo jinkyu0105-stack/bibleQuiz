@@ -2,7 +2,8 @@
 /**
  * Adapted from OriginKit Grass Field, base preset, fetched via its MCP on 2026-10-08.
  * https://www.originkit.dev/components/grass-field?preset=base
- * Original hill/blade shaders and low-discrepancy blade geometry are retained.
+ * OriginKit hill/wind/shading and low-discrepancy geometry are retained;
+ * field x coordinates now expand with the viewport aspect ratio (P9-06 wide fix).
  * Adapter replaces React lifecycle and opaque sky with this review's shared clock,
  * transparent backdrop, themes, lazy allocation, quality cap and explicit cleanup.
  * See ORIGINKIT.md for provenance, tuning and rollback.
@@ -25,6 +26,7 @@ void main() {
 
 const HILL_GLSL = `
 uniform float uTerrain;
+uniform float uFieldWidth;
 float hill(vec2 b) {
     return uTerrain * (
           0.42 * sin(b.x * 0.155 + 0.6) * cos(b.y * 0.105)
@@ -56,7 +58,7 @@ float h21(vec2 p) {
 ${HILL_GLSL}
 
 void main() {
-    vec2 b = a_xz;
+    vec2 b = vec2(a_xz.x * uFieldWidth, a_xz.y);
     vec3 P = vec3(b.x, hill(b) - 0.012, b.y);
     vec3 rel = P - uEye;
     float cp = cos(uPitch), sp = sin(uPitch);
@@ -110,7 +112,7 @@ float h21(vec2 p) {
 ${HILL_GLSL}
 
 void main() {
-    vec2 base = a_base;
+    vec2 base = vec2(a_base.x * uFieldWidth, a_base.y);
     float v = a_param.x;
     float side = a_param.y;
 
@@ -241,6 +243,8 @@ export function createGrassField(canvas, wake) {
     gl.uniform1f(program.u('uAspect'), aspect); gl.uniform1f(program.u('uF'), FOCAL);
     gl.uniform3f(program.u('uEye'), 0, EYE_Y, 0); gl.uniform1f(program.u('uPitch'), PITCH);
     gl.uniform1f(program.u('uTerrain'), 1);
+    // Keep the far terrain and blade field beyond both sides of the camera frustum.
+    gl.uniform1f(program.u('uFieldWidth'), Math.max(1, aspect * .9));
     gl.uniform3fv(program.u('uBase'), palette.base); gl.uniform3fv(program.u('uHaze'), palette.haze);
   }
   function render({ time, ground: arrival, theme, moving, reduced, width, height }) {
@@ -253,7 +257,7 @@ export function createGrassField(canvas, wake) {
     const target = PALETTES[theme] || PALETTES.day;
     if (!palette || reduced || !moving) palette = Object.fromEntries(Object.entries(target).map(([key, value]) => [key, [...value]]));
     else for (const key of Object.keys(target)) palette[key] = palette[key].map((value, index) => value + (target[key][index] - value) * .16);
-    const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1 : 1.25);
+    const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1 : 1.25, 3840 / width, 2160 / height);
     const bw = Math.round(width * dpr), bh = Math.round(height * dpr);
     if (canvas.width !== bw || canvas.height !== bh) { canvas.width = bw; canvas.height = bh; }
     gl.viewport(0, 0, bw, bh); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
