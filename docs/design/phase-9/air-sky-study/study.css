@@ -1,0 +1,44 @@
+:root { color-scheme: light; --ink:#fff; --rail:rgba(14,45,73,.72); --selected:#fff; --selected-ink:#173b5e; --hairline:rgba(255,255,255,.36); }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; color:var(--ink); background:linear-gradient(#187bdb,#d5eeff); font-family:"Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+body[data-time="night"] { color-scheme:dark; background:linear-gradient(#04152f,#245d86); }
+body[data-time="dawn"] { background:linear-gradient(#6689b2,#ffd6b5); }
+body[data-time="dusk"] { background:linear-gradient(#786eaa,#ffb989); }
+#sky { position:fixed; inset:0; width:100%; height:100dvh; z-index:0; pointer-events:none; }
+a,button { color:inherit; }
+a { text-decoration:none; }
+button { font:inherit; cursor:pointer; }
+button:focus-visible,a:focus-visible { outline:3px solid #fff; outline-offset:5px; }
+header { position:fixed; z-index:4; top:0; inset-inline:0; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 4vw; background:linear-gradient(rgba(4,22,38,.52),transparent); }
+.brand { font-size:17px; font-weight:600; letter-spacing:-.04em; }
+.brand span { display:block; margin-top:4px; font-size:11px; letter-spacing:.1em; font-weight:400; }
+.study-label { font-size:12px; }
+#motion { min-height:44px; padding:8px 14px; border:1px solid var(--hairline); border-radius:8px; background:var(--rail); font-size:13px; }
+.time-control { position:fixed; z-index:5; right:24px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:4px; padding:6px; border-radius:12px; background:var(--rail); border:1px solid var(--hairline); }
+.time-control button { display:grid; grid-template-columns:20px auto; align-items:center; gap:8px; min-width:78px; min-height:44px; padding:8px; border:0; background:transparent; border-radius:8px; text-align:left; font-size:12px; }
+.time-control button span { font-size:20px; text-align:center; }
+.time-control button[aria-pressed="true"] { color:var(--selected-ink); background:var(--selected); }
+.time-control button:hover { box-shadow:inset 0 0 0 1px var(--hairline); }
+main { position:relative; z-index:1; }
+section { position:relative; min-height:160dvh; display:flex; align-items:center; padding:12vh 11vw; }
+section.opening { min-height:140dvh; align-items:flex-start; padding-top:30vh; }
+.copy { position:relative; max-width:780px; isolation:isolate; }
+.copy::before { content:""; position:absolute; inset:-80px -130px; background:radial-gradient(ellipse,rgba(6,29,55,.72),rgba(6,29,55,.38) 55%,transparent 72%); z-index:-1; pointer-events:none; }
+.eyebrow { margin:0 0 24px; font-size:13px; letter-spacing:.06em; }
+h1,h2 { margin:0 0 28px; font-size:clamp(40px,5.5vw,80px); font-weight:500; letter-spacing:-.065em; line-height:1.2; word-break:keep-all; }
+h2 { font-size:clamp(36px,4.6vw,66px); }
+.copy>p:not(.eyebrow) { font-size:clamp(15px,1.3vw,18px); line-height:1.8; max-width:440px; word-break:keep-all; }
+.scroll-link { display:inline-flex; gap:32px; align-items:center; margin-top:24px; border-bottom:1px solid currentColor; padding-bottom:10px; font-size:14px; }
+.scroll-link span { font-size:22px; }
+.offset { margin-left:8vw; }
+.right { margin-left:auto; margin-right:6vw; }
+.final { margin-inline:auto; text-align:center; }
+.section-note { position:absolute; bottom:10vh; left:4vw; font-size:12px; }
+.skip { position:fixed; top:8px; left:8px; z-index:10; padding:12px; background:#173b5e; transform:translateY(-180%); }
+.skip:focus { transform:none; }
+.no-script { position:fixed; bottom:90px; left:16px; z-index:6; background:#173b5e; padding:12px; }
+@media(max-width:700px) { header { padding:16px 20px; }.study-label { display:none; }.brand { font-size:14px; }#motion { font-size:12px; padding:8px 10px; }.time-control { top:auto; bottom:18px; right:50%; transform:translateX(50%); flex-direction:row; }.time-control button { min-width:65px; gap:5px; }.time-control button span { font-size:18px; }section { padding-inline:26px; min-height:150dvh; }section.opening { padding-top:30vh; min-height:140dvh; }.copy { max-width:100%; }.copy::before { inset:-50px -30px; }.offset,.right { margin:0; }.eyebrow { font-size:11px; }.copy>p:not(.eyebrow) { max-width:290px; }.section-note { left:26px; } }
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+
+#ground { min-height:100dvh; }

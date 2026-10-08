@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BibleQuiz · 하늘 움직임 검토</title>
+<meta name="description" content="새벽, 낮, 노을, 밤과 구름 사이를 내려오는 움직임을 확인하는 독립 검토본">
+<link rel="stylesheet" href="study.css">
+</head>
+<body data-time="day">
+<canvas id="sky" aria-hidden="true"></canvas>
+<a class="skip" href="#journey">본문으로 이동</a>
+<header><a href="#opening" class="brand">다사랑교회 <span>BibleQuiz</span></a><span class="study-label">배경 움직임 검토</span><button id="motion" type="button" aria-pressed="false">움직임 멈춤</button></header>
+<nav class="time-control" aria-label="하늘 시간대">
+<button type="button" data-time="dawn" aria-pressed="false"><span aria-hidden="true">↥</span>새벽</button>
+<button type="button" data-time="day" aria-pressed="true"><span aria-hidden="true">☼</span>낮</button>
+<button type="button" data-time="dusk" aria-pressed="false"><span aria-hidden="true">↧</span>노을</button>
+<button type="button" data-time="night" aria-pressed="false"><span aria-hidden="true">☾</span>밤</button>
+</nav>
+<main id="journey">
+<section id="opening" class="opening"><div class="copy"><p class="eyebrow">한 주의 말씀, 함께하는 시간</p><h1>말씀을 마음에.<br>하늘을 일상에.</h1><p>같은 하늘 아래, 어린이와 장년이 함께합니다.</p><a class="scroll-link" href="#clouds">구름 사이로 내려가기 <span aria-hidden="true">↓</span></a></div><span class="section-note">하늘</span></section>
+<section id="clouds"><div class="copy offset"><p class="eyebrow">하나의 이어지는 풍경</p><h2>구름 사이를<br>천천히 지나갑니다.</h2><p>가까운 구름과 먼 구름이 서로 다른 속도로 흐릅니다.</p></div><span class="section-note">구름 사이</span></section>
+<section id="near-ground"><div class="copy right"><p class="eyebrow">시선이 내려오는 순간</p><h2>하늘에서,<br>우리의 자리로.</h2><p>배경을 바꾸지 않고 같은 공간 안에서 내려옵니다.</p></div><span class="section-note">지면 가까이</span></section>
+<section id="ground"><div class="copy final"><p class="eyebrow">다시 이어지는 일상</p><h2>함께 머무는<br>작은 정원.</h2><a class="scroll-link" href="#opening">하늘로 돌아가기 <span aria-hidden="true">↑</span></a></div><span class="section-note">정원</span></section>
+</main>
+<noscript><p class="no-script">시간대 전환과 구름 움직임을 보려면 JavaScript를 켜 주세요.</p></noscript>
+<script src="study.js"></script>
+</body></html>
