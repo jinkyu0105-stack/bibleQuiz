@@ -3,7 +3,7 @@
 
 ## 18. 이후 디자인·이미지 스킬 사용 규칙
 
-사용자가 지정한 세 스킬은 이번 문서 작성 단계에서 실행하지 않았다. 다음 단계에서 아래 순서와 범위로 사용한다.
+현재 새 UI는 [하늘 디자인](design.md)을 따른다. P9-06에서는 섹션별 이미지 참고 → 독립 HTML 시안 → 실제 브라우저 검수 순서로 진행한다. 과거 P9-02의 숲/종이 원본 재구성 지시는 종료했다.
 
 ### 18.1 `imagegen-frontend-web`
 
@@ -19,18 +19,11 @@
 4. 아카이브
 5. 관리자 주간 발행·검수
 
-어린이/장년의 visual track 차이가 큰 hero와 workspace는 각각 별도 reference를 만든다. 이 이미지는 개발 참고용이고 실제 사이트 배경으로 그대로 쓰지 않는다.
+대표 화면마다 별도 가로 참고 이미지를 만들며 어린이/장년의 차이가 필요하면 따로 검토한다. UI 참고 이미지는 실제 입력 화면으로 쓰지 않는다. 글자 없는 순수 하늘/구름 배경은 최적화한 뒤 별도 장식 자산으로 사용할 수 있다.
 
 ### 18.2 기본 `imagegen`(사용자가 말한 “image gem”)
 
-실제 주간 bitmap 자산을 만드는 도구다.
-
-- 어린이 desktop landscape
-- 어린이 mobile portrait
-- 장년 desktop landscape
-- 장년 mobile portrait
-
-본문 10장의 art direction을 사용한다. P9-02에서 사용자가 기존 4종을 교체하도록 명시했으므로 Phase7A 01/02 원본 이미지를 직접 입력으로 사용해 같은 숲·종이 정원 배경을 재구성한다. 기존 화면 reference 8종과 celebration은 다시 생성하지 않는다. 글자·로고·성경 구절을 이미지 안에 생성하지 않는다. 생성 후 원본을 눈으로 검수하고, 적절한 자산만 최적화한다.
+실제 bitmap 자산을 만드는 도구다. 새 시안은 독자적인 낮/밤 원경·지면·투명 구름을 제작하며 이전 숲/종이를 다시 생성하지 않는다. 생성 도구의 원본은 보존하고 최적화본과 출처·용량을 기록한다. 글자·로고·성경 구절은 이미지 안에 생성하지 않는다. 생성 후 원본을 눈으로 확인하고 적절한 자산만 사용한다. 기존 이미지/celebration은 별도 승인 없이 삭제하지 않는다.
 
 ### 18.3 `imagegen-frontend-mobile`
 
@@ -42,21 +35,22 @@
 
 경로: `/home/onegem/.agents/skills/design-taste-frontend/SKILL.md`
 
-웹 reference와 이 문서가 승인된 뒤 실제 코드를 구현할 때 사용한다.
+현재 스킬의 적용 범위를 읽고 사용한다. P9-06의 공개 첫 화면/스크롤 시안에는 적용하고, 제품 풀이·관리자는 기존 기능/접근성 규칙을 따른다. 스킬을 이유로 새 UI 라이브러리를 무단 설치하지 않는다.
 
 - 최초 구현은 greenfield editorial interactive web app으로 pre-flight를 수행했다. P9-02 같은 기존 앱 개편은 현재 화면·승인 시안·기능을 먼저 대조하고 기존 토큰과 컴포넌트를 재사용한다. 현재 사용자의 명시적 구현 요청과 기능 보존 조건이 skill의 기본 새 시안 생성 절차보다 우선한다.
 - 제품 성격: 교회 가족용, 접근성 우선, 장년은 사색적, 어린이는 따뜻하되 유아적이지 않음
-- 추천 dials: visual intensity `5/10`, motion `3/10`, density `5/10`
+- 새 하늘 공개 시안의 dials: DESIGN_VARIANCE `7`, MOTION_INTENSITY `7`, VISUAL_DENSITY `3`. 풀이·관리자는 자동 움직임을 약하게 하고 읽기 밀도를 실용적으로 유지한다.
 - 디자인 토큰과 컴포넌트 구조를 먼저 세운다.
 - 시각적 판단이 이 문서의 IME, 보안, 정답 비공개, 접근성 하드 게이트를 덮어쓰면 안 된다.
 
 ### 18.5 실행 순서
 
 ```text
-implementation.md 승인
-→ imagegen-frontend-web 섹션별 reference
-→ 필요할 때 imagegen-frontend-mobile 화면 reference
-→ design-taste-frontend로 Phase 3~6 화면 코드 구현
-→ 기본 imagegen으로 실제 배경 4종과 Phase 7B 최종 polish
-→ 실제 브라우저·기기·출력 QA
+사용자 방향과 현재 기능 확인
+→ imagegen-frontend-web 대표 장면별 reference
+→ 필요할 때 별도 모바일 reference
+→ 독립 공개/풀이/관리자 HTML 시안과 브라우저 검수
+→ 사용자 확인·보정
+→ 기존 앱에 시안 연결·관련 기능/접근성/기기/출력 검사
+→ 승인된 경로로 Preview, Production은 별도 요청
 ```

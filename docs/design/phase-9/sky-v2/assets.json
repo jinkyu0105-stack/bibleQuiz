@@ -1,0 +1,106 @@
+{
+  "task": "P9-06",
+  "date": "2026-10-08",
+  "generationTool": "Codex built-in image_gen.imagegen",
+  "purpose": "Original sky assets and separate text-free screen references. No Air assets copied.",
+  "masters": "Original generation files preserved; additional local copies under .wrangler/design-references/p9-06-air/masters (Git ignored).",
+  "optimization": "Pillow WebP quality87/method6; day/night/meadow small960px quality84. Encoding/size only, no artistic manipulation.",
+  "images": [
+    {
+      "name": "day",
+      "file": "assets/day.webp",
+      "masterFile": "exec-f057b93e-ce70-4b54-8503-d171698f71c8.png",
+      "masterSha256": "210a185575fc8e138f0c6159a48d349247d92a79dfbc7c5c969afdf08b17a584",
+      "bytes": 119202,
+      "sha256": "acd336750e5c7e1d5510a6ad9b0a9132add5613dd47aec898abafe1e396eaf97",
+      "transparent": false,
+      "prompt": "Use case: ui-mockup / photorealistic-natural. Create ONE cinematic horizontal 16:9 website hero ART-DIRECTION REFERENCE for a Korean church's Bible quiz website. Premium spatial cloud world inspired by high-end interactive sky websites. Absolutely NO text, letters, numbers, logos, watermarks, UI labels, or fake writing anywhere. Real typography will be added as HTML. Full bleed atmospheric blue sky, substantial realistic white cumulus cloud banks entering from lower left and lower right edges, cloud towers at different distances, sunlit silver-white rims, detailed shaded pale blue undersides, convincing translucent wisps, clear central and upper-middle negative space to put a large two-line dark navy Korean title at y25%-50% and actions at y62%. Clear top 80px for navigation. The blue sky should be pale luminous cerulean in the center and deeper azure at the top corners. NO ground, NO forest, NO paper, NO symbols, NO glass logos, NO objects, NO panels. Clouds must look like high-resolution atmospheric photography, with sculpted volume, a wide range of small and large turbulent detail; never flat white cotton balls, fog gradients, smoke puffs, or cartoon. Imagine the camera floating among clouds in bright late-morning light. restrained, airy, optimistic, photographic. Wide composition with cloud masses surrounding but not obscuring the central clear area. Render very high fidelity.",
+      "small": {
+        "file": "assets/day-small.webp",
+        "bytes": 48762,
+        "sha256": "4a91a76b34496bcce53ad51cce3f93c18ea8b3570ca728b136be09401684c9e0"
+      }
+    },
+    {
+      "name": "cloud",
+      "file": "assets/cloud.webp",
+      "masterFile": "exec-e69f818d-c2b5-4db6-8660-df3d6a024ecf.png",
+      "masterSha256": "afddee711b81a9ddfddab09392e2b2ce39ff2104c8b07d85bf6661110136cb1b",
+      "bytes": 162664,
+      "sha256": "e77d8dddc802919274cc9889787335054540fc52c6bff8ab2a82244a9b07947e",
+      "transparent": true,
+      "prompt": "Use case: photorealistic-natural. Asset type: a single isolated cloud sprite for a photorealistic WebGL sky. Generate one large, horizontally stretched, realistic sunlit white cumulus cloud on a genuinely transparent RGBA background, no background sky. Landscape 3:2 canvas. Cloud occupies about 90% width, 66% height centered with FULLY TRANSPARENT MARGINS on all sides; no edge cropped. An asymmetrical low bank with three rising turrets, the tallest slightly left of center. Extremely rich natural atmospheric detail: fine fraying vapor edges, sunlit rounded upper lobes, subtle warm-white highlights from upper left, soft pale-blue and cool-gray undersides, semi-transparent outer wisps. Form should be dense and brilliant in the middle, less dense at the fringes, cloud base fairly horizontal but ragged, not a series of evenly spaced circles. This is a believable photographed atmospheric cloud, NOT smoke, explosion, wool, bubbles, illustration or a gray gradient blob. No drop shadow, no floor, no text, no logo, no watermark, no other objects. Preserve useful soft natural alpha transparency in the wispy edges."
+    },
+    {
+      "name": "night",
+      "file": "assets/night.webp",
+      "masterFile": "exec-dffe05b9-42f8-45d4-bd71-b7d41b7d0f17.png",
+      "masterSha256": "eafb15a7be455bc675dcd99ad3030bccb221cf253b0da7cf771b9a37ea921102",
+      "bytes": 144232,
+      "sha256": "1338e1810ec064546a81718b7e0384dbc7aee73019daccc396e73e0f10593bfb",
+      "transparent": false,
+      "prompt": "Use case: lighting-weather. This is Section 2 of 5, a horizontal NIGHT hero reference. Transform this exact bright cloud scene into a refined photorealistic moonlit night. Preserve the precise framing, cloud mass arrangement and central negative space. Deep navy blue upper sky becoming luminous muted cobalt toward the distant horizon, exquisite silver-blue moonlight grazing the upper edges of the same clouds, dark indigo blue but still detailed cloud shadows. Small sparse realistic stars only in the open upper sky, subtle modest crescent moon high toward the upper right. Overall enough separation between clouds and sky to feel dimensional, never black crushed darkness. Center will later hold real white Korean HTML title, so keep middle clear and dark. No text, no logos, no typography, no UI, no foreground objects, no mountains or land. Wide 16:9 premium atmospheric website artwork, not fantasy space, no galaxies, no purple glow.",
+      "referencedMaster": "exec-f057b93e-ce70-4b54-8503-d171698f71c8.png",
+      "small": {
+        "file": "assets/night-small.webp",
+        "bytes": 57406,
+        "sha256": "44dd3ea73aaad23025d5a4dcd33c41f0af4be14eddd23a7d899edeab80df818f"
+      }
+    },
+    {
+      "name": "meadow",
+      "file": "assets/meadow.webp",
+      "masterFile": "exec-6d2a5a81-5eab-4501-9ff6-a6c5e0ad2b03.png",
+      "masterSha256": "a3f19385c7814a52209130140e2016dc331cf3a4633e42d06eaecad37c31827e",
+      "bytes": 193820,
+      "sha256": "02c4f1de22b8a5984700880303decef440ef29bd6334027258ee35e9538cf67b",
+      "transparent": false,
+      "prompt": "Use case: photorealistic-natural. This is Section 3 of 5, a single horizontal 16:9 atmospheric ground-arrival section ART DIRECTION REFERENCE for the same cinematic blue-sky website. Eye-level camera just above a gently rolling, lush, immaculate open meadow under the expansive clear luminous blue sky. Distant soft hill horizon sits at LOWER 35% of frame. Lower third contains rich fine grass blades and a very small number of natural tiny white daisies, realistic subtle foreground depth-of-field with detailed midground. Tiny soft wispy clouds near the far horizon, center and upper sky mostly clear for HTML text to be added later. A gentle grassy slope rises in bottom-left and bottom-right, leaving a shallow inviting open valley at bottom center. Color lush clean green with sunlight from upper left, sky azure gradient pale at horizon, matching atmospheric high-end interactive sky. Premium quiet landscape photography with excellent material detail. NO forest, NO trees, NO paper or craft aesthetic, NO architecture, NO path, NO mountains, NO large decorative flowers or mushrooms, NO people, NO glass sculptures, NO text, NO logo, NO watermark, NO UI panels. This should feel like descending from clouds into the same real world, peaceful and spacious.",
+      "small": {
+        "file": "assets/meadow-small.webp",
+        "bytes": 70506,
+        "sha256": "4fb62d1632f918b4bdd8f3e442a9940a725aa694099a63ffb5a4d782bd07a8b6"
+      }
+    },
+    {
+      "name": "puzzle",
+      "file": "references/puzzle.webp",
+      "masterFile": "exec-cac47032-1cce-465e-b7c6-ec100dad9323.png",
+      "masterSha256": "bbf4a46f7b3f797c3cc98d2faf8e1360323affce3b7aaa53a7a0024267613ecd",
+      "bytes": 24310,
+      "sha256": "60f642c01b1e52ecfb904585dc91e224ecfb6563cad6ae84672d19fabef1c15c",
+      "transparent": false,
+      "prompt": "Create ONE horizontal 16:9 art direction reference, full screen composition for a premium Korean crossword website, section 4 of 5. No text, no letters, no numbers, no symbols pretending to be writing, no logos, no words whatsoever. A very quiet vast light powder-blue sky with tiny detailed distant cumulus at far left and far right. Centered in generous white space, a beautifully precise nearly opaque very light cool-white horizontal workspace, thin soft-gray hairline borders and minimal 10px corner radius, no heavy drop shadows. Left two thirds contains an elegant perfectly square 8 by 8 blank crossword board, ink-navy inactive squares in a pleasing irregular balanced pattern, white empty active squares, one pale cobalt-blue selected row and a single cobalt outline selected square. All squares crisp consistent. Right one third a wholly blank white reading area with generous padding and a single subtle blue horizontal divider, NO fake writing or line placeholders. Two understated blank pill-shaped controls beneath. The board and reading surface anchored together in a flat editorial composition. Designed like a refined desktop productivity instrument sitting quietly in daylight, not a floating sci-fi glass widget. Most important: strict readable geometry, soft blue ambient light, restful uncluttered organization, natural real sky, strong negative space. No devices, no browser chrome, no forest, no paper texture, no gold or green accents. Photo-realistic clouds, polished high fidelity digital interface material."
+    },
+    {
+      "name": "admin",
+      "file": "references/admin.webp",
+      "masterFile": "exec-301365c3-a95e-4a21-a504-83ff78e0f7a9.png",
+      "masterSha256": "6ff73a89ce2e8feb5ebd0c8d6f324d0f3d5832c405bb9146c996cec848334761",
+      "bytes": 14748,
+      "sha256": "29a2884dff543b96a05259e6cc2e643a5d172ef1e9d745d7fb03b83ed4b02dee",
+      "transparent": false,
+      "prompt": "Create ONE horizontal 16:9 art direction reference, full screen composition for a premium church content editor dashboard, section 5 of 5. Absolutely NO text, letters, numbers, logos, readable or fake writing, icons, or glyphs. A precise spacious 1440px-style dashboard composition: left slim 220px cool-white sidebar separated by one hairline from main workspace; a single small cobalt rounded rectangle selected near top of sidebar with ample blank space. Main area cool light-gray almost white with horizontal six-step workflow represented by SIX tiny circles linked by very thin neutral lines across top, one cobalt active circle. Main content split into generous 60% white editing plane and 40% subtly powder-blue right preview plane. Empty editorial surfaces, no fake writing or repeated skeleton lines. Quiet cobalt accents, near-black slim rules, 8px corners, meticulous spacing, lots of light. Far right edge and top margin reveal a subtle luminous pale blue real sky with distant soft cumulus, to connect to an airy sky identity while content areas remain nearly opaque. Absolutely no glassmorphism, no nested cards, no stock forest, no paper, no gold, no fake desktop or devices. Sophisticated restrained productive dashboard, beautiful controlled hierarchy of blank areas, crisp precise geometry. Overall image should look like premium interface surface studies that a developer will populate with real Korean HTML."
+    },
+    {
+      "name": "cloud-bank",
+      "file": "assets/cloud-bank.webp",
+      "masterFile": "exec-1fedc0c9-d825-4d97-9343-05539f043625.png",
+      "masterSha256": "cfa35d53e2557e65e7c2f64f18822d8c426a8fe09052e1d660e1b867b6266c87",
+      "bytes": 302668,
+      "sha256": "3f7668e435c9976c8090fb7d49cc7d8b79d801b19884649bb5cb2d70e15d0ce8",
+      "transparent": true,
+      "prompt": "A single very broad asymmetrical photorealistic bank of thin luminous stratocumulus clouds, horizontal length roughly 3 times height, isolated on a TRUE transparent background. One continuous natural wispy cloud bank, extremely feathery translucent torn fringes, soft subtle pale silver-blue shadows, brighter white sunlit top-left, detailed realistic vapor. The central part lower and flatter with fine broken wisps extending far left; the right part slightly taller with one subtle cumulus mound. NOT the repeated identical cartoon turrets, not a solid cotton mountain, not smoke, not fog flat sheet. Natural atmospheric fine mist around edges that fades all the way to alpha0. Keep generous empty transparent padding on every side, completely inside the frame, no crop. A physically believable photographic cloud sprite for a 3D browser sky, soft aerial depth. No sky, no horizon, no ground, no text, no words, no symbols, no watermark. White/lightblue cloud only, use actual RGBA transparency."
+    },
+    {
+      "name": "cloud-near",
+      "file": "assets/cloud-near.webp",
+      "masterFile": "exec-c6a26393-b16f-4337-b014-a142273ee46b.png",
+      "masterSha256": "297eb4de584b835dc95f617608dde78dd0f789fb83d20318eaabfb2bbf9be69c",
+      "bytes": 178600,
+      "sha256": "179247ad1dd715c5d0f3fb72dde59dc551ed0e6e5e687ab9b0b991b6e64f522d",
+      "transparent": true,
+      "prompt": "One isolated extremely realistic voluminous sunlit cumulus cloud cluster on a TRUE TRANSPARENT background, cinematic natural photography, rich fine fluffy vapor details. Unique asymmetrical shape: a TALL rounded wispy tower at far LEFT leaning slightly right, with a long low tapering soft flat cloud base that trails off toward the RIGHT. The left two thirds heavier with three uneven overlapping lobes, the right third thin delicate dissipating filaments. Photoreal subtle blue-gray shade underneath, luminous soft warm white rim sunlight from upper left. Deep convincing billowy depth with airy semi-transparent ragged edges. Broad horizontal composition, cloud fills roughly80%width and65%height with empty transparent margins all around, do not crop any portion. Not cotton, not fantasy, not painterly, no repeated identical lobes. Designed as a high-quality depth-layer billboard sprite for a website. Nothing else: NO sky, ground, plane, text, words, logo, watermarks. Actual RGBA transparent background."
+    }
+  ]
+}

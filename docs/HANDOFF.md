@@ -1,32 +1,38 @@
-# 인계 — P9-05 하늘 탐색·동작 검토 완료 / 새 Air 계승 UI 개편 진행 중
+# 인계 — P9-06 새 하늘 대표 시안, 시각 검수 대기
 
 ## 현재와 다음 한 작업
 
-2026-10-08 사용자는 Refero/Air를 참고한 전체 UI 개편 시작 순서를 승인하고 **밝은 하늘과 어두운 하늘 모두·시간대 선택·같은 구름 공간에서 하늘→지면 하강**을 명시했다. [P9-05](work/P9-05.md)에서 실제 Air 네 버튼/스크롤/마지막 잔디·공개 scene 동작을 확인하고 [새 디자인10.7](spec/design.md#107-air-계승-하늘-방향--2026-10-08)·[D-042](DECISIONS.md#d-042--air의-연속-하늘시간대-전환을-새-ui-방향으로-채택)과 독립 검토본을 만들었다. P9-05의 고정 범위는 완료, 전체 새 UI는 진행 중이다. 기존 P9-04·이전 Phase9 승인 범위 완료를 철회하지 않는다.
+2026-10-08 사용자는 기존 숲·종이·색상 기준이 필요 없다고 명시하고 **Astra·Max로 처음부터 다시** 만들도록 요청했다. P9-06에서 공개 낮/밤·네 시간대·같은 구름 공간의 하강/들판·모바일 풀이·관리자 검토 시안을 새로 만들었다. [P9-06 작업/검사 근거](work/P9-06.md) · [현재 디자인](spec/design.md) · [D-042 보완](DECISIONS.md#d-042--air의-연속-하늘시간대-전환을-새-ui-방향으로-채택). 기존 기준은 [보관본](archive/2026-10-08-pre-sky-design.md)에 남기고 현재 명세에서 종료했다. 기존 자산은 삭제하지 않았다.
 
-**다음P9-06: 공개 첫 화면 낮/밤·모바일 풀이·관리자 생성/검수 대표 시안.** 이번에는 착수하지 않았다. 사용자가 승인한 시작 흐름에 따라 대표 시안을 만들고 확인한 뒤 전체 앱 UI/기능 검사로 이어간다. 내부 단계마다 같은 승인을 재요청하지 않으며 새로운 비용·production 의존성/서비스·배포 경계는 별도다. `imagegen-frontend-web`/필요한 모바일 참고 skill은 현재 AGENTS catalog를 읽는다. 이미지 한 장에 여러 화면/섹션을 압축하지 않고 글자/성경 구절을 합성하지 않는다. 실제 한글 레이블은 HTML/명세로 다룬다. 기존 기능·정답/Access·한글입력·영속자료·출력 폰트/fontkit을 유지한다. 최종 타이포/표면/패널은 아직 확정하지 않았다.
+**현재P9-06은 시각 검수 대기, 부모인 전체 UI 개편은 진행 중**이다. 다음 첫 작업은 같은 P9-06에서 사용자의 화면 확인/지적을 반영해 보정하는 것이다. 대표 시안 확인 후 기존 앱 연결과 실제 기능 검사를 이어간다. 이번에 새 후속 번호를 만들지 않았으며 전체 앱/운영 변경을 완료한 것으로 보고하지 않는다. P9-04와 이전 Phase9 승인 범위 완료는 유지한다. 범위 안의 작은 보정을 내부 단계마다 다시 승인받지 않는다. Production/새 비용·production dependency/service 경계는 유지한다.
 
-후속 참조/글꼴 질문은 [P9-05 확인 근거](work/P9-05.md#참조-경로적용-범위한글-글꼴-확인--2026-10-08)·[한글 서체 기준](spec/design.md#참조와-한글-서체-적용-기준)에 정리했다. Refero 수동 DESIGN.md/CSS 참조이며 Tailwind/MCP 적용이나 전체 디자인 준수는 아니다. 실제 fonts.css는 Noto Sans KR400/Noto Serif KR600이고 독립 검토본은 이를 연결하지 않았다. 미지원 원본/대체를 이름만 넣지 말고 다음 시안에서 실제 한글 폰트·굵기·OS 폴백을 검수한다. Pretendard/Nanum Pen Script는 비교 후보이며 설치/확정하지 않았다. 이번 후속은 문서만 변경, P9-06 미착수다.
+## 사용자가 직접 볼 화면
 
-## 직접 확인할 검토본
+**`http://localhost:4189/docs/design/phase-9/sky-v2/`**. [검토 안내/소스](design/phase-9/sky-v2/README.md). Codex 브라우저 패널 열기를 호출했고 응답은 `queued`였다. 기본 낮, 우측 시간대 버튼으로 새벽/낮/노을/밤을 비교한다. 아래로 스크롤해 구름/지면을 확인하고 하단 검토 메뉴로 공개·풀이·관리자를 오간다. 모바일 공개는 시간대 제어가 아래쪽, 모바일 풀이/관리자는 내용 위에 있다.
 
-주소: `http://localhost:4189/docs/design/phase-9/air-sky-study/`. 네 시간대 버튼을 누르고 스크롤하면 같은 하늘의 구름을 지나 정원으로 내려간다. 구름은 스크롤 없이도 움직이며 멈춤/재개·움직임 감소 설정을 지원한다. PC 우측 세로/390px 모바일 하단 가로 제어다. 기본 리뷰 시점은 낮이며 최종 앱의 자동 초기 시간 정책은 미확정이다.
+공개는 원경/구름/지면을 같은 진행도로 움직이는 독자 WebGL billboard 장면이다. 원본 Air3D/유리 로고/잔디 구현의 복제는 아니다. 풀이는 예시8×8 격자의 입력/단서/초기화, 관리자는 메뉴/6단계 배치·탭/편집 미리보기/확인 표시를 검토한다. 실제 원문/정답/AI 결과/저장/발행과 연결하지 않는다. 예시 편집은 메모리에만 남으며 새로고침하면 초기화된다.
 
-[원본](design/phase-9/air-sky-study/index.html) · [스타일](design/phase-9/air-sky-study/study.css) · [움직임](design/phase-9/air-sky-study/study.js). 자체 Canvas2D/noise texture/지면의 독립 움직임 검토다. 실제 Air3D/최종 이미지 품질·전체 UI 시안·앱 연결/배포 완료로 보고하지 않는다. Air 코드/이미지/3D/폰트를 복사하지 않았다. 원격 자료/API/DB와 연결하지 않는다.
+기존4189 loopback 정적 서버를 재사용했다. 재개 시 먼저 응답을 확인하고 없으면 다음 명령으로 연다. 기존 개발 서버는 종료/변경하지 않았다.
 
-loopback 정적 서버4189를 열어 두었다. 재개 시 먼저 주소 응답을 확인하고 없으면 프로젝트에서 `python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bibleQuiz`로 연다. 기존 개발 서버는 종료/변경하지 않았다. 시작 문서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation의 관련spec/work→Git status/diff/log 순서다.
+```sh
+python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bibleQuiz
+```
 
-## 검사·증거·한계
+기존 `air-sky-study/`는 P9-05의 과거 움직임 탐색 근거로 남긴다. 새 수정은 `sky-v2/`에서 진행한다. 변경 시 필수 검사·STATUS/HANDOFF 갱신·로컬 커밋까지 마친다. 문서 시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련spec/work→Git status/diff/log다.
 
-- Chromium: 새벽/낮/노을/밤 단일 선택·구름 시간 진행·멈춤 정지·하강 지면 도착·390px 가로 넘침 없음/밤 전환·움직임 감소/해당 상태 시간대 전환·runtime error0. `node --check`, 최종 lint/typecheck, diff whitespace/문서 링크 확인. Phase/배포 완료 검사가 아니므로 변경 없는 기존 출시 check/IME/PDF/백업/유료 호출을 반복하지 않았다.
-- 첫 lint는 docs 독립JS의 browser globals 선언 누락으로 실패했고 파일 선언으로 정리했다. 초기100ms 고정 대기의 media 확인 실패는 상태 조건/렌더 확인으로 바꿨으며 최종결과 JSON을 따른다. 시각 캡처의 최하단 제목/헤더 겹침을 수정하고 tint 재사용으로 반복 계산을 줄였다.
-- 원본 데스크톱 네 버튼 실제 클릭·소프트웨어 WebGL 캡처·최하단scrollY=max12716을 대조했다. 원본 모바일 시간대 위치는 확인했으나 밤 클릭은 hero 가로채기로 실패했다. 원본의 React hydration/WebGL 경고와 초기 도입 애니메이션 중 최하단 오판은 성공으로 기록하지 않는다. 기술 근거와 제한은[P9-05](work/P9-05.md).
-- 증거는 Git 제외 `.wrangler/design-references/p9-05-air-20261008/air/`와`study/`의 PNG·sanitized observations·verification JSON. 제3자 trackers/전체 DOM/network/원본 JS는 커밋하지 않는다.
-- 검토본의 최종 대비·실기기fps/배터리·Firefox/WebKit·대표 화면 구성/한글 폰트 검수는 다음 디자인/앱 범위에 남아 있다. 원본3D를 도입할지 또는 자체 가벼운 레이어를 쓸지는 production 의존성 추가 전에 별도 판단한다. 새 dependency/Refero 설치·결제/AI API0.
+## 결과·검사·남은 한계
+
+- 새 이미지8개(대표 장면5개/투명 구름3종), 실제 한글 Noto Sans KR400, native HTML/CSS/JS/WebGL. `imagegen-frontend-web`/`imagegen`, 공개 화면에 `design-taste-frontend`를 사용했다. Refero는 기존 DESIGN.md/CSS Variables 수동 참조이며 MCP/Tailwind export/설치/결제 없음. 원본 Air 매체/코드/유료 폰트도 복사하지 않았다. 정확한 프롬프트·해시·용량은 [assets.json](design/phase-9/sky-v2/assets.json).
+- Chromium 시간대/구름/하강/멈춤/OS감소/폰트/320~1440px/예시입력/관리자 편집/장식 실패·WebGL 복원·외부 API 요청 없음/runtime error0. 숨은 탭 중단은 **모의 visibility 이벤트**로 확인했다. Firefox390px 밤 풀이 smoke 통과. 실제 OS의 탭/배터리·Windows/macOS 폴백·휴대폰 IME/입력/성능은 미검수다.
+- WebKit은 실행 시 libgtk-4/libgraphene/GStreamer 등 시스템 라이브러리 부족으로 시작하지 못했다. 현재 시안은 Chromium/Firefox에서 검토했고 WebKit 통과로 쓰지 않는다. 앱 연결 단계의 브라우저/실기기 검수는 남아 있다.
+- 최종 `node --check`, `pnpm run lint`, `pnpm run typecheck`, `git diff --check`, 변경 문서 링크 확인. 기존 Phase/출시 검사·`pnpm check`/전체E2E/IME/PDF/백업/유료 호출은 반복하지 않았다. P9-06 시안을 앱 출시 완료로 올리지 않는다.
+- Lighthouse13.5 로컬 1회씩: desktop 성능99/접근성100/LCP0.9초, mobile91/100/3.1초, TBT0/CLS0.002. 정적 서버/소프트웨어 WebGL/모바일 시뮬레이션이며 실제 운영/기기와 직접 비교하지 않는다. 캐시/대표 화면 통합CSS/글꼴 blocking 등 진단을 [P9-06](work/P9-06.md)에 남겼다.
+- 첫 lint global 누락, 밤 배경의 stacking, 동일 구름 반복, 모바일 제어 겹침, 작은 본문/밤 격자 대비를 고쳤다. 입력 중 검토 메뉴 숨김, 사용자 멈춤의 OS설정 왕복 보존, WebGL 복원 참조 정리도 재검증했다. FontTools/Pillow 부재는 기존 bundled Pillow/프로젝트 fontkit으로 해결했다. 기존 fontkit 파일은 변경하지 않았다.
+- 증거는 Git 제외 `.wrangler/design-references/p9-06-air/`의 `verification.json`, `final-refinements.json`, Lighthouse JSON, `review/*.png`. 원본 master도 이 안의 `masters/`와 생성 위치에 보존한다. 원본 사이트 전체 DOM/network/JS는 커밋하지 않는다.
 
 ## Git·배포·보존
 
-시작 HEAD **2a12e0b**, main/worktree clean. 실제 원격 main **21b81dee578c6dad5decc3add9d71102a3595df6**, 로컬 문서2커밋 미푸시를 확인했다. P9-05 검토본/문서는52b0614로 로컬 커밋했다(ahead3). 후속 참조/글꼴 확인은 같은 완료 작업의 문서 보완이며 시작 HEAD52b0614·clean/ahead3를 확인했다. 문서 diff whitespace·로컬 링크168개/새 절 제목·공식 글꼴 목록과 코드 대조를 확인했다. 문서만 변경했고 기존 코드/출시 검사를 반복하지 않는다. 별도 로컬 커밋 뒤 미푸시4개이며 push/배포하지 않는다. 정확한 종료HEAD/미푸시 수는 git log/status로 확인한다. src/public/Worker/설정/SQL/package/lockfile은 변경하지 않는다.
+이번 시작 HEAD **51c40e2**, main/worktree clean, origin/main보다4커밋 앞섬을 확인했다. 종료 전 실제 GitHub main을 `ls-remote`로 다시 확인했으며 **21b81dee578c6dad5decc3add9d71102a3595df6** 그대로다. 변경은 `docs/design/phase-9/sky-v2/`와 관련 design/spec/work/기본 안내·보관 문서뿐이다. 검증된 P9-06 변경을 이 문서와 함께 로컬 커밋한다. 해당 커밋의 부모는51c40e2이며 정확한 종료 HEAD/clean/미푸시 수는 최종 Git log/status를 따른다. push하지 않는다.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -36,12 +42,12 @@ loopback 정적 서버4189를 열어 두었다. 재개 시 먼저 주소 응답�
 | Preview app |3dc36ff6-f6d0-4627-bc43-6beeb3495391 / GitHub21b81de 자동 배포|
 | Preview content |2df93f07-3703-42ec-b576-fd085e8c839f / 기존 배포|
 
-이번에 push/원격 읽기검수/배포/migration/Secret/실제AI를 실행하지 않았다. 위 버전은 기존 배포 기록을 재사용한다. 일반 Preview는 main push 자동 배포만, Production은 별도 사용자 요청이다.0000~0038·실제 자료/키/유료 결과·celebration/garden-v1/garden-v2·출력TTF/fontkit 패치를 보존한다. 이전 CI/운영 검사·LCP5.4초·기기/관측 한계와 rollback은[P9-04](work/P9-04.md)에 유지한다.
+배포 버전은 기존 기록을 재사용했다. Cloudflare 원격 재검수/배포/migration/Secret/실제AI를 실행하지 않았다. 일반 Preview는 main push 자동 배포만, Production은 별도 사용자 요청이다.0000~0038·실제 자료/키/유료 결과·celebration/garden-v1/garden-v2·출력 TTF/fontkit 패치를 보존한다. `src/public`·Worker/설정/SQL/package/lockfile 변경 없음. 이전 CI/운영 검사·LCP5.4초·기기/관측 한계와 rollback은 [P9-04](work/P9-04.md)에 유지한다.
 
-`pnpm dev`는 영속 합성`.wrangler/ui-demo-state/`, 기존 실제 로컬은`pnpm dev:local`, E2E는 임시DB 격리다. 이번 정적 검토본과 혼동하지 않는다.
+`pnpm dev`는 영속 합성 `.wrangler/ui-demo-state/`, 기존 실제 로컬은 `pnpm dev:local`, E2E는 임시DB 격리다. 이번 정적 검토본과 혼동하지 않는다.
 
 ## 실행·사용량·세션
 
-최신 시작 Pro4% 사용/96% 잔여, 별도5시간 없음, 사용자 지정×10=960%. Computer Use node_repl은 WSL URI해석 시작 실패였다. 복구 skill을 따라 기존 `/bin/bash`·login:false·명시workdir·승인 검토로 Linux Playwright1.62.1을 사용했다. 셸 PATH상 node/pnpm은 없어 먼저 확인하고 현재 프로세스에만 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. 동일 실패 경로를 반복하거나 앱/보안 설정을 바꾸지 않는다. 도구 추가 설치는 필요하지 않았다.
+시작 Pro4% 사용/96% 잔여, 별도5시간 없음, 사용자 지정×10=960%. 요청 모델/추천은 **Astra·Max**이며 모델 설정을 도구로 바꿨다고 주장하지 않는다. 기존 실패 경로 대신 `codex-exec-recovery`의 검증된 `/bin/bash`·login:false·명시workdir·승인 검토 경로를 재사용했다. 기본 process ENOENT를 저장소 단절로 단정하지 않는다. node/pnpm은 현재 프로세스 PATH에만 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. Computer Use WSL URI 실패 경로는 반복하지 않았다.
 
-세션 유지. 다음P9-06 추천 **GPT-6.1-sol·High** — 낮/밤과 공개·풀이·관리자 화면을 같은 시각 체계로 연결할 대표 시안 판단이 필요하다.
+같은 P9-06의 사용자 시각 검수/보정이 남으므로 **세션 유지**. 다음 작업 추천 **Astra·Max** — 실제 Air 대비 구름의 질감·빛·공간감과 공개/풀이/관리자 한글 UI를 함께 판단해야 한다.
