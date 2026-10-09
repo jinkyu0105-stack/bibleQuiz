@@ -38,6 +38,10 @@ export function installLiquidGlass() {
   if (prismatic) {
     if (glint === 'both' || glint === 'header') document.querySelector('.site-header').dataset.glintShape = headerGlint === 'straight' ? 'vertical' : headerGlint;
     if (glint === 'both' || glint === 'dock') document.querySelector('.review-switch').dataset.glintShape = 'spot';
+    for (const card of document.querySelectorAll('.weekly-sheet, .archive-list')) {
+      card.dataset.glintShape = 'reading-rim';
+      card.dataset.glassLens = 'reading';
+    }
   }
   if (classic) { preserveChoice('glass', 'off'); return; }
   if (!prismatic) preserveChoice('glass', 'soft');
@@ -174,7 +178,8 @@ export function installLiquidGlass() {
     const context = canvas.getContext('2d');
     if (!context) return;
     const pixels = context.createImageData(width, height);
-    const edge = Math.min(flexible ? 18 : 16, radius);
+    const reading = element.dataset.glassLens === 'reading';
+    const edge = Math.min(flexible ? 18 : reading ? 22 : 16, radius);
     for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
       const dx = x + .5 - Math.max(radius, Math.min(width - radius, x + .5));
       const dy = y + .5 - Math.max(radius, Math.min(height - radius, y + .5));
@@ -182,7 +187,7 @@ export function installLiquidGlass() {
       const inside = radius - distance;
       // The convex capsule samples inward, magnifying its inner backdrop at
       // the shoulder without pulling empty pixels across its outer border.
-      const strength = distance > 0 && inside >= 0 && inside < edge ? Math.sin(Math.PI * inside / edge) * (flexible ? -112 : 112) : 0;
+      const strength = distance > 0 && inside >= 0 && inside < edge ? Math.sin(Math.PI * inside / edge) * (flexible || reading ? -112 : 112) : 0;
       const offset = (y * width + x) * 4;
       pixels.data[offset] = 128 + (distance ? dx / distance * strength : 0);
       pixels.data[offset + 1] = 128 + (distance ? dy / distance * strength : 0);
@@ -192,7 +197,7 @@ export function installLiquidGlass() {
     filter.setAttribute('width', String(flexible ? 1 : width)); filter.setAttribute('height', String(flexible ? 1 : height));
     map.setAttribute('width', String(flexible ? 1 : width)); map.setAttribute('height', String(flexible ? 1 : height));
     map.setAttribute('href', canvas.toDataURL());
-    element.style.setProperty('--glass-optics', flexible ? `url("#${id}")` : prismatic ? `blur(1.5px) url("#${id}")` : `url("#${id}") blur(3px)`);
+    element.style.setProperty('--glass-optics', flexible ? `url("#${id}")` : prismatic ? `blur(${reading ? 14 : 1.5}px) url("#${id}")` : `url("#${id}") blur(3px)`);
     element.dataset.lensReady = 'true';
   }
   let measurementFrame = 0;

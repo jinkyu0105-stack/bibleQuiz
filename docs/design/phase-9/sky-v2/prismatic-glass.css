@@ -4,7 +4,7 @@
 body[data-time] {
   --glass-clear: rgb(233 247 255 / .22);
   --glass-reading: rgb(247 251 255 / .62);
-  --glass-home-reading: rgb(247 251 255 / .48);
+  --glass-home-reading: rgb(247 251 255 / .44);
   --glass-blur: 14px;
   --glass-rail: var(--glass-clear);
   --glass-edge: rgb(255 255 255 / .52);
@@ -23,7 +23,7 @@ body[data-time] {
 body[data-time=dawn] {
   --glass-clear: rgb(244 239 255 / .24);
   --glass-reading: rgb(250 247 253 / .64);
-  --glass-home-reading: rgb(250 247 253 / .50);
+  --glass-home-reading: rgb(250 247 253 / .46);
   --glass-rim-cool: rgb(135 205 255 / .68);
   --glass-rim-violet: rgb(209 160 244 / .66);
   --glass-rim-warm: rgb(255 201 145 / .78);
@@ -33,7 +33,7 @@ body[data-time=dawn] {
 body[data-time=dusk] {
   --glass-clear: rgb(255 244 230 / .24);
   --glass-reading: rgb(255 249 240 / .65);
-  --glass-home-reading: rgb(255 249 240 / .52);
+  --glass-home-reading: rgb(255 249 240 / .48);
   --glass-rim-cool: rgb(130 218 249 / .66);
   --glass-rim-violet: rgb(209 145 228 / .62);
   --glass-rim-warm: rgb(255 209 141 / .85);
@@ -45,7 +45,7 @@ body[data-time=night] {
   --glass-rail: rgb(10 27 48 / .58);
   --glass-motion: rgb(10 27 48 / .64);
   --glass-reading: rgb(14 31 52 / .75);
-  --glass-home-reading: rgb(14 31 52 / .64);
+  --glass-home-reading: rgb(14 31 52 / .60);
   --glass-edge: rgb(221 239 255 / .36);
   --glass-highlight: rgb(230 245 255 / .64);
   --glass-bottom: rgb(159 199 237 / .24);
@@ -339,13 +339,20 @@ body[data-time=night] .button.primary.hero-cta:hover:not(:disabled) {
 /* Only the two public reading cards become clearer. Quiz and editor surfaces
    retain their existing fill and contrast. Their 14px blur still softens grass. */
 .weekly-sheet, .archive-list { background: var(--glass-home-reading); }
-.glass[data-glint-shape=surface]::before {
-  opacity: 1;
-  background: var(--glint-local-fill),
-    linear-gradient(145deg, var(--glass-reflection), transparent 30%, transparent 82%, rgb(255 255 255 / .035));
+/* Keep refraction on the broad shoulder, with a neutral reading centre.
+   The backdrop lives in one layer so nested filters cannot darken its rim. */
+.glass[data-glint-shape=reading-rim] {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
-.glass[data-glint-shape=surface][data-glint-active] {
-  --glint-local-fill: radial-gradient(circle 84px at var(--glint-x) var(--glint-y), var(--glint-local-light), transparent 100%);
+.glass[data-glint-shape=reading-rim]::before {
+  opacity: 1;
+  -webkit-backdrop-filter: blur(14px) saturate(1.12);
+  backdrop-filter: var(--glass-optics, blur(14px)) saturate(1.12);
+  background: linear-gradient(145deg, var(--glass-reflection), transparent 30%, transparent 82%, rgb(255 255 255 / .035));
+}
+.glass[data-glint-shape=reading-rim]::after { padding: 3px; }
+.glass[data-glint-shape=reading-rim][data-glint-active] {
   --glint-local-rim: radial-gradient(circle 112px at var(--glint-x) var(--glint-y), var(--glass-highlight), transparent 100%);
 }
 .difficulty-links .round-arrow {
