@@ -41,13 +41,10 @@ export function installLiquidGlass() {
     for (const card of document.querySelectorAll('.weekly-sheet, .archive-list, .puzzle-workspace')) {
       card.dataset.glint = '';
       card.dataset.glintShape = 'reading-rim';
-      const homeCard = card.matches('.weekly-sheet, .archive-list');
-      card.dataset.glassLens = homeCard ? 'reading-header' : 'reading';
-      if (homeCard) {
-        const core = document.createElement('span');
-        core.className = 'glass-reading-core'; core.setAttribute('aria-hidden', 'true');
-        card.prepend(core);
-      }
+      card.dataset.glassLens = 'reading-header';
+      const core = document.createElement('span');
+      core.className = 'glass-reading-core'; core.setAttribute('aria-hidden', 'true');
+      card.prepend(core);
     }
   }
   if (prismatic) {

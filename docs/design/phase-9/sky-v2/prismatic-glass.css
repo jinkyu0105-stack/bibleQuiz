@@ -371,8 +371,8 @@ body[data-transparency=reduced] .admin-link.convex-lens { background: var(--glas
 body[data-time=night] .button.primary.hero-cta:hover:not(:disabled) {
   background: var(--glass-clear);
 }
-/* Only the two public reading cards become clearer. Quiz and editor surfaces
-   retain their existing fill and contrast. Their 14px blur still softens grass. */
+/* Base public-card fill; header-like reading surfaces below add a clear
+   shoulder and an inset reading layer. Editor surfaces keep their own fill. */
 .weekly-sheet, .archive-list { background: var(--glass-home-reading); }
 /* Keep refraction on the broad shoulder, with a neutral reading centre.
    The backdrop lives in one layer so nested filters cannot darken its rim. */
@@ -391,13 +391,13 @@ body[data-time=night] .button.primary.hero-cta:hover:not(:disabled) {
   --glint-local-rim: radial-gradient(circle 112px at var(--glint-x) var(--glint-y), var(--glass-highlight), transparent 100%);
 }
 /* Clear header-like shoulders around a softly inset reading surface. */
-:is(.weekly-sheet, .archive-list)[data-glass-lens=reading-header] {
+:is(.weekly-sheet, .archive-list, .puzzle-workspace)[data-glass-lens=reading-header] {
   background: var(--glass-clear);
   --glass-core: rgb(247 251 255 / .30);
 }
-body[data-time=dawn] :is(.weekly-sheet, .archive-list)[data-glass-lens=reading-header] { --glass-core: rgb(250 247 253 / .30); }
-body[data-time=dusk] :is(.weekly-sheet, .archive-list)[data-glass-lens=reading-header] { --glass-core: rgb(255 249 240 / .32); }
-body[data-time=night] :is(.weekly-sheet, .archive-list)[data-glass-lens=reading-header] { --glass-core: rgb(14 31 52 / .36); }
+body[data-time=dawn] :is(.weekly-sheet, .archive-list, .puzzle-workspace)[data-glass-lens=reading-header] { --glass-core: rgb(250 247 253 / .30); }
+body[data-time=dusk] :is(.weekly-sheet, .archive-list, .puzzle-workspace)[data-glass-lens=reading-header] { --glass-core: rgb(255 249 240 / .32); }
+body[data-time=night] :is(.weekly-sheet, .archive-list, .puzzle-workspace)[data-glass-lens=reading-header] { --glass-core: rgb(14 31 52 / .36); }
 .glass[data-glass-lens=reading-header]::before {
   -webkit-backdrop-filter: blur(6px) saturate(1.15);
   backdrop-filter: var(--glass-optics, blur(6px)) saturate(1.15);
