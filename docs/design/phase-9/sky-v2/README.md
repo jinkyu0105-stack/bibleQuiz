@@ -42,6 +42,14 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 기본/`dock-motion=elastic`은 이번 실험, `dock-motion=off`는 직전 선택 표시다. 선택은 시간대·검토 화면 이동에 유지한다. `glass=soft/off`에서는 새 실험을 적용하지 않는다. 하단 검토 바만의 구현이며 Apple 시스템 렌더러나 실제 iPhone 검증을 뜻하지 않는다. [구현/검사/한계](../../../work/P9-06.md#아래-검토-메뉴의-탄성-모션--2026-10-09).
 
+## 아래 검토 메뉴의 볼록한 유리
+
+[새 유리·새 밤 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&dock-motion=elastic&dock-material=convex) · [직전 평평한 재질](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&dock-motion=elastic&dock-material=flat)
+
+사용자가 마음에 들어 한 탄성 움직임을 유지하고, 움직이는 선택 유리에 맑은 중심·넓은 굴절 가장자리·위아래 반사를 더했다. 이동하는 동안 빛이 살짝 기울고 정착하면 중앙으로 돌아온다. 밤은 이전의 불투명한 파란 채움을 줄여 배경이 비치고, 차가운 흰 반사로 두께를 표현했다. 글자와 클릭 영역은 고정하며 이 바의 가독성 받침은 유지한다.
+
+기본/`dock-material=convex`가 이번 보정, `flat`은 같은 탄성 모션에 직전 재질이다. Chromium은 실제 배경 굴절, Firefox 등은 흐림과 넓은 반사로 표시한다. 투명도 감소에는 불투명한 선택 표시를 쓴다. 모션을 끈 `dock-motion=off`와 `glass=soft/off`는 이전 모습을 유지한다. [재현 기준](../../../spec/design.md#apple-참고-유리-검토본의-재현-기준) · [변경/검사/한계](../../../work/P9-06.md#볼록한-유리와-새-밤-영상--2026-10-09).
+
 ## 헤더·검토 바의 반사광 비교
 
 현재 헤더는 **위·아래 테두리만 동시에 반응**한다. 마우스가 가운데에 있어도 같은 x좌표의 위아래 경계에 빛이 맺히고, 좌우로 움직이면 두 반사가 함께 따라간다. 중앙 표면에는 추가 광원이 없다. 이전 원형 빛을 가장자리에 댔을 때의38px 반경/밝기를 각각의 경계에 재사용한다. 아래 디자인 검토 바는 포인터 주변의 작은 원형 빛 그대로다.
@@ -65,9 +73,11 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 [새벽](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing) · [낮](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day&video=billowing) · [노을](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dusk&video=billowing) · [밤](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=night&video=billowing) · [원래 사진/구름군](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day&video=off)
 
-2026-10-09 제공받은 네 영상은 모두 **3840×2160·24fps·10초**다.4K는 원본 영상 스트림을 그대로 복사하고 소리만 제거했다. 모바일700px 이하에서는 각각의1080p 파일을 사용한다. 시간대를 바꾸면 현재 영상 하나만 요청하고 이전 재생을 정리한다. 시간대 색과 햇빛/달빛은 영상에 담긴 그대로 표시한다. 끝0.9초의 첫 장면 합성은 반복 경계를 완화하며 MP4 자체를 완벽한 루프로 만든 것은 아니다.
+현재 밤은 새로 제공한 `Generated video 2.mp4`를 연결한v2다. 무음4K는29,403,913bytes(약28.04MiB), 모바일1080p는6,698,738bytes(약6.39MiB)다. 원본29,575,502bytes와 [이전 밤v1](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&night-video=v1)을 보존했다. 기본/`night-video=v2`는 새 영상, `v1`은 이전 영상이며 화면 이동에도 선택을 유지한다.
 
-새벽 기본은 사용자가 선택한12:30 버전(`video=billowing`)이다. [11:50 강한 움직임](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=dynamic) · [최초 잔잔한 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=calm)도 보존했다. 이 선택은 새벽에만 적용한다. 새벽 현재4K19.24MB/1080p4.28MB이며 새 세 파일의 용량/해시는 [자산 기록](assets/video/README.md)을 따른다.
+2026-10-09 제공받은 네 시간대의 현재 영상은 모두 **3840×2160·24fps·10초**다.4K는 원본 영상 스트림을 그대로 복사하고 소리만 제거했다. 모바일700px 이하에서는 각각의1080p 파일을 사용한다. 시간대를 바꾸면 현재 영상 하나만 요청하고 이전 재생을 정리한다. 시간대 색과 햇빛/달빛은 영상에 담긴 그대로 표시한다. 끝0.9초의 첫 장면 합성은 반복 경계를 완화하며 MP4 자체를 완벽한 루프로 만든 것은 아니다.
+
+새벽 기본은 사용자가 선택한12:30 버전(`video=billowing`)이다. [11:50 강한 움직임](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=dynamic) · [최초 잔잔한 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=calm)도 보존했다. 이 선택은 새벽에만 적용한다. 새벽 현재4K19.24MB/1080p4.28MB이며 각 파일의 용량/해시는 [자산 기록](assets/video/README.md)을 따른다.
 
 오른쪽 멈춤으로 영상·구름·잔디를 함께 멈춘다. 화면 아래쪽과 숨은 탭에서는 재생을 정지한다. 멈춘 상태에서 시간대를 바꾸거나 OS 움직임 감소가 켜져 있으면 해당 첫 장면만 보여 준다. 자동 재생이 제한되면 **하늘 영상 재생** 버튼으로 시작한다. 풀이/관리자와 `video=off`는 영상 파일을 요청하지 않는다.
 

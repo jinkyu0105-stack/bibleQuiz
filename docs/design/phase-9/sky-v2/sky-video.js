@@ -11,10 +11,12 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
   let pendingPlay = null, generation = 0, posterGeneration = 0, disposed = false;
   let selectedTheme = '';
   const variant = new URLSearchParams(window.location.search).get('video');
+  const previousNight = new URLSearchParams(window.location.search).get('night-video') === 'v1';
   const directories = {
     dawn: variant === 'calm' ? 'assets/video/'
       : variant === 'dynamic' ? 'assets/video/dynamic/' : 'assets/video/billowing/',
-    day: 'assets/video/day/', dusk: 'assets/video/dusk/', night: 'assets/video/night/',
+    day: 'assets/video/day/', dusk: 'assets/video/dusk/',
+    night: previousNight ? 'assets/video/night/' : 'assets/video/night-v2/',
   };
   video.muted = true;
 

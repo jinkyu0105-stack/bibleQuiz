@@ -1,0 +1,45 @@
+{
+  "task": "P9-06",
+  "theme": "night",
+  "version": "v2",
+  "importedAt": "2026-10-09",
+  "source": {
+    "sourceFilename": "Generated video 2.mp4",
+    "original": ".wrangler/design-references/p9-06-video/masters/sky-night-v2-4k-original.mp4",
+    "sha256": "9648c1c788e9ae8c3e2107640877b8a5e313f698e61356d772202e0b10a5d7b1",
+    "bytes": 29575502,
+    "downloadsPreserved": true
+  },
+  "video": {
+    "width": 3840,
+    "height": 2160,
+    "frameRate": "24/1",
+    "durationSeconds": 10.0,
+    "preservedVideoStreamHash": "SHA256=2348f8d772ce06250e2ee10e8c7751d88d1253f65146398aaa6bed1f7fbccd2c"
+  },
+  "files": {
+    "sky-night-4k.mp4": {
+      "bytes": 29403913,
+      "sha256": "f1f0cfa446fb807c98bf7d1745e8e871858ddebb44305a77ccc22deaa8e98712"
+    },
+    "sky-night-1080p.mp4": {
+      "bytes": 6698738,
+      "sha256": "02fce643ecd6a6ea38d10095d6f436ce102c873f05052a35bb877c94712206d3"
+    },
+    "sky-night-poster-4k.webp": {
+      "bytes": 541018,
+      "sha256": "fd2c149d44e8ad5ee4b71094d783b77d164a2e0f94aeb2c0b19b1f03a9e1730a"
+    },
+    "sky-night-poster-small.webp": {
+      "bytes": 117632,
+      "sha256": "7c2724f3ef8a66920dfad94f1fff2686b54cfc9620ff16341b321971e4799d74"
+    }
+  },
+  "commands": {
+    "sky-night-4k.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -c:v copy -an -movflags +faststart OUTPUT",
+    "sky-night-1080p.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -an -vf scale=1920:1080:flags=lanczos -c:v libx264 -threads 4 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart OUTPUT",
+    "sky-night-poster-4k.webp": "ffmpeg -i ORIGINAL -frames:v 1 -c:v libwebp -quality 88 OUTPUT",
+    "sky-night-poster-small.webp": "ffmpeg -i ORIGINAL -frames:v 1 -vf scale=1280:720:flags=lanczos -c:v libwebp -quality 86 OUTPUT"
+  },
+  "policy": "User-supplied time-of-day video. The 4K video stream is copied without re-encoding; audio is removed for the background. A 1080p derivative and first-frame posters reuse the existing playback policy."
+}

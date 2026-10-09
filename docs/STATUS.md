@@ -1,17 +1,17 @@
 # 현재 상태
 
-## P9-06 아래 검토 메뉴 탄성 모션 — 2026-10-09
+## P9-06 볼록한 유리와 새 밤 영상 — 2026-10-09
 
-**하단 ‘디자인 검토’의 탄성 hover 실험·관련 검사 완료, 사용자 시각 확인 대기. 부모P9-06은 진행 중**이다. 첨부 iPhone 영상의 하단 메뉴를 참고해 유리 선택 표시가 이동 방향으로 늘었다가 복원되도록 했다. 글자/클릭 영역과 실제 화면 선택은 고정하고 마우스를 빼면 현재 메뉴로 돌아온다. [현재 실험](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&dock-motion=elastic) · [직전 선택 표시](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&dock-motion=off) · [안내](design/phase-9/sky-v2/README.md#아래-검토-메뉴의-탄성-모션). 기존 네 영상·헤더/카드/화살표와 다른 제어를 보존했다. 실제 앱/배포는 아직이다.
+**하단 ‘디자인 검토’ 유리 보완·밤 영상 교체·관련 검사 완료, 사용자 시각 확인 대기. 부모P9-06은 진행 중**이다. 채택한 탄성 모션을 유지하며 맑은 중심·넓은 가장자리 굴절·위아래 반사로 볼록함을 더했다. 밤은 불투명한 파란 채움을 줄였다. [현재 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&dock-motion=elastic&dock-material=convex) · [직전 재질](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&dock-motion=elastic&dock-material=flat). 새 밤은3840×2160·24fps·10초이며 원본/이전v1을 보존한다. 실제 앱/배포는 아직이다.
 
 | 작업 ID | 사용자 결과 | 상태 |
 |---|---|---|
 | P9-05 | Air 실제 탐색·하늘 방향·첫 동작 검토본 | 완료 |
-| P9-06 | 새 하늘 대표 시안·영상 배경/전체 유리 UI 보정 | 진행 중 — 하단 메뉴 모션 실험 완료, 사용자 시각 확인/실제 앱 연결 남음 |
+| P9-06 | 새 하늘 대표 시안·영상 배경/전체 유리 UI 보정 | 진행 중 — 하단 유리/밤 교체 완료, 사용자 시각 확인/실제 앱 연결 남음 |
 
-관련 브라우저16사례(Chromium15·Firefox1), 하단 메뉴 글자192영역(영역당 배경9지점) 대비 표본 최소5.53:1·실패0.390/1440/2560px 동작·빠른 반전/복귀·클릭/키보드·터치·멈춤/감소·기존 비교 경로를 확인했다. 가독성은390/2560px·네 영상5초와 잔디·세 hover 대상만의 표본이며 전체WCAG/모든 프레임·Safari/실기기 검수는 아니다. lint/typecheck·문서/보호 파일 검사를 수행했다. [변경·검사·한계](work/P9-06.md#아래-검토-메뉴의-탄성-모션--2026-10-09). 전체 출시/유료 호출은 반복하지 않았다.
+탄성16사례·굴절/대안5검사·밤 영상5검사를 통과했다. 하단 대비192표본 최소5.30:1, 새 밤 상단111표본 최소4.64:1·실패0. lint/typecheck도 통과했다. 표본·이벤트 모의 검사이며 전체WCAG/모든 프레임·Safari/실기기 검수는 아니다. [변경·검사·한계](work/P9-06.md#볼록한-유리와-새-밤-영상--2026-10-09). 전체 출시/유료 호출은 반복하지 않았다.
 
-시작 HEAD2fe620f clean/ahead24, 추적 origin/main21b81de. 이번 담당 UI3개/문서6개만 로컬 커밋하면 미푸시25개다. 병렬5caa2b4/video-kit·기존 영상/이미지·migration/폰트/fontkit·실제 자료/키/유료 결과 유지, push/배포 없음. 시작 Pro76%×사용자 지정10=760%, 별도5시간 없음. **세션 유지**, 다음 추천 **Astra·Max** — 사용자 확인 뒤 유리 탄성/빛의 시각 보정을 같은P9-06에서 이어간다.
+시작 HEAD45d3861 clean/ahead25, 추적 origin/main21b81de. 이번 담당 UI5개/새 미디어5개/문서7개만 로컬 커밋하면 미푸시26개다. 병렬5caa2b4/video-kit·기존 영상/이미지·migration/폰트/fontkit·실제 자료/키/유료 결과 유지, push/배포 없음. 시작 Pro75%×사용자 지정10=750%, 별도5시간 없음. **세션 유지**, 다음 추천 **Astra·Max** — 사용자 확인 뒤 곡면 반사와 영상 위 가독성 보정을 같은P9-06에서 이어간다.
 
 ## P9-04 운영 배포 완료 — 2026-10-07
 

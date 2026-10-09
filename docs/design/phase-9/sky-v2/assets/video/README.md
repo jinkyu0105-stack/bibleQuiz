@@ -7,11 +7,13 @@
 | 새벽 | 12:30 제공 영상 | [18.34MiB](billowing/sky-dawn-4k.mp4) | [4.08MiB](billowing/sky-dawn-1080p.mp4) | [billowing/manifest.json](billowing/manifest.json) |
 | 낮 | daytime.mp4 | [19.74MiB](day/sky-day-4k.mp4) | [4.39MiB](day/sky-day-1080p.mp4) | [day/manifest.json](day/manifest.json) |
 | 노을 | sunset.mp4 | [16.05MiB](dusk/sky-dusk-4k.mp4) | [3.44MiB](dusk/sky-dusk-1080p.mp4) | [dusk/manifest.json](dusk/manifest.json) |
-| 밤 | night.mp4 | [23.17MiB](night/sky-night-4k.mp4) | [5.42MiB](night/sky-night-1080p.mp4) | [night/manifest.json](night/manifest.json) |
+| 밤·현재v2 | Generated video 2.mp4 | [28.04MiB](night-v2/sky-night-4k.mp4) | [6.39MiB](night-v2/sky-night-1080p.mp4) | [night-v2/manifest.json](night-v2/manifest.json) |
+| 밤·이전v1 | night.mp4 | [23.17MiB](night/sky-night-4k.mp4) | [5.42MiB](night/sky-night-1080p.mp4) | [night/manifest.json](night/manifest.json) |
 
-- 새 세 원본은 Git 제외 `.wrangler/design-references/p9-06-video/masters/sky-day-4k-original.mp4`, `sky-dusk-4k-original.mp4`, `sky-night-4k-original.mp4`에 이름을 바꿔 복사했다. SHA-256이 Downloads 원본과 같고 Downloads 파일도 남겨 두었다. 원본 전체의 영상/소리를 보존한다.
+- 새 밤v2 원본은 Git 제외 `.wrangler/design-references/p9-06-video/masters/sky-night-v2-4k-original.mp4`다. Downloads 파일과 전체 SHA-256이 같으며 둘 다 보존한다. 원본29,575,502bytes(28.21MiB), 무음4K29,403,913bytes(28.04MiB),1080p6,698,738bytes(6.39MiB)다. 기본/`night-video=v2`가 새 영상이고 `night-video=v1`로 이전 밤을 비교한다. 이전 밤 자산과 원본은 수정하지 않았다.
+- 앞서 받은 세 원본은 Git 제외 `.wrangler/design-references/p9-06-video/masters/sky-day-4k-original.mp4`, `sky-dusk-4k-original.mp4`, `sky-night-4k-original.mp4`에 이름을 바꿔 복사했다. SHA-256이 Downloads 원본과 같고 Downloads 파일도 남겨 두었다. 원본 전체의 영상/소리를 보존한다.
 - 선택 새벽 원본은 같은 masters의 `sky-dawn-billowing-4k-original.mp4`다. 원본19,423,541bytes=18.52MiB와 무음4K19,235,669bytes=18.34MiB를 구분한다. 최초 새벽 원본만 앞선 사용자 요청 당시 해시 대조 후 이동했으며 기록은 [최초 manifest](manifest.json)에 남아 있다.
-- 네4K 재생본은 영상 스트림 SHA-256이 각각의 원본과 같으며 재인코딩/색 재보정/업스케일을 하지 않았다. MP4 재생 정보를 앞에 두었다.1080p는 기존 libx264/CRF20 방식의 파생본이다.
+- 현재 네 시간대와 이전 밤의4K 재생본은 영상 스트림 SHA-256이 각각의 원본과 같으며 재인코딩/색 재보정/업스케일을 하지 않았다. MP4 재생 정보를 앞에 두었다.1080p는 기존 libx264/CRF20 방식의 파생본이다.
 - 각 폴더의 `sky-시간대-poster-4k.webp`와 `-poster-small.webp`는 해당 영상 첫 프레임이다. 로딩/재생 실패/움직임 감소에서 사용하며 마지막0.9초에는 각자의 첫 프레임을 겹쳐 반복 경계를 완화한다. 원본을 완벽한 루프 파일로 편집한 것은 아니다.
 - 최초700px 이하는1080p, 넓은 화면은4K를 요청한다. 같은 영상에서 넓어지면4K로 올리고 다시 좁아졌다고 바꾸지 않는다. 선택 시간대의 공개 상단에서만 재생하며 다른 세 영상을 미리 요청하지 않는다.
 - 새벽의 [이전 강한 움직임](dynamic/manifest.json)은 `video=dynamic`, [최초 잔잔한 영상](manifest.json)은 `video=calm`으로 보존한다. 기본은 `video=billowing`이며 낮/노을/밤 영상은 이 새벽 선택에 영향을 받지 않는다. `video=off`는 모든 시간대의 원래 사진/구름군 비교다.

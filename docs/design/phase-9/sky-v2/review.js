@@ -12,6 +12,11 @@ if (['off', 'calm', 'dynamic', 'billowing'].includes(params.get('video'))) for (
   const query = new URLSearchParams(path.slice(1)); query.set('video', params.get('video'));
   link.setAttribute('href', `?${query}${hash ? `#${hash}` : ''}`);
 }
+if (['v1', 'v2'].includes(params.get('night-video'))) for (const link of document.querySelectorAll('a[href^="?view="]')) {
+  const [path, hash] = link.getAttribute('href').split('#');
+  const query = new URLSearchParams(path.slice(1)); query.set('night-video', params.get('night-video'));
+  link.setAttribute('href', `?${query}${hash ? `#${hash}` : ''}`);
+}
 for (const panel of document.querySelectorAll('.view')) panel.hidden = panel.id !== `${view}-view`;
 for (const link of document.querySelectorAll('[data-view-link]')) if (link.dataset.viewLink === view) link.setAttribute('aria-current', 'page');
 if (view !== 'home') {

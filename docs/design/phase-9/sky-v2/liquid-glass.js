@@ -30,6 +30,8 @@ export function installLiquidGlass() {
   preserveChoice('header-glint', params.has('header-glint') ? headerGlint : '');
   const elasticDock = params.get('dock-motion') !== 'off';
   preserveChoice('dock-motion', params.has('dock-motion') ? (elasticDock ? 'elastic' : 'off') : '');
+  const convexDock = params.get('dock-material') !== 'flat';
+  preserveChoice('dock-material', params.has('dock-material') ? (convexDock ? 'convex' : 'flat') : '');
   if (prismatic) {
     if (glint === 'both' || glint === 'header') document.querySelector('.site-header').dataset.glintShape = headerGlint === 'straight' ? 'vertical' : headerGlint;
     if (glint === 'both' || glint === 'dock') document.querySelector('.review-switch').dataset.glintShape = 'spot';
@@ -68,6 +70,10 @@ export function installLiquidGlass() {
     element.prepend(indicator);
     const motion = prismatic && elasticDock && element.matches('.review-switch')
       ? installDockMotion({ element, indicator, signal, canMove }) : null;
+    if (motion && convexDock) {
+      element.dataset.dockMaterial = 'convex';
+      indicator.dataset.glassLens = 'convex';
+    }
     return { element, indicator, motion };
   });
   function measureSelection({ element, indicator, motion }) {
@@ -96,10 +102,12 @@ export function installLiquidGlass() {
   const chromiumEngine = /(?:Chrome|Chromium)\/\d+/.test(navigator.userAgent) && !/(?:OPiOS|CriOS|FxiOS)/.test(navigator.userAgent);
   const canLens = (prismatic ? chromiumEngine : Boolean(window.chrome)) && CSS.supports('backdrop-filter', 'url("#liquid-edge")');
   const lenses = canLens ? [...document.querySelectorAll('[data-glass-lens]')].map((element, index) => {
+    const flexible = element.dataset.glassLens === 'convex';
     const filter = document.createElementNS(svgNS, 'filter');
     const id = `liquid-edge-${index}`;
     filter.id = id;
-    filter.setAttribute('filterUnits', 'userSpaceOnUse');
+    filter.setAttribute('filterUnits', flexible ? 'objectBoundingBox' : 'userSpaceOnUse');
+    if (flexible) filter.setAttribute('primitiveUnits', 'objectBoundingBox');
     filter.setAttribute('color-interpolation-filters', 'sRGB');
     filter.setAttribute('x', '0'); filter.setAttribute('y', '0');
     const map = document.createElementNS(svgNS, 'feImage');
@@ -108,9 +116,9 @@ export function installLiquidGlass() {
     // Three slightly different paths separate the backdrop's colours only at
     // the curved edge. The centre of the normal map remains neutral.
     const channels = prismatic ? [
-      { name: 'red', scale: 18, matrix: '1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0' },
-      { name: 'green', scale: 14, matrix: '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0' },
-      { name: 'blue', scale: 10, matrix: '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0' },
+      { name: 'red', scale: flexible ? .28 : 18, matrix: '1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0' },
+      { name: 'green', scale: flexible ? .26 : 14, matrix: '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0' },
+      { name: 'blue', scale: flexible ? .24 : 10, matrix: '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0' },
     ] : [{ name: 'all', scale: 16 }];
     for (const channel of channels) {
       const bend = document.createElementNS(svgNS, 'feDisplacementMap');
@@ -133,15 +141,17 @@ export function installLiquidGlass() {
       }
     }
     const soften = document.createElementNS(svgNS, 'feGaussianBlur');
-    soften.setAttribute('stdDeviation', prismatic ? '.35' : '.7');
+    soften.setAttribute('stdDeviation', flexible ? '.0035' : prismatic ? '.35' : '.7');
     filter.append(soften); defs.append(filter);
-    return { element, filter, map, id, size: '' };
+    return { element, filter, map, id, flexible, size: '' };
   }) : [];
   function measureLens(lens) {
-    const { element, filter, map, id } = lens;
-    const width = element.clientWidth, height = element.clientHeight;
+    const { element, filter, map, id, flexible } = lens;
+    // A normalized capsule follows the spring's width/scale on the compositor.
+    // Its map is built once, never regenerated for every animation frame.
+    const width = flexible ? 128 : element.clientWidth, height = flexible ? 84 : element.clientHeight;
     if (width < 1 || height < 1) return;
-    const radius = Math.min(parseFloat(window.getComputedStyle(element).borderTopLeftRadius), width / 2, height / 2);
+    const radius = flexible ? 42 : Math.min(parseFloat(window.getComputedStyle(element).borderTopLeftRadius), width / 2, height / 2);
     const size = `${width}:${height}:${radius}`;
     if (size === lens.size) return;
     lens.size = size;
@@ -150,23 +160,25 @@ export function installLiquidGlass() {
     const context = canvas.getContext('2d');
     if (!context) return;
     const pixels = context.createImageData(width, height);
-    const edge = Math.min(16, radius);
+    const edge = Math.min(flexible ? 18 : 16, radius);
     for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
       const dx = x + .5 - Math.max(radius, Math.min(width - radius, x + .5));
       const dy = y + .5 - Math.max(radius, Math.min(height - radius, y + .5));
       const distance = Math.hypot(dx, dy);
       const inside = radius - distance;
-      const strength = distance > 0 && inside >= 0 && inside < edge ? Math.sin(Math.PI * inside / edge) * 112 : 0;
+      // The convex capsule samples inward, magnifying its inner backdrop at
+      // the shoulder without pulling empty pixels across its outer border.
+      const strength = distance > 0 && inside >= 0 && inside < edge ? Math.sin(Math.PI * inside / edge) * (flexible ? -112 : 112) : 0;
       const offset = (y * width + x) * 4;
       pixels.data[offset] = 128 + (distance ? dx / distance * strength : 0);
       pixels.data[offset + 1] = 128 + (distance ? dy / distance * strength : 0);
       pixels.data[offset + 2] = 128; pixels.data[offset + 3] = 255;
     }
     context.putImageData(pixels, 0, 0);
-    filter.setAttribute('width', String(width)); filter.setAttribute('height', String(height));
-    map.setAttribute('width', String(width)); map.setAttribute('height', String(height));
+    filter.setAttribute('width', String(flexible ? 1 : width)); filter.setAttribute('height', String(flexible ? 1 : height));
+    map.setAttribute('width', String(flexible ? 1 : width)); map.setAttribute('height', String(flexible ? 1 : height));
     map.setAttribute('href', canvas.toDataURL());
-    element.style.setProperty('--glass-optics', prismatic ? `blur(1.5px) url("#${id}")` : `url("#${id}") blur(3px)`);
+    element.style.setProperty('--glass-optics', flexible ? `url("#${id}")` : prismatic ? `blur(1.5px) url("#${id}")` : `url("#${id}") blur(3px)`);
     element.dataset.lensReady = 'true';
   }
   let measurementFrame = 0;
@@ -178,7 +190,7 @@ export function installLiquidGlass() {
     });
   }
   const resize = new ResizeObserver(scheduleMeasurement);
-  for (const { element } of [...groups, ...lenses]) resize.observe(element);
+  for (const { element } of [...groups, ...lenses.filter(lens => !lens.flexible)]) resize.observe(element);
   const selection = new MutationObserver(scheduleMeasurement);
   for (const { element } of groups) selection.observe(element, { subtree: true, attributes: true, attributeFilter: ['aria-pressed', 'aria-current'] });
   scheduleMeasurement();

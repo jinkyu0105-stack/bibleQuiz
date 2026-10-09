@@ -25,6 +25,7 @@ export function installDockMotion({ element, indicator, signal, canMove }) {
     indicator.style.setProperty('--dock-scale-x', scaleX.toFixed(4));
     indicator.style.setProperty('--dock-scale-y', scaleY.toFixed(4));
     indicator.style.setProperty('--dock-lift', clamp(lift, 0, 1).toFixed(3));
+    indicator.style.setProperty('--dock-light-x', `${clamp(50 + state.x.velocity * .035, 22, 78).toFixed(1)}%`);
   }
   function stop() {
     cancelAnimationFrame(frame); frame = 0; previousTime = 0;
