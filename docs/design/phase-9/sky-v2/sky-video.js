@@ -9,7 +9,8 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
   let posterRequested = false, posterReady = false, frameReady = false;
   let source = '', failed = false, blocked = false, reportedBlocked = false;
   let pendingPlay = null, generation = 0, disposed = false;
-  const directory = 'assets/video/';
+  const directory = new URLSearchParams(window.location.search).get('video') === 'calm'
+    ? 'assets/video/' : 'assets/video/dynamic/';
   video.muted = true;
 
   function eligible() { return enabled && state.theme === 'dawn' && state.visible; }

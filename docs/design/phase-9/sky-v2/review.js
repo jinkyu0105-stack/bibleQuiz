@@ -7,9 +7,9 @@ const view = ['home', 'quiz', 'admin'].includes(params.get('view')) ? params.get
 const level = params.get('level') === 'adults' ? 'adults' : 'children';
 document.body.dataset.view = view;
 document.body.dataset.mountains = params.get('mountains') === 'off' ? 'off' : 'on';
-if (params.get('video') === 'off') for (const link of document.querySelectorAll('a[href^="?view="]')) {
+if (['off', 'calm'].includes(params.get('video'))) for (const link of document.querySelectorAll('a[href^="?view="]')) {
   const [path, hash] = link.getAttribute('href').split('#');
-  const query = new URLSearchParams(path.slice(1)); query.set('video', 'off');
+  const query = new URLSearchParams(path.slice(1)); query.set('video', params.get('video'));
   link.setAttribute('href', `?${query}${hash ? `#${hash}` : ''}`);
 }
 for (const panel of document.querySelectorAll('.view')) panel.hidden = panel.id !== `${view}-view`;

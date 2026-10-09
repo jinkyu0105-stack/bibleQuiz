@@ -1,5 +1,7 @@
 # 새벽 영상 자산
 
+현재 기본은 [dynamic/manifest.json](dynamic/manifest.json)의 움직임이 많은 새벽 영상이다. 기존 이 폴더의 영상은 `video=calm`으로 비교한다. 새 원본은 `.wrangler/design-references/p9-06-video/masters/sky-dawn-dynamic-4k-original.mp4`에 해시를 대조해 복사했고 Downloads 파일도 유지했다. 아래 수치/이동 기록은 최초 잔잔한 영상이다.
+
 2026-10-09 · P9-06. 사용자가 제공한4K 원본에서 만든 독립 검토본의 재생 자산이다. [해시·미디어 정보·변환 명령](manifest.json)에 원본과 파생 파일을 구분했다.
 
 - 원본은 저장소의 Git 제외 `.wrangler/design-references/p9-06-video/masters/sky-dawn-4k-original.mp4`에 이름을 바꿔 이동했다. 복사/쓰기 완료 후 SHA-256을 대조하고 요청받은 Downloads 파일만 제거했다. 원본의 영상·소리를 모두 보존했다.

@@ -1,0 +1,44 @@
+{
+  "task": "P9-06",
+  "variant": "dynamic",
+  "importedAt": "2026-10-09",
+  "source": {
+    "sourceFilename": "Generated Video October 09, 2026 - 11_50AM.mp4",
+    "original": ".wrangler/design-references/p9-06-video/masters/sky-dawn-dynamic-4k-original.mp4",
+    "bytes": 20986190,
+    "sha256": "515d84c3ab18275f0ef7cf168f11e2c6d7fc14624c23b8b57efa931c3050d397",
+    "downloadsPreserved": true
+  },
+  "video": {
+    "width": 3840,
+    "height": 2160,
+    "frameRate": "24/1",
+    "durationSeconds": 10,
+    "preservedVideoStreamHash": "SHA256=50b078b37e109a11194bb423c10791078bdabb48c9e21117b82ec32a88d72cf1"
+  },
+  "files": {
+    "sky-dawn-1080p.mp4": {
+      "bytes": 4687214,
+      "sha256": "67d6f7b3e2e86fa0faaabb999af48434c95aab7b070cbfc558d249b46af4dc12"
+    },
+    "sky-dawn-4k.mp4": {
+      "bytes": 20814648,
+      "sha256": "d53baa5f207dd79c1351ed4b24af383810c38ec86a3a10e04625216faea9eb77"
+    },
+    "sky-dawn-poster-4k.webp": {
+      "bytes": 361026,
+      "sha256": "cf3795ae6b2d37e7a99be99192614574853448a261f3d8760eada9a707ff1c49"
+    },
+    "sky-dawn-poster-small.webp": {
+      "bytes": 85018,
+      "sha256": "858c47995da8b037c6e99310949996cbb6d9c0451dd381c310fcea5cf72adb61"
+    }
+  },
+  "commands": {
+    "sky-dawn-4k.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -c:v copy -an -movflags +faststart OUTPUT",
+    "sky-dawn-1080p.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -an -vf scale=1920:1080:flags=lanczos -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart OUTPUT",
+    "sky-dawn-poster-4k.webp": "ffmpeg -i ORIGINAL -frames:v 1 -c:v libwebp -quality 88 OUTPUT",
+    "sky-dawn-poster-small.webp": "ffmpeg -i ORIGINAL -frames:v 1 -vf scale=1280:720:flags=lanczos -c:v libwebp -quality 86 OUTPUT"
+  },
+  "policy": "Default dawn video; previous clip remains available with video=calm. Existing mute, responsive, pause and .9s first-frame blend behavior retained."
+}

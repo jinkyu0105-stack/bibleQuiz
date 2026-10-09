@@ -2,38 +2,27 @@
 
 ## 현재 작업과 다음 첫 행동
 
-2026-10-09 KST. **P9-06 진행 중 — 사용자 제공 새벽4K 영상 연결, 사용자 시각 확인/나머지 영상 대기**. 사용자는 새벽 MP4의 이름/디렉토리 정리와 현재 검토본 적용을 요청했다. 새벽의 상단에 연결했고 Apple 유리 UI·하강/산/잔디를 유지했다. P9-04 운영 배포와 앞서 승인된 Phase9 완료는 유지한다.
-
-[새벽 영상 보기](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn) · [원래 이미지 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=off). 먼저 새벽의 반복 연결/색을 사용자와 확인한다. 나머지 시간대 영상이 도착하면 같은P9-06에서 수령/검증/연결하며 새 ID를 만들지 않는다. 실제 앱 연결은 대표 시안 보정 뒤 이어진다.
+2026-10-09. **P9-06 진행 중 — 움직임이 많은 새벽 영상 교체, 사용자 비교 대기**. 사용자의11:50 생성 파일을 새벽 기본으로 연결했다. [새 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn)과 [이전 잔잔한 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=calm)을 비교한다. `video=off`는 기존 사진이다. 다음은 사용자 시각 보정/나머지 영상 수령이며 같은P9-06을 유지한다. 부모 전체 UI 개편은 진행 중, 기존P9-04 운영/Phase9 승인 범위 완료는 유지한다.
 
 ## 이번 변경과 보존
 
-- 사용자 파일 `Generated Video October 08, 2026 - 11_25PM.mp4`를 Git 제외 `.wrangler/design-references/p9-06-video/masters/sky-dawn-4k-original.mp4`로 이동했다. copy/flush/SHA-256 확인 뒤 요청한 Downloads 파일만 제거했으며 영상·소리가 모두 동일하다.
-- 승인된 재생 자산은 `docs/design/phase-9/sky-v2/assets/video/`의 무음4K/1080p MP4와 첫 장면 WebP2종이다.4K는3840×2160·24fps·10초·12.52MB, 원본 영상 스트림과 동일하다. 모바일1080p는3.06MB다. [파일·해시·변환 명령](design/phase-9/sky-v2/assets/video/manifest.json).
-- 새 `sky-video.js`/`sky-video.css`, 연결 `index.html`/`world.js`/`review.js`. 공개 새벽의 보이는 상단에서만 재생하며 공통 정지/움직임 감소/시간대/스크롤/숨은 탭을 따른다. 자동 재생 거부 시 **새벽 영상 재생**, 실패 시 정지 이미지/기존 사진으로 대체한다.
-- 원본 마지막/첫 구름 차이를 확인해 단순 반복만 사용하는 접근을 버렸다. 끝0.9초 동안 첫 장면을 화면에 합성한다. 원본/4K 스트림을 편집한 seamless 파일은 아니며 반복의 자연스러움은 사용자 검수가 남는다. 기존 새벽 필터/빛을 중복 적용하지 않는다.
-- 관련 디자인 명세/D-042/STATUS/작업 문서/검토본과 영상 자료 README를 갱신했다. 기존 style.css·하늘/구름/잔디/산·한글/출력 폰트/fontkit·실제 자료/키/유료 결과·0000~0038·package/lockfile/Worker 설정은 보존한다. 기존 영상 입력 PNG4장/프롬프트도 유지한다.
-- [재생 기준](spec/design.md#새벽-영상-재생-기준), [작업/검증](work/P9-06.md#새벽-4k-영상-연결--2026-10-09), [사용법](design/phase-9/sky-v2/README.md#새벽-4k-영상). 새 production 의존성·서비스·유료 호출·계정 변경 없음.
+`sky-video.js`의 기본 디렉토리를 `assets/video/dynamic/`으로 선택하고 `review.js`가 `video=calm`을 화면 이동에도 보존한다. 새 무음4K·1080p·첫 프레임WebP2종과 manifest를 추가했다.3840×2160·24fps·10초,4K20.81MB/1080p4.69MB다.4K 영상 스트림은 원본과 동일하다. 기존 재생 제어·끝0.9초 합성·구름/산/잔디/유리/1440px를 유지한다.
 
-## 검사와 한계
+새 원본은 Git 제외 `.wrangler/design-references/p9-06-video/masters/sky-dawn-dynamic-4k-original.mp4`로 해시를 확인해 복사했으며 Downloads 파일도 남아 있다. 이전 보관 원본과 재생 자산도 그대로다. [해시·제작 명령](design/phase-9/sky-v2/assets/video/dynamic/manifest.json) · [사용법](design/phase-9/sky-v2/README.md#새벽-4k-영상) · [이번 검사](work/P9-06.md#움직임이-많은-새벽-영상-비교--2026-10-09).
 
-최종 `pnpm run lint`·`pnpm run typecheck`·변경 JS 구문 통과. Chromium28항목에서4K/모바일1080p·정지/재개·시간대/스크롤·OS 감소/사용자 정지 보존·파일 재사용·영상/전체 신규 매체404 대체 표시·반복/이미지 비교·2560px 산/잔디를 확인했다. 자동 재생 거부/클릭 복구2항목과 Firefox 실제4K 재생도 통과했다. 마지막 Chromium/Firefox 재생 검사 runtime error0·외부 요청0. 숨은 탭은 이벤트/hidden 모의 검사다.
+## 검사와 남은 범위
 
-초기 검사의 거부된 미디어 `networkidle` 대기와 Firefox `playsInline` DOM 속성 가정은 검사 코드 문제였다. 실제 제어 상태/HTML 속성/재생을 기준으로 고친 뒤 해당 검사만 통과시켰다. 근거 로그를 지우지 않았다. 새 영상0/5/9.6초·390/1440px의99개 글자 영역 대비는 최소4.72:1로 모두 목표 이상이며 이전 정지 배경420표본과 구분한다. 전체 WCAG/모든 프레임 보증은 아니다.
+Chromium PC2560px4K·모바일390px1080p 재생, 이전 영상 비교/이동, OS 감소의 MP4 요청0/정지 이미지, 멈춤, 합성과 실제 반복 통과. 네 시나리오 runtime0·넘침 없음. lint/typecheck·git diff --check·기존/새 영상 파일 해시 대조 통과. 근거/스크립트/캡처는 `.wrangler/design-references/p9-06-video-dynamic/`다. 기존99개 대비 표본/Firefox 결과는 이전 영상의 검사이며 이번 결과로 재사용하지 않는다. Safari/WebKit은 이전 host 라이브러리 부재 한계, 실제 기기/GPU/배터리·새 영상의 반복 자연스러움은 남는다. 출시 검사/유료 호출은 반복하지 않았다.
 
-근거는 Git 제외 `.wrangler/design-references/p9-06-video/`: `asset-verification.json`, `browser-verification.json`, `policy-firefox-verification.json`, `firefox-verification.json`, `video-contrast.json`, 캡처/재현 스크립트다. 앞의 종합 JSON에는 이후 보완된 검사 실패 기록도 남아 있으므로 마지막 보완 결과와 함께 읽는다. 문서 링크242개/새 앵커·원본/파생본/기존 자산12개 해시·변경18개 파일 범위 대조와 `git diff --check`도 통과했다. 근거는 `docs-verification.json`을 따른다.
-
-WebKit은 앞서 확인한 `libgtk-4.so.1`/GStreamer 등 host 라이브러리 부재로 재실행하지 않았다. Safari/iOS·실제 GPU/배터리·OS 탭 전환·실제 앱 IME와 사용자 반복 시각 검수가 남는다. 기존 출시 `pnpm check`/전체E2E/Lighthouse·실제 입력/PDF·유료 호출을 반복하지 않았다.
-
-## 실행과 Git
-
-loopback4189 정적 서버는 실행 중이며 없을 때만 다음 경로를 사용한다.
+최초 브라우저 검사에서4189 서버 종료로 연결 거부를 확인하고 다음 인계 명령으로 재실행했다. 현재 로컬 서버는 실행 중이다. 서버가 없을 때만 실행한다.
 
 ```sh
 python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bibleQuiz
 ```
 
-시작 HEAD **d0345ca**, main/worktree clean, origin/main **21b81de**보다12커밋 앞섬. 이번 영상 연결/관련 문서를 하나의 로컬 커밋으로 남기면 미푸시13커밋이다. 정확한 종료 HEAD/clean/커밋수는 최종 Git log/status를 따른다. 이전 유리 UI d0345ca와 이번 영상 연결을 구분한다. push/원격 재검수 없음.
+## Git과 배포
+
+시작 HEAD **e7928c0**, main clean, origin/main **21b81de**보다13커밋 앞섬. 이번 교체·자산·문서를 로컬 커밋하면 미푸시14커밋이다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 기존 자산/실제 자료/키/유료 결과·0000~0038·폰트/fontkit·package/lockfile/Worker 설정을 보존했다. push/배포 없음.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -47,8 +36,6 @@ Preview는 main push 자동 경로, Production은 별도 요청이다. [P9-04](w
 
 ## 실행·사용량·세션
 
-시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git status/diff/log다. 시작 Pro14% 사용/86% 잔여, 별도5시간 없음, 사용자 지정×10=860%. **세션 유지**, 다음 추천 **Astra·Max** — 같은P9-06의 영상/유리 UI 시각 보정을 이어간다.
+시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro15% 사용/85% 잔여, 별도5시간 없음, 사용자 지정×10=850%. 세션 유지, 다음 추천 **Astra·Max** — 새벽 두 영상의 움직임과 색감을 비교/보정한다.
 
-검증된 shell은 `/bin/bash`·login:false·명시 workdir·승인 검토 경로다. Node24.18.0/pnpm11.14.0의 PATH는 현재 프로세스에만 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. 실행 시작 오류에는 codex-exec-recovery를 적용하며 같은 실패 경로를 반복하지 않는다. FFmpeg/ffprobe6.1.1은 `/usr/bin`의 기존 설치를 사용했다.
-
-Windows computer-use node_repl의 과거 실행 전 `sandboxCwd is not a local file URI` 한계는 유지한다. 이번은 검증된 WSL/기존 Chromium·Firefox를 사용했으며 저장소 접근은 정상이다. 기존 키/유료 결과는 영속 위치를 재사용하고 비밀값을 채팅/Git에 노출하지 않는다.
+검증된 shell은 `/bin/bash`·login:false·명시 workdir·승인 검토 경로다. Node24.18.0/pnpm11.14.0의 PATH는 프로세스에 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. FFmpeg/ffprobe6.1.1은 기존 `/usr/bin` 설치를 쓴다. 실행 시작 오류에는 codex-exec-recovery를 적용하며 같은 실패 경로를 반복하지 않는다. Windows computer-use의 과거 `sandboxCwd is not a local file URI` 한계와 WebKit host 라이브러리 부재를 저장소 단절로 해석하지 않는다.

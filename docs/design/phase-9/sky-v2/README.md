@@ -30,6 +30,8 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 ## 새벽 4K 영상
 
+현재 기본은10월9일11:50 제공받은 **움직임이 많은 버전**이다. [새 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn) · [이전 잔잔한 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=calm). 두 원본과 재생 자산을 모두 보존한다. 새 버전은4K20.81MB/모바일1080p4.69MB이며 기존10초 재생·정지·끝0.9초 합성을 유지한다. [새 파일 정보](assets/video/dynamic/manifest.json). 아래 최초 영상의 설명과 구분한다.
+
 [새벽 영상 보기](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn) · [원래 사진/구름군 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=off)
 
 2026-10-09 제공받은3840×2160·24fps·10초 영상을 새벽 첫 화면에 연결했다.4K는 원본 영상 스트림을 보존하고 소리만 제거했으며 모바일700px 이하에서는1080p·3.06MB 파일을 쓴다. 원본 새벽색을 그대로 표시하고 기존 필터/빛을 이중 적용하지 않는다. 마지막과 첫 구름 모양의 차이는 끝0.9초 동안 첫 장면을 겹쳐 완화한다.
