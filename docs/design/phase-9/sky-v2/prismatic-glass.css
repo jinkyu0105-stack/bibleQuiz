@@ -406,7 +406,7 @@ body[data-time=night] :is(.weekly-sheet, .archive-list)[data-glass-lens=reading-
 .glass[data-glass-lens=reading-header]::after { padding: 1.5px; }
 /* Keep the resting prism sharp; feather only the pointer reflection.
    Blur the parent after its child has been masked into a narrow ring. */
-.glass[data-glass-lens=reading-header][data-glint-active] {
+.glass[data-glint-feather][data-glint-active] {
   --glint-local-rim: linear-gradient(transparent, transparent);
 }
 .glass-rim-glow {

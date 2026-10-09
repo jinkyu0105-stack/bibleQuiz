@@ -2,15 +2,15 @@
 
 ## 현재 작업과 다음 첫 행동
 
-2026-10-09. **P9-06 진행 중 — 메인 두 카드의 넓고 연한 테두리 포인터 반사 구현/검사 완료, 사용자 시각 확인 대기**. [노을 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?view=home&time=dusk&video=billowing&ground=grass&menu-glass=on#weekly)을 새로고침해 두 카드의 가장자리를 비교한다. 수정 전 기준3a0237a. `glass=soft/off` 전체 재질 비교는 유지한다. 다음은 사용자 시각 피드백이며 다른 UI 확대·실제 앱 연결·push/배포는 자동 시작하지 않는다.
+2026-10-09. **풀이 박스·관리자 좌측/중앙 패널의 페더 반사 구현/관련 검사 완료, 사용자 시각 확인 대기. 부모P9-06 진행 중**. [관리자 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?view=admin&time=dusk&video=billowing&ground=grass&menu-glass=on)을 새로고침해 좌측/중앙 패널 및 풀이 박스의 가까운 가장자리 반사를 확인한다. 변경 전 abb0d06. 다음은 사용자 시각 피드백이며 실제 앱 연결·다른 UI 확대·push/배포는 자동 시작하지 않는다.
 
 ## 이번 변경과 검사
 
-- `liquid-glass.js`: 공개 두 카드의 읽기 층 옆에 aria-hidden 반사 장식만 추가했다.
-- `prismatic-glass.css`: 포인터의 선명한1.5px 흰 선 대신150px 반경/7px 링·4px 페더를 적용했다. 정적 프리즘/굴절·중앙 읽기 층·다른 UI는 유지한다. 장식의 자식에 링 마스크, 부모에 blur를 두며 중앙에는 추가 광원이 없다.
-- Chromium/Firefox 관련8묶음·중앙 변경0/0·테두리2507/2833px 픽셀 비교 통과. 네 시간대 화면 확인, pageerror0. lint/typecheck 통과. 직전204표본 글자 대비 결과는 기존 근거로 유지하며 전체 대비/출시/유료/미디어 검사는 반복하지 않았다. 실제 기기/Safari/성능 미검수 한계는 유지한다.
+- `liquid-glass.js`: 공개/풀이/관리자5개 표면에 같은 aria-hidden 장식·data-glint-feather를 연결했다. 공개 읽기 층/풀이 렌즈·관리자 배경과 입력/탄성 메뉴는 유지한다.
+- `prismatic-glass.css`: 페더 반사 선택자를 공통 속성으로 확장했다.150px 반경/7px 링/4px blur 값과 중앙 제외를 그대로 사용한다. 관리자는 정적 프리즘 경계와 페더만 추가하고 새 SVG/읽기 층은 없다.
+- Chromium/Firefox19묶음·pageerror0, 세 패널 중앙 픽셀 변경0(테두리2379/2748/2793). 네 시간대 hover/이탈·입력/선택/메뉴·감소/강제 색상/soft/off·Firefox390px 대안 확인. lint/typecheck 통과. 전체 대비/출시·Safari/실기기/성능 검사는 반복하지 않았다.
 
-[상세 기록](work/P9-06.md#공개-카드의-부드러운-테두리-반사--2026-10-09) · 증거 `.wrangler/design-references/p9-06-card-feather/`. 마스크 후 흐림이 되도록 구조를 수정했고 중간 CSS 중복 삽입을 제거한 최종본을 검증했다. 잔디 초기 파일 재시도 한계는 [기존 기록](work/P9-06.md#잔디-표시-조사와-미리보기-복구--2026-10-09)을 유지한다.
+[상세 기록](work/P9-06.md#풀이관리자-패널의-페더-반사-확장--2026-10-09) · 증거 `.wrangler/design-references/p9-06-panel-feather/`. 폐기한 별도 구현 접근 없음. 잔디 초기 파일 재시도 한계는 [기존 기록](work/P9-06.md#잔디-표시-조사와-미리보기-복구--2026-10-09)을 유지한다.
 
 ## 병렬 대화 경계와 프롬프트 결과
 
@@ -23,7 +23,7 @@
 
 ## Git과 배포
 
-시작 HEAD **3a0237a**, clean, 추적 origin/main **21b81de**보다33개 앞섬. 이번 UI2개/문서6개만 로컬 커밋하면 미푸시34개다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 병렬 video-kit/5caa2b4·기존 메뉴/미디어·실제 자료/키/유료 결과·0000~0038·폰트/fontkit·패키지/Cloudflare 설정 유지, push/배포 없음.
+시작 HEAD **abb0d06**, clean, 추적 origin/main **21b81de**보다34개 앞섬. 이번 UI2개/문서6개만 로컬 커밋하면 미푸시35개다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 병렬 video-kit/5caa2b4·기존 메뉴/미디어·실제 자료/키/유료 결과·0000~0038·폰트/fontkit·패키지/Cloudflare 설정 유지, push/배포 없음.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -37,7 +37,7 @@ Preview는 main push 자동 경로, Production은 별도 요청이다. [P9-04](w
 
 ## 실행·사용량·세션
 
-시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro32% 사용/68% 잔여, 별도5시간 없음, 사용자 지정×10=680%. 메인 카드 보정 완료·사용자 확인 대기·부모P9-06 진행 중·세션 유지. 다음 추천 **Astra·High** — 읽기와 맑은 가장자리의 균형을 보정한다.
+시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro32% 사용/68% 잔여, 별도5시간 없음, 사용자 지정×10=680%. 풀이·관리자 패널 반사 확장 완료·사용자 확인 대기·부모P9-06 진행 중·세션 유지. 다음 추천 **Astra·High** — 읽기와 맑은 가장자리의 균형을 보정한다.
 
 4189 서버가 응답하지 않을 때만 아래 명령으로 다시 시작한다. **PTY 유지 세션**에서 실행하며 직전 서버 세션 ID는14880이며 이번에도 HTTP200을 확인했다. `nohup ... &`만 실행하면 이 도구 환경에서 명령 종료 뒤 프로세스가 유지되지 않아 사용하지 않는다. 도구 세션/앱 종료 뒤 영속성까지 보장하지 않는다.
 

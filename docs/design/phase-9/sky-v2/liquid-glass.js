@@ -46,10 +46,19 @@ export function installLiquidGlass() {
       if (homeCard) {
         const core = document.createElement('span');
         core.className = 'glass-reading-core'; core.setAttribute('aria-hidden', 'true');
-        const glow = document.createElement('span');
-        glow.className = 'glass-rim-glow'; glow.setAttribute('aria-hidden', 'true');
-        card.prepend(core, glow);
+        card.prepend(core);
       }
+    }
+  }
+  if (prismatic) {
+    for (const panel of document.querySelectorAll('.weekly-sheet, .archive-list, .puzzle-workspace, .admin-sidebar, .admin-main')) {
+      panel.dataset.glint = '';
+      panel.dataset.glintFeather = '';
+      // Admin panels retain their reading backdrop; only the rim reacts.
+      if (!panel.dataset.glintShape) panel.dataset.glintShape = 'feather';
+      const glow = document.createElement('span');
+      glow.className = 'glass-rim-glow'; glow.setAttribute('aria-hidden', 'true');
+      panel.prepend(glow);
     }
   }
   if (classic) { preserveChoice('glass', 'off'); return; }
