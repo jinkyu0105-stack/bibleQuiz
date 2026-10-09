@@ -77,6 +77,7 @@ export function installLiquidGlass() {
     const levelSwitch = document.querySelector('.level-switch');
     levelSwitch.dataset.glassLens = ''; levelSwitch.dataset.glint = '';
     levelSwitch.dataset.glintShape = 'spot';
+    document.querySelector('.admin-sidebar nav').classList.add('glass-segmented');
     const admin = document.querySelector('.admin-link');
     admin.classList.add('convex-lens');
     admin.dataset.glassLens = 'convex'; admin.dataset.glint = '';
@@ -86,7 +87,7 @@ export function installLiquidGlass() {
     indicator.className = 'glass-indicator'; indicator.setAttribute('aria-hidden', 'true');
     element.prepend(indicator);
     const dock = element.matches('.review-switch');
-    const expandedMenu = menuGlass && element.matches('.public-nav, .time-options, .level-switch');
+    const expandedMenu = menuGlass && element.matches('.public-nav, .time-options, .level-switch, .content-tabs, .admin-sidebar nav');
     const motion = prismatic && ((dock && elasticDock) || expandedMenu)
       ? installDockMotion({ element, indicator, signal, canMove }) : null;
     if (motion && ((dock && convexDock) || expandedMenu)) {

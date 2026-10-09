@@ -1,12 +1,12 @@
 /* global window, document, requestAnimationFrame, cancelAnimationFrame */
-// Shared by the review dock, header links and responsive time selector.
+// Shared by glass menus, including the responsive admin navigation grid.
 // Only the glass stretches; labels, hit areas and actual selection stay fixed.
 export function installDockMotion({ element, indicator, signal, canMove }) {
   const links = [...element.querySelectorAll(':scope > a, :scope > button')];
   const forcedColors = window.matchMedia('(forced-colors: active)');
   const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
   const spring = (value = 0) => ({ value, velocity: 0 });
-  const state = { position: spring(), length: spring(), stretch: spring(), lift: spring() };
+  const state = { position: spring(), length: spring(), crossPosition: spring(), crossLength: spring(), stretch: spring(), lift: spring() };
   let boxes = [], target = null, hovered = null, frame = 0, previousTime = 0, ready = false, vertical = false;
   const selected = () => links.find(link => link.matches('[aria-current=page], [aria-pressed=true]'));
   const focused = () => links.find(link => link === document.activeElement && link.matches(':focus-visible'));
@@ -18,12 +18,13 @@ export function installDockMotion({ element, indicator, signal, canMove }) {
     const along = 1 + stretch, across = 1 + lift * .08 - stretch * .35;
     const halfLength = state.length.value * along / 2;
     // Keep the glass within the menu, including rapid reversals.
-    const position = clamp(state.position.value, boxes[0].start + halfLength - 2, boxes.at(-1).end - halfLength + 2);
+    const position = clamp(state.position.value, Math.min(...boxes.map(box => box.start)) + halfLength - 2, Math.max(...boxes.map(box => box.end)) - halfLength + 2);
     const offset = position - state.length.value / 2;
-    indicator.style.width = `${(vertical ? target.width : state.length.value).toFixed(2)}px`;
-    indicator.style.height = `${(vertical ? state.length.value : target.height).toFixed(2)}px`;
-    indicator.style.setProperty('--selection-x', `${(vertical ? target.left : offset).toFixed(2)}px`);
-    indicator.style.setProperty('--selection-y', `${(vertical ? offset : target.top).toFixed(2)}px`);
+    const crossOffset = state.crossPosition.value - state.crossLength.value / 2;
+    indicator.style.width = `${(vertical ? state.crossLength.value : state.length.value).toFixed(2)}px`;
+    indicator.style.height = `${(vertical ? state.length.value : state.crossLength.value).toFixed(2)}px`;
+    indicator.style.setProperty('--selection-x', `${(vertical ? crossOffset : offset).toFixed(2)}px`);
+    indicator.style.setProperty('--selection-y', `${(vertical ? offset : crossOffset).toFixed(2)}px`);
     indicator.style.setProperty('--dock-scale-x', (vertical ? across : along).toFixed(4));
     indicator.style.setProperty('--dock-scale-y', (vertical ? along : across).toFixed(4));
     indicator.style.setProperty('--dock-lift', clamp(lift, 0, 1).toFixed(3));
@@ -35,7 +36,7 @@ export function installDockMotion({ element, indicator, signal, canMove }) {
   }
   function snap() {
     stop();
-    for (const [key, value] of Object.entries({ position: target.position, length: target.length, stretch: 0, lift: 0 })) {
+    for (const [key, value] of Object.entries({ position: target.position, length: target.length, crossPosition: target.crossCenter, crossLength: target.crossLength, stretch: 0, lift: 0 })) {
       state[key].value = value; state[key].velocity = 0;
     }
     render();
@@ -54,17 +55,22 @@ export function installDockMotion({ element, indicator, signal, canMove }) {
     for (let i = 0; i < count; i++) {
       step(state.position, target.position, 380, 27, dt);
       step(state.length, target.length, 380, 27, dt);
+      step(state.crossPosition, target.crossCenter, 380, 27, dt);
+      step(state.crossLength, target.crossLength, 380, 27, dt);
       step(state.stretch, Math.min(Math.abs(state.position.velocity) / 1900, .32), 480, 30, dt);
       step(state.lift, lift, 360, 25, dt);
     }
     render();
     const resting = Math.abs(state.position.value - target.position) < .08 && Math.abs(state.position.velocity) < .2 &&
       Math.abs(state.length.value - target.length) < .08 && Math.abs(state.length.velocity) < .2 &&
+      Math.abs(state.crossPosition.value - target.crossCenter) < .08 && Math.abs(state.crossPosition.velocity) < .2 &&
+      Math.abs(state.crossLength.value - target.crossLength) < .08 && Math.abs(state.crossLength.velocity) < .2 &&
       Math.abs(state.stretch.value) < .001 && Math.abs(state.stretch.velocity) < .005 &&
       Math.abs(state.lift.value - lift) < .001 && Math.abs(state.lift.velocity) < .005;
     if (resting) {
       stop();
       state.position.value = target.position; state.length.value = target.length;
+      state.crossPosition.value = target.crossCenter; state.crossLength.value = target.crossLength;
       state.stretch.value = 0; state.lift.value = lift;
       for (const part of Object.values(state)) part.velocity = 0;
       render();
@@ -102,6 +108,8 @@ export function installDockMotion({ element, indicator, signal, canMove }) {
     for (const box of boxes) {
       box.start = vertical ? box.top : box.left;
       box.length = vertical ? box.height : box.width;
+      box.crossLength = vertical ? box.width : box.height;
+      box.crossCenter = (vertical ? box.left : box.top) + box.crossLength / 2;
       box.end = box.start + box.length; box.center = box.start + box.length / 2;
     }
     indicator.style.borderRadius = window.getComputedStyle(selected() || links[0]).borderRadius;
@@ -120,8 +128,10 @@ export function installDockMotion({ element, indicator, signal, canMove }) {
     if (event.pointerType === 'touch' || !enabled() || !boxes.length) return;
     const bounds = element.getBoundingClientRect();
     const coordinate = vertical ? event.clientY - bounds.top - element.clientTop : event.clientX - bounds.left - element.clientLeft;
-    if (coordinate < boxes[0].start || coordinate > boxes.at(-1).end) { if (hovered) leave(); return; }
-    const box = boxes.reduce((nearest, box) => Math.abs(box.center - coordinate) < Math.abs(nearest.center - coordinate) ? box : nearest);
+    if (coordinate < Math.min(...boxes.map(box => box.start)) || coordinate > Math.max(...boxes.map(box => box.end))) { if (hovered) leave(); return; }
+    const cross = vertical ? event.clientX - bounds.left - element.clientLeft : event.clientY - bounds.top - element.clientTop;
+    const distance = box => Math.hypot(box.center - coordinate, box.crossCenter - cross);
+    const box = boxes.reduce((nearest, box) => distance(box) < distance(nearest) ? box : nearest);
     hovered = box.link;
     aim(hovered, clamp((coordinate - box.center) * .22, -6, 6));
   }, { passive: true, signal });

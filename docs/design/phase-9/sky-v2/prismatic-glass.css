@@ -210,9 +210,9 @@ body:not([data-time=night]) :is(.review-switch, .level-switch)[data-dock-motion=
   mask-composite: exclude;
 }
 .glass-segmented[data-dock-motion=elastic] > :is(a, button)[data-dock-preview] { color: var(--glass-selected-ink); }
-.glass-segmented[data-dock-previewing] > :is(a[aria-current=page], button[aria-pressed=true]):not([data-dock-preview]) { color: var(--ink); }
+.glass-segmented[data-dock-previewing] > :is([aria-current=page], button[aria-pressed=true]):not([data-dock-preview]) { color: var(--ink); }
 /* Hover previews a destination; the dot still marks the current page/theme. */
-.glass-segmented[data-dock-previewing] > :is(a[aria-current=page], button[aria-pressed=true])::after {
+.glass-segmented[data-dock-previewing] > :is([aria-current=page], button[aria-pressed=true])::after {
   content: '';
   position: absolute;
   display: block;
@@ -306,6 +306,29 @@ body[data-time=night] .level-switch[data-dock-material=convex] {
   --dock-dome-light: rgb(237 249 255 / .36);
   --dock-lens-tint: rgb(143 191 233 / .04);
   background: color-mix(in srgb, var(--glass-rail) 60%, var(--glass-solid) 40%);
+}
+/* Admin controls already sit on a reading panel; keep that backing and let
+   only the shared lens move. The sidebar remains a 3-column grid on mobile. */
+:is(.content-tabs, .admin-sidebar nav)[data-dock-material=convex] {
+  --glass-selected-ink: var(--ink);
+}
+.admin-sidebar nav[data-dock-motion=elastic] > button {
+  background: transparent;
+  box-shadow: none;
+}
+.admin-sidebar nav[data-dock-motion=elastic] > button[aria-current=page] {
+  color: var(--ink);
+}
+body[data-time=night] :is(.content-tabs, .admin-sidebar nav)[data-dock-material=convex] {
+  --dock-dome-light: rgb(237 249 255 / .36);
+  --dock-lens-tint: rgb(143 191 233 / .04);
+}
+@media (forced-colors: active) {
+  .admin-sidebar nav[data-dock-motion=elastic] > button[aria-current=page] {
+    outline: 2px solid Highlight;
+    outline-offset: -3px;
+    color: Highlight;
+  }
 }
 /* Leave the tiny mobile label clear when its selected lens is elsewhere. */
 .time-options[data-dock-previewing] > button[aria-pressed=true]::after {
