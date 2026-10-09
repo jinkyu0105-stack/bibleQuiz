@@ -22,7 +22,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 사용자가 선택한 3번 **Apple Liquid Glass**의 원리를 웹으로 구현했다. 공개·풀이·관리자의 둥근 표면, 빛나는 가장자리, 배경 흐림과 이동하는 선택 표시를 함께 볼 수 있다. 헤더/시간대/첫 버튼은 더 맑게, 퀴즈와 편집 영역은 읽기 쉬운 밀도로 구분한다. 한글 글자와 입력칸 자체를 굴절시키지 않는다.
 
 - [맑은 프리즘 유리 + 선택 새벽 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing) · [직전의 부드러운 유리](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing&glass=soft) · [유리 이전](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing&glass=off)
-- 현재 기본은 밝은 시간대 제어 채움22~24%/밤38%, 풀이/편집 읽기62~75%와14px 흐림이다. 공개의 두 본문 박스는 낮48%/새벽50%/노을52%/밤64%로 조금 더 투명하게 보정했다. 밤 시간대 선택기는58%, 재생 제어는64% 받침으로 대비를 유지한다. 구름이 맑게 비치는 가운데와 얇은 색 분산 경계를 구분한다. 수치는 CSS alpha이며 실제 투과율은 아니다. 입력칸/글자/콘텐츠 폭은 유지한다.
+- 현재 기본은 밝은 시간대 제어 채움22~24%/밤38%, 풀이/편집 읽기62~75%와14px 흐림이다. 공개의 두 본문 박스는 낮48%/새벽50%/노을52%/밤64%로 조금 더 투명하게 보정했다. 확장한 시간대 바는 낮53.2%/새벽·노을54.4%/밤74.8%, 밤 재생 제어는64% 받침으로 대비를 유지한다. 구름이 맑게 비치는 가운데와 얇은 색 분산 경계를 구분한다. 수치는 CSS alpha이며 실제 투과율은 아니다. 입력칸/글자/콘텐츠 폭은 유지한다.
 - **선명하게** 버튼은 투명도를 줄인다. 선택은 `clarity=high`로 URL/검토 화면 이동에 남으며 다시 누르면 복원한다. OS 투명도/움직임 감소와 기존 멈춤도 따른다.
 - Chromium에서는 배경 전용 RGB 가장자리 굴절을 더하고, 다른 브라우저는6px CSS 흐림과 유색 반사 경계로 표시한다. 실제 픽셀 비교로 중앙이 유지되고 경계에서 색이 분리됨을 확인했다. Apple 시스템 재질과 동일한 SDK가 아니다. Safari/WebKit 실검증은 현재 실행 라이브러리 부재로 남아 있다.
 - 두 공개 본문 박스에는 무지갯빛 테두리와 포인터 주변의 부드러운 반사를, 어린이/장년의 원형 화살표에는 작은 렌즈 반사를 더했다. 밤 첫 버튼은 hover에도 투명한 밤 유리색을 유지한다.
@@ -40,7 +40,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 마우스를 빼면 현재 화면으로 돌아온다. 다른 메뉴를 미리 보는 동안 작은 점이 현재 화면을 가리키고, 실제 화면은 클릭/Enter로만 바뀐다. 키보드 초점도 따라가며 터치에는 hover를 만들지 않는다. 공통 멈춤·OS 움직임 감소·투명도 감소·강제 색상에서는 이동을 끄고 현재 선택을 유지한다. 정착하면 반복 프레임을 멈춘다.
 
-기본/`dock-motion=elastic`은 이번 실험, `dock-motion=off`는 직전 선택 표시다. 선택은 시간대·검토 화면 이동에 유지한다. `glass=soft/off`에서는 새 실험을 적용하지 않는다. 하단 검토 바만의 구현이며 Apple 시스템 렌더러나 실제 iPhone 검증을 뜻하지 않는다. [구현/검사/한계](../../../work/P9-06.md#아래-검토-메뉴의-탄성-모션--2026-10-09).
+기본/`dock-motion=elastic`은 이번 실험, `dock-motion=off`는 직전 선택 표시다. 선택은 시간대·검토 화면 이동에 유지한다. `glass=soft/off`에서는 새 실험을 적용하지 않는다. 이 비교는 하단 검토 바를 대상으로 하며 헤더/시간대 확장은 아래의 별도 비교를 따른다. Apple 시스템 렌더러나 실제 iPhone 검증을 뜻하지 않는다. [구현/검사/한계](../../../work/P9-06.md#아래-검토-메뉴의-탄성-모션--2026-10-09).
 
 ## 아래 검토 메뉴의 볼록한 유리
 
@@ -50,9 +50,17 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 기본/`dock-material=convex`가 이번 보정, `flat`은 같은 탄성 모션에 직전 재질이다. Chromium은 실제 배경 굴절, Firefox 등은 흐림과 넓은 반사로 표시한다. 투명도 감소에는 불투명한 선택 표시를 쓴다. 모션을 끈 `dock-motion=off`와 `glass=soft/off`는 이전 모습을 유지한다. [재현 기준](../../../spec/design.md#apple-참고-유리-검토본의-재현-기준) · [변경/검사/한계](../../../work/P9-06.md#볼록한-유리와-새-밤-영상--2026-10-09).
 
+## 헤더·시간대 메뉴와 관리자 버튼
+
+[메뉴 확장 보기](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both&dock-motion=elastic&dock-material=convex&menu-glass=on) · [밤에서 보기](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&menu-glass=on) · [확장 전 메뉴](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both&dock-motion=elastic&dock-material=convex&menu-glass=off)
+
+채택한 하단 유리와 같은 탄성·넓은 굴절·볼록한 반사를 헤더의 ‘이번 주 퀴즈/지난 퀴즈’와 시간대 메뉴에 적용했다. 헤더는 hover/키보드 초점이 있을 때 유리가 나타나 좌우로 따라간다. 시간대는 PC에서 위아래로,700px 이하 가로 배치에서는 좌우로 움직인다. hover만으로 시간대나 화면을 바꾸지 않으며, 다른 시간대 위에서는 모서리의 작은 점이 실제 선택을 표시하고 이탈하면 현재 선택으로 돌아온다. 움직이는 유리 밖에서도 작은 글자가 읽히도록 시간대 바의 받침을 보강했다.
+
+헤더 ‘관리자’는 같은 재질의 볼록한 버튼이며 포인터에 맞춰 반사가 기울어진다. 글자와 클릭 영역을 늘리거나 헤더 전체를 움직이지 않는다. 기본/`menu-glass=on`은 확장, `off`는 직전 헤더/시간대/관리자 모습이며 하단의 채택한 유리는 유지한다. `dock-motion`/`dock-material`은 하단만의 비교로 남긴다. 모든 선택은 검토 화면 이동에 보존한다. 정지·감소·터치/키보드 대안도 공유한다. [현재 구현/검사](../../../work/P9-06.md#헤더시간대와-관리자-유리-확장--2026-10-09).
+
 ## 헤더·검토 바의 반사광 비교
 
-현재 헤더는 **위·아래 테두리만 동시에 반응**한다. 마우스가 가운데에 있어도 같은 x좌표의 위아래 경계에 빛이 맺히고, 좌우로 움직이면 두 반사가 함께 따라간다. 중앙 표면에는 추가 광원이 없다. 이전 원형 빛을 가장자리에 댔을 때의38px 반경/밝기를 각각의 경계에 재사용한다. 아래 디자인 검토 바는 포인터 주변의 작은 원형 빛 그대로다.
+현재 헤더는 **위·아래 테두리만 동시에 반응**한다. 마우스가 가운데에 있어도 같은 x좌표의 위아래 경계에 빛이 맺히고, 좌우로 움직이면 두 반사가 함께 따라간다. 헤더 바탕 중앙에는 추가 광원이 없으며, 메뉴/관리자 캡슐의 반사는 각 제어 안에 따로 둔다. 이전 원형 빛을 가장자리에 댔을 때의38px 반경/밝기를 각각의 경계에 재사용한다. 아래 디자인 검토 바는 포인터 주변의 작은 원형 빛 그대로다.
 
 | 비교 | 헤더 | 아래 검토 바 |
 |---|---|---|
@@ -119,7 +127,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 - [liquid-glass.css](liquid-glass.css): 역할별 유리 재질·네 시간대·접근성 대체 표시
 - [prismatic-glass.css](prismatic-glass.css): 현재 맑은 채움·시간대별 프리즘/반사·선명하게 대안, `glass=soft`로 비활성화
 - [liquid-glass.js](liquid-glass.js): 배경 전용 가장자리 굴절·선택 표시·마우스 빛·투명도/이전 모습 전환
-- [dock-motion.js](dock-motion.js): 하단 검토 메뉴의 탄성 이동·변형·복귀·정지 수명
+- [dock-motion.js](dock-motion.js): 하단/헤더/시간대 메뉴가 공유하는 탄성 이동·가로/세로 변형·복귀·정지 수명
 - [originkit-grass.js](originkit-grass.js): OriginKit shader/잔디 geometry와 검토본 연결
 - [sky-video.js](sky-video.js) / [sky-video.css](sky-video.css): 네 시간대 영상 지연 요청·전환·정지/대체 이미지·반복 경계 합성
 - [sky-banks.js](sky-banks.js): 원래 낮/밤 배경의 구름군12영역·수평 이동·원본 fallback

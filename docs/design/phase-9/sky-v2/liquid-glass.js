@@ -32,6 +32,9 @@ export function installLiquidGlass() {
   preserveChoice('dock-motion', params.has('dock-motion') ? (elasticDock ? 'elastic' : 'off') : '');
   const convexDock = params.get('dock-material') !== 'flat';
   preserveChoice('dock-material', params.has('dock-material') ? (convexDock ? 'convex' : 'flat') : '');
+  const expandedMenus = params.get('menu-glass') !== 'off';
+  const menuGlass = prismatic && expandedMenus;
+  preserveChoice('menu-glass', params.has('menu-glass') ? (expandedMenus ? 'on' : 'off') : '');
   if (prismatic) {
     if (glint === 'both' || glint === 'header') document.querySelector('.site-header').dataset.glintShape = headerGlint === 'straight' ? 'vertical' : headerGlint;
     if (glint === 'both' || glint === 'dock') document.querySelector('.review-switch').dataset.glintShape = 'spot';
@@ -64,14 +67,23 @@ export function installLiquidGlass() {
   reduceTransparency.addEventListener('change', syncClarity, { signal });
   syncClarity();
 
+  if (menuGlass) {
+    document.querySelector('.public-nav').classList.add('glass-segmented');
+    const admin = document.querySelector('.admin-link');
+    admin.classList.add('convex-lens');
+    admin.dataset.glassLens = 'convex'; admin.dataset.glint = '';
+  }
   const groups = [...document.querySelectorAll('.glass-segmented')].map(element => {
     const indicator = document.createElement('span');
     indicator.className = 'glass-indicator'; indicator.setAttribute('aria-hidden', 'true');
     element.prepend(indicator);
-    const motion = prismatic && elasticDock && element.matches('.review-switch')
+    const dock = element.matches('.review-switch');
+    const expandedMenu = menuGlass && element.matches('.public-nav, .time-options');
+    const motion = prismatic && ((dock && elasticDock) || expandedMenu)
       ? installDockMotion({ element, indicator, signal, canMove }) : null;
-    if (motion && convexDock) {
+    if (motion && ((dock && convexDock) || expandedMenu)) {
       element.dataset.dockMaterial = 'convex';
+      indicator.classList.add('convex-lens');
       indicator.dataset.glassLens = 'convex';
     }
     return { element, indicator, motion };
@@ -147,9 +159,11 @@ export function installLiquidGlass() {
   }) : [];
   function measureLens(lens) {
     const { element, filter, map, id, flexible } = lens;
-    // A normalized capsule follows the spring's width/scale on the compositor.
-    // Its map is built once, never regenerated for every animation frame.
-    const width = flexible ? 128 : element.clientWidth, height = flexible ? 84 : element.clientHeight;
+    // A normalized capsule follows the spring's dimensions. Rebuild only
+    // when its layout axis changes, never for an animation frame.
+    const vertical = flexible && element.parentElement.dataset.dockAxis === 'y';
+    const width = flexible ? (vertical ? 84 : 128) : element.clientWidth;
+    const height = flexible ? (vertical ? 128 : 84) : element.clientHeight;
     if (width < 1 || height < 1) return;
     const radius = flexible ? 42 : Math.min(parseFloat(window.getComputedStyle(element).borderTopLeftRadius), width / 2, height / 2);
     const size = `${width}:${height}:${radius}`;
@@ -191,7 +205,11 @@ export function installLiquidGlass() {
   }
   const resize = new ResizeObserver(scheduleMeasurement);
   for (const { element } of [...groups, ...lenses.filter(lens => !lens.flexible)]) resize.observe(element);
-  const selection = new MutationObserver(scheduleMeasurement);
+  const selection = new MutationObserver(records => {
+    for (const group of groups) if (records.some(record => group.element.contains(record.target))) {
+      if (group.motion) group.motion.syncSelection(); else measureSelection(group);
+    }
+  });
   for (const { element } of groups) selection.observe(element, { subtree: true, attributes: true, attributeFilter: ['aria-pressed', 'aria-current'] });
   scheduleMeasurement();
   document.fonts.ready.then(() => { if (!signal.aborted) scheduleMeasurement(); });

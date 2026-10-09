@@ -1,17 +1,17 @@
 # 현재 상태
 
-## P9-06 볼록한 유리와 새 밤 영상 — 2026-10-09
+## P9-06 헤더·시간대·관리자 유리 확장 — 2026-10-09
 
-**하단 ‘디자인 검토’ 유리 보완·밤 영상 교체·관련 검사 완료, 사용자 시각 확인 대기. 부모P9-06은 진행 중**이다. 채택한 탄성 모션을 유지하며 맑은 중심·넓은 가장자리 굴절·위아래 반사로 볼록함을 더했다. 밤은 불투명한 파란 채움을 줄였다. [현재 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&dock-motion=elastic&dock-material=convex) · [직전 재질](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&dock-motion=elastic&dock-material=flat). 새 밤은3840×2160·24fps·10초이며 원본/이전v1을 보존한다. 실제 앱/배포는 아직이다.
+**헤더 메뉴·시간대 메뉴의 탄성/볼록 유리와 관리자 버튼의 입체감 구현·관련 검사 완료, 사용자 시각 확인 대기. 부모P9-06은 진행 중**이다. 채택한 하단 효과를 공유하며 헤더는 좌우, 시간대는 PC 세로/모바일 가로로 움직인다. hover로 실제 화면/시간대는 바꾸지 않는다. [현재 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both&dock-motion=elastic&dock-material=convex&menu-glass=on) · [확장 전 메뉴](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&menu-glass=off). 기존 하단·네 영상과 실제 앱/운영은 유지한다.
 
 | 작업 ID | 사용자 결과 | 상태 |
 |---|---|---|
 | P9-05 | Air 실제 탐색·하늘 방향·첫 동작 검토본 | 완료 |
-| P9-06 | 새 하늘 대표 시안·영상 배경/전체 유리 UI 보정 | 진행 중 — 하단 유리/밤 교체 완료, 사용자 시각 확인/실제 앱 연결 남음 |
+| P9-06 | 새 하늘 대표 시안·영상 배경/전체 유리 UI 보정 | 진행 중 — 헤더/시간대/관리자 확장 완료, 사용자 시각 확인/실제 앱 연결 남음 |
 
-탄성16사례·굴절/대안5검사·밤 영상5검사를 통과했다. 하단 대비192표본 최소5.30:1, 새 밤 상단111표본 최소4.64:1·실패0. lint/typecheck도 통과했다. 표본·이벤트 모의 검사이며 전체WCAG/모든 프레임·Safari/실기기 검수는 아니다. [변경·검사·한계](work/P9-06.md#볼록한-유리와-새-밤-영상--2026-10-09). 전체 출시/유료 호출은 반복하지 않았다.
+새 메뉴10검사·하단16사례 회귀, 최종 lint/typecheck를 통과했다. 새 메뉴 대비176표본은 글자 최소4.53:1·장식 아이콘 최소3.63:1·기준 미달0이다. 표본/이벤트 모의 검사이며 전체WCAG/모든 프레임·Safari/실기기 검수는 아니다. [변경·검사·한계](work/P9-06.md#헤더시간대와-관리자-유리-확장--2026-10-09). 전체 출시/유료 호출은 반복하지 않았다.
 
-시작 HEAD45d3861 clean/ahead25, 추적 origin/main21b81de. 이번 담당 UI5개/새 미디어5개/문서7개만 로컬 커밋하면 미푸시26개다. 병렬5caa2b4/video-kit·기존 영상/이미지·migration/폰트/fontkit·실제 자료/키/유료 결과 유지, push/배포 없음. 시작 Pro75%×사용자 지정10=750%, 별도5시간 없음. **세션 유지**, 다음 추천 **Astra·Max** — 사용자 확인 뒤 곡면 반사와 영상 위 가독성 보정을 같은P9-06에서 이어간다.
+시작 HEAD3215370 clean/ahead26, 추적 origin/main21b81de. 이번 담당 UI3개/문서6개만 로컬 커밋하면 미푸시27개다. 병렬5caa2b4/video-kit·기존 영상/이미지·migration/폰트/fontkit·실제 자료/키/유료 결과 유지, push/배포 없음. 시작 Pro73%×사용자 지정10=730%, 별도5시간 없음. **세션 유지**, 다음 추천 **Astra·Max** — 사용자 확인 뒤 가로·세로 탄성과 곡면 반사를 같은P9-06에서 보정한다.
 
 ## P9-04 운영 배포 완료 — 2026-10-07
 

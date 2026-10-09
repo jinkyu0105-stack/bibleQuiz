@@ -175,8 +175,8 @@ body[data-time=night] #motion { background: var(--glass-motion); }
   box-shadow: 0 2px 6px -2px var(--glass-shadow),
     inset 0 1px 1px var(--glass-highlight), inset 0 -1px 0 var(--glass-bottom);
 }
-/* Only the review dock has an elastic hover lens. ?dock-motion=off keeps the
-   previous selection indicator. Deformation never reaches the text/hit area. */
+/* Shared elastic lens. Each menu keeps its own selection and layout axis;
+   deformation never reaches labels or hit areas. */
 .review-switch[data-dock-motion=elastic] {
   /* Moving the lens must not leave a label dependent on its old backing.
      Keep the small dock legible over both bright clouds and dark grass. */
@@ -186,15 +186,15 @@ body:not([data-time=night]) .review-switch[data-dock-motion=elastic] {
   --ink: #071725;
   --glass-control-ink: var(--ink);
 }
-.review-switch[data-dock-motion=elastic] > .glass-indicator {
+.glass-segmented[data-dock-motion=elastic] > .glass-indicator {
   padding: 0;
   transition: none;
   transform: translate3d(var(--selection-x, 0px), var(--selection-y, 0px), 0)
     scale(var(--dock-scale-x, 1), var(--dock-scale-y, 1));
   transform-origin: center;
 }
-.review-switch[data-dock-moving] > .glass-indicator { will-change: transform; }
-.review-switch[data-dock-motion=elastic] > .glass-indicator::after {
+.glass-segmented[data-dock-moving] > .glass-indicator { will-change: transform; }
+.glass-segmented[data-dock-motion=elastic] > .glass-indicator:not(.convex-lens)::after {
   content: '';
   position: absolute;
   inset: -1px;
@@ -209,12 +209,14 @@ body:not([data-time=night]) .review-switch[data-dock-motion=elastic] {
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
 }
-.review-switch[data-dock-motion=elastic] a[data-dock-preview] { color: var(--glass-selected-ink); }
-.review-switch[data-dock-previewing] a[aria-current=page]:not([data-dock-preview]) { color: var(--ink); }
-/* Hover previews a destination; the little dot still marks the current page. */
-.review-switch[data-dock-previewing] a[aria-current=page]::after {
+.glass-segmented[data-dock-motion=elastic] > :is(a, button)[data-dock-preview] { color: var(--glass-selected-ink); }
+.glass-segmented[data-dock-previewing] > :is(a[aria-current=page], button[aria-pressed=true]):not([data-dock-preview]) { color: var(--ink); }
+/* Hover previews a destination; the dot still marks the current page/theme. */
+.glass-segmented[data-dock-previewing] > :is(a[aria-current=page], button[aria-pressed=true])::after {
   content: '';
   position: absolute;
+  display: block;
+  top: auto; right: auto;
   bottom: 4px;
   left: calc(50% - 1.5px);
   width: 3px;
@@ -224,26 +226,27 @@ body:not([data-time=night]) .review-switch[data-dock-motion=elastic] {
 }
 /* A shallow convex capsule: clear centre, broad bent shoulders, and two
    separated light catches. The accepted spring and the label layer stay put. */
-.review-switch[data-dock-material=convex] {
+:is([data-dock-material=convex], .admin-link.convex-lens) {
   --glass-selected-ink: var(--ink);
   --dock-lens-tint: rgb(242 250 255 / .12);
   --dock-dome-light: rgb(255 255 255 / .60);
   --dock-lens-shade: rgb(15 46 66 / .14);
 }
-body[data-time=night] .review-switch[data-dock-material=convex] {
+body[data-time=night] :is([data-dock-material=convex], .admin-link.convex-lens) {
   --dock-lens-tint: rgb(143 191 233 / .08);
   --dock-dome-light: rgb(237 249 255 / .64);
   --dock-lens-shade: rgb(0 11 30 / .22);
 }
-.review-switch[data-dock-material=convex] > .glass-indicator {
+.convex-lens {
   background: transparent;
   border-color: rgb(246 252 255 / .60);
   box-shadow: 0 5px 10px -4px var(--glass-shadow), 0 1px 2px rgb(6 24 43 / .28),
     inset 0 1.5px 1px rgb(255 255 255 / .82), inset 0 -1.5px 2px rgb(194 226 255 / .62),
     inset 3px 0 5px rgb(244 252 255 / .20), inset -3px 0 5px var(--dock-lens-shade);
 }
-.review-switch[data-dock-material=convex] > .glass-indicator::before {
+.convex-lens::before {
   content: '';
+  pointer-events: none;
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -253,10 +256,15 @@ body[data-time=night] .review-switch[data-dock-material=convex] {
   -webkit-backdrop-filter: blur(.6px) saturate(1.18);
   backdrop-filter: blur(.6px) saturate(1.18);
 }
-.review-switch[data-dock-material=convex] > .glass-indicator[data-lens-ready]::before {
+.convex-lens[data-lens-ready]::before {
   backdrop-filter: var(--glass-optics) saturate(1.18);
 }
-.review-switch[data-dock-material=convex] > .glass-indicator::after {
+.convex-lens::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
   padding: 0;
   opacity: calc(.70 + var(--dock-lift, 0) * .25);
   background: radial-gradient(ellipse 38% 45% at var(--dock-light-x, 50%) 0%, #fff, transparent 100%),
@@ -268,18 +276,55 @@ body[data-time=night] .review-switch[data-dock-material=convex] {
   -webkit-mask: radial-gradient(ellipse at center, transparent 55%, #000 95%);
   mask: radial-gradient(ellipse at center, transparent 55%, #000 95%);
 }
-body[data-transparency=reduced] .review-switch[data-dock-material=convex] > .glass-indicator {
+body[data-transparency=reduced] .convex-lens {
   background: var(--glass-solid-selected);
 }
-body[data-transparency=reduced] .review-switch[data-dock-material=convex] > .glass-indicator::before,
-body[data-transparency=reduced] .review-switch[data-dock-material=convex] > .glass-indicator::after { display: none; }
+body[data-transparency=reduced] .convex-lens::before,
+body[data-transparency=reduced] .convex-lens::after { display: none; }
 @media (prefers-reduced-transparency:reduce), (forced-colors:active) {
-  .review-switch[data-dock-material=convex] > .glass-indicator { background: var(--glass-solid-selected); }
-  .review-switch[data-dock-material=convex] > .glass-indicator::before,
-  .review-switch[data-dock-material=convex] > .glass-indicator::after { display: none; }
+  .convex-lens { background: var(--glass-solid-selected); }
+  .convex-lens::before,
+  .convex-lens::after { display: none; }
 }
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
-  .review-switch[data-dock-material=convex] > .glass-indicator { background: var(--glass-solid-selected); }
+  .convex-lens { background: var(--glass-solid-selected); }
+}
+/* The header previews section links; neither is selected while idle. */
+.public-nav[data-dock-motion=elastic] > .glass-indicator { opacity: 0; transition: opacity 140ms; }
+.public-nav[data-dock-visible] > .glass-indicator { opacity: 1; }
+.public-nav[data-dock-material=convex] a:hover { background: transparent; }
+.time-options[data-dock-material=convex] {
+  --glass-selected-ink: var(--glass-control-ink);
+  background: color-mix(in srgb, var(--glass-rail) 60%, var(--glass-solid) 40%);
+}
+body:not([data-time=night]) .time-options[data-dock-material=convex] {
+  --ink: #071725;
+  --glass-control-ink: var(--ink);
+}
+/* Leave the tiny mobile label clear when its selected lens is elsewhere. */
+.time-options[data-dock-previewing] > button[aria-pressed=true]::after {
+  top: 5px; right: 5px; bottom: auto; left: auto;
+}
+/* The admin link uses the same optical capsule, with its label above both
+   decorative layers and pointer reflection confined to this one button. */
+.admin-link.convex-lens, .admin-link.convex-lens:hover {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  color: var(--glass-header-ink);
+}
+body[data-time] .admin-link.convex-lens { border-color: rgb(246 252 255 / .60); }
+.admin-link.convex-lens::before, .admin-link.convex-lens::after { z-index: -1; }
+.admin-link.convex-lens[data-glint-active] { --dock-light-x: var(--glint-x, 50%); --dock-lift: 1; }
+body[data-transparency=reduced] .admin-link.convex-lens { background: var(--glass-solid-selected); }
+@media (prefers-reduced-transparency:reduce) {
+  .admin-link.convex-lens { background: var(--glass-solid-selected); }
+}
+@media (forced-colors:active) {
+  .admin-link.convex-lens { background: ButtonFace; color: ButtonText; border-color: ButtonText; }
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  .admin-link.convex-lens { background: var(--glass-solid-selected); }
 }
 .button.primary.hero-cta, .button.primary.hero-cta:hover {
   box-shadow: 0 14px 26px -12px var(--glass-shadow),
