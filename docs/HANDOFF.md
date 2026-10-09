@@ -2,22 +2,20 @@
 
 ## 현재 작업과 다음 첫 행동
 
-2026-10-09. **P9-06 진행 중 — 헤더/시간대 메뉴의 탄성·볼록 유리와 관리자 버튼 입체감 구현·관련 검사 완료, 사용자 시각 확인 대기**. 사용자가 채택한 하단 spring/재질을 같은 검토본의 메뉴로 확장했다. 실제 앱 연결/배포와 구분하며 하단·네 영상·카드/화살표는 유지한다.
+2026-10-09. **P9-06 진행 중 — 잔디 표시 문의를 조사하고 로컬 서버 재실행·사용자 새로고침으로 복구 확인**. 사용자는 직전 헤더/시간대/관리자 유리 확장에 긍정적으로 응답했다. 이번에는 질문에 대한 조사와 기존 미리보기 실행만 했으며 UI/잔디/영상 코드는 변경하지 않았다. 실제 앱 연결/배포는 남는다.
 
-[현재 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both&dock-motion=elastic&dock-material=convex&menu-glass=on)에서 헤더 두 링크를 좌우로, 시간대 메뉴를 위아래로 왕복하고 관리자 위로 포인터를 옮겨 본다. 모바일 시간대는 가로로 이동한다. hover로 실제 화면/시간대를 바꾸지 않으며 클릭/Enter 의미는 그대로다. [확장 전 메뉴](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&menu-glass=off)와 비교할 수 있다. 다음 첫 행동은 **이번 확장의 사용자 시각 피드백을 같은P9-06에 반영**하는 것이다. 다른 UI 확대/실제 앱 연결·새 번호·push/배포를 자동 시작하지 않는다.
+다음 첫 행동은 같은P9-06의 사용자 후속 요청을 확인하는 것이다. 잔디가 다시 안 보이면 먼저4189 서버 응답과 정확한 브라우저 오류를 확인한다. 초기 잔디 파일 로딩 실패는 서버 복구 뒤에도 버튼만으로 재시도하지 않는 한계가 남는다. 재시도/원인별 안내 개선은 제안이며 사용자 질문만으로 새 구현을 시작하지 않는다. 다른 UI 확대·새 번호·push/배포도 자동 시작하지 않는다.
 
-기본/`menu-glass=on`이 이번 확장, `off`는 직전 헤더/시간대/관리자 모습이며 하단의 선택은 유지한다. 기존 `dock-material=convex/flat`, `dock-motion=elastic/off`, `night-video=v1/v2`, `video=billowing/dynamic/calm/off`, `header-glint=edge/spot/straight/flare`, `glint=both/header/dock/original`, `glass=soft/off`도 보존한다. [전체 비교 안내](design/phase-9/sky-v2/README.md).
+[현재 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&menu-glass=on) · [직전 메뉴 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&menu-glass=off) · [모든 비교 옵션](design/phase-9/sky-v2/README.md).
 
-## 이번 변경과 검사
+## 이번 조사와 검사
 
-- `dock-motion.js`는 실제 항목의 가로/세로 배치를 측정해 같은 spring을 적용한다. 헤더는 hover/키보드 초점에만 표시하고 이탈하면 마지막 위치에서 사라진다. 시간대는 실제 선택과 hover를 구분하며 이탈 시 복귀한다. 현재 시간대의 표시는 작은 모서리 점이다. 글자·클릭 영역/실제 선택은 늘이거나 hover로 바꾸지 않는다.
-- `liquid-glass.js`/`prismatic-glass.css`는 정규화 곡면을 헤더/시간대 선택 표시와 관리자 링크에 공유한다. 관리자의 두 장식 층은 글자 아래이며 관리자만 포인터 반응을 받아 헤더와 겹치지 않는다. 가로128×84/세로84×128 지도는 배치 축이 바뀔 때만 바꾸고 매 프레임 재생성하지 않는다. 실제 선택 변화는 해당 메뉴만 갱신한다. 새 의존성/미디어 변경은 없다.
-- 모바일 시간대의 기존 선택점과 글자 겹침, 잔디 위 읽기 부족을 발견해 보정했다. 점은 오른쪽 위로 옮기고 시간대 바의 기존 rail60%+불투명 색40% 혼합으로 최종alpha 낮53.2%/새벽·노을54.4%/밤74.8%, 밝은 시간대 글자는#071725다. 선택 유리는 계속 맑은 중심/넓은 굴절을 쓰며 헤더/하단 받침은 그대로다.
-- 새 메뉴10검사와 기존 하단16사례 회귀 통과.390/700/701/1440/2560px 축·넘침/복귀·hover만의 표시·실제 클릭/키보드/터치·URL/세 화면·정지/감소/강제 색상·숨김 모의·이전 비교·Firefox CSS 대안을 확인했다. 이동 중 지도/필터 갱신0, 정착한 세 렌즈의 style 갱신0, 런타임 오류/외부 요청0.
-- 새 메뉴 대비176표본은390/2560px·네 영상5초와 잔디에서 확인했다. 글자 최소4.53:1, 장식 아이콘 최소3.63:1·기준 미달0. 시간대128표본은 보정 후 다시 확인했고 변화 없는 헤더/관리자48표본은 재사용했다. 하단 낮/밤 평소/hover 픽셀 대조는 일부 경계에 RGB합 최대38의 차이가 있어 완전 동일로 판정하지 않으며 기존 수치/동작을 유지한다. 전체WCAG/모든 프레임·Safari/실제 iPhone·실기기 성능은 남는다.
-- 최종 lint/typecheck 통과. JS 구문·문서 링크/앵커276개·사실·diff check·기존 보호452파일 해시 불변·검토 HTTP200을 확인했다. 전체 출시·기존 영상 전체 검사·유료 호출은 반복하지 않는다.
+- HTML/잔디 파일의 연결 거부와4189 listener 없음 확인. 잔디는 지면에 접근한 뒤 처음 요청하므로 서버 중단과 증상이 부합한다. 실제 사용자 탭의 최초 실패 기록은 직접 읽지 못했다.
+- 서버 재개 뒤 Chromium1268×908에서 잔디 모듈1회·24,000개 풀잎·프레임 진행·active=true를 확인했다. 사용자가 원래 화면을 새로고침한 뒤 잔디가 다시 나타난다고 확인했다. 현재 장애 복구 완료다.
+- 잔디 파일만 일시 차단한 별도 재현에서 같은 사진 안내가 나왔고, 차단을 풀어도 사진→잔디 선택은 재요청하지 않았다. 원인은 `world.js`의 초기 실패 상태 유지다. GPU/context 실패도 같은 안내여서 향후 재발 원인을 이 사례로 단정하지 않는다.
+- 정상 재현 pageerror/실패 요청0, 소프트웨어 GPU의 성능 경고는 남는다. 이번은 문서3개만 변경하며 diff/로컬 링크/사실 검사를 통과했다. 기존 lint/typecheck·출시/유료 검사를 반복하지 않는다. 자세한 근거는 [P9-06](work/P9-06.md#잔디-표시-조사와-미리보기-복구--2026-10-09), 로컬 증거는 `.wrangler/design-references/p9-06-grass-recovery/`다.
 
-지속 근거는 [P9-06](work/P9-06.md#헤더시간대와-관리자-유리-확장--2026-10-09), 로컬 증거는 `.wrangler/design-references/p9-06-menu-glass/`다. 이전 native SVG/CSS 공식 문서 근거를 재사용했다. 초기에 이탈하는 헤더 렌즈를 첫 항목으로 옮겨 숨기던 처리는 폐기했고, 마지막 위치에서 사라지도록 보정했다. 기존 [볼록한 유리/밤 영상](work/P9-06.md#볼록한-유리와-새-밤-영상--2026-10-09)과 [탄성 구현](work/P9-06.md#아래-검토-메뉴의-탄성-모션--2026-10-09) 근거를 유지한다.
+직전 유리 메뉴의 새10검사·하단16사례·대비176표본·lint/typecheck·보호452파일 불변 근거는 [메뉴 확장 기록](work/P9-06.md#헤더시간대와-관리자-유리-확장--2026-10-09)에 유지한다. 이번에 이 검사를 반복하거나 새로운 실기기/GPU 성능 보증으로 사용하지 않았다.
 
 ## 병렬 대화 경계와 프롬프트 결과
 
@@ -30,7 +28,7 @@
 
 ## Git과 배포
 
-시작 HEAD **3215370**, clean, 추적 origin/main **21b81de**보다26개 앞섬. 이번 UI3개/관련 문서6개만 로컬 커밋하면 미푸시27개다. 정확한 종료 HEAD/clean은 이 문서와 함께 남긴 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 병렬 video-kit/5caa2b4·기존 자산·실제 자료/키/유료 결과·0000~0038·폰트/fontkit·패키지/Cloudflare 설정 유지, push/배포 없음.
+시작 HEAD **96cc105**, clean, 추적 origin/main **21b81de**보다27개 앞섬. 이번 공통 문서3개만 로컬 커밋하면 미푸시28개다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 병렬 video-kit/5caa2b4·기존 UI/미디어·실제 자료/키/유료 결과·0000~0038·폰트/fontkit·패키지/Cloudflare 설정 유지, push/배포 없음.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -44,12 +42,12 @@ Preview는 main push 자동 경로, Production은 별도 요청이다. [P9-04](w
 
 ## 실행·사용량·세션
 
-시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro27% 사용/73% 잔여, 별도5시간 없음, 사용자 지정×10=730%. 이번 메뉴 확장·관련 검사 완료·사용자 시각 확인 대기·부모P9-06 진행 중·세션 유지. 다음 추천 **Astra·Max** — 가로·세로 탄성과 곡면 반사를 함께 판단한다.
+시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro28% 사용/72% 잔여, 별도5시간 없음, 사용자 지정×10=720%. 현재 잔디 표시 복구·부모P9-06 진행 중·세션 유지. 다음 추천 **Astra·High** — 재발 시 실제 오류와 재시도 경로를 좁혀 판단한다.
 
-4189 서버가 응답하지 않을 때만 아래 명령으로 다시 시작한다. 이번 종료 전 HTTP200을 확인했다.
+4189 서버가 응답하지 않을 때만 아래 명령으로 다시 시작한다. **PTY 유지 세션**에서 실행하며 이번 세션 ID는14880이다. `nohup ... &`만 실행하면 이 도구 환경에서 명령 종료 뒤 프로세스가 유지되지 않아 사용하지 않는다. 도구 세션/앱 종료 뒤 영속성까지 보장하지 않는다.
 
 ```sh
 python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bibleQuiz
 ```
 
-검증된 shell은 `/bin/bash`·login:false·명시 workdir·승인 검토 경로다. Node24.18.0/pnpm11.14.0의 PATH는 프로세스에 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. FFmpeg/ffprobe6.1.1은 기존 `/usr/bin` 설치를 쓴다. 실행 시작 오류에는 codex-exec-recovery를 적용하며 같은 실패 경로를 반복하지 않는다. Windows computer-use의 과거 `sandboxCwd is not a local file URI` 한계와 WebKit host 라이브러리 부재를 저장소 단절로 해석하지 않는다.
+검증된 shell은 `/bin/bash`·login:false·명시 workdir·승인 검토 경로다. Node24.18.0/pnpm11.14.0의 PATH는 프로세스에 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. FFmpeg/ffprobe6.1.1은 기존 `/usr/bin` 설치를 쓴다. 실행 시작 오류에는 codex-exec-recovery를 적용하며 같은 실패 경로를 반복하지 않는다. Windows computer-use의 `sandboxCwd is not a local file URI` 오류가 이번에도 발생했다. UI 도구 복구나 사용자 탭의 console 확인 성공으로 보고하지 않는다. 기존 Linux Playwright와 사용자 새로고침 확인으로 복구를 검증했고 보안/앱 설정은 변경하지 않았다. WebKit host 라이브러리 부재 한계는 유지한다.
