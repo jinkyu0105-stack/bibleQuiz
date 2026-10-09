@@ -31,19 +31,20 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 ## 헤더·검토 바의 반사광 비교
 
-현재 헤더 광원은 사용자 스케치의 **위아래가 넓고 가운데가 잘록한 형태**를 참고한다. 부드러운 두 빛살이 가는 중심으로 이어지고 위아래 테두리에 밝은 흰색 반사가 맺힌다. 모양은 유리의 위아래 끝에 붙어 마우스를 좌우로 따라간다. 밤에는 중앙으로 번지는 빛만 낮춰 밝은 글자를 보존한다. 아래 검토 바의 작은 원형 광원은 그대로다.
+사용자 선택에 따라 **헤더와 아래 디자인 검토 바 모두 같은 작은 원형 광원**을 쓴다. 크기·밝기·포인터 추종이 같으며 마우스 가까이에서만 빛이 반응한다. 원 반경30px/테두리38px, 흰색 alpha16%/밤8%다. 모래시계형은 채택하지 않았다.
 
 | 비교 | 헤더 | 아래 검토 바 |
 |---|---|---|
-| [현재 보정안](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both) | 밝은 모래시계형 반사 | 포인터 주변 원형 광원 |
-| [직전 일자형과 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both&header-glint=straight) | 직전의 좁은 세로 광원 | 포인터 주변 원형 광원 |
-| [헤더만 새 효과](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=header) | 밝은 모래시계형 반사 | 이전 반사 |
-| [아래 바만 새 효과](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=dock) | 이전 반사 | 포인터 주변 원형 광원 |
-| [두 반사광 모두 이전으로](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=original) | 이전 반사 | 이전 반사 |
+| [현재 원형 광원](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both) | 포인터 주변 원형 광원 | 포인터 주변 원형 광원 |
+| [이전 일자형](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&header-glint=straight) | 좁은 세로 광원 | 포인터 주변 원형 광원 |
+| [보관한 모래시계형](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&header-glint=flare) | 밝은 모래시계형 반사 | 포인터 주변 원형 광원 |
+| [헤더만 원형](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=header) | 포인터 주변 원형 광원 | 이전 반사 |
+| [아래 바만 원형](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=dock) | 이전 반사 | 포인터 주변 원형 광원 |
+| [두 반사광 모두 이전으로](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=original) | 모양 실험 전 반사 | 모양 실험 전 반사 |
 
-`header-glint=straight`는 직전5c44efc의 일자형, 생략 또는 `header-glint=flare`는 현재 형태다. `glint=original`은 두 모양 실험 전 a1900a4의 반사로 돌아간다. 두 선택은 시간대·공개/풀이/관리자 이동에도 유지한다. 유리 재질 전체를 바꾸는 `glass=soft`/`glass=off`와 구분한다.
+`header-glint` 생략 또는 `spot`은 현재 원형, `straight`는5c44efc의 일자형, `flare`는75e63a0의 모래시계형이다. `glint=original`은 a1900a4의 반사다. 선택은 시간대·공개/풀이/관리자 이동에 유지하며 유리 재질 전체를 바꾸는 `glass=soft`/`glass=off`와 구분한다.
 
-유리 재질·프리즘·평소 표면은 유지한다. 포인터 이탈 시 추가 광원만 사라지며 공통 멈춤/OS 움직임 감소/투명도 감소에서는 반응하지 않는다. 터치로 빛이 남지 않는다. 현재 보정안의 시각 확인은 같은 P9-06에서 이어간다. [이번 구현/검사](../../../work/P9-06.md#헤더의-잘록한-광원과-밝기-보정--2026-10-09) · [앞선 두 모양/복원 근거](../../../work/P9-06.md#헤더와-검토-바의-반사광-비교--2026-10-09).
+포인터 이탈 시 추가 광원이 사라지며 공통 멈춤/OS 움직임 감소/투명도 감소에서는 반응하지 않는다. 터치로 빛이 남지 않는다. [현재 선택/검사](../../../work/P9-06.md#헤더와-아래-바의-원형-광원-통일--2026-10-09).
 
 ## 새벽 4K 영상
 

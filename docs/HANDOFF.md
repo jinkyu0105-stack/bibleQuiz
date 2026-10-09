@@ -2,21 +2,19 @@
 
 ## 현재 작업과 다음 첫 행동
 
-2026-10-09. **P9-06 진행 중 — 헤더의 잘록한 광원/밝기 보정·관련 검사 완료, 사용자 시각 확인 대기**. 사용자는 앞선 두 광원 실험에 긍정적으로 응답하고 헤더만 스케치의 넓은 위아래/가는 가운데와 더 강한 반사로 보정하도록 요청했다. 현재 기본은 밝은 모래시계형 헤더+기존 아래 바 원형 빛이다. 다음은 이 형태/강도의 사용자 반응을 같은P9-06에서 반영하는 일이다. 나머지 시간대 영상 수령/연결과 실제 앱 연결은 기존 범위로 남아 있다. 새 작업 ID를 만들지 않는다.
+2026-10-09. **P9-06 진행 중 — 사용자가 선택한 헤더/아래 바 동일 원형 광원 적용·관련 검사 완료**. 사용자는 모래시계형을 선호하지 않고 아래 디자인 검토 바와 같은 빛으로 바꾸도록 요청했다. 헤더도 같은 `spot` CSS를 재사용한다. 나머지 시간대 영상 수령/연결과 실제 앱 연결은 기존 범위로 남아 있다. 다음 사용자 검토/자료를 같은P9-06에서 이어가며 새 작업 ID를 만들지 않는다.
 
-[현재 보정안](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both) · [직전 일자형](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both&header-glint=straight). `header-glint=straight`만 추가하면5c44efc의 헤더로 비교하며 아래 바는 같다. 생략/`flare`는 현재 헤더다. 기존 `glint=header/dock/original`과 `glass=soft/off`도 유지한다. [전체 비교 안내](design/phase-9/sky-v2/README.md#헤더검토-바의-반사광-비교). 선택은 공개/풀이/관리자 이동에도 유지한다.
+[현재 원형 광원](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both). `header-glint` 생략/`spot`은 현재 원형, `straight`는5c44efc의 일자형, `flare`는75e63a0의 미채택 모래시계형이다. 기존 `glint=header/dock/original`과 `glass=soft/off`도 보존한다. [전체 비교 안내](design/phase-9/sky-v2/README.md#헤더검토-바의-반사광-비교). 선택은 공개/풀이/관리자 이동에도 유지한다.
 
-선택12:30 새벽 영상(`video=billowing`)과 새벽 프롬프트v2는 그대로다. `video=dynamic`은11:50, `video=calm`은최초, `video=off`는사진이다. P9-04와 이전 Phase9 완료/운영 버전은 유지한다.
+선택12:30 새벽 영상(`video=billowing`)과 새벽 프롬프트v2, P9-04 완료/운영 버전은 그대로다. `video=dynamic`은11:50, `video=calm`은최초, `video=off`는사진이다.
 
 ## 이번 변경과 검사
 
-UI 코드는 `prismatic-glass.css`와 `liquid-glass.js`만 수정했다. 헤더의 두 넓은 빛살을 가는 중심으로 연결하고 위아래 테두리에 강한 흰색 반사를 더했다. 위아래 위치는 유리 끝에 고정하고 좌우만 포인터를 따른다. 밤에는 글자 주변으로 번지는 양만 낮췄다. 기존 세로 광원 CSS·아래 바·평소 표면·RGB 굴절은 보존했다. 스케치를 도형으로 그대로 따거나 전체 헤더를 밝게 덮는 방식은 쓰지 않았다. [정확한 재현 값](spec/design.md#apple-참고-유리-검토본의-재현-기준).
+UI는 `liquid-glass.js`의 헤더 기본 모양 선택3줄만 바꿨다. 기존 원 반경30px/테두리38px·흰색 alpha16%/밤8%를 그대로 재사용하며 CSS/포인터 처리/아래 바·자산은 수정하지 않았다. 모래시계형은 기본에서 제외하고 이전 명시 비교로만 보존했다. [재현 기준](spec/design.md#apple-참고-유리-검토본의-재현-기준).
 
-Chromium4비교×3화면 이동·390/1440/2560px 형태/넘침/포인터 추종, Firefox CSS 대안·정지/감소·이탈·터치·기존 재질 비교 통과. 통제 배경에서 데스크톱의 빛 폭은 위아래132~134px/중앙15px로 잘록하며, 가장자리 밝기 변화의 최대 평균 RGB값은 직전11.67에서62/255로 커졌다. 실제 광학 밝기 배수나 사용자 체감 수치는 아니다. 5c44efc의 CSS/JS를 브라우저 응답으로만 대조해 일자형 복원·기본의 평소 표면/아래 바와 기존 `original`의11개 비교가 픽셀 차이0이다.
+Chromium4조합/3화면 이동·390/1440/2560px 국소 반사/포인터 추종/넘침 없음·정지/감소/이탈/이전 재질, Firefox 대안 통과. 통제 배경에서 헤더 변화 폭은 각 화면52px다. 헤더/아래 바의 광원 채움·테두리·밝기 계산값이 동일하고 이전 일자형/모래시계형과 화면 이동도 보존됨을 확인했다. 네 시간대 헤더 hover28영역 최소6.31:1/실패0, 밤 캡처 확인. 첫 Firefox 검사만 계산된 CSS에서 `circle` 단어가 생략되는 표기 차이로 실패했다. 실제30px 반경을 확인하도록 검사식을 바로잡고 Firefox 부분만 재실행해 통과했다. 제품 코드는 추가 수정하지 않았다.
 
-네 시간대 헤더 hover28영역 최소6.29:1/실패0. 선택 `billowing`3840×2160 실제 재생 위와 밤 캡처를 확인했다. JS 구문·lint/typecheck·문서 링크/사실·git diff --check·보호 파일50개 해시를 대조했다. 근거는 `.wrangler/design-references/p9-06-header-flare/`, 지속 기록은 [P9-06](work/P9-06.md#헤더의-잘록한-광원과-밝기-보정--2026-10-09)다. 전체 WCAG/모든 영상 프레임·Safari/실기기 검수와 구분하며 이전 전체 기능/출시·유료 검사는 반복하지 않았다.
-
-유리 재질/영상/구름/지면/한글·콘텐츠1440px는 보존했다. 기존 RGB 굴절·기초 대비·아래 바 검사 근거는 앞선P9-06 기록을 유지한다. 실제 앱/배포와 새 헤더의 사용자 시각 확인은 아직이다.
+JS 구문·lint/typecheck·문서 링크/사실·git diff --check·보호 파일50개 해시를 확인했다. 근거는 `.wrangler/design-references/p9-06-header-spot/`, 지속 기록은 [P9-06](work/P9-06.md#헤더와-아래-바의-원형-광원-통일--2026-10-09)다. 새 전체 WCAG/모든 영상 프레임·Safari/실기기 검수로 해석하지 않는다. 기존 전체 기능/출시·유료 검사는 반복하지 않았다.
 
 ## 병렬 대화 경계와 프롬프트 결과
 
@@ -29,7 +27,7 @@ Chromium4비교×3화면 이동·390/1440/2560px 형태/넘침/포인터 추종,
 
 ## Git과 배포
 
-이번 시작 HEAD **5c44efc**, clean, 추적 origin/main **21b81de**보다20개 앞섬. UI2개/관련 문서6개만 별도 로컬 커밋하면 미푸시21개다. 병렬 프롬프트 커밋5caa2b4/video-kit은 보존했다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 실제 자료/키/유료 결과·0000~0038·이미지/영상·폰트/fontkit·package/lockfile/Worker 설정 유지, push/배포 없음.
+이번 시작 HEAD **75e63a0**, clean, 추적 origin/main **21b81de**보다21개 앞섬. UI1개/관련 문서6개만 로컬 커밋하면 미푸시22개다. 병렬 프롬프트 커밋5caa2b4/video-kit을 보존했다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 실제 자료/키/유료 결과·0000~0038·이미지/영상·폰트/fontkit·package/lockfile/Worker 설정 유지, push/배포 없음.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -43,7 +41,7 @@ Preview는 main push 자동 경로, Production은 별도 요청이다. [P9-04](w
 
 ## 실행·사용량·세션
 
-시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro21% 사용/79% 잔여, 별도5시간 없음, 사용자 지정×10=790%. 현재 헤더 보정·관련 검사 완료·부모P9-06 진행 중·세션 유지. 다음 추천 **Astra·Max** — 빛의 형태/강도와 영상 위 가독성을 시각 보정한다.
+시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro22% 사용/78% 잔여, 별도5시간 없음, 사용자 지정×10=780%. 현재 원형 광원 선택 반영·검사 완료·부모P9-06 진행 중·세션 유지. 다음 추천 **GPT-6.1-sol·Medium** — 기존 효과의 작은 보정·연결을 진행한다.
 
 4189 서버가 응답하지 않을 때만 아래 명령으로 다시 시작한다. 이번 종료 전 HTTP200을 확인했다.
 
