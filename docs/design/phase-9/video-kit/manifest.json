@@ -1,6 +1,6 @@
 {
   "date": "2026-10-08",
-  "purpose": "User-operated 4K image-to-video input references; no video generated",
+  "purpose": "User-operated 4K image-to-video references; dawn billowing result accepted; other time variants prepared, not generated",
   "inputResolution": "1672x941",
   "intendedVideoOutput": "3840x2160",
   "method": "Chromium export of existing sky-v2 CSS background using original PNG masters; full original bounds, no hero overscan, no UI, no canvas motion, no resampling or new AI generation. Existing color filters and light overlays are baked into each frame.",
@@ -89,5 +89,36 @@
         "text": ""
       }
     }
-  ]
+  ],
+  "promptRevision": {
+    "id": "billowing-v2",
+    "date": "2026-10-09",
+    "basis": "User-pasted accepted dawn prompt, preserved verbatim except trailing newline",
+    "acceptedVideoManifest": "../sky-v2/assets/video/billowing/manifest.json",
+    "motionIntensity": "5/10",
+    "camera": "Extremely slow shallow lateral/forward glide; closed path for loop",
+    "duration": "Prompt does not fix duration; accepted dawn file is 10s",
+    "prompts": {
+      "dawn": {
+        "file": "prompts/dawn.txt",
+        "sha256": "65404eb7767da4035cad3451336e32062279fa9f24e255a4aaac34a87b59711e",
+        "status": "user-approved source"
+      },
+      "day": {
+        "file": "prompts/day.txt",
+        "sha256": "d0d8d0ef0885e44933521fcb1aaa34b2e52713ee47c647fb102b24efa8eec455",
+        "status": "time-of-day adaptation; video pending"
+      },
+      "dusk": {
+        "file": "prompts/dusk.txt",
+        "sha256": "cc218ca12b276e6b0511f97d61eb3c99613628d1825f76a0c2413bc9f028bba6",
+        "status": "time-of-day adaptation; video pending"
+      },
+      "night": {
+        "file": "prompts/night.txt",
+        "sha256": "1d470155131dee1a1d578b5f047e0ea5fc92b87451026b96f91ef4a1a55b8f2c",
+        "status": "time-of-day adaptation; video pending"
+      }
+    }
+  }
 }

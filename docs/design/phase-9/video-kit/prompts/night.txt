@@ -1,7 +1,35 @@
-Animate the supplied still image into a calm, naturally looping eight-second sky background. Treat the image as the exact composition and color reference, not merely a style suggestion. Preserve the dense, full-bodied cloud banks along both sides and the lower edge, their recognizable silhouettes, and the open sky in the center. Keep every major cloud mass in its original region. The camera is completely locked: no pan, tilt, zoom, dolly, or change of perspective.
+Animate the supplied night sky image with a moderate amount of natural cloud movement—clearly visible, but calm enough for a website background.
 
-Maintain the reference's deep navy and cobalt night sky, soft blue-silver cloud edges, and detailed low-light cloud volumes. Keep the existing crescent moon and every star fixed in position, size, brightness, and shape for the entire clip. The moon is part of the static sky, never moving with the clouds. Preserve the gentle moonlit contrast without crushing cloud detail or making the scene look like daytime. No star twinkling, new constellations, aurora, purple nebula, moon movement, or gradual brightening toward dawn. Only the cloud volumes move.
+Target a motion intensity of 5 out of 10. The clouds should feel alive and continuously evolving, with gentle billowing and gradual dissipation rather than energetic turbulence.
 
-Animate only the clouds: gentle lateral flow within the existing banks, small independent variations between nearby cloud volumes, and soft, slow billowing. The movement should be perceptible over several seconds while remaining restful; cloud displacement should stay around one to two percent of the frame width. Keep the original cloud density and fine detail. Avoid rigid sliding of the entire image, sparse replacement clouds, rapid time-lapse, turbulence, melting shapes, or repeated cloud clones.
+Preserve the reference composition, dense cloud banks on both sides and along the bottom, open central sky, and exact night colors: deep navy and cobalt sky, soft blue-silver cloud edges, and detailed moonlit cloud volumes. Preserve the existing crescent moon and stars as a distant, stable celestial background. Keep their identities, relative arrangement, size, shape, and brightness constant; no independent movement, star trails, twinkling, new constellations, or extra moons. The shallow camera translation should create parallax in the nearby clouds while leaving this distant background visually almost stationary. Preserve readable cloud detail without brightening the scene into daylight. Keep the overall lighting, exposure, and color consistent throughout.
 
-Compose the motion as one continuous cycle. Make the final composition, cloud edges, exposure, and color return naturally to the starting state, with smooth motion across the playback boundary. No visible reset, crossfade to another scene, reverse-playback effect, abrupt stop, cuts, brightness pulsing, or color drift. Keep the center open throughout. Add no text, logos, people, birds, aircraft, landscape, buildings, or extra celestial objects. No speech or music; only a very quiet, steady natural ambience if audio is generated.
+LIVING CLOUD FORMATIONS
+Animate the internal volume of the clouds, not just their positions or outlines. Within the larger cloud banks, let rounded billows slowly swell outward and rise, revealing new soft folds and overlapping lobes.
+
+As some billows develop, let older edges gradually thin, become translucent, and dissolve into the surrounding air. Small wisps should emerge, stretch gently with the breeze, and disperse. Dissipation should happen progressively at the edges, not by fading an entire cloud uniformly.
+
+Stagger this evolution across the scene. One region may gently rise and expand while a neighboring region softens and dissipates. Maintain a natural balance between formation and dissolution so the overall cloud density and composition remain stable.
+
+The clouds must visibly change shape independently of the camera. Their motion should still be apparent if the camera movement were removed. Avoid rigid cloud cutouts, frozen formations, or simply sliding the reference image.
+
+DEPTH AND FLOW
+Use two or three depth layers with modest differences in speed. Nearby clouds should show slightly more visible billowing and drifting, while distant clouds evolve more slowly. Keep the overall breeze coherent, with subtle local curls and variations.
+
+Maintain moderate, unhurried movement throughout the clip without escalating. Avoid explosive growth, strong inward surges, boiling motion, large rolling waves, rapid deformation, or storm-like turbulence. Leave some regions relatively calm.
+
+SUBTLE CAMERA MOVEMENT
+Allow an extremely slow, shallow camera glide with a slight lateral and forward component, creating delicate parallax between cloud layers.
+
+Keep the camera movement much less pronounced than the clouds’ own formation and dissipation. This should feel like quietly floating in place, not flying through the sky.
+
+Preserve the central opening and the original framing. No obvious zoom, large pan, orbit, tilt, shake, or dramatic approach toward a cloud. Do not use camera movement as a substitute for cloud animation.
+
+COMPOSITION AND LOOP
+Maintain abundant clouds around the sides and bottom while keeping generous clear space in the center for website text. Do not allow growing clouds to close this central opening.
+
+Create a smooth, natural looping animation. Use a very shallow, gently closed camera path that returns to its starting position and orientation without a noticeable reversal.
+
+Coordinate cloud formation and dissipation so the ending approaches the opening distribution, density, and direction of motion. Clouds should continue evolving naturally through the loop rather than visibly rewinding. No obvious reset, sudden reversal, freeze, crossfade, or fade to black.
+
+Photorealistic volumetric clouds with soft, detailed edges and convincing internal depth. No flickering, pulsing brightness, rubbery deformation, synchronized breathing, or rapid time-lapse. No transition to dawn, daytime, or sunset. No new objects, text, logos, or audio.
