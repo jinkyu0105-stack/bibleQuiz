@@ -390,6 +390,40 @@ body[data-time=night] .button.primary.hero-cta:hover:not(:disabled) {
 .glass[data-glint-shape=reading-rim][data-glint-active] {
   --glint-local-rim: radial-gradient(circle 112px at var(--glint-x) var(--glint-y), var(--glass-highlight), transparent 100%);
 }
+/* Clear header-like shoulders around a softly inset reading surface. */
+:is(.weekly-sheet, .archive-list)[data-glass-lens=reading-header] {
+  background: var(--glass-clear);
+  --glass-core: rgb(247 251 255 / .30);
+}
+body[data-time=dawn] :is(.weekly-sheet, .archive-list)[data-glass-lens=reading-header] { --glass-core: rgb(250 247 253 / .30); }
+body[data-time=dusk] :is(.weekly-sheet, .archive-list)[data-glass-lens=reading-header] { --glass-core: rgb(255 249 240 / .32); }
+body[data-time=night] :is(.weekly-sheet, .archive-list)[data-glass-lens=reading-header] { --glass-core: rgb(14 31 52 / .36); }
+.glass[data-glass-lens=reading-header]::before {
+  -webkit-backdrop-filter: blur(6px) saturate(1.15);
+  backdrop-filter: var(--glass-optics, blur(6px)) saturate(1.15);
+  background: linear-gradient(125deg, var(--glass-reflection), transparent 32%, transparent 70%, rgb(255 255 255 / .07));
+}
+.glass[data-glass-lens=reading-header]::after { padding: 1.5px; }
+.glass-reading-core {
+  position: absolute;
+  inset: 8px;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: var(--glass-core);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  -webkit-mask: linear-gradient(to right, transparent, #000 10px, #000 calc(100% - 10px), transparent),
+    linear-gradient(to bottom, transparent, #000 10px, #000 calc(100% - 10px), transparent);
+  -webkit-mask-composite: source-in;
+  mask: linear-gradient(to right, transparent, #000 10px, #000 calc(100% - 10px), transparent),
+    linear-gradient(to bottom, transparent, #000 10px, #000 calc(100% - 10px), transparent);
+  mask-composite: intersect;
+}
+body[data-transparency=reduced] .glass-reading-core { display: none; }
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .glass-reading-core { display: none; }
+}
 .difficulty-links .round-arrow {
   flex-shrink: 0;
   border-radius: 50%;

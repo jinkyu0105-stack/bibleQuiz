@@ -41,7 +41,13 @@ export function installLiquidGlass() {
     for (const card of document.querySelectorAll('.weekly-sheet, .archive-list, .puzzle-workspace')) {
       card.dataset.glint = '';
       card.dataset.glintShape = 'reading-rim';
-      card.dataset.glassLens = 'reading';
+      const homeCard = card.matches('.weekly-sheet, .archive-list');
+      card.dataset.glassLens = homeCard ? 'reading-header' : 'reading';
+      if (homeCard) {
+        const core = document.createElement('span');
+        core.className = 'glass-reading-core'; core.setAttribute('aria-hidden', 'true');
+        card.prepend(core);
+      }
     }
   }
   if (classic) { preserveChoice('glass', 'off'); return; }
@@ -184,6 +190,8 @@ export function installLiquidGlass() {
     if (!context) return;
     const pixels = context.createImageData(width, height);
     const reading = element.dataset.glassLens === 'reading';
+    // Home cards share the header's clear outer refraction; their separate
+    // inset reading surface supplies the stronger blur behind text.
     const edge = Math.min(flexible ? 18 : reading ? 22 : 16, radius);
     for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
       const dx = x + .5 - Math.max(radius, Math.min(width - radius, x + .5));
