@@ -30,7 +30,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 ## 새벽 4K 영상
 
-현재 기본은10월9일11:50 제공받은 **움직임이 많은 버전**이다. [새 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn) · [이전 잔잔한 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=calm). 두 원본과 재생 자산을 모두 보존한다. 새 버전은4K20.81MB/모바일1080p4.69MB이며 기존10초 재생·정지·끝0.9초 합성을 유지한다. [새 파일 정보](assets/video/dynamic/manifest.json). 아래 최초 영상의 설명과 구분한다.
+현재 기본은10월9일12:30 제공받은 **구름의 부풀음·소멸과 느린 카메라 이동을 요청한 버전**이다. [이번 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing) · [11:50 강한 움직임](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=dynamic) · [최초 잔잔한 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=calm). 세 원본과 재생 자산을 모두 보존한다. 최신4K19.24MB/모바일1080p4.28MB이며 기존10초 재생·정지·끝0.9초 합성을 유지한다. [새 파일 정보](assets/video/billowing/manifest.json). 아래 최초 영상의 설명과 구분한다.
 
 [새벽 영상 보기](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn) · [원래 사진/구름군 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=off)
 
