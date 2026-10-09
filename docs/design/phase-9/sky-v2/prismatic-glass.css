@@ -177,12 +177,12 @@ body[data-time=night] #motion { background: var(--glass-motion); }
 }
 /* Shared elastic lens. Each menu keeps its own selection and layout axis;
    deformation never reaches labels or hit areas. */
-.review-switch[data-dock-motion=elastic] {
+:is(.review-switch, .level-switch)[data-dock-motion=elastic] {
   /* Moving the lens must not leave a label dependent on its old backing.
      Keep the small dock legible over both bright clouds and dark grass. */
   background: color-mix(in srgb, var(--glass-clear) 60%, var(--glass-solid) 40%);
 }
-body:not([data-time=night]) .review-switch[data-dock-motion=elastic] {
+body:not([data-time=night]) :is(.review-switch, .level-switch)[data-dock-motion=elastic] {
   --ink: #071725;
   --glass-control-ink: var(--ink);
 }
@@ -300,6 +300,12 @@ body[data-transparency=reduced] .convex-lens::after { display: none; }
 body:not([data-time=night]) .time-options[data-dock-material=convex] {
   --ink: #071725;
   --glass-control-ink: var(--ink);
+}
+/* The quiz selector sits over the brighter part of the night sky. */
+body[data-time=night] .level-switch[data-dock-material=convex] {
+  --dock-dome-light: rgb(237 249 255 / .36);
+  --dock-lens-tint: rgb(143 191 233 / .04);
+  background: color-mix(in srgb, var(--glass-rail) 60%, var(--glass-solid) 40%);
 }
 /* Leave the tiny mobile label clear when its selected lens is elsewhere. */
 .time-options[data-dock-previewing] > button[aria-pressed=true]::after {
