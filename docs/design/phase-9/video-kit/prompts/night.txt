@@ -1,35 +1,27 @@
-Animate the supplied night sky image with a moderate amount of natural cloud movement—clearly visible, but calm enough for a website background.
+Animate the supplied night sky image as a living, continuously evolving cloudscape. The primary visible action is the clouds themselves forming rounded billows, slowly rising, and dissolving at selected edges; camera movement is secondary.
 
-Target a motion intensity of 5 out of 10. The clouds should feel alive and continuously evolving, with gentle billowing and gradual dissipation rather than energetic turbulence.
+Target cloud motion intensity at 5 out of 10: calm and unhurried, but clearly visible during normal playback. Cloud formation and dissipation must be more apparent than either camera motion or simple sideways cloud drift.
 
 Preserve the reference composition, dense cloud banks on both sides and along the bottom, open central sky, and exact night colors: deep navy and cobalt sky, soft blue-silver cloud edges, and detailed moonlit cloud volumes. Preserve the existing crescent moon and stars as a distant, stable celestial background. Keep their identities, relative arrangement, size, shape, and brightness constant; no independent movement, star trails, twinkling, new constellations, or extra moons. The shallow camera translation should create parallax in the nearby clouds while leaving this distant background visually almost stationary. Preserve readable cloud detail without brightening the scene into daylight. Keep the overall lighting, exposure, and color consistent throughout.
 
-LIVING CLOUD FORMATIONS
-Animate the internal volume of the clouds, not just their positions or outlines. Within the larger cloud banks, let rounded billows slowly swell outward and rise, revealing new soft folds and overlapping lobes.
+LIVING CLOUD FORMATIONS — PRIMARY ACTION
+Animate the three-dimensional volume inside the cloud banks. Soft rounded lobes emerge from the existing cloud interiors, swell outward, and slowly rise into new billowing masses. New folds and overlaps develop within the same bank; its internal structure and silhouette visibly change over time. Make these changes readable at normal playback speed, without making the movement fast or turbulent.
 
-As some billows develop, let older edges gradually thin, become translucent, and dissolve into the surrounding air. Small wisps should emerge, stretch gently with the breeze, and disperse. Dissipation should happen progressively at the edges, not by fading an entire cloud uniformly.
+Let formation and dissipation occur in different places with overlapping, staggered timing. Early in the shot, rounded lobes in the left bank begin to rise and expand. A little later, a separate outer edge of the right bank slowly thins into translucent wisps while the left lobes are still growing. Later, a fresh rounded mass develops within the lower foreground bank while an older wisp elsewhere gradually disperses and disappears. Continue this uneven local evolution throughout; do not make every region start, peak, or stop together. Keep the changes inside the surrounding banks, away from the central opening.
 
-Stagger this evolution across the scene. One region may gently rise and expand while a neighboring region softens and dissipates. Maintain a natural balance between formation and dissolution so the overall cloud density and composition remain stable.
+Dissipation progresses from a local edge inward: soft filaments separate, stretch gently, lose density, and dissolve into clear air. The rest of that bank remains full and textured. New lobes form from within other parts of the banks at different times, maintaining their overall abundance without uniformly fading whole clouds or inflating and deflating the scene together.
 
-The clouds must visibly change shape independently of the camera. Their motion should still be apparent if the camera movement were removed. Avoid rigid cloud cutouts, frozen formations, or simply sliding the reference image.
+Cloud shape changes must be visible independently of the camera. If camera translation and zoom were removed, a viewer would still clearly see new rounded lobes forming and rising, folds changing, and other edges thinning and disappearing. A moving or enlarging photograph, rigid cutout layers, texture sliding over a fixed cloud, or parallax alone does not meet this requirement.
 
-DEPTH AND FLOW
-Use two or three depth layers with modest differences in speed. Nearby clouds should show slightly more visible billowing and drifting, while distant clouds evolve more slowly. Keep the overall breeze coherent, with subtle local curls and variations.
+DEPTH AND PACE
+Use two or three depth layers. Nearby clouds show more visible billowing, gentle drifting, and edge dissolution; distant clouds evolve more slowly. Keep a coherent light breeze with small local curls. Preserve some quieter regions, but keep visible local cloud evolution present throughout the clip. No storm-like turbulence, boiling, explosive growth, fast time-lapse, or synchronized breathing.
 
-Maintain moderate, unhurried movement throughout the clip without escalating. Avoid explosive growth, strong inward surges, boiling motion, large rolling waves, rapid deformation, or storm-like turbulence. Leave some regions relatively calm.
+SUBTLE CAMERA MOVEMENT — SECONDARY ACTION
+Use an extremely slow, shallow camera glide with a slight lateral component and only a trace of forward movement. The camera contributes delicate depth parallax, much less apparent than the clouds' own formation and dissipation. Keep the framing nearly steady, as if quietly floating in place. No visible zoom, large pan, orbit, tilt, shake, or travel through the clouds. Never use camera movement to supply the cloud animation.
 
-SUBTLE CAMERA MOVEMENT
-Allow an extremely slow, shallow camera glide with a slight lateral and forward component, creating delicate parallax between cloud layers.
+COMPOSITION AND NATURAL LOOP
+Maintain the generous open central sky and the abundant cloud banks along both sides and the bottom. Preserve their overall placement and fullness, while allowing individual lobes, folds, edges, and small gaps within the banks to change. Stable composition means a stable overall balance, not frozen cloud shapes. Growing lobes must not close the central opening, and dissolving edges must not empty a whole side or the lower bank.
 
-Keep the camera movement much less pronounced than the clouds’ own formation and dissipation. This should feel like quietly floating in place, not flying through the sky.
+Aim for a smooth, natural loop through continuous, staggered renewal. Near the join, keep similar overall cloud coverage, central space, color, exposure, and pace and direction of motion. Individual cloud shapes and positions do not have to reproduce the first frame. Do not force clouds to return to their original contours or synchronize all formation and disappearance to the clip boundary. Keep camera displacement small enough to retain compatible framing; an exact closed camera path or an identical first and last frame is not required. Prioritize visible, continuous cloud evolution over exact frame matching. Motion should carry through the join without a hold, rewind, reset, sudden reversal, crossfade, or fade to black.
 
-Preserve the central opening and the original framing. No obvious zoom, large pan, orbit, tilt, shake, or dramatic approach toward a cloud. Do not use camera movement as a substitute for cloud animation.
-
-COMPOSITION AND LOOP
-Maintain abundant clouds around the sides and bottom while keeping generous clear space in the center for website text. Do not allow growing clouds to close this central opening.
-
-Create a smooth, natural looping animation. Use a very shallow, gently closed camera path that returns to its starting position and orientation without a noticeable reversal.
-
-Coordinate cloud formation and dissipation so the ending approaches the opening distribution, density, and direction of motion. Clouds should continue evolving naturally through the loop rather than visibly rewinding. No obvious reset, sudden reversal, freeze, crossfade, or fade to black.
-
-Photorealistic volumetric clouds with soft, detailed edges and convincing internal depth. No flickering, pulsing brightness, rubbery deformation, synchronized breathing, or rapid time-lapse. No transition to dawn, daytime, or sunset. No new objects, text, logos, or audio.
+Photorealistic volumetric clouds with soft, detailed edges and convincing internal depth. Keep local shading consistent with the evolving volume under the existing light; hold the scene's overall brightness and color steady. No flickering, exposure pulsing, rubbery deformation, or sudden popping in and out. No transition to dawn, daytime, or sunset. No people, birds, aircraft, buildings, text, logos, or audio.
