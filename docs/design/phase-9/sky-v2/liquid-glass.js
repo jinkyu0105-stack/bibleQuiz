@@ -19,6 +19,15 @@ export function installLiquidGlass() {
       link.setAttribute('href', `?${query}${hash ? `#${hash}` : ''}`);
     }
   }
+  // Review-only comparison: restore both original glints, or try either
+  // experiment independently without changing the glass material or video.
+  const glint = ['original', 'header', 'dock'].includes(params.get('glint')) ? params.get('glint') : 'both';
+  document.body.dataset.glintComparison = glint;
+  preserveChoice('glint', params.has('glint') ? glint : '');
+  if (prismatic) {
+    if (glint === 'both' || glint === 'header') document.querySelector('.site-header').dataset.glintShape = 'vertical';
+    if (glint === 'both' || glint === 'dock') document.querySelector('.review-switch').dataset.glintShape = 'spot';
+  }
   if (classic) { preserveChoice('glass', 'off'); return; }
   if (!prismatic) preserveChoice('glass', 'soft');
   clarityButton.hidden = false;
@@ -169,6 +178,7 @@ export function installLiquidGlass() {
   let glintFrame = 0, activeGlass = null, pending = null;
   function clearGlint() {
     cancelAnimationFrame(glintFrame); glintFrame = 0; pending = null;
+    activeGlass?.removeAttribute('data-glint-active');
     activeGlass?.style.removeProperty('--glint-x'); activeGlass?.style.removeProperty('--glint-y');
     activeGlass = null;
   }
@@ -182,6 +192,7 @@ export function installLiquidGlass() {
       glintFrame = requestAnimationFrame(() => {
         glintFrame = 0;
         if (!pending || !activeGlass || !canMove()) return;
+        activeGlass.dataset.glintActive = '';
         const box = activeGlass.getBoundingClientRect();
         activeGlass.style.setProperty('--glint-x', `${((pending.x - box.left) / box.width * 100).toFixed(1)}%`);
         activeGlass.style.setProperty('--glint-y', `${((pending.y - box.top) / box.height * 100).toFixed(1)}%`);

@@ -29,6 +29,19 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 [AI가 참조할 재질/토큰/상태 명세](../../../spec/design.md#apple-참고-유리-검토본의-재현-기준) · [검사와 남은 범위](../../../work/P9-06.md#맑은-유리와-프리즘-보완--2026-10-09).
 
+## 헤더·검토 바의 반사광 비교
+
+사용자 요청으로 헤더는 좌우로 움직이는 좁은 세로 광원, 아래 검토 바는 포인터 근처의 작은 원형 광원을 시험한다. 유리 재질·프리즘과 평소 표면은 유지한다. 마우스를 빼면 추가 광원만 사라지며, 공통 멈춤/OS 움직임 감소/투명도 감소에서는 반응하지 않는다. 터치로 빛이 남지 않는다.
+
+| 비교 | 헤더 | 아래 검토 바 |
+|---|---|---|
+| [두 효과 함께](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both) | 세로 광원 | 포인터 주변 원형 광원 |
+| [헤더만 새 효과](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=header) | 세로 광원 | 이전 반사 |
+| [아래 바만 새 효과](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=dock) | 이전 반사 | 포인터 주변 원형 광원 |
+| [두 반사광 모두 이전으로](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=original) | 이전 반사 | 이전 반사 |
+
+현재 기본은 두 효과의 시험안이다. `glint` 선택은 시간대·공개/풀이/관리자 이동에도 유지한다. `glint=original`은 **이번 반사광만** 이전으로 되돌리는 비교다. 유리 재질 전체를 바꾸는 `glass=soft`/`glass=off`와 구분한다. 최종 선호는 사용자 확인 뒤 정한다. [구현/검사/복원 근거](../../../work/P9-06.md#헤더와-검토-바의-반사광-비교--2026-10-09).
+
 ## 새벽 4K 영상
 
 사용자가 선택한 현재 기본은10월9일12:30 제공받은 **구름의 부풀음·소멸과 느린 카메라 이동을 요청한 버전**이다. [이번 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing) · [11:50 강한 움직임](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=dynamic) · [최초 잔잔한 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=calm). 세 원본과 재생 자산을 모두 보존한다. 최신4K19.24MB/모바일1080p4.28MB이며 기존10초 재생·정지·끝0.9초 합성을 유지한다. [새 파일 정보](assets/video/billowing/manifest.json). 아래 최초 영상의 설명과 구분한다.

@@ -86,19 +86,38 @@ body[data-time=night] {
      verified in Chromium; other engines still get the coloured reflected rim. */
   -webkit-backdrop-filter: blur(6px) saturate(1.15);
   backdrop-filter: var(--glass-optics, blur(6px)) saturate(1.15);
-  background: radial-gradient(ellipse at var(--glint-x, 14%) var(--glint-y, 0%), rgb(255 255 255 / .18), transparent 62%),
+  background: var(--glass-glint-fill, radial-gradient(ellipse at var(--glint-x, 14%) var(--glint-y, 0%), rgb(255 255 255 / .18), transparent 62%)),
     linear-gradient(125deg, var(--glass-reflection), transparent 32%, transparent 70%, rgb(255 255 255 / .07));
 }
 .glass-clear::after, .glass[data-glint]::after {
   opacity: 1;
   padding: 1.5px;
   /* Uneven, directional colour catches: no continuously glowing rainbow ring. */
-  background: radial-gradient(ellipse at var(--glint-x, 14%) var(--glint-y, 0%), var(--glass-highlight), transparent 48%),
+  background: var(--glass-glint-rim, radial-gradient(ellipse at var(--glint-x, 14%) var(--glint-y, 0%), var(--glass-highlight), transparent 48%)),
     conic-gradient(from 120deg at 50% 50%, transparent 0deg, var(--glass-rim-cool) 42deg,
       var(--glass-rim-violet) 65deg, var(--glass-rim-warm) 84deg, transparent 110deg,
       transparent 164deg, var(--glass-rim-cool) 207deg, var(--glass-rim-violet) 236deg,
       var(--glass-rim-warm) 255deg, transparent 285deg);
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / .10);
+}
+/* Preserve the resting reflection. Only the small extra light follows the
+   pointer, so entering a control does not darken its far end. Fixed radii keep
+   a long header from stretching the light across its entire width. */
+.glass[data-glint-shape] {
+  --glint-local-light: rgb(255 255 255 / .16);
+  --glass-glint-fill: var(--glint-local-fill, linear-gradient(transparent, transparent)),
+    radial-gradient(ellipse at 14% 0%, rgb(255 255 255 / .18), transparent 62%);
+  --glass-glint-rim: var(--glint-local-rim, linear-gradient(transparent, transparent)),
+    radial-gradient(ellipse at 14% 0%, var(--glass-highlight), transparent 48%);
+}
+body[data-time=night] .glass[data-glint-shape] { --glint-local-light: rgb(255 255 255 / .08); }
+.glass[data-glint-shape=vertical][data-glint-active] {
+  --glint-local-fill: radial-gradient(ellipse 24px 90px at var(--glint-x) var(--glint-y), var(--glint-local-light), transparent 100%);
+  --glint-local-rim: radial-gradient(ellipse 36px 110px at var(--glint-x) var(--glint-y), var(--glass-highlight), transparent 100%);
+}
+.glass[data-glint-shape=spot][data-glint-active] {
+  --glint-local-fill: radial-gradient(circle 30px at var(--glint-x) var(--glint-y), var(--glint-local-light), transparent 100%);
+  --glint-local-rim: radial-gradient(circle 38px at var(--glint-x) var(--glint-y), var(--glass-highlight), transparent 100%);
 }
 .site-header, .site-header.scrolled, body:not([data-view=home]) .site-header {
   box-shadow: 0 16px 32px -22px var(--glass-shadow),
