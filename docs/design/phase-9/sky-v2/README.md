@@ -30,6 +30,18 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 [AI가 참조할 재질/토큰/상태 명세](../../../spec/design.md#apple-참고-유리-검토본의-재현-기준) · [검사와 남은 범위](../../../work/P9-06.md#맑은-유리와-프리즘-보완--2026-10-09).
 
+## 아래 검토 메뉴의 탄성 모션
+
+[탄성 모션 보기](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&dock-motion=elastic) · [직전 고정 선택 표시](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both&dock-motion=off)
+
+사용자가 제공한 iPhone 영상의 하단 메뉴를 참고한 실험이다. 공개·풀이·관리자 위로 마우스를 옮기면 유리 표시가 잠깐 가로로 늘어났다가 통통하게 모인다. 메뉴 안에서는 포인터 방향으로 살짝 당겨지고, 빠르게 방향을 바꾸어도 현재 속도에서 이어 움직인다. 얇은 프리즘 경계도 함께 움직이며 글자와 클릭 영역은 고정한다.
+
+유리 표시가 떠난 메뉴도 읽히도록 이 바의 받침에 기존 불투명 색을40% 섞었다. 최종 채움 alpha는 낮53.2%/새벽·노을54.4%/밤62.8%이며 가장자리 굴절과 반사는 유지한다. 현재 메뉴도 렌즈가 떠나면 일반 본문색을 쓰며, 밝은 시간대의 이 바 글자는 짙은 남색으로 보정했다.
+
+마우스를 빼면 현재 화면으로 돌아온다. 다른 메뉴를 미리 보는 동안 작은 점이 현재 화면을 가리키고, 실제 화면은 클릭/Enter로만 바뀐다. 키보드 초점도 따라가며 터치에는 hover를 만들지 않는다. 공통 멈춤·OS 움직임 감소·투명도 감소·강제 색상에서는 이동을 끄고 현재 선택을 유지한다. 정착하면 반복 프레임을 멈춘다.
+
+기본/`dock-motion=elastic`은 이번 실험, `dock-motion=off`는 직전 선택 표시다. 선택은 시간대·검토 화면 이동에 유지한다. `glass=soft/off`에서는 새 실험을 적용하지 않는다. 하단 검토 바만의 구현이며 Apple 시스템 렌더러나 실제 iPhone 검증을 뜻하지 않는다. [구현/검사/한계](../../../work/P9-06.md#아래-검토-메뉴의-탄성-모션--2026-10-09).
+
 ## 헤더·검토 바의 반사광 비교
 
 현재 헤더는 **위·아래 테두리만 동시에 반응**한다. 마우스가 가운데에 있어도 같은 x좌표의 위아래 경계에 빛이 맺히고, 좌우로 움직이면 두 반사가 함께 따라간다. 중앙 표면에는 추가 광원이 없다. 이전 원형 빛을 가장자리에 댔을 때의38px 반경/밝기를 각각의 경계에 재사용한다. 아래 디자인 검토 바는 포인터 주변의 작은 원형 빛 그대로다.
@@ -97,6 +109,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 - [liquid-glass.css](liquid-glass.css): 역할별 유리 재질·네 시간대·접근성 대체 표시
 - [prismatic-glass.css](prismatic-glass.css): 현재 맑은 채움·시간대별 프리즘/반사·선명하게 대안, `glass=soft`로 비활성화
 - [liquid-glass.js](liquid-glass.js): 배경 전용 가장자리 굴절·선택 표시·마우스 빛·투명도/이전 모습 전환
+- [dock-motion.js](dock-motion.js): 하단 검토 메뉴의 탄성 이동·변형·복귀·정지 수명
 - [originkit-grass.js](originkit-grass.js): OriginKit shader/잔디 geometry와 검토본 연결
 - [sky-video.js](sky-video.js) / [sky-video.css](sky-video.css): 네 시간대 영상 지연 요청·전환·정지/대체 이미지·반복 경계 합성
 - [sky-banks.js](sky-banks.js): 원래 낮/밤 배경의 구름군12영역·수평 이동·원본 fallback

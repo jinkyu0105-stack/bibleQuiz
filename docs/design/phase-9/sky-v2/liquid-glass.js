@@ -1,5 +1,6 @@
 /* global window, document, URLSearchParams, CSS, navigator, ResizeObserver, MutationObserver,
    requestAnimationFrame, cancelAnimationFrame, AbortController */
+import { installDockMotion } from './dock-motion.js';
 // A web material inspired by Apple. The optical map is original procedural code;
 // it distorts only a backdrop pseudo-element, never labels, inputs or content.
 export function installLiquidGlass() {
@@ -27,6 +28,8 @@ export function installLiquidGlass() {
   // Keep the header light on its rim; preserve previous review choices.
   const headerGlint = ['spot', 'straight', 'flare'].includes(params.get('header-glint')) ? params.get('header-glint') : 'edge';
   preserveChoice('header-glint', params.has('header-glint') ? headerGlint : '');
+  const elasticDock = params.get('dock-motion') !== 'off';
+  preserveChoice('dock-motion', params.has('dock-motion') ? (elasticDock ? 'elastic' : 'off') : '');
   if (prismatic) {
     if (glint === 'both' || glint === 'header') document.querySelector('.site-header').dataset.glintShape = headerGlint === 'straight' ? 'vertical' : headerGlint;
     if (glint === 'both' || glint === 'dock') document.querySelector('.review-switch').dataset.glintShape = 'spot';
@@ -63,9 +66,12 @@ export function installLiquidGlass() {
     const indicator = document.createElement('span');
     indicator.className = 'glass-indicator'; indicator.setAttribute('aria-hidden', 'true');
     element.prepend(indicator);
-    return { element, indicator };
+    const motion = prismatic && elasticDock && element.matches('.review-switch')
+      ? installDockMotion({ element, indicator, signal, canMove }) : null;
+    return { element, indicator, motion };
   });
-  function measureSelection({ element, indicator }) {
+  function measureSelection({ element, indicator, motion }) {
+    if (motion) { motion.measure(); return; }
     const selected = element.querySelector(':scope > [aria-pressed=true], :scope > [aria-current=page]');
     if (!selected || !element.getClientRects().length) return;
     indicator.style.width = `${selected.offsetWidth}px`;
@@ -204,13 +210,17 @@ export function installLiquidGlass() {
     }, { passive: true, signal });
     element.addEventListener('pointerleave', clearGlint, { signal });
   }
-  const motion = new MutationObserver(clearGlint);
-  motion.observe(document.body, { attributes: true, attributeFilter: ['data-motion', 'data-transparency'] });
-  reduceMotion.addEventListener('change', clearGlint, { signal });
-  finePointer.addEventListener('change', clearGlint, { signal });
-  document.addEventListener('visibilitychange', () => { if (document.hidden) clearGlint(); }, { signal });
-  window.addEventListener('pagehide', event => {
+  function resetInteraction() {
     clearGlint();
+    for (const group of groups) group.motion?.reset();
+  }
+  const motion = new MutationObserver(resetInteraction);
+  motion.observe(document.body, { attributes: true, attributeFilter: ['data-motion', 'data-transparency'] });
+  reduceMotion.addEventListener('change', resetInteraction, { signal });
+  finePointer.addEventListener('change', resetInteraction, { signal });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) resetInteraction(); }, { signal });
+  window.addEventListener('pagehide', event => {
+    resetInteraction();
     if (event.persisted) return;
     cancelAnimationFrame(measurementFrame);
     resize.disconnect(); selection.disconnect(); motion.disconnect(); lifetime.abort();
