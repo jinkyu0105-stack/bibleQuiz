@@ -46,7 +46,9 @@ export function installLiquidGlass() {
       if (homeCard) {
         const core = document.createElement('span');
         core.className = 'glass-reading-core'; core.setAttribute('aria-hidden', 'true');
-        card.prepend(core);
+        const glow = document.createElement('span');
+        glow.className = 'glass-rim-glow'; glow.setAttribute('aria-hidden', 'true');
+        card.prepend(core, glow);
       }
     }
   }

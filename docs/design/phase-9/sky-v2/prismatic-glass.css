@@ -404,6 +404,37 @@ body[data-time=night] :is(.weekly-sheet, .archive-list)[data-glass-lens=reading-
   background: linear-gradient(125deg, var(--glass-reflection), transparent 32%, transparent 70%, rgb(255 255 255 / .07));
 }
 .glass[data-glass-lens=reading-header]::after { padding: 1.5px; }
+/* Keep the resting prism sharp; feather only the pointer reflection.
+   Blur the parent after its child has been masked into a narrow ring. */
+.glass[data-glass-lens=reading-header][data-glint-active] {
+  --glint-local-rim: linear-gradient(transparent, transparent);
+}
+.glass-rim-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  filter: blur(4px);
+  opacity: 0;
+}
+.glass-rim-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 7px;
+  background: radial-gradient(circle 150px at var(--glint-x, 50%) var(--glint-y, 50%), rgb(255 255 255 / .52), rgb(255 255 255 / .18) 45%, transparent 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+.glass[data-glint-active] > .glass-rim-glow { opacity: 1; }
+body[data-transparency=reduced] .glass-rim-glow { display: none; }
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .glass-rim-glow { display: none; }
+}
 .glass-reading-core {
   position: absolute;
   inset: 8px;
