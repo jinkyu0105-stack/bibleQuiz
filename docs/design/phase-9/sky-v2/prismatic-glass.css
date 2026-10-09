@@ -312,6 +312,12 @@ body[data-time=night] .level-switch[data-dock-material=convex] {
 :is(.content-tabs, .admin-sidebar nav)[data-dock-material=convex] {
   --glass-selected-ink: var(--ink);
 }
+/* Nested SVG backdrop displacement darkens these translucent reading panels.
+   In bright skies use the CSS optical surface; keep the convex rim and spring. */
+body:not([data-time=night]) :is(.content-tabs, .admin-sidebar nav)[data-dock-material=convex] > .convex-lens::before {
+  -webkit-backdrop-filter: blur(.6px) saturate(1.18);
+  backdrop-filter: blur(.6px) saturate(1.18);
+}
 .admin-sidebar nav[data-dock-motion=elastic] > button {
   background: transparent;
   box-shadow: none;

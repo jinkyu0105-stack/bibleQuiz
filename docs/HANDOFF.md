@@ -2,17 +2,16 @@
 
 ## 현재 작업과 다음 첫 행동
 
-2026-10-09. **P9-06 진행 중 — 관리자 검수 탭과 운영 메뉴의 유리 보정 구현/관련 검사 완료, 사용자 시각 확인 대기**. 사용자 주석의 두 메뉴만 확장했다. 편집 패널/6단계·기존 공개/풀이·영상/잔디·실제 앱/배포는 유지한다.
-
-다음 첫 행동은 [현재 관리자 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?view=admin&time=dawn&video=billowing&ground=grass&menu-glass=on)의 두 메뉴에 대한 사용자 피드백을 반영하는 것이다. 수정 전 기준8dfc57e. `menu-glass=off`는 확장 전 메뉴, `glass=soft/off`는 기존 전체 재질 비교다. [비교 안내](design/phase-9/sky-v2/README.md#관리자-검수-탭과-운영-메뉴). 새 번호/다른 UI 확대/실제 앱 연결·push/배포를 자동 시작하지 않는다.
+2026-10-09. **P9-06 진행 중 — 관리자 두 메뉴의 새벽/낮/노을 회색화 보정·검사 완료, 사용자 시각 확인 대기**. [낮 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?view=admin&time=day&video=billowing&ground=grass&menu-glass=on)에서 세 밝은 시간대의 색감에 대한 피드백을 반영한다. 수정 전 기준d4be6d0. `menu-glass=off`/`glass=soft/off` 비교는 유지한다. 다른 UI 확대·실제 앱 연결·push/배포는 자동 시작하지 않는다.
 
 ## 이번 변경과 검사
 
-- `liquid-glass.js`/`index.html`: 관리자 검수 탭과 운영 메뉴에 공통 탄성/볼록한 렌즈를 연결하고 주간 운영의 현재 위치를 `aria-current=page`로 표시했다. 클릭/Enter의 기존 탭/안내 동작과 초안/검수 로직은 유지한다.
-- `dock-motion.js`: 모바일3열 운영 메뉴의 기존 배치를 유지하도록 두 좌표로 목적지를 찾고 교차축 위치/크기도 spring으로 이동한다. 기존 spring/늘어남/부풀기 계수는 유지한다. `prismatic-glass.css`에서 고정 선택 채움을 렌즈로 바꾸고 밤의 과한 반사를 낮췄으며 실제 선택 점/강제 색상 윤곽을 유지한다. 검수 탭의 별도 고정 굴절 지도 연결은 불필요해 제외했다.
-- Chromium/Firefox 관련12항목 통과:390/700/701/1268/2560px 전체 hover 목표·선택/초안/검수 체크·운영 안내·터치/키보드·정지/감소·비교 복원·공통 메뉴 smoke. 런타임 오류0. 네 시간대/390·1440px hover 글자72표본 최소4.87:1, 실패0. lint/typecheck·구문·diff/문서 로컬 링크 검사 통과. 전체WCAG/모든 움직임 프레임·Safari/실기기 성능은 미검수다.
+- 밝은 시간대의 실제 tint/shade는 정상이다. SVG 배경 변위를 끈 렌더에서 회색화가 사라졌고 음영만 꺼서는 남았다. 브라우저 내부 합성 원인까지 확정하지 않는다. 직전 기능/대비 검사가 재질의 시각적 완성도까지 보증한 것은 아니다.
+- `prismatic-glass.css`만 수정: 밝은 세 시간대의 두 관리자 convex 렌즈에 CSS blur(.6px)/saturate(1.18) 대안을 적용했다. 해당 범위의 실제 RGB 배경 변위는 제외하고 볼록한 반사 경계/탄성은 유지한다. 밤과 다른 제어·편집/모션 코드·미디어는 그대로다.
+- Chromium/Firefox 관련10항목 통과, 오류0. 네 시간대/390·1440px hover 글자72표본 최소6.23:1·실패0. 세 밝은 시간대 PC 캡처를 확인했다. lint·diff/문서 링크 검사 통과. CSS만 변경하여 직전 typecheck를 재사용했다. 실제 기기/Safari·전체WCAG/모든 프레임·성능은 미검수다.
+- 초기 진단의 빈 CSS 문자열 오류는 스크립트만 수정했다. 불투명 흰 채움으로 문제를 덮지 않았다. 이전 전체 기능·출시/유료 검사는 반복하지 않았다.
 
-[현재 상세 기록](work/P9-06.md#관리자-검수-탭과-운영-메뉴-유리--2026-10-09) · 로컬 증거 `.wrangler/design-references/p9-06-admin-glass/`. 잔디 초기 파일 실패가 버튼만으로 재시도되지 않는 한계는 이번 범위에 넣지 않았다. [기존 복구 근거](work/P9-06.md#잔디-표시-조사와-미리보기-복구--2026-10-09).
+[상세 기록](work/P9-06.md#관리자-밝은-시간대의-회색화-보정--2026-10-09) · 로컬 증거 `.wrangler/design-references/p9-06-admin-tint/`. 잔디 초기 파일 실패의 버튼 재시도 한계는 별도이며 [기존 기록](work/P9-06.md#잔디-표시-조사와-미리보기-복구--2026-10-09)을 유지한다.
 
 ## 병렬 대화 경계와 프롬프트 결과
 
@@ -25,7 +24,7 @@
 
 ## Git과 배포
 
-시작 HEAD **8dfc57e**, clean, 추적 origin/main **21b81de**보다30개 앞섬. 이번 UI4개/문서6개만 로컬 커밋하면 미푸시31개다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 병렬 video-kit/5caa2b4·기존 메뉴/미디어·실제 자료/키/유료 결과·0000~0038·폰트/fontkit·패키지/Cloudflare 설정 유지, push/배포 없음.
+시작 HEAD **d4be6d0**, clean, 추적 origin/main **21b81de**보다31개 앞섬. 이번 CSS1개/문서6개만 로컬 커밋하면 미푸시32개다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 병렬 video-kit/5caa2b4·기존 메뉴/미디어·실제 자료/키/유료 결과·0000~0038·폰트/fontkit·패키지/Cloudflare 설정 유지, push/배포 없음.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -39,7 +38,7 @@ Preview는 main push 자동 경로, Production은 별도 요청이다. [P9-04](w
 
 ## 실행·사용량·세션
 
-시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro30% 사용/70% 잔여, 별도5시간 없음, 사용자 지정×10=700%. 관리자 메뉴 보정 완료·사용자 확인 대기·부모P9-06 진행 중·세션 유지. 다음 추천 **Astra·High** — 가로/세로 유리 이동과 가독성을 보정한다.
+시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro31% 사용/69% 잔여, 별도5시간 없음, 사용자 지정×10=690%. 관리자 밝은 유리 보정 완료·사용자 확인 대기·부모P9-06 진행 중·세션 유지. 다음 추천 **Astra·High** — 색감과 광학 합성을 검토한다.
 
 4189 서버가 응답하지 않을 때만 아래 명령으로 다시 시작한다. **PTY 유지 세션**에서 실행하며 직전 서버 세션 ID는14880이며 이번에도 HTTP200을 확인했다. `nohup ... &`만 실행하면 이 도구 환경에서 명령 종료 뒤 프로세스가 유지되지 않아 사용하지 않는다. 도구 세션/앱 종료 뒤 영속성까지 보장하지 않는다.
 
