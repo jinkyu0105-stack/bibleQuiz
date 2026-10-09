@@ -1,0 +1,150 @@
+/* P9-06: clearer glass and restrained spectral edges.
+   This separate layer can be removed with ?glass=soft; the previous material
+   and the original ?glass=off review remain available for comparison. */
+body[data-time] {
+  --glass-clear: rgb(233 247 255 / .22);
+  --glass-reading: rgb(247 251 255 / .62);
+  --glass-blur: 14px;
+  --glass-rail: var(--glass-clear);
+  --glass-edge: rgb(255 255 255 / .52);
+  --glass-highlight: rgb(255 255 255 / .88);
+  --glass-bottom: rgb(214 235 255 / .42);
+  --glass-shadow: rgb(16 47 75 / .22);
+  --glass-selected: rgb(249 253 255 / .65);
+  --glass-rim-cool: rgb(93 208 255 / .70);
+  --glass-rim-violet: rgb(191 142 241 / .60);
+  --glass-rim-warm: rgb(255 209 140 / .75);
+  --glass-reflection: rgb(218 245 255 / .14);
+  --glass-control-ink: #193348;
+  --glass-header-ink: #102438;
+  --glass-admin-fill: rgb(250 253 255 / .24);
+}
+body[data-time=dawn] {
+  --glass-clear: rgb(244 239 255 / .24);
+  --glass-reading: rgb(250 247 253 / .64);
+  --glass-rim-cool: rgb(135 205 255 / .68);
+  --glass-rim-violet: rgb(209 160 244 / .66);
+  --glass-rim-warm: rgb(255 201 145 / .78);
+  --glass-reflection: rgb(255 225 207 / .16);
+  --glass-control-ink: #27344e;
+}
+body[data-time=dusk] {
+  --glass-clear: rgb(255 244 230 / .24);
+  --glass-reading: rgb(255 249 240 / .65);
+  --glass-rim-cool: rgb(130 218 249 / .66);
+  --glass-rim-violet: rgb(209 145 228 / .62);
+  --glass-rim-warm: rgb(255 209 141 / .85);
+  --glass-reflection: rgb(255 227 187 / .18);
+  --glass-control-ink: #392c42;
+}
+body[data-time=night] {
+  --glass-clear: rgb(10 27 48 / .38);
+  --glass-rail: rgb(10 27 48 / .58);
+  --glass-reading: rgb(14 31 52 / .75);
+  --glass-edge: rgb(221 239 255 / .36);
+  --glass-highlight: rgb(230 245 255 / .64);
+  --glass-bottom: rgb(159 199 237 / .24);
+  --glass-selected: rgb(36 64 95 / .78);
+  --glass-shadow: rgb(0 10 29 / .34);
+  --glass-rim-cool: rgb(95 203 255 / .65);
+  --glass-rim-violet: rgb(191 161 249 / .63);
+  --glass-rim-warm: rgb(239 209 175 / .58);
+  --glass-reflection: rgb(175 211 255 / .10);
+  --glass-control-ink: #edf5ff;
+  --glass-header-ink: #edf5ff;
+  --glass-admin-fill: rgb(12 30 52 / .26);
+}
+.glass {
+  box-shadow: 0 14px 34px -18px var(--glass-shadow),
+    0 3px 8px -4px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 var(--glass-bottom);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.12);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.12);
+}
+.glass::before {
+  background: radial-gradient(ellipse at 4% 0%, var(--glass-reflection), transparent 55%),
+    linear-gradient(155deg, var(--glass-highlight), transparent 28%, transparent 80%, var(--glass-bottom));
+  opacity: .22;
+}
+.glass::after {
+  padding: 1px;
+  background: linear-gradient(135deg, var(--glass-highlight), var(--glass-rim-cool) 8%, transparent 23%, transparent 70%, var(--glass-rim-warm) 89%, var(--glass-highlight));
+  opacity: .72;
+}
+.glass-clear {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: 0 10px 26px -14px var(--glass-shadow),
+    0 2px 5px -2px var(--glass-shadow),
+    inset 0 1px 1px var(--glass-highlight),
+    inset 0 -1px 1px var(--glass-bottom);
+}
+.glass-clear::before {
+  opacity: 1;
+  /* The blur-only fallback is intentional. SVG backdrop displacement has been
+     verified in Chromium; other engines still get the coloured reflected rim. */
+  -webkit-backdrop-filter: blur(6px) saturate(1.15);
+  backdrop-filter: var(--glass-optics, blur(6px)) saturate(1.15);
+  background: radial-gradient(ellipse at var(--glint-x, 14%) var(--glint-y, 0%), rgb(255 255 255 / .18), transparent 62%),
+    linear-gradient(125deg, var(--glass-reflection), transparent 32%, transparent 70%, rgb(255 255 255 / .07));
+}
+.glass-clear::after, .glass[data-glint]::after {
+  opacity: 1;
+  padding: 1.5px;
+  /* Uneven, directional colour catches: no continuously glowing rainbow ring. */
+  background: radial-gradient(ellipse at var(--glint-x, 14%) var(--glint-y, 0%), var(--glass-highlight), transparent 48%),
+    conic-gradient(from 120deg at 50% 50%, transparent 0deg, var(--glass-rim-cool) 42deg,
+      var(--glass-rim-violet) 65deg, var(--glass-rim-warm) 84deg, transparent 110deg,
+      transparent 164deg, var(--glass-rim-cool) 207deg, var(--glass-rim-violet) 236deg,
+      var(--glass-rim-warm) 255deg, transparent 285deg);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .10);
+}
+.site-header, .site-header.scrolled, body:not([data-view=home]) .site-header {
+  box-shadow: 0 16px 32px -22px var(--glass-shadow),
+    0 3px 8px -5px var(--glass-shadow),
+    inset 0 1px 1px var(--glass-highlight), inset 0 -1px 1px var(--glass-bottom);
+}
+.site-header { color: var(--glass-header-ink); }
+.hero-side-note { color: #00101f; }
+body[data-time=night] .hero-side-note { color: var(--ink); }
+.admin-link { background: var(--glass-admin-fill); }
+.time-options { background: var(--glass-rail); }
+.time-options button, .review-switch > span { color: var(--glass-control-ink); }
+.glass-indicator {
+  box-shadow: 0 2px 6px -2px var(--glass-shadow),
+    inset 0 1px 1px var(--glass-highlight), inset 0 -1px 0 var(--glass-bottom);
+}
+.button.primary.hero-cta, .button.primary.hero-cta:hover {
+  box-shadow: 0 14px 26px -12px var(--glass-shadow),
+    0 3px 6px -3px var(--glass-shadow),
+    inset 0 1px 1px var(--glass-highlight), inset 0 -1px 1px var(--glass-bottom);
+}
+/* Dense reading and entry areas retain a stable local surface. */
+.word-entry input, .editor-column input, .editor-column textarea { background: var(--glass-field); }
+body[data-transparency=reduced] {
+  --glass-clear: var(--glass-solid);
+  --glass-rail: var(--glass-solid);
+  --glass-reading: var(--glass-solid);
+  --glass-selected: var(--glass-solid-selected);
+}
+body[data-transparency=reduced] .glass::before,
+body[data-transparency=reduced] .glass::after { display: none; }
+@media (prefers-reduced-transparency:reduce), (forced-colors:active) {
+  body[data-time] {
+    --glass-clear: var(--glass-solid);
+    --glass-rail: var(--glass-solid);
+    --glass-reading: var(--glass-solid);
+    --glass-selected: var(--glass-solid-selected);
+  }
+  .glass { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .glass::before, .glass::after { display: none; }
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  body[data-time] {
+    --glass-clear: var(--glass-solid);
+    --glass-rail: var(--glass-solid);
+    --glass-reading: var(--glass-solid);
+    --glass-selected: var(--glass-solid-selected);
+  }
+}

@@ -19,14 +19,15 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 ## Apple 참고 유리 UI
 
-사용자가 선택한3번 **Apple Liquid Glass**의 원리를 웹으로 구현했다. 공개·풀이·관리자의 둥근 표면, 빛나는 가장자리, 배경 흐림과 이동하는 선택 표시를 함께 볼 수 있다. 헤더/시간대/첫 버튼은 더 맑게, 퀴즈와 편집 영역은 읽기 쉬운 밀도로 구분한다. 한글 글자와 입력칸 자체를 굴절시키지 않는다.
+사용자가 선택한 3번 **Apple Liquid Glass**의 원리를 웹으로 구현했다. 공개·풀이·관리자의 둥근 표면, 빛나는 가장자리, 배경 흐림과 이동하는 선택 표시를 함께 볼 수 있다. 헤더/시간대/첫 버튼은 더 맑게, 퀴즈와 편집 영역은 읽기 쉬운 밀도로 구분한다. 한글 글자와 입력칸 자체를 굴절시키지 않는다.
 
-- [새 유리 UI](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day) · [이전 모습 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day&glass=off)
+- [맑은 프리즘 유리 + 선택 새벽 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing) · [직전의 부드러운 유리](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing&glass=soft) · [유리 이전](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing&glass=off)
+- 현재 기본은 밝은 시간대 제어 채움22~24%/밤38%, 읽기62~75%와14px 흐림이다. 밤 시간대 선택기만 작은 라벨의 대비를 위해58% 받침을 쓴다. 구름이 맑게 비치는 가운데와 얇은 색 분산 경계를 구분한다. 수치는 CSS alpha이며 실제 투과율은 아니다. 입력칸/글자/콘텐츠 폭은 유지한다.
 - **선명하게** 버튼은 투명도를 줄인다. 선택은 `clarity=high`로 URL/검토 화면 이동에 남으며 다시 누르면 복원한다. OS 투명도/움직임 감소와 기존 멈춤도 따른다.
-- Chromium에서는 제어의 가장자리 굴절을 더하고 다른 브라우저는 CSS 흐림으로 표시한다. Apple 시스템 재질과 동일한 SDK가 아니다. Safari/WebKit 실검증은 현재 실행 라이브러리 부재로 남아 있다.
+- Chromium에서는 배경 전용 RGB 가장자리 굴절을 더하고, 다른 브라우저는6px CSS 흐림과 유색 반사 경계로 표시한다. 실제 픽셀 비교로 중앙이 유지되고 경계에서 색이 분리됨을 확인했다. Apple 시스템 재질과 동일한 SDK가 아니다. Safari/WebKit 실검증은 현재 실행 라이브러리 부재로 남아 있다.
 - 사용자가 제공한 새벽4K 영상을 연결했다. 낮·노을·밤은 기존 이미지 방식이며 아래 새벽 영상 링크에서 비교한다.
 
-[AI가 참조할 재질/토큰/상태 명세](../../../spec/design.md#apple-참고-유리-검토본의-재현-기준) · [검사와 남은 범위](../../../work/P9-06.md#apple-참고-유리-ui--2026-10-08).
+[AI가 참조할 재질/토큰/상태 명세](../../../spec/design.md#apple-참고-유리-검토본의-재현-기준) · [검사와 남은 범위](../../../work/P9-06.md#맑은-유리와-프리즘-보완--2026-10-09).
 
 ## 새벽 4K 영상
 
@@ -74,6 +75,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 - [index.html](index.html): 실제 한글/레이아웃/입력 요소
 - [style.css](style.css): 네 시간대와 공개/풀이/관리자 반응형
 - [liquid-glass.css](liquid-glass.css): 역할별 유리 재질·네 시간대·접근성 대체 표시
+- [prismatic-glass.css](prismatic-glass.css): 현재 맑은 채움·시간대별 프리즘/반사·선명하게 대안, `glass=soft`로 비활성화
 - [liquid-glass.js](liquid-glass.js): 배경 전용 가장자리 굴절·선택 표시·마우스 빛·투명도/이전 모습 전환
 - [originkit-grass.js](originkit-grass.js): OriginKit shader/잔디 geometry와 검토본 연결
 - [sky-video.js](sky-video.js) / [sky-video.css](sky-video.css): 새벽 영상 지연 요청·정지/대체 이미지·반복 경계 합성

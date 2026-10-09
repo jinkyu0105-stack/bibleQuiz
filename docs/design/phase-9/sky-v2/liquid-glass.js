@@ -1,13 +1,16 @@
-/* global window, document, URLSearchParams, CSS, ResizeObserver, MutationObserver,
+/* global window, document, URLSearchParams, CSS, navigator, ResizeObserver, MutationObserver,
    requestAnimationFrame, cancelAnimationFrame, AbortController */
 // A web material inspired by Apple. The optical map is original procedural code;
 // it distorts only a backdrop pseudo-element, never labels, inputs or content.
 export function installLiquidGlass() {
   const params = new URLSearchParams(window.location.search);
   const classic = params.get('glass') === 'off';
+  const prismatic = !classic && params.get('glass') !== 'soft';
   const clarityButton = document.querySelector('#glass-clarity');
   document.querySelector('#liquid-glass-style').disabled = classic;
+  document.querySelector('#prismatic-glass-style').disabled = !prismatic;
   document.body.dataset.glass = classic ? 'off' : 'on';
+  document.body.dataset.glassMaterial = prismatic ? 'prism' : 'soft';
   function preserveChoice(key, value) {
     for (const link of document.querySelectorAll('a[href^="?view="]')) {
       const [path, hash] = link.getAttribute('href').split('#');
@@ -17,6 +20,7 @@ export function installLiquidGlass() {
     }
   }
   if (classic) { preserveChoice('glass', 'off'); return; }
+  if (!prismatic) preserveChoice('glass', 'soft');
   clarityButton.hidden = false;
   const lifetime = new AbortController();
   const { signal } = lifetime;
@@ -69,7 +73,10 @@ export function installLiquidGlass() {
   filters.classList.add('liquid-filter-definitions');
   filters.setAttribute('aria-hidden', 'true'); filters.setAttribute('focusable', 'false');
   const defs = document.createElementNS(svgNS, 'defs'); filters.append(defs); document.body.append(filters);
-  const canLens = Boolean(window.chrome) && CSS.supports('backdrop-filter', 'url("#liquid-edge")');
+  // Some Chromium builds do not expose window.chrome. This narrow engine gate
+  // is paired with a real pixel-difference check in the review verification.
+  const chromiumEngine = /(?:Chrome|Chromium)\/\d+/.test(navigator.userAgent) && !/(?:OPiOS|CriOS|FxiOS)/.test(navigator.userAgent);
+  const canLens = (prismatic ? chromiumEngine : Boolean(window.chrome)) && CSS.supports('backdrop-filter', 'url("#liquid-edge")');
   const lenses = canLens ? [...document.querySelectorAll('[data-glass-lens]')].map((element, index) => {
     const filter = document.createElementNS(svgNS, 'filter');
     const id = `liquid-edge-${index}`;
@@ -79,13 +86,37 @@ export function installLiquidGlass() {
     filter.setAttribute('x', '0'); filter.setAttribute('y', '0');
     const map = document.createElementNS(svgNS, 'feImage');
     map.setAttribute('result', 'edge-map'); map.setAttribute('preserveAspectRatio', 'none');
-    const bend = document.createElementNS(svgNS, 'feDisplacementMap');
-    bend.setAttribute('in', 'SourceGraphic'); bend.setAttribute('in2', 'edge-map');
-    bend.setAttribute('xChannelSelector', 'R'); bend.setAttribute('yChannelSelector', 'G');
-    bend.setAttribute('scale', '16');
+    filter.append(map);
+    // Three slightly different paths separate the backdrop's colours only at
+    // the curved edge. The centre of the normal map remains neutral.
+    const channels = prismatic ? [
+      { name: 'red', scale: 18, matrix: '1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0' },
+      { name: 'green', scale: 14, matrix: '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0' },
+      { name: 'blue', scale: 10, matrix: '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0' },
+    ] : [{ name: 'all', scale: 16 }];
+    for (const channel of channels) {
+      const bend = document.createElementNS(svgNS, 'feDisplacementMap');
+      bend.setAttribute('in', 'SourceGraphic'); bend.setAttribute('in2', 'edge-map');
+      bend.setAttribute('xChannelSelector', 'R'); bend.setAttribute('yChannelSelector', 'G');
+      bend.setAttribute('scale', String(channel.scale));
+      bend.setAttribute('result', `${channel.name}-bend`); filter.append(bend);
+      if (channel.matrix) {
+        const isolate = document.createElementNS(svgNS, 'feColorMatrix');
+        isolate.setAttribute('in', `${channel.name}-bend`); isolate.setAttribute('type', 'matrix');
+        isolate.setAttribute('values', channel.matrix); isolate.setAttribute('result', channel.name);
+        filter.append(isolate);
+      }
+    }
+    if (prismatic) {
+      for (const [first, second, result] of [['red', 'green', 'red-green'], ['red-green', 'blue', 'spectrum']]) {
+        const blend = document.createElementNS(svgNS, 'feBlend');
+        blend.setAttribute('in', first); blend.setAttribute('in2', second);
+        blend.setAttribute('mode', 'screen'); blend.setAttribute('result', result); filter.append(blend);
+      }
+    }
     const soften = document.createElementNS(svgNS, 'feGaussianBlur');
-    soften.setAttribute('stdDeviation', '.7');
-    filter.append(map, bend, soften); defs.append(filter);
+    soften.setAttribute('stdDeviation', prismatic ? '.35' : '.7');
+    filter.append(soften); defs.append(filter);
     return { element, filter, map, id, size: '' };
   }) : [];
   function measureLens(lens) {
@@ -117,7 +148,7 @@ export function installLiquidGlass() {
     filter.setAttribute('width', String(width)); filter.setAttribute('height', String(height));
     map.setAttribute('width', String(width)); map.setAttribute('height', String(height));
     map.setAttribute('href', canvas.toDataURL());
-    element.style.setProperty('--glass-optics', `url("#${id}") blur(3px)`);
+    element.style.setProperty('--glass-optics', prismatic ? `blur(1.5px) url("#${id}")` : `url("#${id}") blur(3px)`);
     element.dataset.lensReady = 'true';
   }
   let measurementFrame = 0;
@@ -141,7 +172,7 @@ export function installLiquidGlass() {
     activeGlass?.style.removeProperty('--glint-x'); activeGlass?.style.removeProperty('--glint-y');
     activeGlass = null;
   }
-  function canMove() { return finePointer.matches && !reduceMotion.matches && document.body.dataset.motion !== 'off' && !document.hidden; }
+  function canMove() { return document.body.dataset.transparency !== 'reduced' && finePointer.matches && !reduceMotion.matches && document.body.dataset.motion !== 'off' && !document.hidden; }
   for (const element of document.querySelectorAll('[data-glint]')) {
     element.addEventListener('pointermove', event => {
       if (!canMove()) return;
@@ -159,7 +190,7 @@ export function installLiquidGlass() {
     element.addEventListener('pointerleave', clearGlint, { signal });
   }
   const motion = new MutationObserver(clearGlint);
-  motion.observe(document.body, { attributes: true, attributeFilter: ['data-motion'] });
+  motion.observe(document.body, { attributes: true, attributeFilter: ['data-motion', 'data-transparency'] });
   reduceMotion.addEventListener('change', clearGlint, { signal });
   finePointer.addEventListener('change', clearGlint, { signal });
   document.addEventListener('visibilitychange', () => { if (document.hidden) clearGlint(); }, { signal });
