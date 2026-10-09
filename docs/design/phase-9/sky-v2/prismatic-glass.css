@@ -115,6 +115,30 @@ body[data-time=night] .glass[data-glint-shape] { --glint-local-light: rgb(255 25
   --glint-local-fill: radial-gradient(ellipse 24px 90px at var(--glint-x) var(--glint-y), var(--glint-local-light), transparent 100%);
   --glint-local-rim: radial-gradient(ellipse 36px 110px at var(--glint-x) var(--glint-y), var(--glass-highlight), transparent 100%);
 }
+/* A soft hourglass caustic: two broad edge fans meet in a fine waist.
+   The brightest catches sit on the rim, away from the central label lane.
+   The fans stay attached to the glass edges and follow the pointer sideways. */
+.site-header[data-glint-shape=flare] {
+  --glint-flare-fan: rgb(255 255 255 / .55);
+  --glint-flare-waist: rgb(255 255 255 / .25);
+}
+body[data-time=night] .site-header[data-glint-shape=flare] {
+  --glint-flare-fan: rgb(255 255 255 / .28);
+  --glint-flare-waist: rgb(255 255 255 / .06);
+}
+.site-header[data-glint-shape=flare][data-glint-active] {
+  --glint-local-fill:
+    radial-gradient(ellipse 62px 2px at var(--glint-x) 0%, #fff, transparent 100%),
+    radial-gradient(ellipse 62px 2px at var(--glint-x) 100%, #fff, transparent 100%),
+    radial-gradient(ellipse 68px 18px at var(--glint-x) 0%, rgb(255 255 255 / .72), transparent 100%),
+    radial-gradient(ellipse 68px 18px at var(--glint-x) 100%, rgb(255 255 255 / .64), transparent 100%),
+    radial-gradient(ellipse 80px 58px at var(--glint-x) -24px, var(--glint-flare-fan) 12%, transparent 100%),
+    radial-gradient(ellipse 80px 58px at var(--glint-x) calc(100% + 24px), var(--glint-flare-fan) 12%, transparent 100%),
+    radial-gradient(ellipse 8px 70px at var(--glint-x) 50%, var(--glint-flare-waist), transparent 100%);
+  --glint-local-rim:
+    radial-gradient(ellipse 92px 5px at var(--glint-x) 0%, #fff 25%, transparent 100%),
+    radial-gradient(ellipse 92px 5px at var(--glint-x) 100%, #fff 25%, transparent 100%);
+}
 .glass[data-glint-shape=spot][data-glint-active] {
   --glint-local-fill: radial-gradient(circle 30px at var(--glint-x) var(--glint-y), var(--glint-local-light), transparent 100%);
   --glint-local-rim: radial-gradient(circle 38px at var(--glint-x) var(--glint-y), var(--glass-highlight), transparent 100%);

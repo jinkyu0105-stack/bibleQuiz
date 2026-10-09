@@ -31,16 +31,19 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 ## 헤더·검토 바의 반사광 비교
 
-사용자 요청으로 헤더는 좌우로 움직이는 좁은 세로 광원, 아래 검토 바는 포인터 근처의 작은 원형 광원을 시험한다. 유리 재질·프리즘과 평소 표면은 유지한다. 마우스를 빼면 추가 광원만 사라지며, 공통 멈춤/OS 움직임 감소/투명도 감소에서는 반응하지 않는다. 터치로 빛이 남지 않는다.
+현재 헤더 광원은 사용자 스케치의 **위아래가 넓고 가운데가 잘록한 형태**를 참고한다. 부드러운 두 빛살이 가는 중심으로 이어지고 위아래 테두리에 밝은 흰색 반사가 맺힌다. 모양은 유리의 위아래 끝에 붙어 마우스를 좌우로 따라간다. 밤에는 중앙으로 번지는 빛만 낮춰 밝은 글자를 보존한다. 아래 검토 바의 작은 원형 광원은 그대로다.
 
 | 비교 | 헤더 | 아래 검토 바 |
 |---|---|---|
-| [두 효과 함께](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both) | 세로 광원 | 포인터 주변 원형 광원 |
-| [헤더만 새 효과](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=header) | 세로 광원 | 이전 반사 |
+| [현재 보정안](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both) | 밝은 모래시계형 반사 | 포인터 주변 원형 광원 |
+| [직전 일자형과 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both&header-glint=straight) | 직전의 좁은 세로 광원 | 포인터 주변 원형 광원 |
+| [헤더만 새 효과](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=header) | 밝은 모래시계형 반사 | 이전 반사 |
 | [아래 바만 새 효과](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=dock) | 이전 반사 | 포인터 주변 원형 광원 |
 | [두 반사광 모두 이전으로](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=original) | 이전 반사 | 이전 반사 |
 
-현재 기본은 두 효과의 시험안이다. `glint` 선택은 시간대·공개/풀이/관리자 이동에도 유지한다. `glint=original`은 **이번 반사광만** 이전으로 되돌리는 비교다. 유리 재질 전체를 바꾸는 `glass=soft`/`glass=off`와 구분한다. 최종 선호는 사용자 확인 뒤 정한다. [구현/검사/복원 근거](../../../work/P9-06.md#헤더와-검토-바의-반사광-비교--2026-10-09).
+`header-glint=straight`는 직전5c44efc의 일자형, 생략 또는 `header-glint=flare`는 현재 형태다. `glint=original`은 두 모양 실험 전 a1900a4의 반사로 돌아간다. 두 선택은 시간대·공개/풀이/관리자 이동에도 유지한다. 유리 재질 전체를 바꾸는 `glass=soft`/`glass=off`와 구분한다.
+
+유리 재질·프리즘·평소 표면은 유지한다. 포인터 이탈 시 추가 광원만 사라지며 공통 멈춤/OS 움직임 감소/투명도 감소에서는 반응하지 않는다. 터치로 빛이 남지 않는다. 현재 보정안의 시각 확인은 같은 P9-06에서 이어간다. [이번 구현/검사](../../../work/P9-06.md#헤더의-잘록한-광원과-밝기-보정--2026-10-09) · [앞선 두 모양/복원 근거](../../../work/P9-06.md#헤더와-검토-바의-반사광-비교--2026-10-09).
 
 ## 새벽 4K 영상
 

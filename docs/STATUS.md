@@ -1,19 +1,19 @@
 # 현재 상태
 
-## P9-06 헤더·검토 바 반사광 비교 — 2026-10-09
+## P9-06 헤더의 잘록한 광원 보정 — 2026-10-09
 
-**두 반사광 비교 구현·관련 검사 완료, 사용자 선택 대기. 부모 P9-06은 진행 중**이다. 사용자는 맑은 유리를 긍정적으로 평가하고 헤더에는 세로로 퍼져 좌우를 따라가는 빛, 아래 검토 바에는 포인터 부근의 원형 빛을 시험하도록 요청했다. [두 효과](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both) · [둘 다 이전 반사로](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=original) · [각각 비교하는 방법](design/phase-9/sky-v2/README.md#헤더검토-바의-반사광-비교). 평소 표면·유리 재질/프리즘·영상·입력/배치는 유지한다. 실제 앱/운영 연결은 아직이다.
+**헤더 광원 보정·관련 검사 완료, 사용자 시각 확인 대기. 부모 P9-06은 진행 중**이다. 사용자 스케치를 참고해 위아래는 넓고 가운데는 잘록한 빛과 더 강한 가장자리 반사를 적용했다. 아래 검토 바의 작은 원형 광원은 유지한다. [현재 보정안](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both) · [직전 일자형](http://localhost:4189/docs/design/phase-9/sky-v2/?time=dawn&ground=grass&video=billowing&glint=both&header-glint=straight) · [전체 비교 방법](design/phase-9/sky-v2/README.md#헤더검토-바의-반사광-비교). 실제 앱/운영 연결은 아직이다.
 
 | 작업 ID | 사용자 결과 | 상태 |
 |---|---|---|
 | P9-05 | Air 실제 탐색·하늘 방향·첫 동작 검토본 | 완료 |
-| P9-06 | 새 하늘 대표 시안·영상 배경/전체 유리 UI 보정 | 진행 중 — 반사광 비교 선택·나머지 영상 수령/실제 앱 연결 남음 |
+| P9-06 | 새 하늘 대표 시안·영상 배경/전체 유리 UI 보정 | 진행 중 — 헤더 보정안 확인·나머지 영상 수령/실제 앱 연결 남음 |
 
-Chromium의4조합/3화면 이동·390/1440/2560px 광원 이동/넘침, Firefox·감소/정지·터치·복원 통과. 실제 이전 a1900a4와 복원/평소 모습 픽셀 차이0. 네 시간대 hover44개 글자 영역 최소5.18:1, lint/typecheck·보호 파일50개 해시 대조·문서 검사 완료. 기존735표본/전체 기능/출시/유료 검사는 반복하지 않았다. Safari·실기기와 실제 모양 선택은 남아 있다. [이번 검사·중간 수정](work/P9-06.md#헤더와-검토-바의-반사광-비교--2026-10-09).
+Chromium390/1440/2560px 형태/포인터 이동·4조합/3화면 이동, Firefox·감소/정지·터치·복원 통과. 같은 배경에서 직전 일자형 복원·평소 표면·아래 바·모양 실험 전 반사11개 비교의 픽셀 차이0. 네 시간대 헤더 hover28개 글자 영역 최소6.29:1, 선택 새벽4K 영상 위/밤 캡처 확인, lint/typecheck·보호 파일50개 해시·문서 검사 완료. [구현/측정·검사 범위](work/P9-06.md#헤더의-잘록한-광원과-밝기-보정--2026-10-09). 이전 전체 기능/출시/유료 검사는 반복하지 않았다. Safari/실기기·최종 형태 평가는 기존 한계다.
 
-병렬 대화의5caa2b4는 그대로다. 낮·노을·밤 프롬프트는billowing-v3, 새벽 원문은billowing-v2이며12:30 선택 영상도 유지한다. [병렬 결과](design/phase-9/video-kit/PROMPT-REVISION.md). 이번에는 video-kit을 편집하지 않았다.
+병렬 대화의5caa2b4/video-kit은 보존했다. 낮·노을·밤 프롬프트billowing-v3, 새벽 원문billowing-v2와12:30 선택 영상도 유지한다. [병렬 결과](design/phase-9/video-kit/PROMPT-REVISION.md).
 
-시작 HEADa1900a4 clean/ahead19, 추적 origin/main21b81de. 이번 UI2개/문서6개를 로컬 커밋하면 미푸시20개며 push/배포 없음. Pro80%×사용자 지정10=800%, 별도5시간 없음. 콘텐츠1440px·기존 자산/자료/키/유료 결과·0000~0038·폰트/fontkit 보존. **세션 유지**, 다음 추천 **Astra·Max** — 광원 모양과 포인터 반응을 시각 보정한다.
+시작 HEAD5c44efc clean/ahead20, 추적 origin/main21b81de. 이번 UI2개/문서6개를 로컬 커밋하면 미푸시21개며 push/배포 없음. Pro79%×사용자 지정10=790%, 별도5시간 없음. 콘텐츠1440px·기존 자산/자료/키/유료 결과·0000~0038·폰트/fontkit 보존. **세션 유지**, 다음 추천 **Astra·Max** — 빛의 모양·강도와 영상 위 가독성을 보정한다.
 
 ## P9-04 운영 배포 완료 — 2026-10-07
 

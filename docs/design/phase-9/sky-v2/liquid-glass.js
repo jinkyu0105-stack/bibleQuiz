@@ -24,8 +24,11 @@ export function installLiquidGlass() {
   const glint = ['original', 'header', 'dock'].includes(params.get('glint')) ? params.get('glint') : 'both';
   document.body.dataset.glintComparison = glint;
   preserveChoice('glint', params.has('glint') ? glint : '');
+  // Keep the previous straight column available without changing the dock.
+  const headerGlint = params.get('header-glint') === 'straight' ? 'straight' : 'flare';
+  preserveChoice('header-glint', params.has('header-glint') ? headerGlint : '');
   if (prismatic) {
-    if (glint === 'both' || glint === 'header') document.querySelector('.site-header').dataset.glintShape = 'vertical';
+    if (glint === 'both' || glint === 'header') document.querySelector('.site-header').dataset.glintShape = headerGlint === 'straight' ? 'vertical' : 'flare';
     if (glint === 'both' || glint === 'dock') document.querySelector('.review-switch').dataset.glintShape = 'spot';
   }
   if (classic) { preserveChoice('glass', 'off'); return; }
