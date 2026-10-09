@@ -24,8 +24,8 @@ export function installLiquidGlass() {
   const glint = ['original', 'header', 'dock'].includes(params.get('glint')) ? params.get('glint') : 'both';
   document.body.dataset.glintComparison = glint;
   preserveChoice('glint', params.has('glint') ? glint : '');
-  // Use the same local spot on both controls; keep earlier header comparisons.
-  const headerGlint = ['straight', 'flare'].includes(params.get('header-glint')) ? params.get('header-glint') : 'spot';
+  // Keep the header light on its rim; preserve previous review choices.
+  const headerGlint = ['spot', 'straight', 'flare'].includes(params.get('header-glint')) ? params.get('header-glint') : 'edge';
   preserveChoice('header-glint', params.has('header-glint') ? headerGlint : '');
   if (prismatic) {
     if (glint === 'both' || glint === 'header') document.querySelector('.site-header').dataset.glintShape = headerGlint === 'straight' ? 'vertical' : headerGlint;

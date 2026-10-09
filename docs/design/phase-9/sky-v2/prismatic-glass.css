@@ -111,6 +111,13 @@ body[data-time=night] {
     radial-gradient(ellipse at 14% 0%, var(--glass-highlight), transparent 48%);
 }
 body[data-time=night] .glass[data-glint-shape] { --glint-local-light: rgb(255 255 255 / .08); }
+/* Project the pointer's x position onto both edges. The existing rim mask
+   clips this light out of the centre; the resting fill never follows it. */
+.site-header[data-glint-shape=edge][data-glint-active] {
+  --glint-local-rim:
+    radial-gradient(circle 38px at var(--glint-x) 0%, var(--glass-highlight), transparent 100%),
+    radial-gradient(circle 38px at var(--glint-x) 100%, var(--glass-highlight), transparent 100%);
+}
 .glass[data-glint-shape=vertical][data-glint-active] {
   --glint-local-fill: radial-gradient(ellipse 24px 90px at var(--glint-x) var(--glint-y), var(--glint-local-light), transparent 100%);
   --glint-local-rim: radial-gradient(ellipse 36px 110px at var(--glint-x) var(--glint-y), var(--glass-highlight), transparent 100%);

@@ -2,19 +2,19 @@
 
 ## 현재 작업과 다음 첫 행동
 
-2026-10-09. **P9-06 진행 중 — 사용자가 선택한 헤더/아래 바 동일 원형 광원 적용·관련 검사 완료**. 사용자는 모래시계형을 선호하지 않고 아래 디자인 검토 바와 같은 빛으로 바꾸도록 요청했다. 헤더도 같은 `spot` CSS를 재사용한다. 나머지 시간대 영상 수령/연결과 실제 앱 연결은 기존 범위로 남아 있다. 다음 사용자 검토/자료를 같은P9-06에서 이어가며 새 작업 ID를 만들지 않는다.
+2026-10-09. **P9-06 진행 중 — 헤더의 위·아래 테두리 광원 구현·관련 검사 완료**. 사용자는 중앙 표면의 빛을 없애고 마우스가 가운데에 있어도 위·아래 두 경계가 동시에 반응하도록 요청했다. 현재 헤더는 포인터의 x좌표만 따라 두 테두리를 밝힌다. 아래 바는 기존 원형 반사다. 다음 사용자 검토/자료를 같은P9-06에서 이어가며 나머지 시간대 영상 수령/연결과 실제 앱 연결은 기존 범위로 남아 있다.
 
-[현재 원형 광원](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both). `header-glint` 생략/`spot`은 현재 원형, `straight`는5c44efc의 일자형, `flare`는75e63a0의 미채택 모래시계형이다. 기존 `glint=header/dock/original`과 `glass=soft/off`도 보존한다. [전체 비교 안내](design/phase-9/sky-v2/README.md#헤더검토-바의-반사광-비교). 선택은 공개/풀이/관리자 이동에도 유지한다.
+[현재 테두리 반사](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&glint=both). `header-glint` 생략/`edge`는 현재 테두리, `spot`은4afa662의 원형, `straight`는5c44efc의 일자형, `flare`는75e63a0의 모래시계형이다. 기존 `glint=header/dock/original`과 `glass=soft/off`도 보존한다. [비교 안내](design/phase-9/sky-v2/README.md#헤더검토-바의-반사광-비교). 선택은 공개/풀이/관리자 이동에도 유지한다.
 
 선택12:30 새벽 영상(`video=billowing`)과 새벽 프롬프트v2, P9-04 완료/운영 버전은 그대로다. `video=dynamic`은11:50, `video=calm`은최초, `video=off`는사진이다.
 
 ## 이번 변경과 검사
 
-UI는 `liquid-glass.js`의 헤더 기본 모양 선택3줄만 바꿨다. 기존 원 반경30px/테두리38px·흰색 alpha16%/밤8%를 그대로 재사용하며 CSS/포인터 처리/아래 바·자산은 수정하지 않았다. 모래시계형은 기본에서 제외하고 이전 명시 비교로만 보존했다. [재현 기준](spec/design.md#apple-참고-유리-검토본의-재현-기준).
+`liquid-glass.js`의 헤더 기본을 `edge`로, `prismatic-glass.css`에 테두리 전용 광원을 추가했다. 기존 원형 반사의38px 반경/밝기를 y=0/100%에 각각 두고 기존1.5px 테두리 마스크를 재사용한다. 표면용 광원을 추가하지 않아 중앙의 평소 유리 재질은 그대로다. 포인터 y위치와 무관하게 두 경계가 반응하며 x위치만 따른다. 아래 바·기존 버튼 hover/초점·포인터 이벤트·영상/자산은 유지한다. [재현 기준](spec/design.md#apple-참고-유리-검토본의-재현-기준).
 
-Chromium4조합/3화면 이동·390/1440/2560px 국소 반사/포인터 추종/넘침 없음·정지/감소/이탈/이전 재질, Firefox 대안 통과. 통제 배경에서 헤더 변화 폭은 각 화면52px다. 헤더/아래 바의 광원 채움·테두리·밝기 계산값이 동일하고 이전 일자형/모래시계형과 화면 이동도 보존됨을 확인했다. 네 시간대 헤더 hover28영역 최소6.31:1/실패0, 밤 캡처 확인. 첫 Firefox 검사만 계산된 CSS에서 `circle` 단어가 생략되는 표기 차이로 실패했다. 실제30px 반경을 확인하도록 검사식을 바로잡고 Firefox 부분만 재실행해 통과했다. 제품 코드는 추가 수정하지 않았다.
+기존 브라우저 검증을 재사용해 Chromium4개 `glint` 조합/3화면 이동과4개 헤더 선택/이동·390/1440/2560px를 확인했다. 마우스를 중앙에 둬도 두 테두리가 함께 빛나고 좌우로 따라가며 변화 폭73~74px다. 통제 배경/자식 요소를 숨긴 픽셀 대조에서 중앙 표면(경계4px와 좌우 굴곡40px 제외)의 RGB 차이 최대0이다. 포인터 y=20/80%에서도 같은 반사를 유지했다. Firefox CSS 대안·공통 멈춤/OS 감소/투명도 감소/강제 색상·이탈·이전 재질 비교, 런타임 오류0/외부 요청0. 실제 밤2560px 캡처를 확인했다.
 
-JS 구문·lint/typecheck·문서 링크/사실·git diff --check·보호 파일50개 해시를 확인했다. 근거는 `.wrangler/design-references/p9-06-header-spot/`, 지속 기록은 [P9-06](work/P9-06.md#헤더와-아래-바의-원형-광원-통일--2026-10-09)다. 새 전체 WCAG/모든 영상 프레임·Safari/실기기 검수로 해석하지 않는다. 기존 전체 기능/출시·유료 검사는 반복하지 않았다.
+JS 구문·lint/typecheck·문서 링크/사실·git diff --check·보호 파일50개 해시를 확인했다. 근거는 `.wrangler/design-references/p9-06-header-edge/`, 지속 기록은 [P9-06](work/P9-06.md#헤더의-위아래-테두리만-반응--2026-10-09)다. 중앙 표면 불변을 직접 대조하고 기존 가독성 근거를 유지했으며 새 전체 대비 표본/전체 기능/출시·유료 검사를 반복하지 않았다. 모든 영상 프레임·Safari/실기기 검수로 해석하지 않는다.
 
 ## 병렬 대화 경계와 프롬프트 결과
 
@@ -27,7 +27,7 @@ JS 구문·lint/typecheck·문서 링크/사실·git diff --check·보호 파일
 
 ## Git과 배포
 
-이번 시작 HEAD **75e63a0**, clean, 추적 origin/main **21b81de**보다21개 앞섬. UI1개/관련 문서6개만 로컬 커밋하면 미푸시22개다. 병렬 프롬프트 커밋5caa2b4/video-kit을 보존했다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 실제 자료/키/유료 결과·0000~0038·이미지/영상·폰트/fontkit·package/lockfile/Worker 설정 유지, push/배포 없음.
+이번 시작 HEAD **4afa662**, clean, 추적 origin/main **21b81de**보다22개 앞섬. UI2개/관련 문서6개만 로컬 커밋하면 미푸시23개다. 병렬 프롬프트 커밋5caa2b4/video-kit을 보존했다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 실제 자료/키/유료 결과·0000~0038·이미지/영상·폰트/fontkit·package/lockfile/Worker 설정 유지, push/배포 없음.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -41,7 +41,7 @@ Preview는 main push 자동 경로, Production은 별도 요청이다. [P9-04](w
 
 ## 실행·사용량·세션
 
-시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro22% 사용/78% 잔여, 별도5시간 없음, 사용자 지정×10=780%. 현재 원형 광원 선택 반영·검사 완료·부모P9-06 진행 중·세션 유지. 다음 추천 **GPT-6.1-sol·Medium** — 기존 효과의 작은 보정·연결을 진행한다.
+시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro22% 사용/78% 잔여, 별도5시간 없음, 사용자 지정×10=780%. 현재 헤더 테두리 광원 구현·검사 완료·부모P9-06 진행 중·세션 유지. 다음 추천 **GPT-6.1-sol·Medium** — 기존 효과의 작은 보정·연결을 진행한다.
 
 4189 서버가 응답하지 않을 때만 아래 명령으로 다시 시작한다. 이번 종료 전 HTTP200을 확인했다.
 
