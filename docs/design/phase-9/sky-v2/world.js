@@ -205,7 +205,7 @@ export function createWorld() {
     document.body.dataset.motion = paused || media.matches ? 'off' : 'on';
     const videoBlocked = skyVideo.blocked;
     motionButton.setAttribute('aria-pressed', String(paused || media.matches || videoBlocked));
-    const label = media.matches ? '움직임 감소 설정 적용 중' : videoBlocked ? '새벽 영상 재생' : paused ? '배경 움직임 재개' : '배경 움직임 멈춤';
+    const label = media.matches ? '움직임 감소 설정 적용 중' : videoBlocked ? '하늘 영상 재생' : paused ? '배경 움직임 재개' : '배경 움직임 멈춤';
     motionButton.setAttribute('aria-label', label); motionButton.title = label;
     motionButton.querySelector('span').textContent = paused || media.matches || videoBlocked ? '▷' : 'Ⅱ';
     motionButton.disabled = media.matches;

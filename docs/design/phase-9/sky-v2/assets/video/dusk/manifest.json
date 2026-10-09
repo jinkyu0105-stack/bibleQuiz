@@ -1,0 +1,44 @@
+{
+  "task": "P9-06",
+  "theme": "dusk",
+  "importedAt": "2026-10-09",
+  "source": {
+    "sourceFilename": "sunset.mp4",
+    "original": ".wrangler/design-references/p9-06-video/masters/sky-dusk-4k-original.mp4",
+    "sha256": "1afc443ba6fa08612991b1f9e26b5c9bc61f30a9b7f5b0648543eb0771b02be8",
+    "bytes": 16997296,
+    "downloadsPreserved": true
+  },
+  "video": {
+    "width": 3840,
+    "height": 2160,
+    "frameRate": "24/1",
+    "durationSeconds": 10.0,
+    "preservedVideoStreamHash": "SHA256=ad0dcebdf0f44c5ccd763e825a4491decaa2cd8cefe2d73c032ddfa2d1b75bd2"
+  },
+  "files": {
+    "sky-dusk-4k.mp4": {
+      "bytes": 16825579,
+      "sha256": "7ddda718c34a3e52cb9abe217407275745e9b9c7283515e04039042ba0ca20ac"
+    },
+    "sky-dusk-1080p.mp4": {
+      "bytes": 3607787,
+      "sha256": "2df6c86ddb4d6cd32de94acdd7fad7c94b166563b47ce1acdb213e17ce84a85d"
+    },
+    "sky-dusk-poster-4k.webp": {
+      "bytes": 284248,
+      "sha256": "fb426530743940bff08be2461607c07b08d3fdeaf35a59e3139640082dabc8fb"
+    },
+    "sky-dusk-poster-small.webp": {
+      "bytes": 64420,
+      "sha256": "0af33974031959d34368fddbbf8a8a102abdbb8cf44a6384353a3b1f62dc11dd"
+    }
+  },
+  "commands": {
+    "sky-dusk-4k.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -c:v copy -an -movflags +faststart OUTPUT",
+    "sky-dusk-1080p.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -an -vf scale=1920:1080:flags=lanczos -c:v libx264 -threads 4 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart OUTPUT",
+    "sky-dusk-poster-4k.webp": "ffmpeg -i ORIGINAL -frames:v 1 -c:v libwebp -quality 88 OUTPUT",
+    "sky-dusk-poster-small.webp": "ffmpeg -i ORIGINAL -frames:v 1 -vf scale=1280:720:flags=lanczos -c:v libwebp -quality 86 OUTPUT"
+  },
+  "policy": "User-supplied time-of-day video. The 4K video stream is copied without re-encoding; audio is removed for the background. A 1080p derivative and first-frame posters reuse the existing playback policy."
+}

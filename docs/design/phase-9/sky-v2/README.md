@@ -22,10 +22,11 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 사용자가 선택한 3번 **Apple Liquid Glass**의 원리를 웹으로 구현했다. 공개·풀이·관리자의 둥근 표면, 빛나는 가장자리, 배경 흐림과 이동하는 선택 표시를 함께 볼 수 있다. 헤더/시간대/첫 버튼은 더 맑게, 퀴즈와 편집 영역은 읽기 쉬운 밀도로 구분한다. 한글 글자와 입력칸 자체를 굴절시키지 않는다.
 
 - [맑은 프리즘 유리 + 선택 새벽 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing) · [직전의 부드러운 유리](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing&glass=soft) · [유리 이전](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing&glass=off)
-- 현재 기본은 밝은 시간대 제어 채움22~24%/밤38%, 읽기62~75%와14px 흐림이다. 밤 시간대 선택기만 작은 라벨의 대비를 위해58% 받침을 쓴다. 구름이 맑게 비치는 가운데와 얇은 색 분산 경계를 구분한다. 수치는 CSS alpha이며 실제 투과율은 아니다. 입력칸/글자/콘텐츠 폭은 유지한다.
+- 현재 기본은 밝은 시간대 제어 채움22~24%/밤38%, 풀이/편집 읽기62~75%와14px 흐림이다. 공개의 두 본문 박스는 낮48%/새벽50%/노을52%/밤64%로 조금 더 투명하게 보정했다. 밤 시간대 선택기는58%, 재생 제어는64% 받침으로 대비를 유지한다. 구름이 맑게 비치는 가운데와 얇은 색 분산 경계를 구분한다. 수치는 CSS alpha이며 실제 투과율은 아니다. 입력칸/글자/콘텐츠 폭은 유지한다.
 - **선명하게** 버튼은 투명도를 줄인다. 선택은 `clarity=high`로 URL/검토 화면 이동에 남으며 다시 누르면 복원한다. OS 투명도/움직임 감소와 기존 멈춤도 따른다.
 - Chromium에서는 배경 전용 RGB 가장자리 굴절을 더하고, 다른 브라우저는6px CSS 흐림과 유색 반사 경계로 표시한다. 실제 픽셀 비교로 중앙이 유지되고 경계에서 색이 분리됨을 확인했다. Apple 시스템 재질과 동일한 SDK가 아니다. Safari/WebKit 실검증은 현재 실행 라이브러리 부재로 남아 있다.
-- 사용자가 제공한 새벽4K 영상을 연결했다. 낮·노을·밤은 기존 이미지 방식이며 아래 새벽 영상 링크에서 비교한다.
+- 두 공개 본문 박스에는 무지갯빛 테두리와 포인터 주변의 부드러운 반사를, 어린이/장년의 원형 화살표에는 작은 렌즈 반사를 더했다. 밤 첫 버튼은 hover에도 투명한 밤 유리색을 유지한다.
+- 사용자가 제공한 네 시간대4K 영상을 각각 연결했다. 아래 링크 또는 오른쪽 시간대 버튼으로 비교한다.
 
 [AI가 참조할 재질/토큰/상태 명세](../../../spec/design.md#apple-참고-유리-검토본의-재현-기준) · [검사와 남은 범위](../../../work/P9-06.md#맑은-유리와-프리즘-보완--2026-10-09).
 
@@ -47,17 +48,18 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 포인터 이탈 시 추가 광원이 사라지며 공통 멈춤/OS 움직임 감소/투명도 감소에서는 반응하지 않는다. 기존 버튼 hover/키보드 초점 표시는 유지한다. [현재 구현/검사](../../../work/P9-06.md#헤더의-위아래-테두리만-반응--2026-10-09).
 
-## 새벽 4K 영상
+<a id="새벽-4k-영상"></a>
+## 네 시간대 4K 영상
 
-사용자가 선택한 현재 기본은10월9일12:30 제공받은 **구름의 부풀음·소멸과 느린 카메라 이동을 요청한 버전**이다. [이번 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing) · [11:50 강한 움직임](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=dynamic) · [최초 잔잔한 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=calm). 세 원본과 재생 자산을 모두 보존한다. 최신4K19.24MB/모바일1080p4.28MB이며 기존10초 재생·정지·끝0.9초 합성을 유지한다. [새 파일 정보](assets/video/billowing/manifest.json). 아래 최초 영상의 설명과 구분한다.
+[새벽](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing) · [낮](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day&video=billowing) · [노을](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dusk&video=billowing) · [밤](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=night&video=billowing) · [원래 사진/구름군](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day&video=off)
 
-[새벽 영상 보기](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn) · [원래 사진/구름군 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=off)
+2026-10-09 제공받은 네 영상은 모두 **3840×2160·24fps·10초**다.4K는 원본 영상 스트림을 그대로 복사하고 소리만 제거했다. 모바일700px 이하에서는 각각의1080p 파일을 사용한다. 시간대를 바꾸면 현재 영상 하나만 요청하고 이전 재생을 정리한다. 시간대 색과 햇빛/달빛은 영상에 담긴 그대로 표시한다. 끝0.9초의 첫 장면 합성은 반복 경계를 완화하며 MP4 자체를 완벽한 루프로 만든 것은 아니다.
 
-2026-10-09 제공받은3840×2160·24fps·10초 영상을 새벽 첫 화면에 연결했다.4K는 원본 영상 스트림을 보존하고 소리만 제거했으며 모바일700px 이하에서는1080p·3.06MB 파일을 쓴다. 원본 새벽색을 그대로 표시하고 기존 필터/빛을 이중 적용하지 않는다. 마지막과 첫 구름 모양의 차이는 끝0.9초 동안 첫 장면을 겹쳐 완화한다.
+새벽 기본은 사용자가 선택한12:30 버전(`video=billowing`)이다. [11:50 강한 움직임](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=dynamic) · [최초 잔잔한 영상](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=calm)도 보존했다. 이 선택은 새벽에만 적용한다. 새벽 현재4K19.24MB/1080p4.28MB이며 새 세 파일의 용량/해시는 [자산 기록](assets/video/README.md)을 따른다.
 
-오른쪽 멈춤으로 영상·구름·잔디를 함께 멈춘다. 다른 시간대, 화면 아래쪽, 숨은 탭에서는 영상만 자동 정지한다. OS 움직임 감소 설정에서는 처음부터 영상 대신 정지 이미지를 보여 준다. 자동 재생이 제한되면 **새벽 영상 재생** 버튼을 누른다. 낮·노을·밤과 풀이/관리자에는 영상 파일을 요청하지 않는다. `video=off`로 이미지 방식을 즉시 비교하며 파일을 지울 필요가 없다.
+오른쪽 멈춤으로 영상·구름·잔디를 함께 멈춘다. 화면 아래쪽과 숨은 탭에서는 재생을 정지한다. 멈춘 상태에서 시간대를 바꾸거나 OS 움직임 감소가 켜져 있으면 해당 첫 장면만 보여 준다. 자동 재생이 제한되면 **하늘 영상 재생** 버튼으로 시작한다. 풀이/관리자와 `video=off`는 영상 파일을 요청하지 않는다.
 
-[원본 보존 위치·해시·화면용 파일](assets/video/README.md) · [연결 검사/한계](../../../work/P9-06.md#새벽-4k-영상-연결--2026-10-09). 나머지 시간대 영상은 수령 뒤 같은 경로로 연결한다.
+[원본 보존 위치·파일·해시](assets/video/README.md) · [이번 검사/한계](../../../work/P9-06.md#네-시간대-영상과-공개-카드-유리-보정--2026-10-09). 독립 검토본의 연결이며 실제 앱/배포는 아직이다.
 
 ## OriginKit 잔디 비교
 
@@ -67,7 +69,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 ## 첫 화면의 빽빽한 구름 복원
 
-영상이 없는 시간대와 `video=off` 비교에서는 원래 낮/밤 배경을100% 밀도로 복원한 방식을 유지한다. 원본 구름군12개 영역을 원래 좌표에 둔 채 서로 다른 속도로 좌우로만 약22px 이내에서 움직인다. 새 이미지를 만들거나 몇 개의 구름을 반복 복사한 것이 아니라 기존 이미지를 GPU 마스크로 나눠 표시한다. 첫 화면의 구성·밝기·달을 유지하며 하강 중에는 앞서 만든 구름5종으로 이어진다. 공통 멈춤·움직임 감소도 적용한다. [동작/검사 근거](../../../work/P9-06.md#첫-화면의-원래-구름-밀도-복원--2026-10-08).
+`video=off` 비교와 영상/포스터 실패 대안에서는 원래 낮/밤 배경을100% 밀도로 복원한 방식을 유지한다. 원본 구름군12개 영역을 원래 좌표에 둔 채 서로 다른 속도로 좌우로만 약22px 이내에서 움직인다. 새 이미지를 만들거나 몇 개의 구름을 반복 복사한 것이 아니라 기존 이미지를 GPU 마스크로 나눠 표시한다. 첫 화면의 구성·밝기·달을 유지하며 하강 중에는 앞서 만든 구름5종으로 이어진다. 공통 멈춤·움직임 감소도 적용한다. [동작/검사 근거](../../../work/P9-06.md#첫-화면의-원래-구름-밀도-복원--2026-10-08).
 
 ## 넓은 화면 보정
 
@@ -96,7 +98,7 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 - [prismatic-glass.css](prismatic-glass.css): 현재 맑은 채움·시간대별 프리즘/반사·선명하게 대안, `glass=soft`로 비활성화
 - [liquid-glass.js](liquid-glass.js): 배경 전용 가장자리 굴절·선택 표시·마우스 빛·투명도/이전 모습 전환
 - [originkit-grass.js](originkit-grass.js): OriginKit shader/잔디 geometry와 검토본 연결
-- [sky-video.js](sky-video.js) / [sky-video.css](sky-video.css): 새벽 영상 지연 요청·정지/대체 이미지·반복 경계 합성
+- [sky-video.js](sky-video.js) / [sky-video.css](sky-video.css): 네 시간대 영상 지연 요청·전환·정지/대체 이미지·반복 경계 합성
 - [sky-banks.js](sky-banks.js): 원래 낮/밤 배경의 구름군12영역·수평 이동·원본 fallback
 - [world.js](world.js): 독자적인 깊이별 구름 투영과 지면 이동, 멈춤/감소/fallback
 - [review.js](review.js): 예시 화면 조작과 검토 경계

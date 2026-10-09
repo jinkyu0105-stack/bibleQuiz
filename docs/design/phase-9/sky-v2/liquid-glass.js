@@ -188,7 +188,8 @@ export function installLiquidGlass() {
   function canMove() { return document.body.dataset.transparency !== 'reduced' && finePointer.matches && !reduceMotion.matches && document.body.dataset.motion !== 'off' && !document.hidden; }
   for (const element of document.querySelectorAll('[data-glint]')) {
     element.addEventListener('pointermove', event => {
-      if (!canMove()) return;
+      // Nested arrow lenses own their pointer; the parent card must not steal it.
+      if (!canMove() || event.target.closest('[data-glint]') !== element) return;
       if (activeGlass !== element) { clearGlint(); activeGlass = element; }
       pending = { x: event.clientX, y: event.clientY };
       if (glintFrame) return;

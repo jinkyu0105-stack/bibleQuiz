@@ -12,8 +12,8 @@
   filter: none;
 }
 .sky-video > img { z-index: 1; }
-/* The supplied movie already contains its dawn grade and light. */
-body[data-sky-video=on] .sunlight { opacity: 0; transition: none; }
+/* Each supplied movie already contains its colour and sun/moon light. */
+body[data-sky-video=on] :is(.sunlight, .moonlight) { opacity: 0; transition: none; }
 @media (max-width:700px) {
   .sky-video > img, .sky-video > video { object-position: 53% 50%; }
 }

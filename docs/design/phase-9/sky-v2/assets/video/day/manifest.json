@@ -1,0 +1,44 @@
+{
+  "task": "P9-06",
+  "theme": "day",
+  "importedAt": "2026-10-09",
+  "source": {
+    "sourceFilename": "daytime.mp4",
+    "original": ".wrangler/design-references/p9-06-video/masters/sky-day-4k-original.mp4",
+    "sha256": "b6ac6c15ede771fb12aa20e223b3cdb3f4f2e34df58bd4964be88f1b47e2ecea",
+    "bytes": 20867164,
+    "downloadsPreserved": true
+  },
+  "video": {
+    "width": 3840,
+    "height": 2160,
+    "frameRate": "24/1",
+    "durationSeconds": 10.0,
+    "preservedVideoStreamHash": "SHA256=4328e1495ed38313e681e90d733373af1fbb809182fa633d9d1d3fdcc683b040"
+  },
+  "files": {
+    "sky-day-4k.mp4": {
+      "bytes": 20695616,
+      "sha256": "48bad3dc53cca36c058f13098467813978035a651dbcad6f25be66de811b0e8c"
+    },
+    "sky-day-1080p.mp4": {
+      "bytes": 4598945,
+      "sha256": "64716757b068db67f93472cd0188002575a136617d6ae7495e279162c1ad7a95"
+    },
+    "sky-day-poster-4k.webp": {
+      "bytes": 410978,
+      "sha256": "1a625b97f1ee4e05e784a26472514bfb736af61113abf83c625f8e5ace3a9c65"
+    },
+    "sky-day-poster-small.webp": {
+      "bytes": 95788,
+      "sha256": "94124309a33bb2e0baf22b7b72569dcc996a655e1983c6bd3634e9b4f0e4328a"
+    }
+  },
+  "commands": {
+    "sky-day-4k.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -c:v copy -an -movflags +faststart OUTPUT",
+    "sky-day-1080p.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -an -vf scale=1920:1080:flags=lanczos -c:v libx264 -threads 4 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart OUTPUT",
+    "sky-day-poster-4k.webp": "ffmpeg -i ORIGINAL -frames:v 1 -c:v libwebp -quality 88 OUTPUT",
+    "sky-day-poster-small.webp": "ffmpeg -i ORIGINAL -frames:v 1 -vf scale=1280:720:flags=lanczos -c:v libwebp -quality 86 OUTPUT"
+  },
+  "policy": "User-supplied time-of-day video. The 4K video stream is copied without re-encoding; audio is removed for the background. A 1080p derivative and first-frame posters reuse the existing playback policy."
+}

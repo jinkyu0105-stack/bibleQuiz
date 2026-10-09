@@ -1,5 +1,5 @@
 /* global window, document, URLSearchParams */
-// The user's baked dawn color replaces the photo grade only while this layer is visible.
+// Each supplied movie carries its own time-of-day colour, without the photo grade.
 export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
   const layer = vault.querySelector('.sky-video');
   const poster = layer.querySelector('img');
@@ -8,13 +8,17 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
   let state = { theme: '', visible: false, moving: false, width: 0 };
   let posterRequested = false, posterReady = false, frameReady = false;
   let source = '', failed = false, blocked = false, reportedBlocked = false;
-  let pendingPlay = null, generation = 0, disposed = false;
+  let pendingPlay = null, generation = 0, posterGeneration = 0, disposed = false;
+  let selectedTheme = '';
   const variant = new URLSearchParams(window.location.search).get('video');
-  const directory = variant === 'calm' ? 'assets/video/'
-    : variant === 'dynamic' ? 'assets/video/dynamic/' : 'assets/video/billowing/';
+  const directories = {
+    dawn: variant === 'calm' ? 'assets/video/'
+      : variant === 'dynamic' ? 'assets/video/dynamic/' : 'assets/video/billowing/',
+    day: 'assets/video/day/', dusk: 'assets/video/dusk/', night: 'assets/video/night/',
+  };
   video.muted = true;
 
-  function eligible() { return enabled && state.theme === 'dawn' && state.visible; }
+  function eligible() { return enabled && Boolean(directories[state.theme]) && state.visible; }
   function wantsPlayback() { return eligible() && state.moving && !document.hidden && !disposed; }
   function policyBlocked() { return blocked && eligible(); }
   function notifyPolicy() {
@@ -33,11 +37,29 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
     notifyPolicy(); wake();
   }
   async function loadPoster() {
-    try { await poster.decode(); posterReady = true; } catch { posterReady = false; }
-    refresh();
+    const requestGeneration = posterGeneration;
+    let decoded = false;
+    try { await poster.decode(); decoded = true; } catch { /* Keep the original sky visible. */ }
+    if (disposed || requestGeneration !== posterGeneration) return;
+    posterReady = decoded; refresh();
   }
-  function ready() { frameReady = true; refresh(); }
-  function fail() { failed = true; frameReady = false; video.pause(); refresh(); }
+  function ready() {
+    if (!source || video.readyState < 2) return;
+    frameReady = true; refresh();
+  }
+  function fail() {
+    if (!source) return;
+    failed = true; frameReady = false; video.pause(); refresh();
+  }
+  function selectTheme() {
+    // Invalidate the previous decode/play before exposing another time of day.
+    generation++; posterGeneration++; selectedTheme = state.theme;
+    source = ''; pendingPlay = null; failed = false; blocked = false;
+    posterRequested = false; posterReady = false; frameReady = false;
+    layer.hidden = true; video.hidden = true; poster.style.opacity = '1';
+    video.pause(); video.removeAttribute('src'); video.load();
+    poster.removeAttribute('srcset'); poster.removeAttribute('src');
+  }
   function play() {
     if (pendingPlay || blocked || failed || !video.paused || !source) return;
     const requestGeneration = generation;
@@ -57,18 +79,20 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
   function update(next) {
     state = next;
     if (disposed) return false;
+    if (eligible() && selectedTheme !== state.theme) selectTheme();
+    const directory = directories[selectedTheme];
     if (eligible() && !posterRequested) {
       posterRequested = true;
-      poster.srcset = `${directory}sky-dawn-poster-small.webp 1280w, ${directory}sky-dawn-poster-4k.webp 3840w`;
+      poster.srcset = `${directory}sky-${selectedTheme}-poster-small.webp 1280w, ${directory}sky-${selectedTheme}-poster-4k.webp 3840w`;
       poster.sizes = '100vw';
-      poster.src = `${directory}sky-dawn-poster-4k.webp`;
+      poster.src = `${directory}sky-${selectedTheme}-poster-4k.webp`;
     }
     if (wantsPlayback() && !failed && !blocked) {
-      // Request a movie only for a visible, moving dawn hero. Upgrade once on widening.
+      // Request a movie only for a visible, moving hero. Upgrade once on widening.
       const wanted = state.width <= 700 ? '1080p' : '4k';
       if (!source || source === '1080p' && wanted === '4k') {
         generation++; frameReady = false; source = wanted;
-        video.src = `${directory}sky-dawn-${source}.mp4`;
+        video.src = `${directory}sky-${selectedTheme}-${source}.mp4`;
         video.load();
       }
       play();
@@ -92,7 +116,7 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
   }
   function pagehide() { video.pause(); }
   function dispose() {
-    disposed = true; generation++; video.pause();
+    disposed = true; generation++; posterGeneration++; video.pause();
     poster.removeEventListener('load', loadPoster);
     video.removeEventListener('loadeddata', ready); video.removeEventListener('playing', ready);
     video.removeEventListener('pause', refresh); video.removeEventListener('error', fail);
