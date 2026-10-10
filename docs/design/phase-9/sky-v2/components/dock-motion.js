@@ -3,6 +3,7 @@
 // Only the glass stretches; labels, hit areas and actual selection stay fixed.
 export function installDockMotion({ element, indicator, signal, canMove }) {
   const links = [...element.querySelectorAll(':scope > a, :scope > button')];
+  if (!links.length) return null;
   const forcedColors = window.matchMedia('(forced-colors: active)');
   const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
   const spring = (value = 0) => ({ value, velocity: 0 });

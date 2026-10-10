@@ -1,6 +1,6 @@
 /* global window, document, URLSearchParams, setTimeout, structuredClone */
 import { createWorld } from './world.js?v=20261010-near-field-2';
-import { installLiquidGlass } from './liquid-glass.js';
+import { installLiquidGlass } from './liquid-glass.js?v=20261010-components-1';
 
 const params = new URLSearchParams(window.location.search);
 const view = ['home', 'quiz', 'admin'].includes(params.get('view')) ? params.get('view') : 'home';

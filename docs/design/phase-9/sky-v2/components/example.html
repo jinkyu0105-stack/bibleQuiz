@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>유리 UI 컴포넌트 · 다사랑 성경퀴즈</title>
+  <link rel="stylesheet" href="../fonts.css">
+  <link rel="stylesheet" href="glass-base.css?v=20261010-components-1">
+  <link rel="stylesheet" href="glass-prism.css?v=20261010-components-1">
+  <link rel="stylesheet" href="example.css">
+</head>
+<body data-time="day">
+  <header>
+    <a href="../?view=home">← 디자인 검토본</a>
+    <h1>함께 쓰는 유리 UI</h1>
+    <p>본문 박스와 메뉴에 같은 재질과 움직임을 적용합니다.</p>
+    <div class="example-settings">
+      <label>시간대 <select id="example-theme"><option value="dawn">새벽</option><option value="day" selected>낮</option><option value="dusk">노을</option><option value="night">밤</option></select></label>
+      <button type="button" id="example-clarity" aria-pressed="false">선명하게</button>
+      <button type="button" id="example-motion" aria-pressed="false">움직임 멈춤</button>
+      <button type="button" id="example-remount">다시 연결</button>
+    </div>
+  </header>
+  <main id="examples">
+    <section class="glass example-panel" data-glass-panel="reading" aria-labelledby="reading-title">
+      <h2 id="reading-title">말씀을 가까이.</h2>
+      <p>메인페이지와 풀이 박스의 맑은 가장자리, 부드러운 읽기 면입니다. 글과 입력은 흔들리지 않고 테두리만 빛을 따라갑니다.</p>
+      <div class="glass glass-clear glass-segmented example-menu" data-glass-motion="elastic" data-glass-convex role="group" aria-label="퀴즈 선택">
+        <button type="button" aria-pressed="true">어린이</button><button type="button" aria-pressed="false">장년</button>
+      </div>
+      <button class="glass-action example-action" type="button">함께 시작해요 ↗</button>
+      <p id="example-result" role="status">어린이를 선택했습니다.</p>
+    </section>
+    <section class="glass example-panel" data-glass-panel="standard" aria-labelledby="standard-title">
+      <h2 id="standard-title">차분하게 읽고 준비하는 공간.</h2>
+      <p>관리자 패널의 읽기 면과 테두리 반사를 재사용합니다.</p>
+      <nav class="glass-segmented example-menu example-grid" data-glass-nested data-glass-motion="elastic" data-glass-convex aria-label="준비할 내용">
+        <button type="button" aria-pressed="true">요약</button><button type="button" aria-pressed="false">문제</button><button type="button" aria-pressed="false">확인</button>
+      </nav>
+      <label for="example-note">메모</label><textarea id="example-note" rows="3">화면에서만 사용하는 예시입니다.</textarea>
+    </section>
+  </main>
+  <footer>이 예제는 공통 CSS와 JavaScript만 사용합니다. 앱·저장·발행과 연결하지 않습니다.</footer>
+  <script type="module" src="example.js"></script>
+</body>
+</html>

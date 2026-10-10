@@ -17,6 +17,10 @@ python3 -m http.server 4189 --bind 127.0.0.1 --directory /home/onegem/work/bible
 
 오른쪽 시간대 버튼(모바일 공개 화면은 아래쪽)으로 새벽·낮·노을·밤을 바꾼다. 풀이/관리자 모바일에서는 제어를 내용 위로 옮겨 입력 영역을 가리지 않는다. 멈춤 버튼은 구름과 선택한 잔디의 자동 움직임을 함께 멈춘다. OS 움직임 감소 설정에서는 자동 이동/전환을 끄고 시간대·스크롤 조작은 유지한다.
 
+## 재사용 컴포넌트
+
+토글/탭·본문 유리 박스·관리자 패널·입체 버튼은 [공통 컴포넌트](components/README.md)로 분리했다. [독립 예제 열기](http://localhost:4189/docs/design/phase-9/sky-v2/components/example.html)에서 시간대·선명하게·움직임·재연결을 확인할 수 있다. 원래 화면의 모양과 동작은 유지하며, 실제 운영 앱 연결과는 구분한다.
+
 ## Apple 참고 유리 UI
 
 사용자가 선택한 3번 **Apple Liquid Glass**의 원리를 웹으로 구현했다. 공개·풀이·관리자의 둥근 표면, 빛나는 가장자리, 배경 흐림과 이동하는 선택 표시를 함께 볼 수 있다. 헤더/시간대/첫 버튼은 더 맑게, 퀴즈와 편집 영역은 읽기 쉬운 밀도로 구분한다. 한글 글자와 입력칸 자체를 굴절시키지 않는다.
@@ -140,10 +144,11 @@ hover만으로 편집 내용이나 검수 확인을 바꾸지 않는다. 클릭/
 
 - [index.html](index.html): 실제 한글/레이아웃/입력 요소
 - [style.css](style.css): 네 시간대와 공개/풀이/관리자 반응형
-- [liquid-glass.css](liquid-glass.css): 역할별 유리 재질·네 시간대·접근성 대체 표시
-- [prismatic-glass.css](prismatic-glass.css): 현재 맑은 채움·시간대별 프리즘/반사·선명하게 대안, `glass=soft`로 비활성화
-- [liquid-glass.js](liquid-glass.js): 배경 전용 가장자리 굴절·선택 표시·마우스 빛·투명도/이전 모습 전환
-- [dock-motion.js](dock-motion.js): 하단/헤더/시간대 메뉴가 공유하는 탄성 이동·가로/세로 변형·복귀·정지 수명
+- [liquid-glass.css](liquid-glass.css): 공통 base 재질 import와 화면별 배치
+- [prismatic-glass.css](prismatic-glass.css): 공통 prism 재질 import와 메뉴별 읽기 받침, `glass=soft`로 비활성화
+- [liquid-glass.js](liquid-glass.js): 검토 URL·투명도/이전 모습 전환과 화면의 공통 컴포넌트 연결
+- [components/glass.js](components/glass.js): 박스·선택 표시·광학/포인터 효과와 root 연결/해제
+- [components/dock-motion.js](components/dock-motion.js): 하단/헤더/시간대 메뉴가 공유하는 탄성 이동·가로/세로 변형·복귀·정지 수명
 - [originkit-grass.js](originkit-grass.js): OriginKit shader/잔디 geometry와 검토본 연결
 - [sky-video.js](sky-video.js) / [sky-video.css](sky-video.css): 네 시간대 영상 지연 요청·전환·정지/대체 이미지·반복 경계 합성
 - [sky-banks.js](sky-banks.js): 원래 낮/밤 배경의 구름군12영역·수평 이동·원본 fallback

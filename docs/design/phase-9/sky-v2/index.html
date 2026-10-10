@@ -6,8 +6,8 @@
   <title>다사랑교회 성경퀴즈 · 새 하늘</title>
   <meta name="description" content="말씀을 가까이, 일상에 깊이. 다사랑교회 성경퀴즈의 새 디자인 검토본">
   <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="style.css?v=20261010-near-field-2">
-  <link id="liquid-glass-style" rel="stylesheet" href="liquid-glass.css">
-  <link id="prismatic-glass-style" rel="stylesheet" href="prismatic-glass.css">
+  <link id="liquid-glass-style" rel="stylesheet" href="liquid-glass.css?v=20261010-components-1">
+  <link id="prismatic-glass-style" rel="stylesheet" href="prismatic-glass.css?v=20261010-components-1">
   <link rel="stylesheet" href="sky-video.css">
   <link rel="preload" as="image" href="assets/day.webp" imagesrcset="assets/day-small.webp 960w, assets/day.webp 1672w" imagesizes="100vw">
 </head>
@@ -25,7 +25,7 @@
   </div>
   <header class="site-header glass glass-clear" data-glass-lens data-glint>
     <a class="brand" href="?view=home"><span class="brand-word">다사랑</span><span class="brand-detail">교회<br>성경퀴즈</span></a>
-    <nav class="public-nav" aria-label="주 메뉴"><a href="?view=home#weekly">이번 주 퀴즈</a><a href="?view=home#archive">지난 퀴즈</a></nav>
+    <nav class="public-nav" data-glass-hover-only aria-label="주 메뉴"><a href="?view=home#weekly">이번 주 퀴즈</a><a href="?view=home#archive">지난 퀴즈</a></nav>
     <a class="admin-link" href="?view=admin">관리자 <span aria-hidden="true">↗</span></a>
   </header>
   <aside class="time-rail" aria-label="배경 설정">
@@ -47,7 +47,7 @@
       </section>
       <section id="weekly" class="weekly-section" aria-labelledby="weekly-title">
         <div class="section-heading"><p class="eyebrow">이번 주 성경퀴즈</p><h2 id="weekly-title">기억에 남는 말씀,<br>함께 풀어 보세요.</h2><p>나에게 맞는 퀴즈를 고르고<br>한 칸씩, 천천히 채워 가세요.</p></div>
-        <div class="weekly-sheet glass" data-glint data-glint-shape="surface">
+        <div class="weekly-sheet glass" data-glass-panel="reading" data-glint data-glint-shape="surface">
           <div class="sheet-meta"><span class="status-mark">함께 풀어요</span><span>화면 검토용 예시</span></div>
           <h3>말씀을 따라 걷는 한 주</h3><p class="weekly-summary">설교를 들으며 마음에 남은 말씀을 돌아보세요.<br>작은 단서 하나가 새로운 묵상의 시작이 됩니다.</p>
           <div class="difficulty-links"><a href="?view=quiz&level=children"><span class="difficulty-number">01</span><span><strong>어린이 퀴즈</strong><small>쉽고 친근한 단서로 시작해요</small></span><span class="round-arrow glass glass-clear" data-glint data-glint-shape="spot" aria-hidden="true">↗</span></a><a href="?view=quiz&level=adults"><span class="difficulty-number">02</span><span><strong>장년 퀴즈</strong><small>말씀을 한 번 더 깊이 생각해요</small></span><span class="round-arrow glass glass-clear" data-glint data-glint-shape="spot" aria-hidden="true">↗</span></a></div>
@@ -56,7 +56,7 @@
       </section>
       <section id="archive" class="archive-section" aria-labelledby="archive-title">
         <div class="archive-heading"><p class="eyebrow">지난 퀴즈</p><h2 id="archive-title">다시 꺼내 보는<br>한 주의 말씀.</h2><p>마음에 머문 말씀은<br>언제든 다시 만나도 좋으니까요.</p></div>
-        <div class="archive-list glass" data-glint data-glint-shape="surface"><a href="?view=quiz&level=adults"><span class="archive-index">01</span><span><strong>말씀을 기억하는 시간</strong><small>장년 · 검토용 예시</small></span><span aria-hidden="true">↗</span></a><a href="?view=quiz&level=children"><span class="archive-index">02</span><span><strong>함께 자라는 믿음</strong><small>어린이 · 검토용 예시</small></span><span aria-hidden="true">↗</span></a></div>
+        <div class="archive-list glass" data-glass-panel="reading" data-glint data-glint-shape="surface"><a href="?view=quiz&level=adults"><span class="archive-index">01</span><span><strong>말씀을 기억하는 시간</strong><small>장년 · 검토용 예시</small></span><span aria-hidden="true">↗</span></a><a href="?view=quiz&level=children"><span class="archive-index">02</span><span><strong>함께 자라는 믿음</strong><small>어린이 · 검토용 예시</small></span><span aria-hidden="true">↗</span></a></div>
         <div class="ground-comparison glass" id="ground-controls"><span>잔디 비교</span><div class="glass-segmented" role="group" aria-label="잔디 표현 비교"><button type="button" data-ground="photo" aria-pressed="true">기존 사진</button><button type="button" data-ground="grass" aria-pressed="false">움직이는 잔디</button></div><p id="grass-status" role="status">기존 사진 · 언제든 다시 선택할 수 있어요</p></div>
       </section>
       <footer class="site-footer"><span>다사랑교회 성경퀴즈</span><span>말씀을 가까이. 일상에 깊이.</span><a href="#main">맨 위로 ↑</a></footer>
@@ -64,14 +64,14 @@
     <div id="quiz-view" class="view" hidden>
       <div class="quiz-top"><a class="back-link" href="?view=home#weekly">← 이번 주 말씀</a><span class="quiet-label">화면 검토용 예시</span></div>
       <div class="quiz-heading"><div><p id="quiz-level" class="eyebrow">어린이 성경퀴즈</p><h1>한 칸씩, 말씀 가까이.</h1></div><div class="level-switch glass glass-clear glass-segmented" role="group" aria-label="퀴즈 난이도"><a href="?view=quiz&level=children" data-level="children">어린이</a><a href="?view=quiz&level=adults" data-level="adults">장년</a></div></div>
-      <div class="puzzle-workspace glass">
+      <div class="puzzle-workspace glass" data-glass-panel="reading">
         <div class="board-area"><div class="board-caption"><span>성경 이름으로 연습해요</span><span id="word-count">0 / 3 단어</span></div><div id="puzzle-board" class="puzzle-board" role="group" aria-label="성경 이름 연습 격자"></div><div class="board-footer"><span>단서를 누르면 입력할 칸이 보여요.</span><button id="reset-puzzle" type="button">처음부터</button></div></div>
         <div class="clue-area"><div class="clue-heading"><h2>단서</h2><span>가로</span></div><div id="clue-list" class="clue-list"></div><form id="word-form"><label for="word-input" id="word-label">1번 단어 · 3글자</label><div class="word-entry"><input id="word-input" autocomplete="off" spellcheck="false" placeholder="단어를 입력하세요" maxlength="3"><button class="button primary" type="submit">입력</button></div><p id="word-feedback" role="status">한글을 모두 입력한 뒤 ‘입력’을 눌러 주세요.</p></form><div class="word-navigation"><button type="button" id="previous-word">← 이전 단서</button><button type="button" id="next-word">다음 단서 →</button></div><div class="puzzle-notice"><span aria-hidden="true">○</span><p>괜찮아요. 천천히 풀어 보세요.<br>이 화면의 입력은 다른 곳에 전송되지 않아요.</p></div></div>
       </div>
       <p class="quiz-disclaimer">디자인 검토용 연습 화면입니다. 실제 주간 퀴즈의 채점·제출·참여 기록과 연결되지 않습니다.</p>
     </div>
     <div id="admin-view" class="view" hidden>
-      <div class="admin-layout"><aside class="admin-sidebar glass"><p class="eyebrow">운영 공간</p><h1>주간 운영</h1><nav aria-label="관리자 운영 메뉴"><button type="button" class="selected" aria-current="page" data-admin-page="weekly">주간 운영 <span>↗</span></button><button type="button" data-admin-page="filter">이름·문구 필터</button><button type="button" data-admin-page="privacy">문의·삭제 요청</button><button type="button" data-admin-page="tools">발행·수정 도구</button><button type="button" data-admin-page="backup">비용·백업</button><button type="button" data-admin-page="manual">운영 매뉴얼</button></nav><div class="sidebar-note">말씀을 준비하는<br>정성스러운 한 주.</div></aside><div class="admin-main glass"><div class="admin-title"><div><p class="eyebrow">이번 주 말씀 준비</p><h2>말씀을 따라 걷는 한 주</h2></div><span class="review-badge">검토용 예시</span></div><ol class="admin-steps" aria-label="주간 발행 6단계"></ol><div class="editor-toolbar"><div class="content-tabs glass-segmented" role="group" aria-label="검수 대상"><button type="button" aria-pressed="true" data-content="summary">설교 요약</button><button type="button" aria-pressed="false" data-content="children">어린이 문제</button><button type="button" aria-pressed="false" data-content="adults">장년 문제</button></div><span>내용 검수</span></div><div class="editor-workspace"><div class="editor-column"><div class="editor-heading"><h3 id="editor-title">설교 요약 검토</h3><span>직접 수정 가능</span></div><label for="review-title">제목</label><input id="review-title" value="말씀을 따라 걷는 한 주"><label for="review-body" id="review-body-label">요약 내용</label><textarea id="review-body" rows="9">설교의 중심 내용을 함께 돌아보고, 한 주의 일상에서 실천할 일을 생각해 봅니다.
+      <div class="admin-layout"><aside class="admin-sidebar glass" data-glass-panel="standard"><p class="eyebrow">운영 공간</p><h1>주간 운영</h1><nav data-glass-nested aria-label="관리자 운영 메뉴"><button type="button" class="selected" aria-current="page" data-admin-page="weekly">주간 운영 <span>↗</span></button><button type="button" data-admin-page="filter">이름·문구 필터</button><button type="button" data-admin-page="privacy">문의·삭제 요청</button><button type="button" data-admin-page="tools">발행·수정 도구</button><button type="button" data-admin-page="backup">비용·백업</button><button type="button" data-admin-page="manual">운영 매뉴얼</button></nav><div class="sidebar-note">말씀을 준비하는<br>정성스러운 한 주.</div></aside><div class="admin-main glass" data-glass-panel="standard"><div class="admin-title"><div><p class="eyebrow">이번 주 말씀 준비</p><h2>말씀을 따라 걷는 한 주</h2></div><span class="review-badge">검토용 예시</span></div><ol class="admin-steps" aria-label="주간 발행 6단계"></ol><div class="editor-toolbar"><div class="content-tabs glass-segmented" data-glass-nested role="group" aria-label="검수 대상"><button type="button" aria-pressed="true" data-content="summary">설교 요약</button><button type="button" aria-pressed="false" data-content="children">어린이 문제</button><button type="button" aria-pressed="false" data-content="adults">장년 문제</button></div><span>내용 검수</span></div><div class="editor-workspace"><div class="editor-column"><div class="editor-heading"><h3 id="editor-title">설교 요약 검토</h3><span>직접 수정 가능</span></div><label for="review-title">제목</label><input id="review-title" value="말씀을 따라 걷는 한 주"><label for="review-body" id="review-body-label">요약 내용</label><textarea id="review-body" rows="9">설교의 중심 내용을 함께 돌아보고, 한 주의 일상에서 실천할 일을 생각해 봅니다.
 
 이 문장은 화면 검토를 위한 예시입니다. 실제 설교나 AI 생성 결과가 아닙니다.</textarea><div class="editor-bottom"><span id="edit-state" role="status">예시 내용을 수정해 볼 수 있습니다.</span><button type="button" id="restore-example">예시 되돌리기</button></div></div><aside class="reader-preview"><p class="eyebrow">성도에게 보이는 내용</p><span class="preview-rule"></span><h3 id="preview-title">말씀을 따라 걷는 한 주</h3><p id="preview-body">설교의 중심 내용을 함께 돌아보고, 한 주의 일상에서 실천할 일을 생각해 봅니다.
 
@@ -81,6 +81,6 @@
   <nav class="review-switch glass glass-clear glass-segmented" data-glass-lens data-glint aria-label="검토할 화면"><span>디자인 검토</span><a href="?view=home" data-view-link="home">공개</a><a href="?view=quiz" data-view-link="quiz">풀이</a><a href="?view=admin" data-view-link="admin">관리자</a></nav>
   <dialog id="review-dialog" class="glass"><h2 id="dialog-title">화면 검토</h2><p id="dialog-message"></p><form method="dialog"><button class="button primary">확인</button></form></dialog>
   <noscript><p class="no-script">공개 화면을 읽을 수 있습니다. 시간대 선택과 연습 화면을 사용하려면 JavaScript를 켜 주세요.</p></noscript>
-  <script type="module" src="review.js?v=20261010-near-field-2"></script>
+  <script type="module" src="review.js?v=20261010-components-1"></script>
 </body>
 </html>
