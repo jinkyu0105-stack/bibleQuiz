@@ -7,6 +7,7 @@ P9-06 검토본과 같은 유리 재질·움직임을 실제 React 페이지에�
 | `GlassPanel` | `surface="reading"` 기본값, `standard`; `as`로 의미에 맞는 태그 | 첫 화면/요약/풀이/지난 퀴즈, 관리자 패널 |
 | `GlassMenu` | `as="nav"` 또는 `div`; `clear`, `nested`, `structure` | 주요 메뉴/시간대/난도/운영 메뉴/검수 대상 |
 | `GlassLink` | React Router `LinkProps`, 입체 링크 | 관리자 진입, 참여 가능한 다른 퀴즈 |
+| `PageDock` | `GlassMenu`로 구성한 실제 페이지 바로가기 | 메인 하단 |
 | `GlassArrow` | 링크 안의 장식 화살표 | 첫 화면 난도 링크 |
 | `useGlass` | 기존 DOM 태그를 보존한 채 효과 연결 | 헤더/본문 앵커/접는 관리자 메뉴/설정 버튼 |
 | `SkyEnvironment` | `view="home|quiz|archive|admin"` | 루트 레이아웃의 단일 배경/설정 |
@@ -35,3 +36,5 @@ node scripts/check-sky-components.mjs
 ```
 
 전체 실제 흐름의 검사 결과와 브라우저 한계는 [앱 적용 기록](../../docs/work/p9-06/app-integration.md)에 남긴다.
+
+P9-07의 `sky/solar-time.ts`는 서울 날짜/좌표로 네 시간대를 계산한다. 수동 시간은 `bibleQuiz:sky-session`(sessionStorage), 잔디 숨김은 `bibleQuiz:grass-hidden`(localStorage)이다. 기존 theme/sky 저장값은 초기 시간에 사용하지 않는다. `SkyScene`은 shared world의 `cloudSpeed: 2`, `setGround("grass" | "none")`를 사용하며 기본 native 검토본의 속도/사진 대안은 유지한다. 현재 동작/검사는 [P9-07](../../docs/work/P9-07.md)을 따른다.

@@ -22,7 +22,7 @@ test("shows cleanup times, preserved-data notice, expired and blocked states; re
   await expect(panel).toContainText("발행 자료의 보존 상태");
   await expect(panel.getByRole("button")).toHaveCount(0);
   await panel.screenshot({ path: testInfo.outputPath("cleanup-light.png") });
-  await page.getByLabel("화면 테마").selectOption("dark");
+  await page.getByRole("button", { name: "밤", exact: true }).click();
   await panel.screenshot({ path: testInfo.outputPath("cleanup-dark.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.reload(); await expect(panel).toContainText("정리 예정 합성 설교");

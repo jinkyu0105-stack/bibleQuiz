@@ -39,7 +39,7 @@ test("confirms withdrawal, retries a lost response exactly and restores private 
   await panel.getByText("어린이 문제·정답 보존 자료", { exact: true }).click();
   await expect(panel).toContainText("합성 단서 · 정답: 가나");
   await panel.screenshot({ path: testInfo.outputPath("withdrawal-light.png") });
-  await page.getByLabel("화면 테마").selectOption("dark");
+  await page.getByRole("button", { name: "밤", exact: true }).click();
   await panel.screenshot({ path: testInfo.outputPath("withdrawal-dark.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.reload(); await panel.getByLabel("철회한 퀴즈 검수 자료").selectOption("synthetic");

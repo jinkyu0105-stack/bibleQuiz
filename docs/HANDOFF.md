@@ -2,31 +2,30 @@
 
 ## 현재 작업과 다음 첫 행동
 
-2026-10-10. **P9-06 실제 React 페이지 적용·필수 검사·문서화 완료**. 부모 P9-06의 이번 승인된 로컬 범위도 완료다. 사용자 “이제 실제 페이지에 적용시키세요”가 직전 실제 앱 연결 제외 범위를 변경한 근거이며 push/배포는 승인하지 않았다.
+2026-10-10. **P9-07 메인 탐색과 서울 시간대 보정의 승인된 로컬 범위 완료**. P9-06 실제 앱 적용은863a84b에서 완료했다. 이번 사용자 요청은 하단 유리 바 보존/문의 이동·화면 테마 삭제·잔디 스위치·서울 계절별 시간/수동 유지·섹션 스냅·주간 앵커·구름 움직임·개발 문구 제거다. 서울은 사용자가 명시했고 수동 유지 기간은 현재 탭을 추천·적용했다. push/배포는 요청 범위 밖이다.
 
-다음 첫 행동은 [실제 로컬 페이지](http://localhost:5173/)의 사용자 피드백 확인이다. 자동 후속 구현/새 검수 번호/배포 조건은 만들지 않는다. 운영/Preview는 아래 기존 버전이다. [현재 상세 기록](work/p9-06/app-integration.md) · [React 사용법](../src/components/README.md) · [native 공통 모듈](design/phase-9/sky-v2/components/README.md).
+다음 첫 행동은 실제 로컬 화면의 사용자 피드백을 확인하는 것이다. 자동 후속 구현/새 번호/배포는 시작하지 않는다.320px 안내/CTA 겹침과 Firefox 앵커 이동 문제를 수정했다. 세부 결과는 [P9-07 기록](work/P9-07.md)에 모았다. [실제 페이지](http://localhost:5173/) · [기존 디자인 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/). 두 URL200을 확인했다.
 
-## 구현과 검증
+## 구현과 검사
 
-- 실제 첫 화면·풀이·지난 퀴즈·관리자에 Panel/Menu/Link/Arrow를 사용한다. 기존 shared native 엔진에 root만 연결하는 옵션/탭 선택 관찰/명시적 world 해제를 추가했다. 독립 검토본도 같은 소스를 계속 사용한다.
-- `/`는 하늘 첫 화면과 실제 발행 내용/난도 선택이다. `/quiz/:slug?level=…`, 기존 `/?level=…`, 개발 입력 화면·답안 키와 기존 API를 유지한다. 스크롤 복원, 네 시간대/기기 설정·멈춤/선명하게 저장, OS 감소/강제 색상과 미디어 실패 대안을 연결했다.
-- 기존 관리자 6단계/검수 탭·초안 자동 저장·발행 확인, 한글 입력/제출/결과 복원/출력을 보존한다. 모바일 메뉴 위치 충돌을 수정했다. 실제 관리자 API는 localhost 인증 부재 상태이며 정상 운영 흐름은 기존 합성 E2E로 검증했다.
-- **`pnpm check` exit0**: lint/typecheck·DB/설정·unit308·Worker2197·Workflow4·recoveryCLI2·Node14·Python7·build. 정적 파일386개/선택 MP4 8개/최대 밤4K24,836,709bytes, 모두25MiB 이하. 원본29MiB/비교 영상은 실제 앱 번들에 없다.
-- 관련 공개/입력/지난 퀴즈/관리자/발행/출력 Chromium·모바일 E2E 수행. 수정 후 대상59통과/터치 조건1제외, Firefox9통과/Chromium 한정 영상1제외. `node scripts/check-sky-components.mjs` Chromium/Firefox/터치 통과·오류/외부 요청0. 전체 E2E 목록 조회를 브라우저 성공으로 쓰지 않았다.
-- 전체 검사 첫 실패3건은 SQL의 실제 활동 시각과 고정 정리 날짜의 불일치였다. Date mock 고정만으로 SQL 시계를 바꾸는 시도는 실패해 폐기했다. 마지막 영속 활동부터7일 직전/도달을 검사하도록 `content-intent-generation.test.ts`만 수정했고 대상5건/전체2197건 통과했다. 보관 정책·서비스·SQL/migration은 그대로다.
-- 실제1440/390px 캡처와 밤 풀이/산/잔디의 스크롤 위치 캡처에서 오류0·가로 넘침0. PC19,200/모바일7,200 풀잎·`near-field-v2` 확인. WebKit은 host 라이브러리 부재로 시작하지 못했다. 실기기 Safari/iPhone/Windows IME·GPU/배터리/FPS·운영 네트워크 성능은 미검증이며 이전 점수를 이번 측정값으로 쓰지 않는다.
+정확한 정책/코드 진입점·근거는 [작업 기록](work/P9-07.md), [디자인 계약](spec/design.md#메인-탐색과-서울-시간대--p9-07), [React 재사용 방법](../src/components/README.md)에 둔다. 시간은 NOAA 근사 태양식/서울좌표/UTC+9/윤년으로 계산하고 네 경계의 UI 의미를 명세에 기록했다. 실제 날씨/천문 관측값을 매번 조회하지 않는다. 수동 시간은 sessionStorage, 잔디/선명하게/멈춤은 localStorage다. 이전 theme/sky 저장값은 삭제하지 않되 초기 선택에는 쓰지 않는다.
 
-검사 명령·실패/수정 내역과 증거 위치는 [앱 적용 기록](work/p9-06/app-integration.md)에 모았다. Git 제외 `.wrangler/design-references/p9-06-app/`의 `check-final.log`, `e2e-final.log`, `e2e-firefox.log`, `assets-build.json`, `capture-final.json`, `visual-final.json`이 근거다. 장식/상태를 다시 구현하는 React 전면 교체나 시안의 가짜 저장 동작을 가져오는 접근은 선택하지 않았다.
+- 태양 계산7건·lint/typecheck 통과. USNO 여름/겨울 참고값·한국 날짜/경계·윤일을 대조했다.
+- 필수 `pnpm check` exit0: unit315/Worker2197/Workflow4/recoveryCLI2/Node14/Python7·설정/DB·lint/typecheck/build. 마지막 앵커만 수정한 뒤에는 lint/typecheck/build와 관련 브라우저 검사를 갱신했고 변경 없는 서버 검사 결과를 재사용했다.
+- 관련17개 파일 Chromium/모바일140건의 최초135통과/1제외/4실패 → 확인창 뒤 클릭 순서/20조합 검사 시간 한도 보정 뒤 관련6건 모두 통과. 모바일 발행의 최초 페이지 재이동1건은 독립 재검증과 추가3회 모두 통과했으나 원인은 확정하지 않았다.
+- Firefox에서 native hash/smooth+기존 복원이 제자리에 남는 것을 재현하고 Router Link/ScrollRestoration으로 주간/아래 안내/맨 위로를 연결했다. 질의값도 보존한다. 최종 Chromium/모바일/Firefox 관련26통과·영상 디코딩1건 Firefox 제외. 별도 구름의 실제 렌더 픽셀 변화까지 검사했다.
+- 최초 sky11통과/3실패는 자동 밤 영상 경로·renderer 명칭의 검사 기대값을 정정했다. 실패/수정 기록을 보존하며 전체 E2E 목록 조회를 실행 성공으로 쓰지 않는다.
+- `node scripts/check-sky-components.mjs` Chromium/Firefox/터치 통과·pageerror/외부 요청0. 기존 독립 검토본의 공유 재질/수명/선택 보존을 확인했다.
+- 실제1440×900/390×844/320×667 캡처, 주간 도착0/0/0.28px·가로 넘침0. 낮·밤 푸터/잔디 끄기 추가 캡처도 오류/가로 넘침0. 푸터 왼쪽 문의와 하단 바로가기 위치를 확인했다.
+- 검사 증거는 Git 제외 `.wrangler/design-references/p9-07/`의 `check.log`, `final-ui-check.log`, `e2e-ui.log`, `e2e-corrections.log`, `e2e-publication-stability.log`, `e2e-final-sky.log`, `native-components.log`, `capture.log`, `footer-capture.json`, `build-assets.json`과 PNG/추적 파일에 있다. 첫 기대값 실패는 `e2e-sky.log`에 남겼다.
 
-## 보존과 담당 범위
+실제 관리자 API는 localhost Access 미설정으로 허용되지 않고 정상 UI 흐름은 합성 E2E다. WebKit은 직전 host 라이브러리 부재 한계를 유지한다. 실기기 Safari/iPhone·Windows IME·GPU/배터리/FPS·운영 네트워크 성능은 이번에 새로 검증하지 않는다.
 
-현재 대화는 `src/`의 UI·shared native 연결·관련 E2E/시간 경계 테스트1건·공통 문서를 담당했다. 이전 병렬 대화의 `docs/design/phase-9/video-kit/`와5caa2b4 결과는 편집하지 않았다. 모든 기존 이미지/미디어/master·폰트/fontkit·실제 원문/유료 결과/키·0000~0038·package/lockfile·Cloudflare 설정을 보존했다.
+## Git과 보존
 
-잔디/밤 영상은585f6de를 유지한다. [직전 변경과 복귀 기준](work/P9-06.md#잔디-원근과-밀도-보정-및-밤4k-압축--2026-10-10), [기존 잔디 초기 로드 한계](work/P9-06.md#잔디-표시-조사와-미리보기-복구--2026-10-09)를 보존한다. 최초 잔디 구도 복귀 기준0bf9acf이며 유리/영상 전체를 되돌리지 않는다. 선택 영상/원본 해시는 기존 [영상 기록](design/phase-9/sky-v2/assets/video/README.md)을 따른다.
+시작 main **863a84b**, clean, 추적 origin/main **21b81de**보다40개 앞섰다. 기존 변경은 없었으며 현재 수정은 이번 UI·관련 검사·문서다. 현재 대화가 공통 문서를 담당하고 별도 병렬 대화/작업자는 없다. 편집/커밋 전 실제 status/diff를 다시 확인한다. 이번 검증한 파일만 명시적으로 stage하고 로컬 커밋한다.
 
-## Git과 배포
-
-작업 시작 main HEAD **7ab710b**, clean, 추적 origin/main **21b81de**보다39개 앞섰다. 최초 미커밋 변경은 없었다. 이번 UI/검사/관련 문서만 확인해 로컬 커밋한다. 종료 커밋/clean은 최종 응답과 `git log -1`/`git status --short`에서 확인한다. 배포 포인터 `.wrangler/deploy/config.json`은 검사 전과 byte 동일하며 `dist/`는 이번 로컬 검사용 빌드다. push/배포·원격 migration·실제 AI 실행 없음.
+기존 영상/이미지/master/video-kit·폰트/fontkit·실제 원문/자료/키/유료 결과·0000~0038·package/lockfile·Cloudflare 설정을 보존했다. 최초 잔디 원근 복귀 기준0bf9acf 및585f6de의19,200/7,200개·밤4K 압축본은 유지한다. 선택 영상/해시는 [영상 기록](design/phase-9/sky-v2/assets/video/README.md)을 따른다.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -36,14 +35,12 @@
 | Preview app |3dc36ff6-f6d0-4627-bc43-6beeb3495391 / GitHub21b81de 자동 배포|
 | Preview content |2df93f07-3703-42ec-b576-fd085e8c839f / 기존 배포|
 
-main push는 Preview 자동 배포다. Production은 별도 요청이며 [P9-04](work/P9-04.md)의 운영/rollback 근거를 유지한다.
+push/배포·원격 migration·실제 AI 실행 없음. `main` push는 Preview 자동 배포다. Production은 별도 요청이며 [P9-04](work/P9-04.md)의 운영/rollback 근거를 유지한다. `dist/`는 이번 로컬 검사 결과이며 배포 증거가 아니다. 정적 파일386개/선택 영상8개/최대23.69MiB·25MiB 초과0이며 기존 배포 포인터 내용은 동일하다.
 
 ## 실행·사용량·세션
 
-시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 실제 작업 경로 `/home/onegem/work/bibleQuiz`. Node24.18.0/pnpm11.14.0, 검증된 shell은 `/bin/bash`·login:false·명시 workdir·승인 검토 경로다. 프로세스 PATH에 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다.
+시작 순서 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git. 경로 `/home/onegem/work/bibleQuiz`, Node24.18.0/pnpm11.14.0. 검증된 shell은 `/bin/bash`·login:false·명시 workdir·승인 검토 경로이며 PATH에 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. 기본 exec 시작 오류는 codex-exec-recovery에서 확인된 경로를 사용하며 같은 ENOENT를 반복하지 않는다.
 
-현재 실제 앱 서버5173은 `pnpm dev --host 127.0.0.1 --port 5173`, 기존 정적 검토 서버4189는 Python http.server다. 실제 앱은 기존 격리 `.wrangler/ui-demo-state`의 합성 데이터를 쓰며 운영 DB가 아니다. Codex 브라우저 열기 응답은 `queued`였다. 도구/앱 종료 뒤 서버 영속성을 보장하지 않는다. 서버가 응답하지 않을 때만 저장소 루트에서 위 명령으로 재시작한다. E2E 임시 서버4173은 각 검사 후 종료됐다.
+실제 앱5173은 `pnpm dev --host 127.0.0.1 --port 5173`와 기존 격리 `.wrangler/ui-demo-state` 합성 데이터다. 독립 검토본4189는 저장소 루트의 Python http.server다. 서버 응답이 없을 때만 재시작하며 도구/앱 종료 뒤 영속성을 보장하지 않는다. E2E 임시 서버4173은 각 테스트 명령이 생성/종료하므로 동시 실행하지 않는다.
 
-실행 시작 오류는 codex-exec-recovery의 검증된 경로를 사용한다. 기본 exec는 시작 전 ENOENT, Node REPL은 `sandboxCwd is not a local file URI`였으며 같은 실패 경로를 반복하지 않았다. WebKit 부재를 고쳤다고 보고하지 않는다. 보안/앱 설정과 시스템 패키지는 변경하지 않았다.
-
-Pro 시작63%/종료61% 잔여, 별도5시간 값 없음. 사용자 지정×10=630%/610%. **현재 작업 P9-06 완료 · 부모 작업 이번 로컬 범위 완료 · 다음 사용자 피드백/별도 지시 대기 · 세션 유지 · 다음 추천 GPT-6.1-Sol/high** — 공통 재질과 실제 기능을 함께 확인하는 후속 보정에 적합하다.
+시작 Pro60%·종료59% 잔여, 별도5시간 값 없음. 사용자 지정×10=600%/590%. **현재 작업 P9-07 완료 · 부모 작업 이번 로컬 범위 완료 · 다음 사용자 화면 피드백/별도 지시 · 세션 유지 · 다음 추천 GPT-6.1-Sol/high** — 후속 UI와 실제 동작을 함께 보정한다. 종료 HEAD/clean 여부는 최종 Git 조회와 응답에서 확인한다.

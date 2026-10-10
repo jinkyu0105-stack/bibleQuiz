@@ -82,10 +82,10 @@ test("administrator explicitly regenerates one scope, recovers a lost response a
   await expect(region.getByLabel("개별 재생성 비용과 무료 대안을 확인했습니다.")).not.toBeChecked();
   await expect(region.getByLabel("재생성 범위")).toBeEnabled();
   expect(requests).toHaveLength(3);
-  await page.getByLabel("화면 테마").selectOption("dark");
+  await page.getByRole("button", { name: "밤", exact: true }).click();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await region.screenshot({ path: `/tmp/p5-53-${testInfo.project.name}-dark.png` });
-  await page.getByLabel("화면 테마").selectOption("light");
+  await page.getByRole("button", { name: "낮", exact: true }).click();
   await region.screenshot({ path: `/tmp/p5-53-${testInfo.project.name}-light.png` });
 });
 

@@ -6,7 +6,7 @@ import { readSkyFlag, saveSkyPreference } from "./preferences";
 const asset = (path: string) => skyImages[path] ?? path;
 export type SkyView = "home" | "quiz" | "admin" | "archive";
 
-export function SkyScene({ time, view }: { time: SkyTime; view: SkyView }) {
+export function SkyScene({ time, view, grass }: { time: SkyTime; view: SkyView; grass: boolean }) {
   const world = useRef<WorldController | null>(null);
   useLayoutEffect(() => {
     document.body.dataset.view = view;
@@ -14,17 +14,19 @@ export function SkyScene({ time, view }: { time: SkyTime; view: SkyView }) {
     document.body.dataset.glass = "on";
     document.body.dataset.glassMaterial = "prism";
     document.documentElement.dataset.theme = time === "night" ? "dark" : "light";
+    document.body.dataset.ground = grass ? "grass" : "none";
+    world.current?.setGround(grass ? "grass" : "none");
     world.current?.setTheme(time);
     world.current?.reset();
-  }, [time, view]);
+  }, [time, view, grass]);
   useEffect(() => {
-    const controller = createWorld({ asset, videoMedia: skyMovies,
+    const controller = createWorld({ asset, videoMedia: skyMovies, cloudSpeed: 2,
       initiallyPaused: readSkyFlag("motion-paused"),
       onMotionChange: paused => { saveSkyPreference("motion-paused", String(paused)); },
     });
     world.current = controller;
     controller.setTheme(document.body.dataset.time as SkyTime);
-    controller.setGround("grass");
+    controller.setGround(document.body.dataset.ground === "none" ? "none" : "grass");
     return () => { controller.dispose(); world.current = null; };
   }, []);
   return <div id="world" aria-hidden="true">

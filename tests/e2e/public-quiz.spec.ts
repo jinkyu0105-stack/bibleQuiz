@@ -210,7 +210,7 @@ test("public layout keeps the grid visible in both themes, with plain-text summa
   await expect(page.getByText("현재 장년용에 12명이 참여했습니다.")).toBeVisible();
   await expect(page.locator(".summary-copy img")).toHaveCount(0);
   for (const theme of ["light", "dark"]) {
-    await page.getByLabel("화면 테마").selectOption(theme);
+    await page.getByRole("button", { name: (theme) === "dark" ? "밤" : "낮", exact: true }).click();
     for (const width of [320, 768, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       expect(await page.getByTestId("grid-boundary").evaluate((element) => {
@@ -309,7 +309,7 @@ test("submission prepares a session, safely retries and renders the immediate re
   await page.getByRole("checkbox").check();
   const submit = page.getByRole("button", { name: "답안 제출" });
   await expect(submit).toBeEnabled();
-  await page.getByLabel("화면 테마").selectOption("light");
+  await page.getByRole("button", { name: "낮", exact: true }).click();
   const submitBox = await submit.boundingBox();
   expect(submitBox!.height).toBeGreaterThanOrEqual(48);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
@@ -335,7 +335,7 @@ test("submission prepares a session, safely retries and renders the immediate re
     expect(solutionGridBox!.y).toBeGreaterThan(answerGridBox!.y + answerGridBox!.height);
   }
   await expect(page.getByRole("button", { name: "정답 닫기" })).toHaveAttribute("aria-pressed", "true");
-  await page.getByLabel("화면 테마").selectOption("dark");
+  await page.getByRole("button", { name: "밤", exact: true }).click();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: test.info().outputPath("submission-result-dark.png"), fullPage: true });
   await page.evaluate(() => localStorage.clear());
@@ -442,6 +442,7 @@ test("own submission deletion confirms, safely retries and removes private resul
 
   await page.setViewportSize({ width: 320, height: 800 });
   await page.goto("/?level=child");
+  await page.getByRole("button", { name: "낮", exact: true }).click();
   await page.evaluate(() => localStorage.setItem("bibleQuiz:draft:public-test-child:1", "PRIVATE_LOCAL_DRAFT"));
   await page.getByRole("button", { name: "정답보기" }).click();
   await page.getByRole("button", { name: "참여 현황 보기" }).click();
@@ -463,6 +464,7 @@ test("own submission deletion confirms, safely retries and removes private resul
   await expect(page.getByRole("heading", { name: "제출이 완료되었습니다" })).toBeVisible();
   await expect(page.getByRole("article", { name: "은혜" })).toBeVisible();
 
+  await page.getByRole("button", { name: "밤", exact: true }).click();
   await openDeletion.click();
   dialog = page.getByRole("dialog", { name: "내 제출을 삭제할까요?" });
   const confirmDeletion = dialog.getByRole("button", { name: "삭제하기" });
@@ -475,7 +477,6 @@ test("own submission deletion confirms, safely retries and removes private resul
   await expect(dialog.getByRole("alert")).toContainText("삭제하지 못했습니다. 다시 시도해 주세요.");
   await expect(page.getByRole("heading", { name: "제출이 완료되었습니다" })).toBeVisible();
   await expect(page.getByRole("article", { name: "은혜" })).toBeVisible();
-  await page.getByLabel("화면 테마").selectOption("dark");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: test.info().outputPath("submission-deletion-error-dark-320.png"), fullPage: true });
 
@@ -581,7 +582,7 @@ test("participation board stays on demand, rejects private extras and renders ac
   expect(boardRequests).toBe(2);
 
   for (const [theme, width] of [["light", 320], ["dark", 1440]] as const) {
-    await page.getByLabel("화면 테마").selectOption(theme);
+    await page.getByRole("button", { name: (theme) === "dark" ? "밤" : "낮", exact: true }).click();
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     await page.screenshot({ path: test.info().outputPath(`participation-board-${theme}.png`), fullPage: true });
@@ -666,7 +667,7 @@ test("archived participation board is public before practice", async ({ page }) 
   await expect(page.getByRole("heading", { name: "지난 퀴즈 정답" })).toBeVisible();
   await expect(page.getByText("작성한 답안이 없습니다. 빈칸과 공식 정답을 비교합니다.")).toBeVisible();
   await expect(page.getByTestId("result-answer-grid").locator('[data-comparison-cell="r0c0"]')).toHaveAttribute("aria-label", /내 답 빈칸, 정답 가, 미작성/u);
-  await page.getByLabel("화면 테마").selectOption("dark");
+  await page.getByRole("button", { name: "밤", exact: true }).click();
   await page.setViewportSize({ width: 320, height: 800 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: test.info().outputPath("archived-solution-dark-320.png"), fullPage: true });
@@ -748,7 +749,7 @@ test("archived practice check is strict, retryable, non-persistent and editable 
   await expect(page.getByText("이 결과는 제출 기록, 참여 수나 순위로 저장되지 않습니다.")).toBeVisible();
   await expect(page.getByTestId("result-answer-grid").locator('[data-comparison-cell="r0c0"]')).toHaveAttribute("aria-label", /내 답 가, 정답 가, 맞음/u);
   await expect(page.getByTestId("result-answer-grid").locator('[data-comparison-cell="r0c1"]')).toHaveAttribute("aria-label", /내 답 나, 정답 가, 틀림/u);
-  await page.getByLabel("화면 테마").selectOption("dark");
+  await page.getByRole("button", { name: "밤", exact: true }).click();
   await page.setViewportSize({ width: 320, height: 800 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: test.info().outputPath("archived-practice-dark-320.png"), fullPage: true });

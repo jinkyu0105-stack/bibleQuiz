@@ -53,7 +53,7 @@ test("reviews wording, routes semantic changes, retries lost responses, and reta
   await expect(panel).toContainText("수정 전: 합성 요약 입니다.");
   await expect(panel).toContainText("수정 후: 합성 요약입니다!");
   await panel.getByLabel("수정할 문구").selectOption("child-entry");
-  await page.getByLabel("화면 테마").selectOption(testInfo.project.name === "chromium" ? "light" : "dark");
+  await page.getByRole("button", { name: (testInfo.project.name === "chromium" ? "light" : "dark") === "dark" ? "밤" : "낮", exact: true }).click();
   await panel.screenshot({ path: testInfo.outputPath("wording.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.reload(); await parent.getByLabel("정정할 퀴즈").selectOption("synthetic");

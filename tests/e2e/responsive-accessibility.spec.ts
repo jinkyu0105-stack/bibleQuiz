@@ -80,7 +80,7 @@ for (const level of ['child', 'adult']) test(`${level} uses responsive sky sourc
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     if (width === 320 || width === 1440) {
       for (const theme of ['light', 'dark']) {
-        await page.getByLabel('화면 테마').selectOption(theme);
+        await page.getByRole("button", { name: (theme) === "dark" ? "밤" : "낮", exact: true }).click();
         await page.screenshot({ path: test.info().outputPath(`hero-${level}-${width}-${theme}.png`), fullPage: true });
       }
     }
@@ -106,7 +106,7 @@ test('public forms and archive reflow at 320px and equivalent doubled CSS text s
 test('actual control and focus colors meet non-text contrast in both themes', async ({ page }) => {
   await page.goto('/dev/quiz?level=child');
   for (const theme of ['light', 'dark']) {
-    await page.getByLabel('화면 테마').selectOption(theme);
+    await page.getByRole("button", { name: (theme) === "dark" ? "밤" : "낮", exact: true }).click();
     const ratios = await page.evaluate(() => {
       const css = getComputedStyle(document.documentElement);
       const light = (name: string) => {

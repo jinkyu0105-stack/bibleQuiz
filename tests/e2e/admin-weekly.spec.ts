@@ -140,7 +140,7 @@ test('filter management registers aliases, warns before exceptions and tests tex
   await expect(page.getByText('예외는 해당 범위의 정규화된 전체 문구가 정확히 같을 때만 금지 규칙을 건너뜁니다. 연락처·입력 형식·보호 이름 검사는 유지됩니다.',{exact:true})).toBeVisible();
   await page.getByLabel('이 문구가 기존 금지 규칙을 건너뛰는 영향을 확인했습니다.').check();await page.getByRole('button',{name:'필터 등록',exact:true}).click();
   await page.getByLabel('시험 문구',{exact:true}).fill('금 지 어');await page.getByRole('button',{name:'저장 없이 시험'}).click();await expect(page.getByText('차단 · 정규화: 금지어 · 일치 규칙: rule',{exact:true})).toBeVisible();expect(creates).toBe(2);expect(testCalls).toBe(1);
-  await page.getByLabel('화면 테마').selectOption('dark');await page.screenshot({path:`/tmp/p5-72-policy-${testInfo.project.name}.png`,fullPage:true});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.getByRole("button", { name: "밤", exact: true }).click();await page.screenshot({path:`/tmp/p5-72-policy-${testInfo.project.name}.png`,fullPage:true});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 
 test('review targets preserve a failed draft and every candidate control without triggering generation', async ({page}) => {

@@ -32,7 +32,7 @@ test("Korea time, impact confirmation invalidation, lost response retry and save
  await expect(panel.getByRole("button",{name:"마감 변경 저장"})).toBeDisabled();await panel.getByRole("checkbox").check();
  await panel.getByLabel("마감 변경 사유").fill("참여 시간 연장 확인");await expect(panel.getByRole("checkbox")).toHaveCount(0);
  await panel.getByRole("button",{name:"변경 영향 다시 확인"}).click();await panel.getByRole("checkbox").check();
- await page.getByLabel("화면 테마").selectOption(info.project.name==="chromium"?"light":"dark");await panel.screenshot({path:info.outputPath("deadline.png")});
+ await page.getByRole("button", { name: (info.project.name==="chromium"?"light":"dark") === "dark" ? "밤" : "낮", exact: true }).click();await panel.screenshot({path:info.outputPath("deadline.png")});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await panel.getByRole("button",{name:"마감 변경 저장"}).click();await expect(panel.getByRole("alert")).toContainText("입력은 유지됩니다");await expect(panel.getByLabel("마감 변경 사유")).toHaveValue("참여 시간 연장 확인");
  await panel.getByRole("button",{name:"마감 변경 저장"}).click();await expect(panel).toContainText("마감 일시를 변경했습니다");expect(commits).toHaveLength(2);expect(commits[0]).toEqual(commits[1]);

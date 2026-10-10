@@ -53,7 +53,7 @@ for(const nonRanked of [false,true]) test(`problem correction pauses, preserves 
  await editor.getByRole("button",{name:"재발행 확인",exact:true}).click();
  await expect(editor).toContainText(nonRanked?"순위와 참여 기록 없이 공개":"기존 마감 시각을 유지");
  await expect(editor).not.toContainText("7일 뒤 마감");
- await page.getByLabel("화면 테마").selectOption("dark");expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.getByRole("button", { name: "밤", exact: true }).click();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await editor.screenshot({path:testInfo.outputPath("problem-editor-dark.png")});
  await editor.getByRole("button",{name:"지금 재발행",exact:true}).click();await expect(editor.getByRole("alert")).toBeVisible();
  await editor.getByRole("button",{name:"같은 요청 재확인",exact:true}).click();await expect(panel).toContainText("수정본 발행을 완료했습니다");

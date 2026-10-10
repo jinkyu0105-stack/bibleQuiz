@@ -42,7 +42,7 @@ test("corrects published metadata, retries the same request, preserves links and
   await expect(panel).toContainText("합성 원제목 → 정정한 합성 제목");
   await expect(panel).toContainText("오전 9:00");
   await panel.screenshot({ path: testInfo.outputPath("display-light.png") });
-  await page.getByLabel("화면 테마").selectOption("dark");
+  await page.getByRole("button", { name: "밤", exact: true }).click();
   await panel.screenshot({ path: testInfo.outputPath("display-dark.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.reload(); await panel.getByLabel("정정할 퀴즈").selectOption("synthetic");

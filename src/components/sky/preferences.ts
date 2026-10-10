@@ -1,16 +1,17 @@
 import { browserStorage } from "../../lib/browser-storage";
 import type { SkyTime } from "../../../docs/design/phase-9/sky-v2/world.js";
-export type SkyChoice = SkyTime | "system";
 export const skyTimes = ["dawn", "day", "dusk", "night"] as const;
+const sessionKey = "bibleQuiz:sky-session";
 
-export function readSkyChoice(): SkyChoice {
+/** A manual choice lasts for this tab, including reloads and route changes. */
+export function readSkyChoice(): SkyTime | null {
   try {
-    const storage = browserStorage();
-    const saved = storage?.getItem("bibleQuiz:sky");
-    if (saved === "system" || skyTimes.includes(saved as SkyTime)) return saved as SkyChoice;
-    const legacy = storage?.getItem("bibleQuiz:theme");
-    return legacy === "dark" ? "night" : legacy === "light" ? "day" : "system";
-  } catch { return "system"; }
+    const saved = window.sessionStorage.getItem(sessionKey);
+    return skyTimes.includes(saved as SkyTime) ? saved as SkyTime : null;
+  } catch { return null; }
+}
+export function saveSkyChoice(time: SkyTime): boolean {
+  try { window.sessionStorage.setItem(sessionKey, time); return true; } catch { return false; }
 }
 export function readSkyFlag(key: string): boolean {
   try { return browserStorage()?.getItem(`bibleQuiz:${key}`) === "true"; } catch { return false; }

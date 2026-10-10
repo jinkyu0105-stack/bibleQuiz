@@ -4,6 +4,7 @@ import { GlassMenu } from "../components/glass/GlassMenu";
 import { GlassLink } from "../components/glass/GlassLink";
 import { GlassPanel } from "../components/glass/GlassPanel";
 import { useGlass } from "../components/glass/useGlass";
+import { PageDock } from "../components/glass/PageDock";
 import { SkyEnvironment } from "../components/sky/SkyEnvironment";
 
 export function RootLayout() {
@@ -28,8 +29,8 @@ export function RootLayout() {
         {admin ? <main id="main-content" tabIndex={-1}><GlassPanel as="div" surface="standard" className="admin-main"><Outlet /></GlassPanel></main>
           : <main id="main-content" tabIndex={-1}><Outlet /></main>}
       </div>
-      <footer className="site-footer"><span>다사랑교회 성경퀴즈</span><Link to="/privacy-requests">문의·삭제 요청 및 내 문의</Link><a href="#main-content">맨 위로 ↑</a></footer>
-      {import.meta.env.DEV && <footer className="development-footer">로컬 개발·검수 화면입니다. 실제 서비스 적용 여부는 운영 기록에서 확인합니다.</footer>}
+      <footer className="site-footer"><Link to="/privacy-requests">문의 · 삭제 요청</Link><Link to={{ pathname: location.pathname, search: location.search, hash: "#main-content" }}>맨 위로 ↑</Link></footer>
+      {home && <PageDock />}
     </div>
   </SkyEnvironment>;
 }

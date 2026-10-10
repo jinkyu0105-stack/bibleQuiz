@@ -81,10 +81,8 @@ html { scroll-padding-top: 120px; }
 .time-options small { font-size: 10px; }
 .time-options button[aria-pressed=true] { background: var(--glass-selected); }
 .sky-controls { display: flex; flex-direction: column; gap: 8px; }
-#motion, #glass-clarity { display: grid; place-content: center; width: 50px; height: 50px; min-height: 50px; padding: 5px; border-radius: 50%; color: var(--ink); font-size: 16px; }
-#glass-clarity small { font-size: 8px; }
-.time-rail .theme-control { display: grid; justify-items: center; gap: 4px; width: 84px; font-size: 9px; }
-.theme-control select { max-width: 84px; min-height: 44px; padding: 4px; border-radius: 22px; font-size: 11px; background: var(--glass-solid); }
+#motion, #glass-clarity, #grass-toggle { display: grid; place-content: center; width: 50px; height: 50px; min-height: 50px; padding: 5px; border-radius: 50%; color: var(--ink); font-size: 16px; }
+#glass-clarity small, #grass-toggle small { font-size: 8px; }
 .time-rail .quiet-message { width: 100px; font-size: 11px; padding: 8px; background: var(--glass-solid); }
 body[data-view=admin] .time-rail { top: 130px; transform: none; }
 .sky-home-hero h1 { font-weight: 400; color: var(--ink); margin: 0; }
@@ -104,7 +102,6 @@ body[data-view=admin] .time-rail { top: 130px; transform: none; }
 .recent-archive-panel { padding: 28px; }
 .sky-app .site-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; font-size: 12px; color: var(--ink); padding: 48px 4%; margin-top: 32px; }
 .home-shell .site-footer { color: #fff; text-shadow: 0 1px 4px #071a2c; background: linear-gradient(transparent, #092522a8); }
-.development-footer { position: relative; font-size: 11px; padding: 12px 24px; background: var(--glass-solid); color: var(--ink); }
 .sky-quiz-heading { margin-bottom: 24px; }
 .back-link { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 20px; font-size: 13px; }
 .sky-quiz-heading .eyebrow { color: var(--muted); margin-bottom: 10px; }
@@ -152,9 +149,7 @@ body[data-motion=off] .descent-cue span:last-child { animation: none; }
   .time-options button span { font-size: 20px; }
   .time-options small { font-size: 9px; }
   .sky-controls { flex-direction: row; gap: 4px; }
-  #motion, #glass-clarity { width: 44px; height: 44px; min-height: 44px; }
-  body[data-view=home] .time-rail .theme-control { position: absolute; bottom: 66px; right: 0; border-radius: 20px; padding: 4px; background: var(--glass-reading); }
-  .time-rail .theme-control > span { display: none; }
+  #motion, #glass-clarity, #grass-toggle { width: 44px; height: 44px; min-height: 44px; }
   .sky-quiz-heading h2 { font-size: 29px; }
   .sermon-details { grid-template-columns: minmax(0,1fr); padding: 22px; }
   .sermon-summary { grid-row: auto; }
@@ -169,4 +164,44 @@ body[data-motion=off] .descent-cue span:last-child { animation: none; }
   #world { display: none; }
   .sky-app .site-header, .time-options, .time-rail, .admin-main { background: Canvas; color: CanvasText; }
   .sky-home-hero h1, .hero-side-note, .home-shell .site-footer { color: CanvasText; text-shadow: none; }
+}
+
+/* The original glass dock, connected to actual routes. */
+.page-dock.glass {
+  position: fixed; z-index: 40; bottom: 20px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 3px; padding: 6px 7px 6px 18px;
+  border-radius: 32px; white-space: nowrap; font-size: 11px;
+  background: color-mix(in srgb, var(--glass-clear) 60%, var(--glass-solid) 40%);
+}
+.page-dock > span { padding-right: 10px; color: var(--glass-control-ink); font-size: 10px; }
+.page-dock a { display: grid; place-items: center; min-height: 44px; padding: 10px 19px; border-radius: 24px; font-size: 12px; text-decoration: none; }
+body:not([data-time=night]) .page-dock { --ink: #071725; --glass-control-ink: var(--ink); }
+#grass-toggle[aria-pressed=false] svg { opacity: .55; }
+.sky-app .site-footer { min-height: 100px; padding-top: 24px; padding-bottom: 28px; margin-top: 0; }
+.home-shell .site-footer { padding-bottom: 28px; }
+.home-shell .site-footer a { display: inline-flex; align-items: center; min-height: 44px; }
+html:has(body[data-view=home]) { scroll-snap-type: y mandatory; scroll-padding-top: 0; scroll-behavior: smooth; }
+#home-view > section { scroll-snap-align: start; scroll-snap-stop: always; }
+#home-view .weekly-section { min-height: 100svh; padding-top: 130px; padding-bottom: 110px; }
+#home-view .archive-section { min-height: 100svh; padding-top: 130px; padding-bottom: 110px; }
+#home-view .home-other-quizzes { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
+.home-shell .site-footer { scroll-snap-align: end; }
+@media (max-width: 700px) {
+  body[data-view=home] .time-rail { bottom: 86px; max-width: 380px; margin-inline: auto; }
+  .page-dock.glass { bottom: 16px; max-width: calc(100vw - 24px); padding: 6px 8px; gap: 2px; }
+  .page-dock > span { font-size: 9px; padding: 0 5px; }
+  .page-dock a { padding: 10px 15px; font-size: 11px; }
+  #home-view .weekly-section, #home-view .archive-section { padding-top: 144px; padding-bottom: 226px; }
+  .sky-home-hero { padding-bottom: 238px; }
+  .descent-cue { bottom: 218px; }
+  .hero-side-note { bottom: 218px; }
+  .home-shell .site-footer { padding-bottom: 224px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(body[data-view=home]) { scroll-snap-type: none; scroll-behavior: auto; }
+}
+
+@media (max-width: 700px) and (max-height: 740px) {
+  .sky-home-hero { padding-top: 126px; padding-bottom: 238px; }
+  .descent-cue { display: none; }
 }
