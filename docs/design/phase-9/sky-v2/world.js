@@ -143,8 +143,10 @@ export function createWorld() {
         }).catch(() => { grassFailed = true; }).finally(() => { grassLoading = false; wake(); });
       }
       if (grassField) {
-        grassCanvas.style.transform = `translate3d(0,${height * ((1 - ground) * .95 + .17)}px,0)`;
-        grassVisible = grassField.render({ time, ground, theme: document.body.dataset.time, moving: !paused && !media.matches, reduced: media.matches, width, height });
+        // Match the half-height CSS field with a smaller drawing buffer.
+        const grassHeight = height * .5;
+        grassCanvas.style.transform = `translate3d(0,${grassHeight * ((1 - ground) * .95 + .17)}px,0)`;
+        grassVisible = grassField.render({ time, ground, theme: document.body.dataset.time, moving: !paused && !media.matches, reduced: media.matches, width, height: grassHeight });
       }
     }
     // A local photograph sits behind the interactive grass.

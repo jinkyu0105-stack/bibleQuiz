@@ -2,15 +2,15 @@
 
 ## 현재 작업과 다음 첫 행동
 
-2026-10-10. **풀이 박스의 메인 카드형 굴절 통일 구현/검사 완료, 사용자 시각 확인 대기. 부모P9-06 진행 중**. [풀이 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?view=quiz&time=dusk&video=billowing&ground=grass&menu-glass=on)을 새로고침해 메인과 같은 가장자리 굴절을 확인한다. 사용자 지시로 관리자 패널은 그대로다. 변경 전 b0d5236. 실제 앱 연결·다른 UI 확대·push/배포는 자동 시작하지 않는다.
+2026-10-10. **잔디 표시 높이·그리기 버퍼·풀잎 수 절반 축소 구현/검사 완료, 사용자 시각 확인 대기. 부모P9-06 진행 중**. [잔디 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?view=home&time=dawn&video=billowing&ground=grass&menu-glass=on#ground-controls)을 새로고침해 맨 아래 높이/밀도·마우스 반응을 확인한다. 변경 전0bf9acf. 밤 영상은4K 유지 압축 방법을 설명했으며 실제 인코딩은 하지 않았다. 다음은 사용자 시각 피드백이다.
 
 ## 이번 변경과 검사
 
-- `liquid-glass.js`: 풀이도 메인과 같은 reading-header 렌즈와 안쪽 읽기 층을 사용한다.
-- `prismatic-glass.css`: 메인의 맑은 채움·시간대별 읽기 층 선택자에 풀이를 추가했다. 메인/관리자·격자/입력·페더/난도 메뉴는 유지한다.
-- Chromium390/1440px×네 시간대×두 난도16조합의 재질 일치/넘침/페더, 입력·선명하게/강제 색상·soft/off·관리자 보존 및 Firefox390px 대안 통과, pageerror0. lint/typecheck 통과. 전체 대비·영상 모든 프레임·Safari/실기기/성능/출시 검사는 반복하지 않았다.
+- style.css/world.js: 잔디를 하단50% 캔버스에 표시하고 스크롤 이동량과 그리기 높이도 절반으로 맞췄다.
+- originkit-grass.js: PC12,000/모바일4,500개로 절반 축소. 기존 종횡비/마우스 계산·바람/산/사진 복귀를 유지한다. 실제 앱·유리 UI·영상/프롬프트는 변경하지 않았다.
+- Chromium1440/390/2560px 전후 버퍼 높이/개수 절반·넘침/오류0, 네 시간대/산·마우스·정지/감소·사진 전환/WebGL context loss 복귀 확인. lint/typecheck 통과. 전체GPU 시간/실기기FPS/배터리·출시 검사는 미실행이다.
 
-[상세 기록](work/P9-06.md#풀이-박스의-메인형-굴절-통일--2026-10-10) · 증거 `.wrangler/design-references/p9-06-quiz-header/`. 이전 풀이의22px 안쪽 굴절/전체 읽기 채움을 메인형으로 대체했다. 잔디 초기 파일 재시도 한계는 [기존 기록](work/P9-06.md#잔디-표시-조사와-미리보기-복구--2026-10-09)을 유지한다.
+[상세 기록](work/P9-06.md#잔디-높이와-풀잎-수-절반-축소--2026-10-10) · 증거 `.wrangler/design-references/p9-06-grass-half/`. 화면만 줄이고 개수를 유지하는 초안은 사용자 명확화에 따라 구현 전에 제외했다. 잔디 초기 모듈 실패 재시도 한계는 [기존 기록](work/P9-06.md#잔디-표시-조사와-미리보기-복구--2026-10-09)을 유지한다.
 
 ## 병렬 대화 경계와 프롬프트 결과
 
@@ -23,7 +23,7 @@
 
 ## Git과 배포
 
-시작 HEAD **b0d5236**, clean, 추적 origin/main **21b81de**보다35개 앞섬. 이번 UI2개/문서6개만 로컬 커밋하면 미푸시36개다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 병렬 video-kit/5caa2b4·기존 메뉴/미디어·실제 자료/키/유료 결과·0000~0038·폰트/fontkit·패키지/Cloudflare 설정 유지, push/배포 없음.
+시작 HEAD **0bf9acf**, clean, 추적 origin/main **21b81de**보다36개 앞섬. 이번 코드3개/문서7개만 로컬 커밋하면 미푸시37개다. 정확한 종료 HEAD/clean은 최종 Git 기록을 따른다. 최초 미커밋 변경 없음. 병렬 video-kit/5caa2b4·기존 메뉴/미디어·실제 자료/키/유료 결과·0000~0038·폰트/fontkit·패키지/Cloudflare 설정 유지, push/배포 없음.
 
 | 대상 | 유지하는 version/소스 |
 |---|---|
@@ -37,7 +37,7 @@ Preview는 main push 자동 경로, Production은 별도 요청이다. [P9-04](w
 
 ## 실행·사용량·세션
 
-시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro33% 사용/67% 잔여, 별도5시간 없음, 사용자 지정×10=670%. 풀이 박스의 메인형 굴절 통일 완료·사용자 확인 대기·부모P9-06 진행 중·세션 유지. 다음 추천 **Astra·High** — 읽기와 맑은 가장자리의 균형을 보정한다.
+시작 순서는 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git이다. 시작 Pro33% 사용/67% 잔여, 별도5시간 없음, 사용자 지정×10=670%. 잔디 높이/개수 절반 축소 완료·사용자 확인 대기·부모P9-06 진행 중·세션 유지. 다음 추천 **Astra·High** — 읽기와 맑은 가장자리의 균형을 보정한다.
 
 4189 서버가 응답하지 않을 때만 아래 명령으로 다시 시작한다. **PTY 유지 세션**에서 실행하며 직전 서버 세션 ID는14880이며 이번에도 HTTP200을 확인했다. `nohup ... &`만 실행하면 이 도구 환경에서 명령 종료 뒤 프로세스가 유지되지 않아 사용하지 않는다. 도구 세션/앱 종료 뒤 영속성까지 보장하지 않는다.
 

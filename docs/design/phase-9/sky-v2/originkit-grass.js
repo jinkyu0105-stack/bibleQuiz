@@ -167,7 +167,7 @@ export function createGrassField(canvas, wake) {
   const gl = canvas.getContext('webgl', { alpha: true, antialias: true, depth: true, powerPreference: 'low-power' });
   if (!gl) { canvas.dataset.renderer = 'photo-fallback'; return null; }
   const mobile = window.matchMedia('(max-width: 700px)').matches;
-  const bladeCount = mobile ? 9000 : 24000;
+  const bladeCount = mobile ? 4500 : 12000;
   let programs = [], buffers = [], ground, blades;
   let groundCount = 0, lost = false, disposed = false;
   let palette = null;
