@@ -1,3 +1,4 @@
+import { GlassButton } from "../../components/glass/GlassButton";
 import { useRef, useState } from "react";
 import type { AdminContentView } from "../../../shared/api/admin-content-generation";
 import styles from "./admin-sermon-input.module.css";
@@ -54,20 +55,20 @@ export function ContentRegeneration({ view, inputConfirmed, busy, act }: { view:
     {uncertainJob && <p>이전 응답이 확인되지 않았습니다. 새로 요청하면 별도 비용이 발생할 수 있으며 이전 호출과 비용 기록은 보존합니다.</p>}
     {critiqueRetry && <p>첫 분석은 저장되었습니다. 비판 검토만 다시 시도하면 새 AI 호출 1회, 위 토큰 예시 기준 약 USD 0.08입니다. 직접 검토·수정은 무료입니다.</p>}
     <label className={styles.checkbox}><input type="checkbox" checked={paid} disabled={busy} onChange={e => setPaid(e.currentTarget.checked)} />개별 재생성 비용과 무료 대안을 확인했습니다.</label>
-    <button type="button" disabled={busy || !view.enabled || !ready || !paid || single && !target && !pending || !!running && !pending || !!pending && !!pending.retryCritiqueOnly} onClick={() => void generate(false)}>
+    <GlassButton type="button" disabled={busy || !view.enabled || !ready || !paid || single && !target && !pending || !!running && !pending || !!pending && !!pending.retryCritiqueOnly} onClick={() => void generate(false)}>
       {pending ? "같은 재생성 요청 확인" : single ? "이 답·단서만 다시 생성" : `${labels[scope]}만 다시 생성`}
-    </button>
-    {critiqueRetry && <button type="button" disabled={busy || !view.enabled || !ready || !paid || single && !target && !pending || !!running && !pending || !!pending && !pending.retryCritiqueOnly}
-      onClick={() => void generate(true)}>{pending?.retryCritiqueOnly ? "같은 비판 검토 요청 확인" : "비판 검토만 다시 시도"}</button>}
+    </GlassButton>
+    {critiqueRetry && <GlassButton type="button" disabled={busy || !view.enabled || !ready || !paid || single && !target && !pending || !!running && !pending || !!pending && !pending.retryCritiqueOnly}
+      onClick={() => void generate(true)}>{pending?.retryCritiqueOnly ? "같은 비판 검토 요청 확인" : "비판 검토만 다시 시도"}</GlassButton>}
     {latest?.scope === "intent" && latest.status === "awaiting_intent_review" && <><p>새 분석과 비판 수정본을 아래에서 비교하고 직접 선택·수정한 뒤 설교 의도를 재확정해 주세요. 기존 요약·문제의 검수는 다시 필요합니다.</p>
-      <button type="button" disabled={busy || !view.enabled || view.content.state !== "present" || view.content.intent?.rootAnalysisId === latest.analysisId}
-        onClick={() => void act("discard", {}, latest.jobId)}>기존 의도 유지하고 비교 종료</button></>}
+      <GlassButton type="button" disabled={busy || !view.enabled || view.content.state !== "present" || view.content.intent?.rootAnalysisId === latest.analysisId}
+        onClick={() => void act("discard", {}, latest.jobId)}>기존 의도 유지하고 비교 종료</GlassButton></>}
     {pending && <p role="status">요청 확인 전에는 같은 요청 번호를 유지합니다. 생성 상태를 확인해 주세요.</p>}
     {pending && pending.expectedVersion !== view.version && !view.regenerations.some(j => j.jobId === pending.requestKey) && <>
       <p>요청의 바탕 자료가 변경되었습니다. 현재 자료로 준비하면 새 요청 번호를 사용하며 비용 확인이 다시 필요합니다.</p>
-      <button type="button" disabled={busy} onClick={() => { setPending(null); setPaid(false); }}>현재 자료로 새 요청 준비</button>
+      <GlassButton type="button" disabled={busy} onClick={() => { setPending(null); setPaid(false); }}>현재 자료로 새 요청 준비</GlassButton>
     </>}
-    {pending && view.regenerations.some(j => j.jobId === pending.requestKey) && <button type="button" disabled={busy} onClick={() => { setPending(null); setPaid(false); }}>저장된 요청 확인 완료</button>}
+    {pending && view.regenerations.some(j => j.jobId === pending.requestKey) && <GlassButton type="button" disabled={busy} onClick={() => { setPending(null); setPaid(false); }}>저장된 요청 확인 완료</GlassButton>}
     {view.regenerations.length > 0 && <details><summary>개별 생성 이력·비용 ({view.regenerations.length}건)</summary>
       <ul>{view.regenerations.map(j => <li key={j.jobId}>{labels[j.scope]}{j.target ? " 중 답·단서 하나" : ""} · {statuses[j.status] ?? j.status} · {new Date(j.createdAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}
         {` · USD ${(j.costMicroUsd / 1_000_000).toFixed(4)}`}{j.unknownCalls > 0 && ` · 사용량 미확인 ${j.unknownCalls}회(비용 0이 아님)`}</li>)}</ul>

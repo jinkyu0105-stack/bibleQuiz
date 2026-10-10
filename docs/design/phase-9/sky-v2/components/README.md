@@ -65,3 +65,5 @@ pnpm run typecheck
 [검사 코드](../../../../../scripts/check-sky-components.mjs)는 독립 재사용·중복 연결/해제·선택/입력 보존·포인터/키보드/터치·감소 모드와 기존 풀이/관리자 동작을 확인한다. 이번 전후 화면 비교 근거와 한계는 [P9-06 기록](../../../../work/p9-06/components.md)을 따른다.
 
 생명주기에는 기존 브라우저의 [AbortSignal 이벤트 정리](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#signal)와 [MutationObserver.disconnect](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/disconnect)를 사용한다. 브라우저 검사는 Context7 `/microsoft/playwright` 조회와 설치된 1.62.1의 [공식 screenshot API](https://github.com/microsoft/playwright/blob/main/docs/src/api/class-locator.md)를 대조했다.
+
+P9-08의 실제 React `GlassButton`은 `.glass-button.convex-lens`로 같은 반사/테두리 CSS를 재사용한다. 이 작은 반복 버튼에는 `mountGlassComponents`를 개별 연결하지 않아 SVG 굴절 지도/관찰자/상시 프레임을 만들지 않는다. 각진 모서리와 disabled/focus 처리는 [React UI 사용법](../../../../../src/components/README.md)을 따른다. 기존 `.glass-action`의 입체 링크와 native 검토본 연결 동작은 유지한다.

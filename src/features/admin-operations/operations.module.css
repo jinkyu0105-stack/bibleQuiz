@@ -11,3 +11,4 @@
 .manual pre { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--surface); padding: 1rem; }
 .manual h2, .manual h3 { scroll-margin-top: 2rem; }
 .manual p, .manual li { overflow-wrap: anywhere; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }

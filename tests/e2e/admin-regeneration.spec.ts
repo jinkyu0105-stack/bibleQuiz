@@ -67,6 +67,7 @@ test("administrator explicitly regenerates one scope, recovers a lost response a
   await expect(replacement.getByRole("button", { name: "이 내용 검수 완료", exact: true })).toBeDisabled();
   await replacement.getByLabel("내용과 원문 근거를 검토했습니다.").check();
   await replacement.getByRole("button", { name: "이 내용 검수 완료", exact: true }).click();
+  await expect(replacement.getByText("검수 완료", { exact: true })).toBeVisible();
   await load();
   await expect(replacement.getByText("검수 완료", { exact: true })).toBeVisible();
   await region.getByText(/개별 생성 이력·비용/).click();

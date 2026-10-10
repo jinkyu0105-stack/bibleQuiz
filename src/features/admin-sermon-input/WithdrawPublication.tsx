@@ -1,3 +1,4 @@
+import { GlassButton } from "../../components/glass/GlassButton";
 import { QuizRevisionEditor } from "./QuizRevisionEditor";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
@@ -60,7 +61,7 @@ export function WithdrawPublication({ initialQuizSetId = "", initialReviewId = "
     <h2 id="withdraw-title">첫 제출 전 발행 철회</h2>
     <p>어린이·장년 전체에 제출 기록이 없을 때 공개를 취소하고 검수 대기로 돌립니다. 저장할 때 제출 여부를 다시 확인합니다.</p>
     {message && <p role="status">{message}</p>}{error && <p role="alert">{error}</p>}
-    <button type="button" disabled={busy} onClick={() => { setError(""); setConfirm(false); setAttempt(a => a + 1); }}>목록 다시 확인</button>
+    <GlassButton type="button" disabled={busy} onClick={() => { setError(""); setConfirm(false); setAttempt(a => a + 1); }}>목록 다시 확인</GlassButton>
     {items === null ? !error && <p role="status">철회 가능한 발행 목록을 불러오고 있습니다.</p> : items.length === 0 ? <p>현재 발행 중인 퀴즈가 없습니다.</p> : <>
       <label>철회할 퀴즈<select aria-label="철회할 퀴즈" disabled={busy} value={id} onChange={e => { setId(e.target.value); setConfirm(false); setReason(""); pending.current = null; }}>
         <option value="">퀴즈 선택</option>{items.map(q => <option key={q.quizSetId} value={q.quizSetId}>{q.metadata.sermonDate} · {q.metadata.title}</option>)}
@@ -70,11 +71,11 @@ export function WithdrawPublication({ initialQuizSetId = "", initialReviewId = "
           <legend>발행 철회</legend>
           <p>발행 {dateTime(selected.publishedAt)} · 마감 {dateTime(selected.closesAt)} (한국 시간)</p>
           <label>철회 사유<input value={reason} required minLength={2} maxLength={500} onChange={e => { setReason(e.target.value); setConfirm(false); }} /></label>
-          {!confirm ? <button type="submit">발행 철회 확인</button> : <div role="group" aria-label="발행 철회 최종 확인">
+          {!confirm ? <GlassButton type="submit">발행 철회 확인</GlassButton> : <div role="group" aria-label="발행 철회 최종 확인">
             <p>공개 링크에서 풀이와 제출을 중단합니다. 다른 열린 퀴즈를 메인에 표시하며, 없으면 지난 퀴즈를 읽기 전용으로 소개하거나 준비 안내를 표시합니다.</p>
             <p>최신 제목·설교일과 요약·두 난이도 문제·정답을 검수 시작 자료로 보관합니다.</p>
-            <button type="button" onClick={() => setConfirm(false)}>취소</button>
-            <button type="button" onClick={() => void withdraw()}>{busy ? "철회 확인 중" : "지금 발행 철회"}</button>
+            <GlassButton type="button" onClick={() => setConfirm(false)}>취소</GlassButton>
+            <GlassButton type="button" onClick={() => void withdraw()}>{busy ? "철회 확인 중" : "지금 발행 철회"}</GlassButton>
           </div>}
         </fieldset>
       </form>}

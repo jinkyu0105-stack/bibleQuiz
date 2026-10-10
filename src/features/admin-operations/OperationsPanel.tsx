@@ -1,3 +1,4 @@
+import { GlassButton } from "../../components/glass/GlassButton";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { operationsUsageSchema,backupListSchema,backupAcceptedSchema } from "../../../shared/api/admin-operations";
@@ -27,10 +28,10 @@ export function OperationsPanel(){
     {backupProblem&&<p role="alert">최근 백업·삭제 기록에 실패가 있습니다. 마지막 정상본을 보존하고 상세 상태를 확인하세요.</p>}
     {backups?.enabled&&<p>마지막 SQL 정상 완료: {time(backups.items.find(i=>i.kind!=="deletion_manifest"&&i.status==="verified")?.completedAt??null)} · 주간 정상본 {backups.weeklyVerifiedCount}/8</p>}
     {data?.policyCheckNeeded&&<p>이번 달 요금 정책 확인 필요 · <Link to="/admin/manual">매뉴얼의 월간 확인 항목 보기</Link></p>}
-    {error&&<p role="alert">{error}</p>}<button type="button" onClick={()=>void open()}>비용·백업 상세 열기</button>{!data&&<button type="button" onClick={()=>{setError("");setAttempt(v=>v+1);}}>사용량 다시 조회</button>}
-    <dialog ref={dialog} className={local.drawer} aria-labelledby="operations-dialog-title"><header className={local.header}><h2 id="operations-dialog-title">비용·사용량과 백업</h2><button type="button" onClick={()=>dialog.current?.close()}>닫기</button></header>
+    {error&&<p role="alert">{error}</p>}<div className={local.actions}><GlassButton type="button" onClick={()=>void open()}>비용·백업 상세 열기</GlassButton>{!data&&<GlassButton type="button" onClick={()=>{setError("");setAttempt(v=>v+1);}}>사용량 다시 조회</GlassButton>}</div>
+    <dialog ref={dialog} className={local.drawer} aria-labelledby="operations-dialog-title"><header className={local.header}><h2 id="operations-dialog-title">비용·사용량과 백업</h2><GlassButton type="button" onClick={()=>dialog.current?.close()}>닫기</GlassButton></header>
       <p>앱의 관측 추정입니다. 공식 청구 금액과 무료 잔여량은 각 서비스 관리 화면에서 확인하세요. 계정 전체와 이 프로젝트 기여분을 구분합니다.</p>
-      <button type="button" disabled={busy} onClick={()=>void refresh()}>{busy?"처리 중…":"사용량·백업 갱신"}</button>
+      <GlassButton type="button" disabled={busy} onClick={()=>void refresh()}>{busy?"처리 중…":"사용량·백업 갱신"}</GlassButton>
       {error&&<p role="alert">{error}</p>}{notice&&<p role="status">{notice}</p>}
       {serviceRegistry.map(service=><details key={service.id} className={local.service}><summary>{service.name} · {data?statusLabel[data.items.find(i=>i.service===service.id)?.status??"delayed"]:"사용량 확인 지연"}</summary><p>{service.planAndCostType} · {service.freeAllowanceSummary}</p><a href={service.officialDocsUrl} target="_blank" rel="noreferrer">{service.name} 공식 가격·한도</a><p>관리 위치: {service.dashboardPath}</p>
         <p>가격 확인: {service.pricingCheckedAt.slice(0,10)} · 가격표 {data?.pricingVersion??"미확인"}</p>
@@ -44,9 +45,9 @@ export function OperationsPanel(){
         <label>백업 종류 <select value={kind} disabled={busy} onChange={e=>{setKind(e.target.value as typeof kind);setRequestKey(crypto.randomUUID());setConfirmed(false);}}><option value="manual">수동 백업</option><option value="pre_migration">DB 변경 전 백업</option></select></label>
         <p>전체 SQL export 동안 DB가 잠시 응답하지 못할 수 있습니다. 마지막 정상본을 유지하고 새 파일 검증 뒤 회전합니다.</p>
         <label className={local.check}><input type="checkbox" checked={confirmed} disabled={!backups?.enabled||busy} onChange={e=>setConfirmed(e.target.checked)}/>DB의 일시 응답 중단과 시작 시각을 확인했습니다.</label>
-        <button type="button" disabled={!backups?.enabled||!confirmed||busy} onClick={()=>void backup()}>백업 요청</button><p>복원은 <Link to="/admin/manual">매뉴얼의 격리 복원 절차</Link>로 진행합니다.</p>
+        <GlassButton type="button" disabled={!backups?.enabled||!confirmed||busy} onClick={()=>void backup()}>백업 요청</GlassButton><p>복원은 <Link to="/admin/manual">매뉴얼의 격리 복원 절차</Link>로 진행합니다.</p>
       </section>
-      {data&&<section><h3>{data.yearMonth} 요금 정책 확인</h3><p>{data.policyCheckNeeded?"확인 필요":"이번 달 확인 완료"} · 마지막 확인 {time(data.checkedAt)}</p><fieldset disabled={busy}><legend>공식 링크와 현재 등록값을 서비스별로 확인하세요</legend>{serviceRegistry.map(service=><label key={service.id} className={local.check}><input type="checkbox" checked={checked.includes(service.id)} onChange={e=>setChecked(v=>e.target.checked?[...v,service.id]:v.filter(id=>id!==service.id))}/>{service.name} 정책 확인</label>)}</fieldset><button type="button" disabled={busy||checked.length!==serviceIds.length} onClick={()=>void month()}>이번 달 확인 완료</button></section>}
+      {data&&<section><h3>{data.yearMonth} 요금 정책 확인</h3><p>{data.policyCheckNeeded?"확인 필요":"이번 달 확인 완료"} · 마지막 확인 {time(data.checkedAt)}</p><fieldset disabled={busy}><legend>공식 링크와 현재 등록값을 서비스별로 확인하세요</legend>{serviceRegistry.map(service=><label key={service.id} className={local.check}><input type="checkbox" checked={checked.includes(service.id)} onChange={e=>setChecked(v=>e.target.checked?[...v,service.id]:v.filter(id=>id!==service.id))}/>{service.name} 정책 확인</label>)}</fieldset><GlassButton type="button" disabled={busy||checked.length!==serviceIds.length} onClick={()=>void month()}>이번 달 확인 완료</GlassButton></section>}
     </dialog>
   </section>;
 }

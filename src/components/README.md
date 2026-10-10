@@ -6,6 +6,7 @@ P9-06 검토본과 같은 유리 재질·움직임을 실제 React 페이지에�
 |---|---|---|
 | `GlassPanel` | `surface="reading"` 기본값, `standard`; `as`로 의미에 맞는 태그 | 첫 화면/요약/풀이/지난 퀴즈, 관리자 패널 |
 | `GlassMenu` | `as="nav"` 또는 `div`; `clear`, `nested`, `structure` | 주요 메뉴/시간대/난도/운영 메뉴/검수 대상 |
+| `GlassButton` / `GlassButtonLink` | native button props/ref 또는 Router LinkProps, 각진 CSS 유리; 별도 효과 연결 불필요 | 관리자 실행/저장/재조회/확인 버튼 |
 | `GlassLink` | React Router `LinkProps`, 입체 링크 | 관리자 진입, 참여 가능한 다른 퀴즈 |
 | `PageDock` | `GlassMenu`로 구성한 실제 페이지 바로가기 | 메인 하단 |
 | `GlassArrow` | 링크 안의 장식 화살표 | 첫 화면 난도 링크 |
@@ -37,4 +38,13 @@ node scripts/check-sky-components.mjs
 
 전체 실제 흐름의 검사 결과와 브라우저 한계는 [앱 적용 기록](../../docs/work/p9-06/app-integration.md)에 남긴다.
 
-P9-07의 `sky/solar-time.ts`는 서울 날짜/좌표로 네 시간대를 계산한다. 수동 시간은 `bibleQuiz:sky-session`(sessionStorage), 잔디 숨김은 `bibleQuiz:grass-hidden`(localStorage)이다. 기존 theme/sky 저장값은 초기 시간에 사용하지 않는다. `SkyScene`은 shared world의 `cloudSpeed: 2`, `setGround("grass" | "none")`를 사용하며 기본 native 검토본의 속도/사진 대안은 유지한다. 현재 동작/검사는 [P9-07](../../docs/work/P9-07.md)을 따른다.
+P9-07의 `sky/solar-time.ts`는 서울 날짜/좌표로 네 시간대를 계산한다. 수동 시간은 `bibleQuiz:sky-session`(sessionStorage), 잔디 숨김은 `bibleQuiz:grass-hidden`(localStorage)이다. 기존 theme/sky 저장값은 초기 시간에 사용하지 않는다. `SkyScene`은 shared world의 `cloudSpeed: 2`, `setGround("grass" | "photo")`를 사용하며 기본 native 검토본의 속도/사진 대안은 유지한다. 서울 시간 정책은 [P9-07](../../docs/work/P9-07.md), 잔디 사진 복귀·메인 이동·관리자 버튼은 [P9-08](../../docs/work/P9-08.md)을 따른다.
+
+`GlassButton`은 `type`, `disabled`, form 속성, 이벤트와 ref를 native `<button>`에 그대로 전달한다. 폼의 기본 submit 동작도 유지한다. 공통 `convex-lens`의 반사/테두리와0.6px CSS blur를 사용하며, 버튼별 SVG 굴절 지도·관찰자·상시 animation loop는 만들지 않는다. 모서리는10px이며 움직임/투명도 감소와 강제 색상을 따른다. 이미 `GlassMenu`가 소유하는 선택 버튼과 주간6단계는 각자의 선택 표시를 유지한다. 버튼이 많아도 렌더 비용이0이 되는 것은 아니며 실제 성능은 면적·효과·배경·기기에 따라 달라진다.
+
+```tsx
+<GlassButton type="button" disabled={busy} onClick={refresh}>다시 확인</GlassButton>
+<GlassButton type="submit" className="primary-button">저장</GlassButton>
+```
+
+`useHomeSectionScroll`은 메인에서만 연결한다. 휠 섹션 이동은 약1.2초, 같은 페이지 Router 앵커는 이동 거리별0.9~1.6초로 감속한다. 긴 섹션 내부/중첩 스크롤·확대 휠은 기본 동작을 유지하며 추가 입력/경로 이탈에서 예약 프레임을 해제한다. 링크 클릭 전 위치를 기록하고 Router 복원 뒤 paint 전에 출발점을 되돌려 Firefox의 해시 복원과 충돌하지 않는다. 초기 deep link/뒤로 가기는 기존 Router 복원이며 모바일 터치는 native snap, 감소 모드는 즉시 이동한다.

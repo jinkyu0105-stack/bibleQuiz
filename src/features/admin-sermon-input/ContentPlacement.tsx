@@ -1,3 +1,4 @@
+import { GlassButton } from "../../components/glass/GlassButton";
 import { WinnerSettings } from "../admin-weekly/WinnerSettings";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { AdminContentView } from "../../../shared/api/admin-content-generation";
@@ -124,7 +125,7 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
       </div></fieldset>
       <label className={styles.field}>목표 단어 수<input disabled={disabled || !ready} type="number" min={1} max={100} value={options[level].targetWordCounts[0] ?? ""} onChange={e => change(level, { ...options[level], targetWordCounts: [Number(e.currentTarget.value)] })} /></label>
       <p className={styles.helper}>시작 권장: 5×5는 5~7개, 6×6는 6~8개, 7×7는 7~10개, 8×8~10×10은 8~15개. 실제 후보에 따라 달라집니다.</p>
-      <button type="button" disabled={disabled || !ready || !options[level].gridSizes.length || !Number.isInteger(options[level].targetWordCounts[0]) || options[level].targetWordCounts[0]! < 1 || options[level].targetWordCounts[0]! > 100} onClick={() => void trial(level)}>{names[level]} 배치 시험</button>
+      <GlassButton type="button" disabled={disabled || !ready || !options[level].gridSizes.length || !Number.isInteger(options[level].targetWordCounts[0]) || options[level].targetWordCounts[0]! < 1 || options[level].targetWordCounts[0]! > 100} onClick={() => void trial(level)}>{names[level]} 배치 시험</GlassButton>
       {trials[level] && <>
         {trials[level].layouts.length === 0 && <p role="status">이 설정에서는 배치를 찾지 못했습니다. 격자 크기·목표 단어 수 또는 후보 상태를 바꿔 다시 시험해 주세요.</p>}
         {trials[level].searchIncomplete && <p>탐색 범위 안의 결과입니다. 가능한 모든 조합을 검사한 것은 아닙니다.</p>}
@@ -135,18 +136,18 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
         </>}
       </>}
     </section>)}
-    <button type="button" className="primary-button" disabled={disabled || !trials.child?.layouts[indices.child] || !trials.adult?.layouts[indices.adult]} onClick={() => void save()}>선택한 두 배치 저장·검사</button>
+    <GlassButton type="button" className="primary-button" disabled={disabled || !trials.child?.layouts[indices.child] || !trials.adult?.layouts[indices.adult]} onClick={() => void save()}>선택한 두 배치 저장·검사</GlassButton>
     <p className={styles.helper}>저장 전 시험 결과는 현재 선택본을 바꾸지 않습니다. 자료나 후보가 바뀌면 다시 검수하고 시험해 주세요.</p>
     {trialBusy && <p role="status">요청을 처리하고 있습니다.</p>}{message && <p role="status">{message}</p>}
     </div>
     {view.preview && view.reviewLayouts && <section hidden={step === 4} aria-label="최종 검사 미리보기" className={styles.placementLevel}>
-      {step !== 5 && view.status === "review_ready" && placement.current && !publishedSlug && <button type="button" className="primary-button" disabled={disabled} onClick={() => setConfirmPublish(true)}>지금 발행</button>}
+      {step !== 5 && view.status === "review_ready" && placement.current && !publishedSlug && <GlassButton type="button" className="primary-button" disabled={disabled} onClick={() => setConfirmPublish(true)}>지금 발행</GlassButton>}
       <h4>{placement.selected ? "선택한 배치의 최종 검사 통과" : "기본 배치의 최종 검사 통과"}</h4>
       <h5>{view.preview.metadata.title}</h5><p>설교일 {view.preview.metadata.date} · {view.preview.metadata.bibleReferenceLabel} ({view.preview.metadata.translation})</p>
       <a href={view.preview.metadata.bibleReadingUrl} target="_blank" rel="noreferrer">대한성서공회에서 읽기</a>
       <p className={styles.reviewSummary}>{view.preview.summary.text}</p><p className={styles.helper}>{view.preview.summary.disclosure}</p>
       {levels.map(level => <div className={styles.previewViewport} data-mobile={mobile} data-preview-theme={step === undefined ? undefined : previewTheme} key={level}><LayoutReview layout={view.reviewLayouts![level]} title={names[level]} answers={answers} large={large} /></div>)}
-      <button type="button" onClick={() => void copyClues()}>정답 없이 단서 복사</button>
+      <GlassButton type="button" onClick={() => void copyClues()}>정답 없이 단서 복사</GlassButton>
       <p>두 난이도의 현재 입력·내용 검수·연결·교차·정답 일치 검사를 통과했습니다. 아직 발행하지 않았습니다.</p>
       {step === 5 && <ul aria-label="발행 검수표"><li>입력자료·설교 의도 사람 확정</li><li>요약·어린이·장년 문제 검수</li><li>두 난도 격자·연결·교차·정답 검사 통과</li><li>아래 Top N 설정과 공개할 내용을 확인해 주세요.</li></ul>}
       {step === 5 && view.quizSetId && <WinnerSettings quizSetId={view.quizSetId}/>}
@@ -181,7 +182,7 @@ function PublicationConfirmation({ view, disabled, message, cancel, publish }: {
     <p>Top N은 이 퀴즈의 저장된 난도별 설정을 사용합니다. 이 퀴즈의 관측 AI 비용 USD {((view.quizCostMicroUsd ?? view.jobCostMicroUsd) / 1_000_000).toFixed(4)}
       {!!(view.quizUnknownCalls ?? view.jobUnknownCalls) && ` · 사용량 미확인 ${view.quizUnknownCalls ?? view.jobUnknownCalls}회(비용 0이 아님)`}</p>
     {message && <p role="status">{message}</p>}
-    <div className={styles.previewTools}><button type="button" disabled={disabled} onClick={dismiss}>취소</button>
-      <button type="button" className="primary-button" disabled={disabled} onClick={publish}>지금 발행</button></div>
+    <div className={styles.previewTools}><GlassButton type="button" disabled={disabled} onClick={dismiss}>취소</GlassButton>
+      <GlassButton type="button" className="primary-button" disabled={disabled} onClick={publish}>지금 발행</GlassButton></div>
   </dialog>;
 }

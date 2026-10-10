@@ -1,3 +1,4 @@
+import { GlassButton } from "../../components/glass/GlassButton";
 import { problemViewSchema,type ProblemView } from "../../../shared/api/admin-problem-correction";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { revisionCommandSchema, revisionViewSchema, revisionTrialSchema, type RevisionContent, type RevisionView } from "../../../shared/api/admin-quiz-revision";
@@ -66,14 +67,14 @@ export function QuizRevisionEditor({ quizSetId,problem,onProblemView }: { quizSe
     <p>내용 저장 → 두 격자 확인 → 요약·문제 검토 → 재발행 순서로 진행합니다.</p>
     {error && <p role="alert">{error}</p>}{message && <p role="status">{message}</p>}
     <div className={styles.actions}>
-      <button type="button" disabled={busy} onClick={()=>dirty ? setReloadConfirm(true):void run()}>저장본 다시 불러오기</button>
-      {error && retryAvailable && <button type="button" disabled={busy} onClick={()=>void run(undefined,true)}>같은 요청 재확인</button>}
+      <GlassButton type="button" disabled={busy} onClick={()=>dirty ? setReloadConfirm(true):void run()}>저장본 다시 불러오기</GlassButton>
+      {error && retryAvailable && <GlassButton type="button" disabled={busy} onClick={()=>void run(undefined,true)}>같은 요청 재확인</GlassButton>}
     </div>
-    {reloadConfirm && <div role="group" aria-label="저장본 불러오기 확인"><p>저장하지 않은 입력을 버리고 마지막 저장본을 불러옵니다.</p><button type="button" onClick={()=>setReloadConfirm(false)}>입력 유지</button><button type="button" onClick={()=>void run()}>입력 버리고 불러오기</button></div>}
+    {reloadConfirm && <div role="group" aria-label="저장본 불러오기 확인"><p>저장하지 않은 입력을 버리고 마지막 저장본을 불러옵니다.</p><GlassButton type="button" onClick={()=>setReloadConfirm(false)}>입력 유지</GlassButton><GlassButton type="button" onClick={()=>void run()}>입력 버리고 불러오기</GlassButton></div>}
     {!view && !error && <p role="status">편집 상태를 불러오고 있습니다.</p>}
     {view && ["not_started","expired"].includes(view.state) && <>
       <p>{view.state==="expired" ? "7일 동안 활동이 없던 편집본은 정리되었습니다. 보존된 철회 자료에서 새 편집을 시작할 수 있습니다.":"보존된 철회 자료에서 새 편집본을 엽니다. 보관 중인 수정 내용이 있으면 함께 가져옵니다."}</p>
-      <button type="button" disabled={busy} onClick={()=>void run({action:"start",expectedCycle:view.cycle})}>새 편집 시작</button>
+      <GlassButton type="button" disabled={busy} onClick={()=>void run({action:"start",expectedCycle:view.cycle})}>새 편집 시작</GlassButton>
     </>}
     {view?.state==="published" && view.publication && <p>발행 {dateTime(view.publication.publishedAt)} · 마감 {dateTime(view.publication.closesAt)} (한국 시간) · <a href={`/quiz/${view.slug}`}>발행한 퀴즈 열기</a></p>}
     {ready && <>
@@ -93,27 +94,27 @@ export function QuizRevisionEditor({ quizSetId,problem,onProblemView }: { quizSe
           <details><summary>보존된 기존 근거</summary><pre className={styles.revisionEvidence}>{JSON.stringify(view.sourceEvidence[entry.id],null,2)}</pre></details>
         </details>)}
       </fieldset>)}
-      <button type="button" disabled={busy || !dirty} onClick={()=>void run({action:"save",content})}>편집본 저장</button>
+      <GlassButton type="button" disabled={busy || !dirty} onClick={()=>void run({action:"save",content})}>편집본 저장</GlassButton>
       <p>저장·배치 변경 뒤에는 요약과 두 난이도를 다시 검토합니다. 수정한 답·단서에는 관리자 근거를 적어 주세요.</p>
       <label><input type="checkbox" checked={answers} onChange={e=>setAnswers(e.target.checked)} />관리자 정답 보기</label>
       {(["child","adult"] as const).map(level=><fieldset key={level} disabled={busy || dirty} className={styles.revisionLevel}><legend>{names[level]} 배치와 검토</legend>
         {view.body!.layouts[level] ? <ReviewGrid grid={view.body!.layouts[level]!.grid} {...(answers ? {solution:view.body!.layouts[level]!.solution}:{})} title={`${names[level]} 현재 격자`} />:<p>현재 답으로 배치를 다시 선택해 주세요.</p>}
         <fieldset disabled={!!problem && !problem.levels.includes(level)} className={styles.actions}><label>{names[level]} 격자 크기<select value={size[level]} onChange={e=>{setSize({...size,[level]:Number(e.target.value)});setTrials({...trials,[level]:undefined});}}>{[5,6,7,8,9,10].map(n=><option key={n} value={n}>{n} × {n}</option>)}</select></label>
           <label>{names[level]} 배치 번호<input value={seed[level]} maxLength={128} onChange={e=>{setSeed({...seed,[level]:e.target.value});setTrials({...trials,[level]:undefined});}} /></label>
-          <button type="button" onClick={()=>void run({action:"trial",difficulty:level,gridSize:size[level],seed:seed[level]})}>{names[level]} 무료 배치 시험</button></fieldset>
+          <GlassButton type="button" onClick={()=>void run({action:"trial",difficulty:level,gridSize:size[level],seed:seed[level]})}>{names[level]} 무료 배치 시험</GlassButton></fieldset>
         {trials[level] && <>{trials[level]!.layout ? <><ReviewGrid grid={trials[level]!.layout!.grid} {...(answers ? {solution:trials[level]!.layout!.solution}:{})} title={`${names[level]} 시험 격자`} />
-          <button type="button" onClick={()=>void run({action:"layout",difficulty:level,gridSize:trials[level]!.gridSize,seed:trials[level]!.seed})}>{names[level]} 이 배치 사용</button></>:<p>{trials[level]!.issues.join(" ")}</p>}</>}
-        <button type="button" disabled={busy || dirty || view.issues.length>0 || view.body!.reviewed[level]} onClick={()=>void run({action:"review",area:level,confirmed:true})}>{names[level]} 문제·정답·근거 검토 완료</button>
+          <GlassButton type="button" onClick={()=>void run({action:"layout",difficulty:level,gridSize:trials[level]!.gridSize,seed:trials[level]!.seed})}>{names[level]} 이 배치 사용</GlassButton></>:<p>{trials[level]!.issues.join(" ")}</p>}</>}
+        <GlassButton type="button" disabled={busy || dirty || view.issues.length>0 || view.body!.reviewed[level]} onClick={()=>void run({action:"review",area:level,confirmed:true})}>{names[level]} 문제·정답·근거 검토 완료</GlassButton>
         <p>{view.body!.reviewed[level] ? "현재 저장본 검토 완료":"현재 저장본 검토 필요"}</p>
       </fieldset>)}
       {view.issues.length>0 && <ul>{view.issues.map(issue=><li key={issue}>{issue}</li>)}</ul>}
-      <button type="button" disabled={busy || dirty || view.issues.length>0 || view.body!.reviewed.summary} onClick={()=>void run({action:"review",area:"summary",confirmed:true})}>설교 정보·요약 검토 완료</button>
+      <GlassButton type="button" disabled={busy || dirty || view.issues.length>0 || view.body!.reviewed.summary} onClick={()=>void run({action:"review",area:"summary",confirmed:true})}>설교 정보·요약 검토 완료</GlassButton>
       <p>{view.body!.reviewed.summary ? "현재 요약 검토 완료":"현재 요약 검토 필요"}</p>
-      <button type="button" disabled={busy || dirty || !view.canPublish} onClick={()=>{setConfirmAt(Date.now());setConfirm(true);}}>재발행 확인</button>
+      <GlassButton type="button" disabled={busy || dirty || !view.canPublish} onClick={()=>{setConfirmAt(Date.now());setConfirm(true);}}>재발행 확인</GlassButton>
       {confirm && <div role="group" aria-label="재발행 최종 확인"><p>{problem ? (problem.nonRanked ? "마감된 수정본은 순위와 참여 기록 없이 공개합니다.":"수정본 접수를 재개하며 기존 마감 시각을 유지합니다."):"같은 공유 주소에서 즉시 참여를 시작하고 7일 뒤 마감합니다."} 이전 문제·정답·발행 기록을 보존합니다.</p>
         <p>예상 시작 {dateTime(new Date(confirmAt).toISOString())} · 예상 마감 {dateTime(problem?.closesAt ?? new Date(confirmAt+7*86_400_000).toISOString())} (한국 시간)</p>
         <p>현재 발행 주소: /quiz/{view.slug}</p><p>재발행과 배치 시험에는 AI 호출 비용이 들지 않습니다.</p>
-        <button type="button" disabled={busy} onClick={()=>setConfirm(false)}>재발행 취소</button><button type="button" disabled={busy} onClick={()=>void run({action:"publish",confirmation:"publish"})}>지금 재발행</button></div>}
+        <GlassButton type="button" disabled={busy} onClick={()=>setConfirm(false)}>재발행 취소</GlassButton><GlassButton type="button" disabled={busy} onClick={()=>void run({action:"publish",confirmation:"publish"})}>지금 재발행</GlassButton></div>}
     </>}
   </section>;
 }

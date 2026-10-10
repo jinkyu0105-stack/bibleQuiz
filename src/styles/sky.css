@@ -82,7 +82,7 @@ html { scroll-padding-top: 120px; }
 .time-options button[aria-pressed=true] { background: var(--glass-selected); }
 .sky-controls { display: flex; flex-direction: column; gap: 8px; }
 #motion, #glass-clarity, #grass-toggle { display: grid; place-content: center; width: 50px; height: 50px; min-height: 50px; padding: 5px; border-radius: 50%; color: var(--ink); font-size: 16px; }
-#glass-clarity small, #grass-toggle small { font-size: 8px; }
+#glass-clarity small { font-size: 8px; }
 .time-rail .quiet-message { width: 100px; font-size: 11px; padding: 8px; background: var(--glass-solid); }
 body[data-view=admin] .time-rail { top: 130px; transform: none; }
 .sky-home-hero h1 { font-weight: 400; color: var(--ink); margin: 0; }
@@ -181,6 +181,7 @@ body:not([data-time=night]) .page-dock { --ink: #071725; --glass-control-ink: va
 .home-shell .site-footer { padding-bottom: 28px; }
 .home-shell .site-footer a { display: inline-flex; align-items: center; min-height: 44px; }
 html:has(body[data-view=home]) { scroll-snap-type: y mandatory; scroll-padding-top: 0; scroll-behavior: smooth; }
+html:has(body[data-view=home]):is([data-home-scroll=managed], [data-home-scroll-animating]) { scroll-snap-type: none; scroll-behavior: auto; }
 #home-view > section { scroll-snap-align: start; scroll-snap-stop: always; }
 #home-view .weekly-section { min-height: 100svh; padding-top: 130px; padding-bottom: 110px; }
 #home-view .archive-section { min-height: 100svh; padding-top: 130px; padding-bottom: 110px; }
@@ -204,4 +205,29 @@ html:has(body[data-view=home]) { scroll-snap-type: y mandatory; scroll-padding-t
 @media (max-width: 700px) and (max-height: 740px) {
   .sky-home-hero { padding-top: 126px; padding-bottom: 238px; }
   .descent-cue { display: none; }
+}
+
+/* Small repeated actions share the header's CSS dome and rim, without its SVG displacement. */
+:is(button, a).glass-button.convex-lens {
+  min-height: 44px; padding: 10px 16px; border-radius: 10px;
+  border: 1px solid var(--glass-edge); background: transparent; color: var(--ink);
+  line-height: inherit;
+}
+button.glass-button.convex-lens:disabled {
+  color: var(--muted); background: var(--glass-soft); box-shadow: none;
+}
+button.glass-button:disabled::before, button.glass-button:disabled::after { opacity: .28; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body:not([data-motion=off]):not([data-transparency=reduced]) .glass-button:not(:disabled):hover {
+    --dock-light-x: 72%; --dock-lift: 1;
+  }
+}
+button.glass-button.primary-button { font-weight: 700; }
+body[data-transparency=reduced] :is(button, a).glass-button.convex-lens { background: var(--glass-solid-selected); }
+@media (prefers-reduced-transparency: reduce) {
+  :is(button, a).glass-button.convex-lens { background: var(--glass-solid-selected); }
+}
+@media (forced-colors: active) {
+  :is(button, a).glass-button.convex-lens { background: ButtonFace; color: ButtonText; border-color: ButtonText; }
+  button.glass-button.convex-lens:disabled { color: GrayText; border-color: GrayText; }
 }

@@ -127,7 +127,7 @@ test("Seoul time is automatic on a fresh tab and manual choices last for the cur
   await page.clock.setFixedTime(new Date("2026-12-21T03:00:00Z"));
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await expect(page.locator("body")).toHaveAttribute("data-time", "dusk");
-  await page.getByRole("navigation", { name: "빠른 이동" }).getByRole("link", { name: "풀이", exact: true }).click();
+  await page.getByRole("navigation", { name: "빠른 이동" }).getByRole("link", { name: "퀴즈", exact: true }).click();
   await expect(page).toHaveURL(/\?level=child$/);
   await page.reload();
   await expect(page.locator("body")).toHaveAttribute("data-time", "dusk");
@@ -139,7 +139,7 @@ test("Seoul time is automatic on a fresh tab and manual choices last for the cur
   await fresh.close();
 });
 
-test("grass switches off without hiding the mountains and footer links use the real pages", async ({ page }) => {
+test("grass switches to the original photo and the dock links use the real pages", async ({ page }) => {
   await mockQuiz(page);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
@@ -148,26 +148,28 @@ test("grass switches off without hiding the mountains and footer links use the r
   await expect(page.locator(".distant-mountains")).toBeVisible();
   await page.getByRole("button", { name: "잔디 끄기", exact: true }).click();
   await expect(page.locator("#origin-grass")).toBeHidden();
-  await expect(page.locator(".meadow")).toHaveCSS("opacity", "0");
-  await expect(page.locator(".distant-mountains")).toBeVisible();
+  await expect(page.locator(".meadow")).toHaveCSS("opacity", "1");
+  await expect(page.locator(".distant-mountains")).toBeHidden();
+  await expect(page.locator("#grass-toggle")).toHaveText("");
   await page.reload();
   await expect(page.getByRole("button", { name: "잔디 켜기", exact: true })).toHaveAttribute("aria-pressed", "false");
   await page.locator("footer").scrollIntoViewIfNeeded();
   await expect(page.locator("#origin-grass")).toBeHidden();
   const footer = page.locator("footer");
   await expect(footer).not.toContainText("로컬 개발");
-  await expect(footer).not.toContainText("다사랑교회 성경퀴즈");
-  await expect(footer.getByRole("link", { name: "문의 · 삭제 요청", exact: true })).toBeVisible();
-  await footer.getByRole("link", { name: "문의 · 삭제 요청", exact: true }).click();
+  await expect(footer).toContainText("다사랑교회 성경퀴즈");
+  const dock = page.getByRole("navigation", { name: "빠른 이동" });
+  await expect(dock.getByRole("link", { name: "홈", exact: true }).locator("svg")).toBeVisible();
+  await dock.getByRole("link", { name: "문의", exact: true }).click();
   await expect(page).toHaveURL(/\/privacy-requests$/);
 });
 
 test("home snaps to sections and its weekly anchor, short-screen buttons and footer stay reachable", async ({ page, isMobile }) => {
   await mockQuiz(page);
   await page.goto("/?video=off");
-  await expect(page.locator("html")).toHaveCSS("scroll-snap-type", "y mandatory");
+  await expect(page.locator("html")).toHaveCSS("scroll-snap-type", isMobile ? "y mandatory" : "none");
   if (!isMobile) {
-    await page.mouse.move(400, 400);
+    await page.locator(".sky-home-hero").hover({ position: { x: 400, y: 400 } });
     await page.mouse.wheel(0, 550);
     await expect.poll(() => page.locator("#weekly").evaluate(node => Math.abs(node.getBoundingClientRect().top))).toBeLessThan(2);
     await page.mouse.wheel(0, -550);
@@ -189,7 +191,7 @@ test("home snaps to sections and its weekly anchor, short-screen buttons and foo
   await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
   await expect(page).toHaveURL(/\?video=off#main-content$/);
   await page.locator("footer").scrollIntoViewIfNeeded();
-  await page.locator("footer").getByRole("link", { name: "문의 · 삭제 요청", exact: true }).click();
+  await page.getByRole("navigation", { name: "빠른 이동" }).getByRole("link", { name: "문의", exact: true }).click();
   await expect(page).toHaveURL(/\/privacy-requests$/);
   await page.goto("/");
   await page.emulateMedia({ reducedMotion: "reduce" });

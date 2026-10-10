@@ -1,3 +1,4 @@
+import { GlassButton } from "../../components/glass/GlassButton";
 import { useEffect, useRef, useState } from "react";
 import type { AdminAiCosts } from "../../../shared/api/admin-ai-costs";
 import { loadAdminAiCosts } from "./client";
@@ -44,20 +45,20 @@ export function AiCostDetails({ quizSetId, refreshKey = 0 }: { quizSetId: string
   }
   const legacyPricing = data?.calls.some(call => call.pricingVersion === "openai-terra-2026-09-22") ?? false;
   return <div className={styles.costStrip}>
-    <button type="button" className={styles.costButton} onClick={open} aria-haspopup="dialog">
+    <GlassButton type="button" className={styles.costButton} onClick={open} aria-haspopup="dialog">
       <span>이번 주 AI 예상 비용</span>
       <strong>{loading && !data ? "확인 중" : data ? money(data.knownCostMicroUsd) : "확인 실패"}</strong>
       {data && <small>이 퀴즈 전체 · 호출 {data.totalCalls}회{data.unknownCalls > 0 ? ` · 사용량 미확인 ${data.unknownCalls}회` : ""}</small>}
-    </button>
+    </GlassButton>
     {legacyPricing && <p className={styles.helper}>캐시 저장 요금이 빠질 수 있는 과거 추정치가 포함되어 있습니다. 실제 청구액과 다를 수 있습니다.</p>}
-    {error && <button type="button" onClick={refresh}>비용 다시 확인</button>}
+    {error && <GlassButton type="button" onClick={refresh}>비용 다시 확인</GlassButton>}
     <dialog ref={dialog} className={styles.costDialog} aria-labelledby="ai-costs-title">
       <div className={styles.costDialogHeader}>
         <div><h2 id="ai-costs-title">이 퀴즈의 AI 호출 비용</h2><p>호출 날짜와 관계없이 선택한 퀴즈에 속한 전체 기록입니다.</p></div>
-        <button type="button" onClick={() => dialog.current?.close()}>닫기</button>
+        <GlassButton type="button" onClick={() => dialog.current?.close()}>닫기</GlassButton>
       </div>
       {loading && <p role="status">관측 비용 기록을 불러오고 있습니다.</p>}
-      {error && <p role="alert">{error} <button type="button" onClick={refresh}>다시 확인</button></p>}
+      {error && <p role="alert">{error} <GlassButton type="button" onClick={refresh}>다시 확인</GlassButton></p>}
       {data && <>
         <div className={styles.costTotal}>
           <p>관측된 호출 합계 <strong>{money(data.knownCostMicroUsd)}</strong></p>

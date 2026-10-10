@@ -152,16 +152,16 @@ export function createWorld({ asset = path => path, videoMedia = null, initially
       }
     }
     // A local photograph sits behind the interactive grass.
-    const showMountains = (grassVisible || groundMode === 'none' && !quiet && ground > .40) && document.body.dataset.mountains !== 'off';
+    const showMountains = grassVisible && document.body.dataset.mountains !== 'off';
     if (showMountains && !mountainRequested) { mountainRequested = true; mountainImage.srcset = `${asset('assets/mountains.webp')} 1600w, ${asset('assets/mountains-4k.webp')} 3840w`; mountainImage.sizes = '100vw'; mountainImage.src = asset('assets/mountains.webp'); }
     mountains.hidden = !showMountains || !mountainReady;
     mountains.style.transform = `translate3d(-50%,${height * (1 - ground) * .95}px,0)`;
     mountains.style.opacity = String(Math.min(1, Math.max(0, (ground - .40) / .22)));
     grassCanvas.hidden = !grassVisible;
     grassCanvas.dataset.active = String(grassVisible);
-    meadow.style.opacity = grassVisible || groundMode === 'none' ? '0' : String(Math.min(1, ground * 2));
+    meadow.style.opacity = grassVisible ? '0' : String(Math.min(1, ground * 2));
     const failed = groundMode === 'grass' && (grassFailed || grassCanvas.dataset.renderer === 'photo-fallback');
-    const grassMessage = failed ? '움직이는 잔디를 표시할 수 없어 기존 사진을 보여 드립니다.' : groundMode === 'grass' ? 'OriginKit · 바람에 흔들리는 잔디' : groundMode === 'none' ? '잔디 숨김' : '기존 사진 · 언제든 다시 선택할 수 있어요';
+    const grassMessage = failed ? '움직이는 잔디를 표시할 수 없어 기존 사진을 보여 드립니다.' : groundMode === 'grass' ? 'OriginKit · 바람에 흔들리는 잔디' : '기존 사진 · 언제든 다시 선택할 수 있어요';
     if (grassStatus && grassStatus.textContent !== grassMessage) grassStatus.textContent = grassMessage;
     canvas.dataset.progress = progress.toFixed(4); canvas.dataset.time = time.toFixed(3);
     canvas.dataset.camera = cameraY.toFixed(3); canvas.dataset.ground = ground.toFixed(4);
@@ -238,7 +238,7 @@ export function createWorld({ asset = path => path, videoMedia = null, initially
   setup(); measure(); updateMotion();
   return {
     dispose,
-    setGround(mode) { groundMode = mode === 'grass' ? 'grass' : mode === 'none' ? 'none' : 'photo'; document.body.dataset.ground = groundMode; wake(); },
+    setGround(mode) { groundMode = mode === 'grass' ? 'grass' : 'photo'; document.body.dataset.ground = groundMode; wake(); },
     setTheme(theme) { targetColor = themes[theme] || themes.day; wake(); },
     reset() { readProgress(); progress = targetProgress; lastScrollY = -1; wake(); },
   };

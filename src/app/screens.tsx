@@ -1,3 +1,4 @@
+import { useHomeSectionScroll } from "../features/quiz/useHomeSectionScroll";
 import { Link, NavLink, Outlet, isRouteErrorResponse, useRouteError, useLocation, ScrollRestoration } from "react-router-dom";
 import { AdminNavigation } from "../features/admin-weekly/AdminNavigation";
 import { GlassMenu } from "../components/glass/GlassMenu";
@@ -12,6 +13,7 @@ export function RootLayout() {
   const admin = location.pathname.startsWith("/admin");
   const home = location.pathname === "/" && !new URLSearchParams(location.search).has("level");
   const view = admin ? "admin" : home ? "home" : location.pathname === "/archive" ? "archive" : "quiz";
+  useHomeSectionScroll(home);
   const header = useGlass<HTMLElement>();
   return <SkyEnvironment view={view}>
     <div className={`app-shell sky-app ${view}-shell`}>
@@ -29,7 +31,7 @@ export function RootLayout() {
         {admin ? <main id="main-content" tabIndex={-1}><GlassPanel as="div" surface="standard" className="admin-main"><Outlet /></GlassPanel></main>
           : <main id="main-content" tabIndex={-1}><Outlet /></main>}
       </div>
-      <footer className="site-footer"><Link to="/privacy-requests">문의 · 삭제 요청</Link><Link to={{ pathname: location.pathname, search: location.search, hash: "#main-content" }}>맨 위로 ↑</Link></footer>
+      <footer className="site-footer"><span>다사랑교회 성경퀴즈</span><Link to={{ pathname: location.pathname, search: location.search, hash: "#main-content" }}>맨 위로 ↑</Link></footer>
       {home && <PageDock />}
     </div>
   </SkyEnvironment>;

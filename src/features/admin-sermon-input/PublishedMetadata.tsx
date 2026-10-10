@@ -1,3 +1,4 @@
+import { GlassButton } from "../../components/glass/GlassButton";
 import { AiCostDetails } from "./AiCostDetails";
 import { QuizDeadline } from "./QuizDeadline";
 import { PublishedWording } from "./PublishedWording";
@@ -55,7 +56,7 @@ function Editor({ quizSetId, onSaved }: { quizSetId: string; onSaved: () => void
     {message && <p role="status">{message}</p>}
     {error && <p role="alert">{error}</p>}
     <AiCostDetails quizSetId={quizSetId} />
-    <button type="button" disabled={busy} onClick={() => { setError(""); setView(null); setAttempt(a => a + 1); }}>최신 내용 불러오기</button>
+    <GlassButton type="button" disabled={busy} onClick={() => { setError(""); setView(null); setAttempt(a => a + 1); }}>최신 내용 불러오기</GlassButton>
     {!view ? !error && <p role="status">현재 표시 정보를 불러오고 있습니다.</p> : <>
       <p><a href={`/quiz/${view.quiz.slug}`}>공개된 퀴즈 보기</a> · {view.quiz.status === "archived" ? "지난 퀴즈" : "발행된 퀴즈"}</p>
       <p>발행 {dateTime(view.quiz.publishedAt)} · 마감 {dateTime(view.quiz.closesAt)} (한국 시간)</p>
@@ -69,12 +70,12 @@ function Editor({ quizSetId, onSaved }: { quizSetId: string; onSaved: () => void
           </div>
           {weekday && <p>{weekday}{weekday !== "일요일" && "입니다. 특별예배 등 의도한 날짜인지 확인해 주세요."}</p>}
           <p>공개 링크와 접수 기간, 문제·정답·참여 기록은 그대로 유지됩니다. 단서나 요약의 의미 변경은 문제 오류 처리에서 진행합니다.</p>
-          <button className="primary-button" type="submit">{busy ? "저장 중" : "정정 저장"}</button>
+          <GlassButton className="primary-button" type="submit">{busy ? "저장 중" : "정정 저장"}</GlassButton>
         </fieldset>
       </form>
-      <button type="button" onClick={() => setShowWording(v => !v)}>{showWording ? "일반 문구 닫기" : "요약·단서 오탈자 수정"}</button>
+      <GlassButton type="button" onClick={() => setShowWording(v => !v)}>{showWording ? "일반 문구 닫기" : "요약·단서 오탈자 수정"}</GlassButton>
       {showWording && <PublishedWording quizSetId={quizSetId} />}
-      <button type="button" onClick={() => setShowDeadline(v => !v)}>{showDeadline ? "마감 변경 닫기" : "마감 일시 변경"}</button>
+      <GlassButton type="button" onClick={() => setShowDeadline(v => !v)}>{showDeadline ? "마감 변경 닫기" : "마감 일시 변경"}</GlassButton>
       {showDeadline && <QuizDeadline quizSetId={quizSetId} onSaved={() => { setAttempt(a => a + 1); onSaved(); }} />}
       <details><summary>정정 이력 ({view.history.length})</summary>
         {view.history.length === 0 ? <p>아직 정정한 기록이 없습니다.</p> : <ol className={styles.cleanupList}>{view.history.map(item => <li key={item.revision}>
@@ -99,7 +100,7 @@ export function PublishedMetadata({ initialQuizSetId = "" }: { initialQuizSetId?
   return <section className={styles.panel} aria-labelledby="published-metadata-title">
     <h2 id="published-metadata-title">발행 정보 정정</h2>
     <p>발행된 퀴즈의 제목·설교일과 요약·단서 오탈자를 바로잡습니다. 초안 정리 후에도 이용할 수 있습니다.</p>
-    {error ? <p role="alert">발행 목록을 불러오지 못했습니다. <button type="button" onClick={() => { setError(false); setAttempt(a => a + 1); }}>목록 다시 확인</button></p>
+    {error ? <p role="alert">발행 목록을 불러오지 못했습니다. <GlassButton type="button" onClick={() => { setError(false); setAttempt(a => a + 1); }}>목록 다시 확인</GlassButton></p>
       : items === null ? <p role="status">발행 목록을 불러오고 있습니다.</p>
       : items.length === 0 ? <p>아직 발행된 퀴즈가 없습니다.</p>
       : <label>정정할 퀴즈<select value={id} onChange={event => setId(event.target.value)}><option value="">퀴즈 선택</option>

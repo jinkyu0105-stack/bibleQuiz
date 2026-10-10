@@ -1,3 +1,4 @@
+import { GlassButton } from "../../components/glass/GlassButton";
 import { useEffect, useRef, useState } from "react";
 import type { AdminSermonInputCurrent } from "../../../shared/api/admin-sermon-input";
 import type { IntentAnalysis } from "../../../workers/_shared/services/sermon-intent-contract";
@@ -70,20 +71,20 @@ export function ContentEvidence({ evidence, source, editable, onChange, onEmpty,
       </p>}
       <div className={styles.evidenceActions}>
         {item.start !== null && <span>{item.start.toFixed(1)}초</span>}
-        {item.locationStatus !== "unverified" && <button type="button" onClick={() => locate(item)}>원문 위치 보기</button>}
+        {item.locationStatus !== "unverified" && <GlassButton type="button" onClick={() => locate(item)}>원문 위치 보기</GlassButton>}
         {videoId && item.start !== null && <a href={`https://www.youtube.com/watch?v=${videoId}&t=${Math.floor(item.start)}s`}
           target="_blank" rel="noopener noreferrer">영상 시각 열기</a>}
-        {editable && <><button type="button" onClick={() => { setReplacing(index); locate(item); }}>근거 교체</button>
-          <button type="button" onClick={() => remove(index)}>근거 삭제</button></>}
+        {editable && <><GlassButton type="button" onClick={() => { setReplacing(index); locate(item); }}>근거 교체</GlassButton>
+          <GlassButton type="button" onClick={() => remove(index)}>근거 삭제</GlassButton></>}
       </div>
     </div>)}
     <details ref={sourceRef} className={styles.evidenceSource}><summary>원문에서 근거 구절 선택</summary>
       <div className={styles.sectionHeading}><strong>원문 위치 선택</strong><span>{source.content.format === "timed_segments" ? `구간 ${segmentIndex + 1} / ${segments.length}` : "전체 문서"}</span></div>
       {source.content.format === "timed_segments" && <div className={styles.evidenceActions}>
-        <button type="button" disabled={segmentIndex === 0} onClick={() => { setSegmentIndex(segmentIndex - 1); setSelected(null); }}>이전 구간</button>
+        <GlassButton type="button" disabled={segmentIndex === 0} onClick={() => { setSegmentIndex(segmentIndex - 1); setSelected(null); }}>이전 구간</GlassButton>
         <label>구간 번호 <input type="number" min={1} max={segments.length} value={segmentIndex + 1}
           onChange={event => { const n = Number(event.currentTarget.value); if (Number.isInteger(n) && n >= 1 && n <= segments.length) { setSegmentIndex(n - 1); setSelected(null); } }} /></label>
-        <button type="button" disabled={segmentIndex === segments.length - 1} onClick={() => { setSegmentIndex(segmentIndex + 1); setSelected(null); }}>다음 구간</button>
+        <GlassButton type="button" disabled={segmentIndex === segments.length - 1} onClick={() => { setSegmentIndex(segmentIndex + 1); setSelected(null); }}>다음 구간</GlassButton>
         {segment.start !== null && <span>{segment.start.toFixed(1)}초</span>}
       </div>}
       <textarea ref={textRef} readOnly value={segment.text} rows={6} aria-label="선택할 원문"
@@ -91,9 +92,9 @@ export function ContentEvidence({ evidence, source, editable, onChange, onEmpty,
         onMouseUp={event => captureSelection(event.currentTarget)}
         onKeyUp={event => captureSelection(event.currentTarget)} />
       {editable ? <><p className={styles.helper}>원문에서 정확한 구절을 드래그한 뒤 저장하세요. 시간은 원래 구간을 그대로 사용합니다.</p>
-        <button type="button" disabled={!selected || selected.from >= selected.to} onClick={saveSelection}>
-          {replacing === null ? "선택한 구절을 근거에 추가" : "선택한 구절로 근거 교체"}</button>
-        {replacing !== null && <button type="button" onClick={() => setReplacing(null)}>교체 취소</button>}
+        <GlassButton type="button" disabled={!selected || selected.from >= selected.to} onClick={saveSelection}>
+          {replacing === null ? "선택한 구절을 근거에 추가" : "선택한 구절로 근거 교체"}</GlassButton>
+        {replacing !== null && <GlassButton type="button" onClick={() => setReplacing(null)}>교체 취소</GlassButton>}
         {evidence.length === 1 && !onEmpty && <p className={styles.helper}>이 문단의 마지막 근거는 유지하거나 다른 구절로 교체해야 합니다.</p>}</>
         : <p className={styles.helper}>현재 선택본의 원문과 다르면 이력 보기만 가능합니다. 최신 자료를 선택해 검토하세요.</p>}
     </details>

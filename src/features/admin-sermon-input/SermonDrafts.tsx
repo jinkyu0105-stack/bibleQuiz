@@ -1,3 +1,4 @@
+import { GlassButton } from "../../components/glass/GlassButton";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { z } from "zod";
 import { draftListSchema, draftMetadataViewSchema, registerSermonResultSchema, type DraftItem, type DraftMetadataView } from "../../../shared/api/admin-sermon-drafts";
@@ -94,13 +95,13 @@ function MetadataForm({ view, onSave, onSelectExisting, busy }: {
         <label>설교 일자(주일)<input type="date" value={date} required onChange={e => { setDate(e.target.value); setReason("직접 선택"); }} /></label>
       </div>
       {!view && <div className={styles.actions}>
-        <button type="button" onClick={() => void inspectVideo()} disabled={!video.trim()}>{previewBusy ? "영상 확인 중" : "영상 정보·공개 자막 확인"}</button>
-        <button type="button" onClick={() => { const candidate = suggestSermonDate(title); setDate(candidate.date); setReason(candidate.reason); setConfirmed(false); }}>제목에서 설교일 추천</button>
+        <GlassButton type="button" onClick={() => void inspectVideo()} disabled={!video.trim()}>{previewBusy ? "영상 확인 중" : "영상 정보·공개 자막 확인"}</GlassButton>
+        <GlassButton type="button" onClick={() => { const candidate = suggestSermonDate(title); setDate(candidate.date); setReason(candidate.reason); setConfirmed(false); }}>제목에서 설교일 추천</GlassButton>
       </div>}
       {previewError && <p role="alert">{previewError} 제목·설교일을 직접 입력해 계속할 수 있습니다.</p>}
       {preview?.outcome === "existing" && <div role="status">
         <p>같은 영상의 {preview.destination === "draft" ? "미발행 작업" : preview.destination === "published" ? "발행 이력" : "정리된 초안"}이 있습니다. 새 정보로 덮어쓰지 않습니다.</p>
-        {preview.destination === "draft" && <button type="button" onClick={() => void onSelectExisting(preview.sermonId)}>기존 작업 선택</button>}
+        {preview.destination === "draft" && <GlassButton type="button" onClick={() => void onSelectExisting(preview.sermonId)}>기존 작업 선택</GlassButton>}
       </div>}
       {preview?.outcome === "inspected" && <div className={styles.previewNotice} role="status">
         <p>영상 제목: {preview.title ?? "확인되지 않음 · 직접 입력해 주세요"} · 게시일: {preview.publishedDate ?? "확인되지 않음"}</p>
@@ -112,7 +113,7 @@ function MetadataForm({ view, onSave, onSelectExisting, busy }: {
             : "등록 후 다시 시도하거나 텍스트를 직접 붙여넣을 수 있습니다."}</p>
             {preview.title && <p>영상 기본 정보는 확인했지만, 자막 원본은 아직 가져오지 못했습니다.</p>}
             <details><summary>기술 정보</summary><pre>{JSON.stringify({ code: preview.caption.code, diagnostic: preview.caption.diagnostic }, null, 2)}</pre></details>
-            <button type="button" onClick={() => { const caption = preview.caption; if (caption.status === "unavailable") void copyDiagnostic(caption.code, caption.diagnostic); }}>진단 정보 복사</button>
+            <GlassButton type="button" onClick={() => { const caption = preview.caption; if (caption.status === "unavailable") void copyDiagnostic(caption.code, caption.diagnostic); }}>진단 정보 복사</GlassButton>
             {copyMessage && <p role="status">{copyMessage}</p>}</>}
       </div>}
       <p>{reason} · {weekday}{weekday && weekday !== "일요일" ? ": 특별예배 등 의도한 날짜인지 확인해 주세요. 저장은 가능합니다." : ""}</p>
@@ -128,7 +129,7 @@ function MetadataForm({ view, onSave, onSelectExisting, busy }: {
       {view && <p>공개 주소 미리보기: /quiz/{date}-{view.slugPreview.split("-").at(-1)}</p>}
     </fieldset>
     <label className={styles.checkbox}><input type="checkbox" checked={confirmed} disabled={busy || !parsed.ok} onChange={e => setConfirmed(e.target.checked)} />제목·설교일·성경 장절을 확인했습니다.</label>
-    <button type="submit" className="primary-button" disabled={busy || previewBusy || !confirmed || !parsed.ok}>{busy ? "저장 중" : view ? "설교 정보 저장" : "새 작업 등록"}</button>
+    <GlassButton type="submit" className="primary-button" disabled={busy || previewBusy || !confirmed || !parsed.ok}>{busy ? "저장 중" : view ? "설교 정보 저장" : "새 작업 등록"}</GlassButton>
   </form>;
 }
 
@@ -180,8 +181,8 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
     <h3 id="sermon-drafts-title">설교 작업 선택</h3>
     <p>영상 링크에서 제목·게시일 후보와 공개 자막 상태를 확인할 수 있습니다. 설교일·장절은 직접 확인하고, 자막을 가져오지 못하면 텍스트를 붙여넣어 주세요.</p>
     <div className={styles.actions}>
-      <button type="button" disabled={busy || disabled} onClick={() => { setCreating(v => !v); setError(""); setMessage(""); }}>{creating ? "등록 닫기" : "새 설교 등록"}</button>
-      <button type="button" disabled={busy || disabled} onClick={() => { setError(""); setView(null); setVersion(v => v + 1); }}>작업 목록 새로고침</button>
+      <GlassButton type="button" disabled={busy || disabled} onClick={() => { setCreating(v => !v); setError(""); setMessage(""); }}>{creating ? "등록 닫기" : "새 설교 등록"}</GlassButton>
+      <GlassButton type="button" disabled={busy || disabled} onClick={() => { setError(""); setView(null); setVersion(v => v + 1); }}>작업 목록 새로고침</GlassButton>
     </div>
     {error && <p role="alert">{error}</p>}{message && <p role="status">{message}</p>}
     {items === null ? <p role="status">미발행 작업을 불러오고 있습니다.</p> : items.length === 0 ? <p>미발행 작업이 없습니다. 새 설교를 등록해 주세요.</p> :
