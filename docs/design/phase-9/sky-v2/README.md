@@ -97,7 +97,7 @@ hover만으로 편집 내용이나 검수 확인을 바꾸지 않는다. 클릭/
 
 [새벽](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dawn&video=billowing) · [낮](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day&video=billowing) · [노을](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=dusk&video=billowing) · [밤](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=night&video=billowing) · [원래 사진/구름군](http://localhost:4189/docs/design/phase-9/sky-v2/?ground=grass&time=day&video=off)
 
-현재 밤은 새로 제공한 `Generated video 2.mp4`를 연결한v2다. 무음4K는29,403,913bytes(약28.04MiB), 모바일1080p는6,698,738bytes(약6.39MiB)다. 원본29,575,502bytes와 [이전 밤v1](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&night-video=v1)을 보존했다. 기본/`night-video=v2`는 새 영상, `v1`은 이전 영상이며 화면 이동에도 선택을 유지한다.
+현재 밤은 새로 제공한 `Generated video 2.mp4`의v2다. 기본4K는24,836,709bytes(23.69MiB) 압축본으로3840×2160·24fps·10초를 유지한다. 모바일1080p는6,698,738bytes(6.39MiB) 그대로다. [재압축 전4K 비교](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&video=billowing&night-video=v2-original&rev=20261010-near-field-2)는29,403,913bytes(28.04MiB) 파일을 사용한다. 원본29,575,502bytes와 [이전 밤v1](http://localhost:4189/docs/design/phase-9/sky-v2/?time=night&ground=grass&video=billowing&night-video=v1)을 보존했다. 기본/`night-video=v2`는 새 압축본, `v2-original`은 재압축 전4K, `v1`은 이전 밤이며 화면 이동에도 선택을 유지한다. 손실 압축으로 세부 차이가 있으며 원본을 덮어쓰지 않았다.
 
 2026-10-09 제공받은 네 시간대의 현재 영상은 모두 **3840×2160·24fps·10초**다.4K는 원본 영상 스트림을 그대로 복사하고 소리만 제거했다. 모바일700px 이하에서는 각각의1080p 파일을 사용한다. 시간대를 바꾸면 현재 영상 하나만 요청하고 이전 재생을 정리한다. 시간대 색과 햇빛/달빛은 영상에 담긴 그대로 표시한다. 끝0.9초의 첫 장면 합성은 반복 경계를 완화하며 MP4 자체를 완벽한 루프로 만든 것은 아니다.
 
@@ -155,4 +155,6 @@ hover만으로 편집 내용이나 검수 확인을 바꾸지 않는다. 클릭/
 
 관리자 좌측 사이드 패널과 중앙 콘텐츠 패널에도 같은 페더 반사를 적용했다. 기존 읽기 배경과 편집/탄성 메뉴는 유지하고 가까운 가장자리만 반응한다. [풀이·관리자 반사 검사](../../../work/P9-06.md#풀이관리자-패널의-페더-반사-확장--2026-10-09).
 
-잔디 영역과 풀잎 개수는 기존의 절반으로 줄였다. 하단의 더 얕은 들판과 PC12,000개/모바일4,500개 풀잎을 사용하며 바람·마우스 반응을 유지한다. [축소/검사](../../../work/P9-06.md#잔디-높이와-풀잎-수-절반-축소--2026-10-10).
+잔디 캔버스 절반 축소는 폐기했다. 가까운 큰 풀의 크기와 원래 배치를 살리고, 먼 지형을 완만하게 낮춰 들판을 짧게 만들었다. 한쪽으로 기울던 경사를 줄이고 뒤쪽/왼쪽의 빈틈을 보충한다. PC19,200개/모바일7,200개로 최초보다20% 적으며 바람·마우스 반응을 유지한다. [현재 검토본](http://localhost:4189/docs/design/phase-9/sky-v2/?view=home&ground=grass&time=dawn&video=billowing&menu-glass=on&rev=20261010-near-field-2#ground-controls) · [검사](../../../work/P9-06.md#잔디-원근과-밀도-보정-및-밤4k-압축--2026-10-10).
+
+두 브라우저가 다른 모습을 표시했던 문제는 새 버전 주소에서 같은 모습임을 사용자가 확인했다. Windows의4189는WSL relay이며 응답JS의 SHA-256도 저장소와 일치했다. 기존 브라우저의 캐시가 직접 관측된 것은 아니므로 확정 원인으로 쓰지 않는다. 바뀐 CSS와모듈 연결에 `v=20261010-near-field-2`를 붙였다. 이전 탭이 그대로면 위 새 주소로 열거나 Ctrl+Shift+R로 다시 불러온다. 미디어 파일은 재다운로드 방지를 위해 불필요하게 버전 변경하지 않는다.

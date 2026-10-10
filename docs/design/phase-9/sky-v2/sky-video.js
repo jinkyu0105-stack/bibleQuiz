@@ -11,7 +11,8 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
   let pendingPlay = null, generation = 0, posterGeneration = 0, disposed = false;
   let selectedTheme = '';
   const variant = new URLSearchParams(window.location.search).get('video');
-  const previousNight = new URLSearchParams(window.location.search).get('night-video') === 'v1';
+  const nightVariant = new URLSearchParams(window.location.search).get('night-video');
+  const previousNight = nightVariant === 'v1';
   const directories = {
     dawn: variant === 'calm' ? 'assets/video/'
       : variant === 'dynamic' ? 'assets/video/dynamic/' : 'assets/video/billowing/',
@@ -94,7 +95,8 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
       const wanted = state.width <= 700 ? '1080p' : '4k';
       if (!source || source === '1080p' && wanted === '4k') {
         generation++; frameReady = false; source = wanted;
-        video.src = `${directory}sky-${selectedTheme}-${source}.mp4`;
+        const optimizedNight = selectedTheme === 'night' && !previousNight && nightVariant !== 'v2-original' && source === '4k';
+        video.src = `${directory}sky-${selectedTheme}-${source}${optimizedNight ? '-optimized' : ''}.mp4`;
         video.load();
       }
       play();

@@ -2,7 +2,8 @@
 /**
  * Adapted from OriginKit Grass Field, base preset, fetched via its MCP on 2026-10-08.
  * https://www.originkit.dev/components/grass-field?preset=base
- * OriginKit hill/wind/shading and low-discrepancy geometry are retained;
+ * OriginKit wind/shading and low-discrepancy geometry are retained;
+ * the terrain now falls away gently behind a denser, shorter visible field;
  * field x coordinates now expand with the viewport aspect ratio (P9-06 wide fix).
  * Adapter replaces React lifecycle and opaque sky with this review's shared clock,
  * transparent backdrop, themes, lazy allocation, quality cap and explicit cleanup.
@@ -24,15 +25,19 @@ void main() {
 }
 `;
 
+// Preserve the original foreground positions. The shorter field slopes gently
+// away from the viewer, with a small density supplement inside the visible area.
+const FIELD_END = 18;
 const HILL_GLSL = `
 uniform float uTerrain;
 uniform float uFieldWidth;
 float hill(vec2 b) {
-    return uTerrain * (
-          0.42 * sin(b.x * 0.155 + 0.6) * cos(b.y * 0.105)
-        + 0.30 * sin(b.y * 0.185 + 1.1)
-        - 0.10 * cos(b.x * 0.34 - b.y * 0.2)
-    );
+    float distance = -b.y;
+    float undulation = 0.08 * sin(b.x * 0.55 + 0.1) * sin(b.y * 0.20)
+        + 0.09 * cos(b.x * 0.22) * cos(b.y * 0.13)
+        + 0.10 * sin(b.y * 0.185 + 1.1);
+    float fallaway = 0.18 * max(0.0, distance - 3.0) * smoothstep(3.0, 5.0, distance);
+    return uTerrain * undulation - fallaway;
 }
 `;
 
@@ -167,7 +172,9 @@ export function createGrassField(canvas, wake) {
   const gl = canvas.getContext('webgl', { alpha: true, antialias: true, depth: true, powerPreference: 'low-power' });
   if (!gl) { canvas.dataset.renderer = 'photo-fallback'; return null; }
   const mobile = window.matchMedia('(max-width: 700px)').matches;
-  const bladeCount = mobile ? 4500 : 12000;
+  const candidateCount = mobile ? 9000 : 24000;
+  const densityBudget = Math.round(candidateCount * .8);
+  let bladeCount = 0;
   let programs = [], buffers = [], ground, blades;
   let groundCount = 0, lost = false, disposed = false;
   let palette = null;
@@ -205,7 +212,7 @@ export function createGrassField(canvas, wake) {
       ground = link(GROUND_VS, FIELD_FS); blades = link(BLADE_VS, FIELD_FS);
       // OriginKit's logarithmically spaced terrain grid.
       const nx = 72, nz = 58, vertices = [];
-      const gz = index => -(.04 * Math.pow(46 / .04, index / nz));
+      const gz = index => -(.04 * Math.pow(FIELD_END / .04, index / nz));
       for (let i = 0; i < nz; i++) {
         const z0 = gz(i), z1 = gz(i + 1), s0 = 3 - z0 * 1.05, s1 = 3 - z1 * 1.05;
         for (let j = 0; j < nx; j++) {
@@ -215,21 +222,39 @@ export function createGrassField(canvas, wake) {
       }
       ground.buffer = buffer(new Float32Array(vertices)); groundCount = vertices.length / 2;
       ground.position = gl.getAttribLocation(ground.program, 'a_xz');
-      const base = new Float32Array(bladeCount * 18), param = new Float32Array(bladeCount * 18), random = new Float32Array(bladeCount * 18);
+      const base = new Float32Array(candidateCount * 18), param = new Float32Array(candidateCount * 18), random = new Float32Array(candidateCount * 18);
       const shape = [[0,-1],[0,1],[.55,-1],[.55,-1],[0,1],[.55,1],[.55,-1],[.55,1],[1,0]];
       let vi = 0;
-      for (let b = 0; b < bladeCount; b++) {
-        const dist = .55 + 32 * Math.pow((b * .6180339887498949) % 1, 1.75);
+      function addBlade(index, dist, fillX) {
         const spread = 2.2 + dist * .85;
-        const x = ((b * .41421356237309515) % 1) * 2 * spread - spread;
-        const r0 = (b * .7320508075688772) % 1, r1 = (b * .5436890126920763) % 1;
+        const x = fillX ?? (((index * .41421356237309515) % 1) * 2 * spread - spread);
+        const r0 = (index * .7320508075688772) % 1, r1 = (index * .5436890126920763) % 1;
         for (const [v, side] of shape) {
           base[vi] = x; base[vi+1] = -dist;
           param[vi] = v; param[vi+1] = side; random[vi] = r0; random[vi+1] = r1; vi += 2;
         }
       }
-      blades.attributes = [['a_base', base], ['a_param', param], ['a_rand', random]].map(([name, array]) => ({ location: gl.getAttribLocation(blades.program, name), buffer: buffer(array) }));
+      for (let b = 0; b < candidateCount; b++) {
+        const dist = .55 + 32 * Math.pow((b * .6180339887498949) % 1, 1.75);
+        if (dist <= FIELD_END) addBlade(b, dist);
+      }
+      const retainedCount = vi / 18;
+      // Fill the newly exposed back of the field; keep a smaller share nearby.
+      // This remains below the original allocation, without packing all 24,000 in.
+      for (let b = 0; b < densityBudget - retainedCount; b++) {
+        const t = ((b + .5) * .6180339887498949) % 1;
+        const near = b % 5 < 2;
+        const dist = near ? 2 + 3 * t : 6 + (FIELD_END - 6) * Math.pow(t, .7);
+        const across = ((b + .5) * .7548776662466927) % 1;
+        // Put the supplement in view, including the exposed left foreground.
+        const x = near ? (across * 1.4 - 1) * dist * .65 : (across * 2 - 1) * dist * .75;
+        addBlade(candidateCount + b, dist, x);
+      }
+      bladeCount = vi / 18;
+      blades.attributes = [['a_base', base], ['a_param', param], ['a_rand', random]].map(([name, array]) => ({ location: gl.getAttribLocation(blades.program, name), buffer: buffer(array.subarray(0, vi)) }));
       canvas.dataset.renderer = 'originkit-grass'; canvas.dataset.blades = String(bladeCount);
+      canvas.dataset.layout = 'near-field-v2'; canvas.dataset.candidates = String(candidateCount);
+      canvas.dataset.retained = String(retainedCount); canvas.dataset.supplement = String(bladeCount - retainedCount);
       return true;
     } catch {
       clean(); canvas.dataset.renderer = 'photo-fallback'; return false;

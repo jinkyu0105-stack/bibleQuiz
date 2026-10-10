@@ -1,6 +1,6 @@
 /* global window, document, Image, performance, requestAnimationFrame, cancelAnimationFrame */
 import { createSkyBanks } from './sky-banks.js';
-import { createSkyVideo } from './sky-video.js';
+import { createSkyVideo } from './sky-video.js?v=20261010-near-field-2';
 // Original billboard world: no Air assets/code, no rendering dependencies.
 export function createWorld() {
   const canvas = document.querySelector('#clouds');
@@ -137,16 +137,15 @@ export function createWorld() {
     if (groundMode === 'grass' && !quiet && ground > .40) {
       if (!grassField && !grassLoading && !grassFailed) {
         grassLoading = true;
-        import('./originkit-grass.js').then(module => {
+        import('./originkit-grass.js?v=20261010-near-field-2').then(module => {
           grassField = module.createGrassField(grassCanvas, wake);
           grassFailed = !grassField;
         }).catch(() => { grassFailed = true; }).finally(() => { grassLoading = false; wake(); });
       }
       if (grassField) {
-        // Match the half-height CSS field with a smaller drawing buffer.
-        const grassHeight = height * .5;
-        grassCanvas.style.transform = `translate3d(0,${grassHeight * ((1 - ground) * .95 + .17)}px,0)`;
-        grassVisible = grassField.render({ time, ground, theme: document.body.dataset.time, moving: !paused && !media.matches, reduced: media.matches, width, height: grassHeight });
+        // Preserve the original foreground scale; shorten the field in world space.
+        grassCanvas.style.transform = `translate3d(0,${height * ((1 - ground) * .95 + .17)}px,0)`;
+        grassVisible = grassField.render({ time, ground, theme: document.body.dataset.time, moving: !paused && !media.matches, reduced: media.matches, width, height });
       }
     }
     // A local photograph sits behind the interactive grass.

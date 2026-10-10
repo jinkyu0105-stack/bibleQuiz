@@ -1,5 +1,5 @@
 /* global window, document, URLSearchParams, setTimeout, structuredClone */
-import { createWorld } from './world.js';
+import { createWorld } from './world.js?v=20261010-near-field-2';
 import { installLiquidGlass } from './liquid-glass.js';
 
 const params = new URLSearchParams(window.location.search);
@@ -12,7 +12,7 @@ if (['off', 'calm', 'dynamic', 'billowing'].includes(params.get('video'))) for (
   const query = new URLSearchParams(path.slice(1)); query.set('video', params.get('video'));
   link.setAttribute('href', `?${query}${hash ? `#${hash}` : ''}`);
 }
-if (['v1', 'v2'].includes(params.get('night-video'))) for (const link of document.querySelectorAll('a[href^="?view="]')) {
+if (['v1', 'v2', 'v2-original'].includes(params.get('night-video'))) for (const link of document.querySelectorAll('a[href^="?view="]')) {
   const [path, hash] = link.getAttribute('href').split('#');
   const query = new URLSearchParams(path.slice(1)); query.set('night-video', params.get('night-video'));
   link.setAttribute('href', `?${query}${hash ? `#${hash}` : ''}`);

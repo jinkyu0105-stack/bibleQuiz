@@ -15,7 +15,8 @@
     "height": 2160,
     "frameRate": "24/1",
     "durationSeconds": 10.0,
-    "preservedVideoStreamHash": "SHA256=2348f8d772ce06250e2ee10e8c7751d88d1253f65146398aaa6bed1f7fbccd2c"
+    "preservedVideoStreamHash": "SHA256=2348f8d772ce06250e2ee10e8c7751d88d1253f65146398aaa6bed1f7fbccd2c",
+    "preservedVideoStreamHashAppliesTo": "sky-night-4k.mp4"
   },
   "files": {
     "sky-night-4k.mp4": {
@@ -33,13 +34,41 @@
     "sky-night-poster-small.webp": {
       "bytes": 117632,
       "sha256": "7c2724f3ef8a66920dfad94f1fff2686b54cfc9620ff16341b321971e4799d74"
+    },
+    "sky-night-4k-optimized.mp4": {
+      "bytes": 24836709,
+      "sha256": "f518e60f436bb6add02c8fc6f36aebdbe09f325d1bad1c515ada09ca7be9c16e"
     }
   },
   "commands": {
     "sky-night-4k.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -c:v copy -an -movflags +faststart OUTPUT",
     "sky-night-1080p.mp4": "ffmpeg -i ORIGINAL -map 0:v:0 -an -vf scale=1920:1080:flags=lanczos -c:v libx264 -threads 4 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart OUTPUT",
     "sky-night-poster-4k.webp": "ffmpeg -i ORIGINAL -frames:v 1 -c:v libwebp -quality 88 OUTPUT",
-    "sky-night-poster-small.webp": "ffmpeg -i ORIGINAL -frames:v 1 -vf scale=1280:720:flags=lanczos -c:v libwebp -quality 86 OUTPUT"
+    "sky-night-poster-small.webp": "ffmpeg -i ORIGINAL -frames:v 1 -vf scale=1280:720:flags=lanczos -c:v libwebp -quality 86 OUTPUT",
+    "sky-night-4k-optimized.mp4": "Two passes: ffmpeg -i sky-night-4k.mp4 -map 0:v:0 -an -c:v libx264 -preset slow -b:v 20M -maxrate 24M -bufsize 40M -pix_fmt yuv420p -threads 6 -pass PASS -passlogfile LOCAL_PASS_LOG; pass 1: -f null /dev/null; pass 2: -movflags +faststart OUTPUT"
   },
-  "policy": "User-supplied time-of-day video. The 4K video stream is copied without re-encoding; audio is removed for the background. A 1080p derivative and first-frame posters reuse the existing playback policy."
+  "policy": "User-supplied time-of-day video. The original muted 4K stream-copy file, source master, posters and mobile derivative are preserved. The desktop default now uses the user-authorized 4K H.264 two-pass lossy compression below 25 MiB; night-video=v2-original selects the previous 4K stream copy.",
+  "compression": {
+    "date": "2026-10-10",
+    "selectedDesktopFile": "sky-night-4k-optimized.mp4",
+    "comparisonQuery": "night-video=v2-original",
+    "sourceFile": "sky-night-4k.mp4",
+    "sourcePreserved": true,
+    "lossy": true,
+    "resolutionPreserved": true,
+    "frameRate": "24/1",
+    "frames": 240,
+    "durationSeconds": 10,
+    "bytes": 24836709,
+    "sourceBytes": 29403913,
+    "reductionPercent": 15.53,
+    "ssimAllFrames": 0.995345,
+    "colorMetadataPreserved": [
+      "tv",
+      "smpte170m",
+      "iec61966-2-1",
+      "bt709"
+    ],
+    "qualityNote": "Full-frame SSIM and still-frame visual comparison are evidence, not a lossless or perceptual-quality guarantee."
+  }
 }
