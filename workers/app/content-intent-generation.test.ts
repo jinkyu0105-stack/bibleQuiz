@@ -429,7 +429,13 @@ describe("actual domain intent storage and Workflow execution", { timeout: 30_00
       // All pre-existing rows survive. The publication adds only new variant/entry/solution rows.
       const after=await capture();
       for (let i=0;i<tables.length;i++) expect(after[i]).toEqual(expect.arrayContaining(before[i]!));
-      expect((await purgeExpiredDraft(db,owner.sermonId,"2026-10-16T00:00:00.000Z")).outcome).toBe("purged");
+      // SQL draft-activity triggers use the real DB clock, beyond Vitest's Date mock.
+      // Check the seven-day boundary from the latest persisted activity, not the host calendar.
+      const activity = await db.prepare("SELECT max(at) at FROM quiz_revision_activity WHERE sermon_id=?")
+        .bind(owner.sermonId).first<{ at: string }>();
+      const cleanupAt = new Date(Date.parse(activity!.at) + 7 * 86_400_000);
+      expect((await purgeExpiredDraft(db,owner.sermonId,new Date(cleanupAt.getTime()-1).toISOString())).outcome).toBe("not_due");
+      expect((await purgeExpiredDraft(db,owner.sermonId,cleanupAt.toISOString())).outcome).toBe("purged");
       expect((await publicRepository.read({slug:published.slug},"child",revisionAt)).quiz?.sermon.summary?.text).toBe(edited.summary);
       expect(await db.prepare("SELECT 1 present FROM draft_cleanup_records WHERE sermon_id=?").bind(owner.sermonId).first()).toEqual({present:1});
       expect(await db.prepare("SELECT count(*) n FROM sermon_content_chunks WHERE sermon_id=?").bind(owner.sermonId).first()).toEqual({n:0});

@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
     errorElement: <RootError />,
     hydrateFallbackElement: <div className="app-shell"><QuizLoading /></div>,
     children: [
-      { index: true, loader: loadPublicQuiz, lazy: () => import("../features/quiz/public-page") },
+      { index: true, loader: loadPublicQuiz, lazy: () => import("../features/quiz/home-page") },
       { path: "archive", lazy: () => import("../features/archive/page") },
       { path: "quiz/:slug/export", lazy: () => import("../features/export/blank-page") },
       { path: "quiz/:slug", loader: loadPublicQuiz, lazy: () => import("../features/quiz/public-page") },

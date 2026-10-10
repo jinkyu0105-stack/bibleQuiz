@@ -48,26 +48,16 @@
   .recent .heading { align-items: start; }
 }
 
-/* Approved archive composition: a larger latest quiz, then image-led cards in date order. */
-.artwork { display: block; height: 140px; overflow: hidden; background: var(--selection); }
-.artwork img { width: 100%; height: 100%; object-fit: cover; }
-@media (min-width: 901px) {
- .card:first-child:not(.compact .card) { display: grid; grid-template-columns: minmax(160px, .8fr) minmax(0, 1.2fr); }
- .card:first-child:not(.compact .card) .artwork { grid-row: 1 / 3; height: 100%; min-height: 280px; }
- .card:first-child:not(.compact .card) .actions { grid-column: 2; }
-}
-@media (max-width: 580px) { .artwork { height: 128px; } }
 
-/* Reference 07: one featured issue, a smaller companion, then a library grid. */
-@media (min-width: 1100px) {
- .cards:not(.compact) { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 20px; }
- .cards:not(.compact) .card:first-child, .cards:not(.compact) .card:nth-child(2) { grid-column: span 2; }
- .cards:not(.compact) .card:first-child { grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); }
- .cards:not(.compact) .card:nth-child(n+3) .cardBody { padding: 20px; }
- .cards:not(.compact) .card:nth-child(n+3) h3 { font-size: 20px; }
- .cards:not(.compact) .card:nth-child(n+3) .actions a { font-size: 12px; padding-inline: 12px; }
-}
-.card { border-radius: 6px; }
-.heading h2 { color: var(--accent); }
-.filters { padding: 20px; border: 1px solid var(--border); background: var(--surface); border-radius: 6px; }
-.date { font-size: 12px; }
+.card { border-radius: 28px; background: transparent; overflow: visible; }
+.card h3 { font-family: inherit; font-weight: 500; }
+.compact { display: block; margin: 0; }
+.compact .card { padding: 18px 0; border: 0; border-radius: 0; border-bottom: 1px solid var(--line); background: transparent; box-shadow: none; backdrop-filter: none; }
+.compact .card:last-child { border-bottom: 0; }
+.compact .cardBody { padding: 0; }
+.compact .date { margin-bottom: 10px; }
+.compact .actions { border: 0; }
+.compact .actions a { min-height: 44px; padding: 8px 12px 8px 0; font-size: 13px; }
+.compact .actions a + a { padding-left: 12px; }
+.filters { border: 1px solid var(--line); border-radius: 20px; padding: 20px; background: var(--glass-reading); }
+.heading h2 { color: var(--ink); }

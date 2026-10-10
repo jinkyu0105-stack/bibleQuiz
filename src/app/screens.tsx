@@ -1,58 +1,37 @@
-import {
-  Link,
-  NavLink,
-  Outlet,
-  isRouteErrorResponse,
-  useRouteError,
-  useLocation,
-} from "react-router-dom";
-
+import { Link, NavLink, Outlet, isRouteErrorResponse, useRouteError, useLocation, ScrollRestoration } from "react-router-dom";
 import { AdminNavigation } from "../features/admin-weekly/AdminNavigation";
-import { ThemeControl } from "../features/quiz/ThemeControl";
-
-const navigation = [
-  { to: "/", label: "이번 주" },
-  { to: "/archive", label: "지난 퀴즈" },
-  { to: "/admin", label: "관리" },
-] as const;
+import { GlassMenu } from "../components/glass/GlassMenu";
+import { GlassLink } from "../components/glass/GlassLink";
+import { GlassPanel } from "../components/glass/GlassPanel";
+import { useGlass } from "../components/glass/useGlass";
+import { SkyEnvironment } from "../components/sky/SkyEnvironment";
 
 export function RootLayout() {
-  const pathname = useLocation().pathname;
-  const admin = pathname.startsWith("/admin");
-  const quiz = pathname === "/" || pathname.startsWith("/quiz/") || pathname === "/dev/quiz";
-  return (
-    <div className={`app-shell${admin ? " admin-shell" : quiz ? " quiz-shell" : pathname === "/archive" ? " archive-shell" : ""}`}>
+  const location = useLocation();
+  const admin = location.pathname.startsWith("/admin");
+  const home = location.pathname === "/" && !new URLSearchParams(location.search).has("level");
+  const view = admin ? "admin" : home ? "home" : location.pathname === "/archive" ? "archive" : "quiz";
+  const header = useGlass<HTMLElement>();
+  return <SkyEnvironment view={view}>
+    <div className={`app-shell sky-app ${view}-shell`}>
+      <ScrollRestoration />
       <a className="skip-link" href="#main-content">본문으로 이동</a>
-      <header className="site-header">
-        <div>
-          <p className="eyebrow">다사랑교회</p>
-          <h1>이번 주의 말씀 : 낱말 퀴즈</h1>
-        </div>
-        <ThemeControl />
-      <nav className="site-navigation" aria-label="주요 메뉴">
-        {navigation.map((item) => (
-          <NavLink
-            className={({ isActive }) => (isActive ? "active" : undefined)}
-            end={item.to === "/"}
-            key={item.to}
-            to={item.to}
-          >
-            {item.label}
-          </NavLink>
-        ))}
-      </nav>
+      <header ref={header} className="site-header glass glass-clear" data-glass-lens="" data-glint="" data-glint-shape="edge">
+        <Link className="brand" to="/" aria-label="다사랑교회 성경퀴즈 처음으로"><span className="brand-word">다사랑</span><span className="brand-detail">교회<br />성경퀴즈</span></Link>
+        <GlassMenu as="nav" clear={false} data-glass-hover-only="" className="site-navigation" aria-label="주요 메뉴">
+          <NavLink end to="/">이번 주</NavLink><NavLink to="/archive">지난 퀴즈</NavLink>
+        </GlassMenu>
+        <GlassLink className="admin-link" to="/admin">관리 <span aria-hidden="true">↗</span></GlassLink>
       </header>
-
       <div className={admin ? "admin-layout" : "public-layout"}>
-      {admin && <AdminNavigation />}
-      <main id="main-content" tabIndex={-1}>
-        <Outlet />
-      </main>
+        {admin && <AdminNavigation />}
+        {admin ? <main id="main-content" tabIndex={-1}><GlassPanel as="div" surface="standard" className="admin-main"><Outlet /></GlassPanel></main>
+          : <main id="main-content" tabIndex={-1}><Outlet /></main>}
       </div>
-      <footer><Link to="/privacy-requests">문의·삭제 요청 및 내 문의</Link></footer>
+      <footer className="site-footer"><span>다사랑교회 성경퀴즈</span><Link to="/privacy-requests">문의·삭제 요청 및 내 문의</Link><a href="#main-content">맨 위로 ↑</a></footer>
       {import.meta.env.DEV && <footer className="development-footer">로컬 개발·검수 화면입니다. 실제 서비스 적용 여부는 운영 기록에서 확인합니다.</footer>}
     </div>
-  );
+  </SkyEnvironment>;
 }
 
 export function RootError() {

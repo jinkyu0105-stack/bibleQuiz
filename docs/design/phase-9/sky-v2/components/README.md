@@ -1,6 +1,6 @@
 # 재사용 유리 UI
 
-P9-06의 승인된 재질과 움직임을 분리한 native HTML/CSS/JavaScript 컴포넌트다. 운영 React 앱에는 아직 연결하지 않았다. 새 패키지나 서비스 없이 다른 검토 화면에서도 사용할 수 있다.
+P9-06의 승인된 재질과 움직임을 분리한 native HTML/CSS/JavaScript 컴포넌트다. 실제 React 앱도 같은 모듈을 [타입이 있는 컴포넌트](../../../../../src/components/README.md)로 감싸 사용한다. 새 패키지나 서비스 없이 다른 검토 화면에서도 사용할 수 있다. 운영 배포 여부는 STATUS를 따른다.
 
 [독립 예제](http://localhost:4189/docs/design/phase-9/sky-v2/components/example.html) · [예제 HTML](example.html) · [예제 연결 코드](example.js)
 
@@ -35,14 +35,14 @@ glass.refresh();
 glass.destroy();
 ```
 
-`root`는 Document 또는 Element이며 root 자체가 박스여도 된다. 생략하면 document 전체에 적용한다. `{ prismatic: false }`는 base 재질용 선택 표시/반사만 초기화한다. 기본값은 true다. CSS를 켜고 끄는 일과 URL 비교 옵션은 호스트가 맡는다.
+`root`는 Document 또는 Element이며 root 자체가 박스여도 된다. 생략하면 document 전체에 적용한다. `{ prismatic: false }`는 base 재질용 선택 표시/반사만 초기화한다. 기본값은 true다. `{ descendants: false }`는 root와 그 root가 만든 장식에만 연결한다. React처럼 중첩 박스/메뉴가 각각 연결 수명을 소유할 때 사용하며, 기본값 true는 기존 하위 요소 전체 탐색을 유지한다. CSS를 켜고 끄는 일과 URL 비교 옵션은 호스트가 맡는다.
 
 같은 root를 다시 연결하면 이전 장식·이벤트·관찰자·예약 프레임을 정리한다. 별도 root 여러 개는 서로 겹치지 않게 사용한다. 각 굴절 필터 ID는 인스턴스마다 다르다. 메뉴 항목이나 박스 구조를 추가/교체했을 때는 같은 root를 다시 연결한다. `refresh()`는 기존 요소의 크기/위치를 다시 측정하며 새 요소를 수집하지 않는다. 장식 관련 속성만 정리하고, 호스트가 변경한 내용·선택·입력·다른 inline style은 유지한다.
 
 ## 선택과 동작 계약
 
 - 메뉴의 **직접 자식** `button`/`a`를 사용한다. 버튼에는 `type="button"`, 그룹에는 이름과 적절한 `role="group"` 또는 `nav`를 제공한다.
-- 버튼의 현재 선택은 `aria-pressed="true"`, 페이지 링크는 `aria-current="page"`로 표시한다. 클릭/키보드 동작과 이 속성 변경은 호스트가 맡고, 컴포넌트는 이를 관찰해 선택 유리만 움직인다. hover로 데이터나 실제 선택을 바꾸지 않는다. 여러 그룹의 상태는 독립적이다.
+- 버튼의 현재 선택은 `aria-pressed="true"`, 페이지 링크는 `aria-current="page"`, 탭은 `aria-selected="true"`로 표시한다. 클릭/키보드 동작과 이 속성 변경은 호스트가 맡고, 컴포넌트는 이를 관찰해 선택 유리만 움직인다. hover로 데이터나 실제 선택을 바꾸지 않는다. 여러 그룹의 상태는 독립적이다.
 - `data-glass-motion`을 생략하면 기존 단순 선택 표시다. `data-glass-convex`를 생략하면 탄성 이동과 평평한 재질을 조합할 수 있다.
 - 현재 선택이 없는 헤더형 메뉴는 `data-glass-hover-only`를 추가한다. 읽기 패널 안의 메뉴에는 `data-glass-nested`를 추가해 밝은 시간대의 기존 CSS 굴절 대안을 사용한다.
 - 일반 유리 표면의 포인터 반사는 `data-glint`로 연결한다. `data-glint-shape="spot"`은 작은 원형, `edge`는 위아래 테두리다. `data-glass-lens`는 맑은 표면의 광학 효과를 연결한다. 박스와 입체 버튼은 필요한 속성/장식을 자동으로 갖춘다.
@@ -50,7 +50,7 @@ glass.destroy();
 
 호스트의 색·여백 조정은 CSS 변수와 별도 클래스에 둔다. 공통 모듈에는 `weekly-sheet`, `puzzle-workspace`, 관리자 화면 ID 같은 페이지 선택자가 없다. [liquid-glass.js](../liquid-glass.js)는 검토 화면의 URL 옵션·선명하게 버튼·메뉴 선택만 연결하며, 기존 두 CSS 파일은 페이지 배치와 각 메뉴의 읽기 받침을 유지한다.
 
-React 연결 시에도 이 API의 연결/해제 수명을 사용할 수 있지만, React 컴포넌트 전환과 실제 앱 연결은 후속 승인 범위다. 예제의 클릭 동작은 실제 퀴즈 저장/제출/발행을 실행하지 않는다.
+React의 `useGlass`는 `useLayoutEffect`에서 root만 연결하고 해제 시 `destroy()`를 호출한다. 선택 상태 변경은 속성 관찰로 반영하고 항목 구조가 달라지면 `structure` 값으로 다시 연결한다. 예제의 클릭 동작은 실제 퀴즈 저장/제출/발행을 실행하지 않는다.
 
 ## 검사
 

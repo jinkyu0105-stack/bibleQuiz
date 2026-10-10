@@ -10,7 +10,7 @@ let nextInstance = 0;
  * Selection/content remain caller-owned: hover never changes aria or inputs.
  * Mount once per non-overlapping root; remounting that root disposes its effects.
  */
-export function mountGlassComponents(root = document, { prismatic = true } = {}) {
+export function mountGlassComponents(root = document, { prismatic = true, descendants = true } = {}) {
   mounts.get(root)?.destroy();
   const instance = nextInstance++;
   const lifetime = new AbortController();
@@ -19,7 +19,7 @@ export function mountGlassComponents(root = document, { prismatic = true } = {})
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   const decorations = [], restorations = [];
-  const find = selector => [...(root.matches?.(selector) ? [root] : []), ...root.querySelectorAll(selector)];
+  const find = selector => [...(root.matches?.(selector) ? [root] : []), ...[...root.querySelectorAll(selector)].filter(element => descendants || decorations.includes(element))];
   // Restore only properties owned by the effect; preserve content, selection,
   // and any unrelated inline styles changed by the caller while mounted.
   function remember(element, attributes, properties = []) {
@@ -79,7 +79,7 @@ export function mountGlassComponents(root = document, { prismatic = true } = {})
   });
   function measureSelection({ element, indicator, motion }) {
     if (motion) { motion.measure(); return; }
-    const selected = element.querySelector(':scope > [aria-pressed=true], :scope > [aria-current=page]');
+    const selected = element.querySelector(':scope > [aria-pressed=true], :scope > [aria-current=page], :scope > [aria-selected=true]');
     if (!selected || !element.getClientRects().length) return;
     indicator.style.width = `${selected.offsetWidth}px`;
     indicator.style.height = `${selected.offsetHeight}px`;
@@ -202,7 +202,7 @@ export function mountGlassComponents(root = document, { prismatic = true } = {})
       if (group.motion) group.motion.syncSelection(); else measureSelection(group);
     }
   });
-  for (const { element } of groups) selection.observe(element, { subtree: true, attributes: true, attributeFilter: ['aria-pressed', 'aria-current'] });
+  for (const { element } of groups) selection.observe(element, { subtree: true, attributes: true, attributeFilter: ['aria-pressed', 'aria-current', 'aria-selected'] });
   scheduleMeasurement();
   document.fonts.ready.then(() => { if (!signal.aborted) scheduleMeasurement(); });
 

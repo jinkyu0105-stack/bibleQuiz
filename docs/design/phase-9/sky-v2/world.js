@@ -1,8 +1,11 @@
-/* global window, document, Image, performance, requestAnimationFrame, cancelAnimationFrame */
+/* global window, document, Image, performance, requestAnimationFrame, cancelAnimationFrame, AbortController */
 import { createSkyBanks } from './sky-banks.js';
-import { createSkyVideo } from './sky-video.js?v=20261010-near-field-2';
+import { createSkyVideo } from './sky-video.js';
 // Original billboard world: no Air assets/code, no rendering dependencies.
-export function createWorld() {
+export function createWorld({ asset = path => path, videoMedia = null, initiallyPaused = false, onMotionChange = () => {} } = {}) {
+  const lifetime = new AbortController();
+  const { signal } = lifetime;
+  let disposed = false;
   const canvas = document.querySelector('#clouds');
   const vault = document.querySelector('.sky-vault');
   const meadow = document.querySelector('.meadow');
@@ -11,19 +14,18 @@ export function createWorld() {
   let mountainRequested = false, mountainReady = false;
   mountainImage.addEventListener('load', async () => {
     // Large responsive photographs should be decoded before their layer is revealed.
-    try { await mountainImage.decode(); mountainReady = true; } catch { mountainReady = false; }
+    try { await mountainImage.decode(); mountainReady = !disposed; } catch { mountainReady = false; }
     wake();
-  });
-  mountainImage.addEventListener('error', () => { mountainReady = false; wake(); });
+  }, { signal });
+  mountainImage.addEventListener('error', () => { mountainReady = false; wake(); }, { signal });
   const grassCanvas = document.querySelector('#origin-grass');
   let groundMode = 'photo', grassField = null, grassLoading = false, grassFailed = false;
   const grassStatus = document.querySelector('#grass-status');
-  const home = document.querySelector('#home-view');
   const header = document.querySelector('.site-header');
   const media = window.matchMedia('(prefers-reduced-motion: reduce)');
   const motionButton = document.querySelector('#motion');
   const gl = canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, premultipliedAlpha: true, powerPreference: 'low-power' });
-  let program, rect, tint, alpha, flip;
+  let program, buffer, rect, tint, alpha, flip;
   const textures = [];
   let textureSize = '', textureGeneration = 0;
   let ready = false;
@@ -31,7 +33,7 @@ export function createWorld() {
   let animation = 0;
   let previous = performance.now();
   let time = 0;
-  let paused = false;
+  let paused = initiallyPaused;
   let targetProgress = 0;
   let progress = 0;
   let color = [1, 1, 1];
@@ -40,7 +42,7 @@ export function createWorld() {
   let width = window.innerWidth;
   let height = window.innerHeight;
   const skyBanks = createSkyBanks(vault, wake);
-  const skyVideo = createSkyVideo(vault, wake, updateMotion);
+  const skyVideo = createSkyVideo(vault, wake, updateMotion, videoMedia);
   const themes = { dawn: [.94, .89, .94], day: [.99, 1, 1], dusk: [1, .81, .76], night: [.24, .36, .55] };
   // x/y are world coordinates; depth determines apparent size and camera parallax.
   const cloudNames = ['cumulus-crown', 'cumulus-tower', 'cumulus-island', 'cumulus-drift', 'cumulus-billow'];
@@ -72,7 +74,7 @@ export function createWorld() {
     gl.deleteShader(vertex); gl.deleteShader(fragment);
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) { canvas.dataset.renderer = 'static-fallback'; return; }
     gl.useProgram(program);
-    const buffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    buffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0,0,1,0,0,1,0,1,1,0,1,1]), gl.STATIC_DRAW);
     const position = gl.getAttribLocation(program, 'aPosition'); gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
     rect = gl.getUniformLocation(program, 'uRect'); tint = gl.getUniformLocation(program, 'uTint'); alpha = gl.getUniformLocation(program, 'uAlpha'); flip = gl.getUniformLocation(program, 'uFlip');
@@ -90,7 +92,7 @@ export function createWorld() {
     cloudNames.forEach((name, index) => {
       const image = new Image();
       image.onload = () => {
-        if (lost || generation !== textureGeneration) return;
+        if (disposed || lost || generation !== textureGeneration) return;
         const texture = gl.createTexture();
         if (textures[index]) gl.deleteTexture(textures[index]);
         textures[index] = texture;
@@ -102,10 +104,10 @@ export function createWorld() {
         finished++; ready = true; canvas.dataset.renderer = finished === cloudNames.length ? 'webgl-billboards' : 'webgl-partial'; wake();
       };
       image.onerror = () => {
-        if (lost || generation !== textureGeneration) return;
+        if (disposed || lost || generation !== textureGeneration) return;
         canvas.dataset.renderer = ready ? 'webgl-partial' : 'static-fallback';
       };
-      image.src = `assets/${name}${size === 'small' ? '-small' : ''}.webp`;
+      image.src = asset(`assets/${name}${size === 'small' ? '-small' : ''}.webp`);
     });
   }
 
@@ -119,7 +121,7 @@ export function createWorld() {
   }
   function readProgress() {
     const isHome = document.body.dataset.view === 'home';
-    targetProgress = isHome ? Math.max(0, Math.min(1, window.scrollY / Math.max(1, home.offsetHeight - height))) : .22;
+    targetProgress = isHome ? Math.max(0, Math.min(1, window.scrollY / Math.max(1, (document.querySelector('#home-view')?.offsetHeight || height) - height))) : .22;
   }
   function renderWorld() {
     // One camera descends through a fixed cloud field. Ground approaches from below.
@@ -137,7 +139,8 @@ export function createWorld() {
     if (groundMode === 'grass' && !quiet && ground > .40) {
       if (!grassField && !grassLoading && !grassFailed) {
         grassLoading = true;
-        import('./originkit-grass.js?v=20261010-near-field-2').then(module => {
+        import('./originkit-grass.js').then(module => {
+          if (disposed) return;
           grassField = module.createGrassField(grassCanvas, wake);
           grassFailed = !grassField;
         }).catch(() => { grassFailed = true; }).finally(() => { grassLoading = false; wake(); });
@@ -150,7 +153,7 @@ export function createWorld() {
     }
     // A local photograph sits behind the interactive grass.
     const showMountains = grassVisible && document.body.dataset.mountains !== 'off';
-    if (showMountains && !mountainRequested) { mountainRequested = true; mountainImage.srcset = 'assets/mountains.webp 1600w, assets/mountains-4k.webp 3840w'; mountainImage.sizes = '100vw'; mountainImage.src = 'assets/mountains.webp'; }
+    if (showMountains && !mountainRequested) { mountainRequested = true; mountainImage.srcset = `${asset('assets/mountains.webp')} 1600w, ${asset('assets/mountains-4k.webp')} 3840w`; mountainImage.sizes = '100vw'; mountainImage.src = asset('assets/mountains.webp'); }
     mountains.hidden = !showMountains || !mountainReady;
     mountains.style.transform = `translate3d(-50%,${height * (1 - ground) * .95}px,0)`;
     mountains.style.opacity = String(Math.min(1, Math.max(0, (ground - .40) / .22)));
@@ -159,7 +162,7 @@ export function createWorld() {
     meadow.style.opacity = grassVisible ? '0' : String(Math.min(1, ground * 2));
     const failed = groundMode === 'grass' && (grassFailed || grassCanvas.dataset.renderer === 'photo-fallback');
     const grassMessage = failed ? '움직이는 잔디를 표시할 수 없어 기존 사진을 보여 드립니다.' : groundMode === 'grass' ? 'OriginKit · 바람에 흔들리는 잔디' : '기존 사진 · 언제든 다시 선택할 수 있어요';
-    if (grassStatus.textContent !== grassMessage) grassStatus.textContent = grassMessage;
+    if (grassStatus && grassStatus.textContent !== grassMessage) grassStatus.textContent = grassMessage;
     canvas.dataset.progress = progress.toFixed(4); canvas.dataset.time = time.toFixed(3);
     canvas.dataset.camera = cameraY.toFixed(3); canvas.dataset.ground = ground.toFixed(4);
     if (!ready || lost) return;
@@ -200,7 +203,7 @@ export function createWorld() {
     if (!document.hidden && ((!paused && !media.matches) || unsettled)) animation = requestAnimationFrame(frame);
   }
   function wake() {
-    if (!animation && !document.hidden) { previous = performance.now(); animation = requestAnimationFrame(frame); }
+    if (!disposed && !animation && !document.hidden) { previous = performance.now(); animation = requestAnimationFrame(frame); }
   }
   function updateMotion() {
     document.body.dataset.motion = paused || media.matches ? 'off' : 'on';
@@ -215,18 +218,26 @@ export function createWorld() {
   motionButton.addEventListener('click', () => {
     if (skyVideo.blocked) { paused = false; skyVideo.retry(); }
     else paused = !paused;
+    onMotionChange(paused);
     updateMotion();
-  });
-  media.addEventListener('change', updateMotion);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(animation); animation = 0; canvas.dataset.suspended = 'true'; } else { delete canvas.dataset.suspended; wake(); } });
+  }, { signal });
+  media.addEventListener('change', updateMotion, { signal });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(animation); animation = 0; canvas.dataset.suspended = 'true'; } else { delete canvas.dataset.suspended; wake(); } }, { signal });
   // A passive wake-up only: layout and drawing are coalesced into the next frame.
-  window.addEventListener('scroll', wake, { passive: true });
-  window.addEventListener('resize', measure);
-  canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); lost = true; ready = false; textureGeneration++; canvas.dataset.renderer = 'static-fallback'; wake(); });
-  canvas.addEventListener('webglcontextrestored', () => { lost = false; setup(); measure(); });
-  window.addEventListener('pagehide', event => { if (!event.persisted) { grassField?.dispose(); skyBanks.dispose(); skyVideo.dispose(); } });
+  window.addEventListener('scroll', wake, { passive: true, signal });
+  window.addEventListener('resize', measure, { signal });
+  canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); lost = true; ready = false; textureGeneration++; canvas.dataset.renderer = 'static-fallback'; wake(); }, { signal });
+  canvas.addEventListener('webglcontextrestored', () => { lost = false; setup(); measure(); }, { signal });
+  function dispose() {
+    if (disposed) return;
+    disposed = true; lifetime.abort(); cancelAnimationFrame(animation); animation = 0; textureGeneration++;
+    grassField?.dispose(); skyBanks.dispose(); skyVideo.dispose();
+    if (gl && !lost) { textures.forEach(texture => gl.deleteTexture(texture)); if (program) gl.deleteProgram(program); if (buffer) gl.deleteBuffer(buffer); }
+  }
+  window.addEventListener('pagehide', event => { if (!event.persisted) dispose(); }, { signal });
   setup(); measure(); updateMotion();
   return {
+    dispose,
     setGround(mode) { groundMode = mode === 'grass' ? 'grass' : 'photo'; document.body.dataset.ground = groundMode; wake(); },
     setTheme(theme) { targetColor = themes[theme] || themes.day; wake(); },
     reset() { readProgress(); progress = targetProgress; lastScrollY = -1; wake(); },

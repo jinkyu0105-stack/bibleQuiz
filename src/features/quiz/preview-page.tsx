@@ -1,3 +1,4 @@
+import { GlassPanel } from "../../components/glass/GlassPanel";
 import { SermonHero } from "./SermonHero";
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -25,12 +26,12 @@ export function Component() {
       <SermonHero difficulty={difficulty} title="마음에 새기는 말씀 (예시)" date="2026-08-31"
         reference="마태복음 5:1-12" translation="개역개정"
         readingUrl="https://www.bskorea.or.kr/bible/korbibReadpage.php?version=GAE&book=mat&chap=5&sec=1" />
-      <section className="sermon-details" id="sermon-details" aria-label="설교 내용과 발행 정보">
+      <GlassPanel className="sermon-details" id="sermon-details" aria-label="설교 내용과 발행 정보">
         <details className="sermon-summary">
           <summary>AI가 요약한 설교 핵심 내용</summary>
           <p>이 시험 화면에는 실제 설교 요약이 없습니다. 발행 화면에서는 관리자가 검토한 AI 요약과 고지 문구를 제공합니다.</p>
         </details>
-      </section>
+      </GlassPanel>
       <DifficultyTabs difficulty={difficulty} onChange={changeLevel} />
       <div role="tabpanel" id="quiz-panel" aria-labelledby={`tab-${difficulty}`}>
         <QuizWorkspace key={`${quiz.quizId}:${quiz.variantRevision}`} quiz={quiz} deadline="시험 화면에는 실제 마감이 없습니다." />

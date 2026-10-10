@@ -131,7 +131,7 @@ test("public quiz loads, keeps difficulty-specific drafts and survives permalink
   const writes: string[] = [];
   page.on("request", (request) => { if (request.method() !== "GET") writes.push(request.url()); });
   await mockPublic(page);
-  await page.goto("/");
+  await page.goto("/?level=child");
   await expect(page.getByRole("heading", { name: "함께 돌아보는 한 주 (테스트)" })).toBeVisible();
   await expect(page.getByText(/설교자의 원문이 아닙니다/)).toBeVisible();
   await expect(page.locator('time[datetime="2099-09-07T00:00:00.000Z"]')).toContainText("한국 시간");
@@ -157,7 +157,7 @@ test("loading, empty, error/retry and private-field rejection do not invent a qu
   let respond: () => void = () => {};
   const gate = new Promise<void>((resolve) => { respond = resolve; });
   await page.route("**/api/quizzes/**", async (route) => { await gate; await route.fulfill({ json: { data: { quiz: null, otherOpenQuizzes: [] } } }); });
-  await page.goto("/", { waitUntil: "domcontentloaded" });
+  await page.goto("/?level=child", { waitUntil: "domcontentloaded" });
   await expect(page.getByRole("status", { name: "퀴즈를 불러오고 있습니다." })).toBeVisible();
   respond();
   await expect(page.getByRole("heading", { name: "말씀 퀴즈를 준비하고 있습니다." })).toBeVisible();
@@ -233,7 +233,7 @@ test("deadline keeps exact Korean time beside a readable remaining period", asyn
     body.data.quiz!.closesAtLabel = "검증용 정확한 마감 시각 (한국 시간)";
     return route.fulfill({ json: body });
   });
-  await page.goto("/");
+  await page.goto("/?level=child");
   await expect(page.locator(`time[datetime="${closesAt}"]`)).toHaveText("검증용 정확한 마감 시각 (한국 시간)");
   await expect(page.getByTestId("remaining-time")).toHaveText("남은 기간: 1일 2시간");
 });
@@ -242,7 +242,7 @@ test("skip link, landmarks and cell names support keyboard-only narrow-screen us
   await mockPublic(page);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.setViewportSize({ width: 320, height: 720 });
-  await page.goto("/");
+  await page.goto("/?level=child");
   await expect(page.getByRole("heading", { name: "함께 돌아보는 한 주 (테스트)" })).toBeVisible();
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "본문으로 이동" })).toBeFocused();
@@ -290,7 +290,7 @@ test("submission prepares a session, safely retries and renders the immediate re
     await route.fulfill({ json: { data: result } });
   });
 
-  await page.goto("/");
+  await page.goto("/?level=child");
   await expect(page.getByRole("button", { name: "정답보기" })).toHaveAttribute("aria-disabled", "true");
   await inputValue(page, "가");
   await page.getByRole("button", { name: "입력 확인", exact: true }).click();
@@ -441,7 +441,7 @@ test("own submission deletion confirms, safely retries and removes private resul
   });
 
   await page.setViewportSize({ width: 320, height: 800 });
-  await page.goto("/");
+  await page.goto("/?level=child");
   await page.evaluate(() => localStorage.setItem("bibleQuiz:draft:public-test-child:1", "PRIVATE_LOCAL_DRAFT"));
   await page.getByRole("button", { name: "정답보기" }).click();
   await page.getByRole("button", { name: "참여 현황 보기" }).click();
@@ -532,7 +532,7 @@ test("participation board stays on demand, rejects private extras and renders ac
     await route.fulfill({ json: publicResponse() });
   });
 
-  await page.goto("/");
+  await page.goto("/?level=child");
   await expect(page.getByRole("heading", { name: "제출한 답안이 확인되었습니다" })).toBeVisible();
   await expect(page.getByRole("button", { name: "정답보기" })).toBeVisible();
   const openBoard = page.getByRole("button", { name: "참여 현황 보기" });

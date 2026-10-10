@@ -125,7 +125,7 @@ body[data-time=night] {
   transition: transform 430ms var(--glass-ease);
 }
 .glass-segmented > :is(button, a) { position: relative; z-index: 1; }
-.glass-segmented[data-selection-ready] > :is(button[aria-pressed=true], a[aria-current=page]) {
+.glass-segmented[data-selection-ready] > :is(button[aria-pressed=true], button[aria-selected=true], a[aria-current=page]) {
   background: transparent;
   color: var(--glass-selected-ink);
   box-shadow: none;
@@ -152,7 +152,7 @@ body[data-transparency=reduced] .glass::before { -webkit-backdrop-filter: none; 
 @media (forced-colors:active) {
   .glass { border-color: ButtonText; }
   .glass::before, .glass::after, .glass-indicator { display: none; }
-  .glass-segmented[data-selection-ready] > :is(button[aria-pressed=true], a[aria-current=page]) { outline: 2px solid Highlight; outline-offset: -3px; color: Highlight; }
+  .glass-segmented[data-selection-ready] > :is(button[aria-pressed=true], button[aria-selected=true], a[aria-current=page]) { outline: 2px solid Highlight; outline-offset: -3px; color: Highlight; }
 }
 
 /* Simple selectors share the same pause policy as elastic menus. */

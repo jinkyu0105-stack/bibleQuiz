@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./app/router";
 import "./styles/index.css";
 import "./styles/fonts.css";
-import "./styles/sermon.css";
+import "./styles/sky.css";
 
 const root = document.getElementById("root");
 

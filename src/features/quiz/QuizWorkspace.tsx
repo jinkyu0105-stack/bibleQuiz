@@ -22,6 +22,7 @@ import {
   SubmissionResultSummary,
   type SubmissionTarget,
 } from "./SubmissionPanel";
+import { GlassPanel } from "../../components/glass/GlassPanel";
 import styles from "./quiz.module.css";
 
 const latinInputMessage = "영문이 입력됐어요. 한/영 키로 한글로 바꿔 주세요.";
@@ -274,7 +275,7 @@ export function QuizWorkspace({
   const cellLabel = `${activeCell.row + 1}행 ${activeCell.column + 1}열, ${directionLabel} ${activeEntry.number}번, ${state.cellValues.get(state.activeCell) ?? "빈칸"}`;
   const gridStyle = { "--grid-size": quiz.grid.gridSize } as CSSProperties;
   return (
-    <section className={styles.workspace} data-large={large}>
+    <GlassPanel className={`${styles.workspace} quiz-workspace-glass`} data-large={large}>
       {latinNoticeVisible && <p className={styles.inputToast} aria-hidden="true" data-testid="latin-input-notice">{latinInputMessage}</p>}
       <div className={styles.tools}>
         <p>{quiz.grid.gridSize} × {quiz.grid.gridSize} 격자 <span>{quiz.grid.entries.length}개 낱말</span></p>
@@ -432,6 +433,6 @@ export function QuizWorkspace({
       {participationBoard !== undefined &&
         (participationBoard.visibility === "public" || (deletedSubmission === null && hasVerifiedSubmission)) &&
         <ParticipationBoard grid={quiz.grid} target={participationBoard.target} printable={participationBoard.printable ?? true} />}
-    </section>
+    </GlassPanel>
   );
 }

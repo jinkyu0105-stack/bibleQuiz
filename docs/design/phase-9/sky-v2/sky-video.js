@@ -1,6 +1,6 @@
 /* global window, document, URLSearchParams */
 // Each supplied movie carries its own time-of-day colour, without the photo grade.
-export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
+export function createSkyVideo(vault, wake, onPlaybackPolicyChange, media = null) {
   const layer = vault.querySelector('.sky-video');
   const poster = layer.querySelector('img');
   const video = layer.querySelector('video');
@@ -21,7 +21,7 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
   };
   video.muted = true;
 
-  function eligible() { return enabled && Boolean(directories[state.theme]) && state.visible; }
+  function eligible() { return enabled && Boolean(media ? media[state.theme] : directories[state.theme]) && state.visible; }
   function wantsPlayback() { return eligible() && state.moving && !document.hidden && !disposed; }
   function policyBlocked() { return blocked && eligible(); }
   function notifyPolicy() {
@@ -86,9 +86,9 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
     const directory = directories[selectedTheme];
     if (eligible() && !posterRequested) {
       posterRequested = true;
-      poster.srcset = `${directory}sky-${selectedTheme}-poster-small.webp 1280w, ${directory}sky-${selectedTheme}-poster-4k.webp 3840w`;
+      poster.srcset = media ? `${media[selectedTheme].smallPoster} 1280w, ${media[selectedTheme].poster} 3840w` : `${directory}sky-${selectedTheme}-poster-small.webp 1280w, ${directory}sky-${selectedTheme}-poster-4k.webp 3840w`;
       poster.sizes = '100vw';
-      poster.src = `${directory}sky-${selectedTheme}-poster-4k.webp`;
+      poster.src = media ? media[selectedTheme].poster : `${directory}sky-${selectedTheme}-poster-4k.webp`;
     }
     if (wantsPlayback() && !failed && !blocked) {
       // Request a movie only for a visible, moving hero. Upgrade once on widening.
@@ -96,7 +96,7 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange) {
       if (!source || source === '1080p' && wanted === '4k') {
         generation++; frameReady = false; source = wanted;
         const optimizedNight = selectedTheme === 'night' && !previousNight && nightVariant !== 'v2-original' && source === '4k';
-        video.src = `${directory}sky-${selectedTheme}-${source}${optimizedNight ? '-optimized' : ''}.mp4`;
+        video.src = media ? media[selectedTheme][source === '4k' ? 'desktop' : 'mobile'] : `${directory}sky-${selectedTheme}-${source}${optimizedNight ? '-optimized' : ''}.mp4`;
         video.load();
       }
       play();

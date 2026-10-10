@@ -231,9 +231,9 @@ test("themes and large view persist, with bounded page width at 320px", async ({
   await page.emulateMedia({ colorScheme: "dark", reducedMotion: "reduce" });
   await page.goto("/dev/quiz?level=adult&size=10");
   await expect(page.getByLabel("화면 테마")).toHaveValue("system");
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(40, 40, 40)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 32, 57)");
   await page.getByLabel("화면 테마").selectOption("light");
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(253, 246, 227)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(234, 242, 248)");
   await page.getByRole("button", { name: "크게 보기" }).click();
   await expect(page.getByRole("button", { name: "기본 보기" })).toHaveAttribute("aria-pressed", "true");
   await page.reload();

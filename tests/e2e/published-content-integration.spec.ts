@@ -26,6 +26,7 @@ test("migrated isolated D1 serves a published fixture through the Worker and bro
   });
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "통합 경로 검증용 설교 (테스트)" })).toBeVisible();
+  await page.getByRole("link", { name: /어린이 퀴즈/ }).click();
   await expect(page.getByRole("grid", { name: "낱말 퀴즈 격자" })).toBeVisible();
   await expect(page.getByText("가로 1번 통합 검사 단서", { exact: true }).first()).toBeVisible();
   await expect(page.locator('time[datetime="2099-09-07T00:00:00.000Z"]')).toContainText("한국 시간");

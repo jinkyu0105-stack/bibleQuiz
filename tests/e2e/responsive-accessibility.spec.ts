@@ -12,7 +12,7 @@ async function archivedBoard(page: Page) {
     ...[2, 3].map(order => ({ submissionOrder: order, displayName: `정답자${order}`, submittedAt: `2026-09-01T00:0${order}:00.000Z`, comment: null, answers: Object.fromEntries(ids.map(id => [id, '가'])), correctCellIds: ids, isFullyCorrect: true, isMine: false })),
   ], winners: [{ rank: 1, submissionOrder: 2 }] });
   await page.route('**/api/quizzes/**', route => route.fulfill({ json: new URL(route.request().url()).pathname.endsWith('/board') ? { data: board } : response }));
-  await page.goto('/');
+  await page.goto('/?level=child');
   await page.getByRole('button', { name: '참여 현황 보기', exact: true }).click();
   return page.getByTestId('participation-board');
 }
@@ -61,7 +61,8 @@ test('board switches immediately with decorative FLIP copies, and reduced motion
   expect(await page.evaluate(() => (window as unknown as { __motionCalls: number[] }).__motionCalls.length)).toBe(0);
   await page.setViewportSize({ width: 320, height: 720 });
   const art = board.locator('img'); await expect(art).toBeVisible();
-  expect(await art.evaluate(image => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+  await art.scrollIntoViewIfNeeded();
+  await expect.poll(() => art.evaluate(image => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   for (const width of [320, 360, 375, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -69,27 +70,26 @@ test('board switches immediately with decorative FLIP copies, and reduced motion
   await board.screenshot({ path: test.info().outputPath('top-n-final.png') });
 });
 
-test('both hero tracks select separate mobile images and retain input when all images fail', async ({ page }) => {
-  for (const level of ['child', 'adult']) {
-    await page.goto(`/dev/quiz?level=${level}&size=10`);
-    for (const width of [320, 375, 768, 1440]) {
-      await page.setViewportSize({ width, height: 900 });
-      const art = page.locator('.sermon-artwork img');
-      await expect.poll(() => art.evaluate(image => (image as HTMLImageElement).currentSrc)).toMatch(new RegExp(`${level}-${width < 768 ? 'mobile' : 'desktop'}-`));
-      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-      if (width === 320 || width === 1440) {
-        for (const theme of ['light', 'dark']) {
-          await page.getByLabel('화면 테마').selectOption(theme);
-          await page.screenshot({ path: test.info().outputPath(`hero-${level}-${width}-${theme}.png`), fullPage: true });
-        }
+for (const level of ['child', 'adult']) test(`${level} uses responsive sky sources and retains input when images fail`, async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto(`/dev/quiz?level=${level}&size=10`);
+  for (const width of [320, 375, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    const art = page.locator('#world .day-sky');
+    await expect.poll(() => art.evaluate(image => (image as HTMLImageElement).currentSrc)).toMatch(new RegExp(`day${width <= 700 ? '-small' : ''}\\.webp`));
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    if (width === 320 || width === 1440) {
+      for (const theme of ['light', 'dark']) {
+        await page.getByLabel('화면 테마').selectOption(theme);
+        await page.screenshot({ path: test.info().outputPath(`hero-${level}-${width}-${theme}.png`), fullPage: true });
       }
     }
   }
-  await page.route('**/images/**', route => route.abort());
-  await page.goto('/dev/quiz?level=child');
+  await page.route(/\.(webp|avif|png|jpe?g)(\?.*)?$/, route => route.abort());
+  await page.goto(`/dev/quiz?level=${level}`);
   await page.getByRole('textbox', { name: /^낱말 입력:/ }).focus();
   await page.getByRole('textbox', { name: /^낱말 입력:/ }).evaluate(element => { (element as HTMLInputElement).value = '값'; element.dispatchEvent(new InputEvent('input', { bubbles: true })); });
-  await expect(page.getByTestId('progress')).toHaveText('1 / 21칸 작성');
+  await expect(page.getByTestId('progress')).toHaveText(level === 'child' ? '1 / 21칸 작성' : '1 / 40칸 작성');
 });
 
 test('public forms and archive reflow at 320px and equivalent doubled CSS text size', async ({ page }) => {

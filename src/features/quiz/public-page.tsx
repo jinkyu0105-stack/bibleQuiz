@@ -1,3 +1,4 @@
+import { GlassPanel } from "../../components/glass/GlassPanel";
 import { SermonHero } from "./SermonHero";
 import { BlankExportPanel } from "../export/BlankExportPanel";
 import { ProblemHistory } from "./ProblemHistory";
@@ -54,7 +55,7 @@ export function Component() {
   return <><PublicQuizContent />{location.pathname === "/" && <RecentArchive />}</>;
 }
 
-function PublicQuizContent() {
+export function PublicQuizContent() {
   const result = useLoaderData<QuizLoadResult>();
   const navigation = useNavigation();
   const revalidator = useRevalidator();
@@ -84,14 +85,14 @@ function PublicQuizContent() {
       reference={quiz.sermon.bibleReferenceLabel} translation={quiz.sermon.translation}
       readingUrl={quiz.sermon.bibleReadingUrl} excerpt={quiz.sermon.summary?.text}
       desktopPath={quiz.variant.desktopBackgroundPath} mobilePath={quiz.variant.mobileBackgroundPath} />
-    <section className="sermon-details" id="sermon-details" aria-label="설교 내용과 발행 정보">
+    <GlassPanel className="sermon-details" id="sermon-details" aria-label="설교 내용과 발행 정보">
       {quiz.sermon.summary && <section className="sermon-summary" aria-labelledby="summary-heading">
         <h3 id="summary-heading">AI가 요약한 설교 핵심 내용</h3>
         <p className="summary-copy">{quiz.sermon.summary.text}</p><p>{quiz.sermon.summary.disclosure}</p>
       </section>}
       <p className="published-date">발행일 <time dateTime={quiz.publishedAt}>{new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "long" }).format(new Date(quiz.publishedAt))}</time></p>
       <Link className="text-link" to={`/quiz/${quiz.slug}?level=${difficulty}`}>이 퀴즈의 고유 주소</Link>
-    </section>
+    </GlassPanel>
     <DifficultyTabs difficulty={difficulty} available={quiz.availableDifficulties} onChange={(level) => {
       if (level === difficulty) return;
       const next = new URLSearchParams(params); next.set("level", level);

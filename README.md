@@ -2,7 +2,7 @@
 
 다사랑교회 주간 설교를 바탕으로 어린이용·장년용 한글 낱말 퀴즈를 제공하는 웹앱입니다.
 
-공개 풀이·제출/채점·지난 퀴즈·출력·관리자 발행과 운영 연결을 구현했고 Phase8 출시 범위는 완료했습니다. 현재 Phase9의 P9-02에서 승인 시안에 맞춘 UI를 로컬 검수하고 있습니다. 최신 상태는 [STATUS](docs/STATUS.md), 정확한 재개는 [HANDOFF](docs/HANDOFF.md), 제품 계약은 [implementation](implementation.md)을 따릅니다. 기본 개발 실행은 아래 `pnpm dev`이며 장년·어린이 시험 화면을 자동 준비합니다.
+공개 풀이·제출/채점·지난 퀴즈·출력·관리자 발행과 운영 연결을 구현했고 Phase8 출시 범위는 완료했습니다. 현재 P9-06의 승인된 하늘·유리 UI를 실제 React 페이지에 로컬 적용했습니다. 운영 배포는 기존 P9-04입니다. 최신 상태는 [STATUS](docs/STATUS.md), 정확한 재개는 [HANDOFF](docs/HANDOFF.md), 제품 계약은 [implementation](implementation.md)을 따릅니다. 기본 개발 실행은 아래 `pnpm dev`이며 장년·어린이 시험 화면을 자동 준비합니다.
 
 ## 프로젝트 문서 지도
 
@@ -30,6 +30,7 @@ D1 데이터베이스
 ```
 
 - `src/`: 브라우저에서 보이는 React 화면
+- `src/components/`: 검토본과 같은 유리 재질을 쓰는 [React 컴포넌트와 하늘 배경](src/components/README.md)
 - `src/features/hangul-input/`: 한글 입력 상태 모델과 단일 native input 연결
 - `src/features/quiz/`: 공개 퀴즈 로딩·화면과 공통 격자·단서·테마·임시 저장·제출 결과·참여 현황, 개발 전용 입력 시험 화면
 - `src/features/archive/`: 지난 퀴즈 검색·날짜 필터·더 보기·브라우저 뒤로가기 복원 화면

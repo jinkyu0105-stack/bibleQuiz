@@ -1,10 +1,11 @@
+import { GlassMenu } from "../../components/glass/GlassMenu";
 import type { Difficulty } from "../../../shared/api/public-quiz";
 
 export function DifficultyTabs({ difficulty, available = ["child", "adult"], onChange }: {
   difficulty: Difficulty; available?: readonly Difficulty[]; onChange: (difficulty: Difficulty) => void;
 }) {
   const levels = (["child", "adult"] as const).filter((level) => available.includes(level));
-  return <div className="difficulty-tabs" role="tablist" aria-label="퀴즈 난이도">
+  return <GlassMenu structure={levels.join(":")} className="difficulty-tabs" role="tablist" aria-label="퀴즈 난이도">
     {levels.map((level, index) => <button type="button" role="tab" id={`tab-${level}`} key={level}
       aria-selected={level === difficulty} aria-controls="quiz-panel" tabIndex={level === difficulty ? 0 : -1}
       data-composition-cancel onPointerDown={(event) => event.preventDefault()}
@@ -16,5 +17,5 @@ export function DifficultyTabs({ difficulty, available = ["child", "adult"], onC
         onChange(next);
         document.getElementById(`tab-${next}`)?.focus();
       }}>{level === "child" ? "어린이용" : "장년용"}</button>)}
-  </div>;
+  </GlassMenu>;
 }

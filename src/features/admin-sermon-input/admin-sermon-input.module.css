@@ -870,3 +870,11 @@
 .reviewTargets button { border-radius: 4px; }
 .reviewActions { border-radius: 4px; border-inline: 0; }
 .weeklyPage > .hero > button:not(:disabled) { background: var(--accent); border-color: var(--accent); color: var(--button-text); font-weight: 700; }
+
+/* Selected review stays a native button group with the shared moving glass. */
+.reviewTargets:global(.glass) { border-radius: 28px; padding: 5px; background: var(--glass-clear); }
+.reviewTargets button { border-radius: 23px; color: var(--ink); }
+.reviewTargets [aria-pressed=true] { color: var(--glass-selected-ink); background: var(--glass-selected); }
+.reviewTargets[data-selection-ready] [aria-pressed=true] { background: transparent; }
+.weeklyPage > .hero, .snapshotDisclosure, .weeklyPage .panel { border-radius: 20px; }
+.weeklyPage > .hero { background: var(--glass-soft); border-top-width: 1px; }

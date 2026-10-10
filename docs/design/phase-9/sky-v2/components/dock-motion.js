@@ -9,7 +9,7 @@ export function installDockMotion({ element, indicator, signal, canMove }) {
   const spring = (value = 0) => ({ value, velocity: 0 });
   const state = { position: spring(), length: spring(), crossPosition: spring(), crossLength: spring(), stretch: spring(), lift: spring() };
   let boxes = [], target = null, hovered = null, frame = 0, previousTime = 0, ready = false, vertical = false;
-  const selected = () => links.find(link => link.matches('[aria-current=page], [aria-pressed=true]'));
+  const selected = () => links.find(link => link.matches('[aria-current=page], [aria-selected=true], [aria-pressed=true]'));
   const focused = () => links.find(link => link === document.activeElement && link.matches(':focus-visible'));
   const enabled = () => canMove() && !forcedColors.matches;
   element.dataset.dockMotion = 'elastic';

@@ -1,3 +1,4 @@
+import { GlassMenu } from "../../components/glass/GlassMenu";
 import { useAutosave } from "../admin-weekly/useAutosave";
 import { ContentRegeneration } from "./ContentRegeneration";
 import { ContentPlacement } from "./ContentPlacement";
@@ -345,7 +346,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
     {message && <p role="status">{message}</p>}{acting && <p role="status">요청을 확인하고 있습니다.</p>}
     {loading && <p role="status">상태·비용·내용·배치를 나누어 불러오고 있습니다. 준비된 자료부터 표시합니다.</p>}
     {loadFailed && <p role="alert">일부 자료를 불러오지 못했습니다. 표시된 내용은 유지됩니다. 생성 상태를 다시 확인한 뒤 편집해 주세요.</p>}
-    {weeklyStep === 3 && <div id="review-targets" className={styles.reviewTargets} role="group" aria-label="검수할 내용">{(["summary", "child", "adult"] as const).map(target => <button key={target} type="button" aria-pressed={reviewTarget === target} onClick={() => setReviewTarget(target)}>{target === "summary" ? "요약" : target === "child" ? "어린이 문제" : "장년 문제"}<small>{c?.[target]?.review ? "검수 완료" : c?.[target] ? "검수 필요" : "생성 대기"}</small></button>)}</div>}
+    {weeklyStep === 3 && <GlassMenu nested id="review-targets" className={styles.reviewTargets} role="group" aria-label="검수할 내용">{(["summary", "child", "adult"] as const).map(target => <button key={target} type="button" aria-pressed={reviewTarget === target} onClick={() => setReviewTarget(target)}>{target === "summary" ? "요약" : target === "child" ? "어린이 문제" : "장년 문제"}<small>{c?.[target]?.review ? "검수 완료" : c?.[target] ? "검수 필요" : "생성 대기"}</small></button>)}</GlassMenu>}
     {view?.snapshots.toSorted((a, b) => Number(isSelected(b, view)) - Number(isSelected(a, view))).map(snapshot => <div key={weeklyStep === undefined ? `${snapshot.value.id}-${view.version}` : snapshot.value.id} hidden={weeklyStep !== undefined && (weeklyStep === 2 ? snapshot.kind !== "intent" : snapshot.kind === "intent" || (snapshot.kind === "candidate" ? snapshot.value.difficulty : snapshot.kind) !== reviewTarget)}>
       <details className={styles.snapshotDisclosure} open={weeklyStep === undefined || isSelected(snapshot, view)}>
       <summary>{snapshotTitle(snapshot)} <span>{isSelected(snapshot, view) ? "현재 선택본" : "이전 결과·비교 자료"}</span></summary>
