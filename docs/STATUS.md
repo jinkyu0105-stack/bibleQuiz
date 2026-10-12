@@ -6,6 +6,8 @@
 
 `pnpm check`2540건·lint/typecheck/build와 Node 생성1건, 실제 고정 SQL의 저장/조회/초안 편집 검사, 격리 로컬 PC/모바일12화면·archive 목록 검증이 통과했다. 저장 Access 만료로 인증된 원격 UI 저장 검사는 제외하고 원격 DB 검증과 구분한다. 초안은 제목/입력 편집용·AI 비활성 유지, 발행 퀴즈는2026-10-26 23:59:59KST 마감. 앱 배포/push 없이 데이터만 추가하고 결과 문서를 로컬 커밋했다. **현재 P9-15 완료 · 부모 테스트 자료 구성 완료 · 다음 사용자 피드백 · 세션 유지 · 추천 GPT-6.1-Sol/medium**.
 
+사용자 추가 아이디어인 참여 현황의 `내 제출 삭제 요청` 버튼은 [향후 계획15절](future/notes.md#15-향후-개발--참여-현황에서-내-제출-삭제-요청)에만 기록했다. 구현·배포 대기 작업으로 착수하지 않았다.
+
 ## P9-14 관리자 안내 UI Preview 반영 — 2026-10-12
 
 **완료.** 사용자 승인으로 관리자 안내 수정본을 소스 **0fbde847a0bdc12374c0983ef0822a35aafa6c87**로 main에 push했다. Workers Builds1cca79c9 success, 실제 Preview version **cd6efb0e-2c05-4401-b0bf-692bdf18c5b1**·100%·**15:32:19KST**를 확인했다. [관리자 도구](https://biblequiz-app-preview.jinkyu0105.workers.dev/admin/tools) · [범위·배포·검사](work/P9-14.md).

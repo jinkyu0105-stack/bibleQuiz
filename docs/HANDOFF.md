@@ -6,6 +6,8 @@
 
 다음 필수 구현은 없다. 사용자가 자료를 확인한 뒤 피드백을 주면 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git status/diff/log 순서로 재개한다. 이미 등록한 SQL을 다시 실행하지 않는다. 새 복제 자료·AI 실행·Production·push/배포는 이번 완료 범위와 구분한다. 초안은 제목/입력 본문 편집용이고 AI 생성은 기존 비활성 상태다. 발행 퀴즈의 마감은2026-10-26 23:59:59KST다.
 
+2026-10-12 추가 요청: 참여 현황에서 자기 제출에 `삭제 요청` 버튼을 두는 아이디어는 [향후 계획15절](future/notes.md#15-향후-개발--참여-현황에서-내-제출-삭제-요청)에만 기록했다. 기존 본인 즉시 삭제 정책과 구분하며 현재 구현하지 않는다. 문서3개만 수정하고 `git diff --check`와 상대 링크를 확인했다.
+
 ## 소스·검사·한계
 
 시작 main934f9e0·clean, origin/main0fbde84 대비 결과 문서1커밋 앞선 상태를 보존했다. fixture/생성기/테스트/준비 문서는 **2fa8870f023e1b6eadf36d843c384552373a8eac**로 먼저 로컬 커밋했고 동일 고정 SQL의 Preview 등록을18:03:07KST 최종 대조했다. 종료 변경은 STATUS/HANDOFF/P9-15 문서3개만 별도 로컬 커밋으로 남긴다. 이번 push/앱 배포는 없다. Preview app은 [P9-14](work/P9-14.md)의 소스0fbde84/versioncd6efb0e, Production app은 P9-04 소스37b7254/version7aea6843을 유지한다.
