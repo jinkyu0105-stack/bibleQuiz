@@ -1,5 +1,9 @@
 # 현재 상태
 
+## P9-15 Preview 가상 퀴즈·참여·문의 자료 — 진행 중
+
+2026-10-12 사용자 요청으로 편집용 초안1·진행 중1·지난 퀴즈2, 각 공개 퀴즈의 어린이/장년, 가상 제출/코멘트12·삭제 요청2를 준비한다. 기존 Preview 자료4세트/제출1과 대표 지정·Production을 보존한다. 로컬 저장/조회/편집 검사와 `pnpm check`2540건, PC/모바일12화면 확인을 통과했다. 고정 SQL과 기존 행 digest를 준비했으며 원격 추가·보존 대조가 남았다. 저장 Access 만료로 인증된 원격 UI 검사는 제외한다. [범위·검사·등록](work/P9-15.md). 추천 GPT-6.1-Sol/high, 세션 유지.
+
 ## P9-14 관리자 안내 UI Preview 반영 — 2026-10-12
 
 **완료.** 사용자 승인으로 관리자 안내 수정본을 소스 **0fbde847a0bdc12374c0983ef0822a35aafa6c87**로 main에 push했다. Workers Builds1cca79c9 success, 실제 Preview version **cd6efb0e-2c05-4401-b0bf-692bdf18c5b1**·100%·**15:32:19KST**를 확인했다. [관리자 도구](https://biblequiz-app-preview.jinkyu0105.workers.dev/admin/tools) · [범위·배포·검사](work/P9-14.md).
