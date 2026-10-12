@@ -176,7 +176,9 @@ body[data-motion=off] .descent-cue span:last-child { animation: none; }
 .page-dock > span { padding-right: 10px; color: var(--glass-control-ink); font-size: 10px; }
 .page-dock a { display: grid; place-items: center; min-height: 44px; padding: 10px 19px; border-radius: 24px; font-size: 12px; text-decoration: none; }
 body:not([data-time=night]) .page-dock { --ink: #071725; --glass-control-ink: var(--ink); }
-#grass-toggle[aria-pressed=false] svg { opacity: .55; }
+#grass-toggle[aria-pressed=false] .grass-blades { opacity: .7; }
+#grass-toggle .grass-off-halo { stroke: var(--glass-solid); stroke-width: 4.5; }
+#grass-toggle .grass-off-mark { stroke-width: 2; }
 .sky-app .site-footer { min-height: 100px; padding-top: 24px; padding-bottom: 28px; margin-top: 0; }
 .home-shell .site-footer { padding-bottom: 28px; }
 .home-shell .site-footer a { display: inline-flex; align-items: center; min-height: 44px; }

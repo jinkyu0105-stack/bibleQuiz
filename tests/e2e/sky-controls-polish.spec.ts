@@ -23,12 +23,16 @@ test("all three circular controls have pointer light and grass restores both gro
   }
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.locator("footer").scrollIntoViewIfNeeded();
+  await expect(page.locator("#grass-toggle .grass-off-mark")).not.toBeVisible();
   await page.getByRole("button", { name: "잔디 끄기", exact: true }).click();
+  await expect(page.locator("#grass-toggle .grass-off-mark")).toBeVisible();
+  await expect(page.locator("#grass-toggle svg")).toHaveCSS("opacity", "1");
   await expect(page.locator("body")).toHaveAttribute("data-ground", "photo");
   await expect(page.locator(".meadow")).toHaveCSS("opacity", "1");
   await expect.poll(() => page.locator(".meadow img").evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   expect(await page.locator(".meadow img").evaluate(node => (node as HTMLImageElement).currentSrc)).toContain("meadow");
   await page.getByRole("button", { name: "잔디 켜기", exact: true }).click();
+  await expect(page.locator("#grass-toggle .grass-off-mark")).not.toBeVisible();
   await expect(page.locator("body")).toHaveAttribute("data-ground", "grass");
   await expect(page.locator("#origin-grass")).toBeVisible();
   await expect(page.locator(".meadow")).toHaveCSS("opacity", "0");

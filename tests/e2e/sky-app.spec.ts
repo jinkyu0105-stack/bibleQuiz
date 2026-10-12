@@ -153,6 +153,7 @@ test("grass switches to the original photo and the dock links use the real pages
   await expect(page.locator("#grass-toggle")).toHaveText("");
   await page.reload();
   await expect(page.getByRole("button", { name: "잔디 켜기", exact: true })).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator("#grass-toggle .grass-off-mark")).toBeVisible();
   await page.locator("footer").scrollIntoViewIfNeeded();
   await expect(page.locator("#origin-grass")).toBeHidden();
   const footer = page.locator("footer");
