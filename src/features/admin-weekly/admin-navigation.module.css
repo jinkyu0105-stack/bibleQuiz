@@ -1,48 +1,33 @@
-/* The approved sky-v2 sidebar, using the existing shared glass material. */
-.sidebar:global(.glass) {
-  position: sticky;
-  top: 116px;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 580px;
-  padding: 28px 18px;
-  border-radius: 28px;
-  line-height: 1.65;
-}
-.sidebar .eyebrow { margin: 0 0 7px; font-size: 10px; color: var(--muted); }
-.sidebar .title { margin: 0; font-size: 23px; font-weight: 400; line-height: 1.65; letter-spacing: -.05em; }
-.menu { margin-top: 24px; }
-.menu > summary { min-height: 44px; padding: 10px 0; color: var(--ink); font-size: 13px; }
-.nav { display: grid; gap: 6px; padding: 0; border: 0; background: transparent; }
-.nav a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 45px;
-  padding: 12px 13px;
-  border: 0;
-  border-radius: 22px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.65;
-  text-decoration: none;
-}
-.nav a[aria-current="page"] { color: var(--glass-selected-ink); background: var(--glass-selected); }
-.nav[data-selection-ready] a[aria-current="page"] { background: transparent; }
-.nav:not([data-dock-material="convex"]) a:hover { background: var(--glass-soft); }
-.currentArrow { visibility: hidden; }
-.nav a[aria-current="page"] .currentArrow { visibility: visible; }
-.sidebar .note { margin: auto 0 0; padding: 26px 10px 0; color: var(--muted); font-size: 11px; line-height: 1.9; }
+.sidebar:global(.glass) { position: sticky; top: 116px; display: flex; flex-direction: column; min-width: 0; padding: 28px 14px 16px; border-radius: 24px; }
+.sidebar .eyebrow { margin: 0 14px 6px; color: var(--muted); font-size: 12px; }
+.sidebar .title { margin: 0 14px; font-size: 23px; line-height: 1.5; }
+.menu { margin-top: 30px; }
+.menu > summary, .settings > summary { display: flex; align-items: center; justify-content: space-between; cursor: pointer; min-height: 44px; list-style: none; }
+.menu > summary::-webkit-details-marker, .settings > summary::-webkit-details-marker { display: none; }
+.menu > summary { padding: 10px 14px; font-size: 14px; }
+.nav { display: grid; gap: 4px; border: 0; background: transparent; padding: 0; }
+.nav a { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 11px 13px; border: 0; border-radius: 12px; color: var(--muted); font-size: 14px; line-height: 1.5; text-decoration: none; }
+.nav svg { width: 18px; height: 18px; flex-shrink: 0; }
+.nav a[aria-current=page] { color: var(--glass-selected-ink); background: var(--glass-selected); font-weight: 600; }
+.nav[data-selection-ready] a[aria-current=page] { background: transparent; }
+.nav:not([data-dock-material=convex]) a:hover { background: var(--glass-soft); }
+.currentArrow { margin-left: auto; visibility: hidden; }
+.nav a[aria-current=page] .currentArrow { visibility: visible; }
+.settings { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 8px; }
+.settings > summary { color: var(--muted); font-size: 12px; padding: 10px 14px; }
+.settings[open] > summary > span { transform: rotate(180deg); }
+.homeLink { margin: 24px 14px 0; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; min-height: 44px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-decoration: none; }
+.homeLink:hover { color: var(--ink); text-decoration: underline; }
 @media (min-width: 1024px) { .menu > summary { display: none; } }
 @media (max-width: 1023px) {
-  .sidebar:global(.glass) { position: relative; top: auto; min-height: 0; padding: 23px 19px 19px; border-radius: 26px; }
-  .sidebar .eyebrow, .sidebar .note { display: none; }
-  .sidebar .title { font-size: 20px; }
-  .menu { margin-top: 5px; }
-  .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; margin-top: 10px; }
-  .nav a { justify-content: center; min-height: 44px; padding: 10px 8px; font-size: 12px; text-align: center; }
-  .currentArrow { display: none; }
+ .sidebar:global(.glass) { position: relative; top: auto; padding: 16px; border-radius: 20px; }
+ .sidebar .eyebrow, .sidebar .title, .homeLink { display: none; }
+ .menu { margin: 0; }
+ .menu > summary { padding: 0 4px; }
+ .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 12px; }
+ .nav a { font-size: 13px; padding: 12px 8px; justify-content: center; }
+ .nav svg, .currentArrow { display: none; }
+ .settings .nav { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-top: 0; }
 }
-@media (max-width: 700px) { .nav a { font-size: 10px; } }
+@media (max-width: 380px) { .nav { grid-template-columns: 1fr; } .nav a { justify-content: flex-start; } .nav svg { display: block; } }
+.menu nav { display: block; }

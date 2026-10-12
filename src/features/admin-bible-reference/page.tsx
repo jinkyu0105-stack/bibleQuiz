@@ -200,21 +200,20 @@ function BibleReferenceTool() {
 
 export function Component() {
   return <div className={styles.tools}>
-    <AdminIntro title="발행·수정 도구" description="이미 만든 퀴즈를 고치거나 입력자료를 점검할 때 사용하는 곳입니다. 상황에 맞는 도구를 펼쳐 주세요.">
-      <p className={styles.startHint}>새 퀴즈는 주간 운영에서 영상 등록부터 발행까지 순서대로 만들 수 있습니다.</p>
-      <ButtonLink to="/admin">주간 운영에서 시작하기</ButtonLink>
+    <AdminIntro title="수정·보관 도구" description="발행한 퀴즈 수정부터 입력자료 점검까지, 필요한 도구를 선택하세요.">
+      <ButtonLink to="/admin">퀴즈 목록으로</ButtonLink>
     </AdminIntro>
     <div className={styles.toolGroup}>
-      <div className={styles.groupHeading}><h3>공개한 퀴즈를 고칠 때</h3><p>제출이 있는지와 수정할 내용에 따라 도구가 달라집니다.</p></div>
-      <AdminTool id="metadata" tag="제목·설교일·오탈자" title="발행한 내용의 표현을 다듬고 싶어요" description="제목과 날짜, 요약·단서의 오탈자를 바로잡습니다. 정답·격자 오류는 제출 여부에 맞춰 아래 두 도구 중 하나를 선택하세요."><PublishedMetadata /></AdminTool>
-      <AdminTool id="withdrawal" tag="아직 제출이 없다면" title="공개를 취소하고 다시 준비하고 싶어요" description="어린이·장년 모두 제출이 없을 때 발행을 철회하고, 검수 단계로 돌아갑니다."><WithdrawPublication /></AdminTool>
-      <AdminTool id="correction" tag="이미 제출이 있는 퀴즈" title="정답이나 문제에 오류가 있어요" description="접수를 잠시 멈추고 문제를 수정합니다. 기존 참여자의 답안과 당시 결과는 보존합니다."><ProblemCorrection /></AdminTool>
+      <div className={styles.groupHeading}><h3>발행한 퀴즈</h3><p>제출이 있는지와 수정할 내용에 따라 도구가 달라집니다.</p></div>
+      <AdminTool id="metadata" tag="제목·설교일·오탈자" title="발행 정보 수정" description="제목·날짜·요약·단서의 오탈자를 고칩니다."><PublishedMetadata /></AdminTool>
+      <AdminTool id="withdrawal" tag="아직 제출이 없다면" title="발행 취소" description="제출이 없는 퀴즈를 비공개로 돌리고 다시 준비합니다."><WithdrawPublication /></AdminTool>
+      <AdminTool id="correction" tag="이미 제출이 있는 퀴즈" title="문제·정답 수정" description="제출이 있는 퀴즈의 오류를 수정합니다. 기존 답안과 결과는 보존됩니다."><ProblemCorrection /></AdminTool>
     </div>
     <div className={styles.toolGroup}>
-      <div className={styles.groupHeading}><h3>초안과 입력자료를 확인할 때</h3><p>평소 발행 순서와 별개로, 필요한 자료만 자세히 살펴봅니다.</p></div>
-      <AdminTool id="cleanup" tag="보관 현황 조회" title="초안이 언제 정리되는지 알고 싶어요" description="초안 본문이 자동으로 정리될 예정 시각을 확인합니다. 이 도구에서 직접 삭제하지는 않습니다."><DraftCleanup /></AdminTool>
-      <AdminTool id="sermon" tag="상세 편집" title="자막과 이전 수정본을 자세히 확인하고 싶어요" description="저장된 설교를 골라 입력자료를 비교·복원하고 검수를 이어갑니다. 처음 만드는 경우에는 주간 운영을 이용하세요."><AdminSermonInput /></AdminTool>
-      <AdminTool id="bible" tag="저장하지 않는 확인 도구" title="성경 장절 표기가 맞는지 확인하고 싶어요" description="‘요 3:16’처럼 입력하거나 책·장·절을 선택해 올바른 표기와 공식 읽기 링크를 확인합니다."><BibleReferenceTool /></AdminTool>
+      <div className={styles.groupHeading}><h3>초안과 입력자료</h3><p>평소 발행 순서와 별개로, 필요한 자료만 자세히 살펴봅니다.</p></div>
+      <AdminTool id="cleanup" tag="보관 현황 조회" title="초안 보관 현황" description="초안 본문의 자동 정리 예정일을 확인합니다."><DraftCleanup /></AdminTool>
+      <AdminTool id="sermon" tag="상세 편집" title="입력자료 편집" description="저장된 자막과 수정본을 비교하고 편집합니다."><AdminSermonInput /></AdminTool>
+      <AdminTool id="bible" tag="저장하지 않는 확인 도구" title="성경 장절 확인" description="장절 표기와 대한성서공회 읽기 링크를 확인합니다."><BibleReferenceTool /></AdminTool>
     </div>
   </div>;
 }

@@ -34,7 +34,11 @@ it("loads all demo views, preserves prior records, rejects repeat import and sup
       expect(board.participants.filter(s => s.isFullyCorrect)).toHaveLength(2);
     }
   }
-  const dashboard = await readWeeklyDashboard(db);
+  const dashboard = await readWeeklyDashboard(db, new Date(demoNow));
+  const publicHome = await createPublicQuizRepository(database).read("latest", "child", new Date(demoNow));
+  const live = data.manifest.find(q => q.status === "published")!;
+  expect(publicHome.quiz?.slug).toBe(live.slug);
+  expect(dashboard.homeQuiz).toEqual({ quizSetId: live.quizSetId, selection: "automatic" });
   expect(dashboard.items.filter(s => s.title.startsWith("[테스트]"))).toHaveLength(4);
   expect(dashboard.unansweredCount).toBe(2);
   for (const s of data.manifest.filter(s => s.status === "archived")) {

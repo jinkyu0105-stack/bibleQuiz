@@ -23,14 +23,14 @@ export function OperationsPanel(){
   const latestSql=backups?.items.find(i=>i.kind!=="deletion_manifest"),latestManifest=backups?.items.find(i=>i.kind==="deletion_manifest");
   const backupProblem=[latestSql,latestManifest].some(i=>i?.status==="failed"||!!i?.errorCode);
   const worst=!data||data.items.some(i=>i.status==="delayed")?"사용량 확인 지연":data.items.some(i=>i.status==="warning")?"주의":data.items.some(i=>i.status==="check")?"확인":"여유";
-  return <section className={styles.panel} aria-labelledby="operations-title"><h3 id="operations-title">비용·백업</h3><p className={styles.hint}>사용량 경고와 마지막 정상 백업을 확인하세요. 자세한 점검과 백업 요청은 상세 화면에서 진행합니다.</p><p role="status">{worst}</p>
+  return <section className={styles.panel} aria-labelledby="operations-title"><h3 id="operations-title">사이트 상태</h3><dl className={local.overview}><div><dt>서비스 사용량</dt><dd>{worst}</dd></div><div><dt>최근 정상 백업</dt><dd>{time(backups?.items.find(i=>i.kind!=="deletion_manifest"&&i.status==="verified")?.completedAt??null)}</dd></div></dl>
     {data?.items.some(i=>i.status==="warning")&&<p role="alert">무료 포함량의80% 이상을 사용한 항목이 있습니다. 공식 관리 화면에서 확인해 주세요.</p>}
     {backupProblem&&<p role="alert">최근 백업·삭제 기록에 실패가 있습니다. 마지막 정상본을 보존하고 상세 상태를 확인하세요.</p>}
     {backups?.enabled&&<p>마지막 SQL 정상 완료: {time(backups.items.find(i=>i.kind!=="deletion_manifest"&&i.status==="verified")?.completedAt??null)} · 주간 정상본 {backups.weeklyVerifiedCount}/8</p>}
     {data?.policyCheckNeeded&&<p>이번 달 요금 정책 확인 필요 · <Link to="/admin/manual">매뉴얼의 월간 확인 항목 보기</Link></p>}
     {error&&<p role="alert">{error}</p>}<div className={local.actions}><Button type="button" onClick={()=>void open()}>비용·백업 상세 열기</Button>{!data&&<Button type="button" onClick={()=>{setError("");setAttempt(v=>v+1);}}>사용량 다시 조회</Button>}</div>
     <dialog ref={dialog} className={local.drawer} aria-labelledby="operations-dialog-title"><header className={local.header}><h2 id="operations-dialog-title">비용·사용량과 백업</h2><Button type="button" onClick={()=>dialog.current?.close()}>닫기</Button></header>
-      <h3>1. 서비스 사용량 확인</h3><p>서비스 이름을 펼치면 사용량과 공식 확인 링크를 볼 수 있습니다.</p><p>앱의 관측 추정입니다. 공식 청구 금액과 무료 잔여량은 각 서비스 관리 화면에서 확인하세요. 계정 전체와 이 프로젝트 기여분을 구분합니다.</p>
+      <h3>서비스 사용량</h3><p>서비스 이름을 펼치면 사용량과 공식 확인 링크를 볼 수 있습니다.</p><p>앱의 관측 추정입니다. 공식 청구 금액과 무료 잔여량은 각 서비스 관리 화면에서 확인하세요. 계정 전체와 이 프로젝트 기여분을 구분합니다.</p>
       <Button type="button" disabled={busy} onClick={()=>void refresh()}>{busy?"처리 중…":"사용량·백업 갱신"}</Button>
       {error&&<p role="alert">{error}</p>}{notice&&<p role="status">{notice}</p>}
       {serviceRegistry.map(service=><details key={service.id} className={local.service}><summary>{service.name} · {data?statusLabel[data.items.find(i=>i.service===service.id)?.status??"delayed"]:"사용량 확인 지연"}</summary><p>{service.planAndCostType} · {service.freeAllowanceSummary}</p><a href={service.officialDocsUrl} target="_blank" rel="noreferrer">{service.name} 공식 가격·한도</a><p>관리 위치: {service.dashboardPath}</p>
@@ -40,14 +40,14 @@ export function OperationsPanel(){
       {data&&data.openAiModels.length>0&&<section><h3>이번 달 AI 모델별 관측</h3><p>과거 비용은 당시 계산값을 보존합니다. 캐시 저장 요금이 누락된 이전 가격표의 기록은 실제 청구보다 낮을 수 있으며, 퀴즈별 비용 상세에서 가격표를 확인할 수 있습니다.</p><ul>{data.openAiModels.map(model=><li key={model.model}>{model.model} · {model.calls}호출 · 입력 {model.inputTokens} / 출력 {model.outputTokens}token · 전사 {model.audioSeconds}초 · USD {(model.costMicroUsd/1_000_000).toFixed(6)} · 미확인 {model.unknownCalls}호출</li>)}</ul></section>}
       <p>Workflows 단계 수는 관측 성공 이벤트이며 청구 단계 수와 동일하다고 단정하지 않습니다. CPU 합계·GB-s·state storage를 확인하지 못하면 미확인으로 표시합니다.</p>
       <p>현재 별도 과금 없음: {noSeparateCharge.join(" · ")}</p>
-      <section><h3>2. 비공개 백업 상태</h3><p>백업은 문제가 생겼을 때 복구할 수 있도록 데이터를 따로 보관한 사본입니다. 먼저 최근 기록을 확인하고, 필요할 때만 새 백업을 요청하세요.</p><p>{backups?.enabled?"백업 실행 켜짐":"백업 실행 꺼짐"} · 주간 정상본 {backups?.weeklyVerifiedCount??"미확인"}/8</p><p>별도 삭제 기록 갱신: {time(backups?.manifestUpdatedAt??null)}</p>
+      <details className={local.section}><summary>백업 관리</summary><h3>비공개 백업 상태</h3><p>백업은 문제가 생겼을 때 복구할 수 있도록 데이터를 따로 보관한 사본입니다. 먼저 최근 기록을 확인하고, 필요할 때만 새 백업을 요청하세요.</p><p>{backups?.enabled?"백업 실행 켜짐":"백업 실행 꺼짐"} · 주간 정상본 {backups?.weeklyVerifiedCount??"미확인"}/8</p><p>별도 삭제 기록 갱신: {time(backups?.manifestUpdatedAt??null)}</p>
         {backups?.items.length===0&&<p>이 환경의 백업 실행 기록이 없습니다.</p>}<ul>{backups?.items.map(item=><li key={item.id}>{time(item.startedAt)} · {backupKindLabel[item.kind]} · {backupStatusLabel[item.status]} · {item.sizeBytes?.toLocaleString()??"크기 미확인"} bytes · 지문 {item.checksumPrefix??"미확인"}{item.errorCode&&` · 확인 필요 ${item.errorCode}`}</li>)}</ul>
         <label>백업 종류 <select value={kind} disabled={busy} onChange={e=>{setKind(e.target.value as typeof kind);setRequestKey(crypto.randomUUID());setConfirmed(false);}}><option value="manual">수동 백업</option><option value="pre_migration">DB 변경 전 백업</option></select></label>
         <p>전체 SQL export 동안 DB가 잠시 응답하지 못할 수 있습니다. 마지막 정상본을 유지하고 새 파일 검증 뒤 회전합니다.</p>
         <label className={local.check}><input type="checkbox" checked={confirmed} disabled={!backups?.enabled||busy} onChange={e=>setConfirmed(e.target.checked)}/>DB의 일시 응답 중단과 시작 시각을 확인했습니다.</label>
         <Button type="button" disabled={!backups?.enabled||!confirmed||busy} onClick={()=>void backup()}>백업 요청</Button><p>복원은 <Link to="/admin/manual">매뉴얼의 격리 복원 절차</Link>로 진행합니다.</p>
-      </section>
-      {data&&<section><h3>3. {data.yearMonth} 요금 정책 확인</h3><p>각 서비스의 공식 요금·한도를 읽은 뒤 확인 표시를 남깁니다. 확인 완료를 눌러도 사용량이나 백업 경고는 없어지지 않습니다.</p><p>{data.policyCheckNeeded?"확인 필요":"이번 달 확인 완료"} · 마지막 확인 {time(data.checkedAt)}</p><fieldset disabled={busy}><legend>공식 링크와 현재 등록값을 서비스별로 확인하세요</legend>{serviceRegistry.map(service=><label key={service.id} className={local.check}><input type="checkbox" checked={checked.includes(service.id)} onChange={e=>setChecked(v=>e.target.checked?[...v,service.id]:v.filter(id=>id!==service.id))}/>{service.name} 정책 확인</label>)}</fieldset><Button type="button" disabled={busy||checked.length!==serviceIds.length} onClick={()=>void month()}>이번 달 확인 완료</Button></section>}
+      </details>
+      {data&&<details className={local.section}><summary>월간 요금 정책 확인</summary><h3>{data.yearMonth} 요금 정책 확인</h3><p>각 서비스의 공식 요금·한도를 읽은 뒤 확인 표시를 남깁니다. 확인 완료를 눌러도 사용량이나 백업 경고는 없어지지 않습니다.</p><p>{data.policyCheckNeeded?"확인 필요":"이번 달 확인 완료"} · 마지막 확인 {time(data.checkedAt)}</p><fieldset disabled={busy}><legend>공식 링크와 현재 등록값을 서비스별로 확인하세요</legend>{serviceRegistry.map(service=><label key={service.id} className={local.check}><input type="checkbox" checked={checked.includes(service.id)} onChange={e=>setChecked(v=>e.target.checked?[...v,service.id]:v.filter(id=>id!==service.id))}/>{service.name} 정책 확인</label>)}</fieldset><Button type="button" disabled={busy||checked.length!==serviceIds.length} onClick={()=>void month()}>이번 달 확인 완료</Button></details>}
     </dialog>
   </section>;
 }

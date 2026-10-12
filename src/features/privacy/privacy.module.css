@@ -1,0 +1,12 @@
+.page { max-width: 840px; margin-inline: auto; }
+.fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; border: 0; padding: 0; }
+.fields legend { font-family: 'Noto Serif KR',serif; font-size: 21px; font-weight: 600; margin-bottom: 20px; }
+.page label { display: grid; gap: 8px; font-size: 14px; font-weight: 600; }
+.page :is(input,select,textarea) { width: 100%; min-width: 0; font-size: 16px; font-weight: 400; border-radius: 8px; padding: 10px 12px; min-height: 44px; }
+.fields textarea { min-height: 130px; }
+.fields > label:first-of-type, .message { grid-column: 1 / -1; }
+.fields select { max-width: 280px; }
+.page button { justify-self: start; font-size: 14px; margin-block: 4px; }
+.page ul { padding: 0; list-style: none; display: grid; gap: 8px; }
+.page [role=status] { padding: 20px; margin-top: 16px; border-left: 3px solid var(--accent); background: var(--glass-reading); }
+@media (max-width: 500px) { .fields { grid-template-columns: 1fr; } }

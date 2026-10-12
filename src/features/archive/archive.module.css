@@ -61,3 +61,13 @@
 .compact .actions a + a { padding-left: 12px; }
 .filters { border: 1px solid var(--line); border-radius: 20px; padding: 20px; background: var(--glass-reading); }
 .heading h2 { color: var(--ink); }
+/* The full archive uses a consistent record size; the home excerpt is preserved. */
+:global(.archive-shell) .page { margin-top: 8px; }
+:global(.archive-shell) .cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
+:global(.archive-shell) .card:first-child { grid-column: auto; background: transparent; border-color: var(--line); }
+:global(.archive-shell) .card { border-radius: 16px; }
+:global(.archive-shell) .cardBody { padding: 24px; }
+:global(.archive-shell) .date { margin-bottom: 16px; }
+:global(.archive-shell) .card h3 { font-size: 22px; }
+:global(.archive-shell) .filters :is(input, select, button) { height: 46px; min-height: 46px; }
+@media (max-width: 580px) { :global(.archive-shell) .cards { grid-template-columns: minmax(0,1fr); } }

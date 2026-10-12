@@ -11,7 +11,7 @@ export const weeklyQuizSchema = z.strictObject({
   childVisibleCount: z.int().nonnegative().default(0), adultVisibleCount: z.int().nonnegative().default(0),
   visibleCount: z.int().nonnegative(), totalCount: z.int().nonnegative(),
 });
-export const weeklyDashboardSchema = z.strictObject({ items: z.array(weeklyQuizSchema), unansweredCount: z.int().nonnegative() });
+export const weeklyDashboardSchema = z.strictObject({ items: z.array(weeklyQuizSchema), homeQuiz: z.strictObject({ quizSetId: id, selection: z.enum(["featured", "automatic"]) }).nullable().default(null), unansweredCount: z.int().nonnegative() });
 export type WeeklyQuiz = z.infer<typeof weeklyQuizSchema>;
 export const submissionListSchema = z.strictObject({ items: z.array(z.strictObject({
   id, difficulty: z.enum(["child", "adult"]), revision: z.int().positive(), status: z.enum(["visible", "hidden", "deleted"]),

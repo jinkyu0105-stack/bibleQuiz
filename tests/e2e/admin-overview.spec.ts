@@ -1,0 +1,73 @@
+import { expect, test } from "@playwright/test";
+import { mockOverview, overview } from "../fixtures/admin-overview";
+
+test("quiz manager shows the actual automatic home quiz and separates editing, published and archived records",async({page},info)=>{
+ const writes=await mockOverview(page);
+ await page.goto("/admin");
+ await page.getByRole("button",{name:"낮",exact:true}).click();
+ const library=page.getByRole("region",{name:"퀴즈 목록 4"});
+ await expect(library.getByRole("article")).toHaveCount(4);
+ await expect(page.getByText("자동 선택",{exact:false})).toBeVisible();
+ await expect(page.getByRole("link",{name:"공개 화면",exact:false}).first()).toHaveAttribute("href","/quiz/2026-10-12-demo01");
+ await expect(page.getByText("아직 공개된 퀴즈가 없습니다")).toHaveCount(0);
+ const homeTitle=page.locator("#home-quiz-heading");
+ expect((await homeTitle.boundingBox())!.width).toBeGreaterThan(150);
+ await expect(homeTitle).toHaveCSS("font-family",/Noto Serif KR/);
+ await expect(page.getByRole("link",{name:"초안 편집",exact:true})).toHaveAttribute("href","/admin/quiz/demo-draft");
+ await page.getByRole("group",{name:"퀴즈 상태"}).getByRole("button",{name:/지난 퀴즈/}).click();
+ await expect(library.getByRole("article")).toHaveCount(2);
+ await page.getByRole("searchbox",{name:"퀴즈 검색"}).fill("함께");
+ await expect(library.getByRole("article")).toHaveCount(1);
+ await expect(library.getByRole("link",{name:/참여 기록/})).toHaveAttribute("href","/admin/submissions?quiz=demo-past1");
+ await page.getByRole("searchbox",{name:"퀴즈 검색"}).fill("없는 제목");
+ await expect(page.getByText("조건에 맞는 퀴즈가 없습니다")).toBeVisible();
+ await page.getByRole("searchbox",{name:"퀴즈 검색"}).fill("");
+ await page.getByRole("group",{name:"퀴즈 상태"}).getByRole("button",{name:/전체/}).click();
+ await page.locator(".admin-main").screenshot({path:info.outputPath("manager-filled.png")});
+ await page.getByRole("button",{name:"밤",exact:true}).click();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.locator(".admin-main").screenshot({path:info.outputPath("manager-night.png")});
+ await page.emulateMedia({reducedMotion:"reduce",forcedColors:"active"});
+ const filter=page.getByRole("group",{name:"퀴즈 상태"}).getByRole("button",{name:/작성 중/});
+ await filter.focus();await page.keyboard.press("Enter");await expect(library.getByRole("article")).toHaveCount(1);
+ await expect(filter).toBeFocused();expect(writes).toEqual([]);
+});
+
+test("failed dashboard loading is distinct from an empty collection and retry recovers",async({page})=>{
+ let fails=true;
+ await mockOverview(page);
+ await page.route("**/api/admin/dashboard",route=>fails?route.fulfill({status:503,json:{error:{message:"합성 실패"}}}):route.fulfill({json:{data:overview}}));
+ await page.goto("/admin");
+ await expect(page.getByRole("alert")).toContainText("불러오지 못했습니다");
+ await expect(page.getByText("첫 퀴즈를 준비해 보세요")).toHaveCount(0);
+ fails=false;await page.getByRole("button",{name:"운영 상태 새로고침"}).click();
+ await expect(page.getByRole("heading",{name:overview.items[0]!.title,exact:true})).toBeVisible();
+ await expect(page.getByRole("alert")).toHaveCount(0);
+});
+
+test("inbox and participation records reveal actions on demand and retain unfinished replies",async({page},info)=>{
+ const writes=await mockOverview(page);
+ await page.goto("/admin/privacy-requests");
+ await expect(page.getByRole("heading",{name:"연습 참가자 하늘"})).toBeVisible();
+ await expect(page.getByLabel("관리자 답변")).toBeHidden();
+ const reply=page.locator("summary").filter({hasText:"답변 작성"});
+ await reply.focus();await page.keyboard.press("Enter");
+ await page.getByLabel("관리자 답변").fill("처리 전 확인할 내용");
+ await expect(page.getByText("상태를 ‘처리 완료’로 바꾸는 것만으로 제출 기록이 삭제되지는 않습니다.")).toBeVisible();
+ await reply.click();await reply.click();
+ await expect(page.getByLabel("관리자 답변")).toHaveValue("처리 전 확인할 내용");
+ await page.locator(".admin-main").screenshot({path:info.outputPath("inbox-reply.png")});
+ await page.goto("/admin/submissions?quiz=demo-past1");
+ await expect(page.getByRole("heading",{name:"연습 참가자 봄"})).toBeVisible();
+ await expect(page.getByRole("button",{name:"영향 확인·조치"})).toBeHidden();
+ await page.getByLabel("난이도 필터").selectOption("adult");
+ await expect(page.getByText(/선택한 난이도·상태에 해당하는 기록이 없습니다/)).toBeVisible();
+ await page.getByLabel("난이도 필터").selectOption("all");
+ await page.locator(".admin-main").screenshot({path:info.outputPath("participants.png")});
+ await page.goto("/admin/quiz/demo-past1");
+ await expect(page.locator("details[data-admin-tool]")).toHaveCount(4);
+ await expect(page.locator("details[data-admin-tool][open]")).toHaveCount(0);
+ await page.goto("/admin/tools#cleanup");
+ await expect(page.locator('[data-admin-tool="cleanup"]')).toHaveAttribute("open","");
+ expect(writes).toEqual([]);
+});

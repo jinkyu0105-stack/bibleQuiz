@@ -39,11 +39,16 @@ async function workspace(page:Page,edit:(body:Record<string,unknown>,view:AdminC
 }
 test('dashboard resumes one existing weekly work and new-work URL reuses it without any write',async({page},testInfo)=>{
   const f=await workspace(page,()=>{throw new Error('no mutations');});
-  await page.goto('/admin');await expect(page.getByRole('link',{name:'계속 작업하기',exact:true})).toHaveAttribute('href','/admin/quiz/weekly');
-  await expect(page.getByRole('link',{name:'답변할 문의·삭제 요청 2건'})).toBeVisible();
+  await page.goto('/admin');await expect(page.getByRole('link',{name:'초안 편집',exact:true})).toHaveAttribute('href','/admin/quiz/weekly');
+  await expect(page.getByRole('link',{name:/답변 대기 2/})).toBeVisible();
   await page.screenshot({path:`/tmp/p5-72-dashboard-${testInfo.project.name}.png`,fullPage:true});
   await page.goto('/admin/new');await expect(page).toHaveURL(/\/admin\/quiz\/weekly$/u);
   await expect(page.getByRole('heading',{name:'요약과 문제',exact:true})).toBeVisible();
+  const summaryEditor=page.locator('article').filter({has:page.getByRole('heading',{name:'설교 요약',exact:true})});
+  const textBox=await summaryEditor.getByRole('textbox',{name:'요약 문단 1',exact:true}).boundingBox();
+  const confirmation=await summaryEditor.getByRole('button',{name:'이 내용 검수 완료',exact:true}).boundingBox();
+  expect(confirmation!.y).toBeGreaterThan(textBox!.y+textBox!.height);
+  await page.locator('.admin-main').screenshot({path:testInfo.outputPath('draft-workspace.png')});
   await expect(page.getByLabel('설교 ID',{exact:true})).toHaveCount(0);
   await expect(page.getByRole('button',{name:/^격자 배치/u})).toBeDisabled();
   await page.getByRole('button',{name:/^설교 의도/u}).click();await expect(page).toHaveURL(/step=2/u);
@@ -79,7 +84,8 @@ test('autosave conflict keeps the draft, avoids automatic retry, and guards navi
   const field=page.getByRole('textbox',{name:'요약 문단 1',exact:true});await field.fill('충돌에도 남아야 하는 합성 초안');
   await expect(page.getByText('다른 저장이 처리됐습니다. 입력을 보존했습니다.',{exact:true})).toBeVisible();
   await expect(field).toHaveValue('충돌에도 남아야 하는 합성 초안');
-  if (!await page.getByRole('link',{name:'이름·문구 필터',exact:true}).isVisible()) await page.locator('summary').filter({hasText:'관리자 운영 메뉴'}).click();
+  if (!await page.getByRole('navigation',{name:'관리자 운영 메뉴',exact:true}).isVisible()) await page.locator('summary').filter({hasText:'관리자 운영 메뉴'}).click();
+  await page.locator('summary').filter({hasText:'도구와 설정'}).click();
   await page.getByRole('link',{name:'이름·문구 필터',exact:true}).click();await expect(page.getByText('저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.',{exact:true})).toBeVisible();
   await page.getByRole('button',{name:'작업 계속하기',exact:true}).click();await expect(page).toHaveURL(/\/admin\/quiz\/weekly/u);expect(f.mutations).toHaveLength(1);
 });
@@ -93,8 +99,8 @@ test('submission operations confirm the selected quiz, refresh records and remov
     return route.fulfill({json:{data:{outcome:'changed',status,submissionId:'submission',...(status==='deleted'?{deletedAt:at}:{})}}});
   });
   page.on('dialog',async dialog=>{expect(dialog.message()).toContain('이번 주 합성 설교');expect(dialog.message()).toContain('어린이');await dialog.accept();});
-  await page.goto('/admin/submissions?quiz=weekly');await page.getByLabel('조치 사유').fill('합성 운영 조치');await page.getByRole('button',{name:'영향 확인·조치'}).click();
-  await expect(page.getByText(/버전 1 · 숨김/u)).toBeVisible();await page.getByRole('button',{name:'영향 확인·조치'}).click();await expect(page.getByText(/버전 1 · 공개/u)).toBeVisible();
+  await page.goto('/admin/submissions?quiz=weekly');await page.locator('summary').filter({hasText:'공개 상태·개인정보 관리'}).click();await page.getByLabel('조치 사유').fill('합성 운영 조치');await page.getByRole('button',{name:'영향 확인·조치'}).click();
+  await expect(page.locator('.admin-main li header').getByText('숨김',{exact:true})).toBeVisible();await page.getByRole('button',{name:'영향 확인·조치'}).click();await expect(page.locator('.admin-main li header').getByText('공개',{exact:true})).toBeVisible();
   await page.getByLabel('제출 조치').selectOption('delete');await page.getByRole('button',{name:'영향 확인·조치'}).click();
   await expect(page.getByRole('heading',{name:'삭제된 제출',exact:true})).toBeVisible();await expect(page.getByText('합성 소감',{exact:true})).toHaveCount(0);await expect(page.getByRole('button',{name:'영향 확인·조치'})).toHaveCount(0);
 });
@@ -109,7 +115,7 @@ test('public receipt survives reload and only its processing status is shown; ad
   let status='received',response:string|null=null,version=at;
   await page.route('**/api/**privacy-requests**',async route=>{const p=new URL(route.request().url()).pathname;if(p.startsWith('/api/admin/')){if(route.request().method()==='PATCH'){const body=route.request().postDataJSON();expect(body.expectedUpdatedAt).toBe(version);status=body.status;response=body.adminResponse;version='2026-10-02T00:00:00.000Z';}return route.fulfill({json:{data:{items:[{id:'11111111-1111-4111-8111-111111111111',requestType:'delete_submission',quizSlug:'2026-10-01-abc234',submittedName:'합성 요청자',message:'합성 비공개 설명',status,adminResponse:response,createdAt:at,updatedAt:version}]}}});}return route.fulfill({json:{data:{requestType:'delete_submission',createdAt:at,status,adminResponse:response}}});});
   await page.goto('/privacy-requests');await page.getByRole('button',{name:'내 문의 1 처리 상태 보기'}).click();await expect(page.getByText('아직 관리자 답변이 없습니다.',{exact:true})).toBeVisible();await expect(page.getByText('합성 비공개 설명')).toHaveCount(0);
-  await page.goto('/admin/privacy-requests');await page.getByLabel('처리 상태').selectOption('resolved');await page.getByLabel('관리자 답변').fill('요청한 조치를 확인했습니다.');await page.getByRole('button',{name:'상태·답변 저장'}).click();
+  await page.goto('/admin/privacy-requests');await page.locator('summary').filter({hasText:'답변 작성'}).click();await page.getByLabel('처리 상태').selectOption('resolved');await page.getByLabel('관리자 답변').fill('요청한 조치를 확인했습니다.');await page.getByRole('button',{name:'상태·답변 저장'}).click();
   await page.goto('/privacy-requests');await page.getByRole('button',{name:'내 문의 1 처리 상태 보기'}).click();await expect(page.getByText('요청한 조치를 확인했습니다.',{exact:true})).toBeVisible();await expect(page.getByText('합성 요청자')).toHaveCount(0);
 });
 test('public intake retries the same lost-response request, stores receipt and restores it after reload',async({page})=>{
@@ -134,12 +140,12 @@ test('filter management registers aliases, warns before exceptions and tests tex
     items=[...items,{id:`rule-${creates}`,kind,groupId:kind==='reserved'?'group':null,label:b.label??b.reason??b.value,value:b.aliases?.[0]??b.value,scope:b.scope??'name',matchMode:b.matchMode??'exact',enabled:true,updatedAt:at}];
     return route.fulfill({json:{data:{items}}});
   });
-  await page.goto('/admin/moderation');await page.getByLabel('보호 대상 표시명').fill('합성 보호 인물');await page.getByLabel('이름·별칭 (한 줄에 하나)').fill('합성 목사\n합성목사');await page.getByRole('button',{name:'필터 등록',exact:true}).click();
+  await page.goto('/admin/moderation');await page.locator('[data-admin-tool=filter-add] > summary').click();await page.getByLabel('보호 대상 표시명').fill('합성 보호 인물');await page.getByLabel('이름·별칭 (한 줄에 하나)').fill('합성 목사\n합성목사');await page.getByRole('button',{name:'필터 등록',exact:true}).click();
   await expect(page.getByRole('heading',{name:'합성 보호 인물',exact:true})).toBeVisible();
   await page.getByLabel('등록 종류').selectOption('exception');await page.getByLabel('필터 문구').fill('합성 허용 문구');await page.getByLabel('예외 사유').fill('설교 문맥 허용');
   await expect(page.getByText('예외는 해당 범위의 정규화된 전체 문구가 정확히 같을 때만 금지 규칙을 건너뜁니다. 연락처·입력 형식·보호 이름 검사는 유지됩니다.',{exact:true})).toBeVisible();
   await page.getByLabel('이 문구가 기존 금지 규칙을 건너뛰는 영향을 확인했습니다.').check();await page.getByRole('button',{name:'필터 등록',exact:true}).click();
-  await page.getByLabel('시험 문구',{exact:true}).fill('금 지 어');await page.getByRole('button',{name:'저장 없이 시험'}).click();await expect(page.getByText('차단 · 정규화: 금지어 · 일치 규칙: rule',{exact:true})).toBeVisible();expect(creates).toBe(2);expect(testCalls).toBe(1);
+  await page.locator('[data-admin-tool=filter-test] > summary').click();await page.getByLabel('시험 문구',{exact:true}).fill('금 지 어');await page.getByRole('button',{name:'저장 없이 시험'}).click();await expect(page.getByText('차단 · 정규화: 금지어 · 일치 규칙: rule',{exact:true})).toBeVisible();expect(creates).toBe(2);expect(testCalls).toBe(1);
   await page.getByRole("button", { name: "밤", exact: true }).click();await page.screenshot({path:`/tmp/p5-72-policy-${testInfo.project.name}.png`,fullPage:true});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 
@@ -172,9 +178,9 @@ test('weekly header exposes review status and keyboard navigation at narrow widt
   const jump=page.getByRole('link',{name:'검수할 내용 선택',exact:true});
   await expect(jump).toBeInViewport();
   const menu=page.locator('summary').filter({hasText:'관리자 운영 메뉴'});
-  const manual=page.getByRole('link',{name:'운영 매뉴얼',exact:true});
+  const manual=page.getByRole('link',{name:'도움말',exact:true});
   await expect(manual).toBeHidden();
-  await menu.focus();await page.keyboard.press('Enter');await expect(manual).toBeVisible();
+  await menu.focus();await page.keyboard.press('Enter');await page.locator('summary').filter({hasText:'도구와 설정'}).click();await expect(manual).toBeVisible();
   await menu.focus();await page.keyboard.press('Enter');await expect(manual).toBeHidden();
   await jump.click();await expect(page.getByRole('button',{name:/^어린이 문제/})).toBeInViewport();
   await page.setViewportSize({width:320,height:844});

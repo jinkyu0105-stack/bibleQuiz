@@ -46,9 +46,9 @@ export function AiCostDetails({ quizSetId, refreshKey = 0 }: { quizSetId: string
   const legacyPricing = data?.calls.some(call => call.pricingVersion === "openai-terra-2026-09-22") ?? false;
   return <div className={styles.costStrip}>
     <Button type="button" className={styles.costButton} onClick={open} aria-haspopup="dialog">
-      <span>이번 주 AI 예상 비용</span>
+      <span>이 퀴즈의 AI 비용</span>
       <strong>{loading && !data ? "확인 중" : data ? money(data.knownCostMicroUsd) : "확인 실패"}</strong>
-      {data && <small>이 퀴즈 전체 · 호출 {data.totalCalls}회{data.unknownCalls > 0 ? ` · 사용량 미확인 ${data.unknownCalls}회` : ""}</small>}
+      {data && <small>호출 {data.totalCalls}회{data.unknownCalls > 0 ? ` · 사용량 미확인 ${data.unknownCalls}회` : ""}</small>}
     </Button>
     {legacyPricing && <p className={styles.helper}>캐시 저장 요금이 빠질 수 있는 과거 추정치가 포함되어 있습니다. 실제 청구액과 다를 수 있습니다.</p>}
     {error && <Button type="button" onClick={refresh}>비용 다시 확인</Button>}

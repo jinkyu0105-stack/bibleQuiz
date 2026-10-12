@@ -70,3 +70,16 @@
 .fields label:has(> input[type=checkbox]) { display: flex; align-items: center; }
 .fields input[type=checkbox] { width: auto; flex-shrink: 0; }
 .panel > form { margin-top: 16px; }
+
+/* P9-17: one rhythm across functional admin forms. */
+.page { gap: 24px; padding-block: 0 8px; }
+.panel { border-radius: 12px; padding: 24px; }
+.panel + .panel { margin-top: 0; }
+.panel h3 { font-weight: 600; }
+.backLink { display: inline-flex; width: fit-content; min-height: 44px; align-items: center; color: var(--muted); font-size: 13px; }
+.workspaceHeader { gap: 8px 16px; padding-bottom: 20px; }
+.actions { margin-bottom: 4px; }
+.panel > details { border-top: 1px solid var(--line); margin-top: 16px; }
+.panel > details > summary { min-height: 44px; padding-block: 10px; font-size: 14px; color: var(--accent); }
+.panel > details > form { padding-top: 12px; }
+@media (max-width: 600px) { .panel { padding: 20px 16px; } }

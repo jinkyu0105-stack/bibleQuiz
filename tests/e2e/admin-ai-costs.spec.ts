@@ -38,7 +38,7 @@ test("selected quiz cost opens its call ledger and changes with the selected wor
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   const selected = page.getByRole("combobox", { name: "미발행 작업", exact: true });
   await selected.selectOption("first");
-  const costButton = page.getByRole("button", { name: /이번 주 AI 예상 비용/ });
+  const costButton = page.getByRole("button", { name: /이 퀴즈의 AI 비용/ });
   await expect(costButton).toContainText("USD 0.000524");
   await expect(costButton).toContainText("사용량 미확인 1회");
   await costButton.click();

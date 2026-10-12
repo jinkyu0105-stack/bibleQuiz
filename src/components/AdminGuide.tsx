@@ -1,12 +1,12 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import styles from "./admin-guide.module.css";
 
 /** Short orientation shared by admin screens; actions keep their existing forms. */
-export function AdminIntro({ title, description, eyebrow = "운영 안내", children }: {
+export function AdminIntro({ title, description, eyebrow, children }: {
   title: string; description: string; eyebrow?: string; children?: ReactNode;
 }) {
   return <header className={styles.intro}>
-    <p className={styles.eyebrow}>{eyebrow}</p>
+    {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
     <h2>{title}</h2>
     <p className={styles.description}>{description}</p>
     {children}
@@ -16,19 +16,31 @@ export function AdminIntro({ title, description, eyebrow = "운영 안내", chil
 export function AdminSteps({ steps, label = "사용 순서" }: {
   steps: readonly { title: string; description: string }[]; label?: string;
 }) {
-  return <ol className={styles.steps} aria-label={label}>
+  return <details className={styles.help}><summary>사용 방법<span aria-hidden="true">＋</span></summary><ol className={styles.steps} aria-label={label}>
     {steps.map((step, index) => <li key={step.title}>
       <span className={styles.number} aria-hidden="true">{index + 1}</span>
       <div><strong>{step.title}</strong><p>{step.description}</p></div>
     </li>)}
-  </ol>;
+  </ol></details>;
 }
 
 /** Native disclosure keeps editors mounted, so closing it never clears a draft. */
 export function AdminTool({ id, title, description, tag, children }: {
   id: string; title: string; description: string; tag: string; children: ReactNode;
 }) {
-  return <details className={styles.tool} data-admin-tool={id}>
+  const ref = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    const reveal = () => {
+      if (window.location.hash === `#${id}` && ref.current) {
+        ref.current.open = true;
+        ref.current.scrollIntoView({ block: "start" });
+      }
+    };
+    reveal();
+    window.addEventListener("hashchange", reveal);
+    return () => window.removeEventListener("hashchange", reveal);
+  }, [id]);
+  return <details ref={ref} id={id} className={styles.tool} data-admin-tool={id}>
     <summary>
       <span className={styles.toolCopy}><span className={styles.tag}>{tag}</span>
         <strong>{title}</strong><span className={styles.description}>{description}</span>

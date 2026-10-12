@@ -6,6 +6,7 @@ import { router } from "./app/router";
 import "./styles/index.css";
 import "./styles/fonts.css";
 import "./styles/sky.css";
+import "./styles/interior.css";
 
 const root = document.getElementById("root");
 

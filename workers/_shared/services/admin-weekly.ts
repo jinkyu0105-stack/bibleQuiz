@@ -1,3 +1,4 @@
+import { selectHomeQuiz, type HomeQuizCandidate } from "../repositories/home-quiz-selection";
 import { weeklyDashboardSchema, submissionListSchema, winnerSettingsSchema, winnerSettingsRequestSchema,
   policyCreateSchema, policyPatchSchema, policyListSchema, policyTestSchema, policyTestResultSchema } from "../../../shared/api/admin-weekly";
 import { privacyAdminListSchema, privacyReplySchema } from "../../../shared/api/privacy";
@@ -13,7 +14,7 @@ export function auditStatement(db: D1Database, entity: string, id: string, actio
   return db.prepare("INSERT INTO audit_logs(id,entity_type,entity_id,action,actor_type,actor_email,safe_metadata_json,created_at) VALUES(?,?,?,?,'access_admin',?,?,?)")
     .bind(crypto.randomUUID(), entity, id, action, actor, JSON.stringify(metadata), at);
 }
-export async function readWeeklyDashboard(db: D1Database) {
+export async function readWeeklyDashboard(db: D1Database, now = new Date()) {
   const [quizzes, counts] = await db.batch<Record<string, unknown>>([
     db.prepare(`SELECT q.id quizSetId,q.sermon_id sermonId,coalesce(m.title,s.sermon_title) title,
       coalesce(m.sermon_date,s.sermon_date) sermonDate,coalesce(p.slug,s.slug) slug,q.status,q.submission_state submissionStatus,
@@ -35,10 +36,18 @@ export async function readWeeklyDashboard(db: D1Database) {
     db.prepare("SELECT count(*) n FROM privacy_requests WHERE status IN ('received','reviewing')"),
   ]);
   const published = (await listPublishedMetadata(db)).items;
+  const eligible = await db.prepare(`SELECT DISTINCT q.id quizSetId,q.status,q.submission_state submissionState,q.published_at publishedAt,q.opens_at opensAt,q.closes_at closesAt,s.sermon_date sermonDate
+    FROM quiz_sets q JOIN sermons s ON s.id=q.sermon_id JOIN bible_translations b ON b.id=s.bible_translation_id
+    JOIN quiz_variants v ON v.quiz_set_id=q.id AND v.lifecycle_status='active'
+    AND (v.results_status='valid' OR (q.status='archived' AND v.results_status='non_ranked_correction'))
+    WHERE q.status IN ('published','archived')`).all<HomeQuizCandidate>();
+  const featuredId = quizzes!.results.find(row => row.featured)?.quizSetId as string | undefined;
+  const home = selectHomeQuiz(eligible.results.map(row => ({ ...row, sermonDate: published.find(q => q.quizSetId === row.quizSetId)?.metadata.sermonDate ?? row.sermonDate })), featuredId, now);
+
   return weeklyDashboardSchema.parse({ items: quizzes!.results.map(r => {
     const display = published.find(q => q.quizSetId === r.quizSetId)?.metadata;
     return { ...r, ...(display ? {title: display.title, sermonDate: display.sermonDate} : {}), featured: !!r.featured, withdrawn: !!r.withdrawn, expired: !!r.expired };
-  }), unansweredCount: counts!.results[0]?.n ?? 0 });
+  }), homeQuiz: home ? { quizSetId: home.quizSetId, selection: home.quizSetId === featuredId ? "featured" : "automatic" } : null, unansweredCount: counts!.results[0]?.n ?? 0 });
 }
 export async function listAdminSubmissions(db: D1Database, quizSetId: string) {
   const rows = await db.prepare(`SELECT s.id,v.difficulty,v.revision,s.status,s.display_name displayName,s.comment,s.submitted_at submittedAt,

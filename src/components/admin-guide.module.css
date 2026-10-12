@@ -38,3 +38,26 @@
   .tool, .number { border-color: ButtonText; }
   .tool > summary:focus-visible { outline-color: Highlight; }
 }
+
+/* Guidance is available on demand; the working screen leads with its content. */
+.help { order: 10; border-top: 1px solid var(--line); padding-top: 8px; }
+.help > summary { display: flex; justify-content: space-between; align-items: center; min-height: 44px; font-size: 13px; color: var(--muted); list-style: none; cursor: pointer; }
+.help > summary::-webkit-details-marker { display: none; }
+.help[open] > summary > span { transform: rotate(45deg); }
+.help .steps { margin: 16px 0; }
+.tool { border-radius: 12px; background: transparent; scroll-margin-top: 120px; }
+.tool > summary { padding: 20px; border-radius: 12px; }
+.toolCopy { gap: 6px; }
+.toolCopy strong { font-family: 'Noto Serif KR', serif; font-size: 19px; font-weight: 600; }
+.tag { display: none; }
+.toolCopy .description { font-size: 14px; line-height: 1.6; }
+.tool[open] > summary { background: var(--glass-soft); border-radius: 12px 12px 0 0; }
+.toolBody { padding: 24px; }
+.intro h2 { margin-bottom: 8px; }
+.description { max-width: 60em; }
+@media (max-width: 760px) {
+ .tool > summary { display: flex; padding: 18px 16px; gap: 16px; }
+ .toolCopy { display: grid; }
+ .toolCopy strong, .toolCopy .description { grid-column: auto; grid-row: auto; }
+ .toolBody { padding: 20px 16px; }
+}

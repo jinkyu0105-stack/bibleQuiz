@@ -134,7 +134,7 @@ Content-Type: application/json
 
 ### P5-72 주간 운영의 실제 연결 계약
 
-- `GET /api/admin/dashboard`: 서버에 저장된 작업 목록·대표/발행 상태·최근 활동 시각·정리 완료/철회 여부·생성 단계·전체/공개 및 난도별 제출 수·난도별 Top N·미처리 문의 수. 원문·정답·관리자 이메일·조회 token은 포함하지 않는다. 정리 예정 시각은 기존 `/api/admin/draft-cleanup`, 비용은 기존 퀴즈별 `/ai-costs`에서 따로 읽는다. 서비스 전체 metric·백업 상태는 P8-01의 기존 출시 범위다.
+- `GET /api/admin/dashboard`: `items`, `unansweredCount`, `homeQuiz`를 반환한다. `homeQuiz`는 `{quizSetId, selection:"featured"|"automatic"}` 또는 null이며 현재 공개 홈의 선택 규칙을 공유한다. 명시 대표와 자동 선택을 구별하고 공개 가능한 active variant만 후보에 넣는다. 서버에 저장된 작업 목록·대표/발행 상태·최근 활동 시각·정리 완료/철회 여부·생성 단계·전체/공개 및 난도별 제출 수·난도별 Top N·미처리 문의 수. 원문·정답·관리자 이메일·조회 token은 포함하지 않는다. 정리 예정 시각은 기존 `/api/admin/draft-cleanup`, 비용은 기존 퀴즈별 `/ai-costs`에서 따로 읽는다. 서비스 전체 metric·백업 상태는 P8-01의 기존 출시 범위다.
 - `GET /api/admin/quiz-sets/:id/workspace`: 같은 작업 정보 한 건. 6단계 진행은 기존 입력 확정·내용 검수·최종 미리보기 상태를 조회해 계산한다. URL의 `step`은 화면 이동 선택이며 저장 상태를 대신하지 않는다.
 - `GET /api/admin/submissions?quizSetId=:id`: 실제 답안·이름·코멘트·난도/버전·점수·상태·조치 사유/시각. session/request hash와 관리자 이메일은 반환하지 않는다. 삭제한 제출에는 이름·답안·코멘트가 없다. hide/unhide/delete는 기존 API와 감사 거래를 재사용한다.
 - `GET/PATCH /api/admin/quiz-sets/:id/winner-settings`: 난도별 1~10명과 `editable`·불투명 `revision`. PATCH는 `child, adult, expectedRevision, reason`을 받는다. 기존 `site_state`에 발행 전 값을 두고 발행/재발행 거래가 같은 값을 사용한다. 현재 active variant는 마감 전에만 변경하며 마감/확정 snapshot은 잠근다. 설정·마감·상태 충돌 시 409, 감사와 설정은 함께 저장된다.
@@ -292,7 +292,7 @@ P5-59 첫 제출 전 발행 철회:
 
 마감 뒤 발견되었거나 수정 도중 마감에 도달한 문제 오류는 순위 접수를 다시 열지 않는다. 기존 오류 variant와 제출 기록은 감사·당시 제출자 확인용으로 보존하되 일반 Top N과 참여 현황에서는 제외하고 `결과 무효 처리됨`을 표시한다. 관리자는 검증된 수정 variant를 **정정된 지난 퀴즈**로 발행할 수 있으며, 누구나 풀고 채점·정답보기를 사용할 수 있지만 새 결과는 D1 제출 기록·참여 현황·Top N에 들어가지 않는다. 이 정정은 기존 제출을 재채점하거나 새 순위를 만드는 동작이 아니다.
 
-`GET /api/admin/dashboard`는 featured 퀴즈, 동시에 진행 중인 published 퀴즈들과 각 마감 일시, 가장 최근에 활동한 미발행 `quiz_set`, 파생된 6단계 진행 상태, 실행 중·실패 작업, 하루 이내 초안 삭제 예정 수, 미처리 문의 수, 진행 중 퀴즈별 공개 제출 수와 관리 바로가기, 난이도별 `winner_count`, 최근 발행 목록, 비용·사용량의 최악 상태와 마지막 갱신 시각만 반환한다. 상세 metric은 `usage-summary`에서 지연 로드한다. 별도 승인 대기열은 만들지 않는다. 전체 자막·AI 원문·실제 답안은 첫 화면 집계에 넣지 않고 상세 화면에서 별도로 요청한다.
+`GET /api/admin/dashboard`의 현재 반환 계약은 위 P5-72 절의 `items`·`unansweredCount`·`homeQuiz`다. P9-17 첫 화면은 이를 공개/작성/지난 퀴즈 목록과 실제 홈 선택으로 보여준다. 초안 정리 예정은 `/draft-cleanup`, 퀴즈별 비용은 `/ai-costs`, 서비스 사용량·백업은 `/usage-summary`·`/backups`를 각각 조회한다. 사용량과 비용을 dashboard가 반환한다고 해석하지 않는다. 전체 자막·AI 원문·실제 답안은 첫 화면에 넣지 않고 권한이 있는 상세 화면에서 요청한다.
 
 공개 `export-data`는 주보 편집용 번호 표시 빈 격자와 단서 복사용 데이터만 반환한다. 응답은 `{ data: { slug, difficulty, quizVariantId, quizRevision, grid } }`이며 정답·solution hash·제출 답안·설교 원문·참여자는 포함하지 않는다. 제출·관리자 권한 없이 사용할 수 있고 제출 수·세션·순위 확정을 조회하거나 저장하지 않는다.
 

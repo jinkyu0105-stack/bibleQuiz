@@ -85,7 +85,7 @@ export function PublicQuizContent() {
       reference={quiz.sermon.bibleReferenceLabel} translation={quiz.sermon.translation}
       readingUrl={quiz.sermon.bibleReadingUrl} excerpt={quiz.sermon.summary?.text}
       desktopPath={quiz.variant.desktopBackgroundPath} mobilePath={quiz.variant.mobileBackgroundPath} />
-    <GlassPanel className="sermon-details" id="sermon-details" aria-label="설교 내용과 발행 정보">
+    <GlassPanel className={`sermon-details${quiz.sermon.summary ? "" : " sermon-details-compact"}`} id="sermon-details" aria-label="설교 내용과 발행 정보">
       {quiz.sermon.summary && <section className="sermon-summary" aria-labelledby="summary-heading">
         <h3 id="summary-heading">AI가 요약한 설교 핵심 내용</h3>
         <p className="summary-copy">{quiz.sermon.summary.text}</p><p>{quiz.sermon.summary.disclosure}</p>
@@ -100,7 +100,7 @@ export function PublicQuizContent() {
     }} />
     <div role="tabpanel" id="quiz-panel" aria-labelledby={`tab-${difficulty}`} aria-busy={loading}>
       {loading ? <QuizLoading /> : <>
-        <aside className="quiz-availability"><p>{availabilityText(quiz)}</p><p>{quiz.acceptingSubmissions ? "한 글자 이상 작성한 부분 답안도 제출할 수 있습니다." : "입력한 내용은 현재 브라우저에 임시 저장됩니다."}</p><p>현재 {difficulty === "child" ? "어린이용" : "장년용"}에 {quiz.submissionCount}명이 참여했습니다.</p></aside>
+        <aside className="quiz-availability"><p><strong>{availabilityText(quiz)}</strong></p><p>{quiz.acceptingSubmissions ? "한 글자 이상 작성한 부분 답안도 제출할 수 있습니다." : "입력한 내용은 현재 브라우저에 임시 저장됩니다."}</p><p>현재 {difficulty === "child" ? "어린이용" : "장년용"}에 {quiz.submissionCount}명이 참여했습니다.</p></aside>
         {ownSubmission?.state === "error" && <aside className="quiz-availability" role="alert">
           <p>기존 제출 결과를 확인하지 못했습니다. 중복 제출을 막기 위해 확인 전에는 새 제출을 받지 않습니다.</p>
           <button className="primary-button" type="button" onClick={() => void revalidator.revalidate()}>제출 결과 다시 확인</button>

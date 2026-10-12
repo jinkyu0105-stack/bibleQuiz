@@ -16,3 +16,24 @@
 .drawer > h3, .drawer > section { margin-top: 32px; }
 .drawer h3 { font-size: 1.125rem; line-height: 1.6; }
 .drawer p { line-height: 1.75; }
+
+.overview { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; margin: 24px 0; }
+.overview > div + div { border-left: 1px solid var(--line); padding-left: 24px; }
+.overview dt { font-size: 13px; color: var(--muted); }
+.overview dd { margin: 6px 0 0; color: var(--ink); font-weight: 600; }
+.section { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 8px; }
+.section > summary { padding-block: 16px; min-height: 48px; font-family: 'Noto Serif KR',serif; font-size: 20px; font-weight: 600; color: var(--ink); }
+.section > h3 { margin-top: 16px; }
+.drawer > section, .drawer > .section { border-top: 1px solid var(--line); padding-top: 20px; }
+.drawer li { padding-block: 10px; border-bottom: 1px solid var(--line); }
+.service summary { min-height: 44px; color: var(--ink); }
+.service h4 { margin-top: 24px; }
+.metrics { gap: 12px 24px; }
+.metrics dt { font-size: 13px; }
+.metrics dd { color: var(--ink); }
+.manual { gap: 16px; }
+.manual > details { border: 1px solid var(--line); border-radius: 12px; padding: 4px 20px; }
+.manual > details > summary { padding-block: 16px; min-height: 52px; color: var(--ink); font-family: 'Noto Serif KR',serif; font-size: 18px; font-weight: 600; }
+.manual > details > div { padding-block: 16px; border-top: 1px solid var(--line); }
+.manual :is(p, li) { font-size: 15px; line-height: 1.85; }
+@media (max-width: 500px) { .overview { grid-template-columns: 1fr; gap: 20px; } .overview > div + div { padding: 16px 0 0; border-left: 0; border-top: 1px solid var(--line); } }

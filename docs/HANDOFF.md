@@ -2,20 +2,33 @@
 
 ## 현재 작업과 다음 첫 행동
 
-**P9-16 잔디 아이콘과 꺼짐 표시 — 로컬 완료.** 사용자가 잔디 버튼의 미니멀한 그림과 선명한 꺼짐 표시를 요청했다. 세 가닥 선 아이콘, 꺼짐 사선과 팔레트 기반 대비 테두리를 공통 ThemeControl에 적용했다. 사진 복귀·저장·접근성·포인터 광원은 보존했다. [구현·검사·중간 실패](work/P9-16.md). [로컬 화면](http://localhost:5173/archive).
+**P9-17 내부 화면의 정보 구조·가독성 재설계 — 로컬 구현·검사 완료.** 사용자의 불만은 일부 문구가 아니라 비메인 화면 전반의 위계·정보 구조 문제다. 메인과 승인된 하늘/유리는 보존하고 관리자 목록/메뉴/세부 도구/문의·참여, 공개 풀이/지난 퀴즈/문의의 공통 서체·크기·여백을 정리했다. [구현·검사·한계](work/P9-17.md). [로컬 퀴즈 관리](http://localhost:5173/admin).
 
-다음은 사용자 화면 확인/피드백이다. 별도 필수 구현은 없다. Preview 반영 요청이 오면 관련 검사/정확한 커밋을 확인하고 main push→Workers Builds 절차를 따른다. 이번 수정은 push/배포하지 않았다. 현재 Preview app 소스0fbde84/versioncd6efb0e는 P9-14를 유지하며 Production은 P9-04를 유지한다.
+다음은 사용자의 화면 검토/피드백이다. 이번 범위의 미완료 구현은 없다. Preview 반영 요청이 오면 관련 검사/정확한 소스 커밋을 고정하고 main push→Workers Builds 절차를 따른다. 이번에는 push/배포하지 않았다. Preview app 소스0fbde84/versioncd6efb0e-2c05-4401-b0bf-692bdf18c5b1은 P9-14, Production 소스37b7254/version7aea6843-5288-42da-9bef-bc673e1d9dfe는 P9-04를 유지한다.
 
-## 변경·검사·한계
+## 변경과 확인할 화면
 
-시작 main e81a93b·clean. ThemeControl.tsx/sky.css, 기존 E2E2파일, DECISIONS/STATUS/디자인 정본/P9-16/이 문서를 변경했다. 직전 향후 계획15절의 관리자 매뉴얼 생성 사본 누락을 `node scripts/build-operations-manual.mjs`로 보정하여 workers/_shared/manual-content.ts도 포함한다. 향후 삭제 요청 기능을 구현한 것이 아니며 계속 보류다. 기존 P9-15 Preview 초안1·공개3세트·가상 제출/코멘트12·삭제 요청2와 기존 자료를 보존했다. [P9-15 직접 링크·등록 근거](work/P9-15.md).
+- 퀴즈 관리는 상태별 검색 목록 하나, 실제 홈 퀴즈, 명확한 편집/설정/참여 동작으로 구성한다. 큰 비용 영역과 중복 작업 목록을 제거했다.
+- 사이드바는 퀴즈 관리·참여 기록·문의와 접힌 도구/설정이다. 선택 유리는 현재 메뉴 한 곳에만 표시한다.
+- 문의·참여 자료를 공통 AdminRecord로 구분하고 답변/실제 조치는 펼쳐서 사용한다. 수정·보관, 필터, 비용/백업, 도움말도 필요한 내용만 연다. 폼을 접어도 입력은 유지된다. 실제 내용 검수 완료는 내용을 읽은 뒤 누르는 순서다.
+- `src/styles/interior.css`는 메인을 제외한 콘텐츠에만 명조 제목과 본문/라벨/버튼 계층을 적용한다. 새 글꼴·의존성은 없다.
+- 홈의 자동 선택이 관리자에서 누락되던 문제를 `home-quiz-selection.ts`로 공유했다. 수동 대표 지정과 자동 선택을 구별하며 공개 후보/기존 정렬·시간 경계는 유지한다. 읽기만 변경하며 migration/원격 DB 쓰기는 없다.
+- 디자인 정본·D-044·API/사용자 명세·운영 매뉴얼과 생성 사본을 갱신했다. `docs/future/notes.md`의 참여 현황 삭제 요청 아이디어는 계속 향후 계획이다.
 
-실제 PC/모바일 Chromium 관련 E2E4건 통과(28.4초),4시간대×켜짐/꺼짐8캡처 확인. 최종 `pnpm check` exit0: unit315/Worker2198/Workflow4/recoveryCLI2/Node14/Python7, 총2540건·lint/typecheck·구성·build 통과. 첫 전체 검사는 FUTURE_MANUAL_OUTDATED로 실패했으며 기존 동기화 도구로 해결했다. 캡처 스크립트의 직접 playwright import는 기존 @playwright/test로 바꿔 해결했다. 제품 검증 완화·새 의존성·AI 호출은 없다. 기존 fontkit711KB/500KB 경고, 실제 기기/GPU와 원격 화면 미검수 한계는 유지한다.
+## 검사와 남은 한계
 
-## Git·실행 환경
+전체 `pnpm check` exit0: unit315/Worker2202/Workflow4/recoveryCLI2/Node14/Python7, 총2544건·lint/typecheck·구성·migration 정합성·build 통과. 이후 마지막 보정은 관련 Worker15건·lint/typecheck/build로 재확인했다. 추가 정렬 검사1건은 앞선 전체 검사 수에 포함하지 않는다.
 
-검증 파일을 명시적으로 stage해 로컬 커밋으로 보존하고 실제 Git status/diff를 확인한다. 사용자 변경은 없었으며 기존 커밋/자료를 되돌리지 않았다. `.wrangler/releases/p9-16/`의 로그/캡처는 Git 제외다. 기존 로컬5173/4189·배포 포인터·Preview/Production 자료·Secret/Access·migration을 보존했다. Preview 로그인은 저장된 인증 만료 상태이며 이번에는 원격 접속/DB 쓰기를 시도하지 않았다.
+관리자 PC/모바일 관련38건과 최종 Firefox16건 통과. 전체 Chromium PC/모바일은224통과·기존 터치 전용 PC1건 건너뜀·30초 초과3건이었다. 모바일 참여 현황1건과 이미지 실패 뒤 입력/다중 캡처2건을 같은 제한·workers1로 재실행해 모두 통과했다. 전체 Worker와 동시 실행한 부하 영향은 추정이며 원인 확정으로 쓰지 않는다. 초기 메뉴 선택자·레이아웃·검사 시간 보정은 작업 문서에 남겼다. 기능 검증·삭제 확인·저장 충돌 보호를 제거하지 않았다.
 
-Node24.18.0/pnpm11.14.0. `/bin/bash`, login:false, 명시 workdir, 승인 검토 실행 경로를 재사용한다. pnpm PATH `/home/onegem/.nvm/versions/node/v24.18.0/bin`. 시작 Pro89% 잔여×사용자 지정10=890%, 별도5시간 없음.
+로컬 합성 자료로 PC/모바일·야간·강제색·키보드와 입력 유지를 확인했다. `.wrangler/releases/p9-17/`의 최종 PNG와 로그는 Git 제외이며 실제 Preview UI/원격 저장 성공이 아니다. 기존 fontkit711KB/500KB 경고와 실기기/GPU 미검수는 유지한다. 저장 Access 인증은 만료 상태이며 이번에 원격 접속/설정 변경을 시도하지 않았다.
 
-**현재 P9-16 완료 · 부모 잔디 버튼 UI 보정 완료 · 다음 사용자 로컬 확인/피드백 · 세션 유지 · 추천 GPT-6.1-Sol/medium** — 작은 UI 검토와 보정에 적합하다.
+## Git·환경·데이터 보존
+
+시작 main33f5737·clean. 이번 변경은 UI/API 선택 공유·관련 테스트·명세·작업 문서이며 검토 파일만 명시적으로 stage해 로컬 커밋한다. 실제 종료 HEAD는 `git log -1`로 확인한다. 다른 사용자 변경은 없었으며 기존 커밋/자료를 되돌리지 않았다. 기존 P9-15 Preview 초안1·공개3세트·가상 제출/코멘트12·삭제 요청2 및 기존 자료를 보존했다. [등록 근거](work/P9-15.md).
+
+기존 로컬5173/4189와 `.wrangler/releases/p9-17/deploy-pointer-before.json`에 보관한 배포 포인터를 유지한다. Preview/Production 자료·Secret/Access·migration·실제 AI 호출·push/배포는 변경하지 않는다.
+
+Node24.18.0/pnpm11.14.0. 검증된 `/bin/bash`, login:false, 명시 workdir, 승인 검토 실행 경로를 재사용한다. pnpm PATH `/home/onegem/.nvm/versions/node/v24.18.0/bin`. 시작 Pro88% 잔여×사용자 지정10=880%, 별도5시간 없음. 새 구현 전 현재 사용량과 실제 Git 상태를 확인한다.
+
+**현재 P9-17 로컬 완료 · 부모 내부 화면 재설계 로컬 완료 · 다음 사용자 화면 검토/피드백 · 세션 유지 · 추천 Astra/max** — 여러 화면의 시각적 균형과 실제 작업 흐름을 함께 검토한다.

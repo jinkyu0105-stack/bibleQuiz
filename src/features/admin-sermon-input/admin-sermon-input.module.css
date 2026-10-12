@@ -877,3 +877,20 @@
 .reviewTargets[data-selection-ready] [aria-pressed=true] { background: transparent; }
 .weeklyPage > .hero, .snapshotDisclosure, .weeklyPage .panel { border-radius: 20px; }
 .weeklyPage > .hero { background: var(--glass-soft); border-top-width: 1px; }
+
+/* Keep the cost inspector subordinate to the editing step. */
+.costStrip, .weeklyPage .costStrip { position: static; display: flex; flex-wrap: wrap; gap: 12px; border: 0; padding: 4px 0 12px; border-bottom: 1px solid var(--line); background: transparent; border-radius: 0; }
+.costStrip .costButton:global(.action-button) { min-height: 40px; padding: 6px 0; border: 0; background: transparent; box-shadow: none; font-size: 13px; gap: 6px 10px; }
+.costButton small { flex-basis: auto; font-size: 12px; }
+.costButton:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* The editor has one outer reading surface, with rules between its working areas. */
+.weeklyPage > .hero { padding: 4px 0 20px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; }
+.weeklyPage > .hero .workStatus { display: inline-block; padding: 3px 8px; border: 1px solid var(--line); border-radius: 5px; background: var(--glass-soft); font-size: 12px; }
+.weeklyPage > .panel { padding: 20px 0; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent; }
+.weeklyPage .panel .panel { background: transparent; border-radius: 0; }
+.weeklyPage .snapshotDisclosure { border-inline: 0; border-block: 1px solid var(--line); border-radius: 0; background: transparent; }
+.weeklyPage .snapshotDisclosure > summary { padding: 12px 0; color: var(--accent); }
+.weeklyPage .snapshotDisclosure > .panel { padding-inline: 0; background: transparent; border-radius: 0; }
+.weeklyPage .reviewActions { margin-block: 12px 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--glass-soft); }
+.weeklyPage .reviewActions > p { font-size: 14px; }

@@ -142,7 +142,6 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
     if (!autosave && changed && editable && !event.currentTarget.contains(event.relatedTarget)) void save();
   }}>
     <div className={styles.sectionHeading}><h4>{title}</h4><span>{selected ? confirmed ? "검수 완료" : "현재 선택됨" : "비교 자료"}</span></div>
-    {autosave && reviewActions}
     {replacement && oldCandidate && newCandidate && <section aria-label="답·단서 변경 비교">
       <h5>선택한 답·단서 변경 비교</h5>
       <div className={styles.formGrid}><div><strong>기존 값</strong><p>답: {oldCandidate.displayAnswer}</p><p>단서: {oldCandidate.clue}</p></div>
@@ -184,7 +183,7 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
     {selected && <details className={styles.qualityDisclosure} open={!autosave}><summary>품질 평가와 검토 메모</summary>
     {selected && <ContentQuality key={view.quality[snapshot.value.id]?.revision ?? 0} snapshot={snapshot} view={view} busy={busy || changed} save={quality} />}
     </details>}
-    {!autosave && reviewActions}
+    {reviewActions}
   </article>;
 }
 

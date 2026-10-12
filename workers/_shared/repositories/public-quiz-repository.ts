@@ -1,3 +1,4 @@
+import { selectHomeQuiz } from "./home-quiz-selection";
 import { publishedTitle, publishedSermonDate, publishedSummary, latestRepublication } from "./published-display-columns";
 import { and, asc, count, desc, eq, inArray, or, sql } from "drizzle-orm";
 import { z } from "zod";
@@ -50,8 +51,7 @@ export function createPublicQuizRepository(database: Database) {
       let selected: typeof candidates[number] | undefined;
       if (selector === "latest") {
         const [featured] = await database.select({ value: siteState.value }).from(siteState).where(eq(siteState.key, "featured_quiz_set_id"));
-        selected = candidates.find((row) => row.quizSetId === featured?.value) ?? candidates.find(isOpen) ??
-          [...candidates].filter((row) => row.status === "archived").sort((a, b) => b.sermonDate.localeCompare(a.sermonDate) || b.quizSetId.localeCompare(a.quizSetId))[0];
+        selected = selectHomeQuiz(candidates, featured?.value, now);
       } else selected = candidates.find((row) => row.slug === selector.slug);
       const setId = selected?.quizSetId;
       const row = candidates.find((candidate) => candidate.quizSetId === setId && candidate.difficulty === difficulty);

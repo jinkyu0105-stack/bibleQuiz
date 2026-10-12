@@ -1,38 +1,95 @@
-import { AdminSteps } from "../../components/AdminGuide";
-import { Button, ButtonLink } from "../../components/Button";
-import { OperationsPanel } from "../admin-operations/OperationsPanel";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { weeklyDashboardSchema } from "../../../shared/api/admin-weekly";
+import { Button, ButtonLink } from "../../components/Button";
+import { weeklyDashboardSchema, type WeeklyQuiz } from "../../../shared/api/admin-weekly";
 import { draftCleanupListSchema } from "../../../shared/api/admin-draft-cleanup";
 import { weeklyRequest } from "./client";
-import { AiCostDetails } from "../admin-sermon-input/AiCostDetails";
-import styles from "./weekly.module.css";
-const remaining=(value:string,now:number)=>{const hours=Math.ceil((Date.parse(value)-now)/3_600_000);return hours<=0?'마감 시각 지남':hours>=24?`약 ${Math.ceil(hours/24)}일 남음`:`약 ${hours}시간 남음`;};
-const time=(value:string)=>new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',dateStyle:'medium',timeStyle:'short'}).format(new Date(value));
-export function Component(){
-  const [checkedAt,setCheckedAt]=useState(()=>Date.now());
-  const [data,setData]=useState<ReturnType<typeof weeklyDashboardSchema.parse>|null>(null),[cleanup,setCleanup]=useState<ReturnType<typeof draftCleanupListSchema.parse>|null>(null),[message,setMessage]=useState(''),[attempt,setAttempt]=useState(0);
-  useEffect(()=>{const controller=new AbortController();void weeklyRequest('/api/admin/dashboard',weeklyDashboardSchema,'GET',undefined,controller.signal).then(next=>{if(!controller.signal.aborted){setData(next);setCheckedAt(Date.now());}}).catch(()=>{if(!controller.signal.aborted)setMessage('관리자 작업 목록을 불러오지 못했습니다. 다시 시도해 주세요.');});
-    void weeklyRequest('/api/admin/draft-cleanup',draftCleanupListSchema,'GET',undefined,controller.signal).then(next=>{if(!controller.signal.aborted)setCleanup(next);}).catch(()=>{if(!controller.signal.aborted)setCleanup(null);});return()=>controller.abort();},[attempt]);
-  const draft=data?.items.find(q=>!q.expired&&!['published','archived'].includes(q.status));
-  const featured=data?.items.find(q=>q.featured),open=data?.items.filter(q=>q.status==='published')??[];
-  return <div className={styles.page}><header className={styles.hero}><p className="eyebrow">이번 주 운영</p><h2>{draft?'이어서 완성할 퀴즈':'이번 주 퀴즈 만들기'}</h2><p className={styles.lead}>매주 이곳에서 퀴즈를 만들고, 공개된 퀴즈의 참여와 문의를 확인합니다.</p>
-    {!data?<p role="status">현재 작업을 확인하고 있습니다.</p>:<>{draft&&<><h3>{draft.title}</h3><p>{draft.sermonDate} · {draft.status==='needs_revision'?'다시 확인 필요':draft.jobStatus==='failed'?'생성 결과 확인 필요':draft.jobStatus==='running'?'생성 진행 중':draft.stage==='content_review'?'요약·문제 검수':draft.stage==='intent_review'?'설교 의도 검수':draft.stage==='finish'?'최종 검사 완료':'미발행 작업'}</p></>}
-    <ButtonLink className={styles.primaryAction} to={draft?`/admin/quiz/${draft.quizSetId}`:'/admin/new'}>{draft?'계속 작업하기':'이번 주 퀴즈 만들기'}</ButtonLink>
-    {draft&&<AiCostDetails quizSetId={draft.quizSetId}/>}</>}
-    {message&&<p role="alert">{message}</p>}<Button className={styles.refreshAction} type="button" onClick={()=>{setMessage('');setAttempt(a=>a+1);}}>운영 상태 새로고침</Button></header>
-    <AdminSteps label="한 주의 운영 순서" steps={[
-      {title:"퀴즈 준비",description:"설교 영상을 등록하고 요약·문제를 검토합니다."},
-      {title:"검수 후 발행",description:"어린이·장년 격자를 확인하고 공개합니다."},
-      {title:"참여 확인",description:"제출 기록과 문의를 살피고 마감을 관리합니다."},
-    ]}/>
-    {data&&<><section className={styles.panel}><h3>현재 공개 퀴즈</h3><p className={styles.hint}>방문자가 메인 화면에서 가장 먼저 보게 되는 대표 퀴즈입니다.</p>{featured?<><p>{featured.sermonDate} · {featured.title}</p><Link to={`/quiz/${featured.slug}`}>공개 화면 보기</Link></>:<p>현재 대표 퀴즈가 없습니다. 퀴즈를 준비한 뒤 발행 단계에서 공개할 수 있습니다.</p>}</section>
-      <div className={styles.grid}><section className={styles.panel}><h3>확인할 작업</h3><p className={styles.hint}>답변을 기다리는 문의와 곧 정리될 초안을 먼저 확인하세요.</p><Link to="/admin/privacy-requests">답변할 문의·삭제 요청 {data.unansweredCount}건</Link>
-        <h4>하루 이내 초안 정리 예정</h4>{cleanup===null?<p>초안 정리 현황을 확인하지 못했습니다. 발행·수정 도구에서 다시 확인해 주세요.</p>:cleanup.items.filter(i=>i.state==='blocked'||(!!i.dueAt&&Date.parse(i.dueAt)-checkedAt<=86_400_000&&i.state!=='purged')).length===0?<p>현재 확인할 정리 예정 초안이 없습니다.</p>:<ul>{cleanup.items.filter(i=>i.state==='blocked'||(!!i.dueAt&&Date.parse(i.dueAt)-checkedAt<=86_400_000&&i.state!=='purged')).map(i=><li key={i.sermonId}>{i.title} · {i.dueAt?time(i.dueAt):'시각 미확인'} · {i.state==='blocked'?'확인 필요':'본문 정리 예정'}</li>)}</ul>}
-      </section><section className={styles.panel}><h3>주간 작업 목록</h3><p className={styles.hint}>아직 발행하지 않은 퀴즈입니다. 저장한 지점부터 이어갈 수 있습니다.</p>{data.items.every(q=>['published','archived'].includes(q.status))&&<p>진행 중인 초안이 없습니다. 위의 만들기 버튼으로 시작하세요.</p>}<ul className={styles.list}>{data.items.filter(q=>!['published','archived'].includes(q.status)).map(q=><li key={q.quizSetId}>{q.sermonDate} · {q.title}{q.expired?<p>초안 본문 정리됨</p>:<Link to={`/admin/quiz/${q.quizSetId}`}>작업 열기</Link>}</li>)}</ul></section></div>
-      <section><h3>진행 중인 퀴즈</h3><p className={styles.hint}>공개된 퀴즈의 참여 기록, 마감 일시와 순위 표시 인원을 관리합니다.</p>{open.length===0?<p>현재 진행 중인 퀴즈가 없습니다.</p>:<ul className={styles.list}>{open.map(q=><li key={q.quizSetId} className={styles.panel}><h4>{q.title}</h4><p>{q.sermonDate} · 공개 제출 {q.visibleCount}건 · 전체 제출 {q.totalCount}건</p><p>어린이 공개 {q.childVisibleCount}건 · Top {q.childWinnerCount} / 장년 공개 {q.adultVisibleCount}건 · Top {q.adultWinnerCount}</p><p>{q.closesAt?`마감: ${time(q.closesAt)} (한국 시간) · ${remaining(q.closesAt,checkedAt)}`:'마감 시각 확인 필요'} · {q.submissionStatus==='paused'?'접수 중지':q.closesAt&&Date.parse(q.closesAt)<=checkedAt?'마감 정리 대기':'접수 중'}</p>
-        <div className={styles.actions}><Link to={`/admin/quiz/${q.quizSetId}`}>퀴즈 운영</Link><Link to={`/admin/submissions?quiz=${q.quizSetId}`}>제출 기록 관리</Link><Link to={`/admin/quiz/${q.quizSetId}?operation=deadline`}>마감 일시 변경·지금 마감</Link><Link to={`/admin/quiz/${q.quizSetId}?operation=winners`}>Top N 설정</Link></div></li>)}</ul>}</section>
-      <section className={styles.panel}><h3>최근 발행한 퀴즈</h3><p className={styles.hint}>지난 발행 내용을 다시 확인하거나 운영 화면을 열 수 있습니다.</p>{data.items.every(q=>!['published','archived'].includes(q.status))&&<p>아직 발행한 퀴즈가 없습니다.</p>}<ul>{data.items.filter(q=>['published','archived'].includes(q.status)).slice(0,6).map(q=><li key={q.quizSetId}><Link to={`/admin/quiz/${q.quizSetId}`}>{q.sermonDate} · {q.title}</Link></li>)}</ul></section>
-    </>}<OperationsPanel/></div>;
+import styles from "./dashboard.module.css";
+
+const date = (value: string) => new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", month: "long", day: "numeric" }).format(new Date(value));
+const time = (value: string) => new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+const isDraft = (quiz: WeeklyQuiz) => !["published", "archived"].includes(quiz.status);
+function stage(quiz: WeeklyQuiz) {
+  if (quiz.expired) return "본문 정리됨";
+  if (quiz.status === "archived") return "마감";
+  if (quiz.status === "published") return quiz.submissionStatus === "paused" ? "접수 중지" : "공개 중";
+  if (quiz.jobStatus === "failed") return "생성 확인 필요";
+  if (quiz.jobStatus === "running") return "생성 중";
+  if (quiz.status === "needs_revision") return "수정 필요";
+  return "작성 중";
+}
+const progress: Record<string, string> = { intent_review: "설교 의도 검토", content_review: "요약·문제 검토", finish: "발행 전 확인" };
+type Filter = "all" | "draft" | "published" | "archived";
+export function Component() {
+  const [data, setData] = useState<ReturnType<typeof weeklyDashboardSchema.parse> | null>(null);
+  const [cleanup, setCleanup] = useState<ReturnType<typeof draftCleanupListSchema.parse> | null>(null);
+  const [message, setMessage] = useState("");
+  const [attempt, setAttempt] = useState(0);
+  const [filter, setFilter] = useState<Filter>("all");
+  const [search, setSearch] = useState("");
+  const [checkedAt, setCheckedAt] = useState(Date.now);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const controller = new AbortController();
+    void weeklyRequest("/api/admin/dashboard", weeklyDashboardSchema, "GET", undefined, controller.signal).then(next => {
+      if (!controller.signal.aborted) { setData(next); setCheckedAt(Date.now()); setLoading(false); }
+    }).catch(() => { if (!controller.signal.aborted) { setMessage("퀴즈 목록을 불러오지 못했습니다. 다시 시도해 주세요."); setLoading(false); } });
+    void weeklyRequest("/api/admin/draft-cleanup", draftCleanupListSchema, "GET", undefined, controller.signal).then(next => {
+      if (!controller.signal.aborted) setCleanup(next);
+    }).catch(() => { if (!controller.signal.aborted) setCleanup(null); });
+    return () => controller.abort();
+  }, [attempt]);
+  const items = data?.items ?? [];
+  const drafts = items.filter(isDraft), published = items.filter(q => q.status === "published"), archived = items.filter(q => q.status === "archived");
+  const featured = items.find(q => q.quizSetId === data?.homeQuiz?.quizSetId);
+  const rows = items.filter(q => (filter === "all" || (filter === "draft" ? isDraft(q) : q.status === filter)) && `${q.title} ${q.sermonDate}`.includes(search.trim()));
+  const due = cleanup?.items.filter(q => q.state === "blocked" || (q.state !== "purged" && q.dueAt && Date.parse(q.dueAt) - checkedAt <= 86_400_000)) ?? [];
+  return <div className={styles.page}>
+    <header className={styles.header}>
+      <div><h2>퀴즈 관리</h2><p>퀴즈를 준비하고, 공개와 참여를 관리하세요.</p></div>
+      <ButtonLink variant="primary" to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>
+    </header>
+    {message && <p className={styles.alert} role="alert">{message}</p>}
+    <div className={styles.overview} aria-label="운영 요약">
+      <button type="button" onClick={() => setFilter("published")}><span>공개 중</span><strong>{data ? published.length : "—"}</strong><span aria-hidden="true">↗</span></button>
+      <button type="button" onClick={() => setFilter("draft")}><span>작성 중</span><strong>{data ? drafts.filter(q => !q.expired).length : "—"}</strong><span aria-hidden="true">↗</span></button>
+      <Link to="/admin/privacy-requests"><span>답변 대기</span><strong>{data?.unansweredCount ?? "—"}</strong><span aria-hidden="true">↗</span></Link>
+    </div>
+    {data && <section className={styles.featured} aria-labelledby="home-quiz-heading">
+      <div className={styles.homeMark} aria-hidden="true">⌂</div>
+      <div className={styles.featuredCopy}><span className={styles.caption}>지금 홈에 보이는 퀴즈</span>
+        <h3 id="home-quiz-heading">{featured?.title ?? "아직 공개된 퀴즈가 없습니다"}</h3>
+        <p>{featured ? `${date(featured.sermonDate)} · ${featured.status === "archived" ? "지난 퀴즈" : "공개 중"}${data.homeQuiz?.selection === "automatic" ? " · 자동 선택" : " · 대표 지정"}` : "준비한 퀴즈를 발행하면 이곳에 표시됩니다."}</p>
+      </div>
+      {featured?.slug && <ButtonLink to={`/quiz/${featured.slug}`}>공개 화면 <span aria-hidden="true">↗</span></ButtonLink>}
+    </section>}
+    <section className={styles.library} aria-labelledby="quiz-library-heading" aria-busy={loading}>
+      <div className={styles.sectionHeading}><h3 id="quiz-library-heading">퀴즈 목록 <span>{items.length}</span></h3>
+        <Button type="button" disabled={loading} onClick={() => { setMessage(""); setLoading(true); setAttempt(v => v + 1); }} aria-label="운영 상태 새로고침">{loading ? "불러오는 중" : "새로고침"}</Button>
+      </div>
+      <div className={styles.toolbar}>
+        <div className={styles.filters} role="group" aria-label="퀴즈 상태">
+          {([["all", "전체", items.length], ["draft", "작성 중", drafts.length], ["published", "공개 중", published.length], ["archived", "지난 퀴즈", archived.length]] as const).map(([key, label, count]) => <button key={key} type="button" aria-pressed={filter === key} onClick={() => setFilter(key)}>{label}<span>{count}</span></button>)}
+        </div>
+        <label className={styles.search}><span className="sr-only">퀴즈 검색</span><input type="search" placeholder="제목 또는 날짜 검색" value={search} onChange={e => setSearch(e.target.value)}/></label>
+      </div>
+      {!data && loading ? <div className={styles.empty} role="status">퀴즈를 불러오고 있습니다.</div> : !data ? <div className={styles.empty}>새로고침을 눌러 목록을 다시 불러오세요.</div> : rows.length === 0 ? <div className={styles.empty}><h4>{items.length ? "조건에 맞는 퀴즈가 없습니다" : "첫 퀴즈를 준비해 보세요"}</h4><p>{items.length ? "검색어나 상태를 바꾸면 다른 퀴즈를 볼 수 있습니다." : "설교 영상 등록부터 문제 검토와 발행까지 한 화면에서 이어집니다."}</p>{!items.length && <ButtonLink to="/admin/new">퀴즈 준비하기</ButtonLink>}</div> :
+        <ul className={styles.quizList}>{rows.map(q => <li key={q.quizSetId}>
+          <article className={styles.quizRow}>
+            <div className={styles.date}><span>{q.sermonDate.slice(0, 4)}</span><strong>{q.sermonDate.slice(5).replace("-", ".")}</strong></div>
+            <div className={styles.quizCopy}><div className={styles.badges}><span className={styles.status} data-state={q.expired ? "archived" : q.status}>{stage(q)}</span>{q.quizSetId === data?.homeQuiz?.quizSetId && <span className={styles.homeBadge}>홈 표시</span>}</div>
+              <h4>{q.title}</h4>
+              <p>{isDraft(q) ? q.expired ? "발행 기록과 비용은 보존됩니다." : progress[q.stage ?? ""] ?? "설교 등록·입력 확인" : `어린이 ${q.childVisibleCount}명 · 장년 ${q.adultVisibleCount}명 참여`}</p>
+              {!isDraft(q) && q.closesAt && <p className={styles.deadline}>{q.status === "archived" ? "마감일" : "접수 마감"} {time(q.closesAt)}{q.status === "published" && Date.parse(q.closesAt) <= checkedAt ? " · 마감 처리 대기" : ""}</p>}
+            </div>
+            <div className={styles.rowActions}>
+              {!q.expired && <ButtonLink to={`/admin/quiz/${q.quizSetId}`}>{isDraft(q) ? "초안 편집" : "퀴즈 설정"}</ButtonLink>}
+              {!isDraft(q) && <Link className={styles.textAction} to={`/admin/submissions?quiz=${q.quizSetId}`}>참여 기록 <span aria-hidden="true">↗</span></Link>}
+            </div>
+          </article>
+        </li>)}</ul>}
+    </section>
+    {due.length > 0 && <details className={styles.cleanup}><summary>초안 보관 알림 <span>{due.length}건</span></summary><p>본문 정리 예정이거나 확인이 필요한 초안입니다.</p><ul>{due.map(q => <li key={q.sermonId}><span>{q.title}</span><span>{q.state === "blocked" ? "확인 필요" : q.dueAt ? time(q.dueAt) : "시각 미확인"}</span></li>)}</ul><Link to="/admin/tools#cleanup">보관 현황 열기 →</Link></details>}
+    <footer className={styles.footer}><Link to="/admin/manual">퀴즈 운영이 처음이신가요? <span>사용 안내 ↗</span></Link><Link to="/admin/operations">비용·백업 확인 ↗</Link></footer>
+  </div>;
 }

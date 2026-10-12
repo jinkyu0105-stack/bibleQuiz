@@ -14,8 +14,8 @@ test('operations warning survives monthly confirmation; drawer supports keyboard
  await page.goto('/admin/operations');await expect(page.getByRole('button',{name:'비용·백업 상세 열기'})).toBeVisible();
  await expect(page.getByRole('alert').filter({hasText:'80%'})).toBeVisible();await expect(page.getByRole('alert').filter({hasText:'최근 백업·삭제 기록에 실패'})).toBeVisible();
  await page.getByRole('button',{name:'비용·백업 상세 열기'}).click();const dialog=page.getByRole('dialog');await expect(dialog).toBeVisible();
- await expect(dialog.getByRole('button',{name:'백업 요청',exact:true})).toBeDisabled();await dialog.locator('summary').filter({hasText:'Cloudflare R2'}).click();await expect(dialog.locator('details[open]').getByText('자동 조회 미연결 · 관리 화면에서 확인 필요',{exact:true})).toBeVisible();
- await expect(dialog.getByRole('button',{name:'이번 달 확인 완료',exact:true})).toBeDisabled();
+ await dialog.locator('summary').filter({hasText:'백업 관리'}).click();await expect(dialog.getByRole('button',{name:'백업 요청',exact:true})).toBeDisabled();await dialog.locator('summary').filter({hasText:'Cloudflare R2'}).click();await expect(dialog.locator('details[open]').getByText('자동 조회 미연결 · 관리 화면에서 확인 필요',{exact:true})).toBeVisible();
+ await dialog.locator('summary').filter({hasText:'월간 요금 정책 확인'}).click();await expect(dialog.getByRole('button',{name:'이번 달 확인 완료',exact:true})).toBeDisabled();
  for(const checkbox of await dialog.getByRole('checkbox').all()){if(await checkbox.isEnabled())await checkbox.check();}
  await dialog.getByRole('button',{name:'이번 달 확인 완료',exact:true}).click();await expect.poll(()=>confirmations).toBe(1);
  await expect(page.getByText('이번 달 요금 정책 확인 필요',{exact:false})).toHaveCount(0);await expect(page.getByRole('alert').filter({hasText:'80%'})).toBeVisible();await expect(page.getByRole('alert').filter({hasText:'최근 백업·삭제 기록에 실패'})).toBeVisible();
@@ -24,7 +24,7 @@ test('operations warning survives monthly confirmation; drawer supports keyboard
 });
 test('protected manual displays service dictionary, repository text and future guide without executing HTML',async({page})=>{
  await page.route('**/api/admin/manual**',async route=>route.fulfill({json:{data:{markdown:'# 합성 매뉴얼\n\n## 10. 백업·복구\n\n<svg onload="window.__unsafe=true">원문</svg>',updatedAt:'2026-10-01',verification:'로컬 합성 검증',deployment:'local'}}}));
- await page.goto('/admin/manual');await expect(page.getByRole('heading',{name:'10. 백업·복구',exact:true})).toBeVisible();
+ await page.goto('/admin/manual');await page.locator('summary').filter({hasText:'10. 백업·복구'}).click();
  await expect(page.getByText('<svg onload="window.__unsafe=true">원문</svg>',{exact:true})).toBeVisible();expect(await page.evaluate(()=>Object.hasOwn(window,'__unsafe'))).toBe(false);
  await expect(page.getByText('서비스 사전',{exact:true})).toBeVisible();await page.getByRole('link',{name:'향후 회원 로그인·교회 계정 연동 검토'}).click();await expect(page).toHaveURL(/\/admin\/manual\/future\/member-auth$/u);await expect(page.getByRole('link',{name:'운영 매뉴얼로 돌아가기'})).toBeVisible();
 });

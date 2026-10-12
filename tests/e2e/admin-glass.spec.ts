@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
 
 const at = "2026-10-10T00:00:00.000Z";
-test("admin menus keep one hover lens and actions match the shared quiz solution button", async ({ page, isMobile }, testInfo) => {
+test("admin menus group tasks, retain the glass hover and use compact shared actions", async ({ page, isMobile }, info) => {
   test.setTimeout(60_000);
   const requests: string[] = [];
   await page.route("**/api/admin/**", route => {
@@ -22,71 +22,52 @@ test("admin menus keep one hover lens and actions match the shared quiz solution
   await page.getByRole("button", { name: "낮", exact: true }).click();
   const material = await solution.evaluate(node => {
     const style = getComputedStyle(node);
-    return Object.fromEntries(["background-color", "color", "border-color", "border-radius", "font-weight", "padding", "min-height", "box-shadow", "backdrop-filter"].map(name => [name, style.getPropertyValue(name)]));
+    return Object.fromEntries(["background-color", "color", "border-color", "border-radius", "box-shadow", "backdrop-filter"].map(name => [name, style.getPropertyValue(name)]));
   });
   await page.goto("/admin");
   const refresh = page.getByRole("button", { name: "운영 상태 새로고침", exact: true });
-  await expect(refresh).toBeVisible();
+  await expect(refresh).toBeEnabled();
   const before = requests.filter(path => path.endsWith("/dashboard")).length;
   await refresh.click();
   await expect.poll(() => requests.filter(path => path.endsWith("/dashboard")).length).toBeGreaterThan(before);
-  for (const name of ["운영 상태 새로고침", "비용·백업 상세 열기", "사용량 다시 조회"]) {
-    const button = page.getByRole("button", { name, exact: true });
-    for (const [name, value] of Object.entries(material)) await expect(button).toHaveCSS(name, value);
-    expect(await button.evaluate(node => getComputedStyle(node, "::before").content)).toBe("none");
-    await expect(button).not.toHaveAttribute("data-lens-ready");
-    await button.focus();
-    await expect(button).toBeFocused();
-  }
-  const create = page.getByRole("link", { name: "이번 주 퀴즈 만들기", exact: true });
-  for (const [name, value] of Object.entries(material)) await expect(create).toHaveCSS(name, value);
-  await page.locator(".admin-main").screenshot({ path: testInfo.outputPath("admin-buttons-day.png") });
-  if (isMobile) await page.locator("summary").filter({ hasText: "관리자 운영 메뉴" }).click();
-  const navigation = page.getByRole("navigation", { name: "관리자 운영 메뉴" });
-  const sidebar = page.locator("aside[data-glass-panel=standard]");
-  await expect(sidebar.getByRole("heading", { name: "주간 운영", exact: true })).toBeVisible();
-  await expect(navigation.getByRole("link")).toHaveCount(6);
+  for (const [name, value] of Object.entries(material)) await expect(refresh).toHaveCSS(name, value);
+  await expect(refresh).toHaveCSS("min-height", "44px");
+  expect(await refresh.evaluate(node => getComputedStyle(node, "::before").content)).toBe("none");
+  await expect(refresh).not.toHaveAttribute("data-lens-ready");
+  await expect(page.getByRole("heading",{name:"퀴즈 관리",exact:true})).toHaveCSS("font-family", /Noto Serif KR/);
+  await page.locator(".admin-main").screenshot({ path: info.outputPath("admin-buttons-day.png") });
+  const sidebar=page.locator("aside[data-glass-panel=standard]"),navigation=page.getByRole("navigation",{name:"관리자 운영 메뉴"});
+  const toggle=sidebar.locator("summary").filter({hasText:"관리자 운영 메뉴"});
   if (isMobile) {
-    const toggle = sidebar.locator("summary");
-    await toggle.focus();
-    await page.keyboard.press("Space");
-    await expect(navigation).toBeHidden();
+    await toggle.focus(); await page.keyboard.press("Enter"); await expect(navigation).toBeVisible();
+    await page.keyboard.press("Space"); await expect(navigation).toBeHidden();
     await page.keyboard.press("Enter");
-    await expect(navigation).toBeVisible();
-    await expect(sidebar.getByText("운영 공간", { exact: true })).toBeHidden();
   } else {
-    await expect(sidebar.getByText("운영 공간", { exact: true })).toBeVisible();
-    await expect(sidebar.getByText("말씀을 준비하는", { exact: false })).toBeVisible();
-    await expect(sidebar).toHaveCSS("width", "185px");
-    await expect(sidebar).toHaveCSS("min-height", "580px");
+    await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toBeVisible();
+    await expect(sidebar).toHaveCSS("width","220px");
   }
-  await sidebar.screenshot({ path: testInfo.outputPath("admin-sidebar-day.png") });
+  await expect(navigation.getByRole("link")).toHaveCount(3);
+  await navigation.locator("summary").filter({hasText:"도구와 설정"}).click();
+  await expect(navigation.getByRole("link")).toHaveCount(7);
   if (!isMobile) {
-    const target = navigation.getByRole("link", { name: "이름·문구 필터", exact: true });
+    const target=navigation.getByRole("link",{name:"이름·문구 필터",exact:true});
     await target.hover();
     await expect(target).toHaveAttribute("data-dock-preview", "");
     await expect(target).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-    await expect(navigation.getByRole("link", { name: "주간 운영", exact: true })).toHaveAttribute("aria-current", "page");
-    await expect(navigation.locator(":scope > .glass-indicator")).toHaveCount(1);
+    await expect(target.locator("..").locator(":scope > .glass-indicator")).toHaveCount(1);
   }
-  const filterLink = navigation.getByRole("link", { name: "이름·문구 필터", exact: true });
-  await filterLink.focus();
-  await expect(page).toHaveURL(/\/admin$/);
-  await page.keyboard.press("Enter");
+  await sidebar.screenshot({path:info.outputPath("sidebar-grouped.png")});
+  const filterLink=navigation.getByRole("link",{name:"이름·문구 필터",exact:true});
+  await filterLink.focus(); await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/admin\/moderation$/);
-  await expect(filterLink).toHaveAttribute("aria-current", "page");
-  await expect(navigation.locator("[aria-current=page]")).toHaveCount(1);
-  if (!isMobile) await expect(filterLink.locator("[aria-hidden=true]")).toBeVisible();
-  // Existing actions across all sidebar destinations use the same component,
-  // including controls that start disabled inside a fieldset or dialog.
+  await expect(sidebar.locator("[aria-current=page]")).toHaveCount(1);
+  await expect(sidebar.locator('a[href="/admin/moderation"]')).toHaveAttribute("aria-current","page");
   for (const path of ["/admin/moderation", "/admin/privacy-requests", "/admin/tools", "/admin/operations", "/admin/manual"]) {
     await page.goto(path);
     if (path === "/admin/tools") await openAdminTool(page, "metadata");
-    const buttons = page.locator(".admin-main button");
-    if (path === "/admin/tools") await expect(page.getByRole("link", { name: "주간 운영에서 시작하기" })).toBeVisible();
-    else await expect(buttons.first()).toBeVisible();
-    const classes = await buttons.evaluateAll(nodes => nodes.map(node => node.classList.contains("secondary-button")));
-    expect(classes.every(Boolean)).toBe(true);
+    const button=page.locator(".admin-main .action-button").first();
+    await expect(button).toBeVisible();
+    await expect(button).toHaveCSS("min-height","44px");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
   await page.getByRole("button", { name: "밤", exact: true }).click();
@@ -95,14 +76,11 @@ test("admin menus keep one hover lens and actions match the shared quiz solution
   expect(await page.locator(".admin-main button.secondary-button").first().evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
   await page.setViewportSize({ width: 320, height: 740 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await page.locator(".admin-main").screenshot({ path: testInfo.outputPath("admin-buttons-night-320.png") });
-  const toggle = sidebar.locator("summary");
+  await page.locator(".admin-main").screenshot({ path: info.outputPath("admin-night-320.png") });
   if (!await navigation.isVisible()) await toggle.click();
   await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" });
-  const manualLink = navigation.getByRole("link", { name: "운영 매뉴얼", exact: true });
-  await manualLink.focus();
-  await expect(manualLink).toBeFocused();
-  await expect(manualLink).toHaveAttribute("aria-current", "page");
+  const manualLink=navigation.getByRole("link",{name:"도움말",exact:true});
+  await manualLink.focus(); await expect(manualLink).toBeFocused();
+  await expect(manualLink).toHaveAttribute("aria-current","page");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await expect(page.locator(".admin-main button.secondary-button").first()).toBeVisible();
 });
