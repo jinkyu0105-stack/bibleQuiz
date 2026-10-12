@@ -2,38 +2,37 @@
 
 ## 현재 작업과 다음 첫 행동
 
-2026-10-12 **P9-12 누적 UI Preview 반영 — 진행 중**. 사용자가 Preview 안내 뒤 “좋습니다. 푸시합시다.”라고 명시 승인했다. 시작 main47e6cbf·clean, fetch한 origin/main21b81de 대비45ahead/0behind다. 전체 `pnpm check`와 Preview dry-run을 통과하고 문서 커밋afb61dd를 main에 push했다. Workers Builds47db7001-8e49-439b-909c-7459664ef518 성공과 실제 Preview version353cc553-7b18-4d80-af7b-785d58e7664e·100%를 확인했다. GitHub CI38202232552는 validate성공·browser216통과/1실패/1건너뜀이다. 유일한 실패는 모바일 native snap 도중 좌표를 읽는 검사 시점 오류로 재현했다. 해당 assertion만 expect.poll로 보정하고 관련 최종 반복18건/lint/typecheck가 통과했다. 보정 커밋/push→새 CI/Preview version 대조가 다음 행동이다. 최초 로컬 반복의 별도 PC 앵커 이동1회 실패는 최종 반복에서 재현되지 않아 원인 미확정으로 기록한다. [현재 기록](work/P9-12.md).
+2026-10-12 **P9-12 누적 UI Preview 반영 — 완료**. 사용자 “좋습니다. 푸시합시다.” 승인에 따라 GitHub main에 **2d2b1aa5dfd87e0f1cfb2dada56991f2712a9b7f**까지 push했다. Workers Builds17f77d49-1a1b-4b3f-b082-efe773f7bdd7 성공, 실제 Preview version **7f09d123-0067-43b8-bcc9-732e6896f6bc**·100%·2026-10-12 13:20:55KST를 확인했다. [CI38203328796](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/38203328796)의 validate/browser도 모두 success다. 승인된 push·Preview 배포·검사가 끝났으며 다음 필수 구현은 없다. 종료 결과 문서만 별도 로컬 커밋으로 보존한다. [전체 근거](work/P9-12.md).
 
-누적 하늘/영상/유리 UI·공통 컴포넌트·서울 시간·메인 탐색·관리자 버튼/좌측 패널/여백이 대상이다. Production·content/backup·원격 DB migration/자료·AI 실행·Access 설정 변경은 제외한다. 원격 main에는 런타임 Worker/shared/migration·package/lock·배포/CI 설정 변경이 없다. Worker 변경은 기존 테스트의 DB 시계 기준7일 경계 보정뿐이다.
+누적 하늘/영상/유리 UI·공통 컴포넌트·서울 시간·메인 탐색·관리자 버튼/좌측 패널/여백이 반영됐다. Production·content/backup·원격 DB migration/자료·AI 실행·Access 설정 변경은 하지 않았다. 실제 관리자 화면은 [Preview 발행 도구](https://biblequiz-app-preview.jinkyu0105.workers.dev/admin/tools)에서 Access 로그인 뒤 확인한다. Preview는 운영과 별도 DB이고 AI 생성은 false다. 로그인 후 실데이터 조회/저장 검사는 이번 작업에서 수행하지 않았다.
 
-## 검사와 배포 진입점
+## 검사·수정·한계
 
-- 현재 소스의 전체 `pnpm check` exit0(unit315/Worker2197/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck·DB 검사·build). Preview dry-run은 로컬 공개 키 부재로 최초 중단 후 기존 공개 키를 빌드 입력으로만 재사용해 exit0을 확인했다. Preview app/D1/Workflow 대상을 검증했고 기존 로컬 배포 포인터를 복구했다. 실제 원격 빌드는 저장된 Preview 환경을 사용한다. P9-09~11의 UI 브라우저 결과는 각 작업 문서에 보존한다.
-- GitHub main push는 `biblequiz-app-preview`의 Workers Builds를 시작한다. build `pnpm run build:preview`, deploy `pnpm exec wrangler deploy --strict --autoconfig=false`. 직접 로컬 deploy로 우회하지 않는다. [배포 계약](spec/architecture.md#preview-반영-경로).
-- GitHub check와 Cloudflare deployments 조회 가능. Builds triggers 조회는 인증 오류10000으로 설정을 변경하지 않았다. 직전 소스21b81de의 Workers Builds와 CI validate/browser는 성공했다. 새 소스에서도 각각 확인해야 한다.
-- Access 앱의 Preview Worker 보호와 비인증 HTTP403을 확인했다. 로그인 후 실제 관리자 조회/저장 성공은 아직 확인하지 않았다. 기존 관련 E2E는 합성 API이고 실기기/GPU 미측정 한계를 유지한다.
-- 증거는 Git 제외 `.wrangler/releases/p9-12/`에 저장한다. 최신 변경 전 UI 검사는 [P9-11](work/P9-11.md), 공통 버튼은 [P9-09](work/P9-09.md), 좌측 패널은 [P9-10](work/P9-10.md)를 따른다.
+- 최신 제품 소스의 로컬 `pnpm check` exit0: unit315/Worker2197/Workflow4/recoveryCLI2/Node14/Python7, lint/typecheck·DB 구성·build 통과. Preview strict dry-run exit0, app/D1/Workflow Preview 대상 확인. 기존500kB fontkit 번들 경고 유지.
+- 로컬 공개 사이트 키 부재로 최초 Preview dry-run이 빌드 전에 중단됐다. 기존 공개 키를 빌드 입력에만 재사용해 통과했고 실제 Workers Builds는 저장된 Preview 환경으로 성공했다. Secret/원격 설정 변경 없음. 원래 `.wrangler/deploy/config.json` 복구.
+- 최초 소스afb61dd의 CI38202232552: validate성공, browser216통과/1실패/1건너뜀. 유일한 실패는 모바일 native snap 도중 좌표를 단발 측정한 `sky-controls-polish.spec.ts:92`다. 정상 정착699.71875px를 재현했고 `innerHeight`와 끝 위치 차이가2px 미만이 될 때까지 expect.poll로 확인하도록 테스트1곳만 보정했다. 앱 스크롤/디자인은 그대로다.
+- 보정 뒤 lint/typecheck exit0. 관련18건 최종 반복 통과(1.4분). 앞선 반복에서는 다른 PC 앵커 이동1회 실패(17통과/1실패)가 있었고 최종 반복에서 재현되지 않았다. 이 간헐 실패의 원인까지 확정했다고 쓰지 않는다. 최종 GitHub full check도 통과했고 PC/모바일 Chromium217통과·기존 터치 전용1건 PC 건너뜀·실패/재시도0(12.5분)이다.
+- Preview 비인증 HTTP는 배포 전후403, Worker Access 보호 유지. Builds triggers API는 인증 오류10000으로 조회하지 못해 GitHub check와 deployments GET을 대조했다. 관리자 로그인 후 조회/저장·실기기/GPU 검수는 아니다. P9-09~11의 기존 UI 검사와 관측 한계는 각 작업 문서에 보존한다.
+- 증거: Git 제외 `.wrangler/releases/p9-12/`의 check/dry-run/CI/반복 검사 로그·scroll-diagnostic·remote-before/after/final.json. 임시 추적 파일과 실제 자료/키는 Git에 넣지 않는다.
 
-## Git과 환경 보존
+## Git과 원격 버전
 
-이번 대화는 배포 기록 문서3개와 실패한 E2E assertion1곳만 변경했다. 기존45개 로컬 커밋을 보존하고 배포 준비 문서afb61dd까지 함께 push했다. stage 전 실제 diff/status를 재확인하고 검토한 파일만 명시한다. 재개 시 이후 미커밋 변경도 보존한다. 새 Git blob40MiB 초과 없음.
-
-다음은 이번 작업에서 배포 전후 읽기 조회한 최신 원격 버전이다. Preview app만 변경됐다.
+시작 `/home/onegem/work/bibleQuiz`, main47e6cbf·clean, fetch한 origin/main21b81de보다45커밋 앞섬. 기존 커밋을 보존해 준비 문서afb61dd와 함께 push했고, 이후 테스트/문서 보정2d2b1aa를 push했다. 제품 실행 코드·자산은47e6cbf 그대로다. 이번 작업의 직접 변경은 E2E assertion1곳과 문서3개뿐이다. 종료 결과 문서는 별도 로컬 커밋으로 남기며 실제 배포 소스와 구분한다. 재개 시 실제 Git status/log를 확인하고 이후 변경을 보존한다.
 
 | 대상 | 최신 version/소스 |
 |---|---|
+| Preview app |7f09d123-0067-43b8-bcc9-732e6896f6bc / GitHub2d2b1aa 자동 배포|
 | Production app |7aea6843-5288-42da-9bef-bc673e1d9dfe / 소스37b7254|
 | Production content |48a1269d-a9b2-4405-8bbc-745cdabec1b0 / 기존56bb1bf|
 | Production backup |3fb0e7c7-368b-45a9-89f9-2818739e415d / 기존 배포|
-| Preview app |353cc553-7b18-4d80-af7b-785d58e7664e / GitHubafb61dd 자동 배포|
 | Preview content |2df93f07-3703-42ec-b576-fd085e8c839f / 기존 배포|
 
-실제 자료/키/자막/유료 결과·로컬/원격 DB·migration0000~0038·검토본 원본/자산·폰트·package/lockfile을 보존한다. Production 운영/rollback 정본은 [P9-04](work/P9-04.md)다. Preview dry-run은 원격 배포가 아니며 기존 `.wrangler/deploy/config.json` 포인터를 따로 보존한다.
+최종 Preview deployment1b2be90d-5ff7-42ae-a0fe-fec3981373d5. 다른4개 Worker는 배포 전후 버전 불변. 원격 migration·실제 자료·키·자막/유료 결과·폰트·package/lockfile을 보존한다. 일반 [Preview 배포 계약](spec/architecture.md#preview-반영-경로)은 main push→Workers Builds이며 직접 deploy로 우회하지 않는다. Production 운영/rollback 정본은 [P9-04](work/P9-04.md)다.
 
 ## 실행·사용량·세션
 
 문서 순서 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 spec/work→Git. Node24.18.0/pnpm11.14.0. 기본 명령 도구의 시작 전 ENOENT는 검증된 `/bin/bash`, login:false, 명시 workdir, 승인 검토 실행 경로로 해결했다. 일반 pnpm이 PATH에 없으면 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 PATH에 추가한다.
 
-기존5173/4189 서버를 보존한다. 실제 앱은 기존 `.wrangler/ui-demo-state`를 지정한 `pnpm dev:local --host 127.0.0.1 --port 5173 --strictPort`, 검토본은 root의 `python3 -m http.server 4189 --bind 127.0.0.1`이다. [README](../README.md)의 실행 명령을 따른다. 정상 URL에 중복 서버를 띄우지 않는다. E2E4173은 명령이 생성/정리한다.
+종료 시 기존5173/4189 서버 HTTP200과 원래 로컬 배포 포인터 보존을 확인했다. 실제 앱은 기존 `.wrangler/ui-demo-state`를 지정한 `pnpm dev:local --host 127.0.0.1 --port 5173 --strictPort`, 검토본은 root의 `python3 -m http.server 4189 --bind 127.0.0.1`이다. [README](../README.md)의 실행 명령을 따른다. E2E4173은 별도 임시 DB를 사용해 생성/정리한다.
 
-Pro97% 잔여×사용자 기준10=970%, 별도5시간 없음. **현재 P9-12 진행 중 · 부모 작업 Preview 반영 · 다음 전체 검사/push/배포·CI 확인 · 세션 유지 · 추천 GPT-6.1-Sol/high** — 소스·검사·실제 배포 버전을 함께 대조한다.
+시작 Pro97% 잔여×사용자 기준10=970%, 별도5시간 없음. **현재 P9-12 완료 · 부모 작업 누적 UI Preview 반영 완료 · 다음 사용자 Preview 화면 피드백(필수 후속 구현 없음) · 세션 유지 · 추천 GPT-6.1-Sol/medium** — 기존 화면 확인·작은 보정에 적합하다.

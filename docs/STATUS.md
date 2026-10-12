@@ -2,22 +2,24 @@
 
 ## P9-12 누적 UI Preview 반영 — 2026-10-12
 
-**진행 중.** 사용자가 main push와 Preview 자동 배포를 명시 승인했다. 전체 검사/Preview dry-run 통과 뒤 소스afb61dd를 main에 push했다. Cloudflare 자동 배포는 성공했고 실제 Preview version353cc553-7b18-4d80-af7b-785d58e7664e·100%를 확인했다. GitHub CI38202232552는 validate성공·browser216통과/1실패/1건너뜀이다. 모바일 native snap 완료 전 좌표를 읽은 검사 시점 오류를 보정했다. 관련 최종 반복18건·lint/typecheck 통과 뒤 보정 커밋을 push해 CI를 다시 확인한다. Production/DB·실제 AI 실행은 제외한다. [진행 기록](work/P9-12.md).
+**완료.** 사용자 승인으로 소스 **2d2b1aa5dfd87e0f1cfb2dada56991f2712a9b7f**를 GitHub main에 push했다. [CI38203328796](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/38203328796)의 validate/browser와 Workers Builds17f77d49가 모두 success다. Preview app version **7f09d123-0067-43b8-bcc9-732e6896f6bc**·100%·2026-10-12 **13:20:55KST**를 실제 deployments GET으로 확인했다. [Preview 관리자 도구](https://biblequiz-app-preview.jinkyu0105.workers.dev/admin/tools) · [실행·검사·한계](work/P9-12.md).
 
 | 작업 ID | 사용자 결과 | 상태 |
 |---|---|---|
 | P9-05 | Air 실제 탐색·하늘 방향·첫 동작 검토본 | 완료 |
-| P9-06 | 대표 시안·영상/유리 UI·공통 컴포넌트·실제 React 적용 | 로컬 완료 —863a84b, [검사](work/p9-06/app-integration.md) |
-| P9-07 | 메인 탐색·서울 계절별 자동 시간/탭별 수동 시간 | 로컬 완료 —dca1635, [기록](work/P9-07.md) |
-| P9-08 | 잔디 사진·광원/하단 메뉴·느린 이동·관리자 투명 버튼 | 로컬 완료 —0ec75f0, [기록](work/P9-08.md) |
-| P9-09 | 풀이 기준 공통 버튼·관리자 적용·두 로컬 서버 재시작/실행 안내 | 로컬 완료 —5903b47, [기록](work/P9-09.md) |
-| P9-10 | 검토본 관리자 좌측 패널을 실제 앱에 적용 | 로컬 완료 —d3695d4, [기록](work/P9-10.md) |
-| P9-11 | 발행 도구 간격·제목/주간 새로고침 여백 | 로컬 완료 —47e6cbf, [기록](work/P9-11.md) |
-| P9-12 | 누적 UI main push·Preview 자동 배포 확인 | 진행 중 — Preview 배포 성공·모바일 검사 시점 보정/재검증 |
+| P9-06 | 대표 시안·영상/유리 UI·공통 컴포넌트·실제 React 적용 | 구현 완료 —863a84b, [검사](work/p9-06/app-integration.md) |
+| P9-07 | 메인 탐색·서울 계절별 자동 시간/탭별 수동 시간 | 구현 완료 —dca1635, [기록](work/P9-07.md) |
+| P9-08 | 잔디 사진·광원/하단 메뉴·느린 이동·관리자 투명 버튼 | 구현 완료 —0ec75f0, [기록](work/P9-08.md) |
+| P9-09 | 풀이 기준 공통 버튼·관리자 적용·두 로컬 서버 재시작/실행 안내 | 구현 완료 —5903b47, [기록](work/P9-09.md) |
+| P9-10 | 검토본 관리자 좌측 패널을 실제 앱에 적용 | 구현 완료 —d3695d4, [기록](work/P9-10.md) |
+| P9-11 | 발행 도구 간격·제목/주간 새로고침 여백 | 구현 완료 —47e6cbf, [기록](work/P9-11.md) |
+| P9-12 | 누적 UI main push·Preview 자동 배포 확인 | 완료 — P9-06~11 Preview 반영·최종 CI 성공 |
 
-현재 소스의 `pnpm check` exit0: unit315/Worker2197/Workflow4/recoveryCLI2/Node14/Python7, lint/typecheck·DB 검사·build 통과. Preview dry-run exit0이며 push 후 GitHub 전체 PC/모바일 Chromium 검사를 별도로 확인한다. 이전 UI 검수는 P9-09~11을 따른다. 기존500kB fontkit 번들 경고·WebKit/실기기/GPU 한계는 유지한다.
+로컬과 최종 GitHub `pnpm check` 통과: unit315/Worker2197/Workflow4/recoveryCLI2/Node14/Python7, lint/typecheck·DB 구성·build. Preview strict dry-run 통과. GitHub PC/모바일 Chromium **217통과·기존 터치 전용1건 PC에서 건너뜀·실패/재시도0**(12.5분). 최초 CI의 모바일 스크롤1건 실패는 native snap 완료 전 단발 측정이 원인으로, 실제 끝 위치를 기다리도록 테스트만 보정했다. 보정 후 관련 최종 반복18건과 lint/typecheck도 통과했다. 앞선 로컬 반복의 별도 PC 앵커1회 간헐 실패는 최종 반복/CI에서 재현되지 않았지만 원인 미확정 한계로 기록한다.
 
-현재 시작 main47e6cbf·clean·origin/main보다45커밋 앞섬. Pro97% 잔여×사용자 기준10=970%, 별도5시간 없음. 다음 push/자동 배포 결과 확인, 세션 유지, 추천 GPT-6.1-Sol/high — 기존 디자인과 동작을 함께 보정한다.
+Production app/content/backup·Preview content 버전은 배포 전후 그대로다. 원격 migration·Secret/Access 설정·실제 자료·유료 AI 호출은 변경하지 않았다. Preview는 운영과 별도 DB이며 AI 생성 false를 유지한다. Access 로그인 후 실제 관리자 조회/저장·실기기/GPU 검사는 이번 완료 판정에 포함하지 않는다. 기존500kB fontkit 경고와 관측 한계는 유지한다.
+
+종료 기록만 별도 로컬 문서 커밋으로 보존하고 실제 배포 소스2d2b1aa와 구분한다. 시작 Pro97% 잔여×사용자 기준10=970%, 별도5시간 없음. **현재 P9-12 완료 · 부모 작업 누적 UI Preview 반영 완료 · 다음 사용자 Preview 화면 피드백(필수 후속 구현 없음) · 세션 유지 · 추천 GPT-6.1-Sol/medium** — 기존 화면 확인·작은 보정에 적합하다.
 
 ## P9-04 운영 배포 완료 — 2026-10-07
 
