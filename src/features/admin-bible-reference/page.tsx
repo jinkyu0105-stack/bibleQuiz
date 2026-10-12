@@ -198,7 +198,7 @@ function BibleReferenceTool() {
 }
 
 export function Component() {
-  return <>
+  return <div className={styles.tools}>
 
     <PublishedMetadata />
     <WithdrawPublication />
@@ -206,5 +206,5 @@ export function Component() {
     <DraftCleanup />
     <AdminSermonInput />
     <BibleReferenceTool />
-  </>;
+  </div>;
 }
