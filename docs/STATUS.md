@@ -1,8 +1,8 @@
 # 현재 상태
 
-## P9-11 관리자 도구 간격·제목 — 2026-10-12
+## P9-12 누적 UI Preview 반영 — 2026-10-12
 
-**로컬 완료.** 발행·수정 도구의 박스 간격24px/모바일20px, 제목22px/모바일20px와 주간 운영 새로고침 위16px 여백을 적용했다. 좌측 패널·공통 버튼 재질·입력/저장 기능은 유지한다. [변경·검사](work/P9-11.md) · [도구 화면](http://localhost:5173/admin/tools).
+**진행 중.** 사용자가 main push와 Preview 자동 배포를 명시 승인했다. 현재 소스47e6cbf의 전체 검사/Preview dry-run 뒤 누적 UI를 push하고 Cloudflare 배포와 GitHub CI를 확인한다. Production/DB·실제 AI 실행은 제외한다. [진행 기록](work/P9-12.md).
 
 | 작업 ID | 사용자 결과 | 상태 |
 |---|---|---|
@@ -12,11 +12,12 @@
 | P9-08 | 잔디 사진·광원/하단 메뉴·느린 이동·관리자 투명 버튼 | 로컬 완료 —0ec75f0, [기록](work/P9-08.md) |
 | P9-09 | 풀이 기준 공통 버튼·관리자 적용·두 로컬 서버 재시작/실행 안내 | 로컬 완료 —5903b47, [기록](work/P9-09.md) |
 | P9-10 | 검토본 관리자 좌측 패널을 실제 앱에 적용 | 로컬 완료 —d3695d4, [기록](work/P9-10.md) |
-| P9-11 | 발행 도구 간격·제목/주간 새로고침 여백 | 로컬 완료 — 이 문서를 포함한 로컬 커밋, push/배포 없음 |
+| P9-11 | 발행 도구 간격·제목/주간 새로고침 여백 | 로컬 완료 —47e6cbf, [기록](work/P9-11.md) |
+| P9-12 | 누적 UI main push·Preview 자동 배포 확인 | 진행 중 — 전체 검사/Preview dry-run 통과·push 대기 |
 
-1440/390/320px의 간격/제목 측정과 낮/밤 캡처 확인, 가로 넘침/페이지 오류 없음. lint/typecheck/build exit0, 관련 브라우저9건 통과(Chromium/모바일Chromium/Firefox). 작은 레이아웃 보정으로 관련 검사를 실행했으며 전체 `pnpm check`는 직전 P9-10 통과 기록을 유지한다. 기존 번들 경고·WebKit/실기기/GPU 한계는 작업 기록을 따른다.
+현재 소스의 `pnpm check` exit0: unit315/Worker2197/Workflow4/recoveryCLI2/Node14/Python7, lint/typecheck·DB 검사·build 통과. Preview dry-run exit0이며 push 후 GitHub 전체 PC/모바일 Chromium 검사를 별도로 확인한다. 이전 UI 검수는 P9-09~11을 따른다. 기존500kB fontkit 번들 경고·WebKit/실기기/GPU 한계는 유지한다.
 
-시작 main d3695d4·clean. Pro98% 잔여×사용자 기준10=980%, 별도5시간 없음. 다음 추가 사용자 피드백, 세션 유지, 추천 GPT-6.1-Sol/high — 기존 디자인과 동작을 함께 보정한다.
+현재 시작 main47e6cbf·clean·origin/main보다45커밋 앞섬. Pro97% 잔여×사용자 기준10=970%, 별도5시간 없음. 다음 push/자동 배포 결과 확인, 세션 유지, 추천 GPT-6.1-Sol/high — 기존 디자인과 동작을 함께 보정한다.
 
 ## P9-04 운영 배포 완료 — 2026-10-07
 
@@ -34,7 +35,7 @@
 
 CI 수정 결과 문서37b7254 뒤 사용자가 운영 배포를 명시 승인했다. 현재 작업/배포 사실은 상단 P9-04를 따른다.
 
-## 현재 Preview 자동 배포 완료 — 2026-10-07
+## 직전 Preview 자동 배포 완료 — 2026-10-07
 
 GitHub 소스 **21b81de**의 Workers Builds **e7707d59-9c79-477a-8241-7f26e1f6fc6a** check가 completed/success다. Preview app version **3dc36ff6-f6d0-4627-bc43-6beeb3495391**, traffic100%, deployment **9956f978-69b2-45ea-9175-c51ee72b2ff3**, **2026-10-07 18:57:53KST**를 Cloudflare deployments GET으로 대조했다. 직전 f7359e5의00fa46eb는 이전 버전이다. Preview 반영 당시 Production app27f75159·소스56bb1bf는 배포 대상이 아니었으며 content/backup·DB migration·Secret·실제 AI도 변경하지 않았다.
 
@@ -123,4 +124,4 @@ Production/Preview migration0000~0038·이력39개를 유지한다. 운영 app `
 
 ## Git과 다음 재개
 
-운영 앱 소스37b7254·Preview 소스21b81de, content의 기존 소스56bb1bf를 구분한다. P9-04 시작 worktree clean이며 로컬에는 직전 CI 결과 문서1커밋만 미푸시였다. 이번에는 운영 배포 기록 문서만 로컬 커밋하고 GitHub를 재푸시하지 않는다. 정확한 HEAD는 git log로 확인한다. 이전 출시의 필수 후속 작업은 없으며 새 Air 개편과 후속 보정은 상단 P9-05~07을 따른다. 배포 기록 확인 시 [HANDOFF](HANDOFF.md)·[P9-04](work/P9-04.md)를 따른다. 실제 자료·키·유료 결과와 기존 미커밋 변경을 보존한다.
+현재 Git 상태와 Preview 반영은 상단 P9-12와 [HANDOFF](HANDOFF.md)를 따른다. Production 앱 소스37b7254·content 기존 소스56bb1bf는 그대로다. 사용자가 이번 main push를 명시 승인했으며 GitHub 소스와 실제 Preview Worker version을 각각 기록한다. 실제 자료·키·유료 결과와 기존 미커밋 변경을 보존한다.
