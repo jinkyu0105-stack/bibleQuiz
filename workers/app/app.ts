@@ -165,6 +165,8 @@ export interface AppBindings extends PublicRateBindings, BackupBindings {
   AI_GENERATION_ENABLED?: string;
   P571_SYNTHETIC_SERMON_IDS?: string;
   DB: D1Database;
+  // Function supplied only by a local test entry, never by a string environment variable.
+  ACCESS_JWKS_FETCH?: typeof fetch;
   ACCESS_AUD?: string;
   ACCESS_TEAM_DOMAIN?: string;
   ARCHIVE_CURSOR_SECRET?: string;
@@ -214,6 +216,7 @@ app.use("/api/admin/*", async (context, next) => {
     context.set("accessIdentity", await authenticateAccessRequest(context.req.raw, {
       audience: context.env.ACCESS_AUD,
       teamDomain: context.env.ACCESS_TEAM_DOMAIN,
+      ...(typeof context.env.ACCESS_JWKS_FETCH === "function" ? { fetcher: context.env.ACCESS_JWKS_FETCH } : {}),
     }));
     await next();
   } catch (error) {

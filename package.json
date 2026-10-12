@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "node scripts/start-dev-server.mjs",
     "dev:local": "vite",
+    "dev:demo": "node scripts/start-dev-server.mjs --admin-demo",
     "build": "tsc -b && vite build",
     "build:preview": "node scripts/check-preview-build-env.mjs && tsc -b && CLOUDFLARE_ENV=preview vite build",
     "preview": "pnpm run build && vite preview",

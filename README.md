@@ -4,6 +4,8 @@
 
 공개 풀이·제출/채점·지난 퀴즈·출력·관리자 발행과 운영 연결을 구현했고 Phase8 출시 범위는 완료했습니다. 현재 P9-06의 승인된 하늘·유리 UI를 실제 React 페이지에 로컬 적용했습니다. 운영 배포는 기존 P9-04입니다. 최신 상태는 [STATUS](docs/STATUS.md), 정확한 재개는 [HANDOFF](docs/HANDOFF.md), 제품 계약은 [implementation](implementation.md)을 따릅니다. 기본 개발 실행은 아래 `pnpm dev`이며 장년·어린이 시험 화면을 자동 준비합니다.
 
+관리자 편집·저장·삭제와 제출을 로컬 가상 자료로 연습하려면 **`pnpm dev:demo`**를 실행합니다. [로컬 관리자](http://localhost:5173/admin)에서 시작하며 실제 서비스와 별도입니다. [자료·검사 기록](docs/work/P9-18.md).
+
 ## 프로젝트 문서 지도
 
 새 task는 다음 문서를 순서대로 읽습니다.
@@ -65,15 +67,17 @@ pnpm dev
 
 어제의 임시 `4177` 화면과 같은 코드·시험 데이터를 기본 실행에 연결했습니다. 포트는 접속 번호이며 디자인 버전이 아닙니다. 이 데이터는 실제 설교가 아닌 명시적인 시험 자료입니다. `.wrangler/ui-demo-state/`에 보관하므로 재시작해도 같은 퀴즈와 기록을 사용합니다. 이미 있는 기록은 덮어쓰지 않습니다. 기존 `.wrangler/state/` 자료·키·운영 데이터는 변경하지 않습니다. 관리자 Access 인증과 제출용 Turnstile 조건도 유지하므로 첫 화면 확인을 관리자 로그인·제출·실제 AI 실행 검수로 간주하지 않습니다.
 
+`pnpm dev:demo`는 가상 관리자 인증과 시험용 사람 확인을 제공하여 실제 로컬 DB에 저장합니다. AI 생성·원격 백업·외부 공급자 연결은 꺼져 있습니다. 초안1·발행1·지난2와 참여/문의 자료를 추가하고, 다시 시작해도 기존 연습 결과를 초기화하지 않습니다. 이 모드는 localhost에서만 열리고 배포용 build는 거부합니다.
+
 기존 로컬 자료를 사용하는 별도 개발 실행은 `pnpm dev:local`입니다. 해당 명령은 시험 데이터를 자동 입력하지 않습니다. 일반 화면 확인에는 `pnpm dev`만 사용하면 됩니다. 포트를 직접 지정하려면 `pnpm dev --port 4177`로 실행할 수 있습니다. 시험 데이터/저장 위치의 구현은 [로컬 개발 계약](docs/spec/architecture.md#로컬-ui-개발-실행)에 둡니다.
 
-이미 준비한 시험 기록으로 서버만 다시 켤 때는 WSL 터미널 두 개를 사용합니다. 첫 터미널에서 실제 앱을 켭니다. 기존 `.wrangler/ui-demo-state`를 그대로 읽으며 데이터를 다시 준비하지 않습니다.
+관리자 연습 모드와 디자인 검토본을 다시 켤 때는 WSL 터미널 두 개를 사용합니다. 첫 터미널에서 로컬 앱을 켭니다. `.wrangler/ui-demo-state`의 기존 자료·편집·삭제 기록을 유지하며, 체험 자료가 없을 때만 추가합니다.
 
 ```bash
 cd /home/onegem/work/bibleQuiz
 source ~/.nvm/nvm.sh
 nvm use 24.18.0
-BIBLEQUIZ_LOCAL_D1_PATH="$PWD/.wrangler/ui-demo-state" pnpm dev:local --host 127.0.0.1 --port 5173 --strictPort
+pnpm dev:demo --port 5173 --strictPort
 ```
 
 두 번째 터미널에서는 독립 디자인 검토본을 켭니다.

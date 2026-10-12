@@ -95,11 +95,19 @@ Production은 별도 production 설정·소스 커밋·승인·배포/rollback �
 
 2026-10-07 사용자 요청: 어제의4177 장년·어린이 화면을 `pnpm dev`의 기본 결과로 삼는다. 기본 명령은 `scripts/start-dev-server.mjs`이며 기존39개 migration을 **로컬 전용** `.wrangler/ui-demo-state/`에 적용하고 `scripts/fixtures/dev-ui.sql`의 두 난도 합성 발행 자료를 넣은 뒤 Vite를 시작한다. SQL은 `INSERT OR IGNORE`를 사용해 이미 있는 기록/수정을 덮어쓰지 않는다. 종료 시 데이터를 삭제하지 않는다. 별도 새 migration은 만들지 않는다.
 
-기존 `.wrangler/state/`와 실제 자료·키·유료 결과는 재사용/삭제/복사하지 않는다. 원래 로컬 자료의 실행은 `pnpm dev:local`(Vite 직접 실행)로 남긴다. E2E는 이 명령과 `BIBLEQUIZ_E2E_D1_PATH`로 매번 새 `/tmp` 데이터를 쓰며 기존 격리를 유지한다. 기본 개발 명령은 별도 Cloudflare 환경/설정/E2E override가 주어지면 중단한다. 운영/Preview seed·배포·AI 호출은 실행하지 않는다. 관리자 Access와 제출 Turnstile 게이트를 우회하지 않는다.
+기존 `.wrangler/state/`와 실제 자료·키·유료 결과는 재사용/삭제/복사하지 않는다. 원래 로컬 자료의 실행은 `pnpm dev:local`(Vite 직접 실행)로 남긴다. E2E는 이 명령과 `BIBLEQUIZ_E2E_D1_PATH`로 매번 새 `/tmp` 데이터를 쓰며 기존 격리를 유지한다. 기본 개발 명령은 별도 Cloudflare 환경/설정/E2E override가 주어지면 중단한다. 운영/Preview seed·배포·AI 호출은 실행하지 않는다. 기본 `pnpm dev`는 관리자 Access와 제출 Turnstile 게이트를 우회하지 않는다. 별도 승인된 연습 모드는 아래 P9-18을 따른다.
 
 개발 서버의 기본 포트는5173이고 `--port`로 변경할 수 있다.4173/4177은 과거 시험 서버의 접속 번호일 뿐 다른 디자인 버전이 아니다. 브라우저 임시 답안/설정은 주소별 저장소이므로 과거4177의 브라우저 기록이5173으로 자동 이전되지는 않는다. 같은 화면과 새 기본 시험 데이터를 재현하는 범위다.
 
 Cloudflare Vite plugin1.53.1의 `persistState: { path }`와 Wrangler4.125.0의 `--local --persist-to`를 사용한다. [Vite 공식 API](https://developers.cloudflare.com/workers/vite-plugin/reference/api/)·[D1 공식 명령](https://developers.cloudflare.com/d1/wrangler-commands/)을 확인했다. Context7 library 검색은 해당 플러그인 대신 무관한 플러그인을 반환해 공식 문서로 확인을 이어갔다.
+
+### P9-18 로컬 관리자 연습 모드
+
+2026-10-12 사용자 명시 승인으로 `pnpm dev:demo`를 추가했다. 기본/Preview/Production 실행과 분리된 개발 전용 진입점만 가상 관리자 신분과 시험용 사람 확인을 제공한다. 기존 `.wrangler/ui-demo-state`에 검증된 합성 초안1·발행1·지난2·참여/문의 자료를 한 번 추가하며, 표식이 있으면 재삽입하지 않는다. 편집·삭제·답변과 브라우저 제출은 실제 로컬 API/DB에 저장되고 재시작에도 유지된다.
+
+전용 생성 설정에는 placeholder 로컬 D1만 연결한다. DEV·명시 opt-in·HTTP localhost/127.0.0.1·same-origin을 모두 확인하며, 실행 명령의 LAN host 지정과 이 모드의 Vite build를 거부한다. 일반 build에는 로컬 진입점이 포함되지 않는다. 가상 JWT도 기존 Access 서명/issuer/audience 검증을 거치고, 공개키 fetcher는 로컬 진입점에서 함수로만 주입한다. 환경변수 문자열로 인증 함수를 만들 수 없다. 실제 Cloudflare Access 정책/키와 공급자 Secret을 변경·복사하지 않는다.
+
+서버/브라우저의 기존 시험 훅으로 제출과 문의를 검증한다. 외부 사람 확인 호출·AI 생성·Workflow·백업·Cron은 실행하지 않는다. 로컬 세션과 목록 커서용 무작위 키는600권한·Git 제외 저장소에서 재사용하며 코드/로그에 값은 기록하지 않는다. 원격 환경이나 다른 PC에 이 시험 설정을 공유하지 않는다. [실행 안내](../../README.md#실행) · [등록·검사·자료](../work/P9-18.md).
 
 ### 13.5 관리자 인증
 
