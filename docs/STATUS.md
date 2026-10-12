@@ -2,13 +2,15 @@
 
 ## P9-14 관리자 안내 UI Preview 반영 — 2026-10-12
 
-**진행 중.** 사용자가 P9-13 수정본을 push해 Preview에 반영하도록 명시 승인했다. main f7219ad·clean, origin/main2d2b1aa 대비0 behind/2 ahead를 확인했다. 기존 P9-13 전체 검사2539건과 관련 실제 브라우저109건 통과를 재사용하고 GitHub CI/Workers Builds 및 실제 배포 버전을 확인한다. Production·DB/migration·인증 설정·실제 자료/AI는 변경하지 않는다. [범위·배포 기록](work/P9-14.md).
+**완료.** 사용자 승인으로 관리자 안내 수정본을 소스 **0fbde847a0bdc12374c0983ef0822a35aafa6c87**로 main에 push했다. Workers Builds1cca79c9 success, 실제 Preview version **cd6efb0e-2c05-4401-b0bf-692bdf18c5b1**·100%·**15:32:19KST**를 확인했다. [관리자 도구](https://biblequiz-app-preview.jinkyu0105.workers.dev/admin/tools) · [범위·배포·검사](work/P9-14.md).
 
-**현재 P9-14 진행 중 · 부모 관리자 UI Preview 반영 진행 중 · 다음 main push 및 CI/배포 대조 · 세션 유지 · 추천 GPT-6.1-Sol/medium**. 완료 전까지 현재 Preview는 아래 P9-12 버전이다.
+[GitHub CI38212872400](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/38212872400)의 validate/browser 모두 success. `pnpm check`2539건·lint/typecheck/구성/build, 실제 PC/모바일 Chromium221통과·기존 터치 전용1건 PC에서 건너뜀·실패/재시도0(12.6분). 기존 fontkit 경고와 실제 Access/원격 저장·실기기/GPU 미검수 한계는 유지한다.
+
+Production app/content/backup·Preview content 버전과 Preview binding16개는 그대로다. AI=false·별도 DB를 유지하고 원격 migration·Secret/Access·실제 자료/AI는 변경하지 않았다. 종료 문서는 별도 로컬 커밋으로 보존하며 배포 소스0fbde84와 구분한다. **현재 P9-14 완료 · 부모 관리자 UI Preview 반영 완료 · 다음 사용자 화면 피드백(필수 후속 구현 없음) · 세션 유지 · 추천 GPT-6.1-Sol/medium**.
 
 ## P9-13 관리자 콘텐츠 안내와 사용 흐름 개선
 
-**로컬 완료 — f7219ad.** 사이드바/유리 디자인/공통 버튼과 실제 처리 기능을 보존하며 목적·사용 순서·조치 결과를 안내한다. 발행·수정 도구는 상황별로 펼치고 접어도 입력을 유지한다. `pnpm check`2539건 및 최종 Chromium52/모바일52/Firefox5 통과. 중간 실패·검증 한계는 [P9-13](work/P9-13.md)에 보존하고 Preview 반영은 P9-14에서 진행한다.
+**로컬 완료 — f7219ad.** 사이드바/유리 디자인/공통 버튼과 실제 처리 기능을 보존하며 목적·사용 순서·조치 결과를 안내한다. 발행·수정 도구는 상황별로 펼치고 접어도 입력을 유지한다. `pnpm check`2539건 및 최종 Chromium52/모바일52/Firefox5 통과. 중간 실패·검증 한계는 [P9-13](work/P9-13.md)에 보존하고 Preview 반영은 P9-14에서 완료했다.
 
 ## P9-12 누적 UI Preview 반영 — 2026-10-12
 
