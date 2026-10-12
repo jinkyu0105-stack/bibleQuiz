@@ -2,7 +2,7 @@
 
 ## P9-12 누적 UI Preview 반영 — 2026-10-12
 
-**진행 중.** 사용자가 main push와 Preview 자동 배포를 명시 승인했다. 현재 소스47e6cbf의 전체 검사/Preview dry-run 뒤 누적 UI를 push하고 Cloudflare 배포와 GitHub CI를 확인한다. Production/DB·실제 AI 실행은 제외한다. [진행 기록](work/P9-12.md).
+**진행 중.** 사용자가 main push와 Preview 자동 배포를 명시 승인했다. 전체 검사/Preview dry-run 통과 뒤 소스afb61dd를 main에 push했다. Cloudflare 자동 배포는 성공했고 실제 Preview version353cc553-7b18-4d80-af7b-785d58e7664e·100%를 확인했다. GitHub CI38202232552는 validate성공·browser216통과/1실패/1건너뜀이다. 모바일 native snap 완료 전 좌표를 읽은 검사 시점 오류를 보정했다. 관련 최종 반복18건·lint/typecheck 통과 뒤 보정 커밋을 push해 CI를 다시 확인한다. Production/DB·실제 AI 실행은 제외한다. [진행 기록](work/P9-12.md).
 
 | 작업 ID | 사용자 결과 | 상태 |
 |---|---|---|
@@ -13,7 +13,7 @@
 | P9-09 | 풀이 기준 공통 버튼·관리자 적용·두 로컬 서버 재시작/실행 안내 | 로컬 완료 —5903b47, [기록](work/P9-09.md) |
 | P9-10 | 검토본 관리자 좌측 패널을 실제 앱에 적용 | 로컬 완료 —d3695d4, [기록](work/P9-10.md) |
 | P9-11 | 발행 도구 간격·제목/주간 새로고침 여백 | 로컬 완료 —47e6cbf, [기록](work/P9-11.md) |
-| P9-12 | 누적 UI main push·Preview 자동 배포 확인 | 진행 중 — 전체 검사/Preview dry-run 통과·push 대기 |
+| P9-12 | 누적 UI main push·Preview 자동 배포 확인 | 진행 중 — Preview 배포 성공·모바일 검사 시점 보정/재검증 |
 
 현재 소스의 `pnpm check` exit0: unit315/Worker2197/Workflow4/recoveryCLI2/Node14/Python7, lint/typecheck·DB 검사·build 통과. Preview dry-run exit0이며 push 후 GitHub 전체 PC/모바일 Chromium 검사를 별도로 확인한다. 이전 UI 검수는 P9-09~11을 따른다. 기존500kB fontkit 번들 경고·WebKit/실기기/GPU 한계는 유지한다.
 

@@ -2,7 +2,7 @@
 
 ## 현재 작업과 다음 첫 행동
 
-2026-10-12 **P9-12 누적 UI Preview 반영 — 진행 중**. 사용자가 Preview 안내 뒤 “좋습니다. 푸시합시다.”라고 명시 승인했다. 시작 main47e6cbf·clean, fetch한 origin/main21b81de 대비45ahead/0behind다. 전체 `pnpm check`와 Preview dry-run 결과를 확인한 뒤 문서/로컬 커밋→main push→Workers Builds/GitHub CI→실제 Worker version 대조를 진행한다. [현재 기록](work/P9-12.md).
+2026-10-12 **P9-12 누적 UI Preview 반영 — 진행 중**. 사용자가 Preview 안내 뒤 “좋습니다. 푸시합시다.”라고 명시 승인했다. 시작 main47e6cbf·clean, fetch한 origin/main21b81de 대비45ahead/0behind다. 전체 `pnpm check`와 Preview dry-run을 통과하고 문서 커밋afb61dd를 main에 push했다. Workers Builds47db7001-8e49-439b-909c-7459664ef518 성공과 실제 Preview version353cc553-7b18-4d80-af7b-785d58e7664e·100%를 확인했다. GitHub CI38202232552는 validate성공·browser216통과/1실패/1건너뜀이다. 유일한 실패는 모바일 native snap 도중 좌표를 읽는 검사 시점 오류로 재현했다. 해당 assertion만 expect.poll로 보정하고 관련 최종 반복18건/lint/typecheck가 통과했다. 보정 커밋/push→새 CI/Preview version 대조가 다음 행동이다. 최초 로컬 반복의 별도 PC 앵커 이동1회 실패는 최종 반복에서 재현되지 않아 원인 미확정으로 기록한다. [현재 기록](work/P9-12.md).
 
 누적 하늘/영상/유리 UI·공통 컴포넌트·서울 시간·메인 탐색·관리자 버튼/좌측 패널/여백이 대상이다. Production·content/backup·원격 DB migration/자료·AI 실행·Access 설정 변경은 제외한다. 원격 main에는 런타임 Worker/shared/migration·package/lock·배포/CI 설정 변경이 없다. Worker 변경은 기존 테스트의 DB 시계 기준7일 경계 보정뿐이다.
 
@@ -16,16 +16,16 @@
 
 ## Git과 환경 보존
 
-이번 대화는 배포 기록 문서3개만 변경했다. 기존45개 로컬 커밋을 보존하고 검사 뒤 함께 push한다. stage 전 실제 diff/status를 재확인하고 검토한 파일만 명시한다. 재개 시 이후 미커밋 변경도 보존한다. 새 Git blob40MiB 초과 없음.
+이번 대화는 배포 기록 문서3개와 실패한 E2E assertion1곳만 변경했다. 기존45개 로컬 커밋을 보존하고 배포 준비 문서afb61dd까지 함께 push했다. stage 전 실제 diff/status를 재확인하고 검토한 파일만 명시한다. 재개 시 이후 미커밋 변경도 보존한다. 새 Git blob40MiB 초과 없음.
 
-다음은 이번 작업에서 배포 전에 읽기 조회한 원격 버전이다.
+다음은 이번 작업에서 배포 전후 읽기 조회한 최신 원격 버전이다. Preview app만 변경됐다.
 
-| 대상 | 배포 전 version/소스 |
+| 대상 | 최신 version/소스 |
 |---|---|
 | Production app |7aea6843-5288-42da-9bef-bc673e1d9dfe / 소스37b7254|
 | Production content |48a1269d-a9b2-4405-8bbc-745cdabec1b0 / 기존56bb1bf|
 | Production backup |3fb0e7c7-368b-45a9-89f9-2818739e415d / 기존 배포|
-| Preview app |3dc36ff6-f6d0-4627-bc43-6beeb3495391 / GitHub21b81de 자동 배포|
+| Preview app |353cc553-7b18-4d80-af7b-785d58e7664e / GitHubafb61dd 자동 배포|
 | Preview content |2df93f07-3703-42ec-b576-fd085e8c839f / 기존 배포|
 
 실제 자료/키/자막/유료 결과·로컬/원격 DB·migration0000~0038·검토본 원본/자산·폰트·package/lockfile을 보존한다. Production 운영/rollback 정본은 [P9-04](work/P9-04.md)다. Preview dry-run은 원격 배포가 아니며 기존 `.wrangler/deploy/config.json` 포인터를 따로 보존한다.

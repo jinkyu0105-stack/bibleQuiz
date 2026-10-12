@@ -89,7 +89,10 @@ test("long sections remain readable and route restoration stays independent", as
   await page.mouse.move(600, 400);
   await page.mouse.wheel(0, 60);
   await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(top);
-  expect(await page.locator("#weekly").evaluate(node => node.getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(698);
+  // Wheel dispatch finishes before the browser's native snap settles on mobile.
+  await expect.poll(() => page.locator("#weekly").evaluate(node =>
+    Math.abs(node.getBoundingClientRect().bottom - innerHeight),
+  )).toBeLessThan(2);
   await page.getByRole("link", { name: /어린이 퀴즈/ }).click();
   await expect(page.locator("body")).toHaveAttribute("data-view", "quiz");
   await expect(page.locator("html")).not.toHaveAttribute("data-home-scroll");
