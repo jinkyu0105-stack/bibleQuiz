@@ -1,3 +1,4 @@
+import { Button } from "../../components/Button";
 import { useRef, useState } from "react";
 import { clueText, difficultyLabel, type BlankExport } from "../../../shared/api/quiz-export";
 import type { Difficulty } from "../../../shared/api/public-quiz";
@@ -49,7 +50,7 @@ export function BlankExportPanel({ slug, difficulty, available = ["child", "adul
       {available.length > 1 && <option value="both">둘 다</option>}
     </select></label>
     <div className="export-actions">
-      <button className="primary-button" disabled={busy} onClick={() => void run("png")}>빈 격자 받기</button>
+      <Button variant="primary" disabled={busy} onClick={() => void run("png")}>빈 격자 받기</Button>
       <button disabled={busy} onClick={() => void run("copy")}>문제 텍스트 복사</button>
       <button disabled={busy} onClick={() => void run("preview")}>자료 미리보기</button>
     </div>

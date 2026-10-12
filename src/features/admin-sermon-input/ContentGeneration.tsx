@@ -1,4 +1,4 @@
-import { GlassButton } from "../../components/glass/GlassButton";
+import { Button } from "../../components/Button";
 import { GlassMenu } from "../../components/glass/GlassMenu";
 import { useAutosave } from "../admin-weekly/useAutosave";
 import { ContentRegeneration } from "./ContentRegeneration";
@@ -123,16 +123,16 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
   const reviewActions = <div className={styles.reviewActions}>
     <p role="status">{changed ? "저장 확인 필요: 수정한 내용이 있습니다." : busy ? "처리 중입니다." : selected ? confirmed ? "현재 선택한 내용의 검수가 완료됐습니다." : "현재 선택한 내용을 검토해 주세요." : "비교 자료입니다. 선택하면 현재 작업에 반영됩니다."}</p>
     <div className={styles.formGrid}>
-      <GlassButton type="button" disabled={!editable || !changed} onClick={() => void save()}>{autosave ? "초안 저장 · 새 수정본 만들기" : "수정본 저장"}</GlassButton>
-      {!selected && <GlassButton type="button" disabled={busy || changed || replacementStale} onClick={() => void command(snapshot.kind === "intent" ? { family: "intent", operation: { kind: "select", analysisId: snapshot.value.id } } : snapshot.kind === "summary" ? { family: "summary", operation: { kind: "select", summaryId: snapshot.value.id } } : { family: "candidate", operation: { kind: "select", difficulty: snapshot.value.difficulty, poolId: snapshot.value.id } })}>이 자료 선택</GlassButton>}
+      <Button type="button" disabled={!editable || !changed} onClick={() => void save()}>{autosave ? "초안 저장 · 새 수정본 만들기" : "수정본 저장"}</Button>
+      {!selected && <Button type="button" disabled={busy || changed || replacementStale} onClick={() => void command(snapshot.kind === "intent" ? { family: "intent", operation: { kind: "select", analysisId: snapshot.value.id } } : snapshot.kind === "summary" ? { family: "summary", operation: { kind: "select", summaryId: snapshot.value.id } } : { family: "candidate", operation: { kind: "select", difficulty: snapshot.value.difficulty, poolId: snapshot.value.id } })}>이 자료 선택</Button>}
     </div>
     {selected && !confirmed && (snapshot.kind === "intent"
-      ? <><GlassButton type="button" disabled={busy || changed || !sourceMatches || !snapshot.value.critiqueId || view.quality[snapshot.value.id]?.status === "regenerate"}
-          onClick={() => confirmIntent(snapshot.value.id)}>설교 의도 확정</GlassButton>
+      ? <><Button type="button" disabled={busy || changed || !sourceMatches || !snapshot.value.critiqueId || view.quality[snapshot.value.id]?.status === "regenerate"}
+          onClick={() => confirmIntent(snapshot.value.id)}>설교 의도 확정</Button>
         {!snapshot.value.critiqueId && <p className={styles.helper}>비판 수정본을 선택하거나 그 수정본을 직접 편집한 뒤 확정해 주세요.</p>}</>
       : <><label className={styles.checkbox}><input type="checkbox" checked={reviewed} disabled={busy || changed} onChange={event => setReviewed(event.currentTarget.checked)} />내용과 원문 근거를 검토했습니다.</label>
-        <GlassButton type="button" disabled={busy || changed || !reviewed || view.quality[snapshot.value.id]?.status === "regenerate"}
-          onClick={() => void command(snapshot.kind === "summary" ? { family: "summary", operation: { kind: "review", summaryId: snapshot.value.id } } : { family: "candidate", operation: { kind: "review", difficulty: snapshot.value.difficulty, poolId: snapshot.value.id } })}>이 내용 검수 완료</GlassButton></>)}
+        <Button type="button" disabled={busy || changed || !reviewed || view.quality[snapshot.value.id]?.status === "regenerate"}
+          onClick={() => void command(snapshot.kind === "summary" ? { family: "summary", operation: { kind: "review", summaryId: snapshot.value.id } } : { family: "candidate", operation: { kind: "review", difficulty: snapshot.value.difficulty, poolId: snapshot.value.id } })}>이 내용 검수 완료</Button></>)}
   </div>;
   const evidence = (items: Parameters<typeof ContentEvidence>[0]["evidence"], group: string, index: number, onEmpty?: () => void) =>
     sourceMatches ? <details className={styles.evidenceDisclosure} open={!autosave}><summary>원문 근거 확인 ({items.length})</summary><ContentEvidence label={fields[group] ?? (draft.kind === "summary" ? `요약 문단 ${index + 1}` : `문제 ${index + 1}`)}
@@ -163,9 +163,9 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
                 : { id: claim.id, text: claim.text, origin: "unresolved", evidence: [] });
         }}><option value="transcript">원문 근거</option><option value="unresolved">근거 확인 필요</option><option value="admin_context">관리자 확인 내용</option></select></label>
         {claim.origin !== "admin_context" && evidence(claim.evidence, field, index, () => setEvidence(field, index, []))}
-        {editable && <GlassButton type="button" onClick={() => removeClaim(field, index)}>이 항목 삭제</GlassButton>}
+        {editable && <Button type="button" onClick={() => removeClaim(field, index)}>이 항목 삭제</Button>}
       </div>)}
-      {editable && <GlassButton type="button" onClick={() => addClaim(field)}>이 항목 추가</GlassButton>}
+      {editable && <Button type="button" onClick={() => addClaim(field)}>이 항목 추가</Button>}
     </details>)}
     {draft.kind === "intent" && draft.critique && <details><summary>비판 검토의 지적 사항</summary>{Object.values(draft.critique).flatMap(check => check.concerns).map((concern, index) => <p key={index}>{concern.note}</p>)}{Object.values(draft.critique).every(check => check.assessment === "clear") && <p>추가 지적 사항이 없습니다. 내용의 최종 판단은 사람이 합니다.</p>}</details>}
     {draft.kind === "summary" && draft.value.draft.paragraphs.map((paragraph, index) => <div key={paragraph.id} className={styles.claimItem}>
@@ -333,17 +333,17 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
     {view && !view.enabled && <p>AI 실행 연결을 아직 활성화하지 않았습니다.</p>}
     {!inputConfirmed && <p>현재 본문을 먼저 확정해 주세요.</p>}
     </details>
-    {view?.jobId && (["review_ready", "failed", "stale", "needs_revision", "uncertain"].includes(view.status) || view.status === "awaiting_intent_review" && !!c?.intent && view.quality[c.intent.selectedId]?.status === "regenerate") && !newDraft && <GlassButton type="button" disabled={controlBusy} onClick={() => { pending.current = null; setPaid(false); setNewDraft(true); }}>{view.recoveredAnalysisId ? "보관 분석으로 생성 이어가기" : "기존 자료를 보존하고 새 초안 생성"}</GlassButton>}
+    {view?.jobId && (["review_ready", "failed", "stale", "needs_revision", "uncertain"].includes(view.status) || view.status === "awaiting_intent_review" && !!c?.intent && view.quality[c.intent.selectedId]?.status === "regenerate") && !newDraft && <Button type="button" disabled={controlBusy} onClick={() => { pending.current = null; setPaid(false); setNewDraft(true); }}>{view.recoveredAnalysisId ? "보관 분석으로 생성 이어가기" : "기존 자료를 보존하고 새 초안 생성"}</Button>}
     {(!view?.jobId || newDraft) && <>
       <div className={styles.formGrid}>{(["child", "adult"] as const).map(d => <div key={d}><label className={styles.field}>{d === "child" ? "어린이" : "장년"} 격자 크기<select value={sizes[d]} onChange={e => setSizes({ ...sizes, [d]: Number(e.currentTarget.value) })}>{[5, 6, 7, 8, 9, 10].map(n => <option key={n} value={n}>{n} × {n}</option>)}</select></label><label className={styles.field}>목표 단어 수<input type="number" min={1} max={100} value={counts[d]} onChange={e => setCounts({ ...counts, [d]: Number(e.currentTarget.value) })} /></label></div>)}</div>
       <label className={styles.checkbox}><input type="checkbox" checked={paid} onChange={e => setPaid(e.currentTarget.checked)} />예상 비용과 무료 대안을 확인하고 생성을 요청합니다.</label>
-      <GlassButton className="primary-button" type="button" disabled={controlBusy || !view?.enabled || !view.quizSetId || !paid || !inputConfirmed} onClick={() => void start()}>{view?.recoveredCritiqueId ? "보관 결과로 검수 이어가기" : view?.recoveredAnalysisId ? "보관 분석으로 비판 검토 시작" : "분석·비판 검토 시작"}</GlassButton>
+      <Button type="button" disabled={controlBusy || !view?.enabled || !view.quizSetId || !paid || !inputConfirmed} onClick={() => void start()}>{view?.recoveredCritiqueId ? "보관 결과로 검수 이어가기" : view?.recoveredAnalysisId ? "보관 분석으로 비판 검토 시작" : "분석·비판 검토 시작"}</Button>
     </>}
-    <GlassButton type="button" disabled={acting || loading} onClick={() => void refresh()}>생성 상태 확인</GlassButton>
+    <Button type="button" disabled={acting || loading} onClick={() => void refresh()}>생성 상태 확인</Button>
     {view?.jobId && <details className={styles.regenerationDisclosure} open={weeklyStep === undefined}><summary>다시 생성·이전 결과 선택</summary><ContentRegeneration key={view.jobId} view={view} inputConfirmed={inputConfirmed} busy={controlBusy} act={act} /></details>}
     {view?.status === "uncertain" && <p>사용량이나 결과가 확인되지 않아 자동 재호출을 중단했습니다. 이전 비용을 확인해 주세요.</p>}
-    {intentWaitJobId && c?.intent?.confirmation && <GlassButton type="button" disabled={controlBusy || !view?.enabled || view.quality[c.intent.selectedId]?.status === "regenerate" || !!partialIntentWait && c.intent.rootAnalysisId !== partialIntentWait.analysisId} onClick={() => setIntentDialog(c.intent!.selectedId)}>{partialIntentWait ? "재확정한 의도 반영 완료" : "확정한 의도로 생성 시작"}</GlassButton>}
-    {view?.stage === "content_review" && <GlassButton className="primary-button" type="button" disabled={controlBusy || !reviewComplete} onClick={() => void act("finish")}>배치·최종 검사 (AI 비용 없음)</GlassButton>}
+    {intentWaitJobId && c?.intent?.confirmation && <Button type="button" disabled={controlBusy || !view?.enabled || view.quality[c.intent.selectedId]?.status === "regenerate" || !!partialIntentWait && c.intent.rootAnalysisId !== partialIntentWait.analysisId} onClick={() => setIntentDialog(c.intent!.selectedId)}>{partialIntentWait ? "재확정한 의도 반영 완료" : "확정한 의도로 생성 시작"}</Button>}
+    {view?.stage === "content_review" && <Button type="button" disabled={controlBusy || !reviewComplete} onClick={() => void act("finish")}>배치·최종 검사 (AI 비용 없음)</Button>}
     {message && <p role="status">{message}</p>}{acting && <p role="status">요청을 확인하고 있습니다.</p>}
     {loading && <p role="status">상태·비용·내용·배치를 나누어 불러오고 있습니다. 준비된 자료부터 표시합니다.</p>}
     {loadFailed && <p role="alert">일부 자료를 불러오지 못했습니다. 표시된 내용은 유지됩니다. 생성 상태를 다시 확인한 뒤 편집해 주세요.</p>}
@@ -355,16 +355,16 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
       autosave={weeklyStep !== undefined} onDirty={weeklyStep !== undefined ? onDirty : undefined}
       command={operation => act("review", { requestKey: crypto.randomUUID(), expectedVersion: view.version, operation })}
       quality={request => act("quality", request)} confirmIntent={setIntentDialog} /></details></div>)}
-    {view?.historyCursor && <GlassButton type="button" disabled={busy} onClick={() => void refresh(view.historyCursor!)}>이전 생성·수정 자료 보기</GlassButton>}
+    {view?.historyCursor && <Button type="button" disabled={busy} onClick={() => void refresh(view.historyCursor!)}>이전 생성·수정 자료 보기</Button>}
     {intentDialog && <div className={styles.confirmBackdrop}><div className={styles.confirmDialog} role="dialog" aria-modal="true" aria-labelledby="intent-confirm-title">
       <h4 id="intent-confirm-title">설교 의도 확정</h4>
       <p>{partialIntentWait ? "확정하면 새 의도를 비교 작업에 반영합니다. 추가 AI 호출은 없습니다."
         : "확정하면 요약·어린이 문제·장년 문제 생성을 시작합니다."}</p>
       {!partialIntentWait && <p className={styles.helper}>다음 AI 호출 3회, 위 예시 기준 약 USD 0.24입니다. 실제 비용은 사용량에 따라 달라집니다.</p>}
       {!view?.enabled && <p className={styles.helper}>AI 실행 연결이 꺼져 있어 의도 확정만 저장합니다.</p>}
-      <div className={styles.evidenceActions}><GlassButton type="button" disabled={busy} onClick={() => setIntentDialog(null)}>취소</GlassButton>
-        <GlassButton type="button" className="primary-button" disabled={busy} onClick={() => void confirmAndResume()}>{view?.enabled
-          ? partialIntentWait ? "확정하고 비교 반영" : "확정하고 다음 생성 시작" : "의도 확정만 저장"}</GlassButton></div>
+      <div className={styles.evidenceActions}><Button type="button" disabled={busy} onClick={() => setIntentDialog(null)}>취소</Button>
+        <Button type="button" disabled={busy} onClick={() => void confirmAndResume()}>{view?.enabled
+          ? partialIntentWait ? "확정하고 비교 반영" : "확정하고 다음 생성 시작" : "의도 확정만 저장"}</Button></div>
     </div></div>}
     </div>
     <div hidden={weeklyStep !== undefined && weeklyStep < 4}>

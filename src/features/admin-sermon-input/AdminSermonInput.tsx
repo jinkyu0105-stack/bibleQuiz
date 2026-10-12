@@ -1,4 +1,4 @@
-import { GlassButton } from "../../components/glass/GlassButton";
+import { Button } from "../../components/Button";
 import { useBlocker, useNavigate, useSearchParams } from "react-router-dom";
 import type { AdminContentView } from "../../../shared/api/admin-content-generation";
 import { useAutosave } from "../admin-weekly/useAutosave";
@@ -542,10 +542,10 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
         <li><span>6</span>발행 <small>검수 후 발행</small></li>
       </ol>}
       {weekly && (step === 2 && selectedIntent || step === 3) && <a className={styles.reviewJump} href={step === 2 ? `#snapshot-${c?.intent?.selectedId}` : "#review-targets"}>{step === 2 ? "현재 선택본 확인" : "검수할 내용 선택"}</a>}
-      {weekly && step < 6 && <GlassButton type="button" className="primary-button" disabled={!available[step] || changedInput || contentDirty || feedback.state === "loading"} onClick={() => selectStep(step + 1)}>다음: {stepNames[step]}</GlassButton>}
+      {weekly && step < 6 && <Button type="button" disabled={!available[step] || changedInput || contentDirty || feedback.state === "loading"} onClick={() => selectStep(step + 1)}>다음: {stepNames[step]}</Button>}
     </header>
     {weekly && <ol className={weeklyStyles.stepper} aria-label="주간 발행 6단계">{stepNames.map((label,index)=><li key={label}><button type="button" disabled={!available[index]} aria-current={step===index+1?"step":undefined} onClick={()=>selectStep(index+1)}><span className={weeklyStyles.stepNumber} aria-hidden="true">{index+1<recommended ? "✓" : index+1}</span><span>{label}</span><small>{!available[index]?reasons[index]:index+1<recommended?"완료 · 수정 가능":step===index+1?"현재 단계":"이동 가능"}</small></button></li>)}</ol>}
-    {blocker.state === "blocked" && <div role="alert"><p>저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.</p><GlassButton type="button" onClick={() => blocker.reset()}>작업 계속하기</GlassButton><GlassButton type="button" onClick={() => blocker.proceed()}>저장하지 않고 이동</GlassButton></div>}
+    {blocker.state === "blocked" && <div role="alert"><p>저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.</p><Button type="button" onClick={() => blocker.reset()}>작업 계속하기</Button><Button type="button" onClick={() => blocker.proceed()}>저장하지 않고 이동</Button></div>}
     {weekly && <p className={styles.saveGuidance} role="status">{changedInput || contentDirty ? "저장 확인 필요. " : ""}편집은 잠시 멈추면 자동 저장됩니다. 확정·AI 재생성·발행은 직접 실행합니다.</p>}
 
     {costQuizSetId && <AiCostDetails key={`${costQuizSetId}-${costRefresh}`} quizSetId={costQuizSetId} refreshKey={costRefresh} />}
@@ -555,8 +555,8 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       <label htmlFor="admin-sermon-id">설교 ID
         <input id="admin-sermon-id" value={sermonId} onChange={(event) => setSermonId(event.currentTarget.value)} autoComplete="off" placeholder="저장된 설교 ID" />
       </label>
-      <GlassButton className="primary-button" type="submit" disabled={workspace.state === "loading"}>{workspace.state === "loading" ? "불러오는 중" : "입력자료 불러오기"}</GlassButton>
-      {loadedSermonId && <GlassButton type="button" onClick={() => void refreshWorkspace()}>새로고침</GlassButton>}
+      <Button type="submit" disabled={workspace.state === "loading"}>{workspace.state === "loading" ? "불러오는 중" : "입력자료 불러오기"}</Button>
+      {loadedSermonId && <Button type="button" onClick={() => void refreshWorkspace()}>새로고침</Button>}
     </form>}
 
     {workspace.state === "idle" && <p className={styles.empty}>새 설교를 등록하거나 미발행 목록에서 작업을 선택해 주세요. 기존 설교 ID로도 불러올 수 있습니다.</p>}
@@ -567,13 +567,13 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       <section className={styles.panel} aria-labelledby="public-caption-title">
         <div className={styles.sectionHeading}><h3 id="public-caption-title">공개 자막 가져오기</h3><span className={styles.needsReview}>원본으로 보존</span></div>
         <p>선택한 영상의 공개 한국어 자막을 다시 조회합니다. 가져온 시간 구간과 글자는 원본으로 저장하고, 사람 확인 전에는 생성에 사용하지 않습니다.</p>
-        <GlassButton type="button" disabled={captionFetch.state === "loading"} onClick={() => void submitPublicCaptions()}>
+        <Button type="button" disabled={captionFetch.state === "loading"} onClick={() => void submitPublicCaptions()}>
           {captionFetch.state === "loading" ? "공개 자막 확인 중" : "공개 자막 가져와 원본 저장"}
-        </GlassButton>
+        </Button>
         {captionFetch.state === "failed" && <div className={styles.error} role="alert">
           <p>{captionFetch.result.message} 다시 시도하거나 아래에 텍스트를 직접 붙여넣어 주세요.</p>
           <details><summary>기술 정보</summary><pre>{JSON.stringify({ code: captionFetch.result.code, diagnostic: captionFetch.result.diagnostic }, null, 2)}</pre></details>
-          <GlassButton type="button" onClick={() => void copyCaptionDiagnostic(captionFetch.result)}>진단 정보 복사</GlassButton>
+          <Button type="button" onClick={() => void copyCaptionDiagnostic(captionFetch.result)}>진단 정보 복사</Button>
           {captionCopyMessage && <p role="status">{captionCopyMessage}</p>}
         </div>}
         {captionFetch.state === "error" && <p role="alert">{captionFetch.message} 아래에 텍스트를 직접 붙여넣을 수 있습니다.</p>}
@@ -607,7 +607,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
         <textarea id="initial-sermon-input" value={importText} onChange={(event) => setImportText(event.currentTarget.value)} rows={12} aria-describedby="initial-input-help" />
       </label>
       <p id="initial-input-help" className={styles.helper}>{importKind === "youtube_visible_transcript" ? `자막 ${[...importText].length.toLocaleString("ko-KR")} / 30,000자` : "제공받은 원고와 요약본은 받은 내용 그대로 저장하며 이후 수정하지 않습니다."}</p>
-      <GlassButton className="primary-button" type="submit" disabled={captionFetch.state === "loading"}>최초 원본 저장</GlassButton>
+      <Button type="submit" disabled={captionFetch.state === "loading"}>최초 원본 저장</Button>
       <Feedback feedback={feedback} />
     </form></>}
 
@@ -627,7 +627,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
           <div className={styles.sectionHeading}><h3 id="confirm-input-title">사람 검토 확정</h3><span className={current.confirmationId ? styles.confirmed : styles.needsReview}>{current.confirmationId ? "완료" : "필요"}</span></div>
           <p>현재 본문을 직접 확인한 기록을 남깁니다. 본문이 바뀌면 다시 확정해야 합니다.</p>
           <label className={styles.checkbox}><input type="checkbox" checked={reviewed} onChange={(event) => setReviewed(event.currentTarget.checked)} />현재 본문을 검토했습니다.</label>
-          <GlassButton className="primary-button" type="button" disabled={!reviewed || current.confirmationId !== null} onClick={submitConfirm}>{current.confirmationId ? "이미 확정됨" : "현재 본문 확정"}</GlassButton>
+          <Button type="button" disabled={!reviewed || current.confirmationId !== null} onClick={submitConfirm}>{current.confirmationId ? "이미 확정됨" : "현재 본문 확정"}</Button>
         </section>
 
         {isCaption ? <form className={styles.panel} onSubmit={submitEdit}>
@@ -651,7 +651,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
             </label>}
             <p className={styles.helper}>구간 ID와 시간은 유지하고 글자만 바꿉니다. 수정한 구간 {Object.keys(timedEdits).length}개</p>
           </>}
-          <GlassButton className="primary-button" type="submit">수정본 저장</GlassButton>
+          <Button type="submit">수정본 저장</Button>
         </form> : <section className={styles.readOnlyPanel} aria-labelledby="read-only-title">
           <h3 id="read-only-title">받은 자료 그대로 사용</h3>
           <p>목사님 제공 원고와 요약본은 읽고 확정할 수 있지만 수정, 복원, 교정하지 않습니다.</p>
@@ -686,7 +686,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
                 </select>
               </label>
             </div>
-            <GlassButton type="button" onClick={() => void submitComparison()} disabled={!leftDocumentId || !rightDocumentId || comparison.state === "loading"}>{comparison.state === "loading" ? "두 본문 불러오는 중" : "선택한 본문 비교"}</GlassButton>
+            <Button type="button" onClick={() => void submitComparison()} disabled={!leftDocumentId || !rightDocumentId || comparison.state === "loading"}>{comparison.state === "loading" ? "두 본문 불러오는 중" : "선택한 본문 비교"}</Button>
             {comparison.state === "error" && <Feedback feedback={{ state: "error", error: comparison.error }} />}
             {comparison.state === "ready" && <>
               <p className={styles.legend}><span>삭제된 내용</span><span>추가된 내용</span></p>
@@ -703,7 +703,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
                 {documentEvents.filter((event) => event.documentId !== current.documentId).map((event) => <option key={event.eventId} value={event.documentId}>{eventOption(event, current.documentId)}</option>)}
               </select>
             </label>
-            <GlassButton type="button" onClick={submitRestore} disabled={!restoreDocumentId}>선택 본문 복원</GlassButton>
+            <Button type="button" onClick={submitRestore} disabled={!restoreDocumentId}>선택 본문 복원</Button>
           </section>}
         </div>
       </section>
@@ -735,7 +735,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
                 setRiskFlags((saved) => checked ? [...saved, flag] : saved.filter((item) => item !== flag));
               }} />{{ biblical_term: "성경 용어", number: "숫자", negation: "부정 표현", needs_review: "추가 확인 필요" }[flag]}</label>)}
             </fieldset>
-            <GlassButton type="submit">교정 제안 저장</GlassButton>
+            <Button type="submit">교정 제안 저장</Button>
           </form>
         </details>
 
@@ -746,7 +746,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
               {proposalEvents.map((event) => <option key={event.eventId} value={event.eventId}>v{event.version} 교정 제안</option>)}
             </select>
           </label>
-          <GlassButton type="button" disabled={!proposalId || correction.state === "loading"} onClick={() => void loadCorrectionDetail()}>{correction.state === "loading" ? "상세 불러오는 중" : "선택 제안 상세 보기"}</GlassButton>
+          <Button type="button" disabled={!proposalId || correction.state === "loading"} onClick={() => void loadCorrectionDetail()}>{correction.state === "loading" ? "상세 불러오는 중" : "선택 제안 상세 보기"}</Button>
         </div>
         {correction.state === "error" && <Feedback feedback={{ state: "error", error: correction.error }} />}
         {correction.state === "ready" && (() => {
@@ -763,7 +763,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
                     <textarea value={documentSegments[segment.segmentId] ?? segment.text}
                       onChange={(event) => setDocumentSegments((values) => ({ ...values, [segment.segmentId]: event.currentTarget.value }))} rows={3} />
                   </label>)}</div>}
-              <GlassButton className="primary-button" type="button" disabled={!appliesToCurrent || feedback.state === "loading"} onClick={submitDocumentApply}>이 교정본 사용</GlassButton>
+              <Button type="button" disabled={!appliesToCurrent || feedback.state === "loading"} onClick={submitDocumentApply}>이 교정본 사용</Button>
             </div>;
           }
           const existing = decidedItems(correction.detail);
@@ -788,8 +788,8 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
               })}
             </ol>
             <div className={styles.actions}>
-              <GlassButton type="button" disabled={!appliesToCurrent} onClick={submitDecisions}>선택한 결정 저장</GlassButton>
-              <GlassButton className="primary-button" type="button" disabled={!appliesToCurrent || !hasAccepted} onClick={submitMerge}>수락한 교정 반영</GlassButton>
+              <Button type="button" disabled={!appliesToCurrent} onClick={submitDecisions}>선택한 결정 저장</Button>
+              <Button type="button" disabled={!appliesToCurrent || !hasAccepted} onClick={submitMerge}>수락한 교정 반영</Button>
             </div>
           </div>;
         })()}

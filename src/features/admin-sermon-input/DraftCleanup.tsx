@@ -1,4 +1,4 @@
-import { GlassButton } from "../../components/glass/GlassButton";
+import { Button } from "../../components/Button";
 import { useEffect, useState } from "react";
 import { draftCleanupListSchema, type DraftCleanupList } from "../../../shared/api/admin-draft-cleanup";
 import styles from "./admin-sermon-input.module.css";
@@ -25,7 +25,7 @@ export function DraftCleanup() {
   return <section className={styles.panel} aria-labelledby="draft-cleanup-title">
     <h2 id="draft-cleanup-title">초안 정리 예정</h2>
     <p>정리 하루 전부터 표시합니다. 발행된 퀴즈·정답·참여 기록과 AI 비용은 보존됩니다.</p>
-    {error ? <p role="status">예정 목록을 불러오지 못했습니다. <GlassButton type="button" onClick={() => { setError(false); setItems(null); setAttempt(a => a + 1); }}>다시 확인</GlassButton></p>
+    {error ? <p role="status">예정 목록을 불러오지 못했습니다. <Button type="button" onClick={() => { setError(false); setItems(null); setAttempt(a => a + 1); }}>다시 확인</Button></p>
       : items === null ? <p role="status">정리 일정을 확인하고 있습니다.</p>
       : items.length === 0 ? <p>하루 안에 정리할 초안이 없습니다.</p>
       : <ul className={styles.cleanupList}>{items.map(item => <li key={item.sermonId}>

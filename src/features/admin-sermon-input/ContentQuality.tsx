@@ -1,4 +1,4 @@
-import { GlassButton } from "../../components/glass/GlassButton";
+import { Button } from "../../components/Button";
 import { useState } from "react";
 import type { AdminContentView } from "../../../shared/api/admin-content-generation";
 import type { ContentQualityRequest } from "../../../shared/api/admin-content-quality";
@@ -42,9 +42,9 @@ export function ContentQuality({ snapshot, view, busy, save }: { snapshot: Snaps
     <label className={styles.field}>검토 메모 (관리자 전용)
       <textarea rows={3} maxLength={2000} disabled={busy} value={note} onChange={event => setNote(event.currentTarget.value)}
         placeholder="근거가 약한 부분이나 수정 이유를 남길 수 있습니다." /></label>
-    <div className={styles.evidenceActions}><GlassButton type="button" disabled={busy || !changed || status === "edited_then_use" && !editable}
+    <div className={styles.evidenceActions}><Button type="button" disabled={busy || !changed || status === "edited_then_use" && !editable}
       onClick={() => void save({ requestKey: crypto.randomUUID(), expectedVersion: view.version, targetSnapshotId: snapshot.value.id,
-        scope, status, criteria: scope === "intent" ? criteria : {}, adminNote: normalizedNote })}>평가 저장</GlassButton>
+        scope, status, criteria: scope === "intent" ? criteria : {}, adminNote: normalizedNote })}>평가 저장</Button>
       {prior && <span>최근 평가: {statusLabels[prior.status]} · {new Date(prior.createdAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}</span>}</div>
     {prior?.status === "regenerate" && <p className={styles.warning}>이 자료는 재생성이 필요하다고 기록했습니다. 같은 자료의 확정·최종 검사·발행은 멈춥니다. {view.status === "awaiting_intent_review" && scope === "intent" ? <>위의 <a href="#content-generation-title">기존 자료를 보존하고 새 초안 생성</a>에서 새 요청을 명시적으로 시작하세요.</> : <><a href="#individual-generation-title">필요한 내용만 다시 생성</a>에서 범위를 선택해 새 요청을 명시적으로 시작하세요.</>}</p>}
   </section>;

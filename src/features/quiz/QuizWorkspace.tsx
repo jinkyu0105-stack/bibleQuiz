@@ -1,3 +1,4 @@
+import { Button } from "../../components/Button";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 
 import { createInputGrid, createInputState } from "../hangul-input/grid";
@@ -414,7 +415,7 @@ export function QuizWorkspace({
         }}
       /> : submission?.state === "enabled" ? <section className={styles.confirmPanel} aria-labelledby="confirm-title">
         <div><h3 id="confirm-title">입력한 내용을 확인해 보세요</h3><p>모르는 칸은 비워 두어도 됩니다. 제출하면 바로 채점 결과와 정답을 확인할 수 있습니다.</p></div>
-        <button type="button" className="primary-button" disabled={!progress.canConfirm} onClick={() => setConfirmation(true)}>입력 확인</button>
+        <Button type="button" variant="primary" disabled={!progress.canConfirm} onClick={() => setConfirmation(true)}>입력 확인</Button>
         {confirmation && <SubmissionPanel cells={state.cellValues} target={submission.target} onSuccess={(result) => {
           const answers = Object.fromEntries(state.cellValues);
           inputRef.current?.blur();
@@ -424,10 +425,10 @@ export function QuizWorkspace({
         }} />}
       </section> : submission?.state === "disabled" ? <section className={styles.confirmPanel} aria-labelledby="confirm-title">
         <div><h3 id="confirm-title">입력한 내용을 확인해 보세요</h3><p>{submission.message}</p></div>
-        <button type="button" className="primary-button" disabled>지금은 제출할 수 없음</button>
+        <Button type="button" variant="primary" disabled>지금은 제출할 수 없음</Button>
       </section> : deletedSubmission !== null ? null : <section className={styles.confirmPanel} aria-labelledby="confirm-title">
         <div><h3 id="confirm-title">입력한 내용을 확인해 보세요</h3><p>모르는 칸은 비워 두어도 됩니다. 이 시험 화면에서는 제출·채점을 하지 않습니다.</p></div>
-        <button type="button" className="primary-button" disabled={!progress.canConfirm} onClick={() => setConfirmation(true)}>입력 확인</button>
+        <Button type="button" variant="primary" disabled={!progress.canConfirm} onClick={() => setConfirmation(true)}>입력 확인</Button>
         {confirmation && <p role="status" className={styles.confirmMessage}>작성 {progress.filled}칸, 빈칸 {progress.remaining}칸입니다. 입력 형식을 확인했습니다. 정답 여부는 검사하지 않았으며 서버로 전송하지 않았습니다.</p>}
       </section>}
       {participationBoard !== undefined &&

@@ -1,4 +1,4 @@
-import { GlassButton } from "../../components/glass/GlassButton";
+import { Button } from "../../components/Button";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { deadlineCommitSchema, deadlinePreviewSchema, deadlineProposalSchema, deadlineResultSchema, deadlineViewSchema,
@@ -57,7 +57,7 @@ export function QuizDeadline({ quizSetId, onSaved }: { quizSetId: string; onSave
     <h3>일반 마감 변경</h3>
     <p>한국 시간으로 입력합니다. 기존 정답·제출·성적을 보존하며 이미 마감된 퀴즈는 다시 열지 않습니다.</p>
     {message && <p role="status">{message}</p>}{error && <p role="alert">{error}</p>}
-    <GlassButton type="button" disabled={busy} onClick={() => { invalidate(); setView(null); setError(""); setAttempt(v => v + 1); }}>최신 마감 불러오기</GlassButton>
+    <Button type="button" disabled={busy} onClick={() => { invalidate(); setView(null); setError(""); setAttempt(v => v + 1); }}>최신 마감 불러오기</Button>
     {!view ? !error && <p role="status">마감 정보를 불러오고 있습니다.</p> : <>
       <p>현재 마감: {view.closesAtKst} (한국 시간)</p>
       <p>성공 제출 {view.impact.total}건 · 공개 {view.impact.visible}건 · 숨김 {view.impact.hidden}건 · 삭제 표식 {view.impact.deleted}건</p>
@@ -70,14 +70,14 @@ export function QuizDeadline({ quizSetId, onSaved }: { quizSetId: string; onSave
             <label>변경할 마감 (한국 시간)<input type="datetime-local" step="1" required value={date} onChange={e => { setDate(e.target.value); invalidate(); }} /></label>
             <label>마감 변경 사유<input required minLength={2} maxLength={500} value={reason} onChange={e => { setReason(e.target.value); invalidate(); }} /></label>
           </div>
-          <GlassButton type="submit">변경 영향 다시 확인</GlassButton>
+          <Button type="submit">변경 영향 다시 확인</Button>
           {preview && <div>
             <p>기존 마감: {preview.previousKst} (한국 시간)</p><p>변경 요청: {preview.requestedKst} (한국 시간)</p>
             <p>확인 시점의 남은 시간: {duration(preview.remainingSeconds)} → {duration(preview.newRemainingSeconds)}</p>
             <p>영향을 받는 기존 제출 {preview.impact.total}건. 연장·단축으로 남은 참여 시간이 달라집니다. 기존 성적을 다시 채점하지 않습니다.</p>
             {preview.immediate && <p role="status">현재 이전의 시각입니다. 저장하면 지금 마감하고 순위를 확정합니다. 과거로 소급해 제출을 삭제하지 않습니다.</p>}
             <label className={styles.checkbox}><input type="checkbox" checked={confirmed} onChange={e => setConfirmed(e.target.checked)} />기존·변경 마감과 제출 영향을 확인했습니다.{preview.immediate && " 지금 마감에 동의합니다."}</label>
-            <GlassButton type="button" className="primary-button" disabled={!confirmed} onClick={() => void submit(true)}>{preview.immediate ? "지금 마감 확정" : "마감 변경 저장"}</GlassButton>
+            <Button type="button" disabled={!confirmed} onClick={() => void submit(true)}>{preview.immediate ? "지금 마감 확정" : "마감 변경 저장"}</Button>
           </div>}
         </fieldset>
       </form>

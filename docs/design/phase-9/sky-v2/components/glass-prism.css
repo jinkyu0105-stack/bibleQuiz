@@ -202,13 +202,13 @@ body[data-time=night] .glass[data-glint-shape=flare] {
 }
 /* A shallow convex capsule: clear centre, broad bent shoulders, and two
    separated light catches. The accepted spring and the label layer stay put. */
-:is([data-dock-material=convex], :is(.glass-action, .glass-button).convex-lens) {
+:is([data-dock-material=convex], .glass-action.convex-lens) {
   --glass-selected-ink: var(--ink);
   --dock-lens-tint: rgb(242 250 255 / .12);
   --dock-dome-light: rgb(255 255 255 / .60);
   --dock-lens-shade: rgb(15 46 66 / .14);
 }
-body[data-time=night] :is([data-dock-material=convex], :is(.glass-action, .glass-button).convex-lens) {
+body[data-time=night] :is([data-dock-material=convex], .glass-action.convex-lens) {
   --dock-lens-tint: rgb(143 191 233 / .08);
   --dock-dome-light: rgb(237 249 255 / .64);
   --dock-lens-shade: rgb(0 11 30 / .22);
@@ -300,24 +300,24 @@ body[data-time=night] :is([data-glass-nested], nav[data-glass-nested])[data-dock
 }
 /* The admin link uses the same optical capsule, with its label above both
    decorative layers and pointer reflection confined to this one button. */
-:is(.glass-action, .glass-button).convex-lens, :is(.glass-action, .glass-button).convex-lens:hover {
+.glass-action.convex-lens, .glass-action.convex-lens:hover {
   position: relative;
   isolation: isolate;
   background: transparent;
   color: var(--glass-header-ink);
 }
-body[data-time] :is(.glass-action, .glass-button).convex-lens { border-color: rgb(246 252 255 / .60); }
-:is(.glass-action, .glass-button).convex-lens::before, :is(.glass-action, .glass-button).convex-lens::after { z-index: -1; }
-:is(.glass-action, .glass-button).convex-lens[data-glint-active] { --dock-light-x: var(--glint-x, 50%); --dock-lift: 1; }
-body[data-transparency=reduced] :is(.glass-action, .glass-button).convex-lens { background: var(--glass-solid-selected); }
+body[data-time] .glass-action.convex-lens { border-color: rgb(246 252 255 / .60); }
+.glass-action.convex-lens::before, .glass-action.convex-lens::after { z-index: -1; }
+.glass-action.convex-lens[data-glint-active] { --dock-light-x: var(--glint-x, 50%); --dock-lift: 1; }
+body[data-transparency=reduced] .glass-action.convex-lens { background: var(--glass-solid-selected); }
 @media (prefers-reduced-transparency:reduce) {
-  :is(.glass-action, .glass-button).convex-lens { background: var(--glass-solid-selected); }
+  .glass-action.convex-lens { background: var(--glass-solid-selected); }
 }
 @media (forced-colors:active) {
-  :is(.glass-action, .glass-button).convex-lens { background: ButtonFace; color: ButtonText; border-color: ButtonText; }
+  .glass-action.convex-lens { background: ButtonFace; color: ButtonText; border-color: ButtonText; }
 }
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
-  :is(.glass-action, .glass-button).convex-lens { background: var(--glass-solid-selected); }
+  .glass-action.convex-lens { background: var(--glass-solid-selected); }
 }
 /* Keep refraction on the broad shoulder, with a neutral reading centre.
    The backdrop lives in one layer so nested filters cannot darken its rim. */

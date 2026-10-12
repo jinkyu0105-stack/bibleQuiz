@@ -107,8 +107,6 @@
 .solutionSection h3 { margin: 0 0 6px; color: var(--text-strong); font-family: "Noto Serif KR", serif; font-size: clamp(1.375rem, 3vw, 1.875rem); }
 .solutionSection p { margin: 0; }
 .solutionKicker { margin-bottom: 4px !important; color: var(--accent); font-size: .75rem; font-weight: 800; letter-spacing: .08em; }
-.solutionAction button { min-width: 136px; min-height: 48px; font-weight: 750; white-space: nowrap; }
-.solutionAction button[aria-disabled="true"] { border-color: var(--border); background: var(--page); color: var(--text); cursor: not-allowed; }
 .solutionStatus, .solutionError { grid-column: 1 / -1; }
 .solutionStatus { color: var(--text-strong); font-weight: 700; }
 .solutionError { padding: 14px 16px; border-left: 3px solid var(--danger); background: var(--incorrect-surface); color: var(--text-strong); }

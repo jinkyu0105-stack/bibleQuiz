@@ -6,7 +6,7 @@ P9-06 검토본과 같은 유리 재질·움직임을 실제 React 페이지에�
 |---|---|---|
 | `GlassPanel` | `surface="reading"` 기본값, `standard`; `as`로 의미에 맞는 태그 | 첫 화면/요약/풀이/지난 퀴즈, 관리자 패널 |
 | `GlassMenu` | `as="nav"` 또는 `div`; `clear`, `nested`, `structure` | 주요 메뉴/시간대/난도/운영 메뉴/검수 대상 |
-| `GlassButton` / `GlassButtonLink` | native button props/ref 또는 Router LinkProps, 각진 CSS 유리; 별도 효과 연결 불필요 | 관리자 실행/저장/재조회/확인 버튼 |
+| `Button` / `ButtonLink` | 기본 `secondary`는 정답보기형, `primary`는 입력 확인·빈 격자 받기형; native props/ref 전달 | 관리자 실행/저장/재조회/확인·풀이 버튼 |
 | `GlassLink` | React Router `LinkProps`, 입체 링크 | 관리자 진입, 참여 가능한 다른 퀴즈 |
 | `PageDock` | `GlassMenu`로 구성한 실제 페이지 바로가기 | 메인 하단 |
 | `GlassArrow` | 링크 안의 장식 화살표 | 첫 화면 난도 링크 |
@@ -38,13 +38,19 @@ node scripts/check-sky-components.mjs
 
 전체 실제 흐름의 검사 결과와 브라우저 한계는 [앱 적용 기록](../../docs/work/p9-06/app-integration.md)에 남긴다.
 
-P9-07의 `sky/solar-time.ts`는 서울 날짜/좌표로 네 시간대를 계산한다. 수동 시간은 `bibleQuiz:sky-session`(sessionStorage), 잔디 숨김은 `bibleQuiz:grass-hidden`(localStorage)이다. 기존 theme/sky 저장값은 초기 시간에 사용하지 않는다. `SkyScene`은 shared world의 `cloudSpeed: 2`, `setGround("grass" | "photo")`를 사용하며 기본 native 검토본의 속도/사진 대안은 유지한다. 서울 시간 정책은 [P9-07](../../docs/work/P9-07.md), 잔디 사진 복귀·메인 이동·관리자 버튼은 [P9-08](../../docs/work/P9-08.md)을 따른다.
+P9-07의 `sky/solar-time.ts`는 서울 날짜/좌표로 네 시간대를 계산한다. 수동 시간은 `bibleQuiz:sky-session`(sessionStorage), 잔디 숨김은 `bibleQuiz:grass-hidden`(localStorage)이다. 기존 theme/sky 저장값은 초기 시간에 사용하지 않는다. `SkyScene`은 shared world의 `cloudSpeed: 2`, `setGround("grass" | "photo")`를 사용하며 기본 native 검토본의 속도/사진 대안은 유지한다. 서울 시간 정책은 [P9-07](../../docs/work/P9-07.md), 잔디 사진 복귀·메인 이동은 [P9-08](../../docs/work/P9-08.md), 현재 공통 버튼은 [P9-09](../../docs/work/P9-09.md)를 따른다.
 
-`GlassButton`은 `type`, `disabled`, form 속성, 이벤트와 ref를 native `<button>`에 그대로 전달한다. 폼의 기본 submit 동작도 유지한다. 공통 `convex-lens`의 반사/테두리와0.6px CSS blur를 사용하며, 버튼별 SVG 굴절 지도·관찰자·상시 animation loop는 만들지 않는다. 모서리는10px이며 움직임/투명도 감소와 강제 색상을 따른다. 이미 `GlassMenu`가 소유하는 선택 버튼과 주간6단계는 각자의 선택 표시를 유지한다. 버튼이 많아도 렌더 비용이0이 되는 것은 아니며 실제 성능은 면적·효과·배경·기기에 따라 달라진다.
+`Button`은 정답보기의 기존 단순한 버튼을 기본값(`secondary`)으로 쓴다.8px 모서리·48px 최소 높이·750 굵기의 글자와 기존 상태별 색을 공유한다. `variant="primary"`는 입력 확인과 빈 격자 받기의 기존 `primary-button` 스타일(26px 모서리·700 굵기)을 재사용한다. 입력 확인이 비활성일 때 흐리게 보이는 것도 같은 primary의 기존 상태다. `ButtonLink`는 같은 두 스타일을 Router 링크에 제공한다.
+
+`type`, `disabled`, form 속성, 이벤트, children과 ref는 native 요소에 그대로 전달한다. type을 생략한 폼 버튼의 기본 submit 동작도 유지한다. 정답보기의 `aria-disabled`와 loading 중 native `disabled`는 원래 feature에서 정한다. API/정답 권한/저장/파일 생성은 컴포넌트에 넣지 않는다. 관리자에서는 긴 이름의 줄바꿈만 허용하고 선택 메뉴/주간6단계·헤더 관리 링크의 기존 유리는 유지한다. P9-08의 `GlassButton`과 반복 버튼용 볼록 장식은 제거했다. 새 효과·관찰자·상시 프레임은 없다.
 
 ```tsx
-<GlassButton type="button" disabled={busy} onClick={refresh}>다시 확인</GlassButton>
-<GlassButton type="submit" className="primary-button">저장</GlassButton>
+import { Button, ButtonLink } from "./components/Button";
+
+<Button type="button" disabled={busy} onClick={refresh}>다시 확인</Button>
+<Button type="submit" variant="primary">저장</Button>
+<ButtonLink to="/admin">관리 화면 열기</ButtonLink>
 ```
+
 
 `useHomeSectionScroll`은 메인에서만 연결한다. 휠 섹션 이동은 약1.2초, 같은 페이지 Router 앵커는 이동 거리별0.9~1.6초로 감속한다. 긴 섹션 내부/중첩 스크롤·확대 휠은 기본 동작을 유지하며 추가 입력/경로 이탈에서 예약 프레임을 해제한다. 링크 클릭 전 위치를 기록하고 Router 복원 뒤 paint 전에 출발점을 되돌려 Firefox의 해시 복원과 충돌하지 않는다. 초기 deep link/뒤로 가기는 기존 Router 복원이며 모바일 터치는 native snap, 감소 모드는 즉시 이동한다.

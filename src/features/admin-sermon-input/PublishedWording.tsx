@@ -1,4 +1,4 @@
-import { GlassButton } from "../../components/glass/GlassButton";
+import { Button } from "../../components/Button";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { wordingRequestSchema, wordingViewSchema, type WordingView } from "../../../shared/api/admin-wording";
 import { displayTextResultSchema } from "../../../shared/api/admin-display-text";
@@ -58,7 +58,7 @@ export function PublishedWording({ quizSetId }: { quizSetId: string }) {
     <p>철자·띄어쓰기·문장부호만 바로잡습니다. 의미·난이도·정답 유도가 같다는 판단은 관리자가 직접 확인합니다.</p>
     <p><a href="#problem-correction-title">의미 변경·불확실한 수정은 문제 오류 처리로 이동</a></p>
     {message && <p role="status">{message}</p>}{error && <p role="alert">{error}</p>}
-    <GlassButton type="button" disabled={busy} onClick={() => { setView(null); setError(""); setAttempt(v => v + 1); }}>최신 문구 불러오기</GlassButton>
+    <Button type="button" disabled={busy} onClick={() => { setView(null); setError(""); setAttempt(v => v + 1); }}>최신 문구 불러오기</Button>
     {!view ? !error && <p role="status">문구를 불러오고 있습니다.</p> : <>
       {view.blocked && <p role="status">문제 오류 처리가 진행 중입니다. 해당 수정본에서 검토를 이어가 주세요.</p>}
       {!view.targets.length && <p>수정할 요약·단서가 없습니다.</p>}
@@ -77,7 +77,7 @@ export function PublishedWording({ quizSetId }: { quizSetId: string }) {
           {semantic ? <p role="status">이 수정은 여기서 저장할 수 없습니다. <a href="#problem-correction-title">문제 오류 처리에서 검토하기</a></p> : <>
             <label className={styles.textareaLabel}>오탈자 정정 사유<input required minLength={2} maxLength={500} value={reason} onChange={e => setReason(e.target.value)} /></label>
             <label className={styles.checkbox}><input type="checkbox" checked={confirmed} onChange={e => setConfirmed(e.target.checked)} />수정 전후의 의미·난이도·정답 유도가 같음을 확인했습니다.</label>
-            <GlassButton type="submit" className="primary-button" disabled={!confirmed || assessment !== "non_semantic_typo" || selected.text === after.trim()}>{busy ? "저장 중" : "오탈자 저장"}</GlassButton>
+            <Button type="submit" disabled={!confirmed || assessment !== "non_semantic_typo" || selected.text === after.trim()}>{busy ? "저장 중" : "오탈자 저장"}</Button>
           </>}
         </>}
       </fieldset></form>

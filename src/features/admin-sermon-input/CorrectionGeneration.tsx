@@ -1,4 +1,4 @@
-import { GlassButton } from "../../components/glass/GlassButton";
+import { Button } from "../../components/Button";
 import { useEffect, useRef, useState } from "react";
 import type { AdminGenerationStatus } from "../../../shared/api/admin-generation";
 import { loadCorrectionGeneration, startCorrectionGeneration } from "./client";
@@ -72,10 +72,10 @@ export function CorrectionGeneration({ sermonId, version, onReview, onCostChange
       <label className={styles.checkbox}><input type="checkbox" checked={retryAccepted} onChange={e => setRetryAccepted(e.currentTarget.checked)} />추가 비용 가능성을 확인하고 새 교정을 요청합니다.</label>
     </>}
     <div className={styles.formGrid}>
-      <GlassButton className="primary-button" type="button" disabled={busy || !availability?.enabled || !availability.quizSetId || !mayStart} onClick={() => void start()}>
-        {uncertain ? "새 요청으로 교정" : "AI 교정 요청"}</GlassButton>
-      {jobId && <GlassButton type="button" disabled={busy} onClick={() => void refresh()}>교정 상태 확인</GlassButton>}
-      {status?.proposalId && <GlassButton type="button" disabled={busy} onClick={() => void onReview(status.proposalId!)}>생성된 교정 문서 검토</GlassButton>}
+      <Button type="button" disabled={busy || !availability?.enabled || !availability.quizSetId || !mayStart} onClick={() => void start()}>
+        {uncertain ? "새 요청으로 교정" : "AI 교정 요청"}</Button>
+      {jobId && <Button type="button" disabled={busy} onClick={() => void refresh()}>교정 상태 확인</Button>}
+      {status?.proposalId && <Button type="button" disabled={busy} onClick={() => void onReview(status.proposalId!)}>생성된 교정 문서 검토</Button>}
     </div>
     {busy && <p role="status">요청을 확인하고 있습니다.</p>}
     {message && <p role="status">{message}</p>}

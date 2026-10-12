@@ -1,0 +1,18 @@
+/* Extracted from the quiz's solution action. Primary actions reuse primary-button. */
+.action-button.secondary-button {
+  min-width: 136px; min-height: 48px; padding: 10px 16px;
+  border: 1px solid var(--control-border); border-radius: 8px;
+  background: var(--glass-field, var(--surface)); color: var(--ink, var(--text-strong));
+  font-weight: 750; white-space: nowrap;
+}
+.action-button.secondary-button:disabled {
+  background: var(--surface); color: var(--text); cursor: not-allowed;
+}
+.action-button.secondary-button[aria-disabled="true"] {
+  border-color: var(--border); background: var(--page); color: var(--text); cursor: not-allowed;
+}
+a.action-button { display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-width: 1px; border-style: solid; text-decoration: none; }
+@media (forced-colors: active) {
+  .action-button.secondary-button { background: ButtonFace; color: ButtonText; border-color: ButtonText; }
+  .action-button.secondary-button:is(:disabled, [aria-disabled="true"]) { color: GrayText; border-color: GrayText; }
+}

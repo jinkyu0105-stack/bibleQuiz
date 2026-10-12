@@ -1,4 +1,4 @@
-import { GlassButton } from "../../components/glass/GlassButton";
+import { Button } from "../../components/Button";
 import { ProblemCorrection } from "../admin-sermon-input/ProblemCorrection";
 import { WithdrawPublication } from "../admin-sermon-input/WithdrawPublication";
 import { PublishedMetadata } from "../admin-sermon-input/PublishedMetadata";
@@ -150,9 +150,9 @@ function BibleReferenceTool() {
             />
           </label>
         </div>
-        <GlassButton className={`primary-button ${styles.submit}`} type="submit" disabled={natural.state === "loading"}>
+        <Button className={styles.submit} type="submit" disabled={natural.state === "loading"}>
           {natural.state === "loading" ? "확인 중" : "입력 확인"}
-        </GlassButton>
+        </Button>
         <RequestFeedback request={natural} />
       </form>
 
@@ -188,9 +188,9 @@ function BibleReferenceTool() {
             </label>
           </div>
         </div>
-        <GlassButton className={`primary-button ${styles.submit}`} type="submit" disabled={selection.state === "loading"}>
+        <Button className={styles.submit} type="submit" disabled={selection.state === "loading"}>
           {selection.state === "loading" ? "확인 중" : "선택 확인"}
-        </GlassButton>
+        </Button>
         <RequestFeedback request={selection} />
       </form>
     </div>

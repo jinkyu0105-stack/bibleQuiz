@@ -67,6 +67,24 @@ pnpm dev
 
 기존 로컬 자료를 사용하는 별도 개발 실행은 `pnpm dev:local`입니다. 해당 명령은 시험 데이터를 자동 입력하지 않습니다. 일반 화면 확인에는 `pnpm dev`만 사용하면 됩니다. 포트를 직접 지정하려면 `pnpm dev --port 4177`로 실행할 수 있습니다. 시험 데이터/저장 위치의 구현은 [로컬 개발 계약](docs/spec/architecture.md#로컬-ui-개발-실행)에 둡니다.
 
+이미 준비한 시험 기록으로 서버만 다시 켤 때는 WSL 터미널 두 개를 사용합니다. 첫 터미널에서 실제 앱을 켭니다. 기존 `.wrangler/ui-demo-state`를 그대로 읽으며 데이터를 다시 준비하지 않습니다.
+
+```bash
+cd /home/onegem/work/bibleQuiz
+source ~/.nvm/nvm.sh
+nvm use 24.18.0
+BIBLEQUIZ_LOCAL_D1_PATH="$PWD/.wrangler/ui-demo-state" pnpm dev:local --host 127.0.0.1 --port 5173 --strictPort
+```
+
+두 번째 터미널에서는 독립 디자인 검토본을 켭니다.
+
+```bash
+cd /home/onegem/work/bibleQuiz
+python3 -m http.server 4189 --bind 127.0.0.1
+```
+
+실제 앱은 [5173](http://localhost:5173/), 검토본은 [4189의 sky-v2](http://localhost:4189/docs/design/phase-9/sky-v2/)에서 엽니다. 각 터미널을 열어 두고, 종료할 때는 해당 터미널에서 `Ctrl+C`를 누릅니다. 처음 실행해 시험 데이터가 없다면 위의 `pnpm dev`로 먼저 준비합니다.
+
 `http://localhost:5173/api/health`는 Worker 백엔드 상태를 JSON으로 반환합니다.
 
 공개 읽기 API는 `/api/quizzes/latest?difficulty=child`, `/api/quizzes/YYYY-MM-DD-고유문자6자리?difficulty=adult`, `/api/archive`입니다. 현재 퀴즈의 본인 제출은 `/api/quizzes/:slug/:difficulty/me`, 참여 현황은 `/api/quizzes/:slug/:difficulty/board`, 공식 정답은 `/api/quizzes/:slug/:difficulty/solution`에서 읽고, 본인 제출 서버 삭제는 `DELETE /api/quizzes/:slug/:difficulty/me/submission`입니다. 진행 중 참여 현황과 정답은 해당 난이도를 제출한 활성 session에만 허용하고, 지난 퀴즈에서는 제출 없이 공개합니다. 브라우저는 진행 중 퀴즈의 즉시 제출 결과를 바로 표시하고, 재방문에서는 검증된 본인 제출에만 `정답보기`를 복원합니다. 지난 퀴즈의 `POST /api/quizzes/:slug/:difficulty/practice/check`는 최소 한 칸의 현재 임시 답안만 서버 메모리에서 채점하고 이름·동의·session·Turnstile·제출·참여 수·순위를 만들거나 갱신하지 않습니다. `POST /api/admin/quiz-sets/:id/close-now`는 Access JWT 서명·issuer·audience와 명시적 확인·사유를 다시 검증한 뒤 마감 시각·순위 snapshot·archive·감사 로그를 한 D1 batch로 확정합니다. Access 관리자 제출 관리는 `PATCH /api/admin/submissions/:id`의 숨김·복구와 `DELETE /api/admin/submissions/:id`의 PII 제거를 exact 상태 변경·moderation action·감사 기록으로 함께 확정합니다. 화면 공유 주소에는 `?level=child|adult`, 지난 퀴즈 검색에는 `?q=...&year=YYYY&month=M`을 사용합니다. 정답은 전용 권한 경계를 통과한 `/solution` 또는 archived 전용 채점 응답에만 포함하며 초기 공개 퀴즈·참여 현황 응답에는 본문·비공개 자막과 함께 섞지 않습니다. `0001`~`0006` migration은 격리 테스트 D1과 Preview D1에서 순서 적용·후검사를 완료했습니다. 개발 Local D1과 Production에는 적용하지 않았으므로 각 환경에서 실행하기 전에 migration 현황과 정확한 대상을 다시 확인해야 합니다.

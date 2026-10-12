@@ -66,4 +66,4 @@ pnpm run typecheck
 
 생명주기에는 기존 브라우저의 [AbortSignal 이벤트 정리](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#signal)와 [MutationObserver.disconnect](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/disconnect)를 사용한다. 브라우저 검사는 Context7 `/microsoft/playwright` 조회와 설치된 1.62.1의 [공식 screenshot API](https://github.com/microsoft/playwright/blob/main/docs/src/api/class-locator.md)를 대조했다.
 
-P9-08의 실제 React `GlassButton`은 `.glass-button.convex-lens`로 같은 반사/테두리 CSS를 재사용한다. 이 작은 반복 버튼에는 `mountGlassComponents`를 개별 연결하지 않아 SVG 굴절 지도/관찰자/상시 프레임을 만들지 않는다. 각진 모서리와 disabled/focus 처리는 [React UI 사용법](../../../../../src/components/README.md)을 따른다. 기존 `.glass-action`의 입체 링크와 native 검토본 연결 동작은 유지한다.
+실제 앱의 반복 실행 버튼은 P9-09에서 풀이의 단순한 `Button`으로 통일했다. 해당 버튼에는 `mountGlassComponents`나 볼록 유리 장식을 연결하지 않는다. 기존 `.glass-action`의 입체 헤더 링크와 native 검토본 연결 동작은 유지한다. [React UI 사용법](../../../../../src/components/README.md)을 따른다.

@@ -1,3 +1,4 @@
+import { Button } from "../../components/Button";
 import { useEffect, useId, useRef, useState } from "react";
 
 import {
@@ -70,17 +71,17 @@ export function SolutionDisclosure({
         : blockedMessage}</p>
     </div>
     <div className={styles.solutionAction}>
-      {isRevealed ? <button type="button" aria-pressed="true" onClick={() => {
+      {isRevealed ? <Button type="button" aria-pressed="true" onClick={() => {
         onHide();
         setState({ status: "idle" });
-      }}>정답 닫기</button> : <button
+      }}>정답 닫기</Button> : <Button
         type="button"
         aria-disabled={!available}
         disabled={state.status === "loading"}
         onClick={loadSolution}
       >{state.status === "loading"
           ? "정답을 불러오고 있습니다"
-          : state.status === "error" ? "정답 다시 시도" : "정답보기"}</button>}
+          : state.status === "error" ? "정답 다시 시도" : "정답보기"}</Button>}
     </div>
     {state.status === "loading" && <p className={styles.solutionStatus} role="status" aria-label="정답을 불러오고 있습니다.">
       정답을 불러오고 있습니다.
