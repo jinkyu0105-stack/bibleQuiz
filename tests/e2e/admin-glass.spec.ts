@@ -42,6 +42,24 @@ test("admin menus keep one hover lens and actions match the shared quiz solution
   await page.locator(".admin-main").screenshot({ path: testInfo.outputPath("admin-buttons-day.png") });
   if (isMobile) await page.locator("summary").filter({ hasText: "관리자 운영 메뉴" }).click();
   const navigation = page.getByRole("navigation", { name: "관리자 운영 메뉴" });
+  const sidebar = page.locator("aside[data-glass-panel=standard]");
+  await expect(sidebar.getByRole("heading", { name: "주간 운영", exact: true })).toBeVisible();
+  await expect(navigation.getByRole("link")).toHaveCount(6);
+  if (isMobile) {
+    const toggle = sidebar.locator("summary");
+    await toggle.focus();
+    await page.keyboard.press("Space");
+    await expect(navigation).toBeHidden();
+    await page.keyboard.press("Enter");
+    await expect(navigation).toBeVisible();
+    await expect(sidebar.getByText("운영 공간", { exact: true })).toBeHidden();
+  } else {
+    await expect(sidebar.getByText("운영 공간", { exact: true })).toBeVisible();
+    await expect(sidebar.getByText("말씀을 준비하는", { exact: false })).toBeVisible();
+    await expect(sidebar).toHaveCSS("width", "185px");
+    await expect(sidebar).toHaveCSS("min-height", "580px");
+  }
+  await sidebar.screenshot({ path: testInfo.outputPath("admin-sidebar-day.png") });
   if (!isMobile) {
     const target = navigation.getByRole("link", { name: "이름·문구 필터", exact: true });
     await target.hover();
@@ -50,6 +68,14 @@ test("admin menus keep one hover lens and actions match the shared quiz solution
     await expect(navigation.getByRole("link", { name: "주간 운영", exact: true })).toHaveAttribute("aria-current", "page");
     await expect(navigation.locator(":scope > .glass-indicator")).toHaveCount(1);
   }
+  const filterLink = navigation.getByRole("link", { name: "이름·문구 필터", exact: true });
+  await filterLink.focus();
+  await expect(page).toHaveURL(/\/admin$/);
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/admin\/moderation$/);
+  await expect(filterLink).toHaveAttribute("aria-current", "page");
+  await expect(navigation.locator("[aria-current=page]")).toHaveCount(1);
+  if (!isMobile) await expect(filterLink.locator("[aria-hidden=true]")).toBeVisible();
   // Existing actions across all sidebar destinations use the same component,
   // including controls that start disabled inside a fieldset or dialog.
   for (const path of ["/admin/moderation", "/admin/privacy-requests", "/admin/tools", "/admin/operations", "/admin/manual"]) {
@@ -67,6 +93,13 @@ test("admin menus keep one hover lens and actions match the shared quiz solution
   await page.setViewportSize({ width: 320, height: 740 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.locator(".admin-main").screenshot({ path: testInfo.outputPath("admin-buttons-night-320.png") });
-  await page.emulateMedia({ forcedColors: "active" });
+  const toggle = sidebar.locator("summary");
+  if (!await navigation.isVisible()) await toggle.click();
+  await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" });
+  const manualLink = navigation.getByRole("link", { name: "운영 매뉴얼", exact: true });
+  await manualLink.focus();
+  await expect(manualLink).toBeFocused();
+  await expect(manualLink).toHaveAttribute("aria-current", "page");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await expect(page.locator(".admin-main button.secondary-button").first()).toBeVisible();
 });

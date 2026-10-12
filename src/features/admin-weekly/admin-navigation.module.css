@@ -1,0 +1,48 @@
+/* The approved sky-v2 sidebar, using the existing shared glass material. */
+.sidebar:global(.glass) {
+  position: sticky;
+  top: 116px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 580px;
+  padding: 28px 18px;
+  border-radius: 28px;
+  line-height: 1.65;
+}
+.sidebar .eyebrow { margin: 0 0 7px; font-size: 10px; color: var(--muted); }
+.sidebar .title { margin: 0; font-size: 23px; font-weight: 400; line-height: 1.65; letter-spacing: -.05em; }
+.menu { margin-top: 24px; }
+.menu > summary { min-height: 44px; padding: 10px 0; color: var(--ink); font-size: 13px; }
+.nav { display: grid; gap: 6px; padding: 0; border: 0; background: transparent; }
+.nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 45px;
+  padding: 12px 13px;
+  border: 0;
+  border-radius: 22px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.65;
+  text-decoration: none;
+}
+.nav a[aria-current="page"] { color: var(--glass-selected-ink); background: var(--glass-selected); }
+.nav[data-selection-ready] a[aria-current="page"] { background: transparent; }
+.nav:not([data-dock-material="convex"]) a:hover { background: var(--glass-soft); }
+.currentArrow { visibility: hidden; }
+.nav a[aria-current="page"] .currentArrow { visibility: visible; }
+.sidebar .note { margin: auto 0 0; padding: 26px 10px 0; color: var(--muted); font-size: 11px; line-height: 1.9; }
+@media (min-width: 1024px) { .menu > summary { display: none; } }
+@media (max-width: 1023px) {
+  .sidebar:global(.glass) { position: relative; top: auto; min-height: 0; padding: 23px 19px 19px; border-radius: 26px; }
+  .sidebar .eyebrow, .sidebar .note { display: none; }
+  .sidebar .title { font-size: 20px; }
+  .menu { margin-top: 5px; }
+  .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; margin-top: 10px; }
+  .nav a { justify-content: center; min-height: 44px; padding: 10px 8px; font-size: 12px; text-align: center; }
+  .currentArrow { display: none; }
+}
+@media (max-width: 700px) { .nav a { font-size: 10px; } }
