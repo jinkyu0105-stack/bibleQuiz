@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import type { AdminContentView } from "../../shared/api/admin-content-generation";
 import { searchCandidatePool } from "../../shared/puzzle/pool-search";
@@ -46,7 +47,7 @@ test("administrator compares layouts, restores choices and reviews public and an
     if (action === "finish") { view.status = "review_ready"; view.stage = "finish"; return route.fulfill({ json: { data: { outcome: "review_ready" } } }); }
     throw new Error(`Unexpected mutation ${action}`);
   });
-  const load = async () => { await page.goto("/admin/tools"); await page.getByLabel("설교 ID").fill("sermon-1"); await page.getByRole("button", { name: "입력자료 불러오기" }).click(); };
+  const load = async () => { await page.goto("/admin/tools"); await openAdminTool(page, "sermon"); await page.getByLabel("설교 ID").fill("sermon-1"); await page.getByRole("button", { name: "입력자료 불러오기" }).click(); };
   await load();
   const panel = page.getByRole("region", { name: "배치 선택·발행 전 검토", exact: true });
   const child = panel.getByRole("region", { name: "어린이 배치 시험", exact: true });

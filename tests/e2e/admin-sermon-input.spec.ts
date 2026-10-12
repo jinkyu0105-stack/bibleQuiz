@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 
 const hash = "a".repeat(64);
@@ -51,7 +52,7 @@ test("AI correction preserves one request after a lost response and opens human 
     }
     await route.fulfill({ json: { data: { input: current } } });
   });
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
   await page.getByRole("button", { name: "입력자료 불러오기" }).click();
   await page.getByRole("button", { name: "AI 교정 요청", exact: true }).click();
@@ -97,7 +98,7 @@ test("administrator loads current input, calculates diff after two bodies, and o
     await route.fulfill({ json: { data: { input: { ...current, version } } } });
   });
 
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
   await page.getByRole("button", { name: "입력자료 불러오기" }).click();
   await expect(page.getByRole("heading", { name: "붙여넣은 자막" })).toBeVisible();
@@ -152,7 +153,7 @@ test("administrator previews, edits, adopts, and separately confirms a correctio
     return route.fulfill({ json: { data: { input: currentInput } } });
   });
 
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
   await page.getByRole("button", { name: "입력자료 불러오기" }).click();
   await page.getByLabel("검토할 교정 제안").selectOption("proposal-1");
@@ -198,7 +199,7 @@ test("administrator stores first pastor material and never offers edit, restore,
     await route.fulfill({ json: { data: { input: saved ? manuscript : null } } });
   });
 
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-2");
   await page.getByRole("button", { name: "입력자료 불러오기" }).click();
   await page.getByLabel("자료 종류").selectOption("sermon_manuscript");
@@ -228,7 +229,7 @@ test("a stale command reloads current input and shows the stable conflict messag
     }
   });
 
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
   await page.getByRole("button", { name: "입력자료 불러오기" }).click();
   await page.getByLabel("현재 본문을 검토했습니다.").check();

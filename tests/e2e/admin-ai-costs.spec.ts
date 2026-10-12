@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import { adminAiCostsSchema } from "../../shared/api/admin-ai-costs";
 import { draftMetadataViewSchema } from "../../shared/api/admin-sermon-drafts";
@@ -34,7 +35,7 @@ test("selected quiz cost opens its call ledger and changes with the selected wor
   await page.route("**/api/admin/sermons/*/input**", route => route.fulfill({ json: { data: route.request().url().endsWith("/history")
     ? { history: null } : { input: null } } }));
   await page.route("**/api/admin/quiz-sets/*/ai-costs", route => route.fulfill({ json: { data: route.request().url().includes("quiz-first") ? first : second } }));
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   const selected = page.getByRole("combobox", { name: "미발행 작업", exact: true });
   await selected.selectOption("first");
   const costButton = page.getByRole("button", { name: /이번 주 AI 예상 비용/ });

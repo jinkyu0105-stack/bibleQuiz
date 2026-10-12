@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import type { WordingView } from "../../shared/api/admin-wording";
 
@@ -21,7 +22,7 @@ test("reviews wording, routes semantic changes, retries lost responses, and reta
     }
     return route.fulfill({ json: { data: { outcome: "replayed", quizSetId: "synthetic", revision: 1 } } });
   });
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "metadata");
   const parent = page.getByRole("region", { name: "발행 정보 정정", exact: true });
   await parent.getByLabel("정정할 퀴즈").selectOption("synthetic");
   await parent.getByRole("button", { name: "요약·단서 오탈자 수정" }).click();
@@ -56,7 +57,7 @@ test("reviews wording, routes semantic changes, retries lost responses, and reta
   await page.getByRole("button", { name: (testInfo.project.name === "chromium" ? "light" : "dark") === "dark" ? "밤" : "낮", exact: true }).click();
   await panel.screenshot({ path: testInfo.outputPath("wording.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await page.reload(); await parent.getByLabel("정정할 퀴즈").selectOption("synthetic");
+  await page.reload(); await openAdminTool(page, "metadata"); await parent.getByLabel("정정할 퀴즈").selectOption("synthetic");
   await parent.getByRole("button", { name: "요약·단서 오탈자 수정" }).click();
   await panel.getByLabel("수정할 문구").selectOption("summary");
   await expect(panel.getByRole("textbox", { name: "수정 전", exact: true })).toHaveValue("합성 요약입니다!");
@@ -70,7 +71,7 @@ test("retains stale edits, refreshes explicitly and locks during problem correct
   await page.route("**/api/admin/published-quizzes", r => r.fulfill({ json: { data: { items: [quiz] } } }));
   await page.route("**/api/admin/quiz-sets/synthetic/display-text", r => r.fulfill({ json: { data: { quiz, history: [] } } }));
   await page.route("**/api/admin/quiz-sets/synthetic/display-text/wording", r => r.request().method() === "GET" ? r.fulfill({ json: { data: view } }) : r.fulfill({ status: 409, json: {} }));
-  await page.goto("/admin/tools"); const parent = page.getByRole("region", { name: "발행 정보 정정", exact: true });
+  await page.goto("/admin/tools"); await openAdminTool(page, "metadata"); const parent = page.getByRole("region", { name: "발행 정보 정정", exact: true });
   await parent.getByLabel("정정할 퀴즈").selectOption("synthetic");
   await parent.getByRole("button", { name: "요약·단서 오탈자 수정" }).click();
   const panel = page.getByRole("region", { name: "일반 문구 오탈자", exact: true });

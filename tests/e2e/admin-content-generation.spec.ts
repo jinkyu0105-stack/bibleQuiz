@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { adminContentViewSchema, type AdminContentView } from "../../shared/api/admin-content-generation";
 import { expect, test } from "@playwright/test";
 // Serve the same independent projections as the real endpoints, rather than
@@ -66,7 +67,7 @@ for (const savedCritique of [false, true]) test(`administrator continues preserv
     view.status = "running"; view.stage = "intent_critique"; view.recoveredAnalysisId = null;
     return route.fulfill({ status: 202, json: { data: { jobId: "continued-job", dispatch: "sent" } } });
   });
-  await page.goto("/admin/tools"); await page.getByLabel("설교 ID").fill("sermon-1");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon"); await page.getByLabel("설교 ID").fill("sermon-1");
   await page.getByRole("button", { name: "입력자료 불러오기" }).click();
   const panel = page.getByRole("region", { name: "설교 요약·문제 생성", exact: true });
   await expect(panel.getByText(savedCritique ? /보관한 분석과 비판 결과를 재사용합니다/ : /교정과 의도 분석을 다시 호출하지 않습니다/)).toBeVisible();
@@ -170,7 +171,7 @@ for (const unverified of [false, true]) test(`administrator compares, edits, con
     }
     return route.fulfill({ json: { data: { outcome: "saved" } } });
   });
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
   await page.getByRole("button", { name: "입력자료 불러오기" }).click();
   const panel = page.getByRole("region", { name: "설교 요약·문제 생성", exact: true });

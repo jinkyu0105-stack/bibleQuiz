@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import { draftMetadataViewSchema, registerSermonResultSchema } from "../../shared/api/admin-sermon-drafts";
 import { parseBibleReference } from "../../shared/bible-reference";
@@ -28,7 +29,7 @@ test("new sermon registration, duplicate resume, prepublication metadata save an
     return route.fulfill({ json: { data: view } });
   });
   await page.route("**/api/admin/sermons/new-sermon/input**", route => route.fulfill({ json: { data: route.request().url().endsWith("/history") ? { history: null } : { input: null } } }));
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   const panel = page.getByRole("region", { name: "설교 작업 선택", exact: true });
   await expect(panel.getByText("미발행 작업이 없습니다. 새 설교를 등록해 주세요.")).toBeVisible();
   await panel.getByRole("button", { name: "새 설교 등록", exact: true }).click();
@@ -85,7 +86,7 @@ test("resume an existing draft from the list and keep unsaved source text out of
       bibleReference: reference.value, slugPreview: "2026-09-20-abc234" }) } });
   });
   await page.route("**/api/admin/sermons/*/input**", route => route.fulfill({ json: { data: route.request().url().endsWith("/history") ? { history: null } : { input: null } } }));
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   const panel = page.getByRole("region", { name: "설교 작업 선택", exact: true });
   const select = panel.getByRole("combobox", { name: "미발행 작업", exact: true });
   await select.selectOption("first");

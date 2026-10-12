@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import type { AdminContentView } from "../../shared/api/admin-content-generation";
 
@@ -53,7 +54,7 @@ test("select one answer and clue, recover the same request, compare and adopt wh
     }
     throw new Error("unexpected request");
   });
-  const load = async () => { await page.goto("/admin/tools"); await page.getByLabel("설교 ID").fill("sermon-1"); await page.getByRole("button", { name: "입력자료 불러오기" }).click(); };
+  const load = async () => { await page.goto("/admin/tools"); await openAdminTool(page, "sermon"); await page.getByLabel("설교 ID").fill("sermon-1"); await page.getByRole("button", { name: "입력자료 불러오기" }).click(); };
   await load();
   const region = page.getByRole("region", { name: "필요한 내용만 다시 생성", exact: true });
   await region.getByLabel("재생성 범위").selectOption("child_one");

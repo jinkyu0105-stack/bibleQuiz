@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test, type Page } from "@playwright/test";
 import type { DeadlineView } from "../../shared/api/admin-deadline";
 async function fixture(page: Page, changeable = true, paused = false) {
@@ -10,7 +11,7 @@ async function fixture(page: Page, changeable = true, paused = false) {
  return view;
 }
 async function open(page:Page) {
- await page.goto("/admin/tools");const parent=page.getByRole("region",{name:"발행 정보 정정",exact:true});
+ await page.goto("/admin/tools"); await openAdminTool(page, "metadata");const parent=page.getByRole("region",{name:"발행 정보 정정",exact:true});
  await parent.getByLabel("정정할 퀴즈").selectOption("synthetic");await parent.getByRole("button",{name:"마감 일시 변경",exact:true}).click();
  return page.getByRole("region",{name:"일반 마감 변경",exact:true});
 }

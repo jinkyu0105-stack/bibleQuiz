@@ -1,5 +1,13 @@
 # 현재 상태
 
+## P9-13 관리자 콘텐츠 안내와 사용 흐름 개선 — 2026-10-12
+
+**로컬 완료.** 사이드바/유리 디자인/공통 버튼과 실제 처리 기능을 보존하며 관리자 콘텐츠에 목적·사용 순서·조치 결과 안내를 추가했다. 발행·수정 도구는 상황별로 선택해 펼치고 접어도 편집 상태를 유지한다. 주간 운영·필터·문의·제출·비용/백업·매뉴얼·발행6단계의 안내와 폼 배치를 보완했다. [범위·검사·중간 실패](work/P9-13.md).
+
+`pnpm check` exit0(unit315/Worker2197/Workflow4/recoveryCLI2/Node14/Python7·lint/typecheck/구성/build). 최종 독립 브라우저 실행 Chromium52·모바일52·Firefox5 통과, 실패/재시도/건너뜀0. 중간 프로세스 종료/시간 초과와 재검증은 작업 기록에 구분한다. PC/모바일/밤/키보드/입력 보존을 확인했으며 실제 Access·원격 저장·실기기/GPU는 검증하지 않았다. 기존 fontkit 경고 유지.
+
+기존 main f5166d5·clean에서 시작해 변경을 보존했다. 결과를 로컬 커밋하며 추가 push/배포·실제 자료/AI/인증/DB 변경은 하지 않는다. **현재 P9-13 완료 · 부모 관리자 콘텐츠 개선 완료 · 다음 화면 피드백(필수 후속 구현 없음) · 세션 유지 · 추천 GPT-6.1-Sol/high**. 현재 Preview는 아래 P9-12 배포이며 새 안내 UI와 구분한다.
+
 ## P9-12 누적 UI Preview 반영 — 2026-10-12
 
 **완료.** 사용자 승인으로 소스 **2d2b1aa5dfd87e0f1cfb2dada56991f2712a9b7f**를 GitHub main에 push했다. [CI38203328796](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/38203328796)의 validate/browser와 Workers Builds17f77d49가 모두 success다. Preview app version **7f09d123-0067-43b8-bcc9-732e6896f6bc**·100%·2026-10-12 **13:20:55KST**를 실제 deployments GET으로 확인했다. [Preview 관리자 도구](https://biblequiz-app-preview.jinkyu0105.workers.dev/admin/tools) · [실행·검사·한계](work/P9-12.md).

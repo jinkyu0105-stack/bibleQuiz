@@ -12,3 +12,7 @@
 .manual h2, .manual h3 { scroll-margin-top: 2rem; }
 .manual p, .manual li { overflow-wrap: anywhere; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }
+
+.drawer > h3, .drawer > section { margin-top: 32px; }
+.drawer h3 { font-size: 1.125rem; line-height: 1.6; }
+.drawer p { line-height: 1.75; }

@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 const hash = "a".repeat(64);
 const binding = { sourceId: "source", sourceRevision: 1, sourceSha256: hash, revisionId: "source", transcriptSha256: hash, checksumFormat: "sha256:utf8-working-text:v1", confirmationId: "confirmed", version: 2 };
@@ -49,7 +50,7 @@ test("administrator explicitly regenerates one scope, recovers a lost response a
     }
     throw new Error(`unexpected mutation ${url.pathname}`);
   });
-  const load = async () => { await page.goto("/admin/tools"); await page.getByLabel("설교 ID").fill("sermon-1"); await page.getByRole("button", { name: "입력자료 불러오기" }).click(); };
+  const load = async () => { await page.goto("/admin/tools"); await openAdminTool(page, "sermon"); await page.getByLabel("설교 ID").fill("sermon-1"); await page.getByRole("button", { name: "입력자료 불러오기" }).click(); };
   await load();
   const region = page.getByRole("region", { name: "필요한 내용만 다시 생성", exact: true });
   await expect(region.getByRole("button", { name: "요약만 다시 생성" })).toBeDisabled();
@@ -139,7 +140,7 @@ test("administrator compares an intent-only revision and explicitly reconfirms i
     if (path.endsWith("/regen-job/resume")) { view.regenerations[0]!.status = "review_ready"; return route.fulfill({ json: { data: { outcome: "sent" } } }); }
     throw new Error(`unexpected mutation ${path}`);
   });
-  await page.goto("/admin/tools"); await page.getByLabel("설교 ID").fill("sermon-1");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon"); await page.getByLabel("설교 ID").fill("sermon-1");
   await page.getByRole("button", { name: "입력자료 불러오기" }).click();
   const region = page.getByRole("region", { name: "필요한 내용만 다시 생성", exact: true });
   await region.getByLabel("재생성 범위").selectOption("intent");
@@ -165,7 +166,7 @@ test("administrator compares an intent-only revision and explicitly reconfirms i
   expect(view.content.intent).toMatchObject({ selectedId: "new-critique", confirmation: { id: "new-confirm" } });
   view.regenerations = [{ jobId: "failed-job", scope: "intent", status: "failed", resultId: null,
     analysisId: "saved-first-analysis", createdAt: "2026-09-22T01:00:00.000Z", costMicroUsd: 80000, unknownCalls: 0 }];
-  await page.reload();
+  await page.reload(); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
   await page.getByRole("button", { name: "입력자료 불러오기" }).click();
   await region.getByLabel("재생성 범위").selectOption("intent");

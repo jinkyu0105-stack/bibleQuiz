@@ -531,7 +531,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
         {!weekly && <p className={styles.kicker}>현재 관리자 작업</p>}
         {weekly && reviewStatus && <p className={styles.workStatus} role="status">{reviewStatus}{step === 2 && selectionLabel ? ` · 현재 선택: ${selectionLabel}` : ""}</p>}
         <h2 id="sermon-input-title">{weekly ? stepNames[step - 1] : "설교 입력자료 검토"}</h2>
-        <p>{weekly ? ["영상과 본문을 확인하고 자막을 확정해 주세요.", "현재 선택한 분석과 원문 근거를 확인해 주세요.", "요약과 두 난도의 문제를 각각 검토해 주세요.", "격자 크기와 문제 수를 골라 무료로 배치를 비교하세요.", "공개할 내용과 두 난도 격자를 확인해 주세요.", "공개 범위를 확인한 뒤 발행해 주세요."][step - 1] : "현재 본문을 확인하고 수정, 비교, 복원, 교정, 사람 확정을 한 화면에서 이어갑니다."}</p>
+        <p>{weekly ? ["퀴즈의 바탕이 될 설교를 준비합니다. 영상·성경 장절·자막을 확인한 뒤 입력자료를 확정하세요.", "설교의 핵심 메시지를 확인합니다. 분석 내용이 원문과 맞는지 읽고 사용할 분석을 확정하세요.", "참여자에게 보여줄 요약과 문제를 다듬습니다. 요약·어린이·장년을 각각 검수해야 다음 단계로 갈 수 있습니다.", "문제가 들어갈 격자를 만듭니다. 크기와 문제 수를 골라 무료로 배치를 비교하고 두 난도의 격자를 선택하세요.", "발행 전에 공개될 내용을 점검합니다. 요약·문제·두 난도 격자를 확인하고 최종 검사를 진행하세요.", "검수한 퀴즈를 참여자에게 공개합니다. 공개 범위와 마감 일시를 확인한 뒤 발행하세요."][step - 1] : "저장된 설교의 자막과 수정 이력을 자세히 살펴봅니다. 아래에서 작업을 선택하면 비교·복원·교정과 검수를 이어갈 수 있습니다."}</p>
       </div>
       {!weekly && <ol className={styles.steps} aria-label="주간 발행 6단계">
         <li aria-current="step"><span>1</span>입력자료 <small>현재</small></li>

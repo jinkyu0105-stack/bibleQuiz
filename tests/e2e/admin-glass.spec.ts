@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
 
@@ -80,8 +81,10 @@ test("admin menus keep one hover lens and actions match the shared quiz solution
   // including controls that start disabled inside a fieldset or dialog.
   for (const path of ["/admin/moderation", "/admin/privacy-requests", "/admin/tools", "/admin/operations", "/admin/manual"]) {
     await page.goto(path);
+    if (path === "/admin/tools") await openAdminTool(page, "metadata");
     const buttons = page.locator(".admin-main button");
-    await expect(buttons.first()).toBeVisible();
+    if (path === "/admin/tools") await expect(page.getByRole("link", { name: "주간 운영에서 시작하기" })).toBeVisible();
+    else await expect(buttons.first()).toBeVisible();
     const classes = await buttons.evaluateAll(nodes => nodes.map(node => node.classList.contains("secondary-button")));
     expect(classes.every(Boolean)).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

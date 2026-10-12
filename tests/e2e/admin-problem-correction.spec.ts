@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { problemViewSchema,type ProblemView } from "../../shared/api/admin-problem-correction";
 import { expect,test } from "@playwright/test";
 import { generatePuzzle,PUZZLE_FIXTURES,serializePublicPuzzle } from "../../shared/puzzle";
@@ -37,7 +38,7 @@ for(const nonRanked of [false,true]) test(`problem correction pauses, preserves 
   if(cmd.action==="publish"&&losePublish){losePublish=false;return route.fulfill({status:503,json:{}});}
   return route.fulfill({json:{data:problemViewSchema.parse(view)}});
  });
- await page.goto("/admin/tools");const panel=page.getByRole("region",{name:"첫 제출 후 문제 오류 처리",exact:true});
+ await page.goto("/admin/tools"); await openAdminTool(page, "correction");const panel=page.getByRole("region",{name:"첫 제출 후 문제 오류 처리",exact:true});
  await panel.getByLabel("오류를 처리할 퀴즈",{exact:true}).selectOption(source.quizSetId);
  await expect(panel).toContainText("공개 3건 · 숨김 1건 · 삭제 1건");
  await panel.getByLabel("관리자 오류 확인 사유",{exact:true}).fill("단서 의미 오류 확인");await panel.getByLabel("공개 중지 안내",{exact:true}).fill("문제를 확인하고 있습니다.");
@@ -48,7 +49,7 @@ for(const nonRanked of [false,true]) test(`problem correction pauses, preserves 
  const level=editor.getByRole("group",{name:"어린이 문제 편집",exact:true});await level.locator("details").first().locator("summary").first().click();
  await level.getByRole("textbox",{name:"어린이 1 단서",exact:true}).fill("수정한 단서");await level.getByRole("textbox",{name:"어린이 1 수정 근거",exact:true}).fill("설교 의미와 일치함을 확인");
  await expect(editor.getByRole("button",{name:"재발행 확인",exact:true})).toBeDisabled();await editor.getByRole("button",{name:"편집본 저장",exact:true}).click();
- await page.reload();await panel.getByLabel("오류를 처리할 퀴즈",{exact:true}).selectOption(source.quizSetId);await expect(editor).toContainText("수정한 단서");
+ await page.reload(); await openAdminTool(page, "correction");await panel.getByLabel("오류를 처리할 퀴즈",{exact:true}).selectOption(source.quizSetId);await expect(editor).toContainText("수정한 단서");
  for(const name of ["어린이 문제·정답·근거 검토 완료","장년 문제·정답·근거 검토 완료","설교 정보·요약 검토 완료"])await editor.getByRole("button",{name,exact:true}).click();
  await editor.getByRole("button",{name:"재발행 확인",exact:true}).click();
  await expect(editor).toContainText(nonRanked?"순위와 참여 기록 없이 공개":"기존 마감 시각을 유지");

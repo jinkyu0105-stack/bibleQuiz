@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import type { DisplayTextView } from "../../shared/api/admin-display-text";
 
@@ -19,7 +20,7 @@ test("corrects published metadata, retries the same request, preserves links and
     }
     return route.fulfill({ json: { data: { outcome: "replayed", quizSetId: "synthetic", revision: 1 } } });
   });
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "metadata");
   const panel = page.getByRole("region", { name: "발행 정보 정정" });
   await expect(panel.getByRole("alert")).toContainText("목록을 불러오지 못했습니다");
   listFails = false; await panel.getByRole("button", { name: "목록 다시 확인" }).click();
@@ -45,7 +46,7 @@ test("corrects published metadata, retries the same request, preserves links and
   await page.getByRole("button", { name: "밤", exact: true }).click();
   await panel.screenshot({ path: testInfo.outputPath("display-dark.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await page.reload(); await panel.getByLabel("정정할 퀴즈").selectOption("synthetic");
+  await page.reload(); await openAdminTool(page, "metadata"); await panel.getByLabel("정정할 퀴즈").selectOption("synthetic");
   await expect(panel.getByLabel("설교 제목", { exact: true })).toHaveValue("정정한 합성 제목");
 });
 
@@ -55,7 +56,7 @@ test("handles a concurrent correction by retaining edits and explicitly loading 
   await page.route("**/api/admin/published-quizzes", route => route.fulfill({ json: { data: { items: [view.quiz] } } }));
   await page.route("**/api/admin/quiz-sets/synthetic/display-text", route => route.request().method() === "GET"
     ? route.fulfill({ json: { data: view } }) : route.fulfill({ status: 409, json: {} }));
-  await page.goto("/admin/tools"); const panel = page.getByRole("region", { name: "발행 정보 정정" });
+  await page.goto("/admin/tools"); await openAdminTool(page, "metadata"); const panel = page.getByRole("region", { name: "발행 정보 정정" });
   await panel.getByLabel("정정할 퀴즈").selectOption("synthetic");
   await panel.getByLabel("설교 제목", { exact: true }).fill("아직 저장 안 된 제목");
   await panel.getByLabel("정정 사유", { exact: true }).fill("합성 사유");
@@ -69,6 +70,6 @@ test("handles a concurrent correction by retaining edits and explicitly loading 
 
 test("shows an empty published list", async ({ page }) => {
   await page.route("**/api/admin/published-quizzes", route => route.fulfill({ json: { data: { items: [] } } }));
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "metadata");
   await expect(page.getByRole("region", { name: "발행 정보 정정" })).toContainText("아직 발행된 퀴즈가 없습니다");
 });

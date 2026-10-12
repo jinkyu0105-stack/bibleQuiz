@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 
 const reference = {
@@ -26,7 +27,7 @@ test("administrator verifies the same reference through natural input and 66-boo
     await route.fulfill({ json: { data: reference } });
   });
 
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "bible");
   await expect(page.getByRole("heading", { name: "성경 장절 확인" })).toBeVisible();
   await expect(page.getByText("이 단계에서는 장절을 저장하거나 설교 내용을 편집하지 않습니다.")).toBeVisible();
 
@@ -60,7 +61,7 @@ test("administrator UI replaces malformed server data with a safe error", async 
   await page.route("**/api/admin/bible/parse-reference", (route) => route.fulfill({
     json: { data: { ...reference, text: "PRIVATE_CANARY" } },
   }));
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "bible");
   const bibleTool = page.locator("section").filter({ has: page.getByRole("heading", { name: "성경 장절 확인" }) });
   const naturalForm = bibleTool.locator("form").first();
   await naturalForm.getByLabel("성경 장절").fill("요한복음 3:1-3");

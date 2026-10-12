@@ -54,3 +54,6 @@ import { Button, ButtonLink } from "./components/Button";
 
 
 `useHomeSectionScroll`은 메인에서만 연결한다. 휠 섹션 이동은 약1.2초, 같은 페이지 Router 앵커는 이동 거리별0.9~1.6초로 감속한다. 긴 섹션 내부/중첩 스크롤·확대 휠은 기본 동작을 유지하며 추가 입력/경로 이탈에서 예약 프레임을 해제한다. 링크 클릭 전 위치를 기록하고 Router 복원 뒤 paint 전에 출발점을 되돌려 Firefox의 해시 복원과 충돌하지 않는다. 초기 deep link/뒤로 가기는 기존 Router 복원이며 모바일 터치는 native snap, 감소 모드는 즉시 이동한다.
+
+
+`AdminIntro`는 관리자 페이지의 목적 설명, `AdminSteps`는 짧은 사용 순서, `AdminTool`은 제목/조건/설명으로 선택하는 접기 도구다. `AdminTool`의 native details/summary는 키보드로 열고 닫을 수 있으며 자식 폼을 계속 마운트하므로 단순 접기에서 편집값을 잃지 않는다. 실제 저장/API/단계 잠금은 기존 feature가 소유한다. 공통 색상과 CSS만 사용하며 새 효과 엔진은 연결하지 않는다. [화면 계약](../../docs/spec/design.md#관리자-콘텐츠-안내--p9-13).

@@ -162,3 +162,9 @@
   .tools { gap: 20px; }
   .tools section h2 { font-size: 20px; }
 }
+
+.toolGroup { display: grid; gap: 16px; min-width: 0; }
+.groupHeading { margin: 10px 0 2px; }
+.groupHeading h3 { margin: 0 0 6px; font-size: 18px; font-weight: 650; }
+.groupHeading p, .startHint { margin: 0; font-size: .875rem; line-height: 1.75; color: var(--muted); }
+.startHint { margin-top: 12px; }

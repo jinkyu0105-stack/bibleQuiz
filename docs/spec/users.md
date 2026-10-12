@@ -99,7 +99,7 @@
 
 정상 상태의 기술 로그나 내부 ID는 첫 화면에 노출하지 않는다. 오류가 있을 때만 `자세히 보기` 안에 사람이 이해할 설명과 지원용 requestId/jobId를 제공한다.
 
-P5-72의 `/admin`·`/admin/new`·`/admin/quiz/:id`가 위 주간 운영 경로다. 이미 미발행 작업이 있으면 `/admin/new`도 기존 작업으로 연결한다. 필터는 `/admin/moderation`, 제출은 `/admin/submissions?quiz=:id`, 문의 답변은 `/admin/privacy-requests`, 참여자 문의는 `/privacy-requests`다. 기존 개별 발행/수정 도구는 `/admin/tools`에 유지한다. 서비스 전체 사용량·백업은 P8-01이며 이 화면에서 준비된 값처럼 표시하지 않는다.
+P5-72의 `/admin`·`/admin/new`·`/admin/quiz/:id`가 위 주간 운영 경로다. 이미 미발행 작업이 있으면 `/admin/new`도 기존 작업으로 연결한다. 필터는 `/admin/moderation`, 제출은 `/admin/submissions?quiz=:id`, 문의 답변은 `/admin/privacy-requests`, 참여자 문의는 `/privacy-requests`다. 기존 개별 발행/수정 도구는 `/admin/tools`에 유지한다. P9-13에서는 기능의 용도·사용 조건을 먼저 보여주고 필요한 도구만 펼친다. 새 퀴즈는 주간 운영 경로로 안내하며 접기만으로 편집값을 버리지 않는다. 각 관리자 메뉴의 목적·순서·결과 안내는 [디자인 P9-13](design.md#관리자-콘텐츠-안내--p9-13)을 따른다. 서비스 전체 사용량·백업은 P8-01이며 이 화면에서 준비된 값처럼 표시하지 않는다.
 
 ### 2.7 관리자 6단계 작업 화면
 

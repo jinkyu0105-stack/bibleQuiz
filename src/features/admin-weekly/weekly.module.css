@@ -45,3 +45,28 @@
 @media (max-width: 760px) { .stepper { position: static; } }
 
 .refreshAction { display: block; margin-top: 16px; }
+
+/* Explain the next action without adding another stack of nested cards. */
+.hero h2 { font-size: clamp(22px, 2.1vw, 28px); line-height: 1.45; }
+.lead, .hint { color: var(--muted); font-size: .9375rem; line-height: 1.75; }
+.hint { margin: 0 0 18px; }
+.note { padding: 16px 0 16px 18px; border-left: 3px solid var(--control-border); font-size: .9375rem; line-height: 1.75; }
+.note p { margin: 0 0 8px; }
+.explainer { border-block: 1px solid var(--line); padding-block: 4px; font-size: .9375rem; }
+.explainer summary { cursor: pointer; min-height: 48px; padding-block: 12px; }
+.explainer dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 12px 20px; margin: 12px 0 20px; }
+.explainer dt { font-weight: 650; }
+.explainer dd { margin: 0; line-height: 1.75; }
+.quickLinks { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-block: 16px 0; }
+.quickLinks a { min-height: 44px; display: inline-flex; align-items: center; text-underline-offset: 5px; }
+@media (max-width: 480px) { .explainer dl { grid-template-columns: 1fr; gap: 4px; } .explainer dd + dt { margin-top: 12px; } }
+
+/* Keep form actions below their inputs instead of stretching beside textareas. */
+.page > button { justify-self: start; }
+.fields { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); align-items: start; }
+.fields label { align-content: start; }
+.fields > button, .fields > p { grid-column: 1 / -1; justify-self: start; }
+.fields > button { margin-top: 4px; }
+.fields label:has(> input[type=checkbox]) { display: flex; align-items: center; }
+.fields input[type=checkbox] { width: auto; flex-shrink: 0; }
+.panel > form { margin-top: 16px; }

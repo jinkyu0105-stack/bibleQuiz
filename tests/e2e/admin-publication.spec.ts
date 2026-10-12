@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import type { AdminContentView } from "../../shared/api/admin-content-generation";
 import { searchCandidatePool } from "../../shared/puzzle/pool-search";
@@ -41,7 +42,7 @@ for (const selected of [false, true]) test(`administrator publishes ${selected ?
     view.status = "published"; view.stage = "published"; view.jobId = null; view.placement = null; view.preview = null; view.snapshots = [];
     return route.fulfill({ json: { data: { outcome: "replayed", quizSetId: "quiz", ...view.publication } } });
   });
-  const load = async () => { await page.goto("/admin/tools"); await page.getByLabel("설교 ID").fill("sermon-1");
+  const load = async () => { await page.goto("/admin/tools"); await openAdminTool(page, "sermon"); await page.getByLabel("설교 ID").fill("sermon-1");
     await page.getByRole("button", { name: "입력자료 불러오기" }).click(); };
   await load();
   const launch = page.getByRole("button", { name: "지금 발행", exact: true });

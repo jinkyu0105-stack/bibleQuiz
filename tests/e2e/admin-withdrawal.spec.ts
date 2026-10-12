@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import type { WithdrawalView } from "../../shared/api/admin-withdraw";
 const quiz = { quizSetId: "synthetic", slug: "2026-09-20-abc123", status: "published", revision: 1,
@@ -20,7 +21,7 @@ test("confirms withdrawal, retries a lost response exactly and restores private 
     commands.push(route.request().postDataJSON()); saved = true;
     return commands.length === 1 ? route.fulfill({ status: 503, json: {} }) : route.fulfill({ json: { data: { outcome: "replayed", quizSetId: "synthetic", reviewRevision: 2, withdrawnAt: review.withdrawnAt } } });
   });
-  await page.goto("/admin/tools"); const panel = page.getByRole("region", { name: "첫 제출 전 발행 철회" });
+  await page.goto("/admin/tools"); await openAdminTool(page, "withdrawal"); const panel = page.getByRole("region", { name: "첫 제출 전 발행 철회" });
   await expect(panel.getByRole("alert")).toContainText("목록을 불러오지 못했습니다");
   failedList = false; await panel.getByRole("button", { name: "목록 다시 확인" }).click();
   await panel.getByLabel("철회할 퀴즈", { exact: true }).selectOption("synthetic");
@@ -42,7 +43,7 @@ test("confirms withdrawal, retries a lost response exactly and restores private 
   await page.getByRole("button", { name: "밤", exact: true }).click();
   await panel.screenshot({ path: testInfo.outputPath("withdrawal-dark.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await page.reload(); await panel.getByLabel("철회한 퀴즈 검수 자료").selectOption("synthetic");
+  await page.reload(); await openAdminTool(page, "withdrawal"); await panel.getByLabel("철회한 퀴즈 검수 자료").selectOption("synthetic");
   await expect(panel.getByRole("article", { name: "철회 후 검수 시작 자료" })).toContainText("오전 9:00");
 });
 
@@ -51,7 +52,7 @@ test("keeps reason on submission conflict and handles empty lists", async ({ pag
   await page.route("**/api/admin/published-quizzes", route => route.fulfill({ json: { data: { items: empty ? [] : [quiz] } } }));
   await page.route("**/api/admin/withdrawn-quizzes", route => route.fulfill({ json: { data: { items: [] } } }));
   await page.route("**/api/admin/quiz-sets/synthetic/withdraw-to-review", route => route.fulfill({ status: 409, json: {} }));
-  await page.goto("/admin/tools"); const panel = page.getByRole("region", { name: "첫 제출 전 발행 철회" });
+  await page.goto("/admin/tools"); await openAdminTool(page, "withdrawal"); const panel = page.getByRole("region", { name: "첫 제출 전 발행 철회" });
   await panel.getByLabel("철회할 퀴즈", { exact: true }).selectOption("synthetic");
   await panel.getByLabel("철회 사유").fill(review.reason);
   await panel.getByRole("button", { name: "발행 철회 확인", exact: true }).click();

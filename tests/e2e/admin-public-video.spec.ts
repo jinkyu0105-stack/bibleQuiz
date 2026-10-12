@@ -1,3 +1,4 @@
+import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import { adminPublicVideoPreviewSchema } from "../../shared/api/admin-public-video";
 import { draftMetadataViewSchema } from "../../shared/api/admin-sermon-drafts";
@@ -54,7 +55,7 @@ test("administrator confirms fetched video fields and imports public captions af
     if (path.endsWith("/history")) return route.fulfill({ json: { data: { history: imported ? history : null } } });
     return route.fulfill({ json: { data: { input: imported ? timed : null } } });
   });
-  await page.goto("/admin/tools");
+  await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   const drafts = page.getByRole("region", { name: "설교 작업 선택", exact: true });
   await drafts.getByRole("button", { name: "새 설교 등록" }).click();
   await drafts.getByLabel("YouTube 영상 링크").fill("https://youtu.be/abcdefghijk");
