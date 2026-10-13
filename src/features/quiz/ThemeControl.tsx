@@ -28,12 +28,12 @@ export function ThemeControl({ time, onChange, grass, onGrassChange, storageFail
       <button ref={motionRef} id="motion" className="glass glass-clear" data-glint type="button" aria-label="배경 움직임 멈춤" aria-pressed="false"><span aria-hidden="true">Ⅱ</span></button>
       <button ref={clarityRef} id="glass-clarity" data-glint className="glass glass-clear" type="button" aria-label={systemClarity ? "시스템 투명도 감소 적용 중" : clarity ? "유리 투명도 복원" : "투명도 줄이기"} aria-pressed={clarity || systemClarity} disabled={systemClarity} onClick={() => { setClarity(!clarity); setClarityStorageFailed(!saveSkyPreference("clarity", String(!clarity))); }}><span aria-hidden="true">가</span><small>선명하게</small></button>
       <button ref={grassRef} id="grass-toggle" data-glint className="glass glass-clear" type="button" aria-label={grass ? "잔디 끄기" : "잔디 켜기"} title={grass ? "잔디 끄기" : "잔디 켜기"} aria-pressed={grass} onClick={onGrassChange}>
-        <svg viewBox="0 0 28 28" width="26" height="26" aria-hidden="true" fill="currentColor">
-          <path className="grass-blades" d="M5 22C5 17 3.5 13 2 11c4 1 6.5 4 8 8C9 12 9.5 7 12 3c0 7 1 11 2 15 1-5 4-9 8-11-2.5 4-3.5 8-3.5 12 1.5-3 3.5-5 6.5-6-2 3-3 6-3 9Z"/>
-          <g className="grass-state" data-on={grass}>
+        <svg viewBox="0 0 28 28" width="26" height="26" aria-hidden="true" fill="none">
+          <path className="grass-blades" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" d="M3 22Q8 21.5 13 22T25 22 M9 20Q8 14 8.5 11 M14 23Q15.5 11 14.5 5 M20 20.5Q19.5 16 20 12"/>
+          {!grass && <g className="grass-state" data-on={false} transform="translate(2 2) scale(.9)">
             <circle cx="22" cy="22" r="5"/>
-            <path d={grass ? "m19.8 22 1.5 1.5 2.8-3" : "M20 22h4"}/>
-          </g>
+            <path d="M20 22h4"/>
+          </g>}
         </svg>
       </button>
     </div>

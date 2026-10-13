@@ -1,7 +1,6 @@
-.sidebar:global(.glass) { position: sticky; top: 116px; display: flex; flex-direction: column; min-width: 0; padding: 28px 14px 16px; border-radius: 24px; }
-.sidebar .eyebrow { margin: 0 14px 6px; color: var(--muted); font-size: 12px; }
-.sidebar .title { margin: 0 14px; font-size: 23px; line-height: 1.5; }
-.menu { margin-top: 30px; }
+.sidebar:global(.glass) { position: sticky; top: 116px; display: flex; flex-direction: column; min-width: 0; padding: 22px 14px 16px; border-radius: 24px; }
+.sidebar .eyebrow { margin: 0 14px 0; color: var(--muted); font-size: 12px; }
+.menu { margin-top: 6px; }
 .menu > summary, .settings > summary { display: flex; align-items: center; justify-content: space-between; cursor: pointer; min-height: 44px; list-style: none; }
 .menu > summary::-webkit-details-marker, .settings > summary::-webkit-details-marker { display: none; }
 .menu > summary { padding: 10px 14px; font-size: 14px; }
@@ -21,7 +20,7 @@
 @media (min-width: 1024px) { .menu > summary { display: none; } }
 @media (max-width: 1023px) {
  .sidebar:global(.glass) { position: relative; top: auto; padding: 16px; border-radius: 20px; }
- .sidebar .eyebrow, .sidebar .title, .homeLink { display: none; }
+ .sidebar .eyebrow, .homeLink { display: none; }
  .menu { margin: 0; }
  .menu > summary { padding: 0 4px; }
  .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 12px; }
@@ -30,4 +29,4 @@
  .settings .nav { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-top: 0; }
 }
 @media (max-width: 380px) { .nav { grid-template-columns: 1fr; } .nav a { justify-content: flex-start; } .nav svg { display: block; } }
-.menu nav { display: block; }
+.menu nav { display: block; padding-block: 0; }

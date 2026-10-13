@@ -1,0 +1,44 @@
+.reader { display: grid; grid-template-columns: 174px minmax(0,1fr); gap: 34px; align-items: start; }
+.contents { display: block; min-width: 0; padding-block: 0; border-right: 1px solid var(--line); padding-right: 18px; }
+.contents section + section { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
+.contents h3 { font-family: 'Noto Sans KR',sans-serif !important; font-size: 12px !important; color: var(--muted) !important; letter-spacing: 0 !important; margin: 0 8px 10px !important; }
+.contents ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 3px; }
+.contents button { display: flex; align-items: center; gap: 7px; width: 100%; border: 1px solid transparent; border-radius: 7px; min-height: 38px; padding: 8px 6px; background: transparent; color: var(--muted); font-size: 13px; line-height: 1.5; text-align: left; word-break: keep-all; }
+.contents button:hover { color: var(--ui-action); background: var(--glass-soft); }
+.contents button[aria-current] { color: var(--ui-action); background: var(--ui-action-bg); font-weight: 600; }
+.topicMark { width: 8px; flex: 0 0 8px; }
+.article { min-width: 0; }
+.articleHeader { margin-bottom: 28px; }
+.articleHeader > p:first-child { color: var(--ui-guide); font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+.articleHeader h3 { font-size: clamp(23px,2vw,26px) !important; line-height: 1.55 !important; margin: 0 !important; word-break: keep-all; scroll-margin-top: 145px; }
+.articleHeader h3:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px; border-radius: 4px; }
+.articleHeader .subtitle { font-size: 14px; color: var(--muted); margin-top: 10px; }
+.article :is(p,li,dd) { word-break: keep-all; overflow-wrap: anywhere; text-wrap: pretty; }
+.article :global(ol) { counter-reset: manual-step; list-style: none; padding: 0; display: grid; gap: 0; }
+.article :global(ol > li) { position: relative; padding: 1px 0 22px 40px; margin: 0; min-height: 52px; }
+.article :global(ol > li::before) { counter-increment: manual-step; content: counter(manual-step); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 26px; height: 26px; color: var(--ui-action); background: var(--ui-action-bg); border: 1px solid color-mix(in srgb,var(--ui-action) 20%,transparent); border-radius: 50%; font-size: 12px; font-weight: 600; }
+.article :global(ol > li:not(:last-child)::after) { content: ''; position: absolute; left: 13px; top: 32px; bottom: 6px; width: 1px; background: var(--line); }
+.article :global(ol > li:last-child) { padding-bottom: 0; }
+.article :global(h4) { color: var(--ink) !important; font-size: 18px !important; margin-top: 20px !important; margin-bottom: 0 !important; }
+.serviceReading { display: grid; gap: 20px; }
+.serviceReading .lead { font-size: 16px; line-height: 1.9; margin: 0; }
+.serviceReading dl { margin: 0; }
+.next { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 10px 16px; border-top: 1px solid var(--line); padding-top: 20px; margin-top: 36px; }
+.next > span { color: var(--muted); font-size: 12px; }
+.next button { display: inline-flex; gap: 16px; align-items: center; min-height: 44px; padding: 8px 0; border: 0; background: transparent; color: var(--ui-action); font-size: 14px; }
+.mobileTopics { display: none; }
+@media(max-width: 1100px) and (min-width: 761px) { .reader { grid-template-columns: 160px minmax(0,1fr); gap: 24px; } }
+@media(max-width: 760px) {
+ .reader { display: block; }
+ .contents { display: none; }
+ .mobileTopics { display: grid; gap: 8px; padding-bottom: 22px; border-bottom: 1px solid var(--line); margin-bottom: 28px; font-size: 12px !important; color: var(--muted); }
+ .mobileTopics select { width: 100%; min-width: 0; }
+ .articleHeader { margin-bottom: 22px; }
+ .articleHeader h3 { font-size: 23px !important; }
+ .article :global(ol > li) { padding-left: 36px; }
+ .serviceReading .lead { font-size: 15px; }
+}
+@media(forced-colors: active) { .contents button[aria-current] { color: Highlight; border-color: Highlight; } .article :global(ol > li::before) { color: CanvasText; background: Canvas; border-color: CanvasText; } }
+.contents > details { border-top: 1px solid var(--line); padding-top: 12px; margin-top: 20px; }
+.contents > details > summary { min-height: 40px; padding: 8px; font-size: 12px; color: var(--muted); }
+.article :global(ol > li > strong:first-child) { display: block; margin-bottom: 8px; font-size: 16px; }

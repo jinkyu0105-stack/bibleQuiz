@@ -2,13 +2,19 @@ import { Fragment } from "react";
 import local from "./operations.module.css";
 
 /** A small, escaped Markdown subset for our repository-owned operator guides. */
+function Sentence({ text }: { text: string }) {
+  // Keep a short Korean predicate together without fixing a viewport-specific line break.
+  const parts = text.replace(/\s*\n\s*/gu, " ").split(/([가-힣]+(?: 수)? (?:있습니다|없습니다|됩니다|합니다|않습니다|하세요)[.!?])/gu);
+  return <>{parts.map((part, index) => index % 2 === 1 && part.length <= 24
+    ? <span className={local.phrase} key={index}>{part}</span> : <Fragment key={index}>{part}</Fragment>)}</>;
+}
 function Inline({ text }: { text: string }) {
   return <>{text.split(/(`[^`\n]+`|\*\*[^*\n]+\*\*)/u).map((part, index) =>
     part.startsWith("`") && part.endsWith("`") ? <code key={index}>{part.slice(1, -1)}</code>
       : part.startsWith("**") && part.endsWith("**") ? <strong key={index}>{part.slice(2, -2)}</strong>
-        : <Fragment key={index}>{part.split(/ {2}\n/u).map((line, i) => <Fragment key={i}>{i > 0 && <br/>}{line}</Fragment>)}</Fragment>)}</>;
+        : <Sentence key={index} text={part}/>)}</>;
 }
-function Blocks({ source }: { source: string }) {
+export function ManualBody({ source }: { source: string }) {
   return <div className={local.prose}>{source.trim().split(/\n\n+/u).filter(Boolean).map((block, index) => {
     const lines = block.split("\n");
     if (block.startsWith("```")) return <pre key={index}><code>{block.replace(/^```[^\n]*\n|\n```$/gu, "")}</code></pre>;
@@ -23,7 +29,7 @@ export function ManualText({ source }: { source: string }) {
   return <div className={local.manual}>{source.split(/(?=^## )/mu).filter(section => section.trim()).map((section, index) => {
     const [heading = "", ...lines] = section.split("\n");
     const content = lines.join("\n").trim().replace(/^마지막 문서 갱신: \d{4}-\d{2}-\d{2}\.\s*/u, "").trim();
-    if (!heading.startsWith("## ")) return content ? <Blocks key={index} source={content}/> : null;
-    return <details key={index}><summary><Inline text={heading.replace(/^## /u, "")}/></summary><div><Blocks source={content}/></div></details>;
+    if (!heading.startsWith("## ")) return content ? <ManualBody key={index} source={content}/> : null;
+    return <details key={index}><summary><Inline text={heading.replace(/^## /u, "")}/></summary><div><ManualBody source={content}/></div></details>;
   })}</div>;
 }

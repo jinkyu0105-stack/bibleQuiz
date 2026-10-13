@@ -43,8 +43,11 @@ test("admin menus group tasks, retain the glass hover and use compact shared act
     await page.keyboard.press("Space"); await expect(navigation).toBeHidden();
     await page.keyboard.press("Enter");
   } else {
-    await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toBeVisible();
+    await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toHaveCount(0);
     await expect(sidebar).toHaveCSS("width","220px");
+    const label = await sidebar.getByText("다사랑 성경퀴즈", {exact:true}).boundingBox();
+    const firstLink = await navigation.getByRole("link", {name:"퀴즈 관리",exact:true}).boundingBox();
+    expect(firstLink!.y - label!.y - label!.height).toBeLessThanOrEqual(12);
   }
   await expect(navigation.getByRole("link")).toHaveCount(3);
   await navigation.locator("summary").filter({hasText:"도구와 설정"}).click();
@@ -66,7 +69,7 @@ test("admin menus group tasks, retain the glass hover and use compact shared act
     await page.goto(path);
     if (path === "/admin/tools") await openAdminTool(page, "metadata");
     if (path === "/admin/manual") {
-      await expect(page.getByRole("heading", {name: "서비스 사전", exact: true})).toBeVisible();
+      await expect(page.getByRole("heading", {name: "운영 매뉴얼", exact: true})).toBeVisible();
       await expect(page.locator(".admin-main .action-button")).toHaveCount(0);
     } else {
       const button=page.locator(".admin-main .action-button").first();
