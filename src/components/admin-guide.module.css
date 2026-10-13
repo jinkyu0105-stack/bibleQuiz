@@ -43,7 +43,7 @@
 .help { order: 10; border-top: 1px solid var(--line); padding-top: 8px; }
 .help > summary { display: flex; justify-content: space-between; align-items: center; min-height: 44px; font-size: 13px; color: var(--muted); list-style: none; cursor: pointer; }
 .help > summary::-webkit-details-marker { display: none; }
-.help[open] > summary > span { transform: rotate(45deg); }
+.help[open] > summary > span:last-child { transform: rotate(45deg); }
 .help .steps { margin: 16px 0; }
 .tool { border-radius: 12px; background: transparent; scroll-margin-top: 120px; }
 .tool > summary { padding: 20px; border-radius: 12px; }

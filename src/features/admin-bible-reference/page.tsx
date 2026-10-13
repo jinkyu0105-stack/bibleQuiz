@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { AdminIntro, AdminTool } from "../../components/AdminGuide";
 import { Button, ButtonLink } from "../../components/Button";
 import { ProblemCorrection } from "../admin-sermon-input/ProblemCorrection";
@@ -131,7 +132,7 @@ function BibleReferenceTool() {
   return <section className={styles.page} aria-labelledby="admin-bible-title">
     <header className={styles.intro}>
       <p className="eyebrow">보조 도구</p>
-      <h2 id="admin-bible-title">성경 장절 확인</h2>
+      <h2 id="admin-bible-title"><AdminLabel text="성경 장절 확인"/></h2>
       <p>자연어 입력과 목록 선택이 같은 장절 형식으로 확인되는지 비교할 수 있습니다.</p>
       <p className={styles.notice}>이 단계에서는 장절을 저장하거나 설교 내용을 편집하지 않습니다. 개역개정 본문도 이 화면에 표시하지 않습니다.</p>
     </header>
@@ -200,7 +201,7 @@ function BibleReferenceTool() {
 
 export function Component() {
   return <div className={styles.tools}>
-    <AdminIntro title="수정·보관 도구" description="발행한 퀴즈 수정부터 입력자료 점검까지, 필요한 도구를 선택하세요.">
+    <AdminIntro terms={["초안", "발행"]} screenshots={["settings", "input"]} title="수정·보관 도구" description="발행한 퀴즈 수정부터 입력자료 점검까지, 필요한 도구를 선택하세요.">
       <ButtonLink to="/admin">퀴즈 목록으로</ButtonLink>
     </AdminIntro>
     <div className={styles.toolGroup}>

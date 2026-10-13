@@ -16,7 +16,7 @@ export function Component(){
   const pending=(status:string)=>status==='received'||status==='reviewing';
   const visible=items?.filter(item=>filter==='all'||(filter==='pending'?pending(item.status):!pending(item.status)));
   return <div className={styles.page}>
-    <AdminIntro title="문의·삭제 요청" description="참여자가 남긴 내용을 확인하고 답변을 보내세요."/>
+    <AdminIntro terms={["처리 완료", "개인정보 삭제"]} screenshots={["privacy"]} title="문의·삭제 요청" description="참여자가 남긴 내용을 확인하고 답변을 보내세요."/>
     <div className={record.toolbar}>
       <div className={record.filters} role="group" aria-label="문의 상태 필터">{([['pending','답변 대기'],['done','처리한 문의'],['all','전체']] as const).map(([value,label])=><button key={value} type="button" aria-pressed={filter===value} onClick={()=>setFilter(value)}>{label}<small>{items?.filter(item=>value==='all'||(value==='pending'?pending(item.status):!pending(item.status))).length??'—'}</small></button>)}</div>
       <Button disabled={busy} onClick={()=>{setMessage('');setAttempt(a=>a+1);}}>문의 목록 새로고침</Button>

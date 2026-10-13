@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
@@ -54,7 +55,7 @@ export function QuizDeadline({ quizSetId, onSaved }: { quizSetId: string; onSave
     } finally { lock.current = false; if (!c.signal.aborted) setBusy(false); }
   }
   return <section className={styles.displayEditor} aria-label="일반 마감 변경">
-    <h3>일반 마감 변경</h3>
+    <h3><AdminLabel text="일반 마감 변경"/></h3>
     <p>한국 시간으로 입력합니다. 기존 정답·제출·성적을 보존하며 이미 마감된 퀴즈는 다시 열지 않습니다.</p>
     {message && <p role="status">{message}</p>}{error && <p role="alert">{error}</p>}
     <Button type="button" disabled={busy} onClick={() => { invalidate(); setView(null); setError(""); setAttempt(v => v + 1); }}>최신 마감 불러오기</Button>

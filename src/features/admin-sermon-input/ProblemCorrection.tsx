@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { ReviewGrid } from "./ContentPlacement";
 import { z } from "zod";
@@ -33,7 +34,7 @@ export function ProblemCorrection({ initialQuizSetId = "" }: { initialQuizSetId?
   }catch{setError("처리 상태를 확인하지 못했습니다. 입력을 확인하고 같은 버튼으로 재확인하거나 최신 상태를 불러와 주세요.");}
   finally{lock.current=false;setBusy(false);}
  }
- return <section className={styles.panel} aria-label="첫 제출 후 문제 오류 처리"><h2 id="problem-correction-title">첫 제출 후 문제 오류 처리</h2>
+ return <section className={styles.panel} aria-label="첫 제출 후 문제 오류 처리"><h2 id="problem-correction-title"><AdminLabel text="첫 제출 후 문제 오류 처리"/></h2>
  <p>기존 답안과 당시 정답을 보존합니다. 수정 중에는 세트 전체 접수를 중지하며, 선택한 난이도의 오류본만 교체합니다. 공통 설교 정보·요약을 수정하려면 두 난이도를 선택해 주세요.</p>
  {error&&<p role="alert">{error}</p>}<Button type="button" disabled={busy} onClick={()=>setAttempt(v=>v+1)}>오류 처리 상태 다시 확인</Button>
  <label>오류를 처리할 퀴즈<select aria-label="오류를 처리할 퀴즈" disabled={busy} value={id} onChange={e=>{setId(e.target.value);setView(null);setRecords(null);setConfirm(false);setCancel(false);pending.current=null;}}><option value="">퀴즈 선택</option>{items.map(q=><option key={q.quizSetId} value={q.quizSetId}>{q.metadata.title}</option>)}</select></label>

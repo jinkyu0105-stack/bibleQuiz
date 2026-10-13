@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { wordingRequestSchema, wordingViewSchema, type WordingView } from "../../../shared/api/admin-wording";
@@ -54,7 +55,7 @@ export function PublishedWording({ quizSetId }: { quizSetId: string }) {
     } finally { lock.current = false; if (!controller.signal.aborted) setBusy(false); }
   }
   return <section aria-label="일반 문구 오탈자" className={styles.displayEditor}>
-    <h3>일반 문구 오탈자</h3>
+    <h3><AdminLabel text="일반 문구 오탈자"/></h3>
     <p>철자·띄어쓰기·문장부호만 바로잡습니다. 의미·난이도·정답 유도가 같다는 판단은 관리자가 직접 확인합니다.</p>
     <p><a href="#problem-correction-title">의미 변경·불확실한 수정은 문제 오류 처리로 이동</a></p>
     {message && <p role="status">{message}</p>}{error && <p role="alert">{error}</p>}

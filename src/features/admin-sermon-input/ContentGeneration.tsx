@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { GlassMenu } from "../../components/glass/GlassMenu";
 import { useAutosave } from "../admin-weekly/useAutosave";
@@ -312,16 +313,16 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
     } finally { setBusy(false); lock.current = false; setIntentDialog(null); }
   }
   if (view?.status === "withdrawn") return <section className={styles.panel} aria-label="발행 철회 완료">
-    <h3>발행 철회 완료</h3><p>공개를 중단하고 검수 대기로 돌렸습니다. 발행 당시 문제·정답과 최신 제목·설교일은 보존됩니다.</p>
+    <h3><AdminLabel text="발행 철회 완료"/></h3><p>공개를 중단하고 검수 대기로 돌렸습니다. 발행 당시 문제·정답과 최신 제목·설교일은 보존됩니다.</p>
     <a href="/admin/tools#withdraw-title">철회한 퀴즈 검수 자료 확인</a>
   </section>;
   if (view?.publication) return <section className={styles.panel} aria-label="발행 완료">
-    <h3>발행 완료</h3><p>발행 시각 {new Date(view.publication.publishedAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (한국 시간)</p>
+    <h3><AdminLabel text="발행 완료"/></h3><p>발행 시각 {new Date(view.publication.publishedAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (한국 시간)</p>
     <p>마감 시각 {new Date(view.publication.closesAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (한국 시간)</p>
     <a href={`/quiz/${view.publication.slug}`}>공개된 퀴즈 보기</a>
   </section>;
   return <section hidden={weeklyStep === 1} className={styles.panel} aria-labelledby="content-generation-title" aria-busy={loading}>
-    <div className={styles.sectionHeading}><h3 id="content-generation-title">설교 요약·문제 생성</h3><span>{view ? ({ failed: "생성 실패", stale: "입력 변경으로 중단", uncertain: "응답 확인 필요" } as Record<string, string>)[view.status] ?? stages[view.stage] ?? "상태 확인" : "연결 확인 중"}</span></div>
+    <div className={styles.sectionHeading}><h3 id="content-generation-title"><AdminLabel text="설교 요약·문제 생성"/></h3><span>{view ? ({ failed: "생성 실패", stale: "입력 변경으로 중단", uncertain: "응답 확인 필요" } as Record<string, string>)[view.status] ?? stages[view.stage] ?? "상태 확인" : "연결 확인 중"}</span></div>
     <div hidden={weeklyStep !== undefined && weeklyStep > 3}>
     <details className={styles.generationGuide} open={weeklyStep === undefined || !view?.jobId || newDraft}><summary>생성 안내·예상 비용</summary>
     <p>{view?.recoveredCritiqueId ? "보관한 분석과 비판 결과를 재사용합니다. 의도를 확정하면 요약·어린이·장년 문제를 이어서 만듭니다." : view?.recoveredAnalysisId ? "보관한 분석을 재사용해 비판 검토부터 이어갑니다. 교정과 의도 분석을 다시 호출하지 않습니다."
@@ -356,7 +357,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
       quality={request => act("quality", request)} confirmIntent={setIntentDialog} /></details></div>)}
     {view?.historyCursor && <Button type="button" disabled={busy} onClick={() => void refresh(view.historyCursor!)}>이전 생성·수정 자료 보기</Button>}
     {intentDialog && <div className={styles.confirmBackdrop}><div className={styles.confirmDialog} role="dialog" aria-modal="true" aria-labelledby="intent-confirm-title">
-      <h4 id="intent-confirm-title">설교 의도 확정</h4>
+      <h4 id="intent-confirm-title"><AdminLabel text="설교 의도 확정"/></h4>
       <p>{partialIntentWait ? "확정하면 새 의도를 비교 작업에 반영합니다. 추가 AI 호출은 없습니다."
         : "확정하면 요약·어린이 문제·장년 문제 생성을 시작합니다."}</p>
       {!partialIntentWait && <p className={styles.helper}>다음 AI 호출 3회, 위 예시 기준 약 USD 0.24입니다. 실제 비용은 사용량에 따라 달라집니다.</p>}

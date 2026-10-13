@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { AiCostDetails } from "./AiCostDetails";
 import { QuizDeadline } from "./QuizDeadline";
@@ -98,7 +99,7 @@ export function PublishedMetadata({ initialQuizSetId = "" }: { initialQuizSetId?
     return () => controller.abort();
   }, [attempt]);
   return <section className={styles.panel} aria-labelledby="published-metadata-title">
-    <h2 id="published-metadata-title">발행 정보 정정</h2>
+    <h2 id="published-metadata-title"><AdminLabel text="발행 정보 정정"/></h2>
     <p>발행된 퀴즈의 제목·설교일과 요약·단서 오탈자를 바로잡습니다. 초안 정리 후에도 이용할 수 있습니다.</p>
     {error ? <p role="alert">발행 목록을 불러오지 못했습니다. <Button type="button" onClick={() => { setError(false); setAttempt(a => a + 1); }}>목록 다시 확인</Button></p>
       : items === null ? <p role="status">발행 목록을 불러오고 있습니다.</p>

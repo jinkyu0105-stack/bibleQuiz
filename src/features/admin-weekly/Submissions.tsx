@@ -24,7 +24,7 @@ export function Component(){
     }catch(error){setMessage(error instanceof Error?error.message:'처리 결과를 확인하지 못했습니다.');}finally{setBusy(false);}}
   const visible=items?.filter(i=>(level==='all'||i.difficulty===level)&&(state==='all'||i.status===state));
   return <div className={styles.page}>
-    <AdminIntro title="참여 기록" description="퀴즈별 답안과 코멘트를 확인하고 공개 여부를 관리하세요."/>
+    <AdminIntro terms={["숨김", "개인정보 삭제", "Top N"]} screenshots={["submissions"]} title="참여 기록" description="퀴즈별 답안과 코멘트를 확인하고 공개 여부를 관리하세요."/>
     <div className={record.fields}>
       <label>관리할 퀴즈<select value={id} disabled={busy} onChange={e=>{setResult(null);setMessage('');setQuery({quiz:e.target.value});}}><option value="">퀴즈 선택</option>{quizzes.filter(q=>['published','archived'].includes(q.status)).map(q=><option key={q.quizSetId} value={q.quizSetId}>{q.sermonDate} · {q.title}</option>)}</select></label>
       <label>난이도 필터<select value={level} onChange={e=>setLevel(e.target.value)}><option value="all">모두</option><option value="child">어린이</option><option value="adult">장년</option></select></label>

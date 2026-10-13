@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { z } from "zod";
@@ -178,7 +179,7 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
     finally { if (!controller.signal.aborted) setBusy(false); }
   }
   return <section className={styles.panel} aria-labelledby="sermon-drafts-title">
-    <h3 id="sermon-drafts-title">설교 작업 선택</h3>
+    <h3 id="sermon-drafts-title"><AdminLabel text="설교 작업 선택"/></h3>
     <p>영상 링크에서 제목·게시일 후보와 공개 자막 상태를 확인할 수 있습니다. 설교일·장절은 직접 확인하고, 자막을 가져오지 못하면 텍스트를 붙여넣어 주세요.</p>
     <div className={styles.actions}>
       <Button type="button" disabled={busy || disabled} onClick={() => { setCreating(v => !v); setError(""); setMessage(""); }}>{creating ? "등록 닫기" : "새 설교 등록"}</Button>

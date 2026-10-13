@@ -1,0 +1,17 @@
+.emoji { display: inline-block; margin-inline-end: .4em; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: .88em; font-weight: 400; line-height: 1; vertical-align: .03em; }
+.term.term { display: inline; width: auto; min-height: 24px; margin: 0; padding: 1px 2px; border: 0; border-radius: 3px; background: none; color: var(--ui-guide); font: inherit; line-height: inherit; text-decoration: underline dotted; text-underline-offset: 4px; cursor: help; white-space: nowrap; box-shadow: none; }
+.term.term:hover { background: var(--ui-guide-bg); }
+.question { display: inline-block; margin-left: 3px; font-size: .65em; vertical-align: super; text-decoration: none; }
+.tooltip { position: fixed; inset: auto; margin: 0; width: min(320px, calc(100vw - 24px)); box-sizing: border-box; padding: 14px 16px; border: 1px solid color-mix(in srgb, var(--ui-guide) 40%, transparent); border-radius: 12px; background: var(--ui-guide-bg); color: var(--ink); font-family: "Noto Sans KR", sans-serif; font-size: 14px; font-weight: 400; line-height: 1.8; white-space: normal; word-break: keep-all; overflow-wrap: anywhere; text-align: left; box-shadow: 0 8px 28px #10234624; }
+.tooltip:popover-open { display: grid; gap: 6px; }
+.tooltip strong { color: var(--ui-guide); font-size: 14px; }
+.concepts { display: flex; align-items: center; flex-wrap: wrap; gap: 0 14px; font-size: 13px; margin: 14px 0; }
+.conceptLabel { color: var(--muted); font-size: 12px; }
+.concepts .term { min-height: 36px; line-height: 36px; }
+.concepts small { color: var(--muted); font-size: 12px; }
+@media (pointer: coarse) { .concepts .term { min-height: 44px; line-height: 44px; } }
+@media (forced-colors: active) {
+  .term.term { color: LinkText; }
+  .tooltip { color: CanvasText; background: Canvas; border-color: CanvasText; box-shadow: none; }
+  .tooltip strong { color: CanvasText; }
+}

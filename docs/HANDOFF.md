@@ -2,40 +2,43 @@
 
 ## 현재 작업과 Git
 
-**P9-22 로컬 완료.** 부분 구현 `d05d3df`의 main / clean 상태에서 이어받아, 기존 매뉴얼·사이드바 시안을 실제 React 화면에 적용하고 관련 검사·문서화를 마쳤다. 작업 경로 `/home/onegem/work/bibleQuiz`. 완료 변경은 이 인수인계를 포함한 로컬 커밋 `Apply P9-22 manual and sidebar visual references`로 보존한다. 정확한 해시와 잔여 변경은 `git log -1`·`git status --short`로 확인한다. push·배포·실제 자료 변경 없음.
+**P9-23 관리자 이해 돕기 — 로컬 완료.** P9-22 완료 `3ddc81e`의 main / clean 상태에서 사용자의 후속 이모지·말풍선·확대 가능한 스크린샷 요청을 구현했다. 경로는 `/home/onegem/work/bibleQuiz`. 이 문서를 포함해 `Add admin concept help and expandable screen examples` 제목의 로컬 커밋으로 보존한다. 정확한 해시와 잔여 변경은 `git log -1`·`git status --short`로 확인한다. push·배포·실제 자료 변경 없음.
 
-다음은 사용자의 로컬 화면 확인과 피드백이며, 새로운 구현 ID나 원격 반영 승인을 만들지 않는다. [P9-22](work/P9-22.md)에 변경 파일·검사 명령·증거·초기 실패와 보정 근거를 모았다. 시안 생성/색상만 구현된 상태라는 이전 인계는 대체한다.
+다음은 사용자 로컬 화면 확인/피드백이다. 새 구현 ID나 원격 반영 승인을 만들지 않는다. [P9-23](work/P9-23.md)에 범위·검사 명령·초기 실패/보정과 한계를 모았다. P9-22 시안 적용 완료는 유지된다.
 
-## 적용한 것과 보존한 것
+## 변경과 보존
 
-- 매뉴얼: 느낌표 아이콘과 전체 1px 테두리의 콜아웃, 선명한 채움 번호/연결선, 굵은 단계 제목, 주제·서비스 아이콘과 활성 배경/왼쪽 표시. 본문 폭과 여백을 시안에 맞추고 강제 개행은 추가하지 않았다.
-- 사이드바: ‘퀴즈 운영’/‘도구와 설정’의 색상 그룹 제목, 선 아이콘, 활성 배경과 왼쪽 표시, 구분선·행 간격. 다른 항목 호버 중에도 실제 선택은 유지한다. 기존 공통 유리 엔진은 변경하지 않았다.
-- 보존: 다섯 역할의 네 시간대 색상, 굵은 고딕 ‘관리 공간’, 수평선과 세 수직선의 잔디, 메인/하늘·14개 문서·10개 서비스·라우트/접기·미저장 편집 보호·모바일/키보드·자료/키/연습 DB.
-- 변경 파일: `src/components/AdminIcon.tsx`, admin-weekly의 `AdminNavigation.tsx`/CSS, admin-operations의 `ManualReader.tsx`/`ManualText.tsx`/CSS 2개, 관련 E2E 2개, DESIGN/디자인 정본/DECISIONS/목차/시안 README 2개/STATUS/HANDOFF/작업 문서. 기존 PNG와 색상 HTML은 재생성하지 않았다.
+- 공통 `AdminHelp`와 `config/admin-help.ts`: 관리자 제목·단계·안내의 장식 이모지,29개 개념의 쉬운 설명. 호버/키보드/터치·Escape/바깥 클릭·스크롤 위치 보정. 설교·참여자·입력 데이터와 완전한 기술 식별자는 변환하지 않는다.
+- `AdminScreenshots`/CSS/설정과 `public/images/admin-guide/` PNG8종: 실제 앱에 합성 연습 자료를 표시해 캡처했다. 현재 운영 상태나 실자료가 아니다. 매뉴얼7개 주제와 관련 관리자 작업에서 작게 보고 확대/원본 크기/스크롤할 수 있다. Tab 순환, 닫기와 원래 버튼 초점 복귀, 기존 입력값 보존을 확인했다.
+- 공통 `AdminGuide`와 admin-weekly/sermon-input/bible-reference/operations의 안내·제목을 연결했다. 제작·저장·확정·발행·문의·삭제·필터·백업 실행 로직과 API/DB는 변경하지 않았다. 기존 의미 색상·선 아이콘·고딕 제목·직선 잔디·원문/키/연습 DB를 보존한다.
+- 테스트는 새 도움말/합성 캡처/fixture와 기존 문의 검사의 정확한 combobox 선택이다. 정본·DESIGN·DECISIONS·목차·작업/자산 문서를 갱신했다. PNG 총610,197bytes이며 글꼴 파일·새 의존성·새 이미지 생성/실제 AI는 없다.
 
 ## 검사 결과와 한계
 
-문서 `git diff --check`와 수정 문서9개의 로컬 파일/절 링크 검사를 통과했다. 최종 관련 E2E **15통과·실패/재시도0** (Chromium PC/모바일·Firefox), lint/typecheck/build exit0. 실제5173에서 네 시간대 PC·390/320px 모바일 화면을 직접 비교했다. 주제/서비스24개·다음 안내·초점 이동·강제 색상/감소 모션/투명도 줄이기를 확인했다. 색상24쌍 대비5.20~8.40:1, 가로 넘침·pageerror·API 쓰기0. 시안 PNG2개/색상 비교HTTP200·PNG 디코딩 확인. 마지막 서비스 부제 간격 보정 후 네 시간대 서비스 화면도 다시 확인했다.
+관련 회귀 E2E54건(Chromium PC/모바일·Firefox)이 무실패/재시도0으로 통과했다. 마지막 강조 용어 연결 후 도움말/매뉴얼24항목 중23통과, 모바일1건은 문서 표시 전 반응형 분기 판단 때문에 실패했다. 검사 대기 조건을 고친 뒤 같은 항목의3브라우저 검사가 모두 통과했다. 성공한 나머지는 변경 없는 결과를 재사용했다. 최종 lint/typecheck/build 통과. 최초 실패·보정/재검사와 최종 검사는 작업 문서에 구분했다.
 
-초기 Chromium 호버1건 실패는 동일 코드의 단독 추적3회에서 재현되지 않았다. 메뉴 펼침 후 지연 측정이 호버 표시를 초기화하는 코드 경로에 맞춰 검사 동기화를 보완했고 최종15건을 통과했다. 최초 실패의 정확한 원인을 확정 재현했다고 주장하지 않는다. 기존 hash 이동 관련 router 경고와 500kB 번들 경고는 남아 있다. 전체 `pnpm check`/전체 E2E/WebKit/실기기/원격 Access는 이번 범위에서 실행하지 않았다. Phase·배포 단위 완료 때는 전체 필수 검사를 따른다.
+선택적 WebKit8건은 `browserType.launch`에서 `libgtk-4.so.1`, GStreamer 등의 OS 라이브러리 누락으로 시작하지 못했다. [공식 시스템 의존성 안내](https://playwright.dev/docs/browsers#install-system-dependencies)를 확인했으며 새 의존성 제외 범위를 지켰다. Safari/실기기/화면 읽기 프로그램/원격 인증은 미검증이다. 필수 로컬 요청 구현은 완료했지만 이 검증 범위를 더 넓게 보고하지 않는다. 전체 `pnpm check`/전체 E2E는 이번 UI 범위에서 실행하지 않았다. Phase·배포 단위의 검사는 기존 규칙을 따른다.
 
-증거는 Git 제외 `.wrangler/releases/p9-22/`의 `verify-ui.mjs`, `implemented-visual.json`, `implemented-*.png`, `e2e-final.log`, `build-implementation.log`다. 이전 부분 검증과 초기 실패 로그도 보존했다. 사용자 Windows 앱에서 직접 표시를 확인하거나 미감 승인을 받은 것은 아니다. 남은 필수 구현/검사는 없으며 이후 미감 피드백은 현재 결과를 기준으로 처리한다.
+실제5173의 네 시간대 PC1440·모바일390, 추가320px·강제 색상, 이미지 확대와 말풍선을 확인했다. 가로 넘침·pageerror·API 쓰기0. 매뉴얼24개 주제/서비스를320px에서 전환해 넘침0도 확인했다. PNG8종을 직접 확인하고 HTTP200/image/png/파일 일치·브라우저 디코딩을 확인했다. Windows 사용자 화면의 표시 여부를 직접 확인하거나 미감 승인을 받은 것은 아니다. 기존 router의 hash 이동 경고와 fontkit500kB 번들 경고는 남아 있다.
 
-## 화면·서버·실행 경로
+Git 제외 증거: `.wrangler/releases/p9-23/`의 `e2e-final.log`(54통과), `e2e-help-final.log`(23통과·모바일1실패·WebKit8시작불가), `e2e-emphasis-final.log`(3통과), lint/typecheck/build 최종 로그, `visual-results.json`, `http-assets.json`, `manual-*`/`tooltip-*`/`examples-*`/`enlarged-*` PNG와 capture 로그. 캡처 도구와 합성 자료는 저장소 테스트에 보존했다.
 
-- 실제 적용 화면: http://localhost:5173/admin/manual
-- 네 시간대 다섯 색상: http://localhost:5173/docs/design/phase-9/admin-sidebar/palette
-- 기존 매뉴얼 시안: http://localhost:5173/docs/design/phase-9/manual-reader/reference.png
-- 기존 사이드바 시안: http://localhost:5173/docs/design/phase-9/admin-sidebar/reference.png
+## 화면·서버·실행
 
-기존5173 `pnpm dev:demo --port 5173 --strictPort`를 재사용했다. 꺼졌으면 기존 자료를 재생성하지 말고 서버만 켠다. Node24.18.0 / pnpm11.14.0. 필요하면 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 현재 셸 PATH에 추가한다. Windows 앱에 이미지는 WSL 파일 경로만 주지 말고 이미지 첨부 또는 확인한 HTTP 주소로 전달한다.
+- 실제 매뉴얼: http://localhost:5173/admin/manual
+- 퀴즈 관리: http://localhost:5173/admin
+- 검수 화면 예시 PNG: http://localhost:5173/images/admin-guide/review.png
+- 기존 다섯 의미 색상 비교: http://localhost:5173/docs/design/phase-9/admin-sidebar/palette
+- 기존 시안: http://localhost:5173/docs/design/phase-9/manual-reader/reference.png 및 http://localhost:5173/docs/design/phase-9/admin-sidebar/reference.png
 
-이번에도 기본 명령 도구의 시작 전 ENOENT와 Node 도구의 WSL cwd URI 오류를 확인했다. 검증된 경로는 `/bin/bash`, `login:false`, 명시 workdir, `require_escalated` 승인 검토 실행이다. 기본 도구 시작 실패와 실제 WSL 연결 문제를 혼동하지 않는다. 이 정상 경로를 먼저 사용하며 승인 거부를 우회하지 않는다. `codex-exec-recovery`를 따른다.
+기존5173 `pnpm dev:demo --port 5173 --strictPort`를 재사용했다. 꺼졌으면 자료를 재생성하지 말고 서버만 켠다. Node24.18.0 / pnpm11.14.0. 필요할 때 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 현재 셸 PATH에 추가한다. 사용자에게 이미지는 WSL 경로만 주지 말고 이미지 첨부 또는 확인한 HTTP 주소로 전달한다.
 
-시작 사용량은 Pro 잔여80% × 사용자 기준10 = 800%였다. 별도5시간 창은 없었다. 다음 구현 시작 시 현재 사용량을 새로 조회한다. 문서는 AGENTS → PROJECT_CONTEXT → DECISIONS → STATUS → HANDOFF → implementation의 관련 디자인 명세 → P9-22 순서로 확인하고 기존 변경을 보존한다.
+검증된 명령 경로: `/bin/bash`, `login:false`, 명시 workdir, `require_escalated` 승인 검토 실행. `codex-exec-recovery`에 따라 인계의 정상 경로를 재사용했다. 기본 exec 시작 전 ENOENT와 Node 도구의 WSL cwd URI 문제를 WSL 단절로 오해하거나 승인 거부를 우회하지 않는다. 이번 WebKit 브라우저의 OS 라이브러리 누락은 별개의 실행 환경 한계다.
 
-Preview: P9-14 소스 `0fbde84`, version `cd6efb0e-2c05-4401-b0bf-692bdf18c5b1`. Production: P9-04 소스 `37b7254`, version `7aea6843-5288-42da-9bef-bc673e1d9dfe`. 새 의존성·실제 AI·원격 데이터 변경·push·배포는 제외했다.
+시작 사용량: Pro 잔여100% × 사용자 기준10 = 1,000%. 별도5시간 창은 없었다. 다음 구현 시작 시 현재값을 조회한다. 문서 순서는 AGENTS → PROJECT_CONTEXT → DECISIONS → STATUS → HANDOFF → implementation의 관련 디자인 명세 → P9-23 → Git 상태/차이/log다.
 
-폐기한 접근은 곡선 풀잎 재해석, 색상/시안 생성만으로 실제 구현 완료 판단, 호버 검사1건으로 공통 엔진 범위를 확대하기다.
+Preview는 P9-14 소스 `0fbde84` / version `cd6efb0e-2c05-4401-b0bf-692bdf18c5b1`, Production은 P9-04 소스 `37b7254` / version `7aea6843-5288-42da-9bef-bc673e1d9dfe`를 유지한다.
 
-**현재 작업 P9-22 로컬 완료 · 부모 작업 시안의 실제 UI 적용 로컬 완료 · 다음 작업 사용자 로컬 화면 확인/피드백 · 세션 유지 · 다음 추천 GPT-6.1-sol/medium** — 한정된 UI 보정과 관련 검증에 적합하다.
+폐기한 접근: 모든 문장에 자동 이모지 삽입, 사용자 자료/기술 식별자 변환, 스크롤마다 설명 닫기, 실제 UI 대신 새 가상 시안 생성, 실자료를 정적 이미지로 사용, 폼 검사에서 넓은 라벨 부분 일치 사용.
+
+**현재 작업 P9-23 로컬 완료 · 부모 작업 관리자 이해 돕기 로컬 완료 · 다음 작업 사용자 화면 확인/피드백 · 세션 유지 · 다음 추천 GPT-6.1-sol/medium** — 한정된 문구·배치 보정과 관련 검사에 적합하다.

@@ -26,7 +26,7 @@ function ManualPage({ future }: { future: boolean }) {
     return () => controller.abort();
   }, [future, attempt]);
   return <div className={styles.page}>
-    <AdminIntro title={future ? "향후 회원 로그인 검토" : "운영 매뉴얼"} description={future ? "아직 제공하지 않는 기능의 검토 내용입니다." : "필요한 주제를 골라 읽어보세요."}/>
+    <AdminIntro title={future ? "향후 회원 로그인 검토" : "운영 매뉴얼"} description={future ? "아직 제공하지 않는 기능의 검토 내용입니다." : "필요한 주제를 골라 읽어보세요. 점선 밑줄에 올리거나 누르면 용어 설명을 볼 수 있습니다."}/>
     {error && <div role="alert"><p>{error}</p><Button type="button" onClick={() => { setError(""); setAttempt(value => value + 1); }}>안내문 다시 불러오기</Button></div>}
     {!data && !error && <p role="status">안내문을 불러오고 있습니다.</p>}
     {data && (future ? <ManualText source={data.markdown}/> : <ManualReader source={data.markdown}/>)}

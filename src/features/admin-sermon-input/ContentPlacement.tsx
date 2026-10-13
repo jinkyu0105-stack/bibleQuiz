@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { WinnerSettings } from "../admin-weekly/WinnerSettings";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
@@ -107,7 +108,7 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
       else setMessage(`${result.error.message} 같은 요청으로 상태를 확인할 수 있습니다.`);
     } finally { if (mounted.current) setTrialBusy(false); lock.current = false; }
   }
-  if (publishedSlug) return <section className={styles.placementSection} aria-label="발행 완료"><h4>발행 완료</h4><a href={`/quiz/${publishedSlug}`}>공개된 퀴즈 보기</a></section>;
+  if (publishedSlug) return <section className={styles.placementSection} aria-label="발행 완료"><h4><AdminLabel text="발행 완료"/></h4><a href={`/quiz/${publishedSlug}`}>공개된 퀴즈 보기</a></section>;
   return <section className={styles.placementSection} aria-label="배치 선택·발행 전 검토">
     <div className={styles.previewTools}>
       <label><input type="checkbox" checked={answers} onChange={e => setAnswers(e.currentTarget.checked)} />관리자 정답 보기</label>
@@ -116,7 +117,7 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
       {step !== undefined && <label>색상 미리보기<select value={previewTheme} onChange={e=>setPreviewTheme(e.target.value)}><option value="light">라이트</option><option value="dark">다크</option></select></label>}
     </div>
     <div hidden={step !== undefined && step > 4}>
-    <h4>배치 선택·발행 전 검토</h4><p>검수한 후보로 여러 배치를 시험합니다. AI 추가 비용은 없습니다.</p>
+    <h4><AdminLabel text="배치 선택·발행 전 검토"/></h4><p>검수한 후보로 여러 배치를 시험합니다. AI 추가 비용은 없습니다.</p>
     {!ready && <p>요약·어린이·장년 문제의 검수를 모두 완료하면 배치를 시험할 수 있습니다.</p>}
     {levels.map(level => <section key={level} className={styles.placementLevel} aria-label={`${names[level]} 배치 시험`}>
       <h5>{names[level]} 배치</h5>
@@ -174,7 +175,7 @@ function PublicationConfirmation({ view, disabled, message, cancel, publish }: {
   const time = (ms: number) => new Date(ms).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" });
   return <dialog ref={dialog} className={styles.publicationDialog} aria-labelledby="publish-title"
     onCancel={e => { e.preventDefault(); if (!disabled) dismiss(); }}>
-    <h4 id="publish-title">지금 발행 확인</h4>
+    <h4 id="publish-title"><AdminLabel text="지금 발행 확인"/></h4>
     <p>새 퀴즈가 메인에 공개되고 지금 참여가 시작됩니다.</p>
     <p>발행·참여 시작 예상: {time(now)} (한국 시간)<br />기본 마감 예상: {time(now + 7 * 24 * 3600_000)} (한국 시간)</p>
     <p>실제 저장 시각부터 정확히 7일 뒤 마감됩니다. 발행 후 저장된 시각을 확인할 수 있습니다.</p>

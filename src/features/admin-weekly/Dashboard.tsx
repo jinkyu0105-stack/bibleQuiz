@@ -1,3 +1,5 @@
+import { AdminConcepts, AdminEmoji, AdminLabel } from "../../components/AdminHelp";
+import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, ButtonLink } from "../../components/Button";
@@ -46,14 +48,16 @@ export function Component() {
   const due = cleanup?.items.filter(q => q.state === "blocked" || (q.state !== "purged" && q.dueAt && Date.parse(q.dueAt) - checkedAt <= 86_400_000)) ?? [];
   return <div className={styles.page}>
     <header className={styles.header}>
-      <div><h2>퀴즈 관리</h2><p>퀴즈를 준비하고, 공개와 참여를 관리하세요.</p></div>
+      <div><h2><AdminLabel text="퀴즈 관리"/></h2><p>퀴즈를 준비하고, 공개와 참여를 관리하세요.</p></div>
       <ButtonLink variant="primary" to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>
     </header>
+    <AdminConcepts terms={["초안", "발행", "자동 선택", "대표 지정"]}/>
+    <AdminScreenshots ids={["dashboard"]} compact/>
     {message && <p className={styles.alert} role="alert">{message}</p>}
     <div className={styles.overview} aria-label="운영 요약">
-      <button type="button" onClick={() => setFilter("published")}><span>공개 중</span><strong>{data ? published.length : "—"}</strong><span aria-hidden="true">↗</span></button>
-      <button type="button" onClick={() => setFilter("draft")}><span>작성 중</span><strong>{data ? drafts.filter(q => !q.expired).length : "—"}</strong><span aria-hidden="true">↗</span></button>
-      <Link data-tone="attention" to="/admin/privacy-requests"><span>답변 대기</span><strong>{data?.unansweredCount ?? "—"}</strong><span aria-hidden="true">↗</span></Link>
+      <button type="button" onClick={() => setFilter("published")}><span><AdminEmoji>📣</AdminEmoji>공개 중</span><strong>{data ? published.length : "—"}</strong><span aria-hidden="true">↗</span></button>
+      <button type="button" onClick={() => setFilter("draft")}><span><AdminEmoji>✏️</AdminEmoji>작성 중</span><strong>{data ? drafts.filter(q => !q.expired).length : "—"}</strong><span aria-hidden="true">↗</span></button>
+      <Link data-tone="attention" to="/admin/privacy-requests"><span><AdminEmoji>💬</AdminEmoji>답변 대기</span><strong>{data?.unansweredCount ?? "—"}</strong><span aria-hidden="true">↗</span></Link>
     </div>
     {data && <section className={styles.featured} aria-labelledby="home-quiz-heading">
       <div className={styles.homeMark} aria-hidden="true">⌂</div>

@@ -1,3 +1,5 @@
+import { adminTerms, type AdminTerm } from "../../config/admin-help";
+import { AdminLabel, GuideText, HelpTerm } from "../../components/AdminHelp";
 import { Fragment } from "react";
 import { AdminIcon } from "../../components/AdminIcon";
 import local from "./operations.module.css";
@@ -7,12 +9,12 @@ function Sentence({ text }: { text: string }) {
   // Keep a short Korean predicate together without fixing a viewport-specific line break.
   const parts = text.replace(/\s*\n\s*/gu, " ").split(/([가-힣]+(?: 수)? (?:있습니다|없습니다|됩니다|합니다|않습니다|하세요)[.!?])/gu);
   return <>{parts.map((part, index) => index % 2 === 1 && part.length <= 24
-    ? <span className={local.phrase} key={index}>{part}</span> : <Fragment key={index}>{part}</Fragment>)}</>;
+    ? <span className={local.phrase} key={index}>{part}</span> : <Fragment key={index}><GuideText text={part}/></Fragment>)}</>;
 }
 function Inline({ text }: { text: string }) {
   return <>{text.split(/(`[^`\n]+`|\*\*[^*\n]+\*\*)/u).map((part, index) =>
-    part.startsWith("`") && part.endsWith("`") ? <code key={index}>{part.slice(1, -1)}</code>
-      : part.startsWith("**") && part.endsWith("**") ? <strong key={index}>{part.slice(2, -2)}</strong>
+    part.startsWith("`") && part.endsWith("`") ? <code key={index}>{Object.hasOwn(adminTerms, part.slice(1, -1)) ? <HelpTerm term={part.slice(1, -1) as AdminTerm}/> : part.slice(1, -1)}</code>
+      : part.startsWith("**") && part.endsWith("**") ? <strong key={index}><AdminLabel text={part.slice(2, -2)} explain/></strong>
         : <Sentence key={index} text={part}/>)}</>;
 }
 export function ManualBody({ source }: { source: string }) {

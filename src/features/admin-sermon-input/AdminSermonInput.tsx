@@ -1,3 +1,5 @@
+import { AdminConcepts, AdminLabel, GuideText } from "../../components/AdminHelp";
+import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { Button } from "../../components/Button";
 import { useBlocker, useNavigate, useSearchParams } from "react-router-dom";
 import type { AdminContentView } from "../../../shared/api/admin-content-generation";
@@ -530,7 +532,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       <div>
         {!weekly && <p className={styles.kicker}>현재 관리자 작업</p>}
         {weekly && reviewStatus && <p className={styles.workStatus} role="status">{reviewStatus}{step === 2 && selectionLabel ? ` · 현재 선택: ${selectionLabel}` : ""}</p>}
-        <h2 id="sermon-input-title">{weekly ? stepNames[step - 1] : "설교 입력자료 검토"}</h2>
+        <h2 id="sermon-input-title"><AdminLabel text={weekly ? stepNames[step - 1]! : "설교 입력자료 검토"}/></h2>
         <p>{weekly ? ["퀴즈의 바탕이 될 설교를 준비합니다. 영상·성경 장절·자막을 확인한 뒤 입력자료를 확정하세요.", "설교의 핵심 메시지를 확인합니다. 분석 내용이 원문과 맞는지 읽고 사용할 분석을 확정하세요.", "참여자에게 보여줄 요약과 문제를 다듬습니다. 요약·어린이·장년을 각각 검수해야 다음 단계로 갈 수 있습니다.", "문제가 들어갈 격자를 만듭니다. 크기와 문제 수를 골라 무료로 배치를 비교하고 두 난도의 격자를 선택하세요.", "발행 전에 공개될 내용을 점검합니다. 요약·문제·두 난도 격자를 확인하고 최종 검사를 진행하세요.", "검수한 퀴즈를 참여자에게 공개합니다. 공개 범위와 마감 일시를 확인한 뒤 발행하세요."][step - 1] : "저장된 설교의 자막과 수정 이력을 자세히 살펴봅니다. 아래에서 작업을 선택하면 비교·복원·교정과 검수를 이어갈 수 있습니다."}</p>
       </div>
       {!weekly && <ol className={styles.steps} aria-label="주간 발행 6단계">
@@ -546,8 +548,10 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
     </header>
     {weekly && <ol className={weeklyStyles.stepper} aria-label="주간 발행 6단계">{stepNames.map((label,index)=><li key={label}><button type="button" disabled={!available[index]} aria-current={step===index+1?"step":undefined} onClick={()=>selectStep(index+1)}><span className={weeklyStyles.stepNumber} aria-hidden="true">{index+1<recommended ? "✓" : index+1}</span><span>{label}</span><small>{!available[index]?reasons[index]:index+1<recommended?"완료 · 수정 가능":step===index+1?"현재 단계":"이동 가능"}</small></button></li>)}</ol>}
     {blocker.state === "blocked" && <div role="alert"><p>저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.</p><Button type="button" onClick={() => blocker.reset()}>작업 계속하기</Button><Button type="button" onClick={() => blocker.proceed()}>저장하지 않고 이동</Button></div>}
-    {weekly && <p className={styles.saveGuidance} role="status">{changedInput || contentDirty ? "저장 확인 필요. " : ""}편집은 잠시 멈추면 자동 저장됩니다. 확정·AI 재생성·발행은 직접 실행합니다.</p>}
+    {weekly && <p className={styles.saveGuidance} role="status">{changedInput || contentDirty ? "저장 확인 필요. " : ""}<GuideText text="편집은 잠시 멈추면 자동 저장됩니다. 확정·AI 재생성·발행은 직접 실행합니다."/></p>}
 
+    <AdminConcepts terms={step === 1 ? ["초안", "확정", "자동 저장"] : step === 2 ? ["설교 의도", "비판 검토", "확정"] : step === 3 ? ["검수", "자동 저장", "재생성"] : step === 4 ? ["격자 배치", "검수"] : ["발행", "접수 마감", "Top N"]}/>
+    <AdminScreenshots key={step} ids={step === 1 ? ["input"] : step <= 3 ? ["review"] : ["settings"]} compact/>
     {costQuizSetId && <AiCostDetails key={`${costQuizSetId}-${costRefresh}`} quizSetId={costQuizSetId} refreshKey={costRefresh} />}
     <div hidden={weekly && step !== 1}>
     <SermonDrafts selectedId={loadedSermonId} onSelect={refreshWorkspace} onMetadataSaved={() => { setMetadataVersion(v => v + 1); onSaved?.(); }} onCostQuizSetId={onCostQuiz} initialCreating={weekly && !initialSermonId} disabled={workspace.state === "loading" || feedback.state === "loading"} />
@@ -565,7 +569,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
     {workspace.state === "ready" && workspace.current === null && <>
       <section className={styles.panel} aria-labelledby="public-caption-title">
-        <div className={styles.sectionHeading}><h3 id="public-caption-title">공개 자막 가져오기</h3><span className={styles.needsReview}>원본으로 보존</span></div>
+        <div className={styles.sectionHeading}><h3 id="public-caption-title"><AdminLabel text="공개 자막 가져오기"/></h3><span className={styles.needsReview}>원본으로 보존</span></div>
         <p>선택한 영상의 공개 한국어 자막을 다시 조회합니다. 가져온 시간 구간과 글자는 원본으로 저장하고, 사람 확인 전에는 생성에 사용하지 않습니다.</p>
         <Button type="button" disabled={captionFetch.state === "loading"} onClick={() => void submitPublicCaptions()}>
           {captionFetch.state === "loading" ? "공개 자막 확인 중" : "공개 자막 가져와 원본 저장"}
@@ -580,7 +584,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       </section>
       <form className={styles.panel} onSubmit={submitImport}>
       <div className={styles.sectionHeading}>
-        <div><p className={styles.kicker}>첫 작업</p><h3>최초 입력자료 저장</h3></div>
+        <div><p className={styles.kicker}>첫 작업</p><h3><AdminLabel text="최초 입력자료 저장"/></h3></div>
         <span className={styles.needsReview}>원본으로 보존</span>
       </div>
       <p>처음 저장한 자료는 덮어쓰지 않습니다. 자막 수정은 저장 뒤 새 버전으로 추가됩니다.</p>
@@ -624,14 +628,14 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
       <div className={styles.actionGrid}>
         <section className={styles.panel} aria-labelledby="confirm-input-title">
-          <div className={styles.sectionHeading}><h3 id="confirm-input-title">사람 검토 확정</h3><span className={current.confirmationId ? styles.confirmed : styles.needsReview}>{current.confirmationId ? "완료" : "필요"}</span></div>
+          <div className={styles.sectionHeading}><h3 id="confirm-input-title"><AdminLabel text="사람 검토 확정"/></h3><span className={current.confirmationId ? styles.confirmed : styles.needsReview}>{current.confirmationId ? "완료" : "필요"}</span></div>
           <p>현재 본문을 직접 확인한 기록을 남깁니다. 본문이 바뀌면 다시 확정해야 합니다.</p>
           <label className={styles.checkbox}><input type="checkbox" checked={reviewed} onChange={(event) => setReviewed(event.currentTarget.checked)} />현재 본문을 검토했습니다.</label>
           <Button type="button" disabled={!reviewed || current.confirmationId !== null} onClick={submitConfirm}>{current.confirmationId ? "이미 확정됨" : "현재 본문 확정"}</Button>
         </section>
 
         {isCaption ? <form className={styles.panel} onSubmit={submitEdit}>
-          <div className={styles.sectionHeading}><h3>자막 직접 수정</h3><span className={styles.needsReview}>새 버전</span></div>
+          <div className={styles.sectionHeading}><h3><AdminLabel text="자막 직접 수정"/></h3><span className={styles.needsReview}>새 버전</span></div>
           {current.content.format === "plain_text" ? <>
             <label className={styles.textareaLabel} htmlFor="caption-edit">수정할 자막
               <textarea id="caption-edit" value={plainEdit} onChange={(event) => setPlainEdit(event.currentTarget.value)} rows={12} />
@@ -653,14 +657,14 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
           </>}
           <Button type="submit">수정본 저장</Button>
         </form> : <section className={styles.readOnlyPanel} aria-labelledby="read-only-title">
-          <h3 id="read-only-title">받은 자료 그대로 사용</h3>
+          <h3 id="read-only-title"><AdminLabel text="받은 자료 그대로 사용"/></h3>
           <p>목사님 제공 원고와 요약본은 읽고 확정할 수 있지만 수정, 복원, 교정하지 않습니다.</p>
         </section>}
       </div>
 
       <section className={styles.panel} aria-labelledby="history-title">
         <div className={styles.sectionHeading}>
-          <div><p className={styles.kicker}>본문을 읽지 않는 목록</p><h3 id="history-title">입력자료 이력</h3></div>
+          <div><p className={styles.kicker}>본문을 읽지 않는 목록</p><h3 id="history-title"><AdminLabel text="입력자료 이력"/></h3></div>
           <span>{history?.events.length ?? 0}건</span>
         </div>
         <ol className={styles.timeline}>
@@ -673,7 +677,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
         <div className={styles.historyTools}>
           <section aria-labelledby="compare-title">
-            <h4 id="compare-title">두 본문 비교</h4>
+            <h4 id="compare-title"><AdminLabel text="두 본문 비교"/></h4>
             <div className={styles.formGrid}>
               <label>이전 본문
                 <select value={leftDocumentId} onChange={(event) => { setLeftDocumentId(event.currentTarget.value); setComparison({ state: "idle" }); }}>
@@ -695,7 +699,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
           </section>
 
           {isCaption && <section aria-labelledby="restore-title">
-            <h4 id="restore-title">과거 본문 복원</h4>
+            <h4 id="restore-title"><AdminLabel text="과거 본문 복원"/></h4>
             <p>과거 기록을 덮어쓰지 않고 선택한 본문을 새 버전으로 만듭니다.</p>
             <label>복원할 본문
               <select value={restoreDocumentId} onChange={(event) => setRestoreDocumentId(event.currentTarget.value)}>
@@ -710,7 +714,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
       {isCaption && <section className={styles.panel} aria-labelledby="correction-title">
         <div className={styles.sectionHeading}>
-          <div><p className={styles.kicker}>선택한 제안만 상세 조회</p><h3 id="correction-title" tabIndex={-1} ref={correctionHeading}>자막 교정 검토</h3></div>
+          <div><p className={styles.kicker}>선택한 제안만 상세 조회</p><h3 id="correction-title" tabIndex={-1} ref={correctionHeading}><AdminLabel text="자막 교정 검토"/></h3></div>
           <span>{proposalEvents.length}개 제안</span>
         </div>
 

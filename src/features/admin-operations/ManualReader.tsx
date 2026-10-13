@@ -1,3 +1,6 @@
+import { AdminLabel, GuideText } from "../../components/AdminHelp";
+import { AdminScreenshots } from "../../components/AdminScreenshots";
+import type { AdminScreenshotId } from "../../config/admin-screenshots";
 import { useRef, useState } from "react";
 import { AdminIcon, type AdminIconName } from "../../components/AdminIcon";
 import { serviceRegistry } from "../../config/service-registry";
@@ -12,6 +15,11 @@ const shortTitles: Record<string, string> = {
   "guide-5": "연습·운영 서버", "guide-6": "매주 할 일", "guide-7": "매월 비용 확인", "guide-8": "코드 수정과 배포",
   "guide-9": "오류가 났을 때", "guide-10": "백업과 복구", "guide-11": "개인정보와 성경 본문",
   "guide-12": "향후 기능", "guide-13": "안내문과 검사 기록", "guide-14": "용어 모아보기",
+};
+const examples: Record<string, readonly AdminScreenshotId[]> = {
+  "guide-2": ["dashboard", "privacy"], "guide-3": ["input", "review", "settings"],
+  "guide-6": ["submissions", "privacy"], "guide-7": ["operations"],
+  "guide-9": ["review", "filters"], "guide-10": ["operations"], "guide-11": ["submissions", "filters"],
 };
 const daily = ["guide-3", "guide-2", "guide-6", "guide-7", "guide-9"];
 const topicIcons: Record<string, AdminIconName> = {
@@ -62,14 +70,15 @@ export function ManualReader({ source }: { source: string }) {
       <select value={current.id} onChange={event => choose(event.target.value)}>{groups.map(group => <optgroup key={group.title} label={group.title}>{group.items.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}</optgroup>)}</select>
     </label>
     <article className={css.article} aria-labelledby="manual-article-title">
-      <header className={css.articleHeader}><p>{category}</p><h3 id="manual-article-title" tabIndex={-1} ref={heading}>{service && <AdminIcon name={topicIcons[current.id] ?? "cloud"}/>}<span>{section?.title ?? service?.name}</span></h3>{service && <p className={css.subtitle}>{service.plainLanguageName}</p>}</header>
+      <header className={css.articleHeader}><p>{category}</p><h3 id="manual-article-title" tabIndex={-1} ref={heading}>{service && <AdminIcon name={topicIcons[current.id] ?? "cloud"}/>}<span><AdminLabel text={section?.title ?? service?.name ?? "운영 안내"}/></span></h3>{service && <p className={css.subtitle}>{service.plainLanguageName}</p>}</header>
       {section && <ManualBody source={section.body}/>}
+      {section && examples[current.id] && <AdminScreenshots key={current.id} ids={examples[current.id]!}/>}
       {service && guide && <div className={css.serviceReading}>
         <p className={css.lead}>{guide.role}</p>
         <dl className={local.guideFacts}>
-          <div><dt>언제 쓰나요?</dt><dd>{guide.when}</dd></div>
-          <div><dt>멈추면 어떻게 되나요?</dt><dd>{guide.failure}</dd></div>
-          <div><dt>내가 확인할 것은?</dt><dd>{guide.check}</dd></div>
+          <div><dt>언제 쓰나요?</dt><dd><GuideText text={guide.when}/></dd></div>
+          <div><dt>멈추면 어떻게 되나요?</dt><dd><GuideText text={guide.failure}/></dd></div>
+          <div><dt>내가 확인할 것은?</dt><dd><GuideText text={guide.check}/></dd></div>
         </dl>
         <a className={local.docLink} href={service.officialDocsUrl} target="_blank" rel="noreferrer">{service.name} 공식 안내 ↗</a>
         <details className={local.technical}><summary>연결 설정·비용 기록 자세히</summary>

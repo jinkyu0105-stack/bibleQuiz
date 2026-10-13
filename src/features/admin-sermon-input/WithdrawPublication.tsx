@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { QuizRevisionEditor } from "./QuizRevisionEditor";
 import { useEffect, useRef, useState } from "react";
@@ -58,7 +59,7 @@ export function WithdrawPublication({ initialQuizSetId = "", initialReviewId = "
     finally { lock.current = false; if (!controller.signal.aborted) setBusy(false); }
   }
   return <section className={styles.panel} aria-labelledby="withdraw-title">
-    <h2 id="withdraw-title">첫 제출 전 발행 철회</h2>
+    <h2 id="withdraw-title"><AdminLabel text="첫 제출 전 발행 철회"/></h2>
     <p>어린이·장년 전체에 제출 기록이 없을 때 공개를 취소하고 검수 대기로 돌립니다. 저장할 때 제출 여부를 다시 확인합니다.</p>
     {message && <p role="status">{message}</p>}{error && <p role="alert">{error}</p>}
     <Button type="button" disabled={busy} onClick={() => { setError(""); setConfirm(false); setAttempt(a => a + 1); }}>목록 다시 확인</Button>

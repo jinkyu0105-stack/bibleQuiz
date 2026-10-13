@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { useEffect, useRef, useState } from "react";
 import type { AdminGenerationStatus } from "../../../shared/api/admin-generation";
@@ -62,7 +63,7 @@ export function CorrectionGeneration({ sermonId, version, onReview, onCostChange
   }
 
   return <section className={styles.panel} aria-labelledby="ai-correction-title">
-    <div className={styles.sectionHeading}><h3 id="ai-correction-title">AI 자막 교정</h3>
+    <div className={styles.sectionHeading}><h3 id="ai-correction-title"><AdminLabel text="AI 자막 교정"/></h3>
       <span className={styles.needsReview}>{status ? labels[status.status] ?? "상태 확인 필요" : "사람 검토 후 채택"}</span></div>
     <p>현재 자막으로 교정 문서를 만듭니다. API 사용료가 별도로 발생하며, 결과를 검토한 뒤 직접 채택합니다.</p>
     {availability && !availability.enabled && <p className={styles.helper}>AI 실행 연결을 아직 활성화하지 않았습니다.</p>}

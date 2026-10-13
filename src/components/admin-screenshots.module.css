@@ -1,0 +1,27 @@
+.examples, .disclosure { margin: 22px 0; min-width: 0; }
+.examples { padding-top: 20px; border-top: 1px solid var(--line); }
+.disclosure > summary { color: var(--ui-guide); font-size: 14px; min-height: 44px; align-content: center; }
+.note.note { color: var(--muted); font-size: 12px; margin: 8px 0 14px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 24px; }
+.figure { min-width: 0; max-width: 360px; margin: 0; }
+.thumbnail { display: block; position: relative; padding: 0; width: 100%; overflow: hidden; background: var(--ui-action-bg); border: 1px solid var(--control-border); border-radius: 10px; cursor: zoom-in; }
+.thumbnail img { display: block; width: 100%; height: auto; aspect-ratio: 1.62; object-fit: contain; object-position: center; }
+.enlarge { position: absolute; right: 6px; bottom: 6px; background: var(--ui-action-bg); color: var(--ui-action); padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; }
+.figure figcaption { display: grid; gap: 6px; padding-top: 10px; font-size: 13px; line-height: 1.7; }
+.figure figcaption strong { font-size: 14px; }
+.figure figcaption > span { color: var(--muted); }
+.viewer { position: fixed; inset: 0; margin: auto; padding: 20px; width: min(1160px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); box-sizing: border-box; border: 1px solid var(--control-border); border-radius: 16px; background: var(--ui-action-bg); color: var(--ink); overflow: auto; }
+.viewer::backdrop { background: #091425b3; }
+.viewer > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.viewer > header p { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.viewer .close, .viewActions button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--control-border); border-radius: 8px; background: var(--glass-soft); color: var(--ui-action); font: inherit; font-size: 14px; cursor: pointer; flex-shrink: 0; }
+.viewActions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 12px; }
+.viewActions > span { color: var(--muted); font-size: 12px; }
+.imageArea { overflow: auto; max-height: 65dvh; border: 1px solid var(--control-border); border-radius: 4px; background: #eef3fa; }
+.imageArea img { display: block; width: 100%; height: auto; }
+.imageArea[data-actual-size] img { width: auto; max-width: none; }
+.caption.caption { font-size: 14px; margin: 14px 0 0; }
+@media (max-width: 600px) { .viewer { position: fixed; inset: 0; margin: auto; padding: 14px; width: calc(100vw - 16px); max-height: calc(100dvh - 16px); } .viewer h3 { font-size: 18px; } .gallery { gap: 20px; } }
+@media (forced-colors: active) { .thumbnail, .viewer, .imageArea { border-color: CanvasText; } .viewer { color: CanvasText; background: Canvas; } .viewer::backdrop { background: #000c; } }
+
+.viewer header h3, .caption { word-break: keep-all; }

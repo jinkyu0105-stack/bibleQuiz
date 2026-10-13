@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { useEffect, useRef, useState } from "react";
 import type { AdminAiCosts } from "../../../shared/api/admin-ai-costs";
@@ -54,7 +55,7 @@ export function AiCostDetails({ quizSetId, refreshKey = 0 }: { quizSetId: string
     {error && <Button type="button" onClick={refresh}>비용 다시 확인</Button>}
     <dialog ref={dialog} className={styles.costDialog} aria-labelledby="ai-costs-title">
       <div className={styles.costDialogHeader}>
-        <div><h2 id="ai-costs-title">이 퀴즈의 AI 호출 비용</h2><p>호출 날짜와 관계없이 선택한 퀴즈에 속한 전체 기록입니다.</p></div>
+        <div><h2 id="ai-costs-title"><AdminLabel text="이 퀴즈의 AI 호출 비용"/></h2><p>호출 날짜와 관계없이 선택한 퀴즈에 속한 전체 기록입니다.</p></div>
         <Button type="button" onClick={() => dialog.current?.close()}>닫기</Button>
       </div>
       {loading && <p role="status">관측 비용 기록을 불러오고 있습니다.</p>}
