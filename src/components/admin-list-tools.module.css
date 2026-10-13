@@ -1,0 +1,16 @@
+.toolbar { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 16px; border-bottom: 1px solid var(--control-border); min-width: 0; }
+.filters { display: flex; flex-wrap: wrap; align-items: end; gap: 4px; padding-top: 4px; }
+.filters button { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 14px; border: 1px solid var(--line); border-bottom: 0; border-radius: 4px 4px 0 0; background: var(--glass-soft); color: var(--muted); font-size: 13px; line-height: 1.5; transition: transform .18s ease, background-color .18s ease; }
+.filters button::before { content: ''; position: absolute; inset: -1px -1px auto; height: 3px; border-radius: 4px 4px 0 0; background: transparent; }
+.filters button[aria-pressed=true] { background: var(--ui-action-bg); color: var(--ui-action); font-weight: 600; border-color: color-mix(in srgb,var(--ui-action) 40%,var(--line)); }
+.filters button[aria-pressed=true]::before { background: var(--ui-action); }
+.filters button:is(:hover,:focus-visible) { transform: translateY(-4px); color: var(--ui-action); background: var(--ui-action-bg); }
+.filters span { font-size: 12px; font-variant-numeric: tabular-nums; opacity: .85; }
+.controls { display: flex; align-items: center; gap: 8px; min-width: 0; margin-bottom: 8px; }
+/* More specific than the shared interior button rule, without local page overrides. */
+:global(.sky-app:not(.home-shell) .admin-main) .refresh:global(.action-button) { display: inline-flex; justify-content: center; align-items: center; flex: 0 0 44px; width: 44px; height: 44px; min-width: 44px; padding: 0; border: 1px solid var(--control-border); border-radius: 50%; color: var(--ui-action); background: var(--glass-field); box-shadow: none; }
+.refresh svg { display: block; width: 20px; height: 20px; flex: 0 0 20px; }
+.refresh:hover:not(:disabled) { background: var(--ui-action-bg); }
+@media (max-width: 600px) { .toolbar { gap: 8px; } .filters { gap: 3px; } .filters button { padding-inline: 9px; gap: 5px; font-size: 12px; } .controls:has(input) { width: 100%; order: -1; } }
+@media (prefers-reduced-motion: reduce) { .filters button { transition: none; } }
+@media (forced-colors: active) { .filters button[aria-pressed=true] { border-color: Highlight; color: Highlight; } .filters button[aria-pressed=true]::before { background: Highlight; } }

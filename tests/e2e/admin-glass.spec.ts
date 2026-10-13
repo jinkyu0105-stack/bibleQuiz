@@ -93,7 +93,7 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
   }
   await page.goto("/admin/operations");
   await page.getByRole("button", { name: "밤", exact: true }).click();
-  await expect(page.locator(".admin-main button.secondary-button").first()).toHaveCSS("color", "rgb(240, 246, 255)");
+  await expect(page.locator(".admin-main button.secondary-button").first()).toHaveCSS("color", "rgb(172, 200, 255)");
   await page.getByRole("button", { name: "투명도 줄이기", exact: true }).click();
   expect(await page.locator(".admin-main button.secondary-button").first().evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
   await page.setViewportSize({ width: 320, height: 740 });

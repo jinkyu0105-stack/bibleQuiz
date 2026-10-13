@@ -44,17 +44,17 @@ export function ProblemCorrection({ initialQuizSetId = "" }: { initialQuizSetId?
  {records?.items.map(record=><details key={record.caseId}><summary>{record.createdAt.slice(0,10)} · {record.source.content.metadata.title} · {record.outcome==="publish"?"수정본 발행":record.outcome==="cancel"?"오류 아님 취소":"확인 중"}</summary><p>{record.reason}</p><p>{record.source.content.summary}</p>{(["child","adult"] as const).map(level=><div key={level}>{record.source.layouts[level]&&<ReviewGrid grid={record.source.layouts[level]!.grid} solution={record.source.layouts[level]!.solution} title={`${level==="child"?"어린이":"장년"} 당시 원본 격자`}/>}<ul>{record.source.content[level].map(e=><li key={e.id}>{e.clue} · 당시 정답: {e.answer}</li>)}</ul></div>)}</details>)}<p>기존 마감: {new Intl.DateTimeFormat("ko-KR",{timeZone:"Asia/Seoul",dateStyle:"medium",timeStyle:"short"}).format(new Date(view.closesAt))} (한국 시간)</p>
  <p>{view.nonRanked ? "마감된 퀴즈입니다. 수정본을 발행해도 순위 접수를 다시 열지 않습니다.":"수정본은 기존 마감까지 참여할 수 있습니다. 수정 중 마감되면 기록 없는 지난 퀴즈로 전환합니다."}</p>
  <ul>{view.impact.map(v=><li key={v.variantId}>{v.difficulty==="child"?"어린이":"장년"} 버전 {v.revision}: 공개 {v.visible}건 · 숨김 {v.hidden}건 · 삭제 {v.deleted}건 · 확정 순위 {v.winners}건</li>)}</ul>
- {["ready","published","cancelled","expired"].includes(view.status)&&<fieldset disabled={busy}><legend>새 오류 확인</legend>
+ {["ready","published","cancelled","expired"].includes(view.status)&&<fieldset disabled={busy} className={styles.correctionFields}><legend>새 오류 확인</legend>
  {view.status==="expired"&&<p>7일 보관 기간이 지난 편집본은 정리되었습니다. 접수 중지는 유지됩니다. 보존된 문제에서 다시 시작할 수 있습니다.</p>}
- {(["child","adult"] as const).map(level=><label key={level}><input type="checkbox" checked={levels.includes(level)} onChange={e=>setLevels(old=>e.target.checked?[...old,level]:old.filter(v=>v!==level))}/>{level==="child"?"어린이":"장년"} 오류</label>)}
- <label>관리자 오류 확인 사유<textarea value={reason} maxLength={500} onChange={e=>setReason(e.target.value)}/></label>
- <label>공개 중지 안내<textarea value={notice} maxLength={500} onChange={e=>setNotice(e.target.value)}/></label>
+ <div className={styles.correctionLevels}>{(["child","adult"] as const).map(level=><label key={level}><input type="checkbox" checked={levels.includes(level)} onChange={e=>setLevels(old=>e.target.checked?[...old,level]:old.filter(v=>v!==level))}/>{level==="child"?"어린이":"장년"} 오류</label>)}</div>
+ <div className={styles.formGrid}><label>관리자 오류 확인 사유<textarea value={reason} maxLength={500} onChange={e=>setReason(e.target.value)}/></label>
+ <label>공개 중지 안내<textarea value={notice} maxLength={500} onChange={e=>setNotice(e.target.value)}/></label></div>
  <Button type="button" disabled={!levels.length||reason.trim().length<2||notice.trim().length<2} onClick={()=>setConfirm(true)}>접수 중지와 영향 확인</Button>
- {confirm&&<div role="group" aria-label="문제 오류 처리 확인"><p>두 난이도 신규 제출을 중지합니다. 선택한 오류본의 기존 기록을 재채점하거나 수정본 순위로 옮기지 않습니다.</p><Button type="button" onClick={()=>setConfirm(false)}>돌아가기</Button><Button type="button" onClick={()=>void run("start")}>접수 중지하고 수정 시작</Button></div>}
+ {confirm&&<div className={styles.correctionConfirm} role="group" aria-label="문제 오류 처리 확인"><p>두 난이도 신규 제출을 중지합니다. 선택한 오류본의 기존 기록을 재채점하거나 수정본 순위로 옮기지 않습니다.</p><Button type="button" onClick={()=>setConfirm(false)}>돌아가기</Button><Button type="button" onClick={()=>void run("start")}>접수 중지하고 수정 시작</Button></div>}
  </fieldset>}
  {view.status==="editing"&&<QuizRevisionEditor key={view.editor!.sessionId} quizSetId={id} problem={view} onProblemView={setView}/>}
  {["editing","expired"].includes(view.status)&&<><Button type="button" disabled={busy} onClick={()=>setCancel(true)}>오류가 아님을 확인하고 취소</Button>
- {cancel&&<div role="group" aria-label="오류 처리 취소 확인"><p>실제 오류가 아닌 경우에만 취소합니다. 마감 전이면 기존본 접수를 명시적으로 재개하고, 마감 뒤에는 열지 않습니다.</p><label>취소 사유<textarea value={reason} onChange={e=>setReason(e.target.value)}/></label><Button type="button" disabled={busy} onClick={()=>setCancel(false)}>계속 수정</Button><Button type="button" disabled={busy||reason.trim().length<2} onClick={()=>void run("cancel")}>오류 아님 확인·취소</Button></div>}</>}
+ {cancel&&<div className={styles.correctionConfirm} role="group" aria-label="오류 처리 취소 확인"><p>실제 오류가 아닌 경우에만 취소합니다. 마감 전이면 기존본 접수를 명시적으로 재개하고, 마감 뒤에는 열지 않습니다.</p><label>취소 사유<textarea value={reason} onChange={e=>setReason(e.target.value)}/></label><Button type="button" disabled={busy} onClick={()=>setCancel(false)}>계속 수정</Button><Button type="button" disabled={busy||reason.trim().length<2} onClick={()=>void run("cancel")}>오류 아님 확인·취소</Button></div>}</>}
  {view.status==="published"&&<p role="status">수정본 발행을 완료했습니다. 기존 오류본은 결과 무효로 보존됩니다.</p>}
  {view.status==="cancelled"&&<p role="status">오류 아님 확인을 저장했습니다. 기존 문제와 기록은 그대로 유지됩니다.</p>}
  </>}

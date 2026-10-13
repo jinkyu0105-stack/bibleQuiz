@@ -1,9 +1,10 @@
 import { AdminConcepts, AdminEmoji, AdminLabel } from "../../components/AdminHelp";
+import { AdminFilterTabs, AdminRefreshButton } from "../../components/AdminListTools";
 import { AdminIcon } from "../../components/AdminIcon";
 import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, ButtonLink } from "../../components/Button";
+import { ButtonLink } from "../../components/Button";
 import { weeklyDashboardSchema, type WeeklyQuiz } from "../../../shared/api/admin-weekly";
 import { draftCleanupListSchema } from "../../../shared/api/admin-draft-cleanup";
 import { weeklyRequest } from "./client";
@@ -70,14 +71,11 @@ export function Component() {
     </section>}
     <section className={styles.library} aria-labelledby="quiz-library-heading" aria-busy={loading}>
       <div className={styles.sectionHeading}><h3 id="quiz-library-heading"><AdminLabel text="퀴즈 목록"/> <span>{items.length}</span></h3>
-        <Button type="button" disabled={loading} onClick={() => { setMessage(""); setLoading(true); setAttempt(v => v + 1); }} className={styles.refresh} aria-label="운영 상태 새로고침" title="퀴즈 목록 새로고침"><AdminIcon name="refresh"/></Button>
+        <AdminRefreshButton disabled={loading} onClick={() => { setMessage(""); setLoading(true); setAttempt(v => v + 1); }} label="운영 상태 새로고침" title="퀴즈 목록 새로고침"/>
       </div>
-      <div className={styles.toolbar}>
-        <div className={styles.filters} role="group" aria-label="퀴즈 상태">
-          {([["all", "전체", items.length], ["draft", "작성 중", drafts.length], ["published", "공개 중", published.length], ["archived", "지난 퀴즈", archived.length]] as const).map(([key, label, count]) => <button key={key} type="button" aria-pressed={filter === key} onClick={() => setFilter(key)}>{label}<span>{count}</span></button>)}
-        </div>
+      <AdminFilterTabs label="퀴즈 상태" value={filter} onChange={setFilter} options={([['all', '전체', items.length], ['draft', '작성 중', drafts.length], ['published', '공개 중', published.length], ['archived', '지난 퀴즈', archived.length]] as const).map(([value,label,count])=>({value,label,count}))}>
         <label className={styles.search}><span className="sr-only">퀴즈 검색</span><input type="search" placeholder="제목 또는 날짜 검색" value={search} onChange={e => setSearch(e.target.value)}/></label>
-      </div>
+      </AdminFilterTabs>
       {!data && loading ? <div className={styles.empty} role="status">퀴즈를 불러오고 있습니다.</div> : !data ? <div className={styles.empty}>새로고침을 눌러 목록을 다시 불러오세요.</div> : rows.length === 0 ? <div className={styles.empty}><h4>{items.length ? "조건에 맞는 퀴즈가 없습니다" : "첫 퀴즈를 준비해 보세요"}</h4><p>{items.length ? "검색어나 상태를 바꾸면 다른 퀴즈를 볼 수 있습니다." : "설교 영상 등록부터 문제 검토와 발행까지 한 화면에서 이어집니다."}</p>{!items.length && <ButtonLink to="/admin/new">퀴즈 준비하기</ButtonLink>}</div> :
         <ul className={styles.quizList}>{rows.map(q => <li key={q.quizSetId}>
           <article className={styles.quizRow}>

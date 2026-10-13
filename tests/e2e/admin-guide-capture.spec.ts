@@ -42,10 +42,10 @@ test('capture operator guide examples', async ({ page }) => {
   await open('/admin/quiz/published-example');
   await between('settings',page.locator('[data-admin-tool="quiz-metadata"]'),page.locator('[data-admin-tool="quiz-correction"]'));
   await open('/admin/submissions?quiz=published-example');
-  await page.locator('summary').filter({hasText:'공개 상태·개인정보 관리'}).click();
+  await page.getByRole('button',{name:'공개 상태·개인정보 관리',exact:true}).click();
   await shot('submissions',recordFor(page,'연습 참여자'));
   await open('/admin/privacy-requests');
-  await page.locator('summary').filter({hasText:'답변 작성'}).click();
+  await page.getByRole('button',{name:'답변 작성',exact:true}).click();
   await shot('privacy',recordFor(page,'연습 요청자'));
   await open('/admin/moderation');
   await page.locator('[data-admin-tool="filter-test"] > summary').click();

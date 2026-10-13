@@ -124,3 +124,9 @@ body[data-time=night] .admin-layout {
 }
 
 .admin-layout svg[data-admin-tone] { color: var(--admin-tone); }
+
+/* Admin actions share one optical alignment, border and text treatment. */
+.sky-app:not(.home-shell) .admin-main .action-button { display: inline-flex; align-items: center; justify-content: center; }
+.sky-app:not(.home-shell) .admin-main .secondary-button:not(:disabled):not([aria-disabled=true]) { color: var(--ui-action); }
+.sky-app:not(.home-shell) .admin-main .secondary-button:hover:not(:disabled):not([aria-disabled=true]) { background: var(--ui-action-bg); border-color: var(--ui-action); }
+@media (forced-colors: active) { .sky-app:not(.home-shell) .admin-main .secondary-button:not(:disabled):not([aria-disabled=true]) { color: ButtonText; } }

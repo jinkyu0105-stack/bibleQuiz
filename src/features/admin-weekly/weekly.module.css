@@ -72,7 +72,7 @@
 .panel > form { margin-top: 16px; }
 
 /* P9-17: one rhythm across functional admin forms. */
-.page { gap: 24px; padding-block: 0 8px; }
+.page { gap: 20px; padding-block: 0 8px; }
 .panel { border-radius: 12px; padding: 24px; }
 .panel + .panel { margin-top: 0; }
 .panel h3 { font-weight: 600; }
@@ -83,3 +83,6 @@
 .panel > details > summary { min-height: 44px; padding-block: 10px; font-size: 14px; color: var(--accent); }
 .panel > details > form { padding-top: 12px; }
 @media (max-width: 600px) { .panel { padding: 20px 16px; } }
+
+.quickHelp { display: grid; gap: 0; }
+.quickHelp > div { margin-block: 0; }

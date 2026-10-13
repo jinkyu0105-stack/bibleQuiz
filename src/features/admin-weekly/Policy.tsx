@@ -1,3 +1,4 @@
+import { AdminRefreshButton } from "../../components/AdminListTools";
 import { AdminLabel } from "../../components/AdminHelp";
 import { AdminIntro, AdminSteps, AdminTool } from "../../components/AdminGuide";
 import { Button } from "../../components/Button";
@@ -18,7 +19,7 @@ export function Component(){
       {title:"규칙 등록",description:"적용할 문구와 범위를 확인한 뒤 저장합니다."},
       {title:"결과 시험",description:"차단 여부 시험에서 규칙이 의도대로 작동하는지 확인합니다."},
     ]}/>
-    {message&&<p role="status">{message}</p>}<Button type="button" disabled={busy} onClick={()=>setAttempt(a=>a+1)}>목록 다시 불러오기</Button>
+    {message&&<p role="status">{message}</p>}<AdminRefreshButton label="목록 다시 불러오기" disabled={busy} onClick={()=>setAttempt(a=>a+1)}/>
     <AdminTool id="filter-add" title="필터 추가" tag="" description="사용을 막을 이름·문구 또는 예외를 등록합니다."><section className={styles.panel}><h3><AdminLabel text="필터 등록"/></h3><p className={styles.hint} id="filter-kind-help">{kind==='reserved'?'보호 이름: 관리자·교역자 등으로 오해할 수 있는 이름 사용을 막습니다. 관리용 이름은 목록을 구분하는 데 씁니다. 실제로 막을 이름은 이름·별칭 칸에 한 줄씩 입력하세요.':kind==='term'?'금지 문구: 선택한 입력란에서 특정 표현을 막습니다. 전체 일치는 문구 전체가 같을 때, 포함은 문장 안에 해당 표현이 있을 때 차단합니다.':'정확한 예외: 금지 규칙에 걸리지만 허용해야 하는 표현을 등록합니다. 선택한 범위의 문구 전체가 일치할 때만 예외로 허용합니다.'}</p><form onSubmit={e=>{e.preventDefault();void mutate(paths[kind],'POST',kind==='reserved'?{label:value,aliases:aliases.split('\n').map(a=>a.trim()).filter(Boolean)}:kind==='term'?{value,scope,matchMode:mode}:{value,scope,reason,acknowledged:ack});}}>
       <fieldset disabled={busy||!loaded} className={styles.fields}><legend>실제 이름과 목록은 관리자만 볼 수 있습니다.</legend><label>등록 종류<select aria-describedby="filter-kind-help" value={kind} onChange={e=>{setKind(e.target.value as typeof kind);setScope('comment');setAck(false);}}><option value="reserved">보호 이름</option><option value="term">금지 문구</option><option value="exception">정확한 예외</option></select></label>
       <label>{kind==='reserved'?'관리용 이름':'필터 문구'}<input value={value} required maxLength={200} onChange={e=>setValue(e.target.value)}/></label>

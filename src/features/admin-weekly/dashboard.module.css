@@ -20,12 +20,6 @@
 .sectionHeading { margin-bottom: 16px; }
 .sectionHeading h3 { margin: 0; }
 .sectionHeading h3 > span:not([aria-hidden]) { margin-left: 8px; font: 14px 'Noto Sans KR',sans-serif; color: var(--muted); }
-.toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 16px; }
-.filters { display: flex; gap: 4px; flex-wrap: wrap; }
-.filters button { display: inline-flex; gap: 8px; align-items: center; min-height: 40px; padding: 8px 12px; border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--muted); font-size: 13px; }
-.filters button[aria-pressed=true] { background: var(--glass-field); border-color: var(--control-border); color: var(--ink); font-weight: 600; }
-.filters button:hover { background: var(--glass-soft); }
-.filters span { font-size: 12px; opacity: .8; font-variant-numeric: tabular-nums; }
 .search { width: min(100%,220px); }
 .search input { width: 100%; min-height: 42px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--glass-field); color: var(--ink); font: inherit; font-size: 13px; }
 .quizList { margin: 0; padding: 0; list-style: none; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
@@ -68,10 +62,7 @@
  .date strong { font-size: 13px; }
  .rowActions { display: flex; flex-wrap: wrap; gap: 8px 16px; }
  .search { width: 100%; }
- .filters { gap: 2px; }
- .filters button { padding-inline: 9px; }
 }
-@media (forced-colors: active) { .filters button[aria-pressed=true] { border-color: Highlight; } .status { border-color: CanvasText; } }
 @media (max-width: 760px) {
  .featured { display: grid; grid-template-columns: 40px minmax(0,1fr); gap: 12px; padding: 18px; }
  .homeMark { width: 40px; height: 40px; }
@@ -92,25 +83,15 @@
 .homeBadge { color: var(--ui-success); font-size: 12px; }
 .quizCopy p { line-height: 1.8; }
 .quizCopy .deadline { margin-top: 8px; font-size: 12px; }
-.filters button[aria-pressed=true] { color: var(--ui-action); background: var(--ui-action-bg); border-color: var(--ui-action); }
 .cleanup { padding-inline: 16px; border: 1px solid var(--ui-attention); border-radius: 10px; background: var(--ui-attention-bg); }
 .footer > a:first-child { color: var(--ui-guide); }
-@media (forced-colors: active) { .overview > :is(button,a), .status, .homeBadge, .homeMark { color: CanvasText; background: Canvas; } .filters button[aria-pressed=true] { color: Highlight; border-color: Highlight; } }
 
 /* Keep optional guidance together instead of stacking its margins with page gaps. */
 .quickHelp { display: grid; gap: 0; margin-block: -10px -8px; }
 .quickHelp > div { margin: 0; }
 .library { border-top: 1px solid var(--line); padding-top: 24px; }
 .caption { display: inline-flex; align-items: center; color: var(--ui-success); font-weight: 700; letter-spacing: .04em; }
-.page .library .sectionHeading .refresh:global(.action-button) { display: grid; place-items: center; width: 44px; height: 44px; min-width: 44px; padding: 0; border-radius: 50%; color: var(--ui-action); background: var(--ui-action-bg); border-color: color-mix(in srgb,var(--ui-action) 28%,transparent); }
-.page .library .rowActions .rowButton:global(.action-button) { min-width: 128px; border-radius: 10px; color: var(--ui-action); background: var(--ui-action-bg); border-color: color-mix(in srgb,var(--ui-action) 26%,transparent); font-size: 13px; transition: background-color .18s, border-color .18s; }
-.page .library .rowActions .rowButton:global(.action-button):is(:hover,:focus-visible), .page .library .sectionHeading .refresh:global(.action-button):is(:hover,:focus-visible) { background: color-mix(in srgb,var(--ui-action) 12%,var(--ui-action-bg)); border-color: var(--ui-action); }
+.page .library .rowActions .rowButton:global(.action-button) { min-width: 128px; border-radius: 8px; color: var(--ui-action); background: var(--ui-action-bg); border-color: color-mix(in srgb,var(--ui-action) 26%,transparent); font-size: 13px; transition: background-color .18s, border-color .18s; }
 .rowButton svg { width: 17px; height: 17px; }
-.toolbar { align-items: end; gap: 16px; }
-.filters { gap: 3px; padding-top: 5px; border-bottom: 1px solid var(--control-border); }
-.filters button { position: relative; min-height: 44px; padding: 10px 13px 9px; border: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0; background: var(--glass-soft); transition: transform .18s ease-out, background-color .18s, border-color .18s; }
-.filters button:is(:hover,:focus-visible) { transform: translateY(-4px); background: var(--ui-action-bg); border-color: var(--ui-action); color: var(--ui-action); box-shadow: 0 4px 0 var(--ui-action-bg); }
-.filters button[aria-pressed=true] { background: var(--ui-action-bg); border-color: var(--ui-action); box-shadow: inset 0 3px var(--ui-action); }
-@media(max-width:760px) { .filters { width: 100%; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 2px; } .filters button { justify-content: center; gap: 4px; padding-inline: 3px; font-size: 12px; } .rowActions { gap: 8px; } }
-@media(prefers-reduced-motion:reduce) { .filters button, .page .library .rowActions .rowButton:global(.action-button) { transition: none; } .filters button:is(:hover,:focus-visible) { transform: none; } }
-@media(forced-colors:active) { .page .library .rowActions .rowButton:global(.action-button), .page .library .sectionHeading .refresh:global(.action-button) { color: ButtonText; border-color: ButtonText; background: ButtonFace; } .filters button[aria-pressed=true] { border-color: Highlight; outline: 2px solid Highlight; outline-offset: -2px; } }
+
+.library > [data-admin-list-toolbar] { margin-bottom: 16px; }

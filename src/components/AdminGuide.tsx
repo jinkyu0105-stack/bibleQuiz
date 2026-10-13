@@ -13,8 +13,10 @@ export function AdminIntro({ title, description, eyebrow, children, terms, scree
     {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
     <h2><AdminLabel text={title}/></h2>
     <p className={styles.description}><GuideText text={description}/></p>
-    {terms && <AdminConcepts terms={terms}/> }
-    {screenshots && <AdminScreenshots ids={screenshots} compact/>}
+    {(terms || screenshots) && <div className={styles.quickHelp}>
+      {terms && <AdminConcepts terms={terms}/>}
+      {screenshots && <AdminScreenshots ids={screenshots} compact/>}
+    </div>}
     {children}
   </header>;
 }

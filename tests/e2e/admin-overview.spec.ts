@@ -50,7 +50,7 @@ test("inbox and participation records reveal actions on demand and retain unfini
  await page.goto("/admin/privacy-requests");
  await expect(page.getByRole("heading",{name:"연습 참가자 하늘"})).toBeVisible();
  await expect(page.getByLabel("관리자 답변")).toBeHidden();
- const reply=page.locator("summary").filter({hasText:"답변 작성"});
+ const reply=page.getByRole('button',{name:'답변 작성',exact:true});
  await reply.focus();await page.keyboard.press("Enter");
  await page.getByLabel("관리자 답변").fill("처리 전 확인할 내용");
  await expect(page.getByText("상태를 ‘처리 완료’로 바꾸는 것만으로 제출 기록이 삭제되지는 않습니다.")).toBeVisible();

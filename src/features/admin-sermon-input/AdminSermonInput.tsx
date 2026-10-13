@@ -550,8 +550,8 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
     {blocker.state === "blocked" && <div role="alert"><p>저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.</p><Button type="button" onClick={() => blocker.reset()}>작업 계속하기</Button><Button type="button" onClick={() => blocker.proceed()}>저장하지 않고 이동</Button></div>}
     {weekly && <p className={styles.saveGuidance} role="status">{changedInput || contentDirty ? "저장 확인 필요. " : ""}<GuideText text="편집은 잠시 멈추면 자동 저장됩니다. 확정·AI 재생성·발행은 직접 실행합니다."/></p>}
 
-    <AdminConcepts terms={step === 1 ? ["초안", "확정", "자동 저장"] : step === 2 ? ["설교 의도", "비판 검토", "확정"] : step === 3 ? ["검수", "자동 저장", "재생성"] : step === 4 ? ["격자 배치", "검수"] : ["발행", "접수 마감", "Top N"]}/>
-    <AdminScreenshots key={step} ids={step === 1 ? ["input"] : step <= 3 ? ["review"] : ["settings"]} compact/>
+    <div className={styles.quickHelp}><AdminConcepts terms={step === 1 ? ["초안", "확정", "자동 저장"] : step === 2 ? ["설교 의도", "비판 검토", "확정"] : step === 3 ? ["검수", "자동 저장", "재생성"] : step === 4 ? ["격자 배치", "검수"] : ["발행", "접수 마감", "Top N"]}/>
+    <AdminScreenshots key={step} ids={step === 1 ? ["input"] : step <= 3 ? ["review"] : ["settings"]} compact/></div>
     {costQuizSetId && <AiCostDetails key={`${costQuizSetId}-${costRefresh}`} quizSetId={costQuizSetId} refreshKey={costRefresh} />}
     <div hidden={weekly && step !== 1}>
     <SermonDrafts selectedId={loadedSermonId} onSelect={refreshWorkspace} onMetadataSaved={() => { setMetadataVersion(v => v + 1); onSaved?.(); }} onCostQuizSetId={onCostQuiz} initialCreating={weekly && !initialSermonId} disabled={workspace.state === "loading" || feedback.state === "loading"} />

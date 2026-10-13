@@ -894,3 +894,17 @@
 .weeklyPage .snapshotDisclosure > .panel { padding-inline: 0; background: transparent; border-radius: 0; }
 .weeklyPage .reviewActions { margin-block: 12px 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--glass-soft); }
 .weeklyPage .reviewActions > p { font-size: 14px; }
+
+/* Compact guidance and clearly grouped correction fields across tools/settings. */
+.quickHelp { display: grid; gap: 0; margin-block: 8px 16px; }
+.quickHelp > div { margin-block: 0; }
+.correctionFields { border: 0; border-top: 1px solid var(--line); padding: 16px 0 0; }
+.correctionLevels { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; }
+.correctionLevels label { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.correctionLevels input { width: 18px; height: 18px; margin: 0; accent-color: var(--ui-action); }
+.correctionFields textarea, .correctionConfirm textarea { width: 100%; min-width: 0; min-height: 88px; resize: vertical; }
+.correctionConfirm { margin-top: 16px; padding: 16px; border: 1px solid var(--ui-attention); border-radius: 8px; background: var(--ui-attention-bg); }
+.correctionConfirm label { display: grid; gap: 6px; margin-block: 12px; }
+.correctionConfirm > button { margin: 4px 8px 0 0; }
+.panel > label:not(.checkbox) { margin-block: 12px; }
+.panel > :global(.action-button) + p { margin-top: 12px; }
