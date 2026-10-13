@@ -1,4 +1,4 @@
-.page { display: grid; gap: 28px; min-width: 0; }
+.page { display: grid; gap: 20px; min-width: 0; }
 .header, .sectionHeading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .header h2 { margin: 0 0 8px; }
 .header p, .featured p { margin: 0; color: var(--muted); }
@@ -35,7 +35,7 @@
 .date span { color: var(--muted); font-size: 12px; }
 .date strong { font-size: 19px; font-weight: 500; }
 .quizCopy { min-width: 0; }
-.quizCopy h4 { margin: 8px 0; }
+.quizCopy .badges + h4 { margin: 12px 0 8px !important; }
 .quizCopy p { margin: 0; font-size: 13px; color: var(--muted); }
 .quizCopy p + p { margin-top: 4px; }
 .badges { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
@@ -43,8 +43,7 @@
 .status[data-state=published] { color: var(--accent); border-color: color-mix(in srgb,var(--accent) 35%,transparent); }
 .status[data-state=needs_revision] { color: var(--warning); }
 .homeBadge { color: var(--muted); font-size: 11px; }
-.rowActions { display: grid; justify-items: stretch; gap: 4px; }
-.textAction { display: inline-flex; align-items: center; justify-content: center; min-height: 36px; gap: 10px; color: var(--accent); font-size: 13px; text-underline-offset: 4px; }
+.rowActions { display: grid; justify-items: stretch; gap: 8px; }
 .empty { padding: 48px 20px; border: 1px dashed var(--control-border); border-radius: 14px; text-align: center; }
 .empty h4 { margin: 0 0 12px; }
 .empty p { color: var(--muted); margin-bottom: 20px; }
@@ -86,7 +85,7 @@
 .overview > :is(button,a):hover { box-shadow: inset 0 -3px currentColor; }
 .overview strong { font-size: 30px; }
 .homeMark { color: var(--ui-success); background: var(--ui-success-bg); border-color: transparent; }
-.status { font-size: 12px; font-weight: 600; padding: 4px 9px; }
+.status { font-size: 11px; line-height: 1.5; font-weight: 600; padding: 2px 7px; }
 .status[data-tone=success] { color: var(--ui-success); background: var(--ui-success-bg); border-color: transparent; }
 .status[data-tone=action] { color: var(--ui-action); background: var(--ui-action-bg); border-color: transparent; }
 .status[data-tone=attention] { color: var(--ui-attention); background: var(--ui-attention-bg); border-color: transparent; }
@@ -97,3 +96,21 @@
 .cleanup { padding-inline: 16px; border: 1px solid var(--ui-attention); border-radius: 10px; background: var(--ui-attention-bg); }
 .footer > a:first-child { color: var(--ui-guide); }
 @media (forced-colors: active) { .overview > :is(button,a), .status, .homeBadge, .homeMark { color: CanvasText; background: Canvas; } .filters button[aria-pressed=true] { color: Highlight; border-color: Highlight; } }
+
+/* Keep optional guidance together instead of stacking its margins with page gaps. */
+.quickHelp { display: grid; gap: 0; margin-block: -10px -8px; }
+.quickHelp > div { margin: 0; }
+.library { border-top: 1px solid var(--line); padding-top: 24px; }
+.caption { display: inline-flex; align-items: center; color: var(--ui-success); font-weight: 700; letter-spacing: .04em; }
+.page .library .sectionHeading .refresh:global(.action-button) { display: grid; place-items: center; width: 44px; height: 44px; min-width: 44px; padding: 0; border-radius: 50%; color: var(--ui-action); background: var(--ui-action-bg); border-color: color-mix(in srgb,var(--ui-action) 28%,transparent); }
+.page .library .rowActions .rowButton:global(.action-button) { min-width: 128px; border-radius: 10px; color: var(--ui-action); background: var(--ui-action-bg); border-color: color-mix(in srgb,var(--ui-action) 26%,transparent); font-size: 13px; transition: background-color .18s, border-color .18s; }
+.page .library .rowActions .rowButton:global(.action-button):is(:hover,:focus-visible), .page .library .sectionHeading .refresh:global(.action-button):is(:hover,:focus-visible) { background: color-mix(in srgb,var(--ui-action) 12%,var(--ui-action-bg)); border-color: var(--ui-action); }
+.rowButton svg { width: 17px; height: 17px; }
+.toolbar { align-items: end; gap: 16px; }
+.filters { gap: 3px; padding-top: 5px; border-bottom: 1px solid var(--control-border); }
+.filters button { position: relative; min-height: 44px; padding: 10px 13px 9px; border: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0; background: var(--glass-soft); transition: transform .18s ease-out, background-color .18s, border-color .18s; }
+.filters button:is(:hover,:focus-visible) { transform: translateY(-4px); background: var(--ui-action-bg); border-color: var(--ui-action); color: var(--ui-action); box-shadow: 0 4px 0 var(--ui-action-bg); }
+.filters button[aria-pressed=true] { background: var(--ui-action-bg); border-color: var(--ui-action); box-shadow: inset 0 3px var(--ui-action); }
+@media(max-width:760px) { .filters { width: 100%; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 2px; } .filters button { justify-content: center; gap: 4px; padding-inline: 3px; font-size: 12px; } .rowActions { gap: 8px; } }
+@media(prefers-reduced-motion:reduce) { .filters button, .page .library .rowActions .rowButton:global(.action-button) { transition: none; } .filters button:is(:hover,:focus-visible) { transform: none; } }
+@media(forced-colors:active) { .page .library .rowActions .rowButton:global(.action-button), .page .library .sectionHeading .refresh:global(.action-button) { color: ButtonText; border-color: ButtonText; background: ButtonFace; } .filters button[aria-pressed=true] { border-color: Highlight; outline: 2px solid Highlight; outline-offset: -2px; } }

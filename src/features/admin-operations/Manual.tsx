@@ -38,6 +38,6 @@ function ManualPage({ future }: { future: boolean }) {
         <div><dt>접속한 서버</dt><dd>{data.deployment.includes("미연결") ? "이 화면에서는 서버 종류 또는 배포 번호를 확인할 수 없습니다. 로컬 실행에서도 이렇게 표시될 수 있으며, 서비스 장애를 뜻하지는 않습니다." : data.deployment}</dd></div>
       </dl>
     </details>}
-    {future ? <Link to="/admin/manual">운영 매뉴얼로 돌아가기</Link> : <Link to="/admin/manual/future/member-auth">기능 검토 기록</Link>}
+    {future && <Link to="/admin/manual">운영 매뉴얼로 돌아가기</Link>}
   </div>;
 }

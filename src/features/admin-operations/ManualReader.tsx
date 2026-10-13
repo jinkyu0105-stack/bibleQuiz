@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { AdminTone } from "../../config/admin-help";
 import { ServiceIcon } from "../../components/ServiceIcon";
 import { AdminLabel, GuideText } from "../../components/AdminHelp";
@@ -83,11 +84,12 @@ export function ManualReader({ source }: { source: string }) {
       <select value={current.id} onChange={event => choose(event.target.value)}>{groups.map(group => <optgroup key={group.title} label={group.title}>{group.items.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}</optgroup>)}</select>
     </label>
     <article className={css.article} data-topic={current.id} aria-labelledby="manual-article-title">
-      <header className={css.articleHeader} data-admin-tone={topicTones[current.id] ?? "guide"}><p>{category}</p><h3 id="manual-article-title" tabIndex={-1} ref={heading}>{service && <TopicIcon id={current.id}/>}<span><AdminLabel text={section?.title ?? service?.name ?? "운영 안내"}/></span></h3>{service && <p className={css.subtitle}>{service.plainLanguageName}</p>}</header>
+      <header className={css.articleHeader} data-admin-tone={topicTones[current.id] ?? "guide"}><p>{category}</p><h3 id="manual-article-title" tabIndex={-1} ref={heading}>{service && <TopicIcon id={current.id}/>}<span><AdminLabel text={section?.title ?? service?.name ?? "운영 안내"}/></span></h3>{service && <p className={css.subtitle}><code>{service.plainLanguageName}</code></p>}</header>
       {section && <ManualBody source={section.body}/>}
+      {current.id === "guide-12" && <div className={css.futureRecord}><AdminIcon name="document" tone="action"/><div><Link to="/admin/manual/future/member-auth">기능 검토 기록</Link><p>회원 로그인 등 제안된 기능의 검토 내용을 읽어 보세요.</p></div></div>}
       {section && examples[current.id] && <AdminScreenshots key={current.id} ids={examples[current.id]!}/>}
       {service && guide && <div className={css.serviceReading}>
-        <p className={css.lead}>{guide.role}</p>
+        <aside className={css.serviceIntro} aria-label="서비스 설명"><AdminIcon name="book" tone="action"/><p className={css.lead}>{guide.role}</p></aside>
         <dl className={local.guideFacts}>
           <div data-admin-tone="action"><dt><AdminLabel text="언제 쓰나요?"/></dt><dd><GuideText text={guide.when}/></dd></div>
           <div data-admin-tone="danger"><dt><AdminLabel text="문제가 생기면?"/></dt><dd><GuideText text={guide.failure}/></dd></div>

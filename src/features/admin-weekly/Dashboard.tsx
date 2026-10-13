@@ -1,4 +1,5 @@
 import { AdminConcepts, AdminEmoji, AdminLabel } from "../../components/AdminHelp";
+import { AdminIcon } from "../../components/AdminIcon";
 import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -51,8 +52,8 @@ export function Component() {
       <div><h2><AdminLabel text="퀴즈 관리"/></h2><p>퀴즈를 준비하고, 공개와 참여를 관리하세요.</p></div>
       <ButtonLink variant="primary" to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>
     </header>
-    <AdminConcepts terms={["초안", "발행", "자동 선택", "대표 지정"]}/>
-    <AdminScreenshots ids={["dashboard"]} compact/>
+    <div className={styles.quickHelp}><AdminConcepts terms={["초안", "발행", "자동 선택", "대표 지정"]}/>
+    <AdminScreenshots ids={["dashboard"]} compact/></div>
     {message && <p className={styles.alert} role="alert">{message}</p>}
     <div className={styles.overview} aria-label="운영 요약">
       <button type="button" onClick={() => setFilter("published")}><span><AdminEmoji>📣</AdminEmoji>공개 중</span><strong>{data ? published.length : "—"}</strong><span aria-hidden="true">↗</span></button>
@@ -61,7 +62,7 @@ export function Component() {
     </div>
     {data && <section className={styles.featured} aria-labelledby="home-quiz-heading">
       <div className={styles.homeMark} aria-hidden="true">⌂</div>
-      <div className={styles.featuredCopy}><span className={styles.caption}>지금 홈에 보이는 퀴즈</span>
+      <div className={styles.featuredCopy}><span className={styles.caption}><AdminEmoji>📡</AdminEmoji>Live</span>
         <h3 id="home-quiz-heading">{featured?.title ?? "아직 공개된 퀴즈가 없습니다"}</h3>
         <p>{featured ? `${date(featured.sermonDate)} · ${featured.status === "archived" ? "지난 퀴즈" : "공개 중"}${data.homeQuiz?.selection === "automatic" ? " · 자동 선택" : " · 대표 지정"}` : "준비한 퀴즈를 발행하면 이곳에 표시됩니다."}</p>
       </div>
@@ -69,7 +70,7 @@ export function Component() {
     </section>}
     <section className={styles.library} aria-labelledby="quiz-library-heading" aria-busy={loading}>
       <div className={styles.sectionHeading}><h3 id="quiz-library-heading"><AdminLabel text="퀴즈 목록"/> <span>{items.length}</span></h3>
-        <Button type="button" disabled={loading} onClick={() => { setMessage(""); setLoading(true); setAttempt(v => v + 1); }} aria-label="운영 상태 새로고침">{loading ? "불러오는 중" : "새로고침"}</Button>
+        <Button type="button" disabled={loading} onClick={() => { setMessage(""); setLoading(true); setAttempt(v => v + 1); }} className={styles.refresh} aria-label="운영 상태 새로고침" title="퀴즈 목록 새로고침"><AdminIcon name="refresh"/></Button>
       </div>
       <div className={styles.toolbar}>
         <div className={styles.filters} role="group" aria-label="퀴즈 상태">
@@ -87,8 +88,8 @@ export function Component() {
               {!isDraft(q) && q.closesAt && <p className={styles.deadline}>{q.status === "archived" ? "마감일" : "접수 마감"} {time(q.closesAt)}{q.status === "published" && Date.parse(q.closesAt) <= checkedAt ? " · 마감 처리 대기" : ""}</p>}
             </div>
             <div className={styles.rowActions}>
-              {!q.expired && <ButtonLink to={`/admin/quiz/${q.quizSetId}`}>{isDraft(q) ? "초안 편집" : "퀴즈 설정"}</ButtonLink>}
-              {!isDraft(q) && <Link className={styles.textAction} to={`/admin/submissions?quiz=${q.quizSetId}`}>참여 기록 <span aria-hidden="true">↗</span></Link>}
+              {!q.expired && <ButtonLink className={styles.rowButton} to={`/admin/quiz/${q.quizSetId}`}><AdminIcon name={isDraft(q) ? "edit" : "settings"}/>{isDraft(q) ? "초안 편집" : "퀴즈 설정"}</ButtonLink>}
+              {!isDraft(q) && <ButtonLink className={styles.rowButton} to={`/admin/submissions?quiz=${q.quizSetId}`}><AdminIcon name="people"/>참여 기록</ButtonLink>}
             </div>
           </article>
         </li>)}</ul>}

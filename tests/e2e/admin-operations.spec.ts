@@ -23,10 +23,14 @@ test('operations warning survives monthly confirmation; drawer supports keyboard
  await page.keyboard.press('Escape');await expect(dialog).not.toBeVisible();await expect(page.getByRole('button',{name:'비용·백업 상세 열기'})).toBeFocused();
 });
 test('protected manual displays service dictionary, repository text and future guide without executing HTML',async({page})=>{
- await page.route('**/api/admin/manual**',async route=>route.fulfill({json:{data:{markdown:'# 합성 매뉴얼\n\n## 10. 백업·복구\n\n<svg onload="window.__unsafe=true">원문</svg>',updatedAt:'2026-10-01',verification:'로컬 합성 검증',deployment:'local'}}}));
+ await page.route('**/api/admin/manual**',async route=>route.fulfill({json:{data:{markdown:'# 합성 매뉴얼\n\n## 10. 백업·복구\n\n<svg onload="window.__unsafe=true">원문</svg>\n\n## 12. 향후 기능\n\n기능 제안을 검토합니다.',updatedAt:'2026-10-01',verification:'로컬 합성 검증',deployment:'local'}}}));
  await page.goto('/admin/manual');await expect(page.getByRole('heading',{name:'백업·복구',exact:true})).toBeVisible();
  await expect(page.getByText('<svg onload="window.__unsafe=true">원문</svg>',{exact:true})).toBeVisible();expect(await page.evaluate(()=>Object.hasOwn(window,'__unsafe'))).toBe(false);
- await expect(page.getByRole('heading',{name:'백업·복구',exact:true})).toBeVisible();await page.getByRole('link',{name:'기능 검토 기록'}).click();await expect(page).toHaveURL(/\/admin\/manual\/future\/member-auth$/u);await expect(page.getByRole('link',{name:'운영 매뉴얼로 돌아가기'})).toBeVisible();
+ await expect(page.getByRole('link',{name:'기능 검토 기록'})).toHaveCount(0);
+ const topics=page.getByLabel('읽을 주제');
+ if(await topics.isVisible()) await topics.selectOption('guide-12');
+ else { const nav=page.getByRole('navigation',{name:'매뉴얼 주제'}); const future=nav.getByRole('button',{name:'향후 기능',exact:true}); if(!await future.isVisible()) await nav.locator('summary').filter({hasText:'설정과 자료 보호'}).click(); await future.click(); }
+ await page.getByRole('article').getByRole('link',{name:'기능 검토 기록'}).click();await expect(page).toHaveURL(/\/admin\/manual\/future\/member-auth$/u);await expect(page.getByRole('link',{name:'운영 매뉴얼로 돌아가기'})).toBeVisible();
 });
 
 test('manual formats reading cues, explains services and retries only after a failed load', async ({page}) => {

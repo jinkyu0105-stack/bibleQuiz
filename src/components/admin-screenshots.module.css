@@ -1,6 +1,7 @@
-.examples, .disclosure { margin: 22px 0; min-width: 0; }
+.examples { margin: 22px 0; min-width: 0; }
+.disclosure { margin: 0; min-width: 0; }
 .examples { padding-top: 20px; border-top: 1px solid var(--line); }
-.disclosure > summary { color: var(--ui-guide); font-size: 14px; min-height: 44px; align-content: center; }
+.disclosure > summary { color: var(--ink); font-size: 14px; min-height: 44px; align-content: center; }
 .note.note { color: var(--muted); font-size: 12px; margin: 8px 0 14px; }
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 24px; }
 .figure { min-width: 0; max-width: 360px; margin: 0; }

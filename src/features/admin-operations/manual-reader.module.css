@@ -70,3 +70,16 @@
 
 .serviceReading > dl > div > dt { font-size: 18px; font-weight: 700; line-height: 1.65; }
 @media (max-width: 760px) { .serviceReading > dl > div > dt { font-size: 17px; } }
+
+.serviceIntro { display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; border: 1px solid color-mix(in srgb,var(--ui-action) 30%,var(--line)); border-left: 3px solid var(--ui-action); border-radius: 8px; background: var(--ui-action-bg); }
+.serviceIntro > svg { flex: 0 0 20px; margin-top: 5px; }
+.serviceReading > dl > div { padding-block: 22px; }
+.serviceReading > dl > div + div { border-top: 1px solid var(--line); }
+.serviceReading > dl > div:first-child { padding-top: 0; }
+.serviceReading > dl > div:last-child { padding-bottom: 0; }
+.serviceReading > dl { gap: 0; }
+.futureRecord { display: flex; gap: 12px; padding-top: 22px; margin-top: 22px; border-top: 1px solid var(--line); }
+.futureRecord > svg { flex-shrink: 0; margin-top: 4px; }
+.futureRecord a { font-weight: 700; }
+.futureRecord p { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+@media (forced-colors:active) { .serviceIntro { border-color: CanvasText; background: Canvas; } }

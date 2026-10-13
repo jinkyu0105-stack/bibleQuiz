@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
 
 const at = "2026-10-10T00:00:00.000Z";
-test("admin menus group tasks, retain the glass hover and use compact shared actions", async ({ page, isMobile }, info) => {
+test("admin menus group tasks, use a flat moving highlight and use compact shared actions", async ({ page, isMobile }, info) => {
   test.setTimeout(60_000);
   const requests: string[] = [];
   await page.route("**/api/admin/**", route => {
@@ -20,17 +20,15 @@ test("admin menus group tasks, retain the glass hover and use compact shared act
   const solution = page.getByRole("button", { name: "정답보기", exact: true });
   await expect(solution).toHaveAttribute("aria-disabled", "false");
   await page.getByRole("button", { name: "낮", exact: true }).click();
-  const material = await solution.evaluate(node => {
-    const style = getComputedStyle(node);
-    return Object.fromEntries(["background-color", "color", "border-color", "border-radius", "box-shadow", "backdrop-filter"].map(name => [name, style.getPropertyValue(name)]));
-  });
   await page.goto("/admin");
   const refresh = page.getByRole("button", { name: "운영 상태 새로고침", exact: true });
   await expect(refresh).toBeEnabled();
   const before = requests.filter(path => path.endsWith("/dashboard")).length;
   await refresh.click();
   await expect.poll(() => requests.filter(path => path.endsWith("/dashboard")).length).toBeGreaterThan(before);
-  for (const [name, value] of Object.entries(material)) await expect(refresh).toHaveCSS(name, value);
+  await expect(refresh).toHaveCSS("border-radius", "50%");
+  await expect(refresh.locator("svg")).toHaveCount(1);
+  await expect(refresh).toHaveText("");
   await expect(refresh).toHaveCSS("min-height", "44px");
   expect(await refresh.evaluate(node => getComputedStyle(node, "::before").content)).toBe("none");
   await expect(refresh).not.toHaveAttribute("data-lens-ready");
@@ -57,23 +55,22 @@ test("admin menus group tasks, retain the glass hover and use compact shared act
   await expect(navigation.getByRole("link")).toHaveCount(7);
   if (!isMobile) {
     const target=navigation.getByRole("link",{name:"이름·문구 필터",exact:true});
-    // Opening the disclosure remounts GlassMenu; its ResizeObserver/font pass
-    // measures on the next frame and clears previews. Hover after that pass.
-    await expect(target.locator("..")).toHaveAttribute("data-selection-ready", "true");
-    await page.evaluate(async () => {
-      await document.fonts.ready;
-      await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
-    });
     const current = navigation.getByRole("link", {name:"퀴즈 관리",exact:true});
-    const selection = await current.evaluate(node => ({color:getComputedStyle(node).color, background:getComputedStyle(node).backgroundColor}));
+    const highlight = navigation.locator(':scope > span[aria-hidden="true"]');
+    await expect(highlight).toBeVisible();
     await target.hover();
-    // Hover previews must not erase the actual current page's semantic highlight.
-    await expect(current).toHaveCSS("color", selection.color);
-    await expect(current).toHaveCSS("background-color", selection.background);
-    expect(await current.evaluate(node => getComputedStyle(node, "::before").width)).toBe("3px");
-    await expect(target).toHaveAttribute("data-dock-preview", "");
-    await expect(target).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-    await expect(target.locator("..").locator(":scope > .glass-indicator")).toHaveCount(1);
+    await expect(current).toHaveAttribute("aria-current", "page");
+    await expect(navigation.locator('.glass-indicator, [data-glass-convex]')).toHaveCount(0);
+    await expect(highlight).toHaveCSS("border-left-width", "3px");
+    await expect.poll(async () => {
+      const a = await target.boundingBox(), b = await highlight.boundingBox();
+      return a && b ? Math.abs(a.y - b.y) : 999;
+    }).toBeLessThan(1);
+    await page.locator('.admin-main h2').hover();
+    await expect.poll(async () => {
+      const a = await current.boundingBox(), b = await highlight.boundingBox();
+      return a && b ? Math.abs(a.y - b.y) : 999;
+    }).toBeLessThan(1);
   }
   await sidebar.screenshot({path:info.outputPath("sidebar-grouped.png")});
   const filterLink=navigation.getByRole("link",{name:"이름·문구 필터",exact:true});
