@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { problemViewSchema,type ProblemView } from "../../../shared/api/admin-problem-correction";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -63,7 +64,7 @@ export function QuizRevisionEditor({ quizSetId,problem,onProblemView }: { quizSe
   function edit(next: RevisionContent) {setContent(next);setConfirm(false);setTrials({});}
   const ready=view?.state==="editing" && !!content;
   return <section aria-label={problemMode ? "문제 오류 수정본 편집":"공개 취소한 퀴즈 편집·재발행"} className={styles.revisionEditor}>
-    <h3>{problemMode ? "문제 오류 수정본 편집":"공개 취소한 퀴즈 편집·재발행"}</h3>
+    <h3><AdminLabel text={problemMode ? "문제 오류 수정본 편집":"공개 취소한 퀴즈 편집·재발행"}/></h3>
     <p>내용 저장 → 두 격자 확인 → 요약·문제 검토 → 재발행 순서로 진행합니다.</p>
     {error && <p role="alert">{error}</p>}{message && <p role="status">{message}</p>}
     <div className={styles.actions}>
@@ -91,7 +92,7 @@ export function QuizRevisionEditor({ quizSetId,problem,onProblemView }: { quizSe
         {content[level].map((entry,index)=><details key={entry.id}><summary>{index+1}. {entry.clue || "단서를 입력해 주세요"}</summary>
           <div className={styles.displayFields}>{(["answer","clue","evidence"] as const).map(field=><label key={field}>{names[level]} {index+1} {field==="answer" ? "정답":field==="clue" ? "단서":"수정 근거"}
             <textarea rows={field==="answer" ? 1:3} value={entry[field]} onChange={e=>edit({...content,[level]:content[level].map((item,i)=>i===index ? {...item,[field]:e.target.value}:item)})} /></label>)}</div>
-          <details><summary>보존된 기존 근거</summary><pre className={styles.revisionEvidence}>{JSON.stringify(view.sourceEvidence[entry.id],null,2)}</pre></details>
+          <details><summary><AdminLabel text="보존된 기존 근거"/></summary><pre className={styles.revisionEvidence}>{JSON.stringify(view.sourceEvidence[entry.id],null,2)}</pre></details>
         </details>)}
       </fieldset>)}
       <Button type="button" disabled={busy || !dirty} onClick={()=>void run({action:"save",content})}>편집본 저장</Button>

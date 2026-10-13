@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { AdminConcepts, AdminEmoji } from "../../components/AdminHelp";
 import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { AdminTool } from "../../components/AdminGuide";
@@ -29,7 +30,7 @@ export function Component(){
   const published=quiz&&['published','archived'].includes(quiz.status);
   return <div className={styles.page}><Link className={styles.backLink} to="/admin">← 퀴즈 목록</Link>{message&&<div><p role="alert">{message}</p><Button onClick={()=>{setMessage('');setAttempt(a=>a+1);}}>다시 불러오기</Button></div>}
     {!id?(newChecked?<AdminSermonInput weekly/>:!message&&<p role="status">기존 초안을 확인하고 있습니다.</p>):!quiz?!message&&<p role="status">퀴즈를 불러오고 있습니다.</p>:<>
-      <header className={styles.workspaceHeader}><h2><AdminEmoji>🧩</AdminEmoji>{quiz.title}</h2><p>{quiz.sermonDate} · {published?quiz.status==='archived'?'마감된 퀴즈':'발행된 퀴즈':'작성 중인 퀴즈'}</p><details><summary>저장·초안 보관 정보</summary><p>마지막 저장: {new Date(quiz.updatedAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})} (한국 시간) · 초안 본문 정리 예정: {due?new Date(due).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'}):'초안 보관 현황에서 확인'}</p></details></header>
+      <header className={styles.workspaceHeader}><h2><AdminEmoji>🧩</AdminEmoji>{quiz.title}</h2><p>{quiz.sermonDate} · {published?quiz.status==='archived'?'마감된 퀴즈':'발행된 퀴즈':'작성 중인 퀴즈'}</p><details><summary><AdminLabel text="저장·초안 보관 정보"/></summary><p>마지막 저장: {new Date(quiz.updatedAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})} (한국 시간) · 초안 본문 정리 예정: {due?new Date(due).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'}):'초안 보관 현황에서 확인'}</p></details></header>
       {published?<>
         <AdminConcepts terms={["발행", "접수 마감", "Top N"]}/>
         <AdminScreenshots ids={["settings"]} compact/>

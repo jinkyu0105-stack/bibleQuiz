@@ -147,7 +147,7 @@ function CurrentPreview({ current }: { current: AdminSermonInputCurrent }) {
       <div><dt>본문 형식</dt><dd>{current.content.format === "plain_text" ? "일반 텍스트" : `시간 구간 ${current.content.segments.length}개`}</dd></div>
     </dl>
     <details className={styles.contentDisclosure}>
-      <summary>현재 본문 확인</summary>
+      <summary><AdminLabel text="현재 본문 확인"/></summary>
       <pre>{text}</pre>
     </details>
   </section>;
@@ -719,7 +719,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
         </div>
 
         <details className={styles.proposalCreator}>
-          <summary>수동 교정 제안 만들기</summary>
+          <summary><AdminLabel text="수동 교정 제안 만들기"/></summary>
           <form onSubmit={submitManualProposal}>
             <p>현재 본문에서 정확히 한 번 나타나는 표현 하나를 직접 제안으로 등록합니다. 수동 제안에는 AI 사용료가 들지 않습니다.</p>
             <div className={styles.formGrid}>

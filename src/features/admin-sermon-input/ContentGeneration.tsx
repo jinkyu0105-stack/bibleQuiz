@@ -138,7 +138,7 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
   const evidence = (items: Parameters<typeof ContentEvidence>[0]["evidence"], group: string, index: number, onEmpty?: () => void) =>
     sourceMatches ? <details className={styles.evidenceDisclosure} open={!autosave}><summary>원문 근거 확인 ({items.length})</summary><ContentEvidence label={fields[group] ?? (draft.kind === "summary" ? `요약 문단 ${index + 1}` : `문제 ${index + 1}`)}
       evidence={items} source={source} editable={editable} onChange={next => setEvidence(group, index, next)} {...(onEmpty ? { onEmpty } : {})} /></details>
-      : <details><summary>저장 당시 근거 보기</summary>{items.map((item, at) => <blockquote key={at}>{item.quote}</blockquote>)}<p>현재 원문과 연결이 다릅니다. 최신 자료에서 다시 검토해 주세요.</p></details>;
+      : <details><summary><AdminLabel text="저장 당시 근거 보기"/></summary>{items.map((item, at) => <blockquote key={at}>{item.quote}</blockquote>)}<p>현재 원문과 연결이 다릅니다. 최신 자료에서 다시 검토해 주세요.</p></details>;
   return <article id={`snapshot-${snapshot.value.id}`} className={styles.panel} onBlur={event => {
     if (!autosave && changed && editable && !event.currentTarget.contains(event.relatedTarget)) void save();
   }}>
@@ -167,7 +167,7 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
       </div>)}
       {editable && <Button type="button" onClick={() => addClaim(field)}>이 항목 추가</Button>}
     </details>)}
-    {draft.kind === "intent" && draft.critique && <details><summary>비판 검토의 지적 사항</summary>{Object.values(draft.critique).flatMap(check => check.concerns).map((concern, index) => <p key={index}>{concern.note}</p>)}{Object.values(draft.critique).every(check => check.assessment === "clear") && <p>추가 지적 사항이 없습니다. 내용의 최종 판단은 사람이 합니다.</p>}</details>}
+    {draft.kind === "intent" && draft.critique && <details><summary><AdminLabel text="비판 검토의 지적 사항"/></summary>{Object.values(draft.critique).flatMap(check => check.concerns).map((concern, index) => <p key={index}>{concern.note}</p>)}{Object.values(draft.critique).every(check => check.assessment === "clear") && <p>추가 지적 사항이 없습니다. 내용의 최종 판단은 사람이 합니다.</p>}</details>}
     {draft.kind === "summary" && draft.value.draft.paragraphs.map((paragraph, index) => <div key={paragraph.id} className={styles.claimItem}>
       <label className={styles.field}>요약 문단 {index + 1}<textarea value={paragraph.text} disabled={!editable} onChange={event => editText("", index, "text", event.currentTarget.value)} /></label>
       {evidence(paragraph.evidence, "", index)}
@@ -181,7 +181,7 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
       <label className={styles.field}>배치에 사용할지 선택<select disabled={busy || changed || !selected} value={draft.value.statuses[item.id]} onChange={event => void command({ family: "candidate", operation: { kind: "set_status", difficulty: draft.value.difficulty, poolId: draft.value.id, candidateId: item.id, status: event.currentTarget.value as "use" | "locked" | "excluded" } })}>
         <option value="use">사용</option><option value="locked">반드시 포함</option><option value="excluded">제외</option></select></label>
     </div>)}
-    {selected && <details className={styles.qualityDisclosure} open={!autosave}><summary>품질 평가와 검토 메모</summary>
+    {selected && <details className={styles.qualityDisclosure} open={!autosave}><summary><AdminLabel text="품질 평가와 검토 메모"/></summary>
     {selected && <ContentQuality key={view.quality[snapshot.value.id]?.revision ?? 0} snapshot={snapshot} view={view} busy={busy || changed} save={quality} />}
     </details>}
     {reviewActions}
@@ -324,7 +324,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
   return <section hidden={weeklyStep === 1} className={styles.panel} aria-labelledby="content-generation-title" aria-busy={loading}>
     <div className={styles.sectionHeading}><h3 id="content-generation-title"><AdminLabel text="설교 요약·문제 생성"/></h3><span>{view ? ({ failed: "생성 실패", stale: "입력 변경으로 중단", uncertain: "응답 확인 필요" } as Record<string, string>)[view.status] ?? stages[view.stage] ?? "상태 확인" : "연결 확인 중"}</span></div>
     <div hidden={weeklyStep !== undefined && weeklyStep > 3}>
-    <details className={styles.generationGuide} open={weeklyStep === undefined || !view?.jobId || newDraft}><summary>생성 안내·예상 비용</summary>
+    <details className={styles.generationGuide} open={weeklyStep === undefined || !view?.jobId || newDraft}><summary><AdminLabel text="생성 안내·예상 비용"/></summary>
     <p>{view?.recoveredCritiqueId ? "보관한 분석과 비판 결과를 재사용합니다. 의도를 확정하면 요약·어린이·장년 문제를 이어서 만듭니다." : view?.recoveredAnalysisId ? "보관한 분석을 재사용해 비판 검토부터 이어갑니다. 교정과 의도 분석을 다시 호출하지 않습니다."
       : "의도 분석과 비판 검토 뒤 사람이 확정합니다. 이어서 요약·어린이·장년 문제를 만들고 각각 검수합니다."}</p>
     <p className={styles.helper}>API 사용료는 별도입니다. 입력 10,000·출력 5,000 토큰 가정 시 약 USD 0.08/호출,
@@ -340,7 +340,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
       <Button type="button" disabled={controlBusy || !view?.enabled || !view.quizSetId || !paid || !inputConfirmed} onClick={() => void start()}>{view?.recoveredCritiqueId ? "보관 결과로 검수 이어가기" : view?.recoveredAnalysisId ? "보관 분석으로 비판 검토 시작" : "분석·비판 검토 시작"}</Button>
     </>}
     <Button type="button" disabled={acting || loading} onClick={() => void refresh()}>생성 상태 확인</Button>
-    {view?.jobId && <details className={styles.regenerationDisclosure} open={weeklyStep === undefined}><summary>다시 생성·이전 결과 선택</summary><ContentRegeneration key={view.jobId} view={view} inputConfirmed={inputConfirmed} busy={controlBusy} act={act} /></details>}
+    {view?.jobId && <details className={styles.regenerationDisclosure} open={weeklyStep === undefined}><summary><AdminLabel text="다시 생성·이전 결과 선택"/></summary><ContentRegeneration key={view.jobId} view={view} inputConfirmed={inputConfirmed} busy={controlBusy} act={act} /></details>}
     {view?.status === "uncertain" && <p>사용량이나 결과가 확인되지 않아 자동 재호출을 중단했습니다. 이전 비용을 확인해 주세요.</p>}
     {intentWaitJobId && c?.intent?.confirmation && <Button type="button" disabled={controlBusy || !view?.enabled || view.quality[c.intent.selectedId]?.status === "regenerate" || !!partialIntentWait && c.intent.rootAnalysisId !== partialIntentWait.analysisId} onClick={() => setIntentDialog(c.intent!.selectedId)}>{partialIntentWait ? "재확정한 의도 반영 완료" : "확정한 의도로 생성 시작"}</Button>}
     {view?.stage === "content_review" && <Button type="button" disabled={controlBusy || !reviewComplete} onClick={() => void act("finish")}>배치·최종 검사 (AI 비용 없음)</Button>}

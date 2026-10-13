@@ -25,7 +25,7 @@ export function AdminSteps({ steps, label = "사용 순서" }: {
   return <details className={styles.help}><summary><span><AdminEmoji>📖</AdminEmoji>사용 방법</span><span aria-hidden="true">＋</span></summary><ol className={styles.steps} aria-label={label}>
     {steps.map((step, index) => <li key={step.title} data-admin-tone={adminTextTones[step.title] ?? "action"}>
       <span className={styles.number} aria-hidden="true">{index + 1}</span>
-      <div><strong>{step.title}</strong><p><GuideText text={step.description}/></p></div>
+      <div><strong><AdminLabel text={step.title}/></strong><p><GuideText text={step.description}/></p></div>
     </li>)}
   </ol></details>;
 }

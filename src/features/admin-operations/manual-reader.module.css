@@ -67,3 +67,6 @@
 .article:is([data-topic="guide-9"], [data-topic="guide-7"]) > div:first-of-type > h4:first-child { border-top: 0; padding-top: 0; margin-top: 0 !important; }
 .article:is([data-topic="guide-9"], [data-topic="guide-7"]) > div:first-of-type > p + p { margin-top: 0; }
 @media (forced-colors: active) { .article:is([data-topic="guide-9"], [data-topic="guide-7"]) > div:first-of-type > h4 { border-color: CanvasText; } }
+
+.serviceReading > dl > div > dt { font-size: 18px; font-weight: 700; line-height: 1.65; }
+@media (max-width: 760px) { .serviceReading > dl > div > dt { font-size: 17px; } }

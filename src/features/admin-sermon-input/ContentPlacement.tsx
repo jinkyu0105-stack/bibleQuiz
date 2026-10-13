@@ -45,7 +45,7 @@ function LayoutReview({ layout, title, answers, large }: { layout: AdminPlacemen
         </div>)}</dl>
       </section>)}
       <p>배치에서 빠진 후보: {layout.omitted.join(", ") || "없음"}</p><p>관리자가 제외한 후보: {layout.excluded.join(", ") || "없음"}</p>
-      {answers && <details><summary>정답 표현 검토</summary>{layout.words.map(w => <p key={w.id}>{w.answer}: {w.phrase}</p>)}</details>}
+      {answers && <details><summary><AdminLabel text="정답 표현 검토"/></summary>{layout.words.map(w => <p key={w.id}>{w.answer}: {w.phrase}</p>)}</details>}
     </div>
   </div>;
 }
@@ -130,7 +130,7 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
       {trials[level] && <>
         {trials[level].layouts.length === 0 && <p role="status">이 설정에서는 배치를 찾지 못했습니다. 격자 크기·목표 단어 수 또는 후보 상태를 바꿔 다시 시험해 주세요.</p>}
         {trials[level].searchIncomplete && <p>탐색 범위 안의 결과입니다. 가능한 모든 조합을 검사한 것은 아닙니다.</p>}
-        {!!trials[level].reasons.length && <details><summary>배치가 어려웠던 이유</summary>{trials[level].reasons.map(reason => <p key={reason}>{reason}</p>)}</details>}
+        {!!trials[level].reasons.length && <details><summary><AdminLabel text="배치가 어려웠던 이유"/></summary>{trials[level].reasons.map(reason => <p key={reason}>{reason}</p>)}</details>}
         {!!trials[level].layouts.length && <><label className={styles.field}>비교할 배치<select disabled={disabled} value={indices[level]} onChange={e => { const index = Number(e.currentTarget.value); setIndices(previous => ({ ...previous, [level]: index })); }}>
           {trials[level].layouts.map(layout => <option key={layout.index} value={layout.index}>{layout.index === 0 ? "추천 배치" : `대안 ${layout.index}`} · {layout.grid.gridSize} × {layout.grid.gridSize} · {layout.wordCount}개</option>)}</select></label>
           <div className={styles.previewViewport} data-mobile={mobile} data-preview-theme={step === undefined ? undefined : previewTheme}><LayoutReview layout={trials[level].layouts[indices[level]]!} title={`${names[level]} 시험`} answers={answers} large={large} /></div>

@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { AdminIntro, AdminSteps } from "../../components/AdminGuide";
 import { AdminRecord } from "../../components/AdminRecord";
 import record from "./records.module.css";
@@ -22,10 +23,10 @@ export function Component(){
       <Button disabled={busy} onClick={()=>{setMessage('');setAttempt(a=>a+1);}}>문의 목록 새로고침</Button>
     </div>
     {message&&<p role="status">{message}</p>}
-    {items===null?(!message&&<p role="status">문의 목록을 불러오고 있습니다.</p>):visible?.length===0?<div className={record.empty}><h3>{filter==='pending'?'답변을 기다리는 문의가 없습니다':'이곳에 문의가 표시됩니다'}</h3><p>새 문의가 들어오면 내용과 처리 상태를 확인할 수 있습니다.</p></div>:<ul className={record.list}>{visible?.map(item=><AdminRecord key={`${item.id}/${item.updatedAt}`} title={item.submittedName??'이름 미기재'} label={item.requestType==='delete_submission'?'제출 삭제 요청':'개인정보 문의'} status={privacyLabels[item.status]} attention={pending(item.status)} meta={<><time dateTime={item.createdAt}>{new Date(item.createdAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})}</time>{item.quizSlug&&(quizSlugSchema.safeParse(item.quizSlug).success?<Link to={`/quiz/${item.quizSlug}`}>관련 퀴즈 보기 ↗</Link>:<span>대상: {item.quizSlug}</span>)}</>}>
+    {items===null?(!message&&<p role="status">문의 목록을 불러오고 있습니다.</p>):visible?.length===0?<div className={record.empty}><h3><AdminLabel text={filter==='pending'?'답변을 기다리는 문의가 없습니다':'이곳에 문의가 표시됩니다'}/></h3><p>새 문의가 들어오면 내용과 처리 상태를 확인할 수 있습니다.</p></div>:<ul className={record.list}>{visible?.map(item=><AdminRecord key={`${item.id}/${item.updatedAt}`} title={item.submittedName??'이름 미기재'} label={item.requestType==='delete_submission'?'제출 삭제 요청':'개인정보 문의'} status={privacyLabels[item.status]} attention={pending(item.status)} meta={<><time dateTime={item.createdAt}>{new Date(item.createdAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})}</time>{item.quizSlug&&(quizSlugSchema.safeParse(item.quizSlug).success?<Link to={`/quiz/${item.quizSlug}`}>관련 퀴즈 보기 ↗</Link>:<span>대상: {item.quizSlug}</span>)}</>}>
       <blockquote>{item.message}</blockquote>
       {item.adminResponse&&<p><strong>내 답변</strong> · {item.adminResponse}</p>}
-      <details><summary>{item.adminResponse?'답변·상태 수정':'답변 작성'}</summary>
+      <details><summary><AdminLabel text={item.adminResponse?'답변·상태 수정':'답변 작성'}/></summary>
         {item.requestType==='delete_submission'&&<div className={record.note}><p>상태를 ‘처리 완료’로 바꾸는 것만으로 제출 기록이 삭제되지는 않습니다.</p><Link to="/admin/submissions">제출 기록 관리 열기 ↗</Link></div>}
         <form onSubmit={e=>{e.preventDefault();const fields=new FormData(e.currentTarget);void save(item.id,{status:String(fields.get('status')),adminResponse:String(fields.get('response')),expectedUpdatedAt:item.updatedAt});}}><fieldset disabled={busy} className={record.reply}><legend>처리 상태·답변</legend><label>처리 상태<select name="status" defaultValue={item.status}>{Object.entries(privacyLabels).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label><label>관리자 답변<textarea name="response" maxLength={1000} defaultValue={item.adminResponse??''}/></label><Button>상태·답변 저장</Button></fieldset></form>
       </details>

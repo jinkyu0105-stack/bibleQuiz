@@ -68,7 +68,7 @@ export function Component() {
       {featured?.slug && <ButtonLink to={`/quiz/${featured.slug}`}>공개 화면 <span aria-hidden="true">↗</span></ButtonLink>}
     </section>}
     <section className={styles.library} aria-labelledby="quiz-library-heading" aria-busy={loading}>
-      <div className={styles.sectionHeading}><h3 id="quiz-library-heading">퀴즈 목록 <span>{items.length}</span></h3>
+      <div className={styles.sectionHeading}><h3 id="quiz-library-heading"><AdminLabel text="퀴즈 목록"/> <span>{items.length}</span></h3>
         <Button type="button" disabled={loading} onClick={() => { setMessage(""); setLoading(true); setAttempt(v => v + 1); }} aria-label="운영 상태 새로고침">{loading ? "불러오는 중" : "새로고침"}</Button>
       </div>
       <div className={styles.toolbar}>
@@ -93,7 +93,7 @@ export function Component() {
           </article>
         </li>)}</ul>}
     </section>
-    {due.length > 0 && <details className={styles.cleanup}><summary>초안 보관 알림 <span>{due.length}건</span></summary><p>본문 정리 예정이거나 확인이 필요한 초안입니다.</p><ul>{due.map(q => <li key={q.sermonId}><span>{q.title}</span><span>{q.state === "blocked" ? "확인 필요" : q.dueAt ? time(q.dueAt) : "시각 미확인"}</span></li>)}</ul><Link to="/admin/tools#cleanup">보관 현황 열기 →</Link></details>}
+    {due.length > 0 && <details className={styles.cleanup}><summary><AdminLabel text="초안 보관 알림"/> <span>{due.length}건</span></summary><p>본문 정리 예정이거나 확인이 필요한 초안입니다.</p><ul>{due.map(q => <li key={q.sermonId}><span>{q.title}</span><span>{q.state === "blocked" ? "확인 필요" : q.dueAt ? time(q.dueAt) : "시각 미확인"}</span></li>)}</ul><Link to="/admin/tools#cleanup">보관 현황 열기 →</Link></details>}
     <footer className={styles.footer}><Link data-tone="guide" to="/admin/manual">퀴즈 운영이 처음이신가요? <span>사용 안내 ↗</span></Link><Link to="/admin/operations">비용·백업 확인 ↗</Link></footer>
   </div>;
 }

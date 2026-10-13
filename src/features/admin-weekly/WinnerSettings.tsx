@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { useEffect, useRef, useState } from "react";
 import { winnerSettingsSchema, type WeeklyQuiz } from "../../../shared/api/admin-weekly";
@@ -12,7 +13,7 @@ export function WinnerSettings({quizSetId}:{quizSetId:string}) {
   async function save(){if(!view||lock.current)return;lock.current=true;setBusy(true);setMessage('');try{
     const next=await weeklyRequest(`/api/admin/quiz-sets/${quizSetId}/winner-settings`,winnerSettingsSchema,'PATCH',{child,adult,reason,expectedRevision:view.revision});setView(next);setMessage('Top N 인원을 저장했습니다. 화면과 출력에 같은 값을 사용합니다.');
   }catch(error){setMessage(error instanceof Error?error.message:'저장을 확인하지 못했습니다.');}finally{lock.current=false;setBusy(false);}}
-  return <section className={styles.panel} aria-label="Top N 인원 설정"><h3>Top N 인원 설정</h3><p className={styles.hint}>모든 문제를 맞힌 참여자 중 결과 화면과 출력물에 보여 줄 인원을 정합니다. 3명으로 설정하면 제출 순서대로 최대 3명을 표시합니다.</p>
+  return <section className={styles.panel} aria-label="Top N 인원 설정"><h3><AdminLabel text="Top N 인원 설정"/></h3><p className={styles.hint}>모든 문제를 맞힌 참여자 중 결과 화면과 출력물에 보여 줄 인원을 정합니다. 3명으로 설정하면 제출 순서대로 최대 3명을 표시합니다.</p>
     {message&&<p role="status">{message}</p>}{!view?<Button type="button" onClick={()=>setAttempt(a=>a+1)}>설정 다시 불러오기</Button>:<form onSubmit={e=>{e.preventDefault();void save();}}>
       {!view.editable&&<p>마감된 퀴즈의 순위는 고정되어 인원을 변경할 수 없습니다.</p>}
       <fieldset disabled={busy||!view.editable} className={styles.fields}><legend>모든 문제를 맞힌 참여자 중 제출 순서로 선정합니다.</legend>

@@ -71,7 +71,7 @@ test('manual formats reading cues, explains services and retries only after a fa
  }
  await expect(page.getByRole('heading',{name:'OpenAI API',exact:true})).toBeFocused();
  await expect(page.getByRole('heading',{name:'OpenAI API',exact:true}).locator('img[alt=""]')).toHaveCount(1);
- await expect(page.getByText('언제 쓰나요?',{exact:true}).first()).toBeVisible();
+ await expect(page.getByRole('article').locator('dt').filter({hasText:'언제 쓰나요?'})).toBeVisible();
  await expect(page.getByText('등록한 설교 자료를 읽고, 내용을 정리하거나 퀴즈 문제의 초안을 만들어 주는 AI입니다. AI가 만든 내용을 확인하고 발행하는 사람은 관리자입니다.',{exact:true})).toBeVisible();
  await expect(page.locator('code').filter({hasText:'OPENAI_API_KEY'})).toBeHidden();
  await page.locator('summary').filter({hasText:'안내문 수정일과 서버 정보'}).click();

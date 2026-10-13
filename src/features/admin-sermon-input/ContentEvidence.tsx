@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { useEffect, useRef, useState } from "react";
 import type { AdminSermonInputCurrent } from "../../../shared/api/admin-sermon-input";
@@ -78,7 +79,7 @@ export function ContentEvidence({ evidence, source, editable, onChange, onEmpty,
           <Button type="button" onClick={() => remove(index)}>근거 삭제</Button></>}
       </div>
     </div>)}
-    <details ref={sourceRef} className={styles.evidenceSource}><summary>원문에서 근거 구절 선택</summary>
+    <details ref={sourceRef} className={styles.evidenceSource}><summary><AdminLabel text="원문에서 근거 구절 선택"/></summary>
       <div className={styles.sectionHeading}><strong>원문 위치 선택</strong><span>{source.content.format === "timed_segments" ? `구간 ${segmentIndex + 1} / ${segments.length}` : "전체 문서"}</span></div>
       {source.content.format === "timed_segments" && <div className={styles.evidenceActions}>
         <Button type="button" disabled={segmentIndex === 0} onClick={() => { setSegmentIndex(segmentIndex - 1); setSelected(null); }}>이전 구간</Button>

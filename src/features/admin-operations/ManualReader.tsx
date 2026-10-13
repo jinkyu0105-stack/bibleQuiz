@@ -89,12 +89,12 @@ export function ManualReader({ source }: { source: string }) {
       {service && guide && <div className={css.serviceReading}>
         <p className={css.lead}>{guide.role}</p>
         <dl className={local.guideFacts}>
-          <div data-admin-tone="action"><dt>언제 쓰나요?</dt><dd><GuideText text={guide.when}/></dd></div>
-          <div data-admin-tone="danger"><dt>문제가 생기면?</dt><dd><GuideText text={guide.failure}/></dd></div>
-          <div data-admin-tone="attention"><dt>무엇을 확인하나요?</dt><dd><GuideText text={guide.check}/></dd></div>
+          <div data-admin-tone="action"><dt><AdminLabel text="언제 쓰나요?"/></dt><dd><GuideText text={guide.when}/></dd></div>
+          <div data-admin-tone="danger"><dt><AdminLabel text="문제가 생기면?"/></dt><dd><GuideText text={guide.failure}/></dd></div>
+          <div data-admin-tone="attention"><dt><AdminLabel text="무엇을 확인하나요?"/></dt><dd><GuideText text={guide.check}/></dd></div>
         </dl>
         <a className={local.docLink} href={service.officialDocsUrl} target="_blank" rel="noreferrer">{service.name} 공식 안내 ↗</a>
-        <details className={local.technical}><summary>연결 설정·비용 기록 자세히</summary>
+        <details className={local.technical}><summary><AdminLabel text="연결 설정·비용 기록 자세히"/></summary>
           <p>설정을 점검할 때 참고하는 정보입니다. 평소 퀴즈를 운영할 때는 바꾸지 않아도 됩니다.</p>
           <dl className={local.guideFacts}>
             <div><dt>관리 화면에서 찾는 곳</dt><dd>{service.dashboardPath}</dd></div>

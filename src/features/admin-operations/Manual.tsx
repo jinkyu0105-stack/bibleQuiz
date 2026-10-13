@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { z } from "zod";
@@ -30,7 +31,7 @@ function ManualPage({ future }: { future: boolean }) {
     {error && <div role="alert"><p>{error}</p><Button type="button" onClick={() => { setError(""); setAttempt(value => value + 1); }}>안내문 다시 불러오기</Button></div>}
     {!data && !error && <p role="status">안내문을 불러오고 있습니다.</p>}
     {data && (future ? <ManualText source={data.markdown}/> : <ManualReader source={data.markdown}/>)}
-    {data && <details className={local.documentInfo}><summary>안내문 수정일과 서버 정보</summary>
+    {data && <details className={local.documentInfo}><summary><AdminLabel text="안내문 수정일과 서버 정보"/></summary>
       <dl className={local.guideFacts}>
         <div><dt>안내문 수정일</dt><dd>{data.updatedAt} · 글을 마지막으로 고친 날짜입니다.</dd></div>
         <div><dt>검사 기록</dt><dd>개발 과정에서 동작을 확인한 기록의 이름입니다. 현재 서버의 실시간 검사 결과는 아닙니다. <span className={local.note}>{data.verification}</span></dd></div>

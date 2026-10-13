@@ -2,20 +2,20 @@
 
 P9-23 사용자 요청의 확대 가능한 설명용 이미지다. 새 디자인 시안이 아닌 **현재 React 컴포넌트의 실제 렌더링**이며, `tests/e2e/fixtures/admin-guide.ts`의 가상 연습 자료만 표시한다. 실제 운영의 결과·자료·백업 상태·비용을 캡처하지 않았다. API는 브라우저 안에서 합성 GET으로 응답하고 쓰기는 차단한다. PNG는 `public/images/admin-guide/`에 보존한다.
 
-2026-10-13 P9-23 문구·의미 색상 보정 후 8종을 다시 캡처했다.
+2026-10-13 P9-23 제목·이모지 보완 후 8종을 다시 캡처했다.
 
 퀴즈 목록·설교 정보·요약/난도 검수·발행 후 설정·참여 조치·문의 답변·필터 시험·비용/백업의 8개 설명에 사용한다. 표시 위치/제목/대체 텍스트/설명은 `src/config/admin-screenshots.ts`, 확대 기능은 `src/components/AdminScreenshots.tsx`를 따른다.
 
 | 파일 | 해상도 | 크기(bytes) |
 |---|---|---|
-| dashboard.png | 990 × 584 | 78,758 |
+| dashboard.png | 990 × 584 | 79,071 |
 | filters.png | 990 × 396 | 54,872 |
 | input.png | 990 × 544 | 86,720 |
 | operations.png | 990 × 335 | 41,949 |
-| privacy.png | 990 × 740 | 68,321 |
-| review.png | 990 × 794 | 130,748 |
+| privacy.png | 990 × 740 | 68,608 |
+| review.png | 990 × 794 | 131,086 |
 | settings.png | 990 × 486 | 90,489 |
-| submissions.png | 990 × 682 | 60,848 |
+| submissions.png | 990 × 682 | 61,327 |
 
 재생성은 프로젝트 루트에서 명시적으로 실행한다. 기존 로컬 연습 DB를 바꾸지 않는 격리 E2E 서버를 사용한다.
 

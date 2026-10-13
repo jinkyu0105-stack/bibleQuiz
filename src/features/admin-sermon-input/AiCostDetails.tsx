@@ -68,11 +68,11 @@ export function AiCostDetails({ quizSetId, refreshKey = 0 }: { quizSetId: string
         </div>
         <p className={styles.helper}>AI API 사용료는 월 USD 0 인프라 운영 목표와 별도입니다. 금액은 공급자 사용량과 호출 당시 저장한 가격표 버전으로 계산한 추정치이며 실제 청구서와 소수점 차이가 날 수 있습니다.</p>
         {legacyPricing && <p role="note">과거 가격표(openai-terra-2026-09-22)는 캐시 저장 요금을 반영하지 않았습니다. 원래 기록을 보존한 금액이며, 캐시 저장이 발생한 호출은 과소 표시됩니다. 새 가격표는 공급자가 보고한 캐시 저장량을 반영합니다.</p>}
-        <h3>모델별 소계</h3>
+        <h3><AdminLabel text="모델별 소계"/></h3>
         {data.models.length === 0 ? <p>아직 AI 호출 기록이 없습니다.</p> : <dl className={styles.costModels}>{data.models.map(group => <div key={`${group.provider}:${group.model}`}>
           <dt>{group.provider} · {group.model}</dt><dd>{money(group.knownCostMicroUsd)} · {group.totalCalls}회{group.unknownCalls > 0 && ` · 사용량 미확인 ${group.unknownCalls}회`}</dd>
         </div>)}</dl>}
-        <h3>호출별 기록</h3>
+        <h3><AdminLabel text="호출별 기록"/></h3>
         {data.calls.length === 0 ? <p>표시할 호출이 없습니다.</p> : <ol className={styles.costCalls}>{data.calls.map(call => <li key={call.callId}>
           <div className={styles.costCallHeading}><strong>{call.singleEntry || call.scope === "single_entry" ? "개별 문제" : purposes[call.purpose]}</strong>
             <span>{call.estimatedCostMicroUsd === null ? "사용량 미확인" : money(call.estimatedCostMicroUsd)}</span></div>

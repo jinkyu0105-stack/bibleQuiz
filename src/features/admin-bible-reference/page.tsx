@@ -139,7 +139,7 @@ function BibleReferenceTool() {
 
     <div className={styles.workspace}>
       <form className={styles.form} onSubmit={submitNatural} noValidate>
-        <h3>자연어로 입력</h3>
+        <h3><AdminLabel text="자연어로 입력"/></h3>
         <p>예: 요한복음 3:1-3, 요 3:16, 요한복음 3장 1절-3절</p>
         <div className={styles.fields}>
           <label htmlFor="natural-reference">성경 장절
@@ -159,7 +159,7 @@ function BibleReferenceTool() {
       </form>
 
       <form className={styles.form} onSubmit={submitSelection}>
-        <h3>66권에서 선택</h3>
+        <h3><AdminLabel text="66권에서 선택"/></h3>
         <p>책, 장, 시작 절, 마지막 절을 차례로 선택합니다. 같은 장 안의 연속 범위만 확인할 수 있습니다.</p>
         <div className={styles.fields}>
           <label htmlFor="bible-book">성경 책
@@ -205,13 +205,13 @@ export function Component() {
       <ButtonLink to="/admin">퀴즈 목록으로</ButtonLink>
     </AdminIntro>
     <div className={styles.toolGroup}>
-      <div className={styles.groupHeading}><h3>발행한 퀴즈</h3><p>제출이 있는지와 수정할 내용에 따라 도구가 달라집니다.</p></div>
+      <div className={styles.groupHeading}><h3><AdminLabel text="발행한 퀴즈"/></h3><p>제출이 있는지와 수정할 내용에 따라 도구가 달라집니다.</p></div>
       <AdminTool id="metadata" tag="제목·설교일·오탈자" title="발행 정보 수정" description="제목·날짜·요약·단서의 오탈자를 고칩니다."><PublishedMetadata /></AdminTool>
       <AdminTool id="withdrawal" tag="아직 제출이 없다면" title="발행 취소" description="제출이 없는 퀴즈를 비공개로 돌리고 다시 준비합니다."><WithdrawPublication /></AdminTool>
       <AdminTool id="correction" tag="이미 제출이 있는 퀴즈" title="문제·정답 수정" description="제출이 있는 퀴즈의 오류를 수정합니다. 기존 답안과 결과는 보존됩니다."><ProblemCorrection /></AdminTool>
     </div>
     <div className={styles.toolGroup}>
-      <div className={styles.groupHeading}><h3>초안과 설교 자료</h3><p>평소 발행 순서와 별개로, 필요한 자료만 자세히 살펴봅니다.</p></div>
+      <div className={styles.groupHeading}><h3><AdminLabel text="초안과 설교 자료"/></h3><p>평소 발행 순서와 별개로, 필요한 자료만 자세히 살펴봅니다.</p></div>
       <AdminTool id="cleanup" tag="보관 현황 조회" title="초안 보관 현황" description="초안 본문의 자동 정리 예정일을 확인합니다."><DraftCleanup /></AdminTool>
       <AdminTool id="sermon" tag="상세 편집" title="설교 자료 편집" description="저장된 자막과 수정본을 비교하고 편집합니다."><AdminSermonInput /></AdminTool>
       <AdminTool id="bible" tag="저장하지 않는 확인 도구" title="성경 장절 확인" description="장절 표기와 대한성서공회 읽기 링크를 확인합니다."><BibleReferenceTool /></AdminTool>

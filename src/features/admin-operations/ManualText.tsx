@@ -1,5 +1,5 @@
-import { adminTerms, adminTextTones, type AdminTerm } from "../../config/admin-help";
-import { AdminLabel, GuideText, HelpTerm } from "../../components/AdminHelp";
+import { adminTerms, adminTextTones, adminTitleEmoji, type AdminTerm } from "../../config/admin-help";
+import { AdminLabel, AdminEmoji, GuideText, HelpTerm } from "../../components/AdminHelp";
 import { AdminIcon } from "../../components/AdminIcon";
 import local from "./operations.module.css";
 
@@ -17,7 +17,10 @@ export function ManualBody({ source }: { source: string }) {
   return <div className={local.prose}>{source.trim().split(/\n\n+/u).filter(Boolean).map((block, index) => {
     const lines = block.split("\n");
     if (block.startsWith("```")) return <pre key={index}><code>{block.replace(/^```[^\n]*\n|\n```$/gu, "")}</code></pre>;
-    if (/^###? /u.test(block)) return <h4 key={index}><Inline text={block.replace(/^#+ /u, "")}/></h4>;
+    if (/^###? /u.test(block)) {
+      const title = block.replace(/^#+ /u, "");
+      return <h4 key={index}>{adminTitleEmoji[title] && <AdminEmoji>{adminTitleEmoji[title]}</AdminEmoji>}<Inline text={title}/></h4>;
+    }
     if (lines.every(line => /^\d+\. /u.test(line))) return <ol key={index} role="list">{lines.map((line, i) => <li key={i} data-admin-tone={adminTextTones[line.match(/\*\*([^*]+)\*\*/u)?.[1] ?? ""]}><Inline text={line.replace(/^\d+\. /u, "")}/></li>)}</ol>;
     if (lines.every(line => line.startsWith("- "))) return <ul key={index}>{lines.map((line, i) => <li key={i}><Inline text={line.slice(2)}/></li>)}</ul>;
     if (block.startsWith("> ")) return <aside className={local.callout} aria-label="주의" key={index}><AdminIcon name="alert"/><div><Inline text={block.replace(/^> ?/gmu, "")}/></div></aside>;

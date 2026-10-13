@@ -1,3 +1,4 @@
+import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { useRef, useState } from "react";
 import type { AdminContentView } from "../../../shared/api/admin-content-generation";
@@ -37,7 +38,7 @@ export function ContentRegeneration({ view, inputConfirmed, busy, act }: { view:
     finally { lock.current = false; }
   }
   return <section aria-labelledby="individual-generation-title">
-    <h4 id="individual-generation-title">필요한 내용만 다시 생성</h4>
+    <h4 id="individual-generation-title"><AdminLabel text="필요한 내용만 다시 생성"/></h4>
     <p className={styles.helper}>의도는 분석·비판 2회, 나머지는 선택한 범위 1회 생성합니다. 기존 선택본은 유지되며 새 결과는 아래 비교 자료에서 직접 선택합니다. 선택·수정한 내용은 다시 검수하고 배치를 검토해야 합니다.</p>
     {!parentReady && <p>전체 생성의 내용 검수 단계에서 개별 재생성을 사용할 수 있습니다.</p>}
     {running && <p>다른 개별 생성 작업이 진행 중입니다. 생성 상태를 확인해 주세요.</p>}
