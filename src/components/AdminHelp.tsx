@@ -1,4 +1,5 @@
-import { Fragment, useEffect, useId, useRef } from "react";
+import { Fragment, type ReactNode } from "react";
+import { useAdminTooltip } from "./useAdminTooltip";
 import { adminTerms, adminTermTones, adminToneLabels, adminTitleEmoji, type AdminTerm } from "../config/admin-help";
 import css from "./admin-help.module.css";
 
@@ -9,58 +10,21 @@ export function AdminLabel({ text, explain = false }: { text: string; explain?: 
   return <>{adminTitleEmoji[text] && <AdminEmoji>{adminTitleEmoji[text]}</AdminEmoji>}{explain ? <GuideText text={text}/> : text}</>;
 }
 
-function positionBubble(button: HTMLButtonElement, bubble: HTMLSpanElement) {
-  const anchor = button.getBoundingClientRect(), box = bubble.getBoundingClientRect();
-  const left = Math.max(12, Math.min(anchor.left, window.innerWidth - box.width - 12));
-  const above = anchor.top - box.height - 8;
-  const below = Math.max(12, Math.min(anchor.bottom + 8, window.innerHeight - box.height - 12));
-  const top = above >= 12 ? above : below;
-  bubble.dataset.side = above >= 12 ? "above" : "below";
-  bubble.style.setProperty("--pointer-x", `${Math.max(18, Math.min(anchor.left + anchor.width / 2 - left, box.width - 18))}px`);
-  bubble.style.left = `${left}px`;
-  bubble.style.top = `${top}px`;
+/** Shared compact explanation for an icon, status or count. */
+export function AdminTooltip({ label, children }: { label: string; children: ReactNode | ((descriptionId: string) => ReactNode) }) {
+  const { id, triggerRef, bubbleRef, triggerEvents, bubbleEvents } = useAdminTooltip<HTMLSpanElement>();
+  return <span ref={triggerRef} className={css.hint} {...triggerEvents}>
+    {typeof children === "function" ? children(id) : children}
+    <span id={id} ref={bubbleRef} role="tooltip" popover="auto" className={`${css.tooltip} ${css.compact}`} data-compact data-admin-tone="action" {...bubbleEvents}>{label}</span>
+  </span>;
 }
 
-/** Native top layer avoids clipping inside the glass panels and nested disclosures. */
+/** Native top layer avoids clipping inside glass panels and nested disclosures. */
 export function HelpTerm({ term }: { term: AdminTerm }) {
-  const id = useId();
-  const trigger = useRef<HTMLButtonElement>(null);
-  const bubble = useRef<HTMLSpanElement>(null);
-  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const hovered = useRef(false);
-  const focused = useRef(false);
-  function show() {
-    clearTimeout(timer.current);
-    const el = bubble.current, button = trigger.current;
-    if (!el || !button) return;
-    if (!el.matches(":popover-open")) el.showPopover();
-    positionBubble(button, el);
-  }
-  function leave() {
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      if (!hovered.current && !focused.current && bubble.current?.matches(":popover-open")) bubble.current.hidePopover();
-    }, 160);
-  }
-  useEffect(() => {
-    const reposition = () => {
-      const el = bubble.current, button = trigger.current;
-      if (!el?.matches(":popover-open") || !button) return;
-      const anchor = button.getBoundingClientRect();
-      if (anchor.bottom < 0 || anchor.top > window.innerHeight) el.hidePopover();
-      else positionBubble(button, el);
-    };
-    window.addEventListener("resize", reposition);
-    window.addEventListener("scroll", reposition, true);
-    return () => { clearTimeout(timer.current); window.removeEventListener("resize", reposition); window.removeEventListener("scroll", reposition, true); };
-  }, []);
-  return <><button type="button" ref={trigger} className={css.term} data-admin-tone={adminTermTones[term]} aria-describedby={id} popoverTarget={id} popoverTargetAction="show"
-    onPointerEnter={event => { if (event.pointerType !== "touch") { hovered.current = true; show(); } }}
-    onPointerLeave={() => { hovered.current = false; leave(); }}
-    onFocus={() => { focused.current = true; show(); }} onBlur={() => { focused.current = false; leave(); }} onClick={show}>
+  const { id, triggerRef, bubbleRef, show, triggerEvents, bubbleEvents } = useAdminTooltip<HTMLButtonElement>();
+  return <><button type="button" ref={triggerRef} className={css.term} data-admin-tone={adminTermTones[term]} aria-describedby={id} popoverTarget={id} popoverTargetAction="show" {...triggerEvents} onClick={show}>
     {term}
-  </button><span id={id} ref={bubble} role="tooltip" popover="auto" className={css.tooltip} data-admin-tone={adminTermTones[term]}
-    onPointerEnter={() => { hovered.current = true; clearTimeout(timer.current); }} onPointerLeave={() => { hovered.current = false; leave(); }}>
+  </button><span id={id} ref={bubbleRef} role="tooltip" popover="auto" className={css.tooltip} data-admin-tone={adminTermTones[term]} {...bubbleEvents}>
     <span className={css.tooltipHeading}><strong>{term}</strong><span className={css.kind} aria-hidden="true">{adminToneLabels[adminTermTones[term]]}</span></span><span>{adminTerms[term]}</span>
   </span></>;
 }

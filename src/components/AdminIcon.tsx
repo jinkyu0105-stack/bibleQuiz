@@ -7,6 +7,8 @@ const shapes = {
   settings: <><path d="M4 7h16 M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></>,
   document: <path d="M4 3h12l4 4v14H4z M16 3v5h4 M8 12h8 M8 16h5"/>,
   people: <><circle cx="8" cy="7" r="3"/><path d="M2 21v-3a6 6 0 0 1 12 0v3 M16 4a3 3 0 0 1 0 6 M17 14a5 5 0 0 1 5 5v2"/></>,
+  child: <><circle cx="12" cy="9" r="5"/><path d="M10 4c0-2 3-2 3 0 M10 9h.01 M14 9h.01 M10 11c1 1 3 1 4 0 M5 21v-1a7 7 0 0 1 14 0v1"/></>,
+  adult: <><circle cx="12" cy="6" r="3"/><path d="M5 21v-3a7 7 0 0 1 14 0v3 M9 14l3 3 3-3"/></>,
   message: <path d="M4 4h16v12H9l-5 4z M8 8h8 M8 12h5"/>,
   edit: <path d="m15 4 5 5 M4 20l5-1L21 7l-4-4L5 15z"/>,
   filter: <path d="M4 4h16l-6 7v8l-4 2V11z"/>,
@@ -27,7 +29,7 @@ const shapes = {
 } satisfies Record<string, ReactNode>;
 export type AdminIconName = keyof typeof shapes;
 
-/** Decorative: the neighbouring text always supplies the accessible name. */
+/** Decorative: the surrounding control or text supplies the accessible name. */
 export function AdminIcon({ name, className, tone }: { name: AdminIconName; className?: string; tone?: AdminTone }) {
   return <svg data-admin-tone={tone} className={className} viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">{shapes[name]}</svg>;
 }

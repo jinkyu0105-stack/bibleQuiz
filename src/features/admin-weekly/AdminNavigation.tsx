@@ -80,6 +80,5 @@ export function AdminNavigation() {
         </details>
       </nav>
     </details>
-    <Link className={styles.homeLink} to="/"><AdminIcon name="external" tone="action"/><span>사이트 보기</span></Link>
   </GlassPanel>;
 }

@@ -29,7 +29,7 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
   await expect(refresh).toHaveCSS("border-radius", "50%");
   await expect(refresh.locator("svg")).toHaveCount(1);
   await expect(refresh).toHaveText("");
-  await expect(refresh).toHaveCSS("min-height", "44px");
+  await expect(refresh).toHaveCSS("min-height", isMobile ? "44px" : "36px");
   expect(await refresh.evaluate(node => getComputedStyle(node, "::before").content)).toBe("none");
   await expect(refresh).not.toHaveAttribute("data-lens-ready");
   await expect(page.getByRole("heading",{name:"퀴즈 관리",exact:true})).toHaveCSS("font-family", /Noto Serif KR/);
@@ -87,7 +87,7 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
     } else {
       const button=page.locator(".admin-main .action-button").first();
       await expect(button).toBeVisible();
-      await expect(button).toHaveCSS("min-height","44px");
+      await expect(button).toHaveCSS("min-height",await button.getAttribute("data-admin-refresh") !== null && !isMobile ? "36px" : "44px");
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }

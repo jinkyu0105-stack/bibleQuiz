@@ -1,5 +1,5 @@
-import { AdminConcepts, AdminEmoji, AdminLabel } from "../../components/AdminHelp";
-import { AdminFilterTabs, AdminRefreshButton } from "../../components/AdminListTools";
+import { AdminConcepts, AdminEmoji, AdminLabel, AdminTooltip } from "../../components/AdminHelp";
+import { AdminFilterTabs, AdminRefreshButton, AdminIconLink } from "../../components/AdminListTools";
 import { AdminIcon } from "../../components/AdminIcon";
 import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { useEffect, useState } from "react";
@@ -77,20 +77,25 @@ export function Component() {
         <label className={styles.search}><span className="sr-only">퀴즈 검색</span><input type="search" placeholder="제목 또는 날짜 검색" value={search} onChange={e => setSearch(e.target.value)}/></label>
       </AdminFilterTabs>
       {!data && loading ? <div className={styles.empty} role="status">퀴즈를 불러오고 있습니다.</div> : !data ? <div className={styles.empty}>새로고침을 눌러 목록을 다시 불러오세요.</div> : rows.length === 0 ? <div className={styles.empty}><h4>{items.length ? "조건에 맞는 퀴즈가 없습니다" : "첫 퀴즈를 준비해 보세요"}</h4><p>{items.length ? "검색어나 상태를 바꾸면 다른 퀴즈를 볼 수 있습니다." : "설교 영상 등록부터 문제 검토와 발행까지 한 화면에서 이어집니다."}</p>{!items.length && <ButtonLink to="/admin/new">퀴즈 준비하기</ButtonLink>}</div> :
-        <ul className={styles.quizList}>{rows.map(q => <li key={q.quizSetId}>
-          <article className={styles.quizRow}>
-            <div className={styles.date}><span>{q.sermonDate.slice(0, 4)}</span><strong>{q.sermonDate.slice(5).replace("-", ".")}</strong></div>
-            <div className={styles.quizCopy}><div className={styles.badges}><span className={styles.status} data-state={q.expired ? "archived" : q.status} data-tone={q.expired || q.status === "archived" ? "neutral" : q.submissionStatus === "paused" || q.jobStatus === "failed" || q.status === "needs_revision" ? "attention" : q.status === "published" ? "success" : "action"}>{stage(q)}</span>{q.quizSetId === data?.homeQuiz?.quizSetId && <span className={styles.homeBadge}>홈 표시</span>}</div>
+        <><div className={styles.boardHeading} aria-hidden="true"><span>설교일</span><span>퀴즈</span><span>참여 · 관리</span></div>
+        <ul className={styles.quizList}>{rows.map(q => {
+          const description = [q.quizSetId === data.homeQuiz?.quizSetId ? "홈에 표시되는 퀴즈" : "", isDraft(q) ? q.expired ? "발행 기록과 비용은 보존됩니다." : progress[q.stage ?? ""] ?? "설교 등록·입력 확인" : q.closesAt ? `${q.status === "archived" ? "마감일" : "접수 마감"} ${time(q.closesAt)}${q.status === "published" && Date.parse(q.closesAt) <= checkedAt ? " · 마감 처리 대기" : ""}` : ""].filter(Boolean).join(" · ");
+          return <li key={q.quizSetId}><article className={styles.quizRow} data-admin-quiz-row>
+            <time className={styles.date} dateTime={q.sermonDate}><span className="sr-only">설교일 {q.sermonDate}</span><span aria-hidden="true">{q.sermonDate.slice(0, 4)}</span><strong aria-hidden="true">{q.sermonDate.slice(5).replace("-", ".")}</strong></time>
+            <div className={styles.quizCopy}>
+              <AdminTooltip label={description || stage(q)}>{descriptionId => <span className={styles.status} tabIndex={0} aria-describedby={descriptionId} data-state={q.expired ? "archived" : q.status} data-tone={q.expired || q.status === "archived" ? "neutral" : q.submissionStatus === "paused" || q.jobStatus === "failed" || q.status === "needs_revision" ? "attention" : q.status === "published" ? "success" : "action"}>{stage(q)}</span>}</AdminTooltip>
               <h4>{q.title}</h4>
-              <p>{isDraft(q) ? q.expired ? "발행 기록과 비용은 보존됩니다." : progress[q.stage ?? ""] ?? "설교 등록·입력 확인" : `어린이 ${q.childVisibleCount}명 · 장년 ${q.adultVisibleCount}명 참여`}</p>
-              {!isDraft(q) && q.closesAt && <p className={styles.deadline}>{q.status === "archived" ? "마감일" : "접수 마감"} {time(q.closesAt)}{q.status === "published" && Date.parse(q.closesAt) <= checkedAt ? " · 마감 처리 대기" : ""}</p>}
             </div>
             <div className={styles.rowActions}>
-              {!q.expired && <ButtonLink className={styles.rowButton} to={`/admin/quiz/${q.quizSetId}`}><AdminIcon name={isDraft(q) ? "edit" : "settings"}/>{isDraft(q) ? "초안 편집" : "퀴즈 설정"}</ButtonLink>}
-              {!isDraft(q) && <ButtonLink className={styles.rowButton} to={`/admin/submissions?quiz=${q.quizSetId}`}><AdminIcon name="people"/>참여 기록</ButtonLink>}
+              {!isDraft(q) && <div className={styles.participants}>
+                {([['child', '어린이', q.childVisibleCount], ['adult', '장년', q.adultVisibleCount]] as const).map(([icon,label,count]) => <AdminTooltip key={icon} label={`${label} ${count}명 참여`}><span className={styles.participant} tabIndex={0} role="img" aria-label={`${label} ${count}명 참여`}><AdminIcon name={icon}/><span aria-hidden="true">{count}</span></span></AdminTooltip>)}
+              </div>}
+              {!q.expired && <AdminIconLink to={`/admin/quiz/${q.quizSetId}`} icon={isDraft(q) ? "edit" : "settings"} label={isDraft(q) ? "초안 편집" : "퀴즈 설정"}/>}
+              {!isDraft(q) && <AdminIconLink to={`/admin/submissions?quiz=${q.quizSetId}`} icon="people" label="참여 기록"/>}
             </div>
-          </article>
-        </li>)}</ul>}
+          </article></li>;
+        })}</ul></>}
+
     </section>
     {due.length > 0 && <details className={styles.cleanup}><summary><AdminLabel text="초안 보관 알림"/> <span>{due.length}건</span></summary><p>본문 정리 예정이거나 확인이 필요한 초안입니다.</p><ul>{due.map(q => <li key={q.sermonId}><span>{q.title}</span><span>{q.state === "blocked" ? "확인 필요" : q.dueAt ? time(q.dueAt) : "시각 미확인"}</span></li>)}</ul><Link to="/admin/tools#cleanup">보관 현황 열기 →</Link></details>}
     <footer className={styles.footer}><Link data-tone="guide" to="/admin/manual">퀴즈 운영이 처음이신가요? <span>사용 안내 ↗</span></Link><Link to="/admin/operations">비용·백업 확인 ↗</Link></footer>

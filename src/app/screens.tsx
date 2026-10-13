@@ -22,7 +22,7 @@ export function RootLayout() {
       <header ref={header} className="site-header glass glass-clear" data-glass-lens="" data-glint="" data-glint-shape="edge">
         <Link className="brand" to="/" aria-label="다사랑교회 성경퀴즈 처음으로"><span className="brand-word">다사랑</span><span className="brand-detail">교회<br />성경퀴즈</span></Link>
         <GlassMenu as="nav" clear={false} data-glass-hover-only="" className="site-navigation" aria-label="주요 메뉴">
-          <NavLink end to="/">이번 주</NavLink><NavLink to="/archive">지난 퀴즈</NavLink>
+          <NavLink end to="/">이번 주 퀴즈</NavLink><NavLink to="/archive">지난 퀴즈</NavLink>
         </GlassMenu>
         <GlassLink className="admin-link" to="/admin">관리 <span aria-hidden="true">↗</span></GlassLink>
       </header>

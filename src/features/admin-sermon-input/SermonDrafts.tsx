@@ -1,3 +1,4 @@
+import { AdminRefreshButton } from "../../components/AdminListTools";
 import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { useEffect, useRef, useState, type FormEvent } from "react";
@@ -183,7 +184,7 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
     <p>영상 링크를 입력하면 제목·게시일과 공개 자막이 있는지 확인합니다. 설교일·장절은 직접 확인하고, 자막을 가져오지 못하면 텍스트를 붙여넣어 주세요.</p>
     <div className={styles.actions}>
       <Button type="button" disabled={busy || disabled} onClick={() => { setCreating(v => !v); setError(""); setMessage(""); }}>{creating ? "등록 닫기" : "새 설교 등록"}</Button>
-      <Button type="button" disabled={busy || disabled} onClick={() => { setError(""); setView(null); setVersion(v => v + 1); }}>작업 목록 새로고침</Button>
+      <AdminRefreshButton label="작업 목록 새로고침" disabled={busy || disabled} onClick={() => { setError(""); setView(null); setVersion(v => v + 1); }}/>
     </div>
     {error && <p role="alert">{error}</p>}{message && <p role="status">{message}</p>}
     {items === null ? <p role="status">작성 중인 설교을 불러오고 있습니다.</p> : items.length === 0 ? <p>작성 중인 설교이 없습니다. 새 설교를 등록해 주세요.</p> :

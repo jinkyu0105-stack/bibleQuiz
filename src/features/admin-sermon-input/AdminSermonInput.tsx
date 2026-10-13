@@ -1,3 +1,4 @@
+import { AdminRefreshButton } from "../../components/AdminListTools";
 import { AdminConcepts, AdminLabel, GuideText } from "../../components/AdminHelp";
 import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { Button } from "../../components/Button";
@@ -560,7 +561,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
         <input id="admin-sermon-id" value={sermonId} onChange={(event) => setSermonId(event.currentTarget.value)} autoComplete="off" placeholder="저장된 설교 ID" />
       </label>
       <Button type="submit" disabled={workspace.state === "loading"}>{workspace.state === "loading" ? "불러오는 중" : "설교 자료 불러오기"}</Button>
-      {loadedSermonId && <Button type="button" onClick={() => void refreshWorkspace()}>새로고침</Button>}
+      {loadedSermonId && <AdminRefreshButton label="새로고침" onClick={() => void refreshWorkspace()}/>}
     </form>}
 
     {workspace.state === "idle" && <p className={styles.empty}>새 설교를 등록하거나 작성 중인 설교 목록에서 작업을 선택해 주세요. 기존 설교 ID로도 불러올 수 있습니다.</p>}

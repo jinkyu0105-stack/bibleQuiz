@@ -60,7 +60,7 @@ async function expectGradual(page: Page) {
 test("wheel and weekly links take time to travel and manual input can interrupt", async ({ page, isMobile }) => {
   await home(page);
   await observeScroll(page);
-  await page.getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
+  await page.locator("#home-view").getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
   await expectGradual(page);
   await expect(page).toHaveURL(/\?video=off#weekly$/);
   if (!isMobile) {
@@ -79,7 +79,7 @@ test("wheel and weekly links take time to travel and manual input can interrupt"
   }
   await page.goto("/?video=off");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
+  await page.locator("#home-view").getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
   await expect(page.locator("html")).not.toHaveAttribute("data-home-scroll-animating");
   await expect.poll(() => page.locator("#weekly").evaluate(node => Math.abs(node.getBoundingClientRect().top))).toBeLessThan(2);
 });
@@ -87,7 +87,7 @@ test("wheel and weekly links take time to travel and manual input can interrupt"
 test("long sections remain readable and route restoration stays independent", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 700 });
   await home(page);
-  await page.getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
+  await page.locator("#home-view").getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
   await expect.poll(() => page.locator("#weekly").evaluate(node => Math.abs(node.getBoundingClientRect().top))).toBeLessThan(2);
   const top = await page.evaluate(() => scrollY);
   await page.mouse.move(600, 400);

@@ -5,9 +5,9 @@ async function circularRefresh(button: Locator) {
   await expect(button).toBeVisible();
   const shape = await button.evaluate(node => {
     const box=node.getBoundingClientRect(), svg=node.querySelector('svg')!, icon=svg.getBoundingClientRect(), drawing=svg.getBBox();
-    return {width:box.width,height:box.height,radius:getComputedStyle(node).borderRadius,dx:icon.x+icon.width/2-box.x-box.width/2,dy:icon.y+icon.height/2-box.y-box.height/2,inkX:drawing.x+drawing.width/2,inkY:drawing.y+drawing.height/2};
+    return {expectedSize:matchMedia("(pointer: coarse)").matches?44:36,width:box.width,height:box.height,radius:getComputedStyle(node).borderRadius,dx:icon.x+icon.width/2-box.x-box.width/2,dy:icon.y+icon.height/2-box.y-box.height/2,inkX:drawing.x+drawing.width/2,inkY:drawing.y+drawing.height/2};
   });
-  expect(shape.width).toBe(44);expect(shape.height).toBe(44);expect(shape.radius).toBe('50%');
+  expect(shape.width).toBe(shape.expectedSize);expect(shape.height).toBe(shape.expectedSize);expect(shape.radius).toBe('50%');
   expect(Math.abs(shape.dx)).toBeLessThan(.5);expect(Math.abs(shape.dy)).toBeLessThan(.5);
   expect(shape.inkX).toBeCloseTo(12,1);expect(shape.inkY).toBeCloseTo(12,1);
   await expect(button).toHaveText('');
@@ -46,5 +46,34 @@ test('quiz and inbox filters share a full-width baseline and circular refresh',a
   const row=page.locator('[data-admin-record]').first(),reply=row.getByRole('button',{name:'답변 작성',exact:true});
   await reply.click();await row.getByLabel('관리자 답변').fill('입력한 답변 유지');await reply.click();await reply.click();await expect(row.getByLabel('관리자 답변')).toHaveValue('입력한 답변 유지');
   await page.setViewportSize({width:320,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect(writes).toEqual([]);
+});
+
+
+test('quiz board uses sermon dates, compact named icons and above-first tooltips', async ({page,isMobile}) => {
+  const writes=await mockAdminGuide(page);
+  await page.goto('/admin');
+  const row=page.locator('[data-admin-quiz-row]').filter({has:page.getByRole('heading',{name:'함께 걷는 기쁨 · 연습',exact:true})});
+  await expect(row.locator('time')).toHaveAttribute('datetime','2026-10-11');
+  expect(await row.locator('time').ariaSnapshot()).toContain('설교일 2026-10-11');
+  const child=row.getByRole('img',{name:'어린이 3명 참여',exact:true});
+  await expect(child.locator('svg')).toHaveCount(1);
+  await expect(row.getByRole('img',{name:'장년 4명 참여',exact:true})).toBeVisible();
+  const action=row.getByRole('link',{name:'퀴즈 설정',exact:true});
+  await expect(action).toHaveAttribute('href','/admin/quiz/published-example');
+  await expect(action).toHaveText('');
+  const box=await action.boundingBox();expect(box!.width).toBe(isMobile?44:36);expect(box!.height).toBe(box!.width);
+  if(!isMobile){const title=await row.getByRole('heading').boundingBox(),count=await child.boundingBox();expect(count!.x).toBeGreaterThan(title!.x+title!.width);expect((await row.boundingBox())!.height).toBeLessThan(90);}
+  await action.focus();const tip=page.getByRole('tooltip',{name:'퀴즈 설정',exact:true});await expect(tip).toBeVisible();await expect(tip).toHaveAttribute('data-side','above');
+  await page.keyboard.press('Escape');await expect(tip).toBeHidden();
+  await action.evaluate(n=>{const anchor=n.parentElement!;anchor.style.transform=`translateY(${2-anchor.getBoundingClientRect().top}px)`;});
+  await action.evaluate(n=>{n.blur();n.focus({preventScroll:true});});expect((await action.boundingBox())!.y).toBeLessThan(12);await expect(tip).toHaveAttribute('data-side','below');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.site-header').getByRole('link',{name:'이번 주 퀴즈',exact:true})).toHaveAttribute('href','/');
+  await expect(page.locator('aside').getByRole('link',{name:'사이트 보기',exact:true})).toHaveCount(0);
+  await page.goto('/admin/tools');const tool=page.locator('[data-admin-tool]').first(),summary=tool.locator('summary').first();
+  await expect(summary.locator('svg')).toHaveCount(1);await expect(summary).not.toContainText('열기');
+  await summary.focus();await page.keyboard.press('Enter');await expect(tool).toHaveAttribute('open','');
+  await page.keyboard.press('Space');await expect(tool).not.toHaveAttribute('open','');
   expect(writes).toEqual([]);
 });

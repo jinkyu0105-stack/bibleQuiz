@@ -21,15 +21,12 @@
 .settings { border-top: 1px solid var(--line); margin-top: 20px; padding-top: 12px; }
 .settings > summary { color: var(--ui-action); font-size: 13px; font-weight: 700; padding: 8px 14px; margin-bottom: 6px; }
 .settings > summary svg { color: var(--muted); }
-.homeLink { margin: 22px 14px 0; padding-top: 18px; display: flex; gap: 12px; align-items: center; min-height: 44px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-decoration: none; }
-.homeLink svg { flex: 0 0 20px; }
-.homeLink:hover { color: var(--ui-action); text-decoration: underline; text-underline-offset: 4px; }
 .sidebar :is(a, summary):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .menu nav { display: block; padding-block: 0; }
 @media (min-width: 1024px) { .menu > summary { display: none; } }
 @media (max-width: 1023px) {
  .sidebar:global(.glass) { position: relative; top: auto; padding: 16px; border-radius: 20px; }
- .sidebar .eyebrow, .sidebar .title, .homeLink { display: none; }
+ .sidebar .eyebrow, .sidebar .title { display: none; }
  .menu { margin: 0; }
  .menu > summary { padding: 0 4px; }
  .sidebar .groupTitle { margin: 14px 8px 6px; }

@@ -1,4 +1,5 @@
 import { AdminLabel, AdminEmoji, AdminConcepts, GuideText } from "./AdminHelp";
+import { AdminIcon } from "./AdminIcon";
 import { AdminScreenshots } from "./AdminScreenshots";
 import { adminTextTones, type AdminTerm } from "../config/admin-help";
 import type { AdminScreenshotId } from "../config/admin-screenshots";
@@ -53,7 +54,7 @@ export function AdminTool({ id, title, description, tag, children }: {
       <span className={styles.toolCopy}><span className={styles.tag}>{tag}</span>
         <strong><AdminLabel text={title}/></strong><span className={styles.description}>{description}</span>
       </span>
-      <span className={styles.toggle} aria-hidden="true"><span className={styles.closed}>열기</span><span className={styles.open}>접기</span><span className={styles.chevron}>⌄</span></span>
+      <span className={styles.toggle} aria-hidden="true"><AdminIcon name="chevron" className={styles.chevron ?? ""}/></span>
     </summary>
     <div className={styles.toolBody}>{children}</div>
   </details>;

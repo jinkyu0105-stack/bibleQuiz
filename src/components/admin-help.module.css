@@ -21,3 +21,10 @@
   .tooltip strong, .kind { color: CanvasText; background: Canvas; }
   .tooltip::after { background: Canvas; border-color: CanvasText; }
 }
+
+.hint { display: inline-flex; align-items: center; min-width: 0; flex-shrink: 0; }
+.compact { width: max-content; max-width: min(280px, calc(100vw - 24px)); padding: 7px 10px; border-top-width: 1px; border-radius: 7px; font-size: 12px; line-height: 1.6; box-shadow: 0 4px 14px #10234624; }
+.compact:popover-open { display: block; }
+.compact::after { width: 7px; height: 7px; }
+.compact[data-side=above]::after { bottom: -5px; }
+.compact[data-side=below]::after { top: -5px; }

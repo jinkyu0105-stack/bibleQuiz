@@ -176,7 +176,7 @@ test("home snaps to sections and its weekly anchor, short-screen buttons and foo
     await page.mouse.wheel(0, -550);
     await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
   }
-  await page.getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
+  await page.locator("#home-view").getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
   await expect.poll(() => page.locator("#weekly").evaluate(node => Math.abs(node.getBoundingClientRect().top))).toBeLessThan(2);
   await expect(page).toHaveURL(/\?video=off#weekly$/);
   const heading = await page.locator("#weekly-title").boundingBox();
@@ -184,7 +184,7 @@ test("home snaps to sections and its weekly anchor, short-screen buttons and foo
   expect(heading!.y).toBeGreaterThan(header!.y + header!.height);
   await page.setViewportSize({ width: 320, height: 667 });
   await page.goto("/?video=off");
-  await page.getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
+  await page.locator("#home-view").getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
   await expect.poll(() => page.locator("#weekly").evaluate(node => Math.abs(node.getBoundingClientRect().top))).toBeLessThan(2);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
   await page.locator("footer").scrollIntoViewIfNeeded();
@@ -203,7 +203,7 @@ test("separate clouds keep drifting while the weekly section is stationary", asy
   await mockQuiz(page);
   await page.goto("/?video=off");
   await page.getByRole("button", { name: "낮", exact: true }).click();
-  await page.getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
+  await page.locator("#home-view").getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
   await expect(page.locator("#clouds")).toHaveAttribute("data-renderer", "webgl-billboards");
   await expect.poll(() => page.locator("#weekly").evaluate(node => Math.abs(node.getBoundingClientRect().top))).toBeLessThan(2);
   await expect.poll(() => page.evaluate(() => {
