@@ -82,7 +82,7 @@ export function ManualReader({ source }: { source: string }) {
     <label className={css.mobileTopics}>읽을 주제
       <select value={current.id} onChange={event => choose(event.target.value)}>{groups.map(group => <optgroup key={group.title} label={group.title}>{group.items.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}</optgroup>)}</select>
     </label>
-    <article className={css.article} aria-labelledby="manual-article-title">
+    <article className={css.article} data-topic={current.id} aria-labelledby="manual-article-title">
       <header className={css.articleHeader} data-admin-tone={topicTones[current.id] ?? "guide"}><p>{category}</p><h3 id="manual-article-title" tabIndex={-1} ref={heading}>{service && <TopicIcon id={current.id}/>}<span><AdminLabel text={section?.title ?? service?.name ?? "운영 안내"}/></span></h3>{service && <p className={css.subtitle}>{service.plainLanguageName}</p>}</header>
       {section && <ManualBody source={section.body}/>}
       {section && examples[current.id] && <AdminScreenshots key={current.id} ids={examples[current.id]!}/>}

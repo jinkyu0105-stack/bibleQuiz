@@ -61,3 +61,9 @@
 
 .contents button[aria-current]:is(:hover,:focus-visible) { color: var(--ink); background: color-mix(in srgb,var(--ui-action) 19%,var(--ui-action-bg)); }
 @media (forced-colors: active) { .contents button:is(:hover,:focus-visible) { color: Highlight; border-color: Highlight; } }
+
+/* Troubleshooting: separate situations more strongly than paragraphs within one situation. */
+.article[data-topic="guide-9"] > div:first-of-type > h4 { border-top: 1px solid var(--line); padding-top: 24px; margin-top: 18px !important; }
+.article[data-topic="guide-9"] > div:first-of-type > h4:first-child { border-top: 0; padding-top: 0; margin-top: 0 !important; }
+.article[data-topic="guide-9"] > div:first-of-type > p + p { margin-top: 0; }
+@media (forced-colors: active) { .article[data-topic="guide-9"] > div:first-of-type > h4 { border-color: CanvasText; } }
