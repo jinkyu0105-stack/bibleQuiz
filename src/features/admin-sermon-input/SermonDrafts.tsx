@@ -101,14 +101,14 @@ function MetadataForm({ view, onSave, onSelectExisting, busy }: {
       </div>}
       {previewError && <p role="alert">{previewError} 제목·설교일을 직접 입력해 계속할 수 있습니다.</p>}
       {preview?.outcome === "existing" && <div role="status">
-        <p>같은 영상의 {preview.destination === "draft" ? "미발행 작업" : preview.destination === "published" ? "발행 이력" : "정리된 초안"}이 있습니다. 새 정보로 덮어쓰지 않습니다.</p>
+        <p>같은 영상의 {preview.destination === "draft" ? "작성 중인 설교" : preview.destination === "published" ? "발행 이력" : "정리된 초안"}이 있습니다. 새 정보로 덮어쓰지 않습니다.</p>
         {preview.destination === "draft" && <Button type="button" onClick={() => void onSelectExisting(preview.sermonId)}>기존 작업 선택</Button>}
       </div>}
       {preview?.outcome === "inspected" && <div className={styles.previewNotice} role="status">
         <p>영상 제목: {preview.title ?? "확인되지 않음 · 직접 입력해 주세요"} · 게시일: {preview.publishedDate ?? "확인되지 않음"}</p>
         <p>영상 제목에서 인식한 날짜·장절은 자동 입력합니다. 인식하지 못한 항목은 직접 입력하고 확인해 주세요.</p>
         {preview.caption.status === "available"
-          ? <p>공개 한국어 {preview.caption.generated === null ? "" : preview.caption.generated ? "자동 " : "수동 "}자막 {preview.caption.segmentCount}구간 · {preview.caption.characterCount.toLocaleString("ko-KR")}자. 등록 후 원본 저장 단계에서 다시 취득합니다.{preview.caption.characterCount > 30_000 ? " 3만 자를 넘으므로 원본 저장은 차단됩니다." : ""}</p>
+          ? <p>공개 한국어 {preview.caption.generated === null ? "" : preview.caption.generated ? "자동 " : "수동 "}자막 {preview.caption.segmentCount}구간 · {preview.caption.characterCount.toLocaleString("ko-KR")}자. 등록 후 설교 자료를 저장할 때 원본을 다시 가져옵니다.{preview.caption.characterCount > 30_000 ? " 3만 자를 넘으므로 원본 저장은 차단됩니다." : ""}</p>
           : <><p>{preview.caption.message} {preview.caption.code === "TRANSCRIPT_SOURCE_BLOCKED"
             ? "반복 조회해도 계속 차단될 수 있습니다. 설교 정보를 확인해 등록한 뒤 YouTube의 ‘스크립트 표시’ 내용을 직접 붙여넣을 수 있습니다."
             : "등록 후 다시 시도하거나 텍스트를 직접 붙여넣을 수 있습니다."}</p>
@@ -146,7 +146,7 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
   useEffect(() => {
     const controller = new AbortController();
     void request("", draftListSchema, controller.signal).then(data => { if (!controller.signal.aborted) setItems(data.items); })
-      .catch(() => { if (!controller.signal.aborted) setError("미발행 목록을 불러오지 못했습니다. 다시 시도해 주세요."); });
+      .catch(() => { if (!controller.signal.aborted) setError("작성 중인 설교 목록을 불러오지 못했습니다. 다시 시도해 주세요."); });
     return () => controller.abort();
   }, [version]);
   useEffect(() => {
@@ -167,7 +167,7 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
         if (result.destination === "draft") {
           setCreating(false); setView(null);
           await onSelect(result.sermonId);
-          setMessage(result.outcome === "existing" ? "같은 영상의 기존 작업을 불러왔습니다. 새로 입력한 정보로 덮어쓰지 않았습니다." : "새 작업을 등록했습니다. 아래에서 입력자료를 저장해 주세요.");
+          setMessage(result.outcome === "existing" ? "같은 영상의 기존 작업을 불러왔습니다. 새로 입력한 정보로 덮어쓰지 않았습니다." : "새 작업을 등록했습니다. 아래에서 설교 자료를 저장해 주세요.");
         } else setMessage(result.destination === "published" ? "이미 등록·발행된 영상입니다. 발행된 퀴즈 관리에서 계속해 주세요." : "같은 영상의 초안 본문이 보관 기간에 따라 정리되었습니다. 초안 보관 현황을 확인해 주세요.");
       } else if (view) {
         const saved = await request(`/${view.sermonId}`, draftMetadataViewSchema, controller.signal, "PATCH", fields);
@@ -180,14 +180,14 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
   }
   return <section className={styles.panel} aria-labelledby="sermon-drafts-title">
     <h3 id="sermon-drafts-title"><AdminLabel text="설교 작업 선택"/></h3>
-    <p>영상 링크에서 제목·게시일 후보와 공개 자막 상태를 확인할 수 있습니다. 설교일·장절은 직접 확인하고, 자막을 가져오지 못하면 텍스트를 붙여넣어 주세요.</p>
+    <p>영상 링크를 입력하면 제목·게시일과 공개 자막이 있는지 확인합니다. 설교일·장절은 직접 확인하고, 자막을 가져오지 못하면 텍스트를 붙여넣어 주세요.</p>
     <div className={styles.actions}>
       <Button type="button" disabled={busy || disabled} onClick={() => { setCreating(v => !v); setError(""); setMessage(""); }}>{creating ? "등록 닫기" : "새 설교 등록"}</Button>
       <Button type="button" disabled={busy || disabled} onClick={() => { setError(""); setView(null); setVersion(v => v + 1); }}>작업 목록 새로고침</Button>
     </div>
     {error && <p role="alert">{error}</p>}{message && <p role="status">{message}</p>}
-    {items === null ? <p role="status">미발행 작업을 불러오고 있습니다.</p> : items.length === 0 ? <p>미발행 작업이 없습니다. 새 설교를 등록해 주세요.</p> :
-      <label>미발행 작업<select value={items.some(item => item.sermonId === selectedId) ? selectedId : ""} disabled={busy || disabled} onChange={e => {
+    {items === null ? <p role="status">작성 중인 설교을 불러오고 있습니다.</p> : items.length === 0 ? <p>작성 중인 설교이 없습니다. 새 설교를 등록해 주세요.</p> :
+      <label>작성 중인 설교<select value={items.some(item => item.sermonId === selectedId) ? selectedId : ""} disabled={busy || disabled} onChange={e => {
         if (e.target.value) { setCreating(false); setView(null); setError(""); setMessage(""); void onSelect(e.target.value); }
       }}><option value="" disabled>작업을 선택해 주세요</option>{items.map(item => <option key={item.sermonId} value={item.sermonId} disabled={item.expired}>{item.sermonDate} · {item.title}{item.expired ? " (본문 정리됨)" : ""}</option>)}</select></label>}
     {!creating && detailError?.id === selectedId && <p role="alert">{detailError.message}</p>}

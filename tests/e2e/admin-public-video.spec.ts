@@ -70,7 +70,7 @@ test("administrator confirms fetched video fields and imports public captions af
   await expect(captions).toBeVisible();
   await captions.getByRole("button", { name: "공개 자막 가져와 원본 저장" }).click();
   await expect(captions.getByRole("alert")).toContainText("텍스트를 직접 붙여넣어 주세요.");
-  await expect(page.getByLabel("입력자료 본문")).toBeVisible();
+  await expect(page.getByLabel("설교 자료 본문")).toBeVisible();
   await expect(captions.getByText("기술 정보")).toBeVisible();
   await captions.getByRole("button", { name: "공개 자막 가져와 원본 저장" }).click();
   await expect(page.getByRole("heading", { name: "시간 정보가 있는 자막" })).toBeVisible();

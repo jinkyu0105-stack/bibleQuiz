@@ -62,8 +62,8 @@ export function QuizRevisionEditor({ quizSetId,problem,onProblemView }: { quizSe
   }
   function edit(next: RevisionContent) {setContent(next);setConfirm(false);setTrials({});}
   const ready=view?.state==="editing" && !!content;
-  return <section aria-label={problemMode ? "문제 오류 수정본 편집":"철회본 편집과 재발행"} className={styles.revisionEditor}>
-    <h3>{problemMode ? "문제 오류 수정본 편집":"철회본 편집과 재발행"}</h3>
+  return <section aria-label={problemMode ? "문제 오류 수정본 편집":"공개 취소한 퀴즈 편집·재발행"} className={styles.revisionEditor}>
+    <h3>{problemMode ? "문제 오류 수정본 편집":"공개 취소한 퀴즈 편집·재발행"}</h3>
     <p>내용 저장 → 두 격자 확인 → 요약·문제 검토 → 재발행 순서로 진행합니다.</p>
     {error && <p role="alert">{error}</p>}{message && <p role="status">{message}</p>}
     <div className={styles.actions}>
@@ -73,7 +73,7 @@ export function QuizRevisionEditor({ quizSetId,problem,onProblemView }: { quizSe
     {reloadConfirm && <div role="group" aria-label="저장본 불러오기 확인"><p>저장하지 않은 입력을 버리고 마지막 저장본을 불러옵니다.</p><Button type="button" onClick={()=>setReloadConfirm(false)}>입력 유지</Button><Button type="button" onClick={()=>void run()}>입력 버리고 불러오기</Button></div>}
     {!view && !error && <p role="status">편집 상태를 불러오고 있습니다.</p>}
     {view && ["not_started","expired"].includes(view.state) && <>
-      <p>{view.state==="expired" ? "7일 동안 활동이 없던 편집본은 정리되었습니다. 보존된 철회 자료에서 새 편집을 시작할 수 있습니다.":"보존된 철회 자료에서 새 편집본을 엽니다. 보관 중인 수정 내용이 있으면 함께 가져옵니다."}</p>
+      <p>{view.state==="expired" ? "7일 동안 활동이 없던 편집본은 정리되었습니다. 공개 취소 후 보관한 자료에서 새 편집을 시작할 수 있습니다.":"공개 취소 후 보관한 자료에서 새 편집본을 엽니다. 보관 중인 수정 내용이 있으면 함께 가져옵니다."}</p>
       <Button type="button" disabled={busy} onClick={()=>void run({action:"start",expectedCycle:view.cycle})}>새 편집 시작</Button>
     </>}
     {view?.state==="published" && view.publication && <p>발행 {dateTime(view.publication.publishedAt)} · 마감 {dateTime(view.publication.closesAt)} (한국 시간) · <a href={`/quiz/${view.slug}`}>발행한 퀴즈 열기</a></p>}

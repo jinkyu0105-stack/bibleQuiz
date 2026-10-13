@@ -201,7 +201,7 @@ function BibleReferenceTool() {
 
 export function Component() {
   return <div className={styles.tools}>
-    <AdminIntro terms={["초안", "발행"]} screenshots={["settings", "input"]} title="수정·보관 도구" description="발행한 퀴즈 수정부터 입력자료 점검까지, 필요한 도구를 선택하세요.">
+    <AdminIntro terms={["초안", "발행"]} screenshots={["settings", "input"]} title="수정·보관 도구" description="발행한 퀴즈 수정부터 설교 자료 점검까지, 필요한 도구를 선택하세요.">
       <ButtonLink to="/admin">퀴즈 목록으로</ButtonLink>
     </AdminIntro>
     <div className={styles.toolGroup}>
@@ -211,9 +211,9 @@ export function Component() {
       <AdminTool id="correction" tag="이미 제출이 있는 퀴즈" title="문제·정답 수정" description="제출이 있는 퀴즈의 오류를 수정합니다. 기존 답안과 결과는 보존됩니다."><ProblemCorrection /></AdminTool>
     </div>
     <div className={styles.toolGroup}>
-      <div className={styles.groupHeading}><h3>초안과 입력자료</h3><p>평소 발행 순서와 별개로, 필요한 자료만 자세히 살펴봅니다.</p></div>
+      <div className={styles.groupHeading}><h3>초안과 설교 자료</h3><p>평소 발행 순서와 별개로, 필요한 자료만 자세히 살펴봅니다.</p></div>
       <AdminTool id="cleanup" tag="보관 현황 조회" title="초안 보관 현황" description="초안 본문의 자동 정리 예정일을 확인합니다."><DraftCleanup /></AdminTool>
-      <AdminTool id="sermon" tag="상세 편집" title="입력자료 편집" description="저장된 자막과 수정본을 비교하고 편집합니다."><AdminSermonInput /></AdminTool>
+      <AdminTool id="sermon" tag="상세 편집" title="설교 자료 편집" description="저장된 자막과 수정본을 비교하고 편집합니다."><AdminSermonInput /></AdminTool>
       <AdminTool id="bible" tag="저장하지 않는 확인 도구" title="성경 장절 확인" description="장절 표기와 대한성서공회 읽기 링크를 확인합니다."><BibleReferenceTool /></AdminTool>
     </div>
   </div>;

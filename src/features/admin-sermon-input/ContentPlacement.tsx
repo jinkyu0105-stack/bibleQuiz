@@ -149,8 +149,8 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
       <p className={styles.reviewSummary}>{view.preview.summary.text}</p><p className={styles.helper}>{view.preview.summary.disclosure}</p>
       {levels.map(level => <div className={styles.previewViewport} data-mobile={mobile} data-preview-theme={step === undefined ? undefined : previewTheme} key={level}><LayoutReview layout={view.reviewLayouts![level]} title={names[level]} answers={answers} large={large} /></div>)}
       <Button type="button" onClick={() => void copyClues()}>정답 없이 단서 복사</Button>
-      <p>두 난이도의 현재 입력·내용 검수·연결·교차·정답 일치 검사를 통과했습니다. 아직 발행하지 않았습니다.</p>
-      {step === 5 && <ul aria-label="발행 검수표"><li>입력자료·설교 의도 사람 확정</li><li>요약·어린이·장년 문제 검수</li><li>두 난도 격자·연결·교차·정답 검사 통과</li><li>아래 Top N 설정과 공개할 내용을 확인해 주세요.</li></ul>}
+      <p>두 난도 모두 자료 확인과 내용 검수를 마쳤고, 격자의 연결·교차·정답 검사를 통과했습니다. 아직 발행하지 않았습니다.</p>
+      {step === 5 && <ul aria-label="발행 검수표"><li>설교 자료와 설교 의도 확인·확정</li><li>요약·어린이·장년 문제 검수</li><li>두 난도 격자·연결·교차·정답 검사 통과</li><li>아래 Top N 설정과 공개할 내용을 확인해 주세요.</li></ul>}
       {step === 5 && view.quizSetId && <WinnerSettings quizSetId={view.quizSetId}/>}
 
       {confirmPublish && !publishedSlug && <PublicationConfirmation view={view} disabled={disabled} message={message}
@@ -180,7 +180,7 @@ function PublicationConfirmation({ view, disabled, message, cancel, publish }: {
     <p>발행·참여 시작 예상: {time(now)} (한국 시간)<br />기본 마감 예상: {time(now + 7 * 24 * 3600_000)} (한국 시간)</p>
     <p>실제 저장 시각부터 정확히 7일 뒤 마감됩니다. 발행 후 저장된 시각을 확인할 수 있습니다.</p>
     <p>기존 퀴즈의 마감·제출·순위는 유지됩니다. 새 퀴즈는 첫 제출 뒤 정답·격자·채점 버전이 잠깁니다.</p>
-    <p>Top N은 이 퀴즈의 저장된 난도별 설정을 사용합니다. 이 퀴즈의 관측 AI 비용 USD {((view.quizCostMicroUsd ?? view.jobCostMicroUsd) / 1_000_000).toFixed(4)}
+    <p>Top N은 이 퀴즈의 저장된 난도별 설정을 사용합니다. 이 퀴즈의 예상 AI 비용 USD {((view.quizCostMicroUsd ?? view.jobCostMicroUsd) / 1_000_000).toFixed(4)}
       {!!(view.quizUnknownCalls ?? view.jobUnknownCalls) && ` · 사용량 미확인 ${view.quizUnknownCalls ?? view.jobUnknownCalls}회(비용 0이 아님)`}</p>
     {message && <p role="status">{message}</p>}
     <div className={styles.previewTools}><Button type="button" disabled={disabled} onClick={dismiss}>취소</Button>

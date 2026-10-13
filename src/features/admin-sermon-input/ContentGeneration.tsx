@@ -18,7 +18,7 @@ type Snapshot = AdminContentView["snapshots"][number];
 const fields: Record<string, string> = { centralMessage: "중심 메시지", purpose: "설교 목적", bibleRelationship: "본문과의 관계", argumentFlow: "논지 흐름",
   repeatedEmphasis: "반복 강조", illustrations: "예화", audienceResponse: "청중의 응답", warnings: "주의점", uncertainties: "불확실한 부분" };
 const stages: Record<string, string> = { input_resolve: "생성 준비", transcript_review: "본문 확인", intent_analysis: "의도 분석 중", intent_critique: "비판 검토 중",
-  intent_review: "의도 검수 대기", summary: "요약 생성 중", child_candidates: "어린이 문제 생성 중", adult_candidates: "장년 문제 생성 중", content_review: "내용 검수 대기",
+  intent_review: "설교 의도 확인 필요", summary: "요약 생성 중", child_candidates: "어린이 문제 생성 중", adult_candidates: "장년 문제 생성 중", content_review: "요약·문제 검수 필요",
   place_child: "어린이 배치 검사", place_adult: "장년 배치 검사", final_validate: "최종 검사", finish: "최종 검사 완료" };
 function isSelected(snapshot: Snapshot, view: AdminContentView) {
   const content = view.content.state === "present" ? view.content : null;
@@ -27,7 +27,7 @@ function isSelected(snapshot: Snapshot, view: AdminContentView) {
       : content?.[snapshot.value.difficulty]?.id === snapshot.value.id;
 }
 function snapshotTitle(snapshot: Snapshot) {
-  return snapshot.kind === "intent" ? snapshot.value.kind === "analysis" ? "최초 분석" : snapshot.value.kind === "critique" ? "비판 수정본" : "직접 수정한 분석"
+  return snapshot.kind === "intent" ? snapshot.value.kind === "analysis" ? "최초 분석" : snapshot.value.kind === "critique" ? "비판 검토를 반영한 분석" : "직접 수정한 분석"
     : snapshot.kind === "summary" ? "설교 요약" : snapshot.value.difficulty === "child" ? "어린이 문제" : "장년 문제";
 }
 const usd = (micro: number) => (micro / 1_000_000).toFixed(4);
@@ -130,7 +130,7 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
     {selected && !confirmed && (snapshot.kind === "intent"
       ? <><Button type="button" disabled={busy || changed || !sourceMatches || !snapshot.value.critiqueId || view.quality[snapshot.value.id]?.status === "regenerate"}
           onClick={() => confirmIntent(snapshot.value.id)}>설교 의도 확정</Button>
-        {!snapshot.value.critiqueId && <p className={styles.helper}>비판 수정본을 선택하거나 그 수정본을 직접 편집한 뒤 확정해 주세요.</p>}</>
+        {!snapshot.value.critiqueId && <p className={styles.helper}>비판 검토를 반영한 분석을 선택하거나 그 수정본을 직접 편집한 뒤 확정해 주세요.</p>}</>
       : <><label className={styles.checkbox}><input type="checkbox" checked={reviewed} disabled={busy || changed} onChange={event => setReviewed(event.currentTarget.checked)} />내용과 원문 근거를 검토했습니다.</label>
         <Button type="button" disabled={busy || changed || !reviewed || view.quality[snapshot.value.id]?.status === "regenerate"}
           onClick={() => void command(snapshot.kind === "summary" ? { family: "summary", operation: { kind: "review", summaryId: snapshot.value.id } } : { family: "candidate", operation: { kind: "review", difficulty: snapshot.value.difficulty, poolId: snapshot.value.id } })}>이 내용 검수 완료</Button></>)}
@@ -148,7 +148,7 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
       <div className={styles.formGrid}><div><strong>기존 값</strong><p>답: {oldCandidate.displayAnswer}</p><p>단서: {oldCandidate.clue}</p></div>
         <div><strong>새 제안</strong><p>답: {newCandidate.displayAnswer}</p><p>단서: {newCandidate.clue}</p></div></div>
       <p className={styles.helper}>나머지 문제와 포함·제외 상태를 보존한 비교본입니다. 채택하지 않으면 기존 선택이 유지됩니다.</p>
-      {replacementStale && <p>비교 이후 선택본이 바뀌었습니다. 현재 선택본에서 해당 답·단서를 다시 생성해 주세요.</p>}
+      {replacementStale && <p>비교 이후 선택본이 바뀌었습니다. 현재 사용 중인 자료에서 해당 답·단서를 다시 생성해 주세요.</p>}
     </section>}
     {draft.kind === "intent" && Object.entries(draft.value.analysis).map(([field, claims]) => <details key={field} className={styles.claimGroup} open={!autosave || field === "centralMessage"}>
       <summary>{fields[field]} <span>{claims.length}개 항목</span></summary>
@@ -240,7 +240,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
     const operation = body && typeof body === "object" && "operation" in body ? body.operation : null;
     const nested = operation && typeof operation === "object" && "operation" in operation ? operation.operation : null;
     const edit = action === "review" && !!nested && typeof nested === "object" && "kind" in nested && nested.kind === "edit";
-    if (weeklyStep !== undefined && dirtySnapshots.size && !edit) { setMessage("편집한 초안의 저장을 먼저 확인해 주세요."); return false; }
+    if (weeklyStep !== undefined && dirtySnapshots.size && !edit) { setMessage("편집한 초안이 저장되었는지 먼저 확인해 주세요."); return false; }
     lock.current = true; setBusy(true);
     try {
       if (action === "finish" && jobId) {
@@ -292,7 +292,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
   const intentWaitJobId = partialIntentWait?.jobId ?? (view?.status === "awaiting_intent_review" ? view.jobId : null);
   async function confirmAndResume() {
     if (!view || !intentDialog || !intentWaitJobId || !c?.intent || c.intent.selectedId !== intentDialog || lock.current) return;
-    if (view.quality[intentDialog]?.status === "regenerate") { setMessage("재생성이 필요하다고 평가한 의도는 확정하거나 재개할 수 없습니다. 새 초안을 명시적으로 요청해 주세요."); setIntentDialog(null); return; }
+    if (view.quality[intentDialog]?.status === "regenerate") { setMessage("재생성이 필요하다고 평가한 의도는 확정하거나 재개할 수 없습니다. 아래 생성 버튼에서 새 초안을 요청해 주세요."); setIntentDialog(null); return; }
     if (partialIntentWait && c.intent.rootAnalysisId !== partialIntentWait.analysisId) {
       setMessage("새 의도 비교본을 먼저 선택해 주세요."); setIntentDialog(null); return;
     }
@@ -305,16 +305,16 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
       }
       if (view.enabled) {
         const resumed = await mutateContentGeneration(sermonId, "resume", {}, intentWaitJobId);
-        if (!resumed.ok) { setMessage("의도 확정은 저장됐지만 생성 재개는 확인되지 않았습니다. 상태를 확인한 뒤 명시적으로 다시 진행해 주세요."); await refresh(); return; }
+        if (!resumed.ok) { setMessage("의도 확정은 저장됐지만 생성 재개는 확인되지 않았습니다. 생성 상태를 확인한 뒤 다시 시작해 주세요."); await refresh(); return; }
         setMessage(partialIntentWait ? "재확정한 의도를 비교 작업에 반영했습니다. 새 AI 호출은 없습니다."
           : "의도를 확정하고 후속 생성 요청을 보냈습니다. 작업 상태를 확인해 주세요.");
-      } else setMessage("의도를 확정했습니다. AI 실행 연결이 활성화된 뒤 생성 재개를 명시적으로 시작할 수 있습니다.");
+      } else setMessage("의도를 확정했습니다. AI 실행 연결이 활성화된 뒤 생성 버튼을 눌러 이어서 만들 수 있습니다.");
       await refresh();
     } finally { setBusy(false); lock.current = false; setIntentDialog(null); }
   }
-  if (view?.status === "withdrawn") return <section className={styles.panel} aria-label="발행 철회 완료">
-    <h3><AdminLabel text="발행 철회 완료"/></h3><p>공개를 중단하고 검수 대기로 돌렸습니다. 발행 당시 문제·정답과 최신 제목·설교일은 보존됩니다.</p>
-    <a href="/admin/tools#withdraw-title">철회한 퀴즈 검수 자료 확인</a>
+  if (view?.status === "withdrawn") return <section className={styles.panel} aria-label="발행 취소 완료">
+    <h3><AdminLabel text="발행 취소 완료"/></h3><p>공개를 중단하고 검수 대기로 돌렸습니다. 발행 당시 문제·정답과 최신 제목·설교일은 보존됩니다.</p>
+    <a href="/admin/tools#withdraw-title">공개를 취소한 퀴즈 검수 자료 확인</a>
   </section>;
   if (view?.publication) return <section className={styles.panel} aria-label="발행 완료">
     <h3><AdminLabel text="발행 완료"/></h3><p>발행 시각 {new Date(view.publication.publishedAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (한국 시간)</p>
@@ -329,7 +329,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
       : "의도 분석과 비판 검토 뒤 사람이 확정합니다. 이어서 요약·어린이·장년 문제를 만들고 각각 검수합니다."}</p>
     <p className={styles.helper}>API 사용료는 별도입니다. 입력 10,000·출력 5,000 토큰 가정 시 약 USD 0.08/호출,
       {view?.recoveredCritiqueId ? " 남은 3회 약 USD 0.24입니다." : view?.recoveredAnalysisId ? " 남은 4회 약 USD 0.32입니다." : !view?.jobId || newDraft ? " 전체 5회 약 USD 0.40입니다." : ""} 실제 비용은 분량과 추론량에 따라 달라집니다. 무료 대안으로 직접 수정·검수할 수 있습니다.</p>
-    {view && costsLoaded && <p>달력 주간 관측 비용 USD {usd(view.weekCostMicroUsd)} · 현재 생성 작업 USD {usd(view.jobCostMicroUsd)}{view.weekUnknownCalls > 0 && ` · 사용량 미확인 ${view.weekUnknownCalls}회(비용 0이 아님)`}</p>}
+    {view && costsLoaded && <p>이번 주 예상 비용 USD {usd(view.weekCostMicroUsd)} · 현재 생성 작업 USD {usd(view.jobCostMicroUsd)}{view.weekUnknownCalls > 0 && ` · 사용량 미확인 ${view.weekUnknownCalls}회(비용 0이 아님)`}</p>}
     {view && !view.enabled && <p>AI 실행 연결을 아직 활성화하지 않았습니다.</p>}
     {!inputConfirmed && <p>현재 본문을 먼저 확정해 주세요.</p>}
     </details>
@@ -345,12 +345,12 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
     {intentWaitJobId && c?.intent?.confirmation && <Button type="button" disabled={controlBusy || !view?.enabled || view.quality[c.intent.selectedId]?.status === "regenerate" || !!partialIntentWait && c.intent.rootAnalysisId !== partialIntentWait.analysisId} onClick={() => setIntentDialog(c.intent!.selectedId)}>{partialIntentWait ? "재확정한 의도 반영 완료" : "확정한 의도로 생성 시작"}</Button>}
     {view?.stage === "content_review" && <Button type="button" disabled={controlBusy || !reviewComplete} onClick={() => void act("finish")}>배치·최종 검사 (AI 비용 없음)</Button>}
     {message && <p role="status">{message}</p>}{acting && <p role="status">요청을 확인하고 있습니다.</p>}
-    {loading && <p role="status">상태·비용·내용·배치를 나누어 불러오고 있습니다. 준비된 자료부터 표시합니다.</p>}
+    {loading && <p role="status">작업 상태와 저장된 자료를 불러오고 있습니다. 확인된 내용부터 표시합니다.</p>}
     {loadFailed && <p role="alert">일부 자료를 불러오지 못했습니다. 표시된 내용은 유지됩니다. 생성 상태를 다시 확인한 뒤 편집해 주세요.</p>}
     {weeklyStep === 3 && <GlassMenu nested id="review-targets" className={styles.reviewTargets} role="group" aria-label="검수할 내용">{(["summary", "child", "adult"] as const).map(target => <button key={target} type="button" aria-pressed={reviewTarget === target} onClick={() => setReviewTarget(target)}>{target === "summary" ? "요약" : target === "child" ? "어린이 문제" : "장년 문제"}<small>{c?.[target]?.review ? "검수 완료" : c?.[target] ? "검수 필요" : "생성 대기"}</small></button>)}</GlassMenu>}
     {view?.snapshots.toSorted((a, b) => Number(isSelected(b, view)) - Number(isSelected(a, view))).map(snapshot => <div key={weeklyStep === undefined ? `${snapshot.value.id}-${view.version}` : snapshot.value.id} hidden={weeklyStep !== undefined && (weeklyStep === 2 ? snapshot.kind !== "intent" : snapshot.kind === "intent" || (snapshot.kind === "candidate" ? snapshot.value.difficulty : snapshot.kind) !== reviewTarget)}>
       <details className={styles.snapshotDisclosure} open={weeklyStep === undefined || isSelected(snapshot, view)}>
-      <summary>{snapshotTitle(snapshot)} <span>{isSelected(snapshot, view) ? "현재 선택본" : "이전 결과·비교 자료"}</span></summary>
+      <summary>{snapshotTitle(snapshot)} <span>{isSelected(snapshot, view) ? "현재 사용 중인 자료" : "이전 결과와 비교 자료"}</span></summary>
       <SnapshotEditor snapshot={snapshot} view={view} source={source} busy={busy}
       autosave={weeklyStep !== undefined} onDirty={weeklyStep !== undefined ? onDirty : undefined}
       command={operation => act("review", { requestKey: crypto.randomUUID(), expectedVersion: view.version, operation })}

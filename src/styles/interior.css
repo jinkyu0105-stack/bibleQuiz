@@ -65,6 +65,7 @@
   --ui-action-fill: #245bc1; --ui-on-action: #fff;
   --accent: var(--ui-action); --warning: var(--ui-attention); --danger: var(--ui-danger);
   --focus: var(--ui-action);
+  --admin-tooltip-surface: #fffefa;
 }
 body[data-time=dawn] .admin-layout {
   --ui-action: #354fc0; --ui-action-bg: #eaeffd;
@@ -83,6 +84,7 @@ body[data-time=dusk] .admin-layout {
   --ui-action-fill: #3d4cb0;
 }
 body[data-time=night] .admin-layout {
+  --admin-tooltip-surface: #182c41;
   --ui-action: #acc8ff; --ui-action-bg: #1b3558;
   --ui-success: #94dab4; --ui-success-bg: #153e31;
   --ui-attention: #f5cb7f; --ui-attention-bg: #493416;
@@ -90,7 +92,7 @@ body[data-time=night] .admin-layout {
   --ui-danger: #ffabbe; --ui-danger-bg: #4c2031;
   --ui-action-fill: #acc8ff; --ui-on-action: #152c47;
 }
-.sky-app .admin-main { color: var(--ink); }
+.sky-app .admin-main { color: var(--ink); word-break: keep-all; overflow-wrap: anywhere; }
 .sky-app .admin-main p { text-wrap: pretty; }
 .sky-app .admin-main :is(p,li) { line-height: 1.85; }
 .sky-app .admin-main p + p { margin-top: 12px; }
@@ -101,10 +103,24 @@ body[data-time=night] .admin-layout {
 .sky-app .admin-main [role=alert]:not(:empty) { color: var(--ui-danger); border-color: var(--ui-danger); background: var(--ui-danger-bg); }
 .sky-app .admin-main details > summary { font-weight: 600; }
 .sky-app .admin-main details[open] > summary { margin-bottom: 12px; }
-.sky-app .admin-main code { padding: 2px 6px; border: 1px solid color-mix(in srgb,var(--ui-guide) 20%,transparent); border-radius: 5px; color: var(--ui-guide); background: var(--ui-guide-bg); font-family: ui-monospace, 'Noto Sans KR', monospace; font-size: .9em; overflow-wrap: anywhere; box-decoration-break: clone; }
+.sky-app .admin-main code { padding: 2px 6px; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); background: var(--glass-soft); font-family: ui-monospace, 'Noto Sans KR', monospace; font-size: .9em; overflow-wrap: anywhere; box-decoration-break: clone; }
 @media (forced-colors: active) {
   .sky-app .admin-main .primary-button { color: ButtonText; background: ButtonFace; border-color: ButtonText; }
   .sky-app .admin-main :is(code,[role=alert]) { color: CanvasText; background: Canvas; border-color: CanvasText; }
 }
 .sky-app .admin-main a[data-tone=attention] { color: var(--ui-attention); }
 .sky-app .admin-main a[data-tone=guide] { color: var(--ui-guide); }
+
+/* Shared meaning colours for authored text, icons and local UI accents. */
+.admin-layout [data-admin-tone=action] { --admin-tone: var(--ui-action); --admin-tone-bg: var(--ui-action-bg); }
+.admin-layout [data-admin-tone=success] { --admin-tone: var(--ui-success); --admin-tone-bg: var(--ui-success-bg); }
+.admin-layout [data-admin-tone=attention] { --admin-tone: var(--ui-attention); --admin-tone-bg: var(--ui-attention-bg); }
+.admin-layout [data-admin-tone=guide] { --admin-tone: var(--ui-guide); --admin-tone-bg: var(--ui-guide-bg); }
+.admin-layout [data-admin-tone=danger] { --admin-tone: var(--ui-danger); --admin-tone-bg: var(--ui-danger-bg); }
+.sky-app .admin-main :is(strong,code)[data-admin-tone] { color: var(--admin-tone); }
+.sky-app .admin-main code[data-admin-tone] { background: var(--admin-tone-bg); border-color: color-mix(in srgb,var(--admin-tone) 25%,transparent); }
+@media (forced-colors: active) {
+ .admin-layout [data-admin-tone] { --admin-tone: CanvasText; --admin-tone-bg: Canvas; }
+}
+
+.admin-layout svg[data-admin-tone] { color: var(--admin-tone); }

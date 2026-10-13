@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import type { AdminTone } from "../../config/admin-help";
 import { AdminIcon, type AdminIconName } from "../../components/AdminIcon";
 import { GlassMenu } from "../../components/glass/GlassMenu";
 import { GlassPanel } from "../../components/glass/GlassPanel";
 import styles from "./admin-navigation.module.css";
 
 const primary = [
-  { to: "/admin", label: "퀴즈 관리", icon: "document" },
-  { to: "/admin/submissions", label: "참여 기록", icon: "people" },
-  { to: "/admin/privacy-requests", label: "문의·삭제 요청", icon: "message" },
+  { to: "/admin", label: "퀴즈 관리", icon: "document", tone: "action" },
+  { to: "/admin/submissions", label: "참여 기록", icon: "people", tone: "success" },
+  { to: "/admin/privacy-requests", label: "문의·삭제 요청", icon: "message", tone: "attention" },
 ] as const;
 const secondary = [
-  { to: "/admin/tools", label: "수정·보관 도구", icon: "edit" },
-  { to: "/admin/moderation", label: "이름·문구 필터", icon: "filter" },
-  { to: "/admin/operations", label: "비용·백업", icon: "chart" },
-  { to: "/admin/manual", label: "도움말", icon: "book" },
+  { to: "/admin/tools", label: "수정·보관 도구", icon: "edit", tone: "action" },
+  { to: "/admin/moderation", label: "이름·문구 필터", icon: "filter", tone: "danger" },
+  { to: "/admin/operations", label: "비용·백업", icon: "chart", tone: "attention" },
+  { to: "/admin/manual", label: "도움말", icon: "book", tone: "guide" },
 ] as const;
 
 export function AdminNavigation() {
@@ -33,9 +34,9 @@ export function AdminNavigation() {
   const active = (to: string) => to === "/admin"
     ? pathname === to || pathname === "/admin/new" || pathname.startsWith("/admin/quiz/")
     : pathname.startsWith(to);
-  const links = (items: readonly { to: string; label: string; icon: AdminIconName }[]) => items.map(item =>
+  const links = (items: readonly { to: string; label: string; icon: AdminIconName; tone: AdminTone }[]) => items.map(item =>
     <Link key={item.to} to={item.to} aria-current={active(item.to) ? "page" : undefined} onClick={() => setExpanded(false)}>
-      <AdminIcon name={item.icon}/>
+      <AdminIcon name={item.icon} tone={item.tone}/>
       <span>{item.label}</span>
     </Link>);
   return <GlassPanel as="aside" surface="standard" className={styles.sidebar}>
@@ -52,6 +53,6 @@ export function AdminNavigation() {
         </details>
       </nav>
     </details>
-    <Link className={styles.homeLink} to="/"><AdminIcon name="external"/><span>사이트 보기</span></Link>
+    <Link className={styles.homeLink} to="/"><AdminIcon name="external" tone="action"/><span>사이트 보기</span></Link>
   </GlassPanel>;
 }

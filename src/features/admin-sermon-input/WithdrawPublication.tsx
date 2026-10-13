@@ -47,46 +47,46 @@ export function WithdrawPublication({ initialQuizSetId = "", initialReviewId = "
     const signature = JSON.stringify({ id, ...fields });
     if (pending.current?.signature !== signature) pending.current = { signature, key: crypto.randomUUID() };
     const command = withdrawRequestSchema.safeParse({ ...fields, requestKey: pending.current.key });
-    if (!command.success) { setError("철회 사유를 2~500자로 입력해 주세요."); return; }
+    if (!command.success) { setError("취소 사유를 2~500자로 입력해 주세요."); return; }
     const controller = new AbortController(); mutation.current = controller; lock.current = true; setBusy(true); setError("");
     try {
       await request(`/api/admin/quiz-sets/${id}/withdraw-to-review`, withdrawResultSchema, controller.signal, command.data);
       if (!controller.signal.aborted) {
-        setMessage("발행을 철회하고 검수 대기로 돌렸습니다. 문제·정답과 발행 이력은 보존됩니다.");
+        setMessage("발행을 취소하고 검수 대기로 돌렸습니다. 문제·정답과 발행 이력은 보존됩니다.");
         setReview(null); setReviewId(id); setId(""); setReason(""); setConfirm(false); pending.current = null; setAttempt(a => a + 1);
       }
-    } catch { if (!controller.signal.aborted) setError("철회를 확인하지 못했습니다. 제출·마감·정정 여부를 확인해 주세요. 입력한 사유는 유지되며 같은 요청을 다시 확인할 수 있습니다."); }
+    } catch { if (!controller.signal.aborted) setError("공개 취소를 확인하지 못했습니다. 제출·마감·정정 여부를 확인해 주세요. 입력한 사유는 유지되며 같은 요청을 다시 확인할 수 있습니다."); }
     finally { lock.current = false; if (!controller.signal.aborted) setBusy(false); }
   }
   return <section className={styles.panel} aria-labelledby="withdraw-title">
-    <h2 id="withdraw-title"><AdminLabel text="첫 제출 전 발행 철회"/></h2>
+    <h2 id="withdraw-title"><AdminLabel text="첫 제출 전 발행 취소"/></h2>
     <p>어린이·장년 전체에 제출 기록이 없을 때 공개를 취소하고 검수 대기로 돌립니다. 저장할 때 제출 여부를 다시 확인합니다.</p>
     {message && <p role="status">{message}</p>}{error && <p role="alert">{error}</p>}
     <Button type="button" disabled={busy} onClick={() => { setError(""); setConfirm(false); setAttempt(a => a + 1); }}>목록 다시 확인</Button>
-    {items === null ? !error && <p role="status">철회 가능한 발행 목록을 불러오고 있습니다.</p> : items.length === 0 ? <p>현재 발행 중인 퀴즈가 없습니다.</p> : <>
-      <label>철회할 퀴즈<select aria-label="철회할 퀴즈" disabled={busy} value={id} onChange={e => { setId(e.target.value); setConfirm(false); setReason(""); pending.current = null; }}>
+    {items === null ? !error && <p role="status">공개를 취소할 수 있는 발행 목록을 불러오고 있습니다.</p> : items.length === 0 ? <p>현재 발행 중인 퀴즈가 없습니다.</p> : <>
+      <label>공개를 취소할 퀴즈<select aria-label="공개를 취소할 퀴즈" disabled={busy} value={id} onChange={e => { setId(e.target.value); setConfirm(false); setReason(""); pending.current = null; }}>
         <option value="">퀴즈 선택</option>{items.map(q => <option key={q.quizSetId} value={q.quizSetId}>{q.metadata.sermonDate} · {q.metadata.title}</option>)}
       </select></label>
       {selected && <form onSubmit={e => { e.preventDefault(); setError(""); setConfirm(true); }}>
         <fieldset disabled={busy} className={styles.displayFields}>
-          <legend>발행 철회</legend>
+          <legend>발행 취소</legend>
           <p>발행 {dateTime(selected.publishedAt)} · 마감 {dateTime(selected.closesAt)} (한국 시간)</p>
-          <label>철회 사유<input value={reason} required minLength={2} maxLength={500} onChange={e => { setReason(e.target.value); setConfirm(false); }} /></label>
-          {!confirm ? <Button type="submit">발행 철회 확인</Button> : <div role="group" aria-label="발행 철회 최종 확인">
+          <label>취소 사유<input value={reason} required minLength={2} maxLength={500} onChange={e => { setReason(e.target.value); setConfirm(false); }} /></label>
+          {!confirm ? <Button type="submit">발행 취소 확인</Button> : <div role="group" aria-label="발행 취소 최종 확인">
             <p>공개 링크에서 풀이와 제출을 중단합니다. 다른 열린 퀴즈를 메인에 표시하며, 없으면 지난 퀴즈를 읽기 전용으로 소개하거나 준비 안내를 표시합니다.</p>
-            <p>최신 제목·설교일과 요약·두 난이도 문제·정답을 검수 시작 자료로 보관합니다.</p>
+            <p>최신 제목·설교일과 요약·두 난도의 문제·정답은 다시 검토할 수 있도록 보관합니다.</p>
             <Button type="button" onClick={() => setConfirm(false)}>취소</Button>
-            <Button type="button" onClick={() => void withdraw()}>{busy ? "철회 확인 중" : "지금 발행 철회"}</Button>
+            <Button type="button" onClick={() => void withdraw()}>{busy ? "취소 확인 중" : "지금 발행 취소"}</Button>
           </div>}
         </fieldset>
       </form>}
     </>}
-    {withdrawn.length > 0 && <label>철회한 퀴즈 검수 자료<select aria-label="철회한 퀴즈 검수 자료" disabled={busy} value={reviewId} onChange={e => { setReview(null); setReviewId(e.target.value); }}>
+    {withdrawn.length > 0 && <label>공개를 취소한 퀴즈 다시 검토<select aria-label="공개를 취소한 퀴즈 다시 검토" disabled={busy} value={reviewId} onChange={e => { setReview(null); setReviewId(e.target.value); }}>
       <option value="">퀴즈 선택</option>{withdrawn.map(q => <option key={q.quizSetId} value={q.quizSetId}>{q.title}</option>)}
     </select></label>}
-    {review && <article aria-label="철회 후 검수 시작 자료">
-      <h3>{review.review.metadata.title}</h3><p>검수본 {review.reviewRevision} · 철회 {dateTime(review.withdrawnAt)} (한국 시간)</p>
-      <p>설교일 {review.review.metadata.sermonDate} · {review.review.bibleReferenceLabel}</p><p>철회 사유: {review.reason}</p>
+    {review && <article aria-label="공개 취소 후 다시 검토할 자료">
+      <h3>{review.review.metadata.title}</h3><p>검수본 {review.reviewRevision} · 공개 취소 {dateTime(review.withdrawnAt)} (한국 시간)</p>
+      <p>설교일 {review.review.metadata.sermonDate} · {review.review.bibleReferenceLabel}</p><p>취소 사유: {review.reason}</p>
       <p>{review.review.summary}</p>
       {review.review.variants.map(variant => <details key={variant.difficulty}><summary>{variant.difficulty === "child" ? "어린이" : "장년"} 문제·정답 보존 자료</summary>
         <ol>{variant.entries.map((entry, index) => {

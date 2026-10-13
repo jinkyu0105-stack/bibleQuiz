@@ -39,13 +39,13 @@ test("saves, restores, compares a free layout, reviews both difficulties and ret
   if(cmd.action==="publish" && losePublish){losePublish=false;return route.fulfill({status:503,json:{}});}
   return route.fulfill({json:{data:view}});
  });
- await page.goto("/admin/tools"); await openAdminTool(page, "withdrawal");await page.getByLabel("철회한 퀴즈 검수 자료").selectOption(source.quizSetId);
- const panel=page.getByRole("region",{name:"철회본 편집과 재발행"});
+ await page.goto("/admin/tools"); await openAdminTool(page, "withdrawal");await page.getByLabel("공개를 취소한 퀴즈 다시 검토").selectOption(source.quizSetId);
+ const panel=page.getByRole("region",{name:"공개 취소한 퀴즈 편집·재발행"});
  await panel.getByRole("button",{name:"새 편집 시작",exact:true}).click();
  await panel.getByRole("textbox",{name:"편집 요약",exact:true}).fill("새로 검토할 요약");
  await expect(panel.getByRole("button",{name:"설교 정보·요약 검토 완료",exact:true})).toBeDisabled();
  await panel.getByRole("button",{name:"편집본 저장",exact:true}).click();await expect(panel).toContainText("저장본 2");
- await page.reload(); await openAdminTool(page, "withdrawal");await page.getByLabel("철회한 퀴즈 검수 자료").selectOption(source.quizSetId);
+ await page.reload(); await openAdminTool(page, "withdrawal");await page.getByLabel("공개를 취소한 퀴즈 다시 검토").selectOption(source.quizSetId);
  await expect(panel.getByRole("textbox",{name:"편집 요약",exact:true})).toHaveValue("새로 검토할 요약");
  await panel.getByRole("button",{name:"어린이 무료 배치 시험",exact:true}).click();
  await expect(panel.getByRole("grid",{name:"어린이 시험 격자",exact:true})).toBeVisible();

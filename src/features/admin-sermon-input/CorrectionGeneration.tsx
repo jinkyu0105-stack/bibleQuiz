@@ -64,10 +64,10 @@ export function CorrectionGeneration({ sermonId, version, onReview, onCostChange
 
   return <section className={styles.panel} aria-labelledby="ai-correction-title">
     <div className={styles.sectionHeading}><h3 id="ai-correction-title"><AdminLabel text="AI 자막 교정"/></h3>
-      <span className={styles.needsReview}>{status ? labels[status.status] ?? "상태 확인 필요" : "사람 검토 후 채택"}</span></div>
+      <span className={styles.needsReview}>{status ? labels[status.status] ?? "상태 확인 필요" : "내용 확인 후 적용"}</span></div>
     <p>현재 자막으로 교정 문서를 만듭니다. API 사용료가 별도로 발생하며, 결과를 검토한 뒤 직접 채택합니다.</p>
     {availability && !availability.enabled && <p className={styles.helper}>AI 실행 연결을 아직 활성화하지 않았습니다.</p>}
-    {availability?.enabled && !availability.quizSetId && <p className={styles.helper}>연결된 미발행 퀴즈가 필요합니다.</p>}
+    {availability?.enabled && !availability.quizSetId && <p className={styles.helper}>아직 발행하지 않은 퀴즈에서 자막 교정을 시작할 수 있습니다.</p>}
     {uncertain && <>
       <p>응답을 확인하지 못했습니다. 기존 호출에 비용이 발생했을 수 있으며 자동으로 다시 실행하지 않습니다.</p>
       <label className={styles.checkbox}><input type="checkbox" checked={retryAccepted} onChange={e => setRetryAccepted(e.currentTarget.checked)} />추가 비용 가능성을 확인하고 새 교정을 요청합니다.</label>
@@ -82,7 +82,7 @@ export function CorrectionGeneration({ sermonId, version, onReview, onCostChange
     {message && <p role="status">{message}</p>}
     {status && <p className={styles.helper}>
       {status.costStatus === "unknown" ? "사용량 미확인 — 비용이 0이라는 뜻이 아닙니다." : status.costStatus === "not_started" ? "아직 AI 호출을 시작하지 않았습니다." :
-        `관측 사용량 기준 예상 비용: USD ${(status.usage.reduce((sum, row) => sum + row.estimatedCostMicroUsd, 0) / 1_000_000).toFixed(6)}`}
+        `기록된 사용량으로 계산한 예상 비용: USD ${(status.usage.reduce((sum, row) => sum + row.estimatedCostMicroUsd, 0) / 1_000_000).toFixed(6)}`}
     </p>}
   </section>;
 }

@@ -58,11 +58,11 @@ export function AiCostDetails({ quizSetId, refreshKey = 0 }: { quizSetId: string
         <div><h2 id="ai-costs-title"><AdminLabel text="이 퀴즈의 AI 호출 비용"/></h2><p>호출 날짜와 관계없이 선택한 퀴즈에 속한 전체 기록입니다.</p></div>
         <Button type="button" onClick={() => dialog.current?.close()}>닫기</Button>
       </div>
-      {loading && <p role="status">관측 비용 기록을 불러오고 있습니다.</p>}
+      {loading && <p role="status">예상 비용 기록을 불러오고 있습니다.</p>}
       {error && <p role="alert">{error} <Button type="button" onClick={refresh}>다시 확인</Button></p>}
       {data && <>
         <div className={styles.costTotal}>
-          <p>관측된 호출 합계 <strong>{money(data.knownCostMicroUsd)}</strong></p>
+          <p>기록된 호출의 예상 비용 <strong>{money(data.knownCostMicroUsd)}</strong></p>
           <p>전체 {data.totalCalls}회 · 사용량 미확인 {data.unknownCalls}회</p>
           {data.unknownCalls > 0 && <p>미확인 호출의 비용은 합계에 포함되지 않았습니다. 0원이라는 뜻이 아닙니다.</p>}
         </div>

@@ -26,7 +26,7 @@ test('protected manual displays service dictionary, repository text and future g
  await page.route('**/api/admin/manual**',async route=>route.fulfill({json:{data:{markdown:'# 합성 매뉴얼\n\n## 10. 백업·복구\n\n<svg onload="window.__unsafe=true">원문</svg>',updatedAt:'2026-10-01',verification:'로컬 합성 검증',deployment:'local'}}}));
  await page.goto('/admin/manual');await expect(page.getByRole('heading',{name:'백업·복구',exact:true})).toBeVisible();
  await expect(page.getByText('<svg onload="window.__unsafe=true">원문</svg>',{exact:true})).toBeVisible();expect(await page.evaluate(()=>Object.hasOwn(window,'__unsafe'))).toBe(false);
- await expect(page.getByRole('heading',{name:'백업·복구',exact:true})).toBeVisible();await page.getByRole('link',{name:'향후 회원 로그인·교회 계정 연동 검토'}).click();await expect(page).toHaveURL(/\/admin\/manual\/future\/member-auth$/u);await expect(page.getByRole('link',{name:'운영 매뉴얼로 돌아가기'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'백업·복구',exact:true})).toBeVisible();await page.getByRole('link',{name:'기능 검토 기록'}).click();await expect(page).toHaveURL(/\/admin\/manual\/future\/member-auth$/u);await expect(page.getByRole('link',{name:'운영 매뉴얼로 돌아가기'})).toBeVisible();
 });
 
 test('manual formats reading cues, explains services and retries only after a failed load', async ({page}) => {
@@ -54,7 +54,8 @@ test('manual formats reading cues, explains services and retries only after a fa
  await expect(page.locator('ol > li > strong').first()).toHaveCSS('font-weight','700');
  await expect(page.locator('p').filter({hasText:'다음 줄입니다.'}).locator('br')).toHaveCount(0);
  expect(await page.evaluate(()=>Object.hasOwn(window,'__unsafe'))).toBe(false);
- await expect(page.locator('span').filter({hasText:/^제출할 수 있습니다\.$/u})).toHaveCSS('white-space','nowrap');
+ await expect(page.locator('p').filter({hasText:'다음 줄입니다.'})).toContainText('제출할 수 있습니다.');
+ await expect(page.locator('p').filter({hasText:'다음 줄입니다.'})).toHaveCSS('white-space','normal');
  if (!await page.getByRole('combobox',{name:'읽을 주제'}).isVisible()) {
    const contents = page.getByRole('navigation',{name:'매뉴얼 주제'});
    await expect(contents).toHaveCSS('display','block');
@@ -69,7 +70,7 @@ test('manual formats reading cues, explains services and retries only after a fa
    await page.getByRole('navigation',{name:'매뉴얼 주제'}).getByRole('button',{name:'OpenAI API',exact:true}).click();
  }
  await expect(page.getByRole('heading',{name:'OpenAI API',exact:true})).toBeFocused();
- await expect(page.getByRole('heading',{name:'OpenAI API',exact:true}).locator('svg[aria-hidden="true"]')).toHaveCount(1);
+ await expect(page.getByRole('heading',{name:'OpenAI API',exact:true}).locator('img[alt=""]')).toHaveCount(1);
  await expect(page.getByText('언제 쓰나요?',{exact:true}).first()).toBeVisible();
  await expect(page.getByText('등록한 설교 자료를 읽고, 내용을 정리하거나 퀴즈 문제의 초안을 만들어 주는 AI입니다. AI가 만든 내용을 확인하고 발행하는 사람은 관리자입니다.',{exact:true})).toBeVisible();
  await expect(page.locator('code').filter({hasText:'OPENAI_API_KEY'})).toBeHidden();

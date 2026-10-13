@@ -107,14 +107,14 @@ async function request<T>(
 export async function loadAdminSermonInput(sermonId: string, signal?: AbortSignal): Promise<AdminSermonInputClientResult<AdminSermonInputCurrent | null>> {
   const path = sermonPath(sermonId);
   if (!path) return { ok: false, error: unavailable("설교 ID를 다시 확인해 주세요.") };
-  const result = await request(path, adminSermonInputSuccessSchema, "설교 입력자료를 불러오지 못했습니다.", { method: "GET", ...(signal ? { signal } : {}) });
+  const result = await request(path, adminSermonInputSuccessSchema, "설교 자료를 불러오지 못했습니다.", { method: "GET", ...(signal ? { signal } : {}) });
   return result.ok ? { ok: true, data: result.data.data.input } : result;
 }
 
 export async function loadAdminSermonInputHistory(sermonId: string, signal?: AbortSignal): Promise<AdminSermonInputClientResult<AdminSermonInputHistory | null>> {
   const path = sermonPath(sermonId);
   if (!path) return { ok: false, error: unavailable("설교 ID를 다시 확인해 주세요.") };
-  const result = await request(`${path}/history`, adminSermonInputHistorySuccessSchema, "입력자료 이력을 불러오지 못했습니다.", { method: "GET", ...(signal ? { signal } : {}) });
+  const result = await request(`${path}/history`, adminSermonInputHistorySuccessSchema, "설교 자료 이력을 불러오지 못했습니다.", { method: "GET", ...(signal ? { signal } : {}) });
   return result.ok ? { ok: true, data: result.data.data.history } : result;
 }
 
@@ -137,13 +137,13 @@ export async function importAdminSermonInput(
 ): Promise<AdminSermonInputClientResult<AdminSermonInputCurrent>> {
   const path = sermonPath(sermonId);
   const parsed = adminSermonInputImportRequestSchema.safeParse(input);
-  if (!path || !parsed.success) return { ok: false, error: unavailable("저장할 입력자료를 다시 확인해 주세요.") };
-  const result = await request(path, adminSermonInputSuccessSchema, "설교 입력자료를 저장하지 못했습니다.", {
+  if (!path || !parsed.success) return { ok: false, error: unavailable("저장할 설교 자료를 다시 확인해 주세요.") };
+  const result = await request(path, adminSermonInputSuccessSchema, "설교 자료를 저장하지 못했습니다.", {
     body: JSON.stringify(parsed.data), method: "POST", ...(signal ? { signal } : {}),
   });
   if (!result.ok) return result;
   return result.data.data.input === null
-    ? { ok: false, error: unavailable("저장된 입력자료 응답을 확인하지 못했습니다.") }
+    ? { ok: false, error: unavailable("저장된 설교 자료 응답을 확인하지 못했습니다.") }
     : { ok: true, data: result.data.data.input };
 }
 
@@ -154,8 +154,8 @@ export async function commandAdminSermonInput(
 ): Promise<AdminSermonInputClientResult<AdminSermonInputMutationData>> {
   const path = sermonPath(sermonId);
   const parsed = adminSermonInputCommandRequestSchema.safeParse(command);
-  if (!path || !parsed.success) return { ok: false, error: unavailable("변경할 입력자료를 다시 확인해 주세요.") };
-  const result = await request(path, adminSermonInputMutationSuccessSchema, "설교 입력자료를 변경하지 못했습니다.", {
+  if (!path || !parsed.success) return { ok: false, error: unavailable("변경할 설교 자료를 다시 확인해 주세요.") };
+  const result = await request(path, adminSermonInputMutationSuccessSchema, "설교 자료를 변경하지 못했습니다.", {
     body: JSON.stringify(parsed.data), method: "PATCH", ...(signal ? { signal } : {}),
   });
   return result.ok ? { ok: true, data: result.data.data } : result;
@@ -169,7 +169,7 @@ export async function loadAdminSermonInputComparison(
   const path = sermonPath(sermonId);
   if (!path) return { ok: false, error: unavailable("비교할 설교를 다시 확인해 주세요.") };
   const parameters = new URLSearchParams(query);
-  const result = await request(`${path}/comparison?${parameters.toString()}`, adminSermonInputComparisonSuccessSchema, "선택한 두 입력자료를 불러오지 못했습니다.", { method: "GET", ...(signal ? { signal } : {}) });
+  const result = await request(`${path}/comparison?${parameters.toString()}`, adminSermonInputComparisonSuccessSchema, "선택한 두 설교 자료를 불러오지 못했습니다.", { method: "GET", ...(signal ? { signal } : {}) });
   return result.ok ? { ok: true, data: result.data.data } : result;
 }
 

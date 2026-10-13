@@ -50,7 +50,7 @@
 .prose li + li { margin-top: 12px; }
 .prose li::marker { color: var(--ui-action); font-weight: 600; }
 .prose strong { font-weight: 700; color: var(--ink); }
-.prose h4 { margin-top: 12px !important; color: var(--ui-guide) !important; }
+.prose h4 { margin-top: 12px !important; color: var(--ink) !important; }
 .callout { display: flex; align-items: flex-start; gap: 12px; border: 1px solid color-mix(in srgb, var(--ui-attention) 28%, var(--ui-attention-bg)); background: var(--ui-attention-bg); color: var(--ui-attention); padding: 16px 18px; border-radius: 8px; font-size: 14px; line-height: 1.85; }
 .callout > svg { flex: 0 0 22px; width: 22px; height: 22px; margin-top: 2px; }
 .callout > div { min-width: 0; }
@@ -58,7 +58,7 @@
 @media (max-width: 500px) { .callout { padding: 14px; gap: 10px; } }
 .guideFacts { display: grid; gap: 22px; margin: 0 0 24px; }
 .guideFacts > div { display: grid; gap: 7px; }
-.guideFacts dt { color: var(--ui-guide); font-size: 13px; font-weight: 700; }
+.guideFacts dt { color: var(--admin-tone, var(--ink)); font-size: 13px; font-weight: 700; }
 .guideFacts dd { margin: 0; font-size: 15px; line-height: 1.85; overflow-wrap: anywhere; }
 .guideFacts code { display: inline-block; margin: 3px 6px 3px 0; }
 .technical { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 8px; }
@@ -80,5 +80,3 @@
 .policyNotice strong { font-size: 14px; color: var(--ui-attention); }
 .policyNotice a { justify-self: start; font-size: 14px; }
 @media(forced-colors: active) { .state[data-tone] { color: CanvasText; background: Canvas; } }
-
-.phrase { white-space: nowrap; }

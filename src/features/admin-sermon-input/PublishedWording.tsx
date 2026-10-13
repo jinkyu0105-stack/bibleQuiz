@@ -50,13 +50,13 @@ export function PublishedWording({ quizSetId }: { quizSetId: string }) {
       if (!controller.signal.aborted) { setMessage("오탈자 정정을 저장했습니다. 원래 정답과 성적은 보존됩니다."); setView(null); setAttempt(v => v + 1); }
     } catch (failure) {
       if (!controller.signal.aborted) setError(failure instanceof Error && failure.message === "semantic"
-        ? "의미·정답 유도 변경은 문제 오류 처리에서 진행해 주세요."
+        ? "문제의 뜻이나 정답을 찾는 방법이 바뀐다면 문제 오류 처리에서 진행해 주세요."
         : "저장을 확인하지 못했습니다. 입력은 유지됩니다. 같은 내용으로 다시 저장하거나 최신 문구를 불러와 주세요.");
     } finally { lock.current = false; if (!controller.signal.aborted) setBusy(false); }
   }
-  return <section aria-label="일반 문구 오탈자" className={styles.displayEditor}>
-    <h3><AdminLabel text="일반 문구 오탈자"/></h3>
-    <p>철자·띄어쓰기·문장부호만 바로잡습니다. 의미·난이도·정답 유도가 같다는 판단은 관리자가 직접 확인합니다.</p>
+  return <section aria-label="뜻이 바뀌지 않는 오타 수정" className={styles.displayEditor}>
+    <h3><AdminLabel text="뜻이 바뀌지 않는 오타 수정"/></h3>
+    <p>철자·띄어쓰기·문장부호만 바로잡습니다. 뜻과 난이도, 정답을 찾는 방법이 바뀌지 않는지 관리자가 확인하세요.</p>
     <p><a href="#problem-correction-title">의미 변경·불확실한 수정은 문제 오류 처리로 이동</a></p>
     {message && <p role="status">{message}</p>}{error && <p role="alert">{error}</p>}
     <Button type="button" disabled={busy} onClick={() => { setView(null); setError(""); setAttempt(v => v + 1); }}>최신 문구 불러오기</Button>
@@ -72,7 +72,7 @@ export function PublishedWording({ quizSetId }: { quizSetId: string }) {
           <div className={styles.formGrid}><label className={styles.textareaLabel}>수정 전<textarea readOnly value={selected.text} rows={4} /></label>
           <label className={styles.textareaLabel}>수정 후<textarea required value={after} maxLength={selected.kind === "clue" ? 2000 : 20000} rows={4} onChange={e => { setAfter(e.target.value); setConfirmed(false); }} /></label></div>
           <label className={styles.textareaLabel}>수정 종류<select value={assessment} onChange={e => { setAssessment(e.target.value); setConfirmed(false); }}>
-            <option value="">직접 확인 후 선택</option><option value="non_semantic_typo">의미가 같은 철자·띄어쓰기·문장부호</option>
+            <option value="">직접 확인 후 선택</option><option value="non_semantic_typo">뜻이 바뀌지 않는 철자·띄어쓰기·문장부호 수정</option>
             <option value="semantic">의미·난이도·정답 유도 변경</option><option value="uncertain">판단이 불확실함</option>
           </select></label>
           {semantic ? <p role="status">이 수정은 여기서 저장할 수 없습니다. <a href="#problem-correction-title">문제 오류 처리에서 검토하기</a></p> : <>

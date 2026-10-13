@@ -62,7 +62,7 @@
  .toolBody { padding: 20px 16px; }
 }
 .help > summary { color: var(--ui-guide); font-size: 14px; }
-.help .number { color: var(--ui-guide); background: var(--ui-guide-bg); border-color: transparent; }
+.help .number { color: var(--admin-tone); background: var(--admin-tone-bg); border-color: transparent; }
 .help .steps { gap: 24px; }
 .help .steps p { font-size: 14px; line-height: 1.85; margin-top: 8px; }
 .toolCopy .description { max-width: 62ch; word-break: keep-all; line-height: 1.8; }

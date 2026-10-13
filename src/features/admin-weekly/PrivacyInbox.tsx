@@ -16,7 +16,7 @@ export function Component(){
   const pending=(status:string)=>status==='received'||status==='reviewing';
   const visible=items?.filter(item=>filter==='all'||(filter==='pending'?pending(item.status):!pending(item.status)));
   return <div className={styles.page}>
-    <AdminIntro terms={["처리 완료", "개인정보 삭제"]} screenshots={["privacy"]} title="문의·삭제 요청" description="참여자가 남긴 내용을 확인하고 답변을 보내세요."/>
+    <AdminIntro terms={["처리 완료", "개인정보 삭제"]} screenshots={["privacy"]} title="문의·삭제 요청" description="문의 내용을 확인하고 답변을 남기세요."/>
     <div className={record.toolbar}>
       <div className={record.filters} role="group" aria-label="문의 상태 필터">{([['pending','답변 대기'],['done','처리한 문의'],['all','전체']] as const).map(([value,label])=><button key={value} type="button" aria-pressed={filter===value} onClick={()=>setFilter(value)}>{label}<small>{items?.filter(item=>value==='all'||(value==='pending'?pending(item.status):!pending(item.status))).length??'—'}</small></button>)}</div>
       <Button disabled={busy} onClick={()=>{setMessage('');setAttempt(a=>a+1);}}>문의 목록 새로고침</Button>
@@ -31,7 +31,7 @@ export function Component(){
       </details>
     </AdminRecord>)}</ul>}
     <AdminSteps steps={[
-      {title:"내용 확인",description:"이름과 관련 퀴즈가 조치할 대상인지 확인합니다."},
+      {title:"내용 확인",description:"이름과 관련 퀴즈를 보고 누구의 어떤 요청인지 확인합니다."},
       {title:"삭제 요청 처리",description:"제출 기록에서 실제 삭제한 뒤 처리 상태를 바꿉니다. 상태 변경만으로 기록은 삭제되지 않습니다."},
       {title:"답변 저장",description:"참여자가 내 문의에서 확인할 수 있도록 처리 결과를 남깁니다."},
     ]}/>

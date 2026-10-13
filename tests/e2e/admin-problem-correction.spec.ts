@@ -38,7 +38,7 @@ for(const nonRanked of [false,true]) test(`problem correction pauses, preserves 
   if(cmd.action==="publish"&&losePublish){losePublish=false;return route.fulfill({status:503,json:{}});}
   return route.fulfill({json:{data:problemViewSchema.parse(view)}});
  });
- await page.goto("/admin/tools"); await openAdminTool(page, "correction");const panel=page.getByRole("region",{name:"첫 제출 후 문제 오류 처리",exact:true});
+ await page.goto("/admin/tools"); await openAdminTool(page, "correction");const panel=page.getByRole("region",{name:"제출된 퀴즈의 문제 수정",exact:true});
  await panel.getByLabel("오류를 처리할 퀴즈",{exact:true}).selectOption(source.quizSetId);
  await expect(panel).toContainText("공개 3건 · 숨김 1건 · 삭제 1건");
  await panel.getByLabel("관리자 오류 확인 사유",{exact:true}).fill("단서 의미 오류 확인");await panel.getByLabel("공개 중지 안내",{exact:true}).fill("문제를 확인하고 있습니다.");

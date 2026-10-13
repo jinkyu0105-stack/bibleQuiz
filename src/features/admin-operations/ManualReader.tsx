@@ -1,9 +1,11 @@
+import type { AdminTone } from "../../config/admin-help";
+import { ServiceIcon } from "../../components/ServiceIcon";
 import { AdminLabel, GuideText } from "../../components/AdminHelp";
 import { AdminScreenshots } from "../../components/AdminScreenshots";
 import type { AdminScreenshotId } from "../../config/admin-screenshots";
 import { useRef, useState } from "react";
 import { AdminIcon, type AdminIconName } from "../../components/AdminIcon";
-import { serviceRegistry } from "../../config/service-registry";
+import { serviceRegistry, type ServiceId } from "../../config/service-registry";
 import { serviceGuides } from "./service-guides";
 import { ManualBody } from "./ManualText";
 import { manualSections } from "./manual-sections";
@@ -26,11 +28,19 @@ const topicIcons: Record<string, AdminIconName> = {
   "guide-1": "book", "guide-2": "grid", "guide-3": "document", "guide-4": "flow",
   "guide-5": "cloud", "guide-6": "calendar", "guide-7": "chart", "guide-8": "code",
   "guide-9": "alert", "guide-10": "database", "guide-11": "shield", "guide-12": "edit",
-  "guide-13": "document", "guide-14": "book", "service-openai": "processor", "service-r2": "database",
-  "service-d1": "database", "service-workers": "cloud", "service-durable_objects": "processor",
-  "service-workflows": "flow", "service-workers_builds": "code", "service-access": "shield",
-  "service-github_actions": "code", "service-domain": "globe",
+  "guide-13": "document", "guide-14": "book",
 };
+
+const topicTones: Record<string, AdminTone> = {
+  "guide-1": "guide", "guide-2": "action", "guide-3": "action", "guide-4": "guide",
+  "guide-5": "attention", "guide-6": "attention", "guide-7": "attention", "guide-8": "action",
+  "guide-9": "danger", "guide-10": "success", "guide-11": "danger", "guide-12": "guide",
+  "guide-13": "success", "guide-14": "guide",
+};
+function TopicIcon({ id }: { id: string }) {
+  return id.startsWith("service-") ? <ServiceIcon service={id.slice(8) as ServiceId}/>
+    : <AdminIcon name={topicIcons[id] ?? "document"} tone={topicTones[id] ?? "guide"}/>;
+}
 
 export function ManualReader({ source }: { source: string }) {
   const sections = manualSections(source);
@@ -55,13 +65,16 @@ export function ManualReader({ source }: { source: string }) {
     setSelected(id);
     requestAnimationFrame(() => {
       heading.current?.focus({ preventScroll: true });
-      if (window.matchMedia("(max-width: 760px)").matches) heading.current?.scrollIntoView({block: "start", behavior: "instant"});
+      const box = heading.current?.getBoundingClientRect();
+      if (box && (window.matchMedia("(max-width: 760px)").matches || box.top < 140 || box.bottom > window.innerHeight)) {
+        heading.current?.scrollIntoView({block: "start", behavior: "instant"});
+      }
     });
   }
   return <div className={css.reader}>
     <nav className={css.contents} aria-label="매뉴얼 주제">
       {groups.map((group, index) => {
-        const items = <ul>{group.items.map(item => <li key={item.id}><button type="button" aria-current={current.id === item.id ? "true" : undefined} onClick={() => choose(item.id)}><AdminIcon name={topicIcons[item.id] ?? "document"}/><span>{item.title}</span></button></li>)}</ul>;
+        const items = <ul>{group.items.map(item => <li key={item.id}><button type="button" aria-current={current.id === item.id ? "true" : undefined} onClick={() => choose(item.id)}><TopicIcon id={item.id}/><span>{item.title}</span></button></li>)}</ul>;
         return index === 0 ? <section key={group.title}><h3>{group.title}</h3>{items}</section>
           : <details key={group.title} open={group.items.some(item => item.id === current.id)}><summary>{group.title}<AdminIcon name="chevron"/></summary>{items}</details>;
       })}
@@ -70,15 +83,15 @@ export function ManualReader({ source }: { source: string }) {
       <select value={current.id} onChange={event => choose(event.target.value)}>{groups.map(group => <optgroup key={group.title} label={group.title}>{group.items.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}</optgroup>)}</select>
     </label>
     <article className={css.article} aria-labelledby="manual-article-title">
-      <header className={css.articleHeader}><p>{category}</p><h3 id="manual-article-title" tabIndex={-1} ref={heading}>{service && <AdminIcon name={topicIcons[current.id] ?? "cloud"}/>}<span><AdminLabel text={section?.title ?? service?.name ?? "운영 안내"}/></span></h3>{service && <p className={css.subtitle}>{service.plainLanguageName}</p>}</header>
+      <header className={css.articleHeader} data-admin-tone={topicTones[current.id] ?? "guide"}><p>{category}</p><h3 id="manual-article-title" tabIndex={-1} ref={heading}>{service && <TopicIcon id={current.id}/>}<span><AdminLabel text={section?.title ?? service?.name ?? "운영 안내"}/></span></h3>{service && <p className={css.subtitle}>{service.plainLanguageName}</p>}</header>
       {section && <ManualBody source={section.body}/>}
       {section && examples[current.id] && <AdminScreenshots key={current.id} ids={examples[current.id]!}/>}
       {service && guide && <div className={css.serviceReading}>
         <p className={css.lead}>{guide.role}</p>
         <dl className={local.guideFacts}>
-          <div><dt>언제 쓰나요?</dt><dd><GuideText text={guide.when}/></dd></div>
-          <div><dt>멈추면 어떻게 되나요?</dt><dd><GuideText text={guide.failure}/></dd></div>
-          <div><dt>내가 확인할 것은?</dt><dd><GuideText text={guide.check}/></dd></div>
+          <div data-admin-tone="action"><dt>언제 쓰나요?</dt><dd><GuideText text={guide.when}/></dd></div>
+          <div data-admin-tone="danger"><dt>문제가 생기면?</dt><dd><GuideText text={guide.failure}/></dd></div>
+          <div data-admin-tone="attention"><dt>무엇을 확인하나요?</dt><dd><GuideText text={guide.check}/></dd></div>
         </dl>
         <a className={local.docLink} href={service.officialDocsUrl} target="_blank" rel="noreferrer">{service.name} 공식 안내 ↗</a>
         <details className={local.technical}><summary>연결 설정·비용 기록 자세히</summary>

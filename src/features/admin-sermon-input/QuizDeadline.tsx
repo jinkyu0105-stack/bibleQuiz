@@ -54,8 +54,8 @@ export function QuizDeadline({ quizSetId, onSaved }: { quizSetId: string; onSave
       if (!c.signal.aborted) setError("변경을 확인하지 못했습니다. 입력은 유지됩니다. 같은 요청을 다시 저장하거나 변경 영향 다시 확인으로 최신 상태를 검토해 주세요. 이미 마감된 퀴즈는 재개할 수 없습니다.");
     } finally { lock.current = false; if (!c.signal.aborted) setBusy(false); }
   }
-  return <section className={styles.displayEditor} aria-label="일반 마감 변경">
-    <h3><AdminLabel text="일반 마감 변경"/></h3>
+  return <section className={styles.displayEditor} aria-label="접수 마감 변경">
+    <h3><AdminLabel text="접수 마감 변경"/></h3>
     <p>한국 시간으로 입력합니다. 기존 정답·제출·성적을 보존하며 이미 마감된 퀴즈는 다시 열지 않습니다.</p>
     {message && <p role="status">{message}</p>}{error && <p role="alert">{error}</p>}
     <Button type="button" disabled={busy} onClick={() => { invalidate(); setView(null); setError(""); setAttempt(v => v + 1); }}>최신 마감 불러오기</Button>

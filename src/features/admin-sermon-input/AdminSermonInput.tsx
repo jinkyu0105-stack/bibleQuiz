@@ -120,7 +120,7 @@ function eventOption(event: AdminSermonInputHistoryEvent, currentId: string) {
 }
 
 function DiffView({ parts }: { parts: TextDiffPart[] }) {
-  return <div className={styles.diff} aria-label="선택한 두 입력자료의 변경 비교">
+  return <div className={styles.diff} aria-label="선택한 두 설교 자료의 변경 비교">
     {parts.map((part, index) => part.kind === "added"
       ? <ins key={index}>{part.text}</ins>
       : part.kind === "removed"
@@ -249,7 +249,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
     if (!currentMatchesHistory(inputResult.data, historyResult.data)) {
       setWorkspace({ state: "error", error: {
         code: "INPUT_SNAPSHOT_CHANGED",
-        message: "입력자료를 불러오는 동안 새 저장이 처리됐습니다. 다시 불러와 주세요.",
+        message: "설교 자료를 불러오는 동안 새 저장이 처리됐습니다. 다시 불러와 주세요.",
       } });
       return false;
     }
@@ -297,7 +297,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       setFeedback({ state: "error", error: { code: "INPUT_TOO_LARGE", message: "설교 자막은 공백과 줄바꿈을 포함해 3만 자 이하로 입력해 주세요." } });
       return;
     }
-    setFeedback({ state: "loading", message: "최초 입력자료를 저장하고 있습니다." });
+    setFeedback({ state: "loading", message: "설교 자료를 처음 저장하고 있습니다." });
     const result = await importAdminSermonInput(loadedSermonId, {
       expectedVersion: 0,
       sourceMode: importKind === "youtube_visible_transcript" ? "manual_paste" : "sermon_notes",
@@ -312,7 +312,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
     }
     setImportText("");
     await refreshWorkspace();
-    setFeedback({ state: "success", message: "최초 입력자료를 저장했습니다." });
+    setFeedback({ state: "success", message: "설교 자료를 처음 저장했습니다." });
   }
 
   async function runCommand(command: AdminSermonInputCommandRequest, message: string): Promise<boolean> {
@@ -349,7 +349,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
   function submitConfirm() {
     if (!current || !reviewed) return;
-    void runCommand({ action: "confirm", ...expectation(current), reviewed: true }, "현재 입력자료를 사람이 검토하고 확정했습니다.");
+    void runCommand({ action: "confirm", ...expectation(current), reviewed: true }, "현재 설교 자료를 확인하고 확정했습니다.");
   }
 
   function submitRestore() {
@@ -517,14 +517,14 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
   const requestedStep = Number(query.get("step"));
   const step = requestedStep >= 1 && requestedStep <= 6 && available[requestedStep - 1] ? requestedStep : recommended;
   const stepNames = ["설교 영상", "설교 의도", "요약과 문제", "격자 배치", "최종 확인", "발행"];
-  const reasons = ["", "입력자료 사람 확정 필요", "설교 의도 확정 필요", "요약·두 난도 검수 필요", "두 격자 최종 검사 필요", "최종 검사 통과 필요"];
+  const reasons = ["", "설교 자료 확인·확정 필요", "설교 의도 확정 필요", "요약·두 난도 검수 필요", "두 격자 최종 검사 필요", "최종 검사 통과 필요"];
   function selectStep(next: number) {
-    if (changedInput || contentDirty || feedback.state === "loading") { setFeedback({state:"error",error:{code:"SAVE_REQUIRED",message:"편집한 초안의 저장을 먼저 확인해 주세요."}}); return; }
+    if (changedInput || contentDirty || feedback.state === "loading") { setFeedback({state:"error",error:{code:"SAVE_REQUIRED",message:"편집한 초안이 저장되었는지 먼저 확인해 주세요."}}); return; }
     setQuery({step:String(next)});
   }
-  const reviewStatus = generation ? ({ awaiting_intent_review: "의도 검수 대기", awaiting_content_review: "내용 검수 대기", review_ready: "최종 검사 완료", failed: "생성 실패: 결과 확인 필요", stale: "입력 변경: 다시 확인 필요", uncertain: "응답 확인 필요", running: "생성 진행 중" } as Record<string, string>)[generation.status] : null;
+  const reviewStatus = generation ? ({ awaiting_intent_review: "설교 의도 확인 필요", awaiting_content_review: "요약·문제 검수 필요", review_ready: "최종 검사 완료", failed: "생성 실패: 결과 확인 필요", stale: "입력 변경: 다시 확인 필요", uncertain: "응답 확인 필요", running: "생성 진행 중" } as Record<string, string>)[generation.status] : null;
   const selectedIntent = generation?.snapshots.find(snapshot => snapshot.kind === "intent" && snapshot.value.id === c?.intent?.selectedId);
-  const selectionLabel = selectedIntent?.kind === "intent" ? selectedIntent.value.kind === "analysis" ? "최초 분석" : selectedIntent.value.kind === "critique" ? "비판 수정본" : "직접 수정한 분석" : null;
+  const selectionLabel = selectedIntent?.kind === "intent" ? selectedIntent.value.kind === "analysis" ? "최초 분석" : selectedIntent.value.kind === "critique" ? "비판 검토를 반영한 분석" : "직접 수정한 분석" : null;
   const currentTimedSegment = current?.content.format === "timed_segments" ? current.content.segments[timedSegmentIndex] : undefined;
 
   return <section className={`${styles.page} ${weekly ? styles.weeklyPage : ""}`} aria-labelledby="sermon-input-title">
@@ -532,11 +532,11 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       <div>
         {!weekly && <p className={styles.kicker}>현재 관리자 작업</p>}
         {weekly && reviewStatus && <p className={styles.workStatus} role="status">{reviewStatus}{step === 2 && selectionLabel ? ` · 현재 선택: ${selectionLabel}` : ""}</p>}
-        <h2 id="sermon-input-title"><AdminLabel text={weekly ? stepNames[step - 1]! : "설교 입력자료 검토"}/></h2>
-        <p>{weekly ? ["퀴즈의 바탕이 될 설교를 준비합니다. 영상·성경 장절·자막을 확인한 뒤 입력자료를 확정하세요.", "설교의 핵심 메시지를 확인합니다. 분석 내용이 원문과 맞는지 읽고 사용할 분석을 확정하세요.", "참여자에게 보여줄 요약과 문제를 다듬습니다. 요약·어린이·장년을 각각 검수해야 다음 단계로 갈 수 있습니다.", "문제가 들어갈 격자를 만듭니다. 크기와 문제 수를 골라 무료로 배치를 비교하고 두 난도의 격자를 선택하세요.", "발행 전에 공개될 내용을 점검합니다. 요약·문제·두 난도 격자를 확인하고 최종 검사를 진행하세요.", "검수한 퀴즈를 참여자에게 공개합니다. 공개 범위와 마감 일시를 확인한 뒤 발행하세요."][step - 1] : "저장된 설교의 자막과 수정 이력을 자세히 살펴봅니다. 아래에서 작업을 선택하면 비교·복원·교정과 검수를 이어갈 수 있습니다."}</p>
+        <h2 id="sermon-input-title"><AdminLabel text={weekly ? stepNames[step - 1]! : "설교 자료 검토"}/></h2>
+        <p>{weekly ? ["퀴즈의 바탕이 될 설교를 준비합니다. 영상·성경 장절·자막을 확인한 뒤 설교 자료를 확정하세요.", "설교의 핵심 메시지를 확인합니다. 분석 내용이 원문과 맞는지 읽고 사용할 분석을 확정하세요.", "참여자에게 보여줄 요약과 문제를 다듬습니다. 요약·어린이·장년을 각각 검수해야 다음 단계로 갈 수 있습니다.", "문제가 들어갈 격자를 만듭니다. 크기와 문제 수를 골라 무료로 배치를 비교하고 두 난도의 격자를 선택하세요.", "발행 전에 공개될 내용을 점검합니다. 요약·문제·두 난도 격자를 확인하고 최종 검사를 진행하세요.", "검수한 퀴즈를 참여자에게 공개합니다. 공개 범위와 마감 일시를 확인한 뒤 발행하세요."][step - 1] : "저장된 설교의 자막과 수정 이력을 자세히 살펴봅니다. 아래에서 작업을 선택하면 비교·복원·교정과 검수를 이어갈 수 있습니다."}</p>
       </div>
       {!weekly && <ol className={styles.steps} aria-label="주간 발행 6단계">
-        <li aria-current="step"><span>1</span>입력자료 <small>현재</small></li>
+        <li aria-current="step"><span>1</span>설교 자료 <small>현재</small></li>
         <li><span>2</span>설교 의도 <small>분석·검수</small></li>
         <li><span>3</span>문제 후보 <small>내용 검수</small></li>
         <li><span>4</span>격자 배치 <small>시험·선택</small></li>
@@ -559,12 +559,12 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       <label htmlFor="admin-sermon-id">설교 ID
         <input id="admin-sermon-id" value={sermonId} onChange={(event) => setSermonId(event.currentTarget.value)} autoComplete="off" placeholder="저장된 설교 ID" />
       </label>
-      <Button type="submit" disabled={workspace.state === "loading"}>{workspace.state === "loading" ? "불러오는 중" : "입력자료 불러오기"}</Button>
+      <Button type="submit" disabled={workspace.state === "loading"}>{workspace.state === "loading" ? "불러오는 중" : "설교 자료 불러오기"}</Button>
       {loadedSermonId && <Button type="button" onClick={() => void refreshWorkspace()}>새로고침</Button>}
     </form>}
 
-    {workspace.state === "idle" && <p className={styles.empty}>새 설교를 등록하거나 미발행 목록에서 작업을 선택해 주세요. 기존 설교 ID로도 불러올 수 있습니다.</p>}
-    {workspace.state === "loading" && <div className={styles.loadingPanel} role="status"><span />입력자료와 이력을 불러오고 있습니다.</div>}
+    {workspace.state === "idle" && <p className={styles.empty}>새 설교를 등록하거나 작성 중인 설교 목록에서 작업을 선택해 주세요. 기존 설교 ID로도 불러올 수 있습니다.</p>}
+    {workspace.state === "loading" && <div className={styles.loadingPanel} role="status"><span />설교 자료와 이력을 불러오고 있습니다.</div>}
     {workspace.state === "error" && <Feedback feedback={{ state: "error", error: workspace.error }} />}
 
     {workspace.state === "ready" && workspace.current === null && <>
@@ -584,7 +584,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       </section>
       <form className={styles.panel} onSubmit={submitImport}>
       <div className={styles.sectionHeading}>
-        <div><p className={styles.kicker}>첫 작업</p><h3><AdminLabel text="최초 입력자료 저장"/></h3></div>
+        <div><p className={styles.kicker}>첫 작업</p><h3><AdminLabel text="설교 자료 처음 저장"/></h3></div>
         <span className={styles.needsReview}>원본으로 보존</span>
       </div>
       <p>처음 저장한 자료는 덮어쓰지 않습니다. 자막 수정은 저장 뒤 새 버전으로 추가됩니다.</p>
@@ -607,7 +607,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
           </select>
         </label>}
       </div>
-      <label className={styles.textareaLabel} htmlFor="initial-sermon-input">입력자료 본문
+      <label className={styles.textareaLabel} htmlFor="initial-sermon-input">설교 자료 본문
         <textarea id="initial-sermon-input" value={importText} onChange={(event) => setImportText(event.currentTarget.value)} rows={12} aria-describedby="initial-input-help" />
       </label>
       <p id="initial-input-help" className={styles.helper}>{importKind === "youtube_visible_transcript" ? `자막 ${[...importText].length.toLocaleString("ko-KR")} / 30,000자` : "제공받은 원고와 요약본은 받은 내용 그대로 저장하며 이후 수정하지 않습니다."}</p>
@@ -628,7 +628,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
       <div className={styles.actionGrid}>
         <section className={styles.panel} aria-labelledby="confirm-input-title">
-          <div className={styles.sectionHeading}><h3 id="confirm-input-title"><AdminLabel text="사람 검토 확정"/></h3><span className={current.confirmationId ? styles.confirmed : styles.needsReview}>{current.confirmationId ? "완료" : "필요"}</span></div>
+          <div className={styles.sectionHeading}><h3 id="confirm-input-title"><AdminLabel text="설교 자료 확정"/></h3><span className={current.confirmationId ? styles.confirmed : styles.needsReview}>{current.confirmationId ? "완료" : "필요"}</span></div>
           <p>현재 본문을 직접 확인한 기록을 남깁니다. 본문이 바뀌면 다시 확정해야 합니다.</p>
           <label className={styles.checkbox}><input type="checkbox" checked={reviewed} onChange={(event) => setReviewed(event.currentTarget.checked)} />현재 본문을 검토했습니다.</label>
           <Button type="button" disabled={!reviewed || current.confirmationId !== null} onClick={submitConfirm}>{current.confirmationId ? "이미 확정됨" : "현재 본문 확정"}</Button>
@@ -664,7 +664,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
       <section className={styles.panel} aria-labelledby="history-title">
         <div className={styles.sectionHeading}>
-          <div><p className={styles.kicker}>본문을 읽지 않는 목록</p><h3 id="history-title"><AdminLabel text="입력자료 이력"/></h3></div>
+          <div><p className={styles.kicker}>저장·수정 기록</p><h3 id="history-title"><AdminLabel text="설교 자료 이력"/></h3></div>
           <span>{history?.events.length ?? 0}건</span>
         </div>
         <ol className={styles.timeline}>
@@ -699,7 +699,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
           </section>
 
           {isCaption && <section aria-labelledby="restore-title">
-            <h4 id="restore-title"><AdminLabel text="과거 본문 복원"/></h4>
+            <h4 id="restore-title"><AdminLabel text="이전 본문으로 되돌리기"/></h4>
             <p>과거 기록을 덮어쓰지 않고 선택한 본문을 새 버전으로 만듭니다.</p>
             <label>복원할 본문
               <select value={restoreDocumentId} onChange={(event) => setRestoreDocumentId(event.currentTarget.value)}>
@@ -714,7 +714,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
       {isCaption && <section className={styles.panel} aria-labelledby="correction-title">
         <div className={styles.sectionHeading}>
-          <div><p className={styles.kicker}>선택한 제안만 상세 조회</p><h3 id="correction-title" tabIndex={-1} ref={correctionHeading}><AdminLabel text="자막 교정 검토"/></h3></div>
+          <div><p className={styles.kicker}>교정 내용을 골라 확인하세요</p><h3 id="correction-title" tabIndex={-1} ref={correctionHeading}><AdminLabel text="자막 교정 검토"/></h3></div>
           <span>{proposalEvents.length}개 제안</span>
         </div>
 
@@ -792,8 +792,8 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
               })}
             </ol>
             <div className={styles.actions}>
-              <Button type="button" disabled={!appliesToCurrent} onClick={submitDecisions}>선택한 결정 저장</Button>
-              <Button type="button" disabled={!appliesToCurrent || !hasAccepted} onClick={submitMerge}>수락한 교정 반영</Button>
+              <Button type="button" disabled={!appliesToCurrent} onClick={submitDecisions}>사용·제외 선택 저장</Button>
+              <Button type="button" disabled={!appliesToCurrent || !hasAccepted} onClick={submitMerge}>선택한 교정 적용</Button>
             </div>
           </div>;
         })()}

@@ -13,7 +13,7 @@ async function fixture(page: Page, changeable = true, paused = false) {
 async function open(page:Page) {
  await page.goto("/admin/tools"); await openAdminTool(page, "metadata");const parent=page.getByRole("region",{name:"발행 정보 정정",exact:true});
  await parent.getByLabel("정정할 퀴즈").selectOption("synthetic");await parent.getByRole("button",{name:"마감 일시 변경",exact:true}).click();
- return page.getByRole("region",{name:"일반 마감 변경",exact:true});
+ return page.getByRole("region",{name:"접수 마감 변경",exact:true});
 }
 test("Korea time, impact confirmation invalidation, lost response retry and saved history",async({page},info)=>{
  const view=await fixture(page,true,true);let loadFail=true;const commits:Record<string,unknown>[]=[];

@@ -54,11 +54,11 @@ test("AI correction preserves one request after a lost response and opens human 
   });
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
-  await page.getByRole("button", { name: "입력자료 불러오기" }).click();
+  await page.getByRole("button", { name: "설교 자료 불러오기" }).click();
   await page.getByRole("button", { name: "AI 교정 요청", exact: true }).click();
   await expect(page.getByRole("button", { name: "AI 교정 요청", exact: true })).toBeDisabled();
   await page.getByRole("button", { name: "교정 상태 확인" }).click();
-  await expect(page.getByText("관측 사용량 기준 예상 비용: USD 0.000524")).toBeVisible();
+  await expect(page.getByText("기록된 사용량으로 계산한 예상 비용: USD 0.000524")).toBeVisible();
   await page.getByRole("button", { name: "생성된 교정 문서 검토" }).click();
   await expect(page.getByRole("textbox", { name: "교정 문서", exact: true })).toHaveValue("AI 교정 검토용 문서");
   expect(posts).toBe(1);
@@ -100,12 +100,12 @@ test("administrator loads current input, calculates diff after two bodies, and o
 
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
-  await page.getByRole("button", { name: "입력자료 불러오기" }).click();
+  await page.getByRole("button", { name: "설교 자료 불러오기" }).click();
   await expect(page.getByRole("heading", { name: "붙여넣은 자막" })).toBeVisible();
 
   await page.getByRole("button", { name: "선택한 본문 비교" }).click();
   await expect(page.locator("ins").filter({ hasText: "바꾼" })).toBeVisible();
-  await expect(page.getByLabel("선택한 두 입력자료의 변경 비교")).toContainText("처음 바꾼 말씀입니다");
+  await expect(page.getByLabel("선택한 두 설교 자료의 변경 비교")).toContainText("처음 바꾼 말씀입니다");
 
   await page.getByLabel("검토할 교정 제안").selectOption("proposal-1");
   expect(correctionReads).toBe(0);
@@ -114,7 +114,7 @@ test("administrator loads current input, calculates diff after two bodies, and o
   expect(correctionReads).toBe(1);
 
   await page.getByLabel("검토 결정").selectOption("accepted");
-  await page.getByRole("button", { name: "선택한 결정 저장" }).click();
+  await page.getByRole("button", { name: "사용·제외 선택 저장" }).click();
   await expect.poll(() => commands).toContainEqual(expect.objectContaining({ action: "decide_corrections", proposalId: "proposal-1" }));
   await expect(page.locator("body")).not.toContainText("PRIVATE_CANARY");
 });
@@ -155,7 +155,7 @@ test("administrator previews, edits, adopts, and separately confirms a correctio
 
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
-  await page.getByRole("button", { name: "입력자료 불러오기" }).click();
+  await page.getByRole("button", { name: "설교 자료 불러오기" }).click();
   await page.getByLabel("검토할 교정 제안").selectOption("proposal-1");
   await page.getByRole("button", { name: "선택 제안 상세 보기" }).click();
   await page.getByLabel("교정 문서").fill("관리자가 고친 문서");
@@ -201,9 +201,9 @@ test("administrator stores first pastor material and never offers edit, restore,
 
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-2");
-  await page.getByRole("button", { name: "입력자료 불러오기" }).click();
+  await page.getByRole("button", { name: "설교 자료 불러오기" }).click();
   await page.getByLabel("자료 종류").selectOption("sermon_manuscript");
-  await page.getByLabel("입력자료 본문").fill("받은 원고");
+  await page.getByLabel("설교 자료 본문").fill("받은 원고");
   await page.getByRole("button", { name: "최초 원본 저장" }).click();
 
   await expect(page.getByRole("heading", { name: "목사님 제공 설교 원고" })).toBeVisible();
@@ -231,10 +231,10 @@ test("a stale command reloads current input and shows the stable conflict messag
 
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
-  await page.getByRole("button", { name: "입력자료 불러오기" }).click();
+  await page.getByRole("button", { name: "설교 자료 불러오기" }).click();
   await page.getByLabel("현재 본문을 검토했습니다.").check();
   await page.getByRole("button", { name: "현재 본문 확정" }).click();
-  await expect(page.getByRole("region", { name: "설교 입력자료 검토", exact: true })
+  await expect(page.getByRole("region", { name: "설교 자료 검토", exact: true })
     .getByRole("alert").filter({ hasText: "다른 저장이 먼저 처리됐습니다" })).toBeVisible();
   expect(currentReads).toBeGreaterThanOrEqual(2);
 });

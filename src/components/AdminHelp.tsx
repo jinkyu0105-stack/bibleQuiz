@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useId, useRef } from "react";
-import { adminTerms, adminTitleEmoji, type AdminTerm } from "../config/admin-help";
+import { adminTerms, adminTermTones, adminToneLabels, adminTitleEmoji, type AdminTerm } from "../config/admin-help";
 import css from "./admin-help.module.css";
 
 export function AdminEmoji({ children }: { children: string }) {
@@ -15,6 +15,8 @@ function positionBubble(button: HTMLButtonElement, bubble: HTMLSpanElement) {
   const above = anchor.top - box.height - 8;
   const below = Math.max(12, Math.min(anchor.bottom + 8, window.innerHeight - box.height - 12));
   const top = above >= 12 ? above : below;
+  bubble.dataset.side = above >= 12 ? "above" : "below";
+  bubble.style.setProperty("--pointer-x", `${Math.max(18, Math.min(anchor.left + anchor.width / 2 - left, box.width - 18))}px`);
   bubble.style.left = `${left}px`;
   bubble.style.top = `${top}px`;
 }
@@ -52,24 +54,28 @@ export function HelpTerm({ term }: { term: AdminTerm }) {
     window.addEventListener("scroll", reposition, true);
     return () => { clearTimeout(timer.current); window.removeEventListener("resize", reposition); window.removeEventListener("scroll", reposition, true); };
   }, []);
-  return <><button type="button" ref={trigger} className={css.term} aria-describedby={id} popoverTarget={id} popoverTargetAction="show"
+  return <><button type="button" ref={trigger} className={css.term} data-admin-tone={adminTermTones[term]} aria-describedby={id} popoverTarget={id} popoverTargetAction="show"
     onPointerEnter={event => { if (event.pointerType !== "touch") { hovered.current = true; show(); } }}
     onPointerLeave={() => { hovered.current = false; leave(); }}
     onFocus={() => { focused.current = true; show(); }} onBlur={() => { focused.current = false; leave(); }} onClick={show}>
-    {term}<span className={css.question} aria-hidden="true">?</span>
-  </button><span id={id} ref={bubble} role="tooltip" popover="auto" className={css.tooltip}
+    {term}
+  </button><span id={id} ref={bubble} role="tooltip" popover="auto" className={css.tooltip} data-admin-tone={adminTermTones[term]}
     onPointerEnter={() => { hovered.current = true; clearTimeout(timer.current); }} onPointerLeave={() => { hovered.current = false; leave(); }}>
-    <strong>{term}</strong><span>{adminTerms[term]}</span>
+    <span className={css.tooltipHeading}><strong>{term}</strong><span className={css.kind} aria-hidden="true">{adminToneLabels[adminTermTones[term]]}</span></span><span>{adminTerms[term]}</span>
   </span></>;
 }
 const termPattern = new RegExp(`(${Object.keys(adminTerms).sort((a,b) => b.length-a.length).join("|")})`, "gu");
 /** Only use for repository-authored prose, never inside a link, label or button. */
 export function GuideText({ text }: { text: string }) {
   const seen = new Set<string>();
-  return <>{text.split(termPattern).map((part, index) => {
+  const parts = text.split(termPattern);
+  return <>{parts.map((part, index) => {
     if (Object.hasOwn(adminTerms, part) && !seen.has(part)) {
       seen.add(part);
-      return <HelpTerm key={index} term={part as AdminTerm}/>;
+      // Keep only the rest of this Korean word with its term, never a whole phrase.
+      const ending = parts[index + 1]?.match(/^[가-힣]+/u)?.[0] ?? "";
+      if (ending) parts[index + 1] = parts[index + 1]!.slice(ending.length);
+      return <span key={index} className={css.termWord}><HelpTerm term={part as AdminTerm}/>{ending}</span>;
     }
     return <Fragment key={index}>{part}</Fragment>;
   })}</>;
@@ -77,6 +83,6 @@ export function GuideText({ text }: { text: string }) {
 export function AdminConcepts({ terms }: { terms: readonly AdminTerm[] }) {
   return <div className={css.concepts} aria-label="용어 도움말"><span className={css.conceptLabel}><AdminEmoji>💡</AdminEmoji>용어 도움말</span>
     {terms.map(term => <HelpTerm key={term} term={term}/>)}
-    <small>올려 보거나 눌러 보세요</small>
+    <small>용어에 마우스를 올리거나 눌러 보세요</small>
   </div>;
 }

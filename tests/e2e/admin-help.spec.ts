@@ -86,8 +86,9 @@ test('manual screenshots enlarge with focus return, zoom, Escape and outside clo
   const writes=await mockAdminGuide(page);
   await page.goto('/admin/manual');
   const thumbnail=page.getByRole('button',{name:'요약과 두 난도를 각각 검수하기 화면 확대',exact:true});
+  await thumbnail.scrollIntoViewIfNeeded();
   await expect(thumbnail.locator('img')).toBeVisible();
-  expect(await thumbnail.locator('img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>600)).toBe(true);
+  await expect.poll(() => thumbnail.locator('img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>600)).toBe(true);
   await thumbnail.click();
   const dialog=page.getByRole('dialog',{name:'요약과 두 난도를 각각 검수하기'});
   await expect(dialog).toBeVisible();
@@ -136,7 +137,7 @@ test('all admin destinations retain headings, restrained emoji and contextual co
   const cases=[
     ['/admin','퀴즈 관리','초안'],['/admin/submissions','참여 기록','숨김'],
     ['/admin/privacy-requests','문의·삭제 요청','처리 완료'],['/admin/tools','수정·보관 도구','초안'],
-    ['/admin/moderation','이름·문구 필터 관리','정확한 예외'],['/admin/operations','비용·백업 상태','관측 비용'],
+    ['/admin/moderation','이름·문구 필터 관리','정확한 예외'],['/admin/operations','비용·백업 상태','예상 비용'],
     ['/admin/quiz/weekly?step=3','요약과 문제','검수'],
   ];
   for(const [url,title,term] of cases) {
@@ -169,5 +170,61 @@ test('manual explains emphasized concepts while preserving copyable technical na
   const identifier=page.locator('code').filter({hasText:'D1_DATABASE_ID'});
   await expect(identifier).toHaveText('D1_DATABASE_ID');
   await expect(identifier.getByRole('button')).toHaveCount(0);
+  expect(writes).toEqual([]);
+});
+
+test('manual uses meaning colours, official service icons and natural Korean wrapping', async ({ page }) => {
+  const writes = await mockAdminGuide(page);
+  await page.goto('/admin/manual');
+  const article = page.getByRole('article', { name: '퀴즈를 만드는 순서' });
+  await expect(article).toBeVisible();
+  async function choose(id: string, name: string, group: string) {
+    const select = page.getByRole('combobox', { name: '읽을 주제' });
+    if (await select.isVisible()) await select.selectOption(id);
+    else {
+      const nav = page.getByRole('navigation', { name: '매뉴얼 주제' });
+      if (group) {
+        const section = nav.locator('details').filter({ hasText: group });
+        if (await section.getAttribute('open') === null) await section.locator('summary').click();
+      }
+      await nav.getByRole('button', { name, exact: true }).click();
+    }
+  }
+  const colours = new Map<string, string[]>();
+  for (const theme of ['새벽', '낮', '노을', '밤']) {
+    await page.getByRole('button', { name: theme, exact: true }).click();
+    await choose('guide-3', '퀴즈 만들기', '');
+    const current: string[] = [];
+    for (const name of ['발행', '확정', '발행 완료', '설교 의도']) {
+      const term = page.getByRole('article').getByRole('button', { name, exact: true }).first();
+      current.push(await term.evaluate(el => getComputedStyle(el).color));
+    }
+    await choose('guide-11', '개인정보와 성경 본문', '설정과 자료 보호');
+    current.push(await page.getByRole('button', { name: '개인정보 삭제', exact: true }).evaluate(el => getComputedStyle(el).color));
+    expect(new Set(current).size).toBe(5);
+    colours.set(theme, current);
+  }
+  expect(new Set([...colours.values()].map(values => values.join(','))).size).toBe(4);
+  for (const [id, name, file] of [['openai','OpenAI API','openai.svg'],['r2','Cloudflare R2','cloudflare.png'],['github_actions','GitHub Actions','github.svg']]) {
+    await choose(`service-${id}`, name!, '서비스 사전');
+    const logo = page.getByRole('heading', { name, exact: true }).locator('img');
+    await expect(logo).toHaveAttribute('src', `/images/services/${file}`);
+    expect(await logo.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+  }
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    await choose('guide-1', '사이트 소개', '설정과 자료 보호');
+    const intro = page.getByRole('article');
+    await expect(intro).toContainText('빈칸이 있어도 제출할 수 있습니다.');
+    const word = intro.getByRole('button', { name: '초안', exact: true }).locator('..');
+    await expect(word).toHaveText('초안을', { useInnerText: true });
+    const wordLines = await word.evaluate(element => {
+      const range = document.createRange(); range.selectNodeContents(element);
+      const centers = [...range.getClientRects()].filter(rect => rect.height > 0).map(rect => rect.y + rect.height / 2);
+      return Math.max(...centers) - Math.min(...centers);
+    });
+    expect(wordLines).toBeLessThan(16);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
   expect(writes).toEqual([]);
 });

@@ -1,6 +1,6 @@
 import { AdminLabel, AdminEmoji, AdminConcepts, GuideText } from "./AdminHelp";
 import { AdminScreenshots } from "./AdminScreenshots";
-import type { AdminTerm } from "../config/admin-help";
+import { adminTextTones, type AdminTerm } from "../config/admin-help";
 import type { AdminScreenshotId } from "../config/admin-screenshots";
 import { useEffect, useRef, type ReactNode } from "react";
 import styles from "./admin-guide.module.css";
@@ -23,7 +23,7 @@ export function AdminSteps({ steps, label = "사용 순서" }: {
   steps: readonly { title: string; description: string }[]; label?: string;
 }) {
   return <details className={styles.help}><summary><span><AdminEmoji>📖</AdminEmoji>사용 방법</span><span aria-hidden="true">＋</span></summary><ol className={styles.steps} aria-label={label}>
-    {steps.map((step, index) => <li key={step.title}>
+    {steps.map((step, index) => <li key={step.title} data-admin-tone={adminTextTones[step.title] ?? "action"}>
       <span className={styles.number} aria-hidden="true">{index + 1}</span>
       <div><strong>{step.title}</strong><p><GuideText text={step.description}/></p></div>
     </li>)}

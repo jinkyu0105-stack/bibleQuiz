@@ -7,7 +7,7 @@ test("quiz manager shows the actual automatic home quiz and separates editing, p
  await page.getByRole("button",{name:"낮",exact:true}).click();
  const library=page.getByRole("region",{name:"퀴즈 목록 4"});
  await expect(library.getByRole("article")).toHaveCount(4);
- await expect(page.getByText("자동 선택",{exact:false})).toBeVisible();
+ await expect(page.locator('section[aria-labelledby="home-quiz-heading"]').getByText("자동 선택",{exact:false})).toBeVisible();
  await expect(page.getByRole("link",{name:"공개 화면",exact:false}).first()).toHaveAttribute("href","/quiz/2026-10-12-demo01");
  await expect(page.getByText("아직 공개된 퀴즈가 없습니다")).toHaveCount(0);
  const homeTitle=page.locator("#home-quiz-heading");
@@ -59,7 +59,7 @@ test("inbox and participation records reveal actions on demand and retain unfini
  await page.locator(".admin-main").screenshot({path:info.outputPath("inbox-reply.png")});
  await page.goto("/admin/submissions?quiz=demo-past1");
  await expect(page.getByRole("heading",{name:"연습 참가자 봄"})).toBeVisible();
- await expect(page.getByRole("button",{name:"영향 확인·조치"})).toBeHidden();
+ await expect(page.getByRole("button",{name:"내용 확인 후 처리"})).toBeHidden();
  await page.getByLabel("난이도 필터").selectOption("adult");
  await expect(page.getByText(/선택한 난이도·상태에 해당하는 기록이 없습니다/)).toBeVisible();
  await page.getByLabel("난이도 필터").selectOption("all");

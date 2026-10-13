@@ -26,7 +26,7 @@ test("reviews wording, routes semantic changes, retries lost responses, and reta
   const parent = page.getByRole("region", { name: "발행 정보 정정", exact: true });
   await parent.getByLabel("정정할 퀴즈").selectOption("synthetic");
   await parent.getByRole("button", { name: "요약·단서 오탈자 수정" }).click();
-  const panel = page.getByRole("region", { name: "일반 문구 오탈자", exact: true });
+  const panel = page.getByRole("region", { name: "뜻이 바뀌지 않는 오타 수정", exact: true });
   await expect(panel.getByRole("alert")).toContainText("문구를 불러오지 못했습니다");
   readFails = false; await panel.getByRole("button", { name: "최신 문구 불러오기" }).click();
   await panel.getByLabel("수정할 문구").selectOption("summary");
@@ -74,7 +74,7 @@ test("retains stale edits, refreshes explicitly and locks during problem correct
   await page.goto("/admin/tools"); await openAdminTool(page, "metadata"); const parent = page.getByRole("region", { name: "발행 정보 정정", exact: true });
   await parent.getByLabel("정정할 퀴즈").selectOption("synthetic");
   await parent.getByRole("button", { name: "요약·단서 오탈자 수정" }).click();
-  const panel = page.getByRole("region", { name: "일반 문구 오탈자", exact: true });
+  const panel = page.getByRole("region", { name: "뜻이 바뀌지 않는 오타 수정", exact: true });
   await panel.getByLabel("수정할 문구").selectOption("summary"); await panel.getByRole("textbox", { name: "수정 후", exact: true }).fill("합성 요약.");
   await panel.getByLabel("수정 종류").selectOption("non_semantic_typo"); await panel.getByLabel("오탈자 정정 사유").fill("문장부호 정정");
   await panel.getByRole("checkbox").check(); await panel.getByRole("button", { name: "오탈자 저장" }).click();

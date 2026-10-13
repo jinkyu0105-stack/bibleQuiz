@@ -68,13 +68,13 @@ for (const savedCritique of [false, true]) test(`administrator continues preserv
     return route.fulfill({ status: 202, json: { data: { jobId: "continued-job", dispatch: "sent" } } });
   });
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon"); await page.getByLabel("설교 ID").fill("sermon-1");
-  await page.getByRole("button", { name: "입력자료 불러오기" }).click();
+  await page.getByRole("button", { name: "설교 자료 불러오기" }).click();
   const panel = page.getByRole("region", { name: "설교 요약·문제 생성", exact: true });
   await expect(panel.getByText(savedCritique ? /보관한 분석과 비판 결과를 재사용합니다/ : /교정과 의도 분석을 다시 호출하지 않습니다/)).toBeVisible();
   await expect(panel.getByText(savedCritique ? /남은 3회 약 USD 0.24/ : /남은 4회 약 USD 0.32/)).toBeVisible();
   await expect(panel.getByRole("article")).toBeVisible();
-  await expect(panel.getByText(/준비된 자료부터 표시합니다/)).toBeVisible();
-  await expect(panel.getByText(/달력 주간 관측 비용 USD 0.1500/)).toBeVisible();
+  await expect(panel.getByText(/확인된 내용부터 표시합니다/)).toBeVisible();
+  await expect(panel.getByText(/이번 주 예상 비용 USD 0.1500/)).toBeVisible();
   await expect(panel.getByRole("button", { name: "보관 분석으로 생성 이어가기" })).toBeDisabled();
   failPlacement = true; holdPlacement = false; releasePlacement();
   await expect(panel.getByRole("alert")).toContainText("일부 자료를 불러오지 못했습니다");
@@ -173,13 +173,13 @@ for (const unverified of [false, true]) test(`administrator compares, edits, con
   });
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
-  await page.getByRole("button", { name: "입력자료 불러오기" }).click();
+  await page.getByRole("button", { name: "설교 자료 불러오기" }).click();
   const panel = page.getByRole("region", { name: "설교 요약·문제 생성", exact: true });
   await expect(panel.getByText(/사용량 미확인 1회/)).toBeVisible();
   await expect(panel.getByRole("button", { name: "분석·비판 검토 시작" })).toBeDisabled();
   await panel.getByLabel("예상 비용과 무료 대안을 확인하고 생성을 요청합니다.").check();
   await panel.getByRole("button", { name: "분석·비판 검토 시작" }).click();
-  const comparison = panel.getByRole("article").filter({ has: page.getByRole("heading", { name: "비판 수정본", exact: true }) });
+  const comparison = panel.getByRole("article").filter({ has: page.getByRole("heading", { name: "비판 검토를 반영한 분석", exact: true }) });
   await comparison.getByRole("button", { name: "이 자료 선택" }).click();
   const central = comparison.locator("details").filter({ has: page.locator("summary").filter({ hasText: /^중심 메시지/u }) });
   if (unverified) {

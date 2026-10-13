@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { AdminTone } from "../config/admin-help";
 
 // Shared line icons extend the existing admin navigation's stroke and proportions.
 const shapes = {
@@ -25,6 +26,6 @@ const shapes = {
 export type AdminIconName = keyof typeof shapes;
 
 /** Decorative: the neighbouring text always supplies the accessible name. */
-export function AdminIcon({ name, className }: { name: AdminIconName; className?: string }) {
-  return <svg className={className} viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">{shapes[name]}</svg>;
+export function AdminIcon({ name, className, tone }: { name: AdminIconName; className?: string; tone?: AdminTone }) {
+  return <svg data-admin-tone={tone} className={className} viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">{shapes[name]}</svg>;
 }

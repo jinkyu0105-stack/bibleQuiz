@@ -77,7 +77,7 @@ test("admin destinations explain their next action and empty states without muta
   await expect(page.getByText(/상태 변경만으로 기록은 삭제되지 않습니다/)).toBeVisible();
   await page.goto("/admin/submissions");
   await expect(page.getByText("관리할 퀴즈를 선택하면 제출 기록이 표시됩니다.", { exact: true })).toBeVisible();
-  await page.locator("summary").filter({ hasText: "숨김·복원·삭제는 어떻게 다른가요?" }).click();
+  await page.locator("summary").filter({ hasText: "숨김·다시 공개·삭제는 어떻게 다른가요?" }).click();
   await expect(page.getByText("공개 참여 현황과 Top N에서 제외합니다. 기록은 남습니다.", { exact: true })).toBeVisible();
   expect(writes).toEqual([]);
 });

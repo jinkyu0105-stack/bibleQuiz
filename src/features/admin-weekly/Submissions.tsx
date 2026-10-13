@@ -20,7 +20,7 @@ export function Component(){
     if(!window.confirm(description))return;setBusy(true);setMessage('');try{
       if(kind==='delete')await weeklyRequest(`/api/admin/submissions/${item.id}`,deletedSubmissionAsAdminDataSchema,'DELETE',{confirmation:'delete',reason});
       else await weeklyRequest(`/api/admin/submissions/${item.id}`,moderatedSubmissionDataSchema,'PATCH',{action:kind,reason});
-      setMessage('제출 조치를 저장했습니다.');setAttempt(a=>a+1);
+      setMessage('참여 기록의 처리 결과를 저장했습니다.');setAttempt(a=>a+1);
     }catch(error){setMessage(error instanceof Error?error.message:'처리 결과를 확인하지 못했습니다.');}finally{setBusy(false);}}
   const visible=items?.filter(i=>(level==='all'||i.difficulty===level)&&(state==='all'||i.status===state));
   return <div className={styles.page}>
@@ -39,10 +39,10 @@ export function Component(){
     <ul className={record.list}>{visible?.map(item=><AdminRecord key={item.id} title={item.displayName??'삭제된 제출'} label={item.difficulty==='child'?'어린이':'장년'} status={item.status==='visible'?'공개':item.status==='hidden'?'숨김':'삭제·복구 불가'} meta={<><span className={record.score}>{item.scorePercent}점</span><time dateTime={item.submittedAt}>{new Date(item.submittedAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})}</time><span>문제 버전 {item.revision}</span></>}>
       {item.comment&&<blockquote>{item.comment}</blockquote>}
       {item.answers&&<details><summary>실제 제출 답안</summary><dl>{Object.entries(item.answers).map(([cell,value])=><div key={cell}><dt>{cell}</dt><dd>{value||'빈칸'}</dd></div>)}</dl></details>}
-      {item.status!=='deleted'&&<details><summary>공개 상태·개인정보 관리</summary><form onSubmit={e=>{e.preventDefault();const fields=new FormData(e.currentTarget);void action(item,String(fields.get('action')),String(fields.get('reason')));}}><div className={record.reply}><label>제출 조치<select name="action"><option value={item.status==='visible'?'hide':'unhide'}>{item.status==='visible'?'숨김':'복원'}</option><option value="delete">개인정보 삭제 (복구 불가)</option></select></label><label>조치 사유<input name="reason" required minLength={2} maxLength={500}/></label><p className={record.note}>숨긴 기록은 다시 공개할 수 있습니다. 개인정보 삭제는 이름·답안·코멘트를 지우며 복구할 수 없습니다.</p><Button disabled={busy||!selected}>영향 확인·조치</Button></div></form></details>}
-      {item.actions.length>0&&<details><summary>조치 이력 ({item.actions.length})</summary><ul className={record.history}>{item.actions.map((a,index)=><li key={index}><time>{new Date(a.createdAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})}</time> · {({hide:'숨김',unhide:'복원',delete:'개인정보 삭제'} as Record<string,string>)[a.action]??a.action}<br/>{a.reason}</li>)}</ul></details>}
+      {item.status!=='deleted'&&<details><summary>공개 상태·개인정보 관리</summary><form onSubmit={e=>{e.preventDefault();const fields=new FormData(e.currentTarget);void action(item,String(fields.get('action')),String(fields.get('reason')));}}><div className={record.reply}><label>처리할 작업<select name="action"><option value={item.status==='visible'?'hide':'unhide'}>{item.status==='visible'?'숨김':'다시 공개'}</option><option value="delete">개인정보 삭제 (복구 불가)</option></select></label><label>처리 사유<input name="reason" required minLength={2} maxLength={500}/></label><p className={record.note}>숨긴 기록은 다시 공개할 수 있습니다. 개인정보 삭제는 이름·답안·코멘트를 지우며 복구할 수 없습니다.</p><Button disabled={busy||!selected}>내용 확인 후 처리</Button></div></form></details>}
+      {item.actions.length>0&&<details><summary>처리 이력 ({item.actions.length})</summary><ul className={record.history}>{item.actions.map((a,index)=><li key={index}><time>{new Date(a.createdAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})}</time> · {({hide:'숨김',unhide:'다시 공개',delete:'개인정보 삭제'} as Record<string,string>)[a.action]??a.action}<br/>{a.reason}</li>)}</ul></details>}
     </AdminRecord>)}</ul>
-    <details className={styles.explainer}><summary>숨김·복원·삭제는 어떻게 다른가요?</summary><dl><dt>숨김</dt><dd>공개 참여 현황과 Top N에서 제외합니다. 기록은 남습니다.</dd><dt>복원</dt><dd>숨긴 기록을 공개 참여 현황에 다시 표시합니다.</dd><dt>개인정보 삭제</dt><dd>이름·답안·코멘트를 제거합니다. 복구와 같은 난이도 재제출은 불가능합니다. 기존 성적과 확정 순위는 보존합니다.</dd></dl></details>
-    <AdminSteps steps={[{title:"퀴즈 선택",description:"퀴즈를 고른 뒤 난이도·상태로 기록을 좁힙니다."},{title:"내용 확인",description:"참여자의 답안과 코멘트를 펼쳐 확인합니다."},{title:"기록 관리",description:"공개 상태·개인정보 관리에서 사유와 영향을 확인한 뒤 조치합니다."}]}/>
+    <details className={styles.explainer}><summary>숨김·다시 공개·삭제는 어떻게 다른가요?</summary><dl><dt>숨김</dt><dd>공개 참여 현황과 Top N에서 제외합니다. 기록은 남습니다.</dd><dt>다시 공개</dt><dd>숨긴 기록을 공개 참여 현황에 다시 표시합니다.</dd><dt>개인정보 삭제</dt><dd>이름·답안·코멘트를 제거합니다. 복구와 같은 난이도 재제출은 불가능합니다. 기존 성적과 확정 순위는 보존합니다.</dd></dl></details>
+    <AdminSteps steps={[{title:"퀴즈 선택",description:"퀴즈를 고른 뒤 난이도·상태로 기록을 좁힙니다."},{title:"내용 확인",description:"참여자의 답안과 코멘트를 펼쳐 확인합니다."},{title:"기록 관리",description:"공개 상태·개인정보 관리에서 사유와 영향을 확인한 뒤 처리합니다."}]}/>
   </div>;
 }

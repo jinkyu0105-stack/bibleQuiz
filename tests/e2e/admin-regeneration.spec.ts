@@ -50,7 +50,7 @@ test("administrator explicitly regenerates one scope, recovers a lost response a
     }
     throw new Error(`unexpected mutation ${url.pathname}`);
   });
-  const load = async () => { await page.goto("/admin/tools"); await openAdminTool(page, "sermon"); await page.getByLabel("설교 ID").fill("sermon-1"); await page.getByRole("button", { name: "입력자료 불러오기" }).click(); };
+  const load = async () => { await page.goto("/admin/tools"); await openAdminTool(page, "sermon"); await page.getByLabel("설교 ID").fill("sermon-1"); await page.getByRole("button", { name: "설교 자료 불러오기" }).click(); };
   await load();
   const region = page.getByRole("region", { name: "필요한 내용만 다시 생성", exact: true });
   await expect(region.getByRole("button", { name: "요약만 다시 생성" })).toBeDisabled();
@@ -123,7 +123,7 @@ test("administrator compares an intent-only revision and explicitly reconfirms i
     if (path.endsWith("/regenerate")) {
       requests.push(body);
       view.version += 2;
-      view.snapshots.push(intent("new-critique", "result-regen-job-intent_analysis", "새 비판 수정본"));
+      view.snapshots.push(intent("new-critique", "result-regen-job-intent_analysis", "새 비판 검토를 반영한 분석"));
       view.regenerations = [{ jobId: "regen-job", scope: "intent", status: "awaiting_intent_review", resultId: "new-critique", analysisId: "result-regen-job-intent_analysis",
         createdAt: "2026-09-22T00:00:00.000Z", costMicroUsd: 160000, unknownCalls: 0 }];
       return route.fulfill({ status: 202, json: { data: { jobId: "regen-job", dispatch: "sent" } } });
@@ -141,7 +141,7 @@ test("administrator compares an intent-only revision and explicitly reconfirms i
     throw new Error(`unexpected mutation ${path}`);
   });
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon"); await page.getByLabel("설교 ID").fill("sermon-1");
-  await page.getByRole("button", { name: "입력자료 불러오기" }).click();
+  await page.getByRole("button", { name: "설교 자료 불러오기" }).click();
   const region = page.getByRole("region", { name: "필요한 내용만 다시 생성", exact: true });
   await region.getByLabel("재생성 범위").selectOption("intent");
   await expect(region.getByRole("button", { name: "설교 의도만 다시 생성" })).toBeDisabled();
@@ -150,7 +150,7 @@ test("administrator compares an intent-only revision and explicitly reconfirms i
   expect(requests).toHaveLength(1);
   expect(requests[0]).toMatchObject({ scope: "intent", expectedVersion: 12 });
   expect(view.content.intent.selectedId).toBe("old-intent");
-  const replacement = page.getByRole("article").filter({ has: page.locator("textarea").filter({ hasText: "새 비판 수정본" }) });
+  const replacement = page.getByRole("article").filter({ has: page.locator("textarea").filter({ hasText: "새 비판 검토를 반영한 분석" }) });
   await expect(replacement.getByText("비교 자료", { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "재확정한 의도 반영 완료" })).toBeDisabled();
   await expect(region.getByRole("button", { name: "기존 의도 유지하고 비교 종료" })).toBeEnabled();
@@ -168,7 +168,7 @@ test("administrator compares an intent-only revision and explicitly reconfirms i
     analysisId: "saved-first-analysis", createdAt: "2026-09-22T01:00:00.000Z", costMicroUsd: 80000, unknownCalls: 0 }];
   await page.reload(); await openAdminTool(page, "sermon");
   await page.getByLabel("설교 ID").fill("sermon-1");
-  await page.getByRole("button", { name: "입력자료 불러오기" }).click();
+  await page.getByRole("button", { name: "설교 자료 불러오기" }).click();
   await region.getByLabel("재생성 범위").selectOption("intent");
   await expect(region.getByRole("button", { name: "비판 검토만 다시 시도" })).toBeDisabled();
   await region.getByLabel("개별 재생성 비용과 무료 대안을 확인했습니다.").check();

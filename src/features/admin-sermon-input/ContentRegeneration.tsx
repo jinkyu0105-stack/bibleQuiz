@@ -7,7 +7,7 @@ type Scope = "intent" | "summary" | "child" | "adult";
 type Choice = Scope | "child_one" | "adult_one";
 const labels = { intent: "설교 의도", summary: "요약", child: "어린이 문제", adult: "장년 문제", child_one: "어린이 답·단서 하나", adult_one: "장년 답·단서 하나" };
 const statuses: Record<string, string> = { dispatch_pending: "실행 대기", running: "생성 중", review_ready: "비교 자료 저장 완료",
-  awaiting_intent_review: "의도 비교·재확정 대기", failed: "생성 실패", stale: "작업 종료(자료 변경 또는 비교 종료)", uncertain: "응답 확인 필요" };
+  awaiting_intent_review: "새 설교 의도 확인 필요", failed: "생성 실패", stale: "작업 종료(자료 변경 또는 비교 종료)", uncertain: "응답 확인 필요" };
 export function ContentRegeneration({ view, inputConfirmed, busy, act }: { view: AdminContentView; inputConfirmed: boolean; busy: boolean;
   act: (action: "regenerate" | "discard", body: unknown, jobId?: string) => Promise<boolean> }) {
   const [choice, setChoice] = useState<Choice>("summary"), [targetKey, setTargetKey] = useState(""), [paid, setPaid] = useState(false);
@@ -60,12 +60,12 @@ export function ContentRegeneration({ view, inputConfirmed, busy, act }: { view:
     </Button>
     {critiqueRetry && <Button type="button" disabled={busy || !view.enabled || !ready || !paid || single && !target && !pending || !!running && !pending || !!pending && !pending.retryCritiqueOnly}
       onClick={() => void generate(true)}>{pending?.retryCritiqueOnly ? "같은 비판 검토 요청 확인" : "비판 검토만 다시 시도"}</Button>}
-    {latest?.scope === "intent" && latest.status === "awaiting_intent_review" && <><p>새 분석과 비판 수정본을 아래에서 비교하고 직접 선택·수정한 뒤 설교 의도를 재확정해 주세요. 기존 요약·문제의 검수는 다시 필요합니다.</p>
+    {latest?.scope === "intent" && latest.status === "awaiting_intent_review" && <><p>새 분석과 비판 검토를 반영한 분석을 아래에서 비교하고 직접 선택·수정한 뒤 설교 의도를 재확정해 주세요. 기존 요약·문제의 검수는 다시 필요합니다.</p>
       <Button type="button" disabled={busy || !view.enabled || view.content.state !== "present" || view.content.intent?.rootAnalysisId === latest.analysisId}
         onClick={() => void act("discard", {}, latest.jobId)}>기존 의도 유지하고 비교 종료</Button></>}
-    {pending && <p role="status">요청 확인 전에는 같은 요청 번호를 유지합니다. 생성 상태를 확인해 주세요.</p>}
+    {pending && <p role="status">요청이 접수되었는지 먼저 확인하세요. 확인하는 동안에는 새 생성을 시작하지 않습니다.</p>}
     {pending && pending.expectedVersion !== view.version && !view.regenerations.some(j => j.jobId === pending.requestKey) && <>
-      <p>요청의 바탕 자료가 변경되었습니다. 현재 자료로 준비하면 새 요청 번호를 사용하며 비용 확인이 다시 필요합니다.</p>
+      <p>처음 요청했을 때와 자료가 달라졌습니다. 현재 자료로 다시 생성하려면 예상 비용을 확인하고 새 요청을 준비하세요.</p>
       <Button type="button" disabled={busy} onClick={() => { setPending(null); setPaid(false); }}>현재 자료로 새 요청 준비</Button>
     </>}
     {pending && view.regenerations.some(j => j.jobId === pending.requestKey) && <Button type="button" disabled={busy} onClick={() => { setPending(null); setPaid(false); }}>저장된 요청 확인 완료</Button>}
