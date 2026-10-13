@@ -55,22 +55,40 @@
 .sky-app:not(.home-shell) .sermon-details-compact { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 16px 24px; }
 .sky-app:not(.home-shell) .sermon-details-compact .published-date { margin: 0; }
 
-/* P9-19: roles, not decorative color. Keep these scoped to admin content. */
+/* Semantic roles retain their meaning across all four sky times. Day is the fallback. */
 .admin-layout {
   --ui-action: #245bc1; --ui-action-bg: #eaf1ff;
   --ui-success: #216648; --ui-success-bg: #e7f4eb;
   --ui-attention: #87520c; --ui-attention-bg: #fff1d8;
-  --ui-guide: #73509a; --ui-guide-bg: #f3ecfa;
+  --ui-guide: #7429c6; --ui-guide-bg: #f2e7ff;
   --ui-danger: #aa3347; --ui-danger-bg: #fcebf0;
+  --ui-action-fill: #245bc1; --ui-on-action: #fff;
   --accent: var(--ui-action); --warning: var(--ui-attention); --danger: var(--ui-danger);
   --focus: var(--ui-action);
 }
+body[data-time=dawn] .admin-layout {
+  --ui-action: #354fc0; --ui-action-bg: #eaeffd;
+  --ui-success: #226253; --ui-success-bg: #e6f4ec;
+  --ui-attention: #86500e; --ui-attention-bg: #fcedd9;
+  --ui-guide: #762bb3; --ui-guide-bg: #f5e6ff;
+  --ui-danger: #ae3555; --ui-danger-bg: #fbe8f0;
+  --ui-action-fill: #354fc0;
+}
+body[data-time=dusk] .admin-layout {
+  --ui-action: #3d4cb0; --ui-action-bg: #eeeafe;
+  --ui-success: #30623e; --ui-success-bg: #ebf3e5;
+  --ui-attention: #8d480d; --ui-attention-bg: #fff0d7;
+  --ui-guide: #972492; --ui-guide-bg: #fce7fa;
+  --ui-danger: #b22d3b; --ui-danger-bg: #ffe8e6;
+  --ui-action-fill: #3d4cb0;
+}
 body[data-time=night] .admin-layout {
-  --ui-action: #afcaff; --ui-action-bg: #203554;
-  --ui-success: #a0daba; --ui-success-bg: #193d32;
-  --ui-attention: #f6cc85; --ui-attention-bg: #45351e;
-  --ui-guide: #d4b8ef; --ui-guide-bg: #372a4b;
-  --ui-danger: #ffb5c0; --ui-danger-bg: #4b2633;
+  --ui-action: #acc8ff; --ui-action-bg: #1b3558;
+  --ui-success: #94dab4; --ui-success-bg: #153e31;
+  --ui-attention: #f5cb7f; --ui-attention-bg: #493416;
+  --ui-guide: #d7acff; --ui-guide-bg: #38204f;
+  --ui-danger: #ffabbe; --ui-danger-bg: #4c2031;
+  --ui-action-fill: #acc8ff; --ui-on-action: #152c47;
 }
 .sky-app .admin-main { color: var(--ink); }
 .sky-app .admin-main p { text-wrap: pretty; }
@@ -78,7 +96,7 @@ body[data-time=night] .admin-layout {
 .sky-app .admin-main p + p { margin-top: 12px; }
 .sky-app .admin-main :is(section,form) > h3 + :is(p,div) { margin-top: 12px; }
 .sky-app .admin-main a:not(.action-button) { color: var(--ui-action); text-decoration-thickness: 1px; }
-.sky-app .admin-main .primary-button { background: #245bc1; color: #fff; border-color: #245bc1; }
+.sky-app .admin-main .primary-button { background: var(--ui-action-fill); color: var(--ui-on-action); border-color: var(--ui-action-fill); }
 .sky-app .admin-main .primary-button:disabled { background: var(--glass-field); color: var(--muted); border-color: var(--line); }
 .sky-app .admin-main [role=alert]:not(:empty) { color: var(--ui-danger); border-color: var(--ui-danger); background: var(--ui-danger-bg); }
 .sky-app .admin-main details > summary { font-weight: 600; }

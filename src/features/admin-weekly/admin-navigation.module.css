@@ -1,7 +1,7 @@
 .sidebar:global(.glass) { position: sticky; top: 116px; display: flex; flex-direction: column; min-width: 0; padding: 22px 14px 16px; border-radius: 24px; }
 .sidebar .eyebrow { margin: 0 14px 0; color: var(--muted); font-size: 12px; }
-/* A restrained engraved highlight; the real serif weight carries the heading. */
-.sidebar .title { margin: 5px 14px 0; font-family: 'Noto Serif KR',serif; font-size: 24px; font-weight: 600; line-height: 1.5; letter-spacing: -.045em; color: var(--ink); }
+/* A restrained engraved highlight; the bold sans-serif heading establishes hierarchy. */
+.sidebar .title { margin: 5px 14px 0; font-family: 'Noto Sans KR',sans-serif !important; font-size: 24px; font-weight: 700 !important; line-height: 1.5; letter-spacing: -.045em; color: var(--ink); }
 .title span { display: inline-block; text-shadow: 0 1px 0 rgb(255 255 255 / .75), 0 2px 3px rgb(21 49 77 / .12); }
 @supports (background-clip: text) {
  .title span { background: linear-gradient(165deg, #172f47 8%, #45637a 46%, #203b52 53%, #193148 92%); background-clip: text; color: transparent; text-shadow: 0 1px 1px rgb(255 255 255 / .15); }

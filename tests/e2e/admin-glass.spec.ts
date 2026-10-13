@@ -44,7 +44,8 @@ test("admin menus group tasks, retain the glass hover and use compact shared act
     await page.keyboard.press("Enter");
   } else {
     await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toBeVisible();
-    await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toHaveCSS("font-family", /Noto Serif KR/);
+    await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toHaveCSS("font-family", /Noto Sans KR/);
+    await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toHaveCSS("font-weight", "700");
     await expect(sidebar).toHaveCSS("width","220px");
     const label = await sidebar.getByRole("heading", {name:"관리 공간",exact:true}).boundingBox();
     const firstLink = await navigation.getByRole("link", {name:"퀴즈 관리",exact:true}).boundingBox();
