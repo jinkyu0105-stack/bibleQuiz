@@ -81,6 +81,7 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
   for (const path of ["/admin/moderation", "/admin/privacy-requests", "/admin/tools", "/admin/operations", "/admin/manual"]) {
     await page.goto(path);
     if (path === "/admin/tools") await openAdminTool(page, "metadata");
+    if (path === "/admin/moderation") await openAdminTool(page, "filter-add");
     if (path === "/admin/manual") {
       await expect(page.getByRole("heading", {name: "운영 매뉴얼", exact: true})).toBeVisible();
       await expect(page.locator(".admin-main .action-button")).toHaveCount(0);

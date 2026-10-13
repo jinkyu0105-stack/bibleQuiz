@@ -131,17 +131,25 @@ test('public intake retries the same lost-response request, stores receipt and r
 });
 test('filter management registers aliases, warns before exceptions and tests text without changing rules',async({page},testInfo)=>{
   let items:Array<{id:string;kind:string;groupId:string|null;label:string;value:string;scope:string;matchMode:string;enabled:boolean;updatedAt:string}>=[];
-  let testCalls=0,creates=0;
+  let testCalls=0,creates=0,loads=0,loadFails=true;
   await page.route('**/api/admin/**',async route=>{
     const p=new URL(route.request().url()).pathname,method=route.request().method(),kind=p.includes('reserved')?'reserved':p.includes('exceptions')?'exception':'term';
     if(p.endsWith('/moderation-test')){testCalls++;return route.fulfill({json:{data:{normalizedValue:'금지어',blocked:true,matchedRuleId:'rule'}}});}
-    if(method==='GET')return route.fulfill({json:{data:{items:items.filter(i=>i.kind===kind)}}});
+    if(method==='GET'){loads++;return loadFails?route.fulfill({status:503,json:{error:{message:'합성 목록 조회 실패'}}}):route.fulfill({json:{data:{items:items.filter(i=>i.kind===kind)}}});}
     const b=route.request().postDataJSON();creates++;
     items=[...items,{id:`rule-${creates}`,kind,groupId:kind==='reserved'?'group':null,label:b.label??b.reason??b.value,value:b.aliases?.[0]??b.value,scope:b.scope??'name',matchMode:b.matchMode??'exact',enabled:true,updatedAt:at}];
     return route.fulfill({json:{data:{items}}});
   });
-  await page.goto('/admin/moderation');await page.locator('[data-admin-tool=filter-add] > summary').click();await page.getByLabel('관리용 이름').fill('합성 보호 인물');await page.getByLabel('이름·별칭 (한 줄에 하나)').fill('합성 목사\n합성목사');await page.getByRole('button',{name:'필터 등록',exact:true}).click();
-  await expect(page.getByRole('heading',{name:'합성 보호 인물',exact:true})).toBeVisible();
+  await page.goto('/admin/moderation');
+  const retry=page.getByRole('button',{name:'다시 시도',exact:true});
+  await expect(page.getByRole('button',{name:'목록 다시 불러오기',exact:true})).toHaveCount(0);
+  await expect(page.getByRole('alert')).toHaveText('필터 목록을 불러오지 못했습니다.');
+  await page.locator('[data-admin-tool=filter-add] > summary').click();await expect(page.getByLabel('관리용 이름')).toBeDisabled();
+  const firstLoad=loads;await retry.click();await expect.poll(()=>loads).toBeGreaterThan(firstLoad);await expect(retry).toBeVisible();
+  loadFails=false;await retry.click();await expect(page.getByLabel('관리용 이름')).toBeEnabled();await expect(retry).toHaveCount(0);await expect(page.getByRole('alert')).toHaveCount(0);
+  const loadedRequests=loads;
+  await page.getByLabel('관리용 이름').fill('합성 보호 인물');await page.getByLabel('이름·별칭 (한 줄에 하나)').fill('합성 목사\n합성목사');await page.getByRole('button',{name:'필터 등록',exact:true}).click();
+  await expect(page.getByRole('heading',{name:'합성 보호 인물',exact:true})).toBeVisible();expect(loads).toBe(loadedRequests);await expect(retry).toHaveCount(0);
   await page.getByLabel('등록 종류').selectOption('exception');await page.getByLabel('필터 문구').fill('합성 허용 문구');await page.getByLabel('예외 사유').fill('설교 문맥 허용');
   await expect(page.getByText('예외는 비교를 위해 정리한 전체 문구가 정확히 같을 때만 적용됩니다. 연락처·입력 형식·보호 이름 검사는 유지됩니다.',{exact:true})).toBeVisible();
   await page.getByLabel('이 문구가 기존 금지 규칙을 건너뛰는 영향을 확인했습니다.').check();await page.getByRole('button',{name:'필터 등록',exact:true}).click();

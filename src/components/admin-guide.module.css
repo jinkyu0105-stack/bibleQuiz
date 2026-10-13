@@ -82,4 +82,4 @@
 .toolCopy .description { font-weight: 400; }
 :global(.sky-app:not(.home-shell) .admin-main) .toolBody > section > h2 { font-family: 'Noto Sans KR', sans-serif; font-size: 18px; font-weight: 600; }
 
-.toggle { align-self: start; justify-content: center; width: 20px; height: 26px; }
+.toggle { align-self: center; justify-content: center; width: 20px; height: 26px; }
