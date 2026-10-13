@@ -47,16 +47,30 @@ test("admin menus group tasks, retain the glass hover and use compact shared act
     await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toHaveCSS("font-family", /Noto Sans KR/);
     await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toHaveCSS("font-weight", "700");
     await expect(sidebar).toHaveCSS("width","220px");
-    const label = await sidebar.getByRole("heading", {name:"관리 공간",exact:true}).boundingBox();
-    const firstLink = await navigation.getByRole("link", {name:"퀴즈 관리",exact:true}).boundingBox();
-    expect(firstLink!.y - label!.y - label!.height).toBeLessThanOrEqual(12);
+    const group = navigation.getByRole("heading", {name:"퀴즈 운영",exact:true});
+    await expect(group).toBeVisible();
+    await expect(group).toHaveCSS("font-family", /Noto Sans KR/);
+    await expect(group).toHaveCSS("font-weight", "700");
   }
   await expect(navigation.getByRole("link")).toHaveCount(3);
   await navigation.locator("summary").filter({hasText:"도구와 설정"}).click();
   await expect(navigation.getByRole("link")).toHaveCount(7);
   if (!isMobile) {
     const target=navigation.getByRole("link",{name:"이름·문구 필터",exact:true});
+    // Opening the disclosure remounts GlassMenu; its ResizeObserver/font pass
+    // measures on the next frame and clears previews. Hover after that pass.
+    await expect(target.locator("..")).toHaveAttribute("data-selection-ready", "true");
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    });
+    const current = navigation.getByRole("link", {name:"퀴즈 관리",exact:true});
+    const selection = await current.evaluate(node => ({color:getComputedStyle(node).color, background:getComputedStyle(node).backgroundColor}));
     await target.hover();
+    // Hover previews must not erase the actual current page's semantic highlight.
+    await expect(current).toHaveCSS("color", selection.color);
+    await expect(current).toHaveCSS("background-color", selection.background);
+    expect(await current.evaluate(node => getComputedStyle(node, "::before").width)).toBe("3px");
     await expect(target).toHaveAttribute("data-dock-preview", "");
     await expect(target).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
     await expect(target.locator("..").locator(":scope > .glass-indicator")).toHaveCount(1);

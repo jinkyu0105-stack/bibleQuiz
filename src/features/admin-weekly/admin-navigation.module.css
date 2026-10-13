@@ -1,40 +1,47 @@
-.sidebar:global(.glass) { position: sticky; top: 116px; display: flex; flex-direction: column; min-width: 0; padding: 22px 14px 16px; border-radius: 24px; }
-.sidebar .eyebrow { margin: 0 14px 0; color: var(--muted); font-size: 12px; }
-/* A restrained engraved highlight; the bold sans-serif heading establishes hierarchy. */
+.sidebar:global(.glass) { position: sticky; top: 116px; display: flex; flex-direction: column; min-width: 0; padding: 24px 14px 16px; border-radius: 24px; }
+.sidebar .eyebrow { margin: 0 14px; color: var(--muted); font-size: 12px; }
 .sidebar .title { margin: 5px 14px 0; font-family: 'Noto Sans KR',sans-serif !important; font-size: 24px; font-weight: 700 !important; line-height: 1.5; letter-spacing: -.045em; color: var(--ink); }
-.title span { display: inline-block; text-shadow: 0 1px 0 rgb(255 255 255 / .75), 0 2px 3px rgb(21 49 77 / .12); }
-@supports (background-clip: text) {
- .title span { background: linear-gradient(165deg, #172f47 8%, #45637a 46%, #203b52 53%, #193148 92%); background-clip: text; color: transparent; text-shadow: 0 1px 1px rgb(255 255 255 / .15); }
- :global(body[data-time=night]) .title span { background-image: linear-gradient(165deg, #f4f8ff 12%, #bed2e5 46%, #eaf3ff 54%, #c1d6e9 92%); text-shadow: 0 1px 2px rgb(0 0 0 / .22); }
-}
-@media (forced-colors: active) { .title span { background: none; color: CanvasText; text-shadow: none; } }
-.menu { margin-top: 12px; }
-.menu > summary, .settings > summary { display: flex; align-items: center; justify-content: space-between; cursor: pointer; min-height: 44px; list-style: none; }
+.menu { margin-top: 24px; }
+.sidebar .groupTitle { margin: 0 14px 10px; font-family: 'Noto Sans KR',sans-serif !important; font-size: 13px; font-weight: 700 !important; letter-spacing: 0; color: var(--ui-action) !important; }
+.menu > summary, .settings > summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer; min-height: 44px; list-style: none; }
 .menu > summary::-webkit-details-marker, .settings > summary::-webkit-details-marker { display: none; }
 .menu > summary { padding: 10px 14px; font-size: 14px; }
+.menu > summary svg, .settings > summary svg { flex: 0 0 18px; width: 18px; height: 18px; }
+.menu[open] > summary svg, .settings[open] > summary svg { transform: rotate(180deg); }
 .nav { display: grid; gap: 4px; border: 0; background: transparent; padding: 0; }
-.nav a { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 11px 13px; border: 0; border-radius: 12px; color: var(--muted); font-size: 14px; line-height: 1.5; text-decoration: none; }
-.nav svg { width: 18px; height: 18px; flex-shrink: 0; }
-.nav a[aria-current=page] { color: var(--glass-selected-ink); background: var(--glass-selected); font-weight: 600; }
-.nav[data-selection-ready] a[aria-current=page] { background: transparent; }
-.nav:not([data-dock-material=convex]) a:hover { background: var(--glass-soft); }
-.currentArrow { margin-left: auto; visibility: hidden; }
-.nav a[aria-current=page] .currentArrow { visibility: visible; }
-.settings { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 8px; }
-.settings > summary { color: var(--muted); font-size: 12px; padding: 10px 14px; }
-.settings[open] > summary > span { transform: rotate(180deg); }
-.homeLink { margin: 24px 14px 0; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; min-height: 44px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-decoration: none; }
-.homeLink:hover { color: var(--ink); text-decoration: underline; }
+.nav a { display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 11px 13px; border: 0; border-radius: 8px; color: var(--ink); font-size: 14px; line-height: 1.5; text-decoration: none; word-break: keep-all; overflow-wrap: anywhere; }
+.nav svg { width: 20px; height: 20px; flex: 0 0 20px; }
+/* Keep the current page visible while the existing glass lens previews another link. */
+.sidebar .nav a[aria-current=page], .sidebar .nav[data-selection-ready] a[aria-current=page] { color: var(--ui-action); background: var(--ui-action-bg); font-weight: 700; }
+.nav a[aria-current=page]::before { content: ''; position: absolute; inset: 7px auto 7px 0; width: 3px; border-radius: 2px; background: var(--ui-action); }
+.sidebar .nav[data-dock-previewing] a[aria-current=page]::after { display: none; }
+.sidebar .nav:not([data-dock-previewing]) > :global(.glass-indicator) { opacity: 0; }
+.nav:not([data-dock-material=convex]) a:not([aria-current=page]):hover { background: var(--glass-soft); }
+.settings { border-top: 1px solid var(--line); margin-top: 20px; padding-top: 12px; }
+.settings > summary { color: var(--ui-action); font-size: 13px; font-weight: 700; padding: 8px 14px; margin-bottom: 6px; }
+.settings > summary svg { color: var(--muted); }
+.homeLink { margin: 22px 14px 0; padding-top: 18px; display: flex; gap: 12px; align-items: center; min-height: 44px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-decoration: none; }
+.homeLink svg { flex: 0 0 20px; }
+.homeLink:hover { color: var(--ui-action); text-decoration: underline; text-underline-offset: 4px; }
+.sidebar :is(a, summary):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.menu nav { display: block; padding-block: 0; }
 @media (min-width: 1024px) { .menu > summary { display: none; } }
 @media (max-width: 1023px) {
  .sidebar:global(.glass) { position: relative; top: auto; padding: 16px; border-radius: 20px; }
  .sidebar .eyebrow, .sidebar .title, .homeLink { display: none; }
  .menu { margin: 0; }
  .menu > summary { padding: 0 4px; }
- .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 12px; }
- .nav a { font-size: 13px; padding: 12px 8px; justify-content: center; }
- .nav svg, .currentArrow { display: none; }
- .settings .nav { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-top: 0; }
+ .sidebar .groupTitle { margin: 14px 8px 6px; }
+ .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+ .nav a { font-size: 13px; padding: 12px 8px; gap: 8px; }
+ .nav svg { width: 18px; height: 18px; flex-basis: 18px; }
+ .settings .nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+ .settings { margin-top: 14px; padding-top: 6px; }
+ .settings > summary { padding-inline: 8px; }
 }
-@media (max-width: 380px) { .nav { grid-template-columns: 1fr; } .nav a { justify-content: flex-start; } .nav svg { display: block; } }
-.menu nav { display: block; padding-block: 0; }
+@media (max-width: 500px) { .nav { grid-template-columns: 1fr; } .nav a { min-height: 44px; } }
+@media (forced-colors: active) {
+ .sidebar .nav a[aria-current=page] { color: Highlight; background: Canvas; outline: 2px solid Highlight; outline-offset: -2px; }
+ .nav a[aria-current=page]::before { background: Highlight; forced-color-adjust: none; }
+ .sidebar .groupTitle, .settings > summary { color: CanvasText; }
+}

@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { AdminIcon, type AdminIconName } from "../../components/AdminIcon";
 import { serviceRegistry } from "../../config/service-registry";
 import { serviceGuides } from "./service-guides";
 import { ManualBody } from "./ManualText";
@@ -13,6 +14,15 @@ const shortTitles: Record<string, string> = {
   "guide-12": "향후 기능", "guide-13": "안내문과 검사 기록", "guide-14": "용어 모아보기",
 };
 const daily = ["guide-3", "guide-2", "guide-6", "guide-7", "guide-9"];
+const topicIcons: Record<string, AdminIconName> = {
+  "guide-1": "book", "guide-2": "grid", "guide-3": "document", "guide-4": "flow",
+  "guide-5": "cloud", "guide-6": "calendar", "guide-7": "chart", "guide-8": "code",
+  "guide-9": "alert", "guide-10": "database", "guide-11": "shield", "guide-12": "edit",
+  "guide-13": "document", "guide-14": "book", "service-openai": "processor", "service-r2": "database",
+  "service-d1": "database", "service-workers": "cloud", "service-durable_objects": "processor",
+  "service-workflows": "flow", "service-workers_builds": "code", "service-access": "shield",
+  "service-github_actions": "code", "service-domain": "globe",
+};
 
 export function ManualReader({ source }: { source: string }) {
   const sections = manualSections(source);
@@ -43,16 +53,16 @@ export function ManualReader({ source }: { source: string }) {
   return <div className={css.reader}>
     <nav className={css.contents} aria-label="매뉴얼 주제">
       {groups.map((group, index) => {
-        const items = <ul>{group.items.map(item => <li key={item.id}><button type="button" aria-current={current.id === item.id ? "true" : undefined} onClick={() => choose(item.id)}><span aria-hidden="true" className={css.topicMark}>{current.id === item.id ? "•" : ""}</span>{item.title}</button></li>)}</ul>;
+        const items = <ul>{group.items.map(item => <li key={item.id}><button type="button" aria-current={current.id === item.id ? "true" : undefined} onClick={() => choose(item.id)}><AdminIcon name={topicIcons[item.id] ?? "document"}/><span>{item.title}</span></button></li>)}</ul>;
         return index === 0 ? <section key={group.title}><h3>{group.title}</h3>{items}</section>
-          : <details key={group.title} open={group.items.some(item => item.id === current.id)}><summary>{group.title}</summary>{items}</details>;
+          : <details key={group.title} open={group.items.some(item => item.id === current.id)}><summary>{group.title}<AdminIcon name="chevron"/></summary>{items}</details>;
       })}
     </nav>
     <label className={css.mobileTopics}>읽을 주제
       <select value={current.id} onChange={event => choose(event.target.value)}>{groups.map(group => <optgroup key={group.title} label={group.title}>{group.items.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}</optgroup>)}</select>
     </label>
     <article className={css.article} aria-labelledby="manual-article-title">
-      <header className={css.articleHeader}><p>{category}</p><h3 id="manual-article-title" tabIndex={-1} ref={heading}>{section?.title ?? service?.name}</h3>{service && <p className={css.subtitle}>{service.plainLanguageName}</p>}</header>
+      <header className={css.articleHeader}><p>{category}</p><h3 id="manual-article-title" tabIndex={-1} ref={heading}>{service && <AdminIcon name={topicIcons[current.id] ?? "cloud"}/>}<span>{section?.title ?? service?.name}</span></h3>{service && <p className={css.subtitle}>{service.plainLanguageName}</p>}</header>
       {section && <ManualBody source={section.body}/>}
       {service && guide && <div className={css.serviceReading}>
         <p className={css.lead}>{guide.role}</p>

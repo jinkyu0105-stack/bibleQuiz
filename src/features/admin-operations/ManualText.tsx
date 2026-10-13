@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { AdminIcon } from "../../components/AdminIcon";
 import local from "./operations.module.css";
 
 /** A small, escaped Markdown subset for our repository-owned operator guides. */
@@ -19,9 +20,9 @@ export function ManualBody({ source }: { source: string }) {
     const lines = block.split("\n");
     if (block.startsWith("```")) return <pre key={index}><code>{block.replace(/^```[^\n]*\n|\n```$/gu, "")}</code></pre>;
     if (/^###? /u.test(block)) return <h4 key={index}><Inline text={block.replace(/^#+ /u, "")}/></h4>;
-    if (lines.every(line => /^\d+\. /u.test(line))) return <ol key={index}>{lines.map((line, i) => <li key={i}><Inline text={line.replace(/^\d+\. /u, "")}/></li>)}</ol>;
+    if (lines.every(line => /^\d+\. /u.test(line))) return <ol key={index} role="list">{lines.map((line, i) => <li key={i}><Inline text={line.replace(/^\d+\. /u, "")}/></li>)}</ol>;
     if (lines.every(line => line.startsWith("- "))) return <ul key={index}>{lines.map((line, i) => <li key={i}><Inline text={line.slice(2)}/></li>)}</ul>;
-    if (block.startsWith("> ")) return <aside className={local.callout} key={index}><Inline text={block.replace(/^> ?/gmu, "")}/></aside>;
+    if (block.startsWith("> ")) return <aside className={local.callout} aria-label="주의" key={index}><AdminIcon name="alert"/><div><Inline text={block.replace(/^> ?/gmu, "")}/></div></aside>;
     return <p key={index}><Inline text={block}/></p>;
   })}</div>;
 }

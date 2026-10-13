@@ -33,7 +33,7 @@ test('manual formats reading cues, explains services and retries only after a fa
  let failRead=true;
  await page.route('**/api/admin/manual', route => {
    return failRead ? route.fulfill({status:503,json:{error:{message:'temporary'}}}) : route.fulfill({json:{data:{
-     markdown:'# 안내\n\n## 읽기 안내\n\n**저장 확인** 후 `퀴즈 설정`을 누르세요.  \n다음 줄입니다. 제출할 수  \n있습니다.\n\n> **주의** 삭제는 별도입니다.\n\n1. 내용을 읽습니다.\n2. `저장`을 누릅니다.\n\n<svg onload="window.__unsafe=true">원문</svg>',
+     markdown:'# 안내\n\n## 읽기 안내\n\n**저장 확인** 후 `퀴즈 설정`을 누르세요.  \n다음 줄입니다. 제출할 수  \n있습니다.\n\n> **주의** 삭제는 별도입니다.\n\n1. **내용 확인** 내용을 읽습니다.\n2. **저장** `저장`을 누릅니다.\n\n<svg onload="window.__unsafe=true">원문</svg>',
      updatedAt:'2026-10-13',verification:'합성 검사 기록',deployment:'미연결 · version 미연결',
    }}});
  });
@@ -47,12 +47,18 @@ test('manual formats reading cues, explains services and retries only after a fa
  await expect(page.locator('code').filter({hasText:'퀴즈 설정'})).toBeVisible();
  await expect(page.locator('strong').filter({hasText:'저장 확인'})).toBeVisible();
  await expect(page.locator('ol > li')).toHaveCount(2);
+ const callout=page.getByRole('complementary',{name:'주의',exact:true});
+ await expect(callout).toBeVisible();
+ await expect(callout.locator('svg[aria-hidden="true"]')).toHaveCount(1);
+ for (const side of ['top','right','bottom','left']) await expect(callout).toHaveCSS(`border-${side}-width`,'1px');
+ await expect(page.locator('ol > li > strong').first()).toHaveCSS('font-weight','700');
  await expect(page.locator('p').filter({hasText:'다음 줄입니다.'}).locator('br')).toHaveCount(0);
  expect(await page.evaluate(()=>Object.hasOwn(window,'__unsafe'))).toBe(false);
  await expect(page.locator('span').filter({hasText:/^제출할 수 있습니다\.$/u})).toHaveCSS('white-space','nowrap');
  if (!await page.getByRole('combobox',{name:'읽을 주제'}).isVisible()) {
    const contents = page.getByRole('navigation',{name:'매뉴얼 주제'});
    await expect(contents).toHaveCSS('display','block');
+   await expect(contents.locator('button[aria-current] svg[aria-hidden="true"]')).toHaveCount(1);
    const topic = await contents.getByRole('button').first().boundingBox();
    expect(topic!.width).toBeGreaterThan(130);
  }
@@ -63,6 +69,7 @@ test('manual formats reading cues, explains services and retries only after a fa
    await page.getByRole('navigation',{name:'매뉴얼 주제'}).getByRole('button',{name:'OpenAI API',exact:true}).click();
  }
  await expect(page.getByRole('heading',{name:'OpenAI API',exact:true})).toBeFocused();
+ await expect(page.getByRole('heading',{name:'OpenAI API',exact:true}).locator('svg[aria-hidden="true"]')).toHaveCount(1);
  await expect(page.getByText('언제 쓰나요?',{exact:true}).first()).toBeVisible();
  await expect(page.getByText('등록한 설교 자료를 읽고, 내용을 정리하거나 퀴즈 문제의 초안을 만들어 주는 AI입니다. AI가 만든 내용을 확인하고 발행하는 사람은 관리자입니다.',{exact:true})).toBeVisible();
  await expect(page.locator('code').filter({hasText:'OPENAI_API_KEY'})).toBeHidden();
