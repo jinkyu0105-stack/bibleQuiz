@@ -43,9 +43,10 @@ test("admin menus group tasks, retain the glass hover and use compact shared act
     await page.keyboard.press("Space"); await expect(navigation).toBeHidden();
     await page.keyboard.press("Enter");
   } else {
-    await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toHaveCount(0);
+    await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toBeVisible();
+    await expect(sidebar.getByRole("heading",{name:"관리 공간"})).toHaveCSS("font-family", /Noto Serif KR/);
     await expect(sidebar).toHaveCSS("width","220px");
-    const label = await sidebar.getByText("다사랑 성경퀴즈", {exact:true}).boundingBox();
+    const label = await sidebar.getByRole("heading", {name:"관리 공간",exact:true}).boundingBox();
     const firstLink = await navigation.getByRole("link", {name:"퀴즈 관리",exact:true}).boundingBox();
     expect(firstLink!.y - label!.y - label!.height).toBeLessThanOrEqual(12);
   }

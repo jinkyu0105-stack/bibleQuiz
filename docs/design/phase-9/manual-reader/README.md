@@ -2,7 +2,9 @@
 
 2026-10-13 P9-20. 사용자가 `imagegen-frontend-web` 사용을 명시 요청했다. 요청한 한 섹션인 운영 매뉴얼 콘텐츠 패널에 대해 가로 이미지 한 장을 생성했다. 전체 페이지나 다른 섹션을 합친 보드는 아니다.
 
-![매뉴얼 읽기 화면 시안](reference.png)
+[시안 원본 파일](reference.png) · [로컬 브라우저에서 시안 보기](http://localhost:5173/docs/design/phase-9/manual-reader/reference.png)
+
+Windows 앱에서 WSL 파일 이미지가 깨질 때는 위 HTTP 주소로 연다. 5173 개발 서버가 실행 중이어야 한다.
 
 ## 생성 방향
 

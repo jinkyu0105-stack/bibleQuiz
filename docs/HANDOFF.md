@@ -1,35 +1,31 @@
 # 다음 작업 인수인계
 
-## 현재 상태와 다음 행동
+## 현재 상태
 
-**P9-20 운영 매뉴얼 시안 적용·사이드바·잔디 스케치 로컬 완료.** [구현·검사와 실패 보정](work/P9-20.md). 다음은 사용자 화면 확인이며 승인 범위의 미완료 구현은 없다.
+**P9-21 사이드바 제목·잔디 정교화·시안 표시 로컬 완료.** [구현과 검사](work/P9-21.md). 시작 main / `64bdaa2`, clean. 다음은 사용자의 화면 확인이며 미완료 구현은 없다. 실제 종료 커밋은 `git log -1`로 확인한다.
 
-[운영 매뉴얼](http://localhost:5173/admin/manual) · [관리자](http://localhost:5173/admin). 기존 `pnpm dev:demo --port 5173 --strictPort` 서버를 유지한다. 이번에는 4189를 확인하지 않았다.
+[관리자](http://localhost:5173/admin) · [시안 PNG](http://localhost:5173/docs/design/phase-9/manual-reader/reference.png). 기존 `pnpm dev:demo --port 5173 --strictPort` 서버를 유지한다. 4189는 이번 확인에서 응답하지 않았다.
 
-## 변경과 보존
+## 변경과 판단
 
-시작 Git은 main / b1a5d8d, clean이었다. 사용자가 명시 요청한 `imagegen-frontend-web`로 콘텐츠 패널 시안을 만들고, 목차와 단일 본문·모바일 선택 메뉴를 구현했다. 참고 PNG는 `docs/design/phase-9/manual-reader/`에 있고 런타임에서 내려받지 않는다.
+‘관리 공간’ 제목을 복원하고 24px 명조·글자 명암으로 표면감을 줬다. 제목 뒤 12px 간격과 모바일 접기는 유지한다. 잔디는 스케치를 그대로 복사한 세 줄 대신, 가운데가 높은 세 풀잎의 곡률·비례·밑동을 다듬었다. 작은 꺼짐 배지·사진 복귀·저장·접근성·광원은 유지한다.
 
-진입점은 `ManualReader.tsx`, `manual-reader.module.css`, `manual-sections.ts`, 기존 Manual·ManualText·operations CSS다. 기존 14개 주제와 10개 서비스 설명을 모두 유지한다. 문장 내부 개행은 공백으로 읽고 짧은 서술부는 함께 표시한다. 매뉴얼 원문의 제작 순서를 3단계로 묶었으며 생성 사본도 동기화했다.
+진입점은 AdminNavigation.tsx와 CSS, ThemeControl.tsx, sky.css, 관련 admin-glass E2E다. 매뉴얼의 콘텐츠·목차는 P9-20 그대로다. 디자인 정본/D-047 후속 정정·시안 README·작업 문서·STATUS와 이 인계를 갱신했다.
 
-AdminNavigation과 CSS에서 ‘관리 공간’과 불필요한 여백을 없앴다. ThemeControl의 잔디는 사용자 스케치처럼 바닥선 하나와 세 줄이고, 켜짐 체크 배지는 제거했다. 꺼짐의 작은 빼기 배지·사진 전환·설정 저장·광원·접근성 이름은 유지한다. 관련 E2E 2개 파일, 디자인 정본·D-047·STATUS·이 인계를 갱신했다.
+사용자는 Windows 앱에서 WSL 경로 이미지가 깨진다고 보고했다. 기존 시안을 이미지 데이터로 재첨부하고 5173 HTTP PNG 제공/브라우저 디코딩을 확인했다. 브라우저 열기 도구는 queued였으므로 사용자가 실제로 보았다고 단정하지 않는다. 앞으로 WSL 이미지 경로 Markdown만 제공하지 않는 규칙을 AGENTS에 기록했다. 시안을 새로 생성하거나 복제하지 않았다.
 
-메인·하늘·외부 유리·기능·인증·자료 정책을 보존했다. `.wrangler/ui-demo-state`는 쓰기 없이 조회했다. 기존 가상 자료와 연습 모드 경계는 [P9-18](work/P9-18.md)을 따른다. 새 패키지·DB 변경·실제 AI 실행은 없다.
+## 검사와 보존
 
-## 검사와 알려진 한계
+- 관련 Chromium PC / 모바일 / Firefox 9건, lint/typecheck, diff 검사 통과.
+- 실제 5173의 네 시간대 제목·잔디 켜짐/꺼짐, 강제 색상 제목, 390/320px 모바일과 시안 디코딩 확인. 가로 넘침/pageerror 0건. 증거 `.wrangler/releases/p9-21/`.
+- 작은 SVG·CSS 수정으로 전체 빌드/Phase 검사를 반복하지 않았다. 실기기/GPU·원격 인증 화면 및 사용자 측 시안 표시 확인은 이번 자동검사에 포함하지 않는다. 기술 검사와 미감 승인은 구분한다.
+- 기존 가상 자료에 쓰지 않았고 새 패키지·migration·실제 AI 실행·push·배포가 없다. P9-18 연습 모드 경계와 기존 키/자료를 보존했다.
+- 폐기한 접근: 스케치를 완성 아이콘처럼 그대로 베끼기, WSL 파일 링크만으로 이미지 전달, ‘관리 공간’ 제거.
 
-- 관리자 PC/모바일/Firefox 최초 18건: 16통과·2실패. 같은 이름의 목차/다음 안내 버튼을 구별하도록 검사 선택자를 수정했다. 보정한 매뉴얼과 잔디 검사 9건 전부 통과했으며 **고유 24시나리오**의 통과 근거가 있다.
-- 최종 lint/typecheck/build, 매뉴얼 사본 동기화, diff 검사 통과. 기존 fontkit 등 500KB 청크 경고는 남는다. Phase/배포 완료가 아니므로 전체 `pnpm check`는 반복하지 않았다.
-- 실제 5173의 다섯 폭(1440~320px), 낮/밤, 320px 전체 24주제 선택·초점·다음 안내, 강제 색상 키보드와 네 시간대 잔디를 확인했다. 최종 가로 넘침/pageerror는 0건이다. 실기기/GPU·원격 인증 UI는 이번에 검사하지 않았다.
-- 첫 실제 캡처에서 공통 nav flex가 목차를 좁히는 문제를 찾아 scoped block/padding으로 수정했다. 초기 Fast Refresh export 린트는 parser 파일 분리로 해결했다. 임시 시각 검사의 노을 식별자 sunset은 실제 dusk로 고쳤다.
-- 반복 상자·채운 잔디 실루엣·문장 중간 강제 줄바꿈을 폐기했다. 증거는 Git 제외 `.wrangler/releases/p9-20/`에 있다. 비밀값을 추가하거나 출력하지 않았다.
+## 원격·실행 환경
 
-검토한 파일만 명시적으로 stage해 로컬 커밋한다. 실제 종료 커밋은 `git log -1`로 확인한다. push하지 않는다.
+Preview: P9-14 소스 `0fbde84`, version `cd6efb0e-2c05-4401-b0bf-692bdf18c5b1`. Production: P9-04 소스 `37b7254`, version `7aea6843-5288-42da-9bef-bc673e1d9dfe`. 이후 UI 수정은 로컬이다.
 
-## 원격과 재개 환경
+Node 24.18.0 / pnpm 11.14.0. 검증된 `/bin/bash`, login:false, 명시 workdir와 승인 검토 실행 경로를 사용한다. PATH `/home/onegem/.nvm/versions/node/v24.18.0/bin`. 시작 Pro 잔여 81% × 사용자 지정 10 = 810%, 별도 5시간 창 없음.
 
-Preview는 P9-14 소스 `0fbde84`, version `cd6efb0e-2c05-4401-b0bf-692bdf18c5b1`을 유지한다. Production은 P9-04 소스 `37b7254`, version `7aea6843-5288-42da-9bef-bc673e1d9dfe`를 유지한다. P9-17 이후의 UI·로컬 체험 변경과 이번 변경은 로컬이며 별도 사용자 지시 전 원격 반영하지 않는다.
-
-Node 24.18.0 / pnpm 11.14.0. 검증된 `/bin/bash`, login:false, 명시 workdir와 승인 검토 실행 경로를 재사용한다. pnpm PATH는 `/home/onegem/.nvm/versions/node/v24.18.0/bin`이다. 시작 Pro 잔여 82% × 사용자 지정 10 = 820%였으며 별도 5시간 창은 없었다.
-
-**현재 작업 P9-20 로컬 완료 · 부모 작업 매뉴얼 재설계 완료 · 다음 작업 사용자 화면 확인 · 세션 유지 · 다음 추천 Astra/max** — 시안과 실제 화면의 위계·여백을 함께 판단한다.
+**현재 작업 P9-21 로컬 완료 · 부모 작업 UI 보정 로컬 완료 · 다음 작업 사용자 화면 확인 · 세션 유지 · 다음 추천 Astra/max** (스케치 의도와 시각적 완성도를 함께 검토).

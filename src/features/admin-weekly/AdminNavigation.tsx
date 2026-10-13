@@ -39,6 +39,7 @@ export function AdminNavigation() {
     </Link>);
   return <GlassPanel as="aside" surface="standard" className={styles.sidebar}>
     <p className={styles.eyebrow}>다사랑 성경퀴즈</p>
+    <h2 className={styles.title}><span>관리 공간</span></h2>
     <details className={styles.menu} open={wide || expanded}>
       <summary onClick={event => { event.preventDefault(); setExpanded(!expanded); }}>관리자 운영 메뉴 <span aria-hidden="true">⌄</span></summary>
       <nav aria-label="관리자 운영 메뉴">

@@ -181,8 +181,6 @@ body:not([data-time=night]) .page-dock { --ink: #071725; --glass-control-ink: va
 body[data-time=night] #grass-toggle[aria-pressed=true] .grass-blades { color: #a4deb0; }
 #grass-toggle .grass-state circle { fill: var(--glass-solid); stroke: currentColor; stroke-width: 1; }
 #grass-toggle .grass-state path { fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
-#grass-toggle .grass-state[data-on=true] { color: #286544; }
-body[data-time=night] #grass-toggle .grass-state[data-on=true] { color: #a4deb0; }
 .sky-app .site-footer { min-height: 100px; padding-top: 24px; padding-bottom: 28px; margin-top: 0; }
 .home-shell .site-footer { padding-bottom: 28px; }
 .home-shell .site-footer a { display: inline-flex; align-items: center; min-height: 44px; }

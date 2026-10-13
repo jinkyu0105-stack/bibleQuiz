@@ -1,6 +1,14 @@
 .sidebar:global(.glass) { position: sticky; top: 116px; display: flex; flex-direction: column; min-width: 0; padding: 22px 14px 16px; border-radius: 24px; }
 .sidebar .eyebrow { margin: 0 14px 0; color: var(--muted); font-size: 12px; }
-.menu { margin-top: 6px; }
+/* A restrained engraved highlight; the real serif weight carries the heading. */
+.sidebar .title { margin: 5px 14px 0; font-family: 'Noto Serif KR',serif; font-size: 24px; font-weight: 600; line-height: 1.5; letter-spacing: -.045em; color: var(--ink); }
+.title span { display: inline-block; text-shadow: 0 1px 0 rgb(255 255 255 / .75), 0 2px 3px rgb(21 49 77 / .12); }
+@supports (background-clip: text) {
+ .title span { background: linear-gradient(165deg, #172f47 8%, #45637a 46%, #203b52 53%, #193148 92%); background-clip: text; color: transparent; text-shadow: 0 1px 1px rgb(255 255 255 / .15); }
+ :global(body[data-time=night]) .title span { background-image: linear-gradient(165deg, #f4f8ff 12%, #bed2e5 46%, #eaf3ff 54%, #c1d6e9 92%); text-shadow: 0 1px 2px rgb(0 0 0 / .22); }
+}
+@media (forced-colors: active) { .title span { background: none; color: CanvasText; text-shadow: none; } }
+.menu { margin-top: 12px; }
 .menu > summary, .settings > summary { display: flex; align-items: center; justify-content: space-between; cursor: pointer; min-height: 44px; list-style: none; }
 .menu > summary::-webkit-details-marker, .settings > summary::-webkit-details-marker { display: none; }
 .menu > summary { padding: 10px 14px; font-size: 14px; }
@@ -20,7 +28,7 @@
 @media (min-width: 1024px) { .menu > summary { display: none; } }
 @media (max-width: 1023px) {
  .sidebar:global(.glass) { position: relative; top: auto; padding: 16px; border-radius: 20px; }
- .sidebar .eyebrow, .homeLink { display: none; }
+ .sidebar .eyebrow, .sidebar .title, .homeLink { display: none; }
  .menu { margin: 0; }
  .menu > summary { padding: 0 4px; }
  .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 12px; }
