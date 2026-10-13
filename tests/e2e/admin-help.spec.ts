@@ -23,7 +23,7 @@ test('admin concepts work with hover, keyboard, touch and dismissal without writ
   await expect(term).toBeFocused();
   await term.click();
   await expect(page.getByRole('tooltip')).toBeVisible();
-  await page.getByRole('heading',{name:'참여 기록',exact:true}).click();
+  await page.mouse.click(2, 2);
   await expect(page.getByRole('tooltip')).toBeHidden();
   await page.setViewportSize({width:320,height:740});
   for(const name of ['새벽','낮','노을','밤']) {
@@ -38,6 +38,47 @@ test('admin concepts work with hover, keyboard, touch and dismissal without writ
     await page.keyboard.press('Escape');
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   }
+  expect(writes).toEqual([]);
+});
+
+test('tooltips prefer above and only move below when the top space runs out', async ({ page }) => {
+  const writes = await mockAdminGuide(page);
+  await page.goto('/admin/manual');
+  await expect(page.getByRole('heading', { name: '퀴즈를 만드는 순서', exact: true })).toBeVisible();
+  const term = page.getByRole('button', { name: '확정', exact: true }).first();
+  const tooltip = page.getByRole('tooltip');
+  await term.focus();
+  await expect(tooltip).toBeVisible();
+  const alignTerm = (top: number) => term.evaluate((element, top) => {
+    window.scrollBy(0, element.getBoundingClientRect().top - top);
+  }, top);
+  const placement = () => term.evaluate(element => {
+    const anchor = element.getBoundingClientRect();
+    const bubble = document.getElementById(element.getAttribute('aria-describedby')!)!.getBoundingClientRect();
+    return {
+      aboveGap: anchor.top - bubble.bottom,
+      belowGap: bubble.top - anchor.bottom,
+      top: bubble.top,
+      bottom: bubble.bottom,
+    };
+  });
+  const threshold = (await tooltip.boundingBox())!.height + 8 + 12;
+  await alignTerm(threshold + 1);
+  await expect.poll(async () => (await placement()).aboveGap).toBeCloseTo(8, 0);
+  expect((await placement()).top).toBeGreaterThanOrEqual(12);
+  // Crossing the top margin changes direction while the same tooltip stays open.
+  await alignTerm(threshold - 1);
+  await expect.poll(async () => (await placement()).belowGap).toBeCloseTo(8, 0);
+  expect((await placement()).bottom).toBeLessThanOrEqual(page.viewportSize()!.height - 12);
+  await alignTerm(360);
+  await expect.poll(async () => (await placement()).aboveGap).toBeCloseTo(8, 0);
+  await page.setViewportSize({ width: 320, height: 740 });
+  await alignTerm(360);
+  await term.click();
+  await expect(tooltip).toBeVisible();
+  await expect.poll(async () => (await placement()).aboveGap).toBeCloseTo(8, 0);
+  await page.keyboard.press('Escape');
+  await expect(tooltip).toBeHidden();
   expect(writes).toEqual([]);
 });
 

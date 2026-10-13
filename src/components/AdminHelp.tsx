@@ -12,8 +12,9 @@ export function AdminLabel({ text, explain = false }: { text: string; explain?: 
 function positionBubble(button: HTMLButtonElement, bubble: HTMLSpanElement) {
   const anchor = button.getBoundingClientRect(), box = bubble.getBoundingClientRect();
   const left = Math.max(12, Math.min(anchor.left, window.innerWidth - box.width - 12));
-  const below = anchor.bottom + 8;
-  const top = below + box.height <= window.innerHeight - 12 ? below : Math.max(12, anchor.top - box.height - 8);
+  const above = anchor.top - box.height - 8;
+  const below = Math.max(12, Math.min(anchor.bottom + 8, window.innerHeight - box.height - 12));
+  const top = above >= 12 ? above : below;
   bubble.style.left = `${left}px`;
   bubble.style.top = `${top}px`;
 }
