@@ -65,11 +65,17 @@ test("admin menus group tasks, retain the glass hover and use compact shared act
   for (const path of ["/admin/moderation", "/admin/privacy-requests", "/admin/tools", "/admin/operations", "/admin/manual"]) {
     await page.goto(path);
     if (path === "/admin/tools") await openAdminTool(page, "metadata");
-    const button=page.locator(".admin-main .action-button").first();
-    await expect(button).toBeVisible();
-    await expect(button).toHaveCSS("min-height","44px");
+    if (path === "/admin/manual") {
+      await expect(page.getByRole("heading", {name: "서비스 사전", exact: true})).toBeVisible();
+      await expect(page.locator(".admin-main .action-button")).toHaveCount(0);
+    } else {
+      const button=page.locator(".admin-main .action-button").first();
+      await expect(button).toBeVisible();
+      await expect(button).toHaveCSS("min-height","44px");
+    }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
+  await page.goto("/admin/operations");
   await page.getByRole("button", { name: "밤", exact: true }).click();
   await expect(page.locator(".admin-main button.secondary-button").first()).toHaveCSS("color", "rgb(240, 246, 255)");
   await page.getByRole("button", { name: "투명도 줄이기", exact: true }).click();
@@ -77,6 +83,7 @@ test("admin menus group tasks, retain the glass hover and use compact shared act
   await page.setViewportSize({ width: 320, height: 740 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.locator(".admin-main").screenshot({ path: info.outputPath("admin-night-320.png") });
+  await page.goto("/admin/manual");
   if (!await navigation.isVisible()) await toggle.click();
   await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" });
   const manualLink=navigation.getByRole("link",{name:"도움말",exact:true});

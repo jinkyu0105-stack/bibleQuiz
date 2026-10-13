@@ -28,3 +28,34 @@ test('protected manual displays service dictionary, repository text and future g
  await expect(page.getByText('<svg onload="window.__unsafe=true">원문</svg>',{exact:true})).toBeVisible();expect(await page.evaluate(()=>Object.hasOwn(window,'__unsafe'))).toBe(false);
  await expect(page.getByText('서비스 사전',{exact:true})).toBeVisible();await page.getByRole('link',{name:'향후 회원 로그인·교회 계정 연동 검토'}).click();await expect(page).toHaveURL(/\/admin\/manual\/future\/member-auth$/u);await expect(page.getByRole('link',{name:'운영 매뉴얼로 돌아가기'})).toBeVisible();
 });
+
+test('manual formats reading cues, explains services and retries only after a failed load', async ({page}) => {
+ let failRead=true;
+ await page.route('**/api/admin/manual', route => {
+   return failRead ? route.fulfill({status:503,json:{error:{message:'temporary'}}}) : route.fulfill({json:{data:{
+     markdown:'# 안내\n\n## 읽기 안내\n\n**저장 확인** 후 `퀴즈 설정`을 누르세요.  \n다음 줄입니다.\n\n> **주의** 삭제는 별도입니다.\n\n1. 내용을 읽습니다.\n2. `저장`을 누릅니다.\n\n<svg onload="window.__unsafe=true">원문</svg>',
+     updatedAt:'2026-10-13',verification:'합성 검사 기록',deployment:'미연결 · version 미연결',
+   }}});
+ });
+ await page.goto('/admin/manual');
+ await expect(page.getByRole('button',{name:'안내문 다시 불러오기'})).toBeVisible();
+ failRead=false;
+ await page.getByRole('button',{name:'안내문 다시 불러오기'}).click();
+ await expect(page.getByRole('button',{name:'안내문 다시 불러오기'})).toHaveCount(0);
+ await expect(page.getByRole('navigation',{name:'자주 찾는 운영 작업'})).toHaveCount(0);
+ await page.locator('summary').filter({hasText:'읽기 안내'}).click();
+ await expect(page.locator('code').filter({hasText:'퀴즈 설정'})).toBeVisible();
+ await expect(page.locator('strong').filter({hasText:'저장 확인'})).toBeVisible();
+ await expect(page.locator('ol > li')).toHaveCount(2);
+ await expect(page.locator('p').filter({hasText:'다음 줄입니다.'}).locator('br')).toHaveCount(1);
+ expect(await page.evaluate(()=>Object.hasOwn(window,'__unsafe'))).toBe(false);
+ await page.locator('summary').filter({hasText:'OpenAI API'}).click();
+ await expect(page.getByText('언제 쓰나요?',{exact:true}).first()).toBeVisible();
+ await expect(page.getByText('등록한 설교 자료를 읽고, 내용을 정리하거나 퀴즈 문제의 초안을 만들어 주는 AI입니다. AI가 만든 내용을 확인하고 발행하는 사람은 관리자입니다.',{exact:true})).toBeVisible();
+ await expect(page.locator('code').filter({hasText:'OPENAI_API_KEY'})).toBeHidden();
+ await page.locator('summary').filter({hasText:'안내문 수정일과 서버 정보'}).click();
+ await expect(page.getByText(/서비스 장애를 뜻하지는 않습니다/)).toBeVisible();
+ await page.getByRole('button',{name:'밤',exact:true}).click();
+ await expect(page.locator('body')).toHaveAttribute('data-time','night');
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+});

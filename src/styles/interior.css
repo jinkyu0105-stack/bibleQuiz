@@ -54,3 +54,39 @@
 @media (prefers-reduced-motion: reduce) { .sky-app:not(.home-shell) .admin-main * { scroll-behavior: auto; } }
 .sky-app:not(.home-shell) .sermon-details-compact { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 16px 24px; }
 .sky-app:not(.home-shell) .sermon-details-compact .published-date { margin: 0; }
+
+/* P9-19: roles, not decorative color. Keep these scoped to admin content. */
+.admin-layout {
+  --ui-action: #245bc1; --ui-action-bg: #eaf1ff;
+  --ui-success: #216648; --ui-success-bg: #e7f4eb;
+  --ui-attention: #87520c; --ui-attention-bg: #fff1d8;
+  --ui-guide: #73509a; --ui-guide-bg: #f3ecfa;
+  --ui-danger: #aa3347; --ui-danger-bg: #fcebf0;
+  --accent: var(--ui-action); --warning: var(--ui-attention); --danger: var(--ui-danger);
+  --focus: var(--ui-action);
+}
+body[data-time=night] .admin-layout {
+  --ui-action: #afcaff; --ui-action-bg: #203554;
+  --ui-success: #a0daba; --ui-success-bg: #193d32;
+  --ui-attention: #f6cc85; --ui-attention-bg: #45351e;
+  --ui-guide: #d4b8ef; --ui-guide-bg: #372a4b;
+  --ui-danger: #ffb5c0; --ui-danger-bg: #4b2633;
+}
+.sky-app .admin-main { color: var(--ink); }
+.sky-app .admin-main p { text-wrap: pretty; }
+.sky-app .admin-main :is(p,li) { line-height: 1.85; }
+.sky-app .admin-main p + p { margin-top: 12px; }
+.sky-app .admin-main :is(section,form) > h3 + :is(p,div) { margin-top: 12px; }
+.sky-app .admin-main a:not(.action-button) { color: var(--ui-action); text-decoration-thickness: 1px; }
+.sky-app .admin-main .primary-button { background: #245bc1; color: #fff; border-color: #245bc1; }
+.sky-app .admin-main .primary-button:disabled { background: var(--glass-field); color: var(--muted); border-color: var(--line); }
+.sky-app .admin-main [role=alert]:not(:empty) { color: var(--ui-danger); border-color: var(--ui-danger); background: var(--ui-danger-bg); }
+.sky-app .admin-main details > summary { font-weight: 600; }
+.sky-app .admin-main details[open] > summary { margin-bottom: 12px; }
+.sky-app .admin-main code { padding: 2px 6px; border: 1px solid color-mix(in srgb,var(--ui-guide) 20%,transparent); border-radius: 5px; color: var(--ui-guide); background: var(--ui-guide-bg); font-family: ui-monospace, 'Noto Sans KR', monospace; font-size: .9em; overflow-wrap: anywhere; box-decoration-break: clone; }
+@media (forced-colors: active) {
+  .sky-app .admin-main .primary-button { color: ButtonText; background: ButtonFace; border-color: ButtonText; }
+  .sky-app .admin-main :is(code,[role=alert]) { color: CanvasText; background: Canvas; border-color: CanvasText; }
+}
+.sky-app .admin-main a[data-tone=attention] { color: var(--ui-attention); }
+.sky-app .admin-main a[data-tone=guide] { color: var(--ui-guide); }

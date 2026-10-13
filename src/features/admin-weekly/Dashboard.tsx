@@ -53,7 +53,7 @@ export function Component() {
     <div className={styles.overview} aria-label="운영 요약">
       <button type="button" onClick={() => setFilter("published")}><span>공개 중</span><strong>{data ? published.length : "—"}</strong><span aria-hidden="true">↗</span></button>
       <button type="button" onClick={() => setFilter("draft")}><span>작성 중</span><strong>{data ? drafts.filter(q => !q.expired).length : "—"}</strong><span aria-hidden="true">↗</span></button>
-      <Link to="/admin/privacy-requests"><span>답변 대기</span><strong>{data?.unansweredCount ?? "—"}</strong><span aria-hidden="true">↗</span></Link>
+      <Link data-tone="attention" to="/admin/privacy-requests"><span>답변 대기</span><strong>{data?.unansweredCount ?? "—"}</strong><span aria-hidden="true">↗</span></Link>
     </div>
     {data && <section className={styles.featured} aria-labelledby="home-quiz-heading">
       <div className={styles.homeMark} aria-hidden="true">⌂</div>
@@ -77,7 +77,7 @@ export function Component() {
         <ul className={styles.quizList}>{rows.map(q => <li key={q.quizSetId}>
           <article className={styles.quizRow}>
             <div className={styles.date}><span>{q.sermonDate.slice(0, 4)}</span><strong>{q.sermonDate.slice(5).replace("-", ".")}</strong></div>
-            <div className={styles.quizCopy}><div className={styles.badges}><span className={styles.status} data-state={q.expired ? "archived" : q.status}>{stage(q)}</span>{q.quizSetId === data?.homeQuiz?.quizSetId && <span className={styles.homeBadge}>홈 표시</span>}</div>
+            <div className={styles.quizCopy}><div className={styles.badges}><span className={styles.status} data-state={q.expired ? "archived" : q.status} data-tone={q.expired || q.status === "archived" ? "neutral" : q.submissionStatus === "paused" || q.jobStatus === "failed" || q.status === "needs_revision" ? "attention" : q.status === "published" ? "success" : "action"}>{stage(q)}</span>{q.quizSetId === data?.homeQuiz?.quizSetId && <span className={styles.homeBadge}>홈 표시</span>}</div>
               <h4>{q.title}</h4>
               <p>{isDraft(q) ? q.expired ? "발행 기록과 비용은 보존됩니다." : progress[q.stage ?? ""] ?? "설교 등록·입력 확인" : `어린이 ${q.childVisibleCount}명 · 장년 ${q.adultVisibleCount}명 참여`}</p>
               {!isDraft(q) && q.closesAt && <p className={styles.deadline}>{q.status === "archived" ? "마감일" : "접수 마감"} {time(q.closesAt)}{q.status === "published" && Date.parse(q.closesAt) <= checkedAt ? " · 마감 처리 대기" : ""}</p>}
@@ -90,6 +90,6 @@ export function Component() {
         </li>)}</ul>}
     </section>
     {due.length > 0 && <details className={styles.cleanup}><summary>초안 보관 알림 <span>{due.length}건</span></summary><p>본문 정리 예정이거나 확인이 필요한 초안입니다.</p><ul>{due.map(q => <li key={q.sermonId}><span>{q.title}</span><span>{q.state === "blocked" ? "확인 필요" : q.dueAt ? time(q.dueAt) : "시각 미확인"}</span></li>)}</ul><Link to="/admin/tools#cleanup">보관 현황 열기 →</Link></details>}
-    <footer className={styles.footer}><Link to="/admin/manual">퀴즈 운영이 처음이신가요? <span>사용 안내 ↗</span></Link><Link to="/admin/operations">비용·백업 확인 ↗</Link></footer>
+    <footer className={styles.footer}><Link data-tone="guide" to="/admin/manual">퀴즈 운영이 처음이신가요? <span>사용 안내 ↗</span></Link><Link to="/admin/operations">비용·백업 확인 ↗</Link></footer>
   </div>;
 }

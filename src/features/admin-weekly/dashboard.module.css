@@ -79,3 +79,21 @@
  .featured > a { grid-column: 2; justify-self: start; margin: 0; }
  .featured h3 { font-size: 18px; }
 }
+
+.overview > :first-child { color: var(--ui-success); background: var(--ui-success-bg); }
+.overview > :nth-child(2) { color: var(--ui-action); background: var(--ui-action-bg); }
+.overview > :nth-child(3) { color: var(--ui-attention); background: var(--ui-attention-bg); }
+.overview > :is(button,a):hover { box-shadow: inset 0 -3px currentColor; }
+.overview strong { font-size: 30px; }
+.homeMark { color: var(--ui-success); background: var(--ui-success-bg); border-color: transparent; }
+.status { font-size: 12px; font-weight: 600; padding: 4px 9px; }
+.status[data-tone=success] { color: var(--ui-success); background: var(--ui-success-bg); border-color: transparent; }
+.status[data-tone=action] { color: var(--ui-action); background: var(--ui-action-bg); border-color: transparent; }
+.status[data-tone=attention] { color: var(--ui-attention); background: var(--ui-attention-bg); border-color: transparent; }
+.homeBadge { color: var(--ui-success); font-size: 12px; }
+.quizCopy p { line-height: 1.8; }
+.quizCopy .deadline { margin-top: 8px; font-size: 12px; }
+.filters button[aria-pressed=true] { color: var(--ui-action); background: var(--ui-action-bg); border-color: var(--ui-action); }
+.cleanup { padding-inline: 16px; border: 1px solid var(--ui-attention); border-radius: 10px; background: var(--ui-attention-bg); }
+.footer > a:first-child { color: var(--ui-guide); }
+@media (forced-colors: active) { .overview > :is(button,a), .status, .homeBadge, .homeMark { color: CanvasText; background: Canvas; } .filters button[aria-pressed=true] { color: Highlight; border-color: Highlight; } }

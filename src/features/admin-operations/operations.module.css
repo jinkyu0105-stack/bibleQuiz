@@ -37,3 +37,48 @@
 .manual > details > div { padding-block: 16px; border-top: 1px solid var(--line); }
 .manual :is(p, li) { font-size: 15px; line-height: 1.85; }
 @media (max-width: 500px) { .overview { grid-template-columns: 1fr; gap: 20px; } .overview > div + div { padding: 16px 0 0; border-left: 0; border-top: 1px solid var(--line); } }
+
+/* Reading is separated from navigation and technical metadata. */
+.manual > details { background: var(--glass-soft); padding: 0 24px; }
+.manual > details[open] { border-color: var(--ui-guide); }
+.manual > details[open] > summary { color: var(--ui-guide); }
+.manual > details > summary::marker { color: var(--ui-guide); font-size: .7em; }
+.manual > details > div { padding: 20px 0 28px; }
+.prose { display: grid; gap: 18px; max-width: 72ch; }
+.prose :is(p,ul,ol) { margin: 0; }
+.prose :is(ul,ol) { padding-left: 1.5em; }
+.prose li + li { margin-top: 12px; }
+.prose li::marker { color: var(--ui-action); font-weight: 600; }
+.prose strong { font-weight: 700; color: var(--ink); }
+.prose h4 { margin-top: 12px !important; color: var(--ui-guide) !important; }
+.callout { border-left: 3px solid var(--ui-attention); background: var(--ui-attention-bg); color: var(--ui-attention); padding: 16px 20px; border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.85; }
+.dictionary { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 32px; }
+.dictionary > p { margin-bottom: 24px; max-width: 62ch; }
+.serviceName { font-family: 'Noto Sans KR',sans-serif; font-size: 16px; font-weight: 600; }
+.serviceSubtitle { display: block; margin-top: 3px; padding-left: 16px; color: var(--muted); font: 13px/1.7 'Noto Sans KR',sans-serif; }
+.serviceGuide { max-width: 76ch; }
+.serviceGuide .lead { font-size: 17px; line-height: 1.9; color: var(--ink); margin: 0 0 24px; }
+.guideFacts { display: grid; gap: 22px; margin: 0 0 24px; }
+.guideFacts > div { display: grid; gap: 7px; }
+.guideFacts dt { color: var(--ui-guide); font-size: 13px; font-weight: 700; }
+.guideFacts dd { margin: 0; font-size: 15px; line-height: 1.85; overflow-wrap: anywhere; }
+.guideFacts code { display: inline-block; margin: 3px 6px 3px 0; }
+.technical { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 8px; }
+.technical > summary, .documentInfo > summary { min-height: 44px; padding-block: 12px; font-size: 13px; }
+.technical > p { font-size: 14px; }
+.docLink { display: inline-block; padding-block: 8px; text-underline-offset: 5px; font-size: 14px; }
+.note { font-size: 12px !important; color: var(--muted); line-height: 1.8; }
+.documentInfo { border-top: 1px solid var(--line); padding-top: 8px; }
+.documentInfo .guideFacts { padding: 12px 0; }
+@media(max-width: 600px) { .manual > details { padding-inline: 16px; } .manual > details > summary { font-size: 17px; } .serviceGuide .lead { font-size: 16px; } }
+@media(forced-colors: active) { .callout { color: CanvasText; background: Canvas; border-color: CanvasText; } .manual > details[open] { border-color: Highlight; } }
+.prose ol { list-style: decimal outside; }
+.prose ul { list-style: disc outside; }
+.prose, .serviceGuide { word-break: keep-all; overflow-wrap: anywhere; }
+.state { justify-self: start; border-radius: 6px; padding: 5px 10px; font-size: 14px; }
+.state[data-tone=success] { color: var(--ui-success); background: var(--ui-success-bg); }
+.state[data-tone=attention] { color: var(--ui-attention); background: var(--ui-attention-bg); }
+.policyNotice { display: grid; gap: 8px; padding: 16px 0; }
+.policyNotice strong { font-size: 14px; color: var(--ui-attention); }
+.policyNotice a { justify-self: start; font-size: 14px; }
+@media(forced-colors: active) { .state[data-tone] { color: CanvasText; background: Canvas; } }

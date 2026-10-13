@@ -5,7 +5,7 @@ import { success,failure } from "../../shared/api/envelope";
 import { readSameOriginJson,MutationRequestError } from "../_shared/http/mutation-request";
 import { readBackups,requestBackup,BackupError } from "../_shared/services/backup-storage";
 import { readOperationsUsage,refreshOperationsUsage,confirmOperationsMonth,OperationsError } from "../_shared/services/operations-usage";
-import { manual, memberAuth } from "../_shared/manual-content";
+import { manual, manualUpdatedAt, memberAuth } from "../_shared/manual-content";
 export const operationsRoutes=new Hono<AppEnvironment>();
 const paths=["/api/admin/usage-summary","/api/admin/usage-summary/refresh","/api/admin/operations/monthly-check","/api/admin/backups","/api/admin/manual","/api/admin/manual/future/member-auth"];
 operationsRoutes.use("*",async(c,next)=>{
@@ -22,7 +22,7 @@ operationsRoutes.post("/api/admin/usage-summary/refresh",async c=>{
 operationsRoutes.post("/api/admin/operations/monthly-check",async c=>c.json(success(await confirmOperationsMonth(c.env,await readSameOriginJson(c.req.raw),c.get("accessIdentity").email))));
 operationsRoutes.get("/api/admin/backups",async c=>c.json(success(await readBackups(c.env))));
 operationsRoutes.post("/api/admin/backups",async c=>c.json(success(await requestBackup(c.env,await readSameOriginJson(c.req.raw))),202));
-operationsRoutes.get("/api/admin/manual",c=>c.json(success({markdown:manual,updatedAt:"2026-10-03",verification:"운영 문서 · 검증 기록은 P8-02",deployment:`${c.env.OPERATIONS_ENVIRONMENT??"미연결"} · version ${z.uuid().safeParse(c.env.CF_VERSION_METADATA?.id).success?c.env.CF_VERSION_METADATA!.id:"미연결"}`})));
+operationsRoutes.get("/api/admin/manual",c=>c.json(success({markdown:manual,updatedAt:manualUpdatedAt,verification:"운영 문서 · 검증 기록은 P8-02",deployment:`${c.env.OPERATIONS_ENVIRONMENT??"미연결"} · version ${z.uuid().safeParse(c.env.CF_VERSION_METADATA?.id).success?c.env.CF_VERSION_METADATA!.id:"미연결"}`})));
 operationsRoutes.get("/api/admin/manual/future/member-auth",c=>c.json(success({markdown:memberAuth,updatedAt:"2026-10-03",verification:"향후 검토 문서",deployment:`${c.env.OPERATIONS_ENVIRONMENT??"미연결"} · version ${z.uuid().safeParse(c.env.CF_VERSION_METADATA?.id).success?c.env.CF_VERSION_METADATA!.id:"미연결"}`})));
 for(const path of paths)operationsRoutes.all(path,c=>c.json(failure({code:"METHOD_NOT_ALLOWED",message:"지원하지 않는 요청 방식입니다.",requestId:c.get("requestId")}),405));
 operationsRoutes.onError((error,c)=>{

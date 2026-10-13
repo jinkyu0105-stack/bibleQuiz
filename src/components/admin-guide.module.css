@@ -61,3 +61,10 @@
  .toolCopy strong, .toolCopy .description { grid-column: auto; grid-row: auto; }
  .toolBody { padding: 20px 16px; }
 }
+.help > summary { color: var(--ui-guide); font-size: 14px; }
+.help .number { color: var(--ui-guide); background: var(--ui-guide-bg); border-color: transparent; }
+.help .steps { gap: 24px; }
+.help .steps p { font-size: 14px; line-height: 1.85; margin-top: 8px; }
+.toolCopy .description { max-width: 62ch; word-break: keep-all; line-height: 1.8; }
+.toggle { color: var(--ui-action); }
+@media(forced-colors: active) { .help .number { color: CanvasText; background: Canvas; border-color: CanvasText; } }

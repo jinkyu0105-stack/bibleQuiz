@@ -71,7 +71,8 @@ test("admin destinations explain their next action and empty states without muta
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.locator(".admin-main").screenshot({ path: info.outputPath(`${path!.split("/").pop()}-guide.png`) });
   }
-  await page.getByRole("link", { name: "문의 답변·삭제 요청", exact: true }).click();
+  await expect(page.getByRole("navigation", { name: "자주 찾는 운영 작업" })).toHaveCount(0);
+  await page.goto("/admin/privacy-requests");
   await page.locator("summary").filter({hasText:"사용 방법"}).click();
   await expect(page.getByText(/상태 변경만으로 기록은 삭제되지 않습니다/)).toBeVisible();
   await page.goto("/admin/submissions");
