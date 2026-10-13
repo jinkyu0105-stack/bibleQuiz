@@ -2,6 +2,8 @@
 
 ## 현재 작업과 Git
 
+최신 변경은 `fa6dbc3` / clean에서 시작한 월간 비용 안내의 세 소제목 구분이다. 기존 상황 구분 CSS를 해당 주제에도 적용했다. 실제 네 시간대 PC1440/모바일390의8상태·구분선3개·넘침/pageerror/API 쓰기0과 문서 링크/diff 검사를 확인했다. CSS만 바뀌어 기존 기능 검사·lint/typecheck/build는 반복하지 않았다. 로컬 커밋 제목은 `Separate monthly cost guide sections`이며 다음은 같은 P9-23 화면 확인이다.
+
 최신 후속 보정은 `c50e701` / main / clean에서 시작한 ‘오류가 났을 때’의 문단 구분이다. 네 상황 사이에 선·여백을 추가하고 같은 상황의 문단은 가까이 묶었다. `Separate troubleshooting guide sections` 로컬 커밋으로 보존한다. 관련 PC/모바일 E2E6건·lint/typecheck·실제 네 시간대8상태·diff 검사 통과. 본문/기능/자료 변경과 push/배포는 없다. 첫 시각 확인 스크립트의 제목 선택 범위 보정은 [작업 기록](work/P9-23.md#오류-안내의-문단-구분-보정)에 구별했다. 다음은 같은 P9-23 사용자 화면 확인이며 세션을 유지한다. 아래는 기반 구현 인계다.
 
 **P9-23 관리자 안내·문구·의미 색상 — 로컬 완료.** main의 `5c2e4ab` / clean에서 후속 요청인 문구 전반 검토, 다섯 의미 색상, 공식 회사 로고, 목차 호버와 말풍선 디자인, 직선 잔디 선 굵기를 반영했다. 경로는 `/home/onegem/work/bibleQuiz`. 이 문서를 포함해 `Refine admin copy, semantic colours and help visuals` 제목의 로컬 커밋으로 보존한다. 정확한 해시와 잔여 변경은 `git log -1`·`git status --short`로 확인한다. push·배포·실제 자료 변경은 없다.
