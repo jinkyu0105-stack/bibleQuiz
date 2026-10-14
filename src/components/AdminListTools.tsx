@@ -1,7 +1,10 @@
 import type { ComponentProps, ReactNode } from "react";
 import { Button, ButtonLink } from "./Button";
-import { AdminTooltip } from "./AdminHelp";
+import { AdminConcepts, AdminLabel, AdminTooltip } from "./AdminHelp";
 import { AdminIcon, type AdminIconName } from "./AdminIcon";
+import { AdminScreenshots } from "./AdminScreenshots";
+import type { AdminTerm } from "../config/admin-help";
+import type { AdminScreenshotId } from "../config/admin-screenshots";
 import styles from "./admin-list-tools.module.css";
 
 /** The same labelled, circular control is used by every admin list. */
@@ -24,4 +27,22 @@ export function AdminFilterTabs<T extends string>({ label, options, value, onCha
     </div>
     {children && <div className={styles.controls}>{children}</div>}
   </div>;
+}
+
+/** Compact orientation for the three boards; detailed guidance remains one disclosure away. */
+export function AdminBoardHeader({ title, description, actions, terms, screenshots }: {
+  title: string; description: string; actions?: ReactNode;
+  terms: readonly AdminTerm[]; screenshots: readonly AdminScreenshotId[];
+}) {
+  return <header className={styles.boardHeader}>
+    <div className={styles.heading}>
+      <h2><AdminLabel text={title}/></h2>
+      {actions && <div className={styles.headingActions}>{actions}</div>}
+      <p>{description}</p>
+    </div>
+    <details className={styles.guide}>
+      <summary><AdminIcon name="book"/><span>용어·화면 안내</span><AdminIcon name="chevron"/></summary>
+      <div className={styles.guideBody}><AdminConcepts terms={terms}/><AdminScreenshots ids={screenshots} compact/></div>
+    </details>
+  </header>;
 }

@@ -5,6 +5,7 @@ import { adminScreenshots } from '../../src/config/admin-screenshots';
 test('admin concepts work with hover, keyboard, touch and dismissal without writes', async ({ page }, info) => {
   const writes=await mockAdminGuide(page);
   await page.goto('/admin/submissions?quiz=published-example');
+  await page.locator('summary').filter({hasText:'용어·화면 안내'}).click();
   const term=page.getByRole('button',{name:'개인정보 삭제',exact:true}).first();
   if(!info.project.use.isMobile) {
     await term.hover();
@@ -144,6 +145,8 @@ test('all admin destinations retain headings, restrained emoji and contextual co
     await page.goto(url!);
     const heading=page.getByRole('heading',{name:title!,exact:true}).first();
     await expect(heading).toBeVisible();
+    const guide=page.locator('summary').filter({hasText:'용어·화면 안내'});
+    if(await guide.count())await guide.click();
     await expect(heading.locator('[aria-hidden="true"]').first()).toContainText(/\p{Extended_Pictographic}/u);
     await page.getByRole('button',{name:term!,exact:true}).first().focus();
     await expect(page.getByRole('tooltip')).toBeVisible();

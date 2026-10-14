@@ -13,22 +13,26 @@ async function circularRefresh(button: Locator) {
   await expect(button).toHaveText('');
 }
 
-test('record boards keep metadata compact, expose one tool and preserve a reason across switches',async({page},info)=>{
+test('record boards open answers beside management and preserve drafts when collapsed',async({page},info)=>{
   const writes=await mockAdminGuide(page);
   await page.goto('/admin/submissions?quiz=published-example');
   const row=page.locator('[data-admin-record]').first();await expect(row).toContainText('연습 참여자');
   await circularRefresh(page.getByRole('button',{name:'제출 목록 새로고침',exact:true}));
   const category=row.getByText('어린이',{exact:true}),state=row.getByText('공개',{exact:true});
   const a=await category.boundingBox(),b=await state.boundingBox();expect(a&&b&&Math.abs(a.y-b.y)).toBeLessThan(2);
-  expect((await row.boundingBox())!.height).toBeLessThan(info.project.name.includes('mobile')?280:190);
-  const manage=row.getByRole('button',{name:'공개 상태·개인정보 관리',exact:true});
-  await manage.focus();await page.keyboard.press('Enter');await expect(manage).toHaveAttribute('aria-expanded','true');
+  expect((await row.boundingBox())!.height).toBeLessThan(info.project.name.includes('mobile')?130:90);
+  const summary=row.locator('summary').first(),disclosure=row.locator('details').first();
+  await expect(row.getByLabel('처리 사유')).toBeHidden();
+  await summary.focus();await page.keyboard.press('Enter');await expect(disclosure).toHaveAttribute('open','');
   await row.getByLabel('처리 사유').fill('입력 유지 확인');
-  await row.getByRole('button',{name:'실제 제출 답안',exact:true}).click();
-  await expect(row.getByLabel('처리 사유')).toBeHidden();await expect(row.getByRole('region',{name:'실제 제출 답안'})).toContainText('연습');
-  await manage.click();await expect(row.getByLabel('처리 사유')).toHaveValue('입력 유지 확인');
-  await expect(row.getByRole('region',{name:'실제 제출 답안'})).toBeHidden();
-  await expect(row.getByRole('region')).toHaveCount(1);
+  const answers=row.getByRole('region',{name:'실제 제출 답안'}),manage=row.getByRole('region',{name:'공개 상태·개인정보 관리'});
+  await expect(answers).toContainText('연습');await expect(manage).toBeVisible();
+  const left=await answers.boundingBox(),right=await manage.boundingBox();
+  if(info.project.name.includes('mobile'))expect(right!.y).toBeGreaterThan(left!.y+left!.height);
+  else expect(right!.x).toBeGreaterThan(left!.x+left!.width);
+  await summary.focus();await page.keyboard.press('Space');await expect(disclosure).not.toHaveAttribute('open','');
+  await expect(row.getByLabel('처리 사유')).toBeHidden();
+  await page.keyboard.press('Enter');await expect(row.getByLabel('처리 사유')).toHaveValue('입력 유지 확인');
   await page.setViewportSize({width:320,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   expect(writes).toEqual([]);
 });
@@ -43,7 +47,7 @@ test('quiz and inbox filters share a full-width baseline and circular refresh',a
     const selected=tabs.locator('[aria-pressed=true]');await expect(selected).toHaveCSS('border-top-left-radius','4px');
     await tabs.getByRole('button').last().click();await expect(tabs.getByRole('button').last()).toHaveAttribute('aria-pressed','true');
   }
-  const row=page.locator('[data-admin-record]').first(),reply=row.getByRole('button',{name:'답변 작성',exact:true});
+  const row=page.locator('[data-admin-record]').first(),reply=row.locator('summary').first();
   await reply.click();await row.getByLabel('관리자 답변').fill('입력한 답변 유지');await reply.click();await reply.click();await expect(row.getByLabel('관리자 답변')).toHaveValue('입력한 답변 유지');
   await page.setViewportSize({width:320,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   expect(writes).toEqual([]);

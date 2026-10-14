@@ -99,8 +99,8 @@ test('submission operations confirm the selected quiz, refresh records and remov
     return route.fulfill({json:{data:{outcome:'changed',status,submissionId:'submission',...(status==='deleted'?{deletedAt:at}:{})}}});
   });
   page.on('dialog',async dialog=>{expect(dialog.message()).toContain('이번 주 합성 설교');expect(dialog.message()).toContain('어린이');await dialog.accept();});
-  await page.goto('/admin/submissions?quiz=weekly');await page.getByRole('button',{name:'공개 상태·개인정보 관리',exact:true}).click();await page.getByLabel('처리 사유').fill('합성 운영 조치');await page.getByRole('button',{name:'내용 확인 후 처리'}).click();
-  await expect(page.locator('.admin-main li header').getByText('숨김',{exact:true})).toBeVisible();await page.getByRole('button',{name:'내용 확인 후 처리'}).click();await expect(page.locator('.admin-main li header').getByText('공개',{exact:true})).toBeVisible();
+  await page.goto('/admin/submissions?quiz=weekly');await page.locator('[data-admin-record] > details > summary').first().click();await page.getByLabel('처리 사유').fill('합성 운영 조치');await page.getByRole('button',{name:'내용 확인 후 처리'}).click();
+  await expect(page.locator('[data-admin-record] > details > summary').getByText('숨김',{exact:true})).toBeVisible();await page.getByRole('button',{name:'내용 확인 후 처리'}).click();await expect(page.locator('[data-admin-record] > details > summary').getByText('공개',{exact:true})).toBeVisible();
   await page.getByLabel('처리할 작업').selectOption('delete');await page.getByRole('button',{name:'내용 확인 후 처리'}).click();
   await expect(page.getByRole('heading',{name:'삭제된 제출',exact:true})).toBeVisible();await expect(page.getByText('합성 소감',{exact:true})).toHaveCount(0);await expect(page.getByRole('button',{name:'내용 확인 후 처리'})).toHaveCount(0);
 });
@@ -115,7 +115,7 @@ test('public receipt survives reload and only its processing status is shown; ad
   let status='received',response:string|null=null,version=at;
   await page.route('**/api/**privacy-requests**',async route=>{const p=new URL(route.request().url()).pathname;if(p.startsWith('/api/admin/')){if(route.request().method()==='PATCH'){const body=route.request().postDataJSON();expect(body.expectedUpdatedAt).toBe(version);status=body.status;response=body.adminResponse;version='2026-10-02T00:00:00.000Z';}return route.fulfill({json:{data:{items:[{id:'11111111-1111-4111-8111-111111111111',requestType:'delete_submission',quizSlug:'2026-10-01-abc234',submittedName:'합성 요청자',message:'합성 비공개 설명',status,adminResponse:response,createdAt:at,updatedAt:version}]}}});}return route.fulfill({json:{data:{requestType:'delete_submission',createdAt:at,status,adminResponse:response}}});});
   await page.goto('/privacy-requests');await page.getByRole('button',{name:'내 문의 1 처리 상태 보기'}).click();await expect(page.getByText('아직 관리자 답변이 없습니다.',{exact:true})).toBeVisible();await expect(page.getByText('합성 비공개 설명')).toHaveCount(0);
-  await page.goto('/admin/privacy-requests');await page.getByRole('button',{name:'답변 작성',exact:true}).click();await page.getByRole('combobox',{name:'처리 상태',exact:true}).selectOption('resolved');await page.getByLabel('관리자 답변').fill('요청한 조치를 확인했습니다.');await page.getByRole('button',{name:'상태·답변 저장'}).click();
+  await page.goto('/admin/privacy-requests');await page.locator('[data-admin-record] > details > summary').first().click();await page.getByRole('combobox',{name:'처리 상태',exact:true}).selectOption('resolved');await page.getByLabel('관리자 답변').fill('요청한 조치를 확인했습니다.');await page.getByRole('button',{name:'상태·답변 저장'}).click();
   await page.goto('/privacy-requests');await page.getByRole('button',{name:'내 문의 1 처리 상태 보기'}).click();await expect(page.getByText('요청한 조치를 확인했습니다.',{exact:true})).toBeVisible();await expect(page.getByText('합성 요청자')).toHaveCount(0);
 });
 test('public intake retries the same lost-response request, stores receipt and restores it after reload',async({page})=>{

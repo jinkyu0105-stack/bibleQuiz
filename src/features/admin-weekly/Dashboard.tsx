@@ -1,7 +1,6 @@
-import { AdminConcepts, AdminEmoji, AdminLabel, AdminTooltip } from "../../components/AdminHelp";
-import { AdminFilterTabs, AdminRefreshButton, AdminIconLink } from "../../components/AdminListTools";
+import { AdminEmoji, AdminLabel, AdminTooltip } from "../../components/AdminHelp";
+import { AdminBoardHeader, AdminFilterTabs, AdminRefreshButton, AdminIconLink } from "../../components/AdminListTools";
 import { AdminIcon } from "../../components/AdminIcon";
-import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ButtonLink } from "../../components/Button";
@@ -49,12 +48,7 @@ export function Component() {
   const rows = items.filter(q => (filter === "all" || (filter === "draft" ? isDraft(q) : q.status === filter)) && `${q.title} ${q.sermonDate}`.includes(search.trim()));
   const due = cleanup?.items.filter(q => q.state === "blocked" || (q.state !== "purged" && q.dueAt && Date.parse(q.dueAt) - checkedAt <= 86_400_000)) ?? [];
   return <div className={styles.page}>
-    <header className={styles.header}>
-      <div><h2><AdminLabel text="퀴즈 관리"/></h2><p>퀴즈를 준비하고, 공개와 참여를 관리하세요.</p></div>
-      <ButtonLink variant="primary" to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>
-    </header>
-    <div className={styles.quickHelp}><AdminConcepts terms={["초안", "발행", "자동 선택", "대표 지정"]}/>
-    <AdminScreenshots ids={["dashboard"]} compact/></div>
+    <AdminBoardHeader title="퀴즈 관리" description="퀴즈를 준비하고, 공개와 참여를 관리하세요." terms={["초안", "발행", "자동 선택", "대표 지정"]} screenshots={["dashboard"]} actions={<ButtonLink variant="primary" to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>}/>
     {message && <p className={styles.alert} role="alert">{message}</p>}
     <div className={styles.overview} aria-label="운영 요약">
       <button type="button" onClick={() => setFilter("published")}><span><AdminEmoji>📣</AdminEmoji>공개 중</span><strong>{data ? published.length : "—"}</strong><span aria-hidden="true">↗</span></button>
@@ -62,7 +56,6 @@ export function Component() {
       <Link data-tone="attention" to="/admin/privacy-requests"><span><AdminEmoji>💬</AdminEmoji>답변 대기</span><strong>{data?.unansweredCount ?? "—"}</strong><span aria-hidden="true">↗</span></Link>
     </div>
     {data && <section className={styles.featured} aria-labelledby="home-quiz-heading">
-      <div className={styles.homeMark} aria-hidden="true">⌂</div>
       <div className={styles.featuredCopy}><span className={styles.caption}><AdminEmoji>📡</AdminEmoji>Live</span>
         <h3 id="home-quiz-heading">{featured?.title ?? "아직 공개된 퀴즈가 없습니다"}</h3>
         <p>{featured ? `${date(featured.sermonDate)} · ${featured.status === "archived" ? "지난 퀴즈" : "공개 중"}${data.homeQuiz?.selection === "automatic" ? " · 자동 선택" : " · 대표 지정"}` : "준비한 퀴즈를 발행하면 이곳에 표시됩니다."}</p>
@@ -97,7 +90,7 @@ export function Component() {
         })}</ul></>}
 
     </section>
-    {due.length > 0 && <details className={styles.cleanup}><summary><AdminLabel text="초안 보관 알림"/> <span>{due.length}건</span></summary><p>본문 정리 예정이거나 확인이 필요한 초안입니다.</p><ul>{due.map(q => <li key={q.sermonId}><span>{q.title}</span><span>{q.state === "blocked" ? "확인 필요" : q.dueAt ? time(q.dueAt) : "시각 미확인"}</span></li>)}</ul><Link to="/admin/tools#cleanup">보관 현황 열기 →</Link></details>}
+    {due.length > 0 && <details className={styles.cleanup}><summary><span><AdminLabel text="초안 보관 알림"/></span><span>{due.length}건</span></summary><p>본문 정리 예정이거나 확인이 필요한 초안입니다.</p><ul>{due.map(q => <li key={q.sermonId}><span>{q.title}</span><span>{q.state === "blocked" ? "확인 필요" : q.dueAt ? time(q.dueAt) : "시각 미확인"}</span></li>)}</ul><Link to="/admin/tools#cleanup">보관 현황 열기 →</Link></details>}
     <footer className={styles.footer}><Link data-tone="guide" to="/admin/manual">퀴즈 운영이 처음이신가요? <span>사용 안내 ↗</span></Link><Link to="/admin/operations">비용·백업 확인 ↗</Link></footer>
   </div>;
 }

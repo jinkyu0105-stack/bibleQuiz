@@ -12,7 +12,7 @@ test("quiz manager shows the actual automatic home quiz and separates editing, p
  await expect(page.getByText("아직 공개된 퀴즈가 없습니다")).toHaveCount(0);
  const homeTitle=page.locator("#home-quiz-heading");
  expect((await homeTitle.boundingBox())!.width).toBeGreaterThan(150);
- await expect(homeTitle).toHaveCSS("font-family",/Noto Serif KR/);
+ await expect(homeTitle).toHaveCSS("font-family",/Noto Sans KR/);
  await expect(page.getByRole("link",{name:"초안 편집",exact:true})).toHaveAttribute("href","/admin/quiz/demo-draft");
  await page.getByRole("group",{name:"퀴즈 상태"}).getByRole("button",{name:/지난 퀴즈/}).click();
  await expect(library.getByRole("article")).toHaveCount(2);
@@ -50,7 +50,7 @@ test("inbox and participation records reveal actions on demand and retain unfini
  await page.goto("/admin/privacy-requests");
  await expect(page.getByRole("heading",{name:"연습 참가자 하늘"})).toBeVisible();
  await expect(page.getByLabel("관리자 답변")).toBeHidden();
- const reply=page.getByRole('button',{name:'답변 작성',exact:true});
+ const reply=page.locator('[data-admin-record] > details > summary').first();
  await reply.focus();await page.keyboard.press("Enter");
  await page.getByLabel("관리자 답변").fill("처리 전 확인할 내용");
  await expect(page.getByText("상태를 ‘처리 완료’로 바꾸는 것만으로 제출 기록이 삭제되지는 않습니다.")).toBeVisible();
