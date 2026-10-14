@@ -35,6 +35,7 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
   await expect(page.getByRole("heading",{name:"퀴즈 관리",exact:true})).toHaveCSS("font-family", /Noto Sans KR/);
   await page.locator(".admin-main").screenshot({ path: info.outputPath("admin-buttons-day.png") });
   const sidebar=page.locator("aside[data-glass-panel=standard]"),navigation=page.getByRole("navigation",{name:"관리자 운영 메뉴"});
+  await expect(sidebar).toHaveCSS('background-color',await page.locator('.admin-main').evaluate(node=>getComputedStyle(node).backgroundColor));
   const toggle=sidebar.locator("summary").filter({hasText:"관리자 운영 메뉴"});
   if (isMobile) {
     await toggle.focus(); await page.keyboard.press("Enter"); await expect(navigation).toBeVisible();

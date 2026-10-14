@@ -45,6 +45,11 @@ test('quiz and inbox indexes stay joined to the list while filtering',async({pag
     const layout=await toolbar.evaluate(n=>({width:n.getBoundingClientRect().width,parent:n.parentElement!.getBoundingClientRect().width,border:getComputedStyle(n).borderBottomWidth}));
     expect(layout.width).toBeGreaterThan(layout.parent-2);expect(layout.border).toBe('1px');
     const selected=tabs.locator('[aria-pressed=true]');await expect(selected).toHaveCSS('border-top-left-radius','4px');
+    const preview=tabs.getByRole('button').nth(1);
+    await preview.hover();
+    await expect(preview).toHaveCSS('background-color',await page.locator('[data-admin-indexed-panel]').evaluate(n=>getComputedStyle(n).backgroundColor));
+    const afterHover=await preview.boundingBox(),panel=await page.locator('[data-admin-indexed-panel]').boundingBox();
+    expect(Math.abs(panel!.y-afterHover!.y-afterHover!.height)).toBeLessThanOrEqual(1);
     await tabs.getByRole('button').last().click();await expect(tabs.getByRole('button').last()).toHaveAttribute('aria-pressed','true');
     await expect(selected).toHaveCSS('background-color',await page.locator('[data-admin-indexed-panel]').evaluate(n=>getComputedStyle(n).backgroundColor));
     const joined=await page.locator('[data-admin-indexed-board]').evaluate(n=>{

@@ -1,8 +1,8 @@
-.sidebar:global(.glass) { position: sticky; top: 116px; display: flex; flex-direction: column; min-width: 0; padding: 24px 14px 16px; border-radius: 24px; }
-.sidebar .eyebrow { margin: 0 14px; color: var(--muted); font-size: 12px; }
+.sidebar:global(.glass) { --nav-action-ink: color-mix(in srgb,var(--ui-action) 50%,var(--ink)); position: sticky; top: 116px; display: flex; flex-direction: column; min-width: 0; padding: 24px 14px 16px; border-radius: 24px; background: var(--glass-clear); }
+.sidebar .eyebrow { margin: 0 14px; color: color-mix(in srgb,var(--muted) 60%,var(--ink)); font-size: 12px; }
 .sidebar .title { margin: 5px 14px 0; font-family: 'Noto Sans KR',sans-serif !important; font-size: 24px; font-weight: 700 !important; line-height: 1.5; letter-spacing: -.045em; color: var(--ink); }
 .menu { margin-top: 24px; }
-.sidebar .groupTitle { margin: 0 14px 10px; font-family: 'Noto Sans KR',sans-serif !important; font-size: 13px; font-weight: 700 !important; letter-spacing: 0; color: var(--ui-action) !important; }
+.sidebar .groupTitle { margin: 0 14px 10px; font-family: 'Noto Sans KR',sans-serif !important; font-size: 13px; font-weight: 700 !important; letter-spacing: 0; color: var(--nav-action-ink) !important; }
 .menu > summary, .settings > summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer; min-height: 44px; list-style: none; }
 .menu > summary::-webkit-details-marker, .settings > summary::-webkit-details-marker { display: none; }
 .menu > summary { padding: 10px 14px; font-size: 14px; }
@@ -15,11 +15,11 @@
 .menu nav { position: relative; isolation: isolate; }
 .highlight { position: absolute; top: 0; left: 0; pointer-events: none; z-index: -1; border-radius: 8px; background: var(--ui-action-bg); border-left: 3px solid var(--ui-action); transition: transform .2s ease-out, width .2s ease-out, height .2s ease-out; }
 .nav a { position: relative; }
-.sidebar .nav a[aria-current=page] { color: var(--ui-action); font-weight: 700; }
-.nav a:is(:hover,:focus-visible) { color: var(--ui-action); }
+.sidebar .nav a[aria-current=page] { color: var(--nav-action-ink); font-weight: 700; }
+.nav a:is(:hover,:focus-visible) { color: var(--nav-action-ink); }
 @media (prefers-reduced-motion: reduce) { .highlight { transition: none; } }
 .settings { border-top: 1px solid var(--line); margin-top: 20px; padding-top: 12px; }
-.settings > summary { color: var(--ui-action); font-size: 13px; font-weight: 700; padding: 8px 14px; margin-bottom: 6px; }
+.settings > summary { color: var(--nav-action-ink); font-size: 13px; font-weight: 700; padding: 8px 14px; margin-bottom: 6px; }
 .settings > summary svg { color: var(--muted); }
 .sidebar :is(a, summary):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .menu nav { display: block; padding-block: 0; }
@@ -39,6 +39,7 @@
 }
 @media (max-width: 500px) { .nav { grid-template-columns: 1fr; } .nav a { min-height: 44px; } }
 @media (forced-colors: active) {
+ .sidebar:global(.glass) { background: Canvas; color: CanvasText; }
  .sidebar .nav a[aria-current=page] { color: Highlight; background: Canvas; outline: 2px solid Highlight; outline-offset: -2px; }
  .highlight { background: Canvas; border: 2px solid Highlight; }
  .sidebar .groupTitle, .settings > summary { color: CanvasText; }

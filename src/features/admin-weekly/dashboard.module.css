@@ -1,10 +1,8 @@
 .page { display: grid; gap: 16px; min-width: 0; }
 .statusBar { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; align-items: stretch; min-width: 0; }
-.overview { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); border: 1px solid var(--admin-board-border,var(--line)); border-radius: 8px; background: var(--admin-board-surface,var(--glass-solid)); }
-.overview > :is(button,a) { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; min-height: 84px; min-width: 0; padding: 10px 14px; border: 0; border-radius: 0; background: var(--admin-tone-bg); color: var(--ink); text-decoration: none; transition: background-color .18s ease; }
-.overview > :is(button,a) + :is(button,a) { border-left: 1px solid var(--admin-board-border,var(--line)); }
-.overview > :first-child { border-radius: 7px 0 0 7px; }
-.overview > :last-child { border-radius: 0 7px 7px 0; }
+.overview { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); border-block: 1px solid var(--admin-board-border,var(--line)); background: var(--admin-board-surface,var(--glass-solid)); }
+.overview > :is(button,a) { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; min-height: 84px; min-width: 0; padding: 10px 14px; border: 0; border-radius: 0; background: var(--admin-tone-bg); color: var(--ink); text-decoration: none; transition: background-color .18s ease; }
+.overview > :is(button,a) + :is(button,a)::before { content: ''; position: absolute; left: 0; top: 16px; bottom: 16px; border-left: 1px dashed color-mix(in srgb,var(--ink) 34%,transparent); pointer-events: none; }
 .overview > :is(button,a):is(:hover,:focus-visible,[aria-pressed=true]) { background: color-mix(in srgb,var(--admin-tone) 12%,var(--admin-tone-bg)); }
 .overview > button[aria-pressed=true] { box-shadow: inset 0 -3px var(--admin-tone); }
 .metricLabel { display: inline-flex; align-items: center; gap: 4px; color: var(--muted); font-size: 12px; white-space: nowrap; }

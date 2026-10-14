@@ -49,10 +49,11 @@ test('capture operator guide examples', async ({ page }) => {
     await page.screenshot({path:`public/images/admin-guide/${id}.png`,animations:'disabled',fullPage:true,clip:{x:a.x+scroll.x,y:a.y+scroll.y,width:a.width,height:b.y+b.height-a.y}});
   }
   async function boardShot(id:string) {
-    await page.locator('.admin-main').screenshot({path:`docs/design/phase-9/admin-boards/${id}-actual.png`,animations:'disabled'});
+    const board=page.locator(id==='quiz'?'.admin-layout':'.admin-main');
+    await board.screenshot({path:`docs/design/phase-9/admin-boards/${id}-actual.png`,animations:'disabled'});
     await page.getByRole('button',{name:'밤',exact:true}).click();
     await expect(page.locator('body')).toHaveAttribute('data-time','night');
-    await page.locator('.admin-main').screenshot({path:`docs/design/phase-9/admin-boards/${id}-night.png`,animations:'disabled'});
+    await board.screenshot({path:`docs/design/phase-9/admin-boards/${id}-night.png`,animations:'disabled'});
   }
   const dashboardOnly=process.env.BIBLEQUIZ_CAPTURE_ADMIN_GUIDE_ONLY === 'dashboard';
   await open('/admin');
