@@ -3,6 +3,7 @@ import { GlassPanel } from "../../components/glass/GlassPanel";
 import { GlassArrow } from "../../components/glass/GlassArrow";
 import { GlassLink } from "../../components/glass/GlassLink";
 import { useGlass } from "../../components/glass/useGlass";
+import { HeroMercury } from "../../components/sky/HeroMercury";
 import { RecentArchive } from "../archive/RecentArchive";
 import { Component as PublicQuiz, PublicQuizContent } from "./public-page";
 import type { QuizLoadResult } from "./public-loader";
@@ -21,6 +22,7 @@ function HomeContent() {
   const quiz = result.state === "ready" ? result.data.quiz : null;
   return <div id="home-view">
     <section className="sky-home-hero" aria-labelledby="home-title">
+      <HeroMercury />
       <div className="hero-content"><p className="hero-kicker">한 주의 말씀을, 함께.</p><h1 id="home-title">말씀을 가까이.<br />일상에 깊이.</h1><p className="hero-description">듣고, 기억하고, 함께 나누는 시간.<br />이번 주 말씀을 성경퀴즈로 만나세요.</p><Link ref={cta} className="button hero-cta glass glass-clear" data-glass-lens="" data-glint="" to={weeklyTarget}>이번 주 퀴즈 <span aria-hidden="true">↗</span></Link></div>
       <Link className="descent-cue" to={weeklyTarget}><span>조금 더 아래로</span><span aria-hidden="true">↓</span></Link>
       <p className="hero-side-note">어린이부터 장년까지<br />같은 말씀, 함께하는 기쁨</p>
