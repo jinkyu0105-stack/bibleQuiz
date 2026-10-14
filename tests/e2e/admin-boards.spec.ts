@@ -38,6 +38,7 @@ test('record boards open answers beside management and preserve drafts when coll
 });
 
 test('quiz and inbox indexes stay joined to the list while filtering',async({page})=>{
+  await page.emulateMedia({reducedMotion:'no-preference'});
   const writes=await mockAdminGuide(page);
   for(const [path,label,refresh] of [['/admin','퀴즈 상태','운영 상태 새로고침'],['/admin/privacy-requests','문의 상태 필터','문의 목록 새로고침']]){
     await page.goto(path!);await circularRefresh(page.getByRole('button',{name:refresh!,exact:true}));
@@ -50,6 +51,11 @@ test('quiz and inbox indexes stay joined to the list while filtering',async({pag
     await expect(preview).toHaveCSS('background-color',await page.locator('[data-admin-indexed-panel]').evaluate(n=>getComputedStyle(n).backgroundColor));
     const afterHover=await preview.boundingBox(),panel=await page.locator('[data-admin-indexed-panel]').boundingBox();
     expect(Math.abs(panel!.y-afterHover!.y-afterHover!.height)).toBeLessThanOrEqual(1);
+    // Catch the global 1px button press effect with motion enabled and the pointer held down.
+    const relativeTop=()=>preview.evaluate(n=>n.getBoundingClientRect().top-n.parentElement!.getBoundingClientRect().top);
+    const restingTop=await relativeTop();
+    await page.mouse.down();expect(await relativeTop()).toBeCloseTo(restingTop,1);
+    await page.mouse.up();expect(await relativeTop()).toBeCloseTo(restingTop,1);
     await tabs.getByRole('button').last().click();await expect(tabs.getByRole('button').last()).toHaveAttribute('aria-pressed','true');
     await expect(selected).toHaveCSS('background-color',await page.locator('[data-admin-indexed-panel]').evaluate(n=>getComputedStyle(n).backgroundColor));
     const joined=await page.locator('[data-admin-indexed-board]').evaluate(n=>{

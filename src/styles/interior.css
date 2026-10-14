@@ -132,6 +132,8 @@ body[data-time=night] .admin-layout {
 @media (forced-colors: active) { .sky-app:not(.home-shell) .admin-main .secondary-button:not(:disabled):not([aria-disabled=true]) { color: ButtonText; } }
 
 /* Clear shells frame brighter reading surfaces, including a neutral slate at night. */
+.sky-app .admin-main:has(> :is([data-admin-board], [data-admin-clear])) { --muted: color-mix(in srgb,var(--ink) 88%,var(--glass-solid)); }
+.sky-app .admin-main:has(> [data-admin-clear]) { background: var(--glass-clear); }
 .sky-app .admin-main:has(> [data-admin-board]) {
   --admin-board-solid: var(--glass-solid);
   --admin-board-surface: color-mix(in srgb,var(--admin-board-solid) 90%,transparent);
@@ -155,5 +157,6 @@ body[data-transparency=reduced] .admin-main:has(> [data-admin-board]) { --admin-
   body[data-time] .admin-main:has(> [data-admin-board]) { --admin-board-surface: var(--admin-board-solid); }
 }
 @media (forced-colors: active) {
+  body[data-time] .admin-main:has(> [data-admin-clear]) { --muted: CanvasText; background: Canvas; }
   body[data-time] .admin-main:has(> [data-admin-board]) { --muted: CanvasText; --admin-board-link: LinkText; --admin-board-surface: Canvas; --admin-board-detail: Canvas; --admin-board-hover: Canvas; --admin-board-border: CanvasText; background: Canvas; }
 }

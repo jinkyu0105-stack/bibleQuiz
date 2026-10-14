@@ -200,7 +200,7 @@ function BibleReferenceTool() {
 }
 
 export function Component() {
-  return <div className={styles.tools}>
+  return <div className={styles.tools} data-admin-clear>
     <AdminIntro terms={["초안", "발행"]} screenshots={["settings", "input"]} title="수정·보관 도구" description="발행한 퀴즈 수정부터 설교 자료 점검까지, 필요한 도구를 선택하세요.">
       <ButtonLink to="/admin">퀴즈 목록으로</ButtonLink>
     </AdminIntro>

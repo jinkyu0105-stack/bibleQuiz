@@ -2,20 +2,20 @@
 
 P9-23 사용자 요청의 확대 가능한 설명용 이미지다. 새 디자인 시안이 아닌 **현재 React 컴포넌트의 실제 렌더링**이며, `tests/e2e/fixtures/admin-guide.ts`의 가상 연습 자료만 표시한다. 실제 운영의 결과·자료·백업 상태·비용을 캡처하지 않았다. API는 브라우저 안에서 합성 GET으로 응답하고 쓰기는 차단한다. PNG는 `public/images/admin-guide/`에 보존한다.
 
-2026-10-14 P9-23 맞닿은 인덱스와 돌출 없는 상단 강조선을 반영해 세 게시판을 다시 촬영했다. dashboard/privacy 두 PNG가 변경됐고 나머지6종은 동일하다. 비교 페이지용 퀴즈 촬영본에는 투명 사이드바까지 함께 포함한다. 게시판 예시는 같은 캡처 경로의 `boards` 모드에서 여러 건의 합성 자료로 만들며, 실제 DB를 바꾸지 않는다.
+2026-10-14 P9-23 도구 메뉴의 투명도와 보조 글자 대비를 반영해8종을 다시 촬영했다. dashboard/filters/operations/privacy/submissions5종이 변경됐고 input/review/settings3종은 동일하다. 비교 페이지용 퀴즈 촬영본에는 투명 사이드바까지 함께 포함한다. 게시판 예시는 같은 캡처 경로의 `boards` 모드에서 여러 건의 합성 자료로 만들며, 실제 DB를 바꾸지 않는다.
 
 퀴즈 목록·설교 정보·요약/난도 검수·발행 후 설정·참여 조치·문의 답변·필터 시험·비용/백업의 8개 설명에 사용한다. 표시 위치/제목/대체 텍스트/설명은 `src/config/admin-screenshots.ts`, 확대 기능은 `src/components/AdminScreenshots.tsx`를 따른다.
 
 | 파일 | 해상도 | 크기(bytes) |
 |---|---|---|
-| dashboard.png | 990 × 364 | 64,518 |
-| filters.png | 990 × 359 | 54,000 |
+| dashboard.png | 990 × 364 | 64,551 |
+| filters.png | 990 × 359 | 70,564 |
 | input.png | 990 × 568 | 93,700 |
-| operations.png | 990 × 335 | 46,064 |
-| privacy.png | 988 × 410 | 36,541 |
+| operations.png | 990 × 335 | 60,686 |
+| privacy.png | 988 × 410 | 36,544 |
 | review.png | 990 × 794 | 112,457 |
 | settings.png | 990 × 406 | 74,805 |
-| submissions.png | 988 × 484 | 48,650 |
+| submissions.png | 988 × 484 | 48,657 |
 
 재생성은 프로젝트 루트에서 명시적으로 실행한다. 기존 로컬 연습 DB를 바꾸지 않는 격리 E2E 서버를 사용한다.
 

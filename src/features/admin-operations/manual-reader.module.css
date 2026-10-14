@@ -18,7 +18,7 @@
 .article { min-width: 0; }
 .article > div { max-width: none; }
 .articleHeader { margin-bottom: 24px; }
-.articleHeader > p:first-child { color: var(--admin-tone, var(--muted)); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+.articleHeader > p:first-child { color: color-mix(in srgb,var(--admin-tone, var(--muted)) 50%,var(--ink)); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
 .articleHeader h3 { display: flex; align-items: center; gap: 12px; font-size: clamp(23px,2vw,26px) !important; line-height: 1.55 !important; margin: 0 !important; word-break: keep-all; scroll-margin-top: 145px; }
 .articleHeader h3 > svg { flex: 0 0 28px; width: 28px; height: 28px; color: var(--ui-guide); }
 .articleHeader h3:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px; border-radius: 4px; }

@@ -13,9 +13,8 @@
 .nav svg { width: 20px; height: 20px; flex: 0 0 20px; }
 /* A flat selection shape follows the pointer or keyboard focus without a glass lens. */
 .menu nav { position: relative; isolation: isolate; }
-.highlight { position: absolute; top: 0; left: 0; pointer-events: none; z-index: -1; border-radius: 8px; background: var(--ui-action-bg); transition: transform .2s ease-out, width .2s ease-out, height .2s ease-out; }
-/* Keep the accent straight and constant-width, independent of the rounded background. */
-.highlight::before { content: ''; position: absolute; inset: 8px auto 8px 0; border-left: 3px solid var(--ui-action); }
+.highlight { position: absolute; top: 0; left: 0; pointer-events: none; z-index: -1; border: 1px solid color-mix(in srgb,var(--ui-action) 28%,transparent); border-radius: 8px; background: var(--ui-action-bg); transition: transform .2s ease-out, width .2s ease-out, height .2s ease-out; }
+:global(body[data-time=night]) .highlight { background: #555b63; border-color: rgb(218 226 237 / .38); }
 .nav a { position: relative; }
 .sidebar .nav a[aria-current=page] { color: var(--nav-action-ink); font-weight: 700; }
 .nav a:is(:hover,:focus-visible) { color: var(--nav-action-ink); }
@@ -43,7 +42,6 @@
 @media (forced-colors: active) {
  .sidebar:global(.glass) { background: Canvas; color: CanvasText; }
  .sidebar .nav a[aria-current=page] { color: Highlight; background: Canvas; outline: 2px solid Highlight; outline-offset: -2px; }
- .highlight { background: Canvas; border: 2px solid Highlight; }
- .highlight::before { display: none; }
+ :global(body[data-time]) .highlight { background: Canvas; border: 2px solid Highlight; }
  .sidebar .groupTitle, .settings > summary { color: CanvasText; }
 }

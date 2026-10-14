@@ -62,11 +62,8 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
     await target.hover();
     await expect(current).toHaveAttribute("aria-current", "page");
     await expect(navigation.locator('.glass-indicator, [data-glass-convex]')).toHaveCount(0);
-    const accent = await highlight.evaluate(node => {
-      const style = getComputedStyle(node, "::before");
-      return { width: style.borderLeftWidth, radius: style.borderRadius };
-    });
-    expect(accent).toEqual({ width: "3px", radius: "0px" });
+    await expect(highlight).toHaveCSS("border-width", "1px");
+    expect(await highlight.evaluate(node => getComputedStyle(node, "::before").content)).toBe("none");
     await expect.poll(async () => {
       const a = await target.boundingBox(), b = await highlight.boundingBox();
       return a && b ? Math.abs(a.y - b.y) : 999;

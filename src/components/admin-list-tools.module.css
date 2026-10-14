@@ -8,6 +8,8 @@
 .filters button + button { border-left: 0; }
 .filters button:first-child { border-top-left-radius: 4px; }
 .filters button:last-child { border-top-right-radius: 4px; }
+/* A folder stays attached even while the shared button press effect is active. */
+.filters button:active:not(:disabled) { transform: none; }
 .filters button::before { content: ''; position: absolute; inset: 0 0 auto; height: 6px; background: color-mix(in srgb,var(--admin-tone) 24%,transparent); box-shadow: inset 0 1px 0 var(--index-edge-light); transition: background-color .18s ease; }
 .filters button:first-child::before { border-top-left-radius: 3px; }
 .filters button:last-child::before { border-top-right-radius: 3px; }

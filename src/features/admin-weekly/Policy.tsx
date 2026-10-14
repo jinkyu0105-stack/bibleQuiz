@@ -12,7 +12,7 @@ export function Component(){
   const [test,setTest]=useState(''),[testScope,setTestScope]=useState('comment'),[result,setResult]=useState<ReturnType<typeof policyTestResultSchema.parse>|null>(null);
   useEffect(()=>{const controller=new AbortController();void Promise.all(Object.values(paths).map(path=>weeklyRequest(`/api/admin/${path}`,policyListSchema,'GET',undefined,controller.signal))).then(data=>{if(!controller.signal.aborted){setItems(data.flatMap(d=>d.items));setLoaded(true);}}).catch(()=>{if(!controller.signal.aborted)setLoadFailed(true);});return()=>controller.abort();},[attempt]);
   async function mutate(path:string,method:string,body:unknown){if(busy)return;setBusy(true);setMessage('');try{setItems((await weeklyRequest(`/api/admin/${path}`,policyListSchema,method,body)).items);setMessage('필터 목록을 저장했습니다.');return true;}catch(error){setMessage(error instanceof Error?error.message:'저장을 확인하지 못했습니다.');return false;}finally{setBusy(false);}}
-  return <div className={styles.page}><AdminIntro terms={["보호 이름", "금지 문구", "정확한 예외"]} screenshots={["filters"]} title="이름·문구 필터 관리" description="참여자가 입력하는 이름·코멘트·답안에서 허용하지 않을 표현을 관리합니다."/>
+  return <div className={styles.page} data-admin-clear><AdminIntro terms={["보호 이름", "금지 문구", "정확한 예외"]} screenshots={["filters"]} title="이름·문구 필터 관리" description="참여자가 입력하는 이름·코멘트·답안에서 허용하지 않을 표현을 관리합니다."/>
     <AdminSteps steps={[
       {title:"종류 선택",description:"보호할 이름, 금지할 문구, 허용할 예외 중 하나를 고릅니다."},
       {title:"규칙 등록",description:"적용할 문구와 범위를 확인한 뒤 저장합니다."},
