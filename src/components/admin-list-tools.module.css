@@ -1,18 +1,18 @@
 .toolbar { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 16px; border-bottom: 1px solid var(--control-border); min-width: 0; }
 .filters { display: flex; flex-wrap: wrap; align-items: end; gap: 4px; padding-top: 4px; }
-.filters button { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 14px; border: 1px solid var(--line); border-bottom: 0; border-radius: 4px 4px 0 0; background: var(--glass-soft); color: var(--muted); font-size: 13px; line-height: 1.5; transition: transform .18s ease, background-color .18s ease; }
+.filters button { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 9px 14px; border: 1px solid var(--control-border); border-bottom: 0; border-radius: 4px 4px 0 0; background: var(--glass-soft); color: var(--muted); font-size: 13px; line-height: 1.5; transition: transform .18s ease, background-color .18s ease; }
 .filters button::before { content: ''; position: absolute; inset: -1px -1px auto; height: 3px; border-radius: 4px 4px 0 0; background: transparent; }
-.filters button[aria-pressed=true] { background: var(--ui-action-bg); color: var(--ui-action); font-weight: 600; border-color: color-mix(in srgb,var(--ui-action) 40%,var(--line)); }
-.filters button[aria-pressed=true]::before { background: var(--ui-action); }
-.filters button:is(:hover,:focus-visible) { transform: translateY(-4px); color: var(--ui-action); background: var(--ui-action-bg); }
-.filters span { font-size: 12px; font-variant-numeric: tabular-nums; opacity: .85; }
+.filters button[aria-pressed=true] { background: var(--admin-board-surface,var(--glass-solid)); color: var(--ink); font-weight: 600; border-color: var(--admin-tone); }
+.filters button[aria-pressed=true]::before { background: var(--admin-tone); }
+.filters button:is(:hover,:focus-visible) { transform: translateY(-4px); color: var(--ink); background: var(--admin-board-surface,var(--glass-solid)); }
+.filters span { display: inline-flex; justify-content: center; align-items: center; min-width: 22px; min-height: 22px; padding-inline: 5px; border: 1px solid color-mix(in srgb,var(--admin-tone) 24%,transparent); border-radius: 4px; background: var(--admin-tone-bg); color: var(--admin-tone); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .controls { display: flex; align-items: center; gap: 8px; min-width: 0; margin-bottom: 8px; }
 /* One size rule for every refresh and square action; touch keeps a generous target. */
 :global(.sky-app:not(.home-shell) .admin-main) .iconControl:global(.action-button) { --admin-icon-size: 36px; display: inline-flex; justify-content: center; align-items: center; flex: 0 0 var(--admin-icon-size); width: var(--admin-icon-size); height: var(--admin-icon-size); min-width: var(--admin-icon-size); min-height: var(--admin-icon-size); padding: 0; border: 1px solid var(--control-border); border-radius: 8px; color: var(--ui-action); background: var(--glass-field); box-shadow: none; }
 :global(.sky-app:not(.home-shell) .admin-main) .iconControl.refresh:global(.action-button) { border-radius: 50%; }
 .iconControl svg { display: block; width: 18px; height: 18px; flex: 0 0 18px; }
 @media (pointer: coarse) { :global(.sky-app:not(.home-shell) .admin-main) .iconControl:global(.action-button) { --admin-icon-size: 44px; } }
-@media (max-width: 600px) { .toolbar { gap: 8px; } .filters { gap: 3px; } .filters button { padding-inline: 9px; gap: 5px; font-size: 12px; } .controls:has(input) { width: 100%; order: -1; } }
+@media (max-width: 600px) { .toolbar { gap: 8px; } .filters { gap: 3px; } .filters button { padding-inline: 7px; gap: 4px; font-size: 12px; } .filters span { min-width: 20px; min-height: 20px; padding-inline: 4px; } .controls:has(input) { width: 100%; order: -1; } }
 @media (prefers-reduced-motion: reduce) { .filters button { transition: none; } }
 @media (forced-colors: active) { .filters button[aria-pressed=true] { border-color: Highlight; color: Highlight; } .filters button[aria-pressed=true]::before { background: Highlight; } }
 
@@ -30,4 +30,4 @@
 .guideBody { padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--glass-soft); }
 @media (max-width: 600px) { :global(.sky-app:not(.home-shell) .admin-main) .heading h2 { font-size: 23px; } .heading p { font-size: 13px; } .guide > summary { min-height: 44px; } }
 
-@media (max-width: 360px) { .filters button { padding-inline: 5px; gap: 3px; font-size: 11px; } }
+@media (max-width: 360px) { .filters button { padding-inline: 3px; gap: 2px; font-size: 11px; } .filters span { min-width: 0; min-height: 20px; padding-inline: 2px; font-size: 10px; } }

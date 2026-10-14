@@ -4,13 +4,27 @@
 <title>관리자 실제 화면과 생성 시안 비교</title>
 <style>
 body{margin:0;background:#eaf4fa;color:#17334a;font:15px/1.7 system-ui,sans-serif}main{max-width:1320px;margin:auto;padding:28px 20px}h1{font-size:26px;margin:0 0 8px}h2{font-size:21px;margin:0 0 8px}p{margin:8px 0 20px}section{border-top:1px solid #b8cfde;padding:24px 0}a{color:#245ac1}nav{display:flex;flex-wrap:wrap;gap:12px 24px;margin:20px 0}img{display:block;width:100%;height:auto;border:1px solid #b8cfde;background:white;border-radius:8px}figure{margin:0;min-width:0}figcaption{font-weight:600;margin-bottom:10px}.compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}.quiz{max-width:1060px}small{display:block;color:#496376}a:focus-visible{outline:3px solid #245ac1;outline-offset:4px}@media(max-width:850px){.compare{grid-template-columns:1fr}}
-</style>
+.themes{display:flex;gap:6px;margin:18px 0}.themes button{min-height:40px;padding:8px 14px;border:1px solid #8baabe;border-radius:5px;background:transparent;color:inherit;cursor:pointer;font:inherit}.themes button[aria-pressed=true]{background:#245ac1;color:white;border-color:#245ac1}.themes button:focus-visible{outline:3px solid #245ac1;outline-offset:3px}body[data-preview=night]{background:#152839;color:#eaf2fa}body[data-preview=night] a{color:#acc8ff}body[data-preview=night] small{color:#c0d2e6}</style>
 <main>
 <h1>관리자 실제 화면과 생성 시안</h1>
-<p>2026년 10월 14일 적용 화면입니다. 바깥 창은 투명하게, 현황과 목록은 선명한 바탕으로 구분했습니다. 실제 React UI에 연습 자료를 표시해 촬영했으며, 이미지를 누르면 원본을 크게 볼 수 있습니다.</p>
+<p>2026년 10월 14일 적용 화면입니다. 현황 세 칸과 Live를 구분하고, 밤의 목록 바탕을 밝은 회청색으로 조정했습니다. 실제 React UI에 연습 자료를 표시해 촬영했으며, 이미지를 누르면 원본을 크게 볼 수 있습니다.</p>
 <nav aria-label="실제 관리자 화면"><a href="/admin">퀴즈 관리 열기</a><a href="/admin/submissions">참여 기록 열기</a><a href="/admin/privacy-requests">문의·삭제 요청 열기</a></nav>
-<section><h2>퀴즈 관리</h2><p>공개 중·작성 중·답변 대기 현황과 Live 퀴즈를 한 행으로 묶었습니다. 그 아래 게시판에는 설교일·제목·참여 인원·작업 아이콘을 모았습니다.</p><figure class="quiz"><figcaption>실제 화면 · 연습 자료</figcaption><a href="quiz-actual.png"><img src="quiz-actual.png" alt="실제 퀴즈 관리: 한 행의 현황·Live와 설교일 기준 게시판"></a></figure></section>
-<section><h2>참여 기록</h2><p>행을 펼치면 왼쪽에는 답안과 코멘트, 오른쪽에는 처리 폼이 나타납니다. 시안의 정오답 색 대신 실제 제출값을 표시합니다.</p><div class="compare"><figure><figcaption>실제 화면 · 연습 자료</figcaption><a href="submissions-actual.png"><img src="submissions-actual.png" alt="실제 참여 기록: 한 행을 펼친 답안과 관리 폼, 나머지 짧은 행"></a></figure><figure><figcaption>기존 생성 시안 · 배치 참고</figcaption><a href="submissions-reference.png"><img src="submissions-reference.png" alt="참여 기록의 기존 생성 시안"></a></figure></div></section>
-<section><h2>문의·삭제 요청</h2><p>접힌 행에는 이름·분류·상태·날짜와 한 줄 미리보기가 보입니다. 펼치면 전체 원문과 상태·답변 폼을 확인할 수 있습니다.</p><div class="compare"><figure><figcaption>실제 화면 · 연습 자료</figcaption><a href="inquiries-actual.png"><img src="inquiries-actual.png" alt="실제 문의 게시판: 펼친 요청의 상태 선택과 답변 입력, 접힌 나머지 요청"></a></figure><figure><figcaption>기존 생성 시안 · 배치 참고</figcaption><a href="inquiries-reference.png"><img src="inquiries-reference.png" alt="문의 게시판의 기존 생성 시안"></a></figure></div></section>
+<div class="themes" role="group" aria-label="실제 화면 시간대"><button type="button" data-preview-time="day" aria-pressed="true">☀ 낮 화면</button><button type="button" data-preview-time="night" aria-pressed="false">☾ 밤 화면</button></div>
+<p>낮·밤 버튼으로 실제 화면을 바꿔 볼 수 있습니다. 기존 생성 시안 두 장은 낮 배경을 유지합니다.</p>
+<section><h2>퀴즈 관리</h2><p>구분선으로 나눈 현황 세 칸은 숫자가 중심이며, 마우스를 올리면 칸 전체가 채워집니다. Live는 초록 표식과 투명한 바탕으로 구분했습니다. 인덱스의 작은 개수 박스에도 의미별 색을 적용했습니다.</p><figure class="quiz"><figcaption>실제 화면 · 연습 자료</figcaption><a href="quiz-actual.png"><img data-screenshot-day="quiz-actual.png" data-screenshot-night="quiz-night.png" src="quiz-actual.png" alt="실제 퀴즈 관리: 한 행의 현황·Live와 설교일 기준 게시판"></a></figure></section>
+<section><h2>참여 기록</h2><p>행을 펼치면 왼쪽에는 답안과 코멘트, 오른쪽에는 처리 폼이 나타납니다. 점수와 상태를 작은 박스로 구분하고, 실제 제출값은 입력한 칸을 파랑·빈칸을 호박색으로 표시합니다.</p><div class="compare"><figure><figcaption>실제 화면 · 연습 자료</figcaption><a href="submissions-actual.png"><img data-screenshot-day="submissions-actual.png" data-screenshot-night="submissions-night.png" src="submissions-actual.png" alt="실제 참여 기록: 한 행을 펼친 답안과 관리 폼, 나머지 짧은 행"></a></figure><figure><figcaption>기존 생성 시안 · 배치 참고</figcaption><a href="submissions-reference.png"><img src="submissions-reference.png" alt="참여 기록의 기존 생성 시안"></a></figure></div></section>
+<section><h2>문의·삭제 요청</h2><p>접힌 행에는 이름·분류·상태·날짜와 한 줄 미리보기가 보입니다. 펼치면 전체 원문과 상태·답변 폼을 확인할 수 있습니다.</p><div class="compare"><figure><figcaption>실제 화면 · 연습 자료</figcaption><a href="inquiries-actual.png"><img data-screenshot-day="inquiries-actual.png" data-screenshot-night="inquiries-night.png" src="inquiries-actual.png" alt="실제 문의 게시판: 펼친 요청의 상태 선택과 답변 입력, 접힌 나머지 요청"></a></figure><figure><figcaption>기존 생성 시안 · 배치 참고</figcaption><a href="inquiries-reference.png"><img src="inquiries-reference.png" alt="문의 게시판의 기존 생성 시안"></a></figure></div></section>
 <small>기존 생성 이미지는 재사용했습니다. 실제 화면 이미지에는 개인 자료나 실제 운영 답안을 포함하지 않았습니다.</small>
-</main></html>
+</main>
+<script>
+const controls=[...document.querySelectorAll('[data-preview-time]')];
+controls.forEach(button=>button.addEventListener('click',()=>{
+ const time=button.dataset.previewTime;
+ document.body.dataset.preview=time;
+ controls.forEach(control=>control.setAttribute('aria-pressed',String(control===button)));
+ document.querySelectorAll('[data-screenshot-day]').forEach(img=>{
+  img.src=time==='night'?img.dataset.screenshotNight:img.dataset.screenshotDay;
+  img.closest('a').href=img.src;
+ });
+}));
+</script></html>

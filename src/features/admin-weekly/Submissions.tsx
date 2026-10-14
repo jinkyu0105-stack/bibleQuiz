@@ -42,7 +42,7 @@ export function Component(){
       <div className={record.submissionDetail}>
         <section className={record.answerSection} aria-label="실제 제출 답안">
           <h4><AdminLabel text="실제 제출 답안"/></h4>
-          {item.answers ? <dl className={record.answers}>{Object.entries(item.answers).map(([cell,value])=><div key={cell}><dt>{cell}</dt><dd>{value||'빈칸'}</dd></div>)}</dl> : <p className={record.muted}>개인정보가 삭제되어 답안을 볼 수 없습니다.</p>}
+          {item.answers ? <dl className={record.answers}>{Object.entries(item.answers).map(([cell,value])=><div key={cell} data-admin-tone={value ? "action" : "attention"}><dt>{cell}</dt><dd>{value||'빈칸'}</dd></div>)}</dl> : <p className={record.muted}>개인정보가 삭제되어 답안을 볼 수 없습니다.</p>}
           {item.comment&&<div className={record.comment}><h4><AdminLabel text="참여자 코멘트"/></h4><blockquote>{item.comment}</blockquote></div>}
         </section>
         {item.status!=='deleted'&&<section className={record.management} aria-label="공개 상태·개인정보 관리">

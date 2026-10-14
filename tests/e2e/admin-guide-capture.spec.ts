@@ -48,10 +48,16 @@ test('capture operator guide examples', async ({ page }) => {
     const scroll=await page.evaluate(()=>({x:scrollX,y:scrollY}));
     await page.screenshot({path:`public/images/admin-guide/${id}.png`,animations:'disabled',fullPage:true,clip:{x:a.x+scroll.x,y:a.y+scroll.y,width:a.width,height:b.y+b.height-a.y}});
   }
+  async function boardShot(id:string) {
+    await page.locator('.admin-main').screenshot({path:`docs/design/phase-9/admin-boards/${id}-actual.png`,animations:'disabled'});
+    await page.getByRole('button',{name:'밤',exact:true}).click();
+    await expect(page.locator('body')).toHaveAttribute('data-time','night');
+    await page.locator('.admin-main').screenshot({path:`docs/design/phase-9/admin-boards/${id}-night.png`,animations:'disabled'});
+  }
   const dashboardOnly=process.env.BIBLEQUIZ_CAPTURE_ADMIN_GUIDE_ONLY === 'dashboard';
   await open('/admin');
   await shot('dashboard',page.locator('section[aria-labelledby="quiz-library-heading"]'));
-  if(boardsOnly||dashboardOnly)await page.locator('.admin-main').screenshot({path:'docs/design/phase-9/admin-boards/quiz-actual.png'});
+  if(boardsOnly||dashboardOnly)await boardShot('quiz');
   if(dashboardOnly) { expect(writes).toEqual([]); return; }
   if(!boardsOnly) {
     await open('/admin/quiz/weekly?step=1');
@@ -66,12 +72,12 @@ test('capture operator guide examples', async ({ page }) => {
   await open('/admin/submissions?quiz=published-example');
   await page.locator('[data-admin-record] > details > summary').first().click();
   await shot('submissions',recordFor(page,'연습 참여자'));
-  if(boardsOnly)await page.locator('.admin-main').screenshot({path:'docs/design/phase-9/admin-boards/submissions-actual.png'});
+  if(boardsOnly)await boardShot('submissions');
   await open('/admin/privacy-requests');
   if(boardsOnly)await page.getByRole('group',{name:'문의 상태 필터'}).getByRole('button',{name:/전체/}).click();
   await page.locator('[data-admin-record] > details > summary').first().click();
   await shot('privacy',recordFor(page,'연습 요청자'));
-  if(boardsOnly) { await page.locator('.admin-main').screenshot({path:'docs/design/phase-9/admin-boards/inquiries-actual.png'}); expect(writes).toEqual([]); return; }
+  if(boardsOnly) { await boardShot('inquiries'); expect(writes).toEqual([]); return; }
   await open('/admin/moderation');
   await page.locator('[data-admin-tool="filter-test"] > summary').click();
   await expect(page.getByRole('button',{name:'저장 없이 시험'})).toBeEnabled();

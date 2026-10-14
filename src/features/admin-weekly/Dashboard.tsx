@@ -51,10 +51,10 @@ export function Component() {
     <AdminBoardHeader title="퀴즈 관리" description="퀴즈를 준비하고, 공개와 참여를 관리하세요." terms={["초안", "발행", "자동 선택", "대표 지정"]} screenshots={["dashboard"]} actions={<ButtonLink variant="primary" to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>}/>
     {message && <p className={styles.alert} role="alert">{message}</p>}
     <div className={styles.statusBar} data-admin-summary>
-    <div className={styles.overview} aria-label="운영 요약">
-      <button type="button" onClick={() => setFilter("published")}><span><AdminEmoji>📣</AdminEmoji>공개 중</span><strong>{data ? published.length : "—"}</strong><span aria-hidden="true">↗</span></button>
-      <button type="button" onClick={() => setFilter("draft")}><span><AdminEmoji>✏️</AdminEmoji>작성 중</span><strong>{data ? drafts.filter(q => !q.expired).length : "—"}</strong><span aria-hidden="true">↗</span></button>
-      <Link data-tone="attention" to="/admin/privacy-requests"><span><AdminEmoji>💬</AdminEmoji>답변 대기</span><strong>{data?.unansweredCount ?? "—"}</strong><span aria-hidden="true">↗</span></Link>
+    <div className={styles.overview} role="group" aria-label="운영 요약">
+      <button type="button" data-admin-tone="success" aria-pressed={filter === "published"} onClick={() => setFilter("published")}><span className={styles.metricLabel}><AdminEmoji>📣</AdminEmoji>공개 중</span><span className={styles.metricValue}><strong>{data ? published.length : "—"}</strong><small>건</small></span></button>
+      <button type="button" data-admin-tone="action" aria-pressed={filter === "draft"} onClick={() => setFilter("draft")}><span className={styles.metricLabel}><AdminEmoji>✏️</AdminEmoji>작성 중</span><span className={styles.metricValue}><strong>{data ? drafts.filter(q => !q.expired).length : "—"}</strong><small>건</small></span></button>
+      <Link data-admin-tone="attention" to="/admin/privacy-requests"><span className={styles.metricLabel}><AdminEmoji>💬</AdminEmoji>답변 대기</span><span className={styles.metricValue}><strong>{data?.unansweredCount ?? "—"}</strong><small>건</small></span></Link>
     </div>
     {data && <section className={styles.featured} aria-labelledby="home-quiz-heading">
       <div className={styles.featuredCopy}><span className={styles.caption}><AdminEmoji>📡</AdminEmoji>Live</span>
@@ -68,7 +68,7 @@ export function Component() {
       <div className={styles.sectionHeading}><h3 id="quiz-library-heading"><AdminLabel text="퀴즈 목록"/> <span>{items.length}</span></h3>
         <AdminRefreshButton disabled={loading} onClick={() => { setMessage(""); setLoading(true); setAttempt(v => v + 1); }} label="운영 상태 새로고침" title="퀴즈 목록 새로고침"/>
       </div>
-      <AdminFilterTabs label="퀴즈 상태" value={filter} onChange={setFilter} options={([['all', '전체', items.length], ['draft', '작성 중', drafts.length], ['published', '공개 중', published.length], ['archived', '지난 퀴즈', archived.length]] as const).map(([value,label,count])=>({value,label,count}))}>
+      <AdminFilterTabs label="퀴즈 상태" value={filter} onChange={setFilter} options={([['all', '전체', items.length, 'action'], ['draft', '작성 중', drafts.length, 'action'], ['published', '공개 중', published.length, 'success'], ['archived', '지난 퀴즈', archived.length, 'guide']] as const).map(([value,label,count,tone])=>({value,label,count,tone}))}>
         <label className={styles.search}><span className="sr-only">퀴즈 검색</span><input type="search" placeholder="제목 또는 날짜 검색" value={search} onChange={e => setSearch(e.target.value)}/></label>
       </AdminFilterTabs>
       {!data && loading ? <div className={styles.empty} role="status">퀴즈를 불러오고 있습니다.</div> : !data ? <div className={styles.empty}>새로고침을 눌러 목록을 다시 불러오세요.</div> : rows.length === 0 ? <div className={styles.empty}><h4>{items.length ? "조건에 맞는 퀴즈가 없습니다" : "첫 퀴즈를 준비해 보세요"}</h4><p>{items.length ? "검색어나 상태를 바꾸면 다른 퀴즈를 볼 수 있습니다." : "설교 영상 등록부터 문제 검토와 발행까지 한 화면에서 이어집니다."}</p>{!items.length && <ButtonLink to="/admin/new">퀴즈 준비하기</ButtonLink>}</div> :

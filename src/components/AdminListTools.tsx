@@ -3,7 +3,7 @@ import { Button, ButtonLink } from "./Button";
 import { AdminConcepts, AdminLabel, AdminTooltip } from "./AdminHelp";
 import { AdminIcon, type AdminIconName } from "./AdminIcon";
 import { AdminScreenshots } from "./AdminScreenshots";
-import type { AdminTerm } from "../config/admin-help";
+import type { AdminTerm, AdminTone } from "../config/admin-help";
 import type { AdminScreenshotId } from "../config/admin-screenshots";
 import styles from "./admin-list-tools.module.css";
 
@@ -18,12 +18,12 @@ export function AdminIconLink({ label, icon, ...props }: Omit<ComponentProps<typ
 }
 
 export function AdminFilterTabs<T extends string>({ label, options, value, onChange, children }: {
-  label: string; options: readonly { value: T; label: string; count: number | string }[];
+  label: string; options: readonly { value: T; label: string; count: number | string; tone?: AdminTone }[];
   value: T; onChange: (value: T) => void; children?: ReactNode;
 }) {
   return <div className={styles.toolbar} data-admin-list-toolbar>
     <div className={styles.filters} role="group" aria-label={label}>
-      {options.map(option => <button type="button" key={option.value} aria-pressed={value === option.value} onClick={() => onChange(option.value)}>{option.label}<span>{option.count}</span></button>)}
+      {options.map(option => <button type="button" key={option.value} data-admin-tone={option.tone ?? "action"} aria-pressed={value === option.value} onClick={() => onChange(option.value)}>{option.label}<span>{option.count}</span></button>)}
     </div>
     {children && <div className={styles.controls}>{children}</div>}
   </div>;
