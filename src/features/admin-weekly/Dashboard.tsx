@@ -47,9 +47,10 @@ export function Component() {
   const featured = items.find(q => q.quizSetId === data?.homeQuiz?.quizSetId);
   const rows = items.filter(q => (filter === "all" || (filter === "draft" ? isDraft(q) : q.status === filter)) && `${q.title} ${q.sermonDate}`.includes(search.trim()));
   const due = cleanup?.items.filter(q => q.state === "blocked" || (q.state !== "purged" && q.dueAt && Date.parse(q.dueAt) - checkedAt <= 86_400_000)) ?? [];
-  return <div className={styles.page}>
+  return <div className={styles.page} data-admin-board="quizzes">
     <AdminBoardHeader title="퀴즈 관리" description="퀴즈를 준비하고, 공개와 참여를 관리하세요." terms={["초안", "발행", "자동 선택", "대표 지정"]} screenshots={["dashboard"]} actions={<ButtonLink variant="primary" to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>}/>
     {message && <p className={styles.alert} role="alert">{message}</p>}
+    <div className={styles.statusBar} data-admin-summary>
     <div className={styles.overview} aria-label="운영 요약">
       <button type="button" onClick={() => setFilter("published")}><span><AdminEmoji>📣</AdminEmoji>공개 중</span><strong>{data ? published.length : "—"}</strong><span aria-hidden="true">↗</span></button>
       <button type="button" onClick={() => setFilter("draft")}><span><AdminEmoji>✏️</AdminEmoji>작성 중</span><strong>{data ? drafts.filter(q => !q.expired).length : "—"}</strong><span aria-hidden="true">↗</span></button>
@@ -62,6 +63,7 @@ export function Component() {
       </div>
       {featured?.slug && <ButtonLink to={`/quiz/${featured.slug}`}>공개 화면 <span aria-hidden="true">↗</span></ButtonLink>}
     </section>}
+    </div>
     <section className={styles.library} aria-labelledby="quiz-library-heading" aria-busy={loading}>
       <div className={styles.sectionHeading}><h3 id="quiz-library-heading"><AdminLabel text="퀴즈 목록"/> <span>{items.length}</span></h3>
         <AdminRefreshButton disabled={loading} onClick={() => { setMessage(""); setLoading(true); setAttempt(v => v + 1); }} label="운영 상태 새로고침" title="퀴즈 목록 새로고침"/>

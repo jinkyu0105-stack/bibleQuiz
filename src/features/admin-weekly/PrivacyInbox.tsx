@@ -16,7 +16,7 @@ export function Component(){
   const [filter,setFilter]=useState('pending');
   const pending=(status:string)=>status==='received'||status==='reviewing';
   const visible=items?.filter(item=>filter==='all'||(filter==='pending'?pending(item.status):!pending(item.status)));
-  return <div className={record.page}>
+  return <div className={record.page} data-admin-board="inquiries">
     <AdminBoardHeader terms={["처리 완료", "개인정보 삭제"]} screenshots={["privacy"]} title="문의·삭제 요청" description="문의 내용을 확인하고 답변을 남기세요."/>
     <AdminFilterTabs label="문의 상태 필터" value={filter} onChange={setFilter} options={([['pending','답변 대기'],['done','처리한 문의'],['all','전체']] as const).map(([value,label])=>({value,label,count:items?.filter(item=>value==='all'||(value==='pending'?pending(item.status):!pending(item.status))).length??'—'}))}>
       <AdminRefreshButton label="문의 목록 새로고침" disabled={busy} onClick={()=>{setMessage('');setAttempt(a=>a+1);}}/>

@@ -130,3 +130,16 @@ body[data-time=night] .admin-layout {
 .sky-app:not(.home-shell) .admin-main .secondary-button:not(:disabled):not([aria-disabled=true]) { color: var(--ui-action); }
 .sky-app:not(.home-shell) .admin-main .secondary-button:hover:not(:disabled):not([aria-disabled=true]) { background: var(--ui-action-bg); border-color: var(--ui-action); }
 @media (forced-colors: active) { .sky-app:not(.home-shell) .admin-main .secondary-button:not(:disabled):not([aria-disabled=true]) { color: ButtonText; } }
+
+/* Board shells show the sky; a stronger surface belongs to the records themselves. */
+.sky-app .admin-main:has(> [data-admin-board]) {
+  --admin-board-surface: color-mix(in srgb,var(--glass-solid) 90%,transparent);
+  background: var(--glass-clear);
+}
+body[data-transparency=reduced] .admin-main:has(> [data-admin-board]) { --admin-board-surface: var(--glass-solid); }
+@media (prefers-reduced-transparency: reduce) {
+  .sky-app .admin-main:has(> [data-admin-board]) { --admin-board-surface: var(--glass-solid); }
+}
+@media (forced-colors: active) {
+  .sky-app .admin-main:has(> [data-admin-board]) { --admin-board-surface: Canvas; background: Canvas; }
+}

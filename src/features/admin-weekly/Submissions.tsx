@@ -25,7 +25,7 @@ export function Component(){
       setMessage('참여 기록의 처리 결과를 저장했습니다.');setAttempt(a=>a+1);
     }catch(error){setMessage(error instanceof Error?error.message:'처리 결과를 확인하지 못했습니다.');}finally{setBusy(false);}}
   const visible=items?.filter(i=>(level==='all'||i.difficulty===level)&&(state==='all'||i.status===state));
-  return <div className={record.page}>
+  return <div className={record.page} data-admin-board="submissions">
     <AdminBoardHeader terms={["숨김", "개인정보 삭제", "Top N"]} screenshots={["submissions"]} title="참여 기록" description="퀴즈별 답안과 코멘트를 확인하고 공개 여부를 관리하세요." actions={<AdminRefreshButton label="제출 목록 새로고침" disabled={busy||!id} onClick={()=>{setMessage('');setAttempt(a=>a+1);}}/>}/>
     <div className={record.fields}>
       <label>관리할 퀴즈<select value={id} disabled={busy} onChange={e=>{setResult(null);setMessage('');setQuery({quiz:e.target.value});}}><option value="">퀴즈 선택</option>{quizzes.filter(q=>['published','archived'].includes(q.status)).map(q=><option key={q.quizSetId} value={q.quizSetId}>{q.sermonDate} · {q.title}</option>)}</select></label>

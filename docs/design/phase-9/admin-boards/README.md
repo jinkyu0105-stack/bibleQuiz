@@ -10,17 +10,17 @@ HTTP 확인 주소: `http://localhost:5173/docs/design/phase-9/admin-boards/subm
 
 2026-10-14 사용자 재현 요청에 따라 실제 `/admin`, `/admin/submissions`, `/admin/privacy-requests`를 다시 적용했다. 기존에는 본문과 도구 버튼이 항상 보였으나 이제 시안처럼 짧은 행 전체를 펼친다. 참여는 답안/관리, 문의는 상태/답변을 좌우로 배치하고 모바일에서는 위아래로 놓는다. 문의의 관련 퀴즈 링크는 행 클릭과 겹치지 않도록 펼친 본문에 둔다.
 
-시안의 개별 행 틈은 사용자의 연속 게시판 요청에 따라 없앴다. 가상 정오답 색·인물 사진은 만들지 않았고 실제 답안 좌표/입력값과 기존 선 아이콘을 쓴다. 하늘·투명 표면·다섯 의미 색상은 유지한다. 퀴즈 관리도 같은 표면/타이포에 맞춰 요약과 Live를 줄이고66px 행을 사용한다.
+시안의 개별 행 틈은 사용자의 연속 게시판 요청에 따라 없앴다. 가상 정오답 색·인물 사진은 만들지 않았고 실제 답안 좌표/입력값과 기존 선 아이콘을 쓴다. 하늘·투명 표면·다섯 의미 색상은 유지한다. 바깥 창은 맑은 유리, 핵심 현황·목록·펼친 내용은 선명한 바탕으로 구분했다. 퀴즈 관리의 현황3개와 Live는 한 행으로 합쳤고66px 목록 행을 유지한다. 작은 화면에서는 같은 현황 영역 안에서 두 줄로 이어진다.
 
-적용 진입점은 `AdminBoardHeader`/`AdminListTools`·`AdminRecord`다. 수치·동작은 [디자인 정본](../../../spec/design.md#p9-23-후속--시안에-맞춘-세-게시판), 실제 검사는 [작업 기록](../../../work/P9-23.md#기존-시안에-맞춘-세-게시판-재구현)을 따른다.
+적용 진입점은 `AdminBoardHeader`/`AdminListTools`·`AdminRecord`다. 수치·동작은 [디자인 정본](../../../spec/design.md#p9-23-후속--시안에-맞춘-세-게시판), 실제 검사는 [작업 기록](../../../work/P9-23.md#투명한-창과-현황live-한-행)을 따른다.
 
 | 실제 UI 촬영본 | 해상도 | bytes |
 |---|---|---|
-| quiz-actual.png | 1056×881 | 222,496 |
-| submissions-actual.png | 1056×1106 | 253,156 |
-| inquiries-actual.png | 1056×932 | 201,374 |
+| quiz-actual.png | 1056×803 | 228,090 |
+| submissions-actual.png | 1056×1106 | 269,338 |
+| inquiries-actual.png | 1056×932 | 217,114 |
 
-실제 React UI에 합성 GET 자료만 넣어 촬영했으며 공개 가능한 연습 자산이다. 재현 명령은 [화면 예시 자산](../admin-guide/README.md)을 따른다. 기존 실제5173 자료를 촬영한 내부 검수 증거는 ignored `.wrangler/releases/p9-23/reference-*`에 별도 보관하며 정적 자산으로 복사하지 않았다.
+실제 React UI에 합성 GET 자료만 넣어 촬영했으며 공개 가능한 연습 자산이다. 재현 명령은 [화면 예시 자산](../admin-guide/README.md)을 따른다. 기존 실제5173 자료를 촬영한 내부 검수 증거는 ignored `.wrangler/releases/p9-23/clear-boards-*`에 별도 보관하며 정적 자산으로 복사하지 않았다.
 
 생성 원본은 Windows Codex generated_images의 현재 대화 폴더에 그대로 남겼다. 이 경로에는 배포된 AI 결과나 실제 참여자 자료가 들어 있지 않다.
 
