@@ -1,4 +1,4 @@
-// Original procedural shader inspired by the public Mercury Veins preview.
+// Original procedural shaders inspired by the public Mercury Veins / Veil Rays previews.
 // No purchased source, texture, video sampling, or additional dependencies.
 const vertex = `
 attribute vec2 aPosition;
@@ -15,6 +15,7 @@ uniform vec2 uResolution;
 uniform vec2 uPointer;
 uniform float uTime;
 uniform vec3 uTint;
+uniform vec2 uEffects;
 float hash(vec2 p) {
   vec3 q = fract(vec3(p.x, p.y, p.x) * vec3(.1031, .11369, .13787));
   q += dot(q, q.yzx + 19.19);
@@ -26,7 +27,7 @@ float noise(vec2 p) {
   return mix(mix(hash(i), hash(i + vec2(1., 0.)), f.x),
     mix(hash(i + vec2(0., 1.)), hash(i + vec2(1., 1.)), f.x), f.y);
 }
-void main() {
+vec4 mercury() {
   vec2 uv = vUv;
   vec2 p = (uv - .5) * vec2(uResolution.x / uResolution.y, 1.) * 3.2;
   float t = uTime * .13;
@@ -48,10 +49,37 @@ void main() {
     * smoothstep(0., .14, uv.y) * smoothstep(0., .12, 1. - uv.y);
   float alpha = clamp(glow * .53 + shade + grain * glow, 0., .64) * edge * mix(.25, 1., center);
   vec3 color = mix(uTint * .2, uTint, smoothstep(.02, .3, glow));
-  gl_FragColor = vec4(color * alpha, alpha);
+  return vec4(color * alpha, alpha);
+}
+vec4 veil() {
+  float t = uTime * .18;
+  float aspect = uResolution.x / uResolution.y;
+  float pointer = uPointer.x < 0. ? 0. : (uPointer.x - .5) * .035;
+  float depth = 1.08 - vUv.y;
+  float source = .51 + sin(t * .27) * .035 + pointer;
+  float angle = (vUv.x - source) * aspect / (depth + .12);
+  float breath = 1. + sin(t * .6) * .12;
+  float cone = exp(-angle * angle * 2.6 / breath);
+  // Project irregular bands from a single source, rather than parallel stripes.
+  float fold = noise(vec2(angle * 8. + t * .15, depth * .65 - t * .22));
+  float fine = noise(vec2(angle * 25. + fold * 2., t * .28));
+  float threads = .2 + .52 * fold + .28 * fine;
+  float shaft = pow(max(0., sin(angle * 32. + fold * 4. + t * .3)), 5.) * .12;
+  float falloff = exp(-depth * .8) * smoothstep(0., .14, vUv.y);
+  float sides = smoothstep(0., .07, vUv.x) * smoothstep(0., .07, 1. - vUv.x);
+  float grain = (hash(gl_FragCoord.xy + floor(uTime * 8.)) - .5) * .045;
+  float alpha = clamp(cone * (threads + shaft + grain) * falloff * sides * .57, 0., .5);
+  return vec4(uTint * alpha, alpha);
+}
+void main() {
+  vec4 reflection = vec4(0.);
+  vec4 rays = vec4(0.);
+  if (uEffects.x > .5) reflection = mercury();
+  if (uEffects.y > .5) rays = veil();
+  gl_FragColor = rays + reflection * (1. - rays.a);
 }`;
 
-export function createHeroMercury(canvas: HTMLCanvasElement): () => void {
+export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
   const hero = canvas.parentElement;
   const gl = canvas.getContext("webgl", { alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false, powerPreference: "low-power" });
   if (!gl || !hero) { canvas.dataset.state = "unavailable"; return () => {}; }
@@ -90,7 +118,7 @@ export function createHeroMercury(canvas: HTMLCanvasElement): () => void {
       gl!.bufferData(gl!.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl!.STATIC_DRAW);
       const position = gl!.getAttribLocation(program, "aPosition");
       gl!.enableVertexAttribArray(position); gl!.vertexAttribPointer(position, 2, gl!.FLOAT, false, 0, 0);
-      uniforms = Object.fromEntries(["uResolution", "uPointer", "uTime", "uTint"].map(name => [name, gl!.getUniformLocation(program!, name)]));
+      uniforms = Object.fromEntries(["uResolution", "uPointer", "uTime", "uTint", "uEffects"].map(name => [name, gl!.getUniformLocation(program!, name)]));
     } catch {
       release(); canvas.dataset.state = "unavailable";
     } finally {
@@ -100,6 +128,7 @@ export function createHeroMercury(canvas: HTMLCanvasElement): () => void {
   const hidden = () => document.hidden || !visible;
   const clear = () => contrast.matches || transparency.matches || document.body.dataset.transparency === "reduced";
   const moving = () => !reduced.matches && document.body.dataset.motion !== "off";
+  const effects = () => [document.body.dataset.heroMercury !== "off", document.body.dataset.heroVeil === "on"] as const;
 
   function draw() {
     if (!program || lost || disposed) return;
@@ -109,12 +138,13 @@ export function createHeroMercury(canvas: HTMLCanvasElement): () => void {
     gl!.uniform2f(uniforms.uPointer!, pointerX, pointerY);
     gl!.uniform1f(uniforms.uTime!, time);
     gl!.uniform3f(uniforms.uTint!, tint[0]!, tint[1]!, tint[2]!);
+    gl!.uniform2f(uniforms.uEffects!, Number(effects()[0]), Number(effects()[1]));
     gl!.drawArrays(gl!.TRIANGLES, 0, 3);
     canvas.dataset.time = time.toFixed(3);
   }
   function tick(now: number) {
     frame = 0;
-    if (disposed || lost || !program || hidden() || clear() || !moving()) return;
+    if (disposed || lost || !program || hidden() || clear() || !moving() || !effects().some(Boolean)) return;
     if (!lastFrame || now - lastFrame >= 1000 / 30) {
       const dt = lastFrame ? Math.min((now - lastFrame) / 1000, .1) : 0;
       time += dt; lastFrame = now;
@@ -127,8 +157,8 @@ export function createHeroMercury(canvas: HTMLCanvasElement): () => void {
   function sync() {
     cancelAnimationFrame(frame); frame = 0; lastFrame = 0;
     if (disposed || lost || !program) return;
-    canvas.dataset.state = clear() ? "clear" : hidden() ? "offscreen" : moving() ? "running" : "paused";
-    if (clear() || hidden()) return;
+    canvas.dataset.state = !effects().some(Boolean) ? "disabled" : clear() ? "clear" : hidden() ? "offscreen" : moving() ? "running" : "paused";
+    if (!effects().some(Boolean) || clear() || hidden()) return;
     draw();
     if (moving()) frame = requestAnimationFrame(tick);
   }
@@ -147,7 +177,7 @@ export function createHeroMercury(canvas: HTMLCanvasElement): () => void {
   const intersection = new IntersectionObserver(([entry]) => { visible = (entry?.intersectionRatio ?? 0) > .01; sync(); }, { threshold: .01 });
   intersection.observe(hero);
   const settings = new MutationObserver(sync);
-  settings.observe(document.body, { attributes: true, attributeFilter: ["data-time", "data-motion", "data-transparency"] });
+  settings.observe(document.body, { attributes: true, attributeFilter: ["data-time", "data-motion", "data-transparency", "data-hero-mercury", "data-hero-veil"] });
   document.addEventListener("visibilitychange", sync, options);
   for (const media of [reduced, contrast, transparency]) media.addEventListener("change", sync, options);
   hero.addEventListener("pointermove", event => {

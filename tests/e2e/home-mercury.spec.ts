@@ -8,7 +8,7 @@ async function home(page: Page) {
   await page.route("**/api/quizzes/**", route => route.fulfill({ json: new URL(route.request().url()).pathname.endsWith("/me") ? { data: { submission: null } } : publicResponse("child") }));
   await page.goto("/?video=off");
   await expect(page.locator("#home-title")).toBeVisible();
-  return page.locator(".hero-mercury");
+  return page.locator(".hero-effects");
 }
 
 async function expectStill(canvas: Locator) {
@@ -78,6 +78,29 @@ test("mercury follows pause, reduced motion, clarity and hidden-tab settings", a
   await expect(canvas).toHaveCSS("visibility", "hidden");
 });
 
+test("both hero effects can be mixed or stopped without adding a second canvas", async ({ page }) => {
+  const canvas = await home(page);
+  const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
+  await trigger.focus();
+  await page.keyboard.press("Enter");
+  const reflection = page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true });
+  const rays = page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true });
+  await reflection.click();
+  await expect(canvas).toHaveAttribute("data-state", "disabled");
+  await expect(canvas).toHaveCSS("visibility", "hidden");
+  await expectStill(canvas);
+  await rays.click();
+  await expect(canvas).toHaveAttribute("data-state", "running");
+  await reflection.click();
+  await expect(page.locator(".sky-home-hero canvas")).toHaveCount(1);
+  await expect(canvas).toHaveAttribute("data-state", "running");
+  await page.keyboard.press("Escape");
+  await page.locator("#motion").click();
+  await expect(canvas).toHaveAttribute("data-state", "paused");
+  await expectStill(canvas);
+  expect(await canvas.evaluate(node => (node as HTMLCanvasElement).getContext("webgl")!.getError())).toBe(0);
+});
+
 test("mercury releases a lost graphics context and restores without blocking content", async ({ page }) => {
   const canvas = await home(page);
   await expect(canvas).toHaveAttribute("data-state", "running");
@@ -99,7 +122,7 @@ test("the original home and quiz remain usable when the decorative GPU layer is 
   await page.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;
     HTMLCanvasElement.prototype.getContext = function (contextId: string, options?: object) {
-      if (this.classList.contains("hero-mercury")) return null;
+      if (this.classList.contains("hero-effects")) return null;
       return original.call(this, contextId, options);
     } as typeof original;
   });

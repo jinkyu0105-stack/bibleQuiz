@@ -23,5 +23,5 @@ export function SkyEnvironment({ view, children }: { view: SkyView; children: Re
   function toggleGrass() { setGrass(!grass); setStorageFailed(!saveSkyPreference("grass-hidden", String(grass))); }
   const time = choice ?? automaticTime;
   return <><SkyScene time={time} view={view} grass={grass} />{children}
-    <ThemeControl time={time} onChange={choose} grass={grass} onGrassChange={toggleGrass} storageFailed={storageFailed} /></>;
+    <ThemeControl home={view === "home"} time={time} onChange={choose} grass={grass} onGrassChange={toggleGrass} storageFailed={storageFailed} /></>;
 }

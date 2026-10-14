@@ -1,7 +1,7 @@
 /* Local stack: sky video < decorative reflection (0) < hero content (1).
    The existing fixed header and controls keep their own global stacking. */
 .sky-home-hero { isolation: isolate; }
-.hero-mercury {
+.hero-effects {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -13,9 +13,10 @@
 .sky-home-hero > .hero-content,
 .sky-home-hero > .descent-cue,
 .sky-home-hero > .hero-side-note { z-index: 1; }
-body[data-time=night] .hero-mercury { opacity: .65; }
-.hero-mercury[data-state=unavailable],
-body[data-transparency=reduced] .hero-mercury { visibility: hidden; }
+body[data-time=night] .hero-effects { opacity: .65; }
+.hero-effects[data-state=unavailable],
+.hero-effects[data-state=disabled],
+body[data-transparency=reduced] .hero-effects { visibility: hidden; }
 @media (forced-colors: active), (prefers-reduced-transparency: reduce) {
-  .hero-mercury { visibility: hidden; }
+  .hero-effects { visibility: hidden; }
 }
