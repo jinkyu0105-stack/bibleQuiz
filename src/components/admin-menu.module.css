@@ -1,0 +1,21 @@
+/* A low, matte selection surface on clear glass; shared by both admin navigations. */
+.menu { --menu-selection: color-mix(in srgb,var(--glass-solid) 96%,transparent); --menu-edge: color-mix(in srgb,var(--glass-highlight) 80%,transparent); --menu-shadow: rgb(24 70 106 / .13); position: relative; isolation: isolate; }
+.selection { position: absolute; top: 0; left: 0; pointer-events: none; z-index: -1; border: 0; border-radius: 10px; background: var(--menu-selection); box-shadow: inset 0 1px 0 var(--menu-edge), 0 2px 3px -1px var(--menu-shadow), 0 5px 12px -6px var(--menu-shadow); transition: transform .2s ease-out; }
+.menu [data-admin-menu-item] { position: relative; border: 0; border-radius: 10px; background: transparent; color: var(--ink); text-decoration: none; }
+.menu [data-admin-menu-item][aria-current] { color: var(--ink); font-weight: 700; }
+.menu [data-admin-menu-item]:active:not(:disabled) { transform: none; }
+.menu [data-admin-menu-item]:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.icon { display: inline-grid; place-items: center; width: 28px; height: 28px; flex: 0 0 28px; border-radius: 7px; }
+.icon > svg { width: 20px; height: 20px; }
+.menu [data-admin-menu-item]:is([aria-current],:hover,:focus-visible) .icon { background: color-mix(in srgb,var(--ui-action-bg) 72%,transparent); }
+:global(body[data-time=night]) .menu { --menu-selection: #56616b; --menu-edge: rgb(234 242 250 / .28); --menu-shadow: rgb(3 12 25 / .36); }
+:global(body[data-transparency=reduced]) .menu { --menu-selection: var(--glass-solid); }
+:global(body[data-time=night][data-transparency=reduced]) .menu { --menu-selection: #56616b; }
+@media (prefers-reduced-transparency: reduce) { .menu { --menu-selection: var(--glass-solid); } :global(body[data-time=night]) .menu { --menu-selection: #56616b; } }
+@media (prefers-reduced-motion: reduce) { .selection { transition: none; } }
+@media (forced-colors: active) {
+  :global(body[data-time]) .menu { --menu-selection: Canvas; }
+  .selection { border: 2px solid Highlight; box-shadow: none; }
+  .menu [data-admin-menu-item][aria-current] { color: Highlight; outline: 1px solid Highlight; outline-offset: -1px; }
+  .menu [data-admin-menu-item] .icon { background: Canvas; }
+}

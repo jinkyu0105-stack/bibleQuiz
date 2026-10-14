@@ -6,6 +6,7 @@ import { AdminScreenshots } from "../../components/AdminScreenshots";
 import type { AdminScreenshotId } from "../../config/admin-screenshots";
 import { useRef, useState } from "react";
 import { AdminIcon, type AdminIconName } from "../../components/AdminIcon";
+import { AdminMenu, AdminMenuIcon } from "../../components/AdminMenu";
 import { serviceRegistry, type ServiceId } from "../../config/service-registry";
 import { serviceGuides } from "./service-guides";
 import { ManualBody } from "./ManualText";
@@ -73,13 +74,13 @@ export function ManualReader({ source }: { source: string }) {
     });
   }
   return <div className={css.reader}>
-    <nav className={css.contents} aria-label="매뉴얼 주제">
+    <AdminMenu className={css.contents} label="매뉴얼 주제" selectionKey={current.id}>
       {groups.map((group, index) => {
-        const items = <ul>{group.items.map(item => <li key={item.id}><button type="button" aria-current={current.id === item.id ? "true" : undefined} onClick={() => choose(item.id)}><TopicIcon id={item.id}/><span>{item.title}</span></button></li>)}</ul>;
+        const items = <ul>{group.items.map(item => <li key={item.id}><button type="button" data-admin-menu-item aria-current={current.id === item.id ? "true" : undefined} onClick={() => choose(item.id)}><AdminMenuIcon><TopicIcon id={item.id}/></AdminMenuIcon><span>{item.title}</span></button></li>)}</ul>;
         return index === 0 ? <section key={group.title}><h3>{group.title}</h3>{items}</section>
           : <details key={group.title} open={group.items.some(item => item.id === current.id)}><summary>{group.title}<AdminIcon name="chevron"/></summary>{items}</details>;
       })}
-    </nav>
+    </AdminMenu>
     <label className={css.mobileTopics}>읽을 주제
       <select value={current.id} onChange={event => choose(event.target.value)}>{groups.map(group => <optgroup key={group.title} label={group.title}>{group.items.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}</optgroup>)}</select>
     </label>

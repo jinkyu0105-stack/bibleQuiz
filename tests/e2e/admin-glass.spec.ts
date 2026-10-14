@@ -1,6 +1,7 @@
 import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
+import { mockAdminGuide } from "./fixtures/admin-guide";
 
 const at = "2026-10-10T00:00:00.000Z";
 test("admin menus group tasks, use a flat moving highlight and use compact shared actions", async ({ page, isMobile }, info) => {
@@ -62,7 +63,7 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
     await target.hover();
     await expect(current).toHaveAttribute("aria-current", "page");
     await expect(navigation.locator('.glass-indicator, [data-glass-convex]')).toHaveCount(0);
-    await expect(highlight).toHaveCSS("border-width", "1px");
+    await expect(highlight).toHaveCSS("border-width", "0px");
     expect(await highlight.evaluate(node => getComputedStyle(node, "::before").content)).toBe("none");
     await expect.poll(async () => {
       const a = await target.boundingBox(), b = await highlight.boundingBox();
@@ -109,4 +110,47 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
   await manualLink.focus(); await expect(manualLink).toBeFocused();
   await expect(manualLink).toHaveAttribute("aria-current","page");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test("manual topics and app navigation share selection feedback while keeping the current topic", async ({page,isMobile}) => {
+  const writes = await mockAdminGuide(page);
+  await page.goto('/admin/manual');
+  await expect(page.getByRole('article')).toBeVisible();
+  const nav = page.getByRole('navigation', {name:'매뉴얼 주제'});
+  if (isMobile) {
+    await expect(nav).toBeHidden();
+    const topic = page.getByRole('combobox', {name:'읽을 주제'});
+    await topic.selectOption('service-openai');
+    await expect(page.getByRole('heading', {name:'OpenAI API',exact:true})).toBeFocused();
+    await topic.selectOption('guide-3');
+  } else {
+    const current = nav.getByRole('button', {name:'퀴즈 만들기',exact:true});
+    const hover = nav.getByRole('button', {name:'매월 비용 확인',exact:true});
+    const selection = nav.locator('[data-admin-menu-selection]');
+    const appSelection = page.getByRole('navigation', {name:'관리자 운영 메뉴'}).locator('[data-admin-menu-selection]');
+    for (const time of ['낮','밤']) {
+      await page.getByRole('button', {name:time,exact:true}).click();
+      for (const property of ['background-color','border-radius','box-shadow']) {
+        await expect(selection).toHaveCSS(property,await appSelection.evaluate((n,p)=>getComputedStyle(n).getPropertyValue(p),property));
+      }
+      await hover.hover();
+      await expect(current).toHaveAttribute('aria-current','true');
+      await expect.poll(async()=>Math.abs((await selection.boundingBox())!.y-(await hover.boundingBox())!.y)).toBeLessThan(1);
+      await page.getByRole('article').hover();
+      await expect.poll(async()=>Math.abs((await selection.boundingBox())!.y-(await current.boundingBox())!.y)).toBeLessThan(1);
+    }
+    const group = nav.locator('summary').filter({hasText:'서비스 사전'});
+    await group.focus(); await page.keyboard.press('Enter');
+    const service = nav.getByRole('button', {name:'OpenAI API',exact:true});
+    await service.focus();
+    await expect.poll(async()=>Math.abs((await selection.boundingBox())!.y-(await service.boundingBox())!.y)).toBeLessThan(1);
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('heading',{name:'OpenAI API',exact:true})).toBeFocused();
+    await expect(service).toHaveAttribute('aria-current','true');
+  }
+  expect(await page.getByRole('article').evaluate(n=>getComputedStyle(n).backgroundColor)).not.toBe(await page.locator('.admin-main').evaluate(n=>getComputedStyle(n).backgroundColor));
+  await page.emulateMedia({forcedColors:'active',reducedMotion:'reduce'});
+  await expect(page.getByRole('article')).toHaveCSS('box-shadow','none');
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect(writes).toEqual([]);
 });

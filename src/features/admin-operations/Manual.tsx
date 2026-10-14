@@ -26,7 +26,7 @@ function ManualPage({ future }: { future: boolean }) {
       .catch(() => { if (!controller.signal.aborted) setError("안내문을 불러오지 못했습니다. 아래 버튼으로 다시 시도해 주세요."); });
     return () => controller.abort();
   }, [future, attempt]);
-  return <div className={styles.page} data-admin-clear>
+  return <div className={styles.page} data-admin-clear data-admin-manual>
     <AdminIntro title={future ? "기능 검토 기록" : "운영 매뉴얼"} description={future ? "회원 로그인 등 기능 제안과 과거 검토를 모았습니다. 현재 제공 여부는 운영 매뉴얼에서 확인하세요." : "목차에서 필요한 주제를 고르세요. 점선 밑줄이 있는 용어에 마우스를 올리거나 누르면 설명이 나옵니다."}/>
     {error && <div role="alert"><p>{error}</p><Button type="button" onClick={() => { setError(""); setAttempt(value => value + 1); }}>안내문 다시 불러오기</Button></div>}
     {!data && !error && <p role="status">안내문을 불러오고 있습니다.</p>}

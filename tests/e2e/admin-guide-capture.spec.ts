@@ -55,6 +55,26 @@ test('capture operator guide examples', async ({ page }) => {
     await expect(page.locator('body')).toHaveAttribute('data-time','night');
     await board.screenshot({path:`docs/design/phase-9/admin-boards/${id}-night.png`,animations:'disabled'});
   }
+  if(process.env.BIBLEQUIZ_CAPTURE_ADMIN_GUIDE_ONLY === 'manual') {
+    await page.setViewportSize({width:1440,height:1100});
+    await open('/admin/manual');
+    await expect(page.getByRole('article')).toBeVisible();
+    async function readerShot(file:string) {
+      await page.mouse.move(0,0);
+      await page.evaluate(()=>{if(document.activeElement instanceof HTMLElement) document.activeElement.blur();scrollTo(0,0);});
+      // Preserve the viewport: clipping after topic scrolling can omit Chromium's sticky sidebar layer.
+      await page.screenshot({path:`docs/design/phase-9/manual-reader/${file}.png`,animations:'disabled'});
+    }
+    await readerShot('layered-actual');
+    await page.getByRole('button',{name:'밤',exact:true}).click();
+    await readerShot('layered-night');
+    await page.getByRole('button',{name:'낮',exact:true}).click();
+    const topics=page.getByRole('navigation',{name:'매뉴얼 주제'});
+    await topics.locator('summary').filter({hasText:'서비스 사전'}).click();
+    await topics.getByRole('button',{name:'OpenAI API',exact:true}).click();
+    await readerShot('layered-service');
+    expect(writes).toEqual([]); return;
+  }
   const dashboardOnly=process.env.BIBLEQUIZ_CAPTURE_ADMIN_GUIDE_ONLY === 'dashboard';
   await open('/admin');
   await shot('dashboard',page.locator('section[aria-labelledby="quiz-library-heading"]'));

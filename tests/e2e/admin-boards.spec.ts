@@ -56,6 +56,20 @@ test('quiz and inbox indexes stay joined to the list while filtering',async({pag
     const restingTop=await relativeTop();
     await page.mouse.down();expect(await relativeTop()).toBeCloseTo(restingTop,1);
     await page.mouse.up();expect(await relativeTop()).toBeCloseTo(restingTop,1);
+    // Compare every label and top edge after selection, not only the pressed element.
+    const edges=()=>tabs.getByRole('button').evaluateAll(nodes=>nodes.map(n=>{
+      const range=document.createRange();range.selectNodeContents(n.firstChild!);
+      return {top:n.getBoundingClientRect().top-n.parentElement!.getBoundingClientRect().top,label:range.getBoundingClientRect().top-n.getBoundingClientRect().top};
+    }));
+    const restingEdges=await edges();
+    for(const tab of await tabs.getByRole('button').all()){
+      await tab.click();const selectedEdges=await edges();
+      for(let i=0;i<selectedEdges.length;i++){
+        expect(selectedEdges[i]!.top).toBeCloseTo(restingEdges[i]!.top,1);
+        expect(selectedEdges[i]!.label).toBeCloseTo(restingEdges[i]!.label,1);
+        expect(selectedEdges[i]!.top).toBeCloseTo(selectedEdges[0]!.top,1);
+      }
+    }
     await tabs.getByRole('button').last().click();await expect(tabs.getByRole('button').last()).toHaveAttribute('aria-pressed','true');
     await expect(selected).toHaveCSS('background-color',await page.locator('[data-admin-indexed-panel]').evaluate(n=>getComputedStyle(n).backgroundColor));
     const joined=await page.locator('[data-admin-indexed-board]').evaluate(n=>{

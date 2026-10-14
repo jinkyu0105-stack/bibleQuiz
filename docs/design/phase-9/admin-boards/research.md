@@ -26,3 +26,14 @@ KEY PATTERNS from the research:
 ├─ 🕒 Recent evidence is thin: only 9 of 31 dated items are from the last 7 days.
 └─ 📎 Raw results saved to ~/work/bibleQuiz/.wrangler/releases/p9-23/research/ui-design-references-and-ai-readable-design-systems-refero-mobbin-shadcn-and-carbon-raw.md
 ---
+
+
+## 2026-10-14 선택 표면과 읽기 층 재검토
+
+이번에는 사용자 주석의 문의 생성 이미지를 최우선 시각 기준으로 삼았다. 새 참고 사이트 목록을 늘리는 대신 실제로 적용할 규칙을 공식 문서와 대조했다. `pnpm dlx ctx7@latest`의 library 검색으로 `/microsoft/fluentui`를 확인한 뒤 Nav/현재 위치/아이콘 접근성 문서를 조회했다. 프로젝트의 React19.2.8/CSS를 유지하며 Fluent UI 패키지를 설치하거나 호환을 가정하지 않았다.
+
+- [Fluent2 Elevation](https://fluent2.microsoft.design/elevation): 면 사이의 관계를 작은 접촉 그림자와 부드러운 그림자로 구별한다. 이를 메뉴의 밝은 선택 면과1px 윗빛에 적용했다. 기존 유리 굴절 위에 또 렌즈를 얹지는 않는다.
+- [Fluent2 Nav](https://fluent2.microsoft.design/components/web/react/core/nav/usage/): 짧은 메뉴 이름·그룹·현재 위치 표시와 기존 아이콘의 의미를 유지한다. 앱과 도움말에서 같은 메뉴 코드를 공유하며 호버를 실제 선택으로 바꾸지 않는다.
+- [Carbon Tabs](https://www.carbondesignsystem.com/building-blocks/core/components/tabs/guidelines): 탭과 내용 영역의 시각적 연결을 참고한다. 이 앱은 목록 필터이므로 기존 `role=group`/`aria-pressed`를 보존하며, 외형 때문에 ARIA 탭 동작을 임의 추가하지 않는다.
+
+구현에 반영한 판단은 선택한 탭만 강조하고 비선택 탭의 강한 경계를 없애는 것, 모든 탭의 실제 글자 기준선을 같게 두는 것, 메뉴 선택 면을 공유하는 것, 도움말 본문만 불투명한 한 장으로 묶는 것이다. 공식 라이브러리를 그대로 구현했다거나 새 스타일이 사용자의 미감 승인을 받았다는 뜻은 아니다. 이번에 `last30days`를 다시 실행하지 않았으며 위의 최근30일 조사 날짜와 한계는 그대로다.

@@ -134,9 +134,10 @@ body[data-time=night] .admin-layout {
 /* Clear shells frame brighter reading surfaces, including a neutral slate at night. */
 .sky-app .admin-main:has(> :is([data-admin-board], [data-admin-clear])) { --muted: color-mix(in srgb,var(--ink) 88%,var(--glass-solid)); }
 .sky-app .admin-main:has(> [data-admin-clear]) { background: var(--glass-clear); }
+.sky-app .admin-main [data-admin-manual] > header > h2 { font-family: 'Noto Sans KR',sans-serif; font-weight: 700; }
 .sky-app .admin-main:has(> [data-admin-board]) {
   --admin-board-solid: var(--glass-solid);
-  --admin-board-surface: color-mix(in srgb,var(--admin-board-solid) 90%,transparent);
+  --admin-board-surface: var(--admin-board-solid);
   --admin-board-detail: color-mix(in srgb,var(--glass-field) 60%,transparent);
   --admin-board-hover: var(--ui-action-bg);
   --admin-board-border: var(--line);
@@ -146,7 +147,7 @@ body[data-time=night] .admin-main:has(> [data-admin-board]) {
   --muted: #d2dfea;
   --admin-board-link: #ccdeff;
   --admin-board-solid: #43515c;
-  --admin-board-surface: color-mix(in srgb,var(--admin-board-solid) 96%,transparent);
+  --admin-board-surface: var(--admin-board-solid);
   --admin-board-detail: rgb(235 242 249 / .055);
   --admin-board-hover: color-mix(in srgb,var(--ui-action) 14%,var(--admin-board-solid));
   --admin-board-border: rgb(216 232 242 / .34);

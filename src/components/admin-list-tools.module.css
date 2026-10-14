@@ -1,24 +1,15 @@
-.indexedBoard { --index-edge-light: color-mix(in srgb,var(--glass-highlight) 45%,transparent); min-width: 0; }
+.indexedBoard { min-width: 0; }
 .toolbar { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 16px; border-bottom: 1px solid var(--admin-board-border,var(--line)); min-width: 0; }
 .indexedPanel { min-width: 0; border: 1px solid var(--admin-board-border,var(--line)); border-top: 0; border-radius: 0 0 8px 8px; background: var(--admin-board-surface,var(--glass-solid)); overflow: clip; }
 .indexedPanel > p { margin: 0; padding: 16px; }
-.filters { display: flex; flex-wrap: wrap; align-items: end; gap: 0; padding-top: 4px; }
-.filters button { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 104px; min-height: 48px; padding: 12px 20px 9px; border: 1px solid var(--control-border); border-bottom: 0; border-radius: 0; background: var(--glass-soft); color: var(--muted); font-size: 13px; line-height: 1.5; box-shadow: inset 1px 0 0 var(--index-edge-light), inset -1px 0 0 var(--index-edge-light); transition: background-color .18s ease, box-shadow .18s ease; }
-/* Adjacent folders share one divider; only the outer ends have rounded corners. */
-.filters button + button { border-left: 0; }
-.filters button:first-child { border-top-left-radius: 4px; }
-.filters button:last-child { border-top-right-radius: 4px; }
-/* A folder stays attached even while the shared button press effect is active. */
+.filters { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; margin-bottom: -1px; }
+/* The reference uses quiet glass tabs, one selected accent, and a single open folder. */
+.filters button { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 116px; min-height: 48px; padding: 12px 20px 10px; border: 0; border-radius: 4px 4px 0 0; background: var(--glass-soft); color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.5; box-shadow: none; transition: background-color .18s ease; }
 .filters button:active:not(:disabled) { transform: none; }
-.filters button::before { content: ''; position: absolute; inset: 0 0 auto; height: 6px; background: color-mix(in srgb,var(--admin-tone) 24%,transparent); box-shadow: inset 0 1px 0 var(--index-edge-light); transition: background-color .18s ease; }
-.filters button:first-child::before { border-top-left-radius: 3px; }
-.filters button:last-child::before { border-top-right-radius: 3px; }
-.filters button[aria-pressed=true] { z-index: 1; background-color: var(--admin-board-surface,var(--glass-solid)); background-image: linear-gradient(to bottom,color-mix(in srgb,var(--glass-highlight) 35%,transparent),transparent 24px); color: var(--ink); font-weight: 600; border-color: var(--admin-board-border,var(--line)); box-shadow: inset 1px 0 0 var(--index-edge-light), inset -1px 0 0 var(--index-edge-light), 0 -4px 9px -6px var(--glass-shadow); }
+.filters button::before { content: ''; position: absolute; inset: 0 0 auto; height: 5px; border-radius: 4px 4px 0 0; background: transparent; }
+.filters button:is(:hover,:focus-visible) { color: var(--ink); background-color: var(--admin-board-surface,var(--glass-solid)); }
+.filters button[aria-pressed=true] { background: var(--admin-board-surface,var(--glass-solid)); color: var(--ink); box-shadow: inset 1px 0 var(--admin-board-border,var(--line)), inset -1px 0 var(--admin-board-border,var(--line)); }
 .filters button[aria-pressed=true]::before { background: var(--admin-tone); }
-/* Cover only the shared baseline, leaving the selected folder open into its contents. */
-.filters button[aria-pressed=true]::after { content: ''; position: absolute; inset: auto 0 -1px; height: 1px; background: var(--admin-board-solid,var(--glass-solid)); }
-.filters button:is(:hover,:focus-visible) { color: var(--ink); background-color: var(--admin-board-surface,var(--glass-solid)); box-shadow: inset 1px 0 0 var(--index-edge-light), inset -1px 0 0 var(--index-edge-light), 0 -4px 9px -6px var(--glass-shadow); }
-.filters button:is(:hover,:focus-visible)::before { background: var(--admin-tone); }
 .filters span { display: inline-flex; justify-content: center; align-items: center; min-width: 22px; min-height: 22px; padding-inline: 5px; border: 1px solid color-mix(in srgb,var(--admin-tone) 24%,transparent); border-radius: 4px; background: var(--admin-tone-bg); color: var(--admin-tone); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .controls { display: flex; align-items: center; gap: 8px; min-width: 0; margin-bottom: 8px; }
 /* One size rule for every refresh and square action; touch keeps a generous target. */
@@ -29,7 +20,7 @@
 @media (max-width: 1200px) { .controls:has(input) { width: 100%; order: -1; } }
 @media (max-width: 600px) { .toolbar { gap: 8px; } .filters button { min-width: 0; padding-inline: 7px; gap: 4px; font-size: 12px; } .filters span { min-width: 20px; min-height: 20px; padding-inline: 4px; } }
 @media (prefers-reduced-motion: reduce) { .filters button, .filters button::before { transition: none; } }
-@media (forced-colors: active) { .filters button[aria-pressed=true] { border-color: Highlight; color: Highlight; } .filters button[aria-pressed=true]::before { background: Highlight; } }
+@media (forced-colors: active) { .filters button[aria-pressed=true] { outline: 2px solid Highlight; outline-offset: -2px; color: Highlight; } .filters button[aria-pressed=true]::before { background: Highlight; forced-color-adjust: none; } }
 
 .boardHeader { min-width: 0; }
 .heading { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 4px 12px; }

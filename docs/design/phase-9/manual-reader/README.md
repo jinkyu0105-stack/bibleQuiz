@@ -19,3 +19,32 @@ Windows 앱에서 WSL 파일 이미지가 깨질 때는 위 HTTP 주소로 연�
 P9-22에서 채워진 단계 번호·연결선·굵은 단계 제목, 느낌표와 전체 테두리가 있는 콜아웃, 목차/서비스 아이콘과 활성 표시까지 실제 화면에 적용했다. 원본 이미지와 문서 내용은 보존했다.
 
 [현재 기준](../../../spec/design.md#p9-22-시간대-색상과-승인-시안의-실제-적용) · [실제 적용과 검증](../../../work/P9-22.md)
+
+## P9-23 투명 목차와 불투명 읽기 영역
+
+2026-10-14. 사용자가 주석으로 지정한 [문의 생성 원본](../admin-boards/inquiries-reference.png)을 입력 참조로 재사용하고, `imagegen-frontend-web`으로 **운영 매뉴얼 읽기 작업영역 한 섹션의 가로 이미지 한 장**을 새로 만들었다. `design-taste-frontend`의 기존 화면 감사·자료 보존·시각 위계를 적용했다. 기존 P9-20 `reference.png`는 보존한다.
+
+[새 가로 시안](layered-reference.png) · [낮 실제 UI](layered-actual.png) · [밤 실제 UI](layered-night.png) · [서비스 사전 실제 UI](layered-service.png) · [브라우저 비교](http://localhost:5173/docs/design/phase-9/admin-boards/review#manual)
+
+| 파일 | 해상도 | bytes |
+|---|---|---|
+| layered-reference.png | 1586×992 | 1,250,430 |
+| layered-actual.png | 1440×1100 | 696,410 |
+| layered-night.png | 1440×1100 | 563,056 |
+| layered-service.png | 1440×1100 | 680,479 |
+
+생성 방향은 투명한 하늘/외곽 창/목차, 낮은 밝은 선택 면, 오른쪽 불투명한 한 장의 읽기 영역이다. 분류·굵은 제목·구분선·세 단계·주의 안내·작은 이미지·다음 안내의 위계를 사용하며 문자·숫자·회사 로고·성경 구절은 합성하지 않았다. 이미지의 막대는 내용이 아닌 배치 참조다. 실제 앱에서는 기존 한국어 안내와 공식 아이콘, 네 시간대 의미색을 그대로 표시한다.
+
+디자인 다이얼은 변화4·움직임3·밀도5다. 장식보다 메뉴 선택과 읽기 영역의 차이에 집중한다. 스킬의 마케팅 페이지용 hero/CTA/가격/사진 구도 항목은 관리자 읽기 화면에 해당하지 않는다. 기존 콘텐츠·공식 아이콘·사용자가 요청한 의미색과 이모지 보존을 우선했으며 별도 패키지/서체는 추가하지 않았다. [공식 참고 규칙](../admin-boards/research.md#2026-10-14-선택-표면과-읽기-층-재검토).
+
+실제 적용은 `AdminMenu`의 공통 배경/아이콘 슬롯, `ManualReader`의 투명 목차와 불투명 본문이다. 그림을 UI로 붙이거나 글을 이미지로 대신하지 않았다. 기존14개 주제·10개 서비스·모바일 선택·제목 초점 이동·콜아웃·이미지 확대를 유지한다. 새 시안과 실제 낮/밤/새벽/노을·PC/390/320px를 직접 비교하고, 메뉴 이동·강제 색상·감소 모션·표본 대비를 검사했다. 이는 사용자 미감 승인이나 전체 접근성 인증을 뜻하지 않는다.
+
+세 실제 PNG는 합성 GET 자료로 렌더링한 첫 화면이며 실제 DB를 변경하지 않았다. 재현:
+
+```sh
+BIBLEQUIZ_CAPTURE_ADMIN_GUIDE=1 BIBLEQUIZ_CAPTURE_ADMIN_GUIDE_ONLY=manual pnpm test:e2e tests/e2e/admin-guide-capture.spec.ts --project=chromium --workers=1 --reporter=line
+```
+
+이모지 캡처 글꼴은 [공통 촬영 안내](../admin-guide/README.md)를 따른다. 잘린 캡처에서 Chromium 고정 사이드바가 빠지는 현상을 확인해 전체 뷰포트로 촬영한다. 생성 원본은 Windows `generated_images/01a13387-991c-7571-919c-5bfd0e833e46/exec-4a3c8a53-08ae-479a-a5fc-b862ed433018.png`에 보존한다. 생성 이미지와 비교용 실제 PNG는 앱에서 내려받는 런타임 자산이 아니다. 확인한 HTTP200/image/png·브라우저 디코딩과 사용자 기기의 실제 표시 확인은 구별한다.
+
+[현재 명세](../../../spec/design.md#p9-23-후속--선택-표면과-도움말-읽기-영역) · [검증 기록](../../../work/P9-23.md#시안-기준-탭과-공통-메뉴도움말-재구성).
