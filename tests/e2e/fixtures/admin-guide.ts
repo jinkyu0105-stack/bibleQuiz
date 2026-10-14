@@ -7,7 +7,7 @@ const at='2026-10-11T00:00:00.000Z';
 export const guideQuiz={quizSetId:'weekly',sermonId:'sermon-weekly',title:'서로 돕는 한 주 · 연습',sermonDate:'2026-10-11',slug:null,status:'draft',submissionStatus:'open',closesAt:null,updatedAt:at,featured:false,expired:false,stage:'content_review',jobStatus:'awaiting_content_review',visibleCount:0,totalCount:0};
 const hash='a'.repeat(64),binding={sourceId:'source',sourceRevision:1,sourceSha256:hash,revisionId:'source',transcriptSha256:hash,checksumFormat:'sha256:utf8-working-text:v1',confirmationId:'confirmed',version:2};
 const evidence=[{segmentId:null,start:null,duration:null,from:0,to:8,quote:'서로 사랑하세요'}];
-function content():AdminContentView {
+export function guideContent():AdminContentView {
   const fullBinding={transcript:binding,analysisId:'analysis',intentConfirmationId:'intent-confirmed'};
   return adminContentViewSchema.parse({enabled:false,quizSetId:'weekly',jobId:'job',version:2,status:'awaiting_content_review',stage:'content_review',
     content:{state:'present',intent:{selectedId:'analysis',rootAnalysisId:'analysis',confirmation:{id:'intent-confirmed'}},summary:{id:'summary',review:null},child:{id:'child',review:null},adult:{id:'adult',review:null}},
@@ -17,8 +17,8 @@ function content():AdminContentView {
 
 const quiz = guideQuiz;
 
-export async function mockAdminGuide(page: Page) {
-  const view=content(), mutations:string[]=[];
+export async function mockAdminGuide(page: Page, view=guideContent()) {
+  const mutations:string[]=[];
   const reference=parseBibleReference('요 3:16'); if(!reference.ok) throw new Error('synthetic reference');
   const published={...quiz,quizSetId:'published-example',sermonId:'published-sermon',title:'함께 걷는 기쁨 · 연습',slug:'2026-10-01-abc234',status:'published',closesAt:'2026-10-18T12:00:00.000Z',stage:'finish',jobStatus:null,childVisibleCount:3,adultVisibleCount:4,visibleCount:7,totalCount:7};
   const archived={...published,quizSetId:'archived-example',title:'작은 친절을 나누어요 · 연습',status:'archived',submissionStatus:'closed',closesAt:'2026-10-04T12:00:00.000Z',sermonDate:'2026-09-27'};

@@ -57,7 +57,7 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
   const [trials, setTrials] = useState<Partial<Record<Level, AdminPlacementTrial>>>({});
   const [indices, setIndices] = useState({ child: placement.selection.child.index, adult: placement.selection.adult.index });
   const [trialBusy, setTrialBusy] = useState(false), [message, setMessage] = useState("");
-  const [previewTheme,setPreviewTheme] = useState("light");
+  const [previewTheme,setPreviewTheme] = useState("current");
   const [confirmPublish, setConfirmPublish] = useState(false);
   const [publishedSlug, setPublishedSlug] = useState<string | null>(null);
   const publicationKey = useRef<string | null>(null);
@@ -114,7 +114,7 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
       <label><input type="checkbox" checked={answers} onChange={e => setAnswers(e.currentTarget.checked)} />관리자 정답 보기</label>
       <label><input type="checkbox" checked={large} onChange={e => setLarge(e.currentTarget.checked)} />크게 보기</label>
       <label><input type="checkbox" checked={mobile} onChange={e => setMobile(e.currentTarget.checked)} />모바일 폭으로 보기</label>
-      {step !== undefined && <label>색상 미리보기<select value={previewTheme} onChange={e=>setPreviewTheme(e.target.value)}><option value="light">라이트</option><option value="dark">다크</option></select></label>}
+      {step !== undefined && <label className={styles.previewTheme}>색상 미리보기<select value={previewTheme} onChange={e=>setPreviewTheme(e.target.value)}><option value="current">현재 시간대</option><option value="light">라이트</option><option value="dark">다크</option></select></label>}
     </div>
     <div hidden={step !== undefined && step > 4}>
     <h4><AdminLabel text="배치 선택·발행 전 검토"/></h4><p>검수한 후보로 여러 배치를 시험합니다. AI 추가 비용은 없습니다.</p>
@@ -133,7 +133,7 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
         {!!trials[level].reasons.length && <details><summary><AdminLabel text="배치가 어려웠던 이유"/></summary>{trials[level].reasons.map(reason => <p key={reason}>{reason}</p>)}</details>}
         {!!trials[level].layouts.length && <><label className={styles.field}>비교할 배치<select disabled={disabled} value={indices[level]} onChange={e => { const index = Number(e.currentTarget.value); setIndices(previous => ({ ...previous, [level]: index })); }}>
           {trials[level].layouts.map(layout => <option key={layout.index} value={layout.index}>{layout.index === 0 ? "추천 배치" : `대안 ${layout.index}`} · {layout.grid.gridSize} × {layout.grid.gridSize} · {layout.wordCount}개</option>)}</select></label>
-          <div className={styles.previewViewport} data-mobile={mobile} data-preview-theme={step === undefined ? undefined : previewTheme}><LayoutReview layout={trials[level].layouts[indices[level]]!} title={`${names[level]} 시험`} answers={answers} large={large} /></div>
+          <div className={styles.previewViewport} data-mobile={mobile} data-preview-theme={step === undefined || previewTheme === "current" ? undefined : previewTheme}><LayoutReview layout={trials[level].layouts[indices[level]]!} title={`${names[level]} 시험`} answers={answers} large={large} /></div>
         </>}
       </>}
     </section>)}
@@ -147,7 +147,7 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
       <h5>{view.preview.metadata.title}</h5><p>설교일 {view.preview.metadata.date} · {view.preview.metadata.bibleReferenceLabel} ({view.preview.metadata.translation})</p>
       <a href={view.preview.metadata.bibleReadingUrl} target="_blank" rel="noreferrer">대한성서공회에서 읽기</a>
       <p className={styles.reviewSummary}>{view.preview.summary.text}</p><p className={styles.helper}>{view.preview.summary.disclosure}</p>
-      {levels.map(level => <div className={styles.previewViewport} data-mobile={mobile} data-preview-theme={step === undefined ? undefined : previewTheme} key={level}><LayoutReview layout={view.reviewLayouts![level]} title={names[level]} answers={answers} large={large} /></div>)}
+      {levels.map(level => <div className={styles.previewViewport} data-mobile={mobile} data-preview-theme={step === undefined || previewTheme === "current" ? undefined : previewTheme} key={level}><LayoutReview layout={view.reviewLayouts![level]} title={names[level]} answers={answers} large={large} /></div>)}
       <Button type="button" onClick={() => void copyClues()}>정답 없이 단서 복사</Button>
       <p>두 난도 모두 자료 확인과 내용 검수를 마쳤고, 격자의 연결·교차·정답 검사를 통과했습니다. 아직 발행하지 않았습니다.</p>
       {step === 5 && <ul aria-label="발행 검수표"><li>설교 자료와 설교 의도 확인·확정</li><li>요약·어린이·장년 문제 검수</li><li>두 난도 격자·연결·교차·정답 검사 통과</li><li>아래 Top N 설정과 공개할 내용을 확인해 주세요.</li></ul>}

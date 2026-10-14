@@ -1,6 +1,7 @@
 import { expect, test, type Locator, type Page, type Route } from '@playwright/test';
 import { mkdirSync, readFileSync } from 'node:fs';
 import { mockAdminGuide } from './fixtures/admin-guide';
+import { mockAdminWorkspace } from './fixtures/admin-workspace';
 
 // Opt-in maintenance command: renders current components with synthetic GET responses only.
 test('capture operator guide examples', async ({ page }) => {
@@ -8,7 +9,8 @@ test('capture operator guide examples', async ({ page }) => {
   test.setTimeout(120_000);
   await page.setViewportSize({width:1440,height:1300});
   await page.emulateMedia({reducedMotion:'reduce'});
-  const writes=await mockAdminGuide(page);
+  const workspaceOnly=process.env.BIBLEQUIZ_CAPTURE_ADMIN_GUIDE_ONLY === 'workspace';
+  const writes=workspaceOnly?await mockAdminWorkspace(page):await mockAdminGuide(page);
   const boardsOnly=process.env.BIBLEQUIZ_CAPTURE_ADMIN_GUIDE_ONLY === 'boards';
   if(boardsOnly) {
     const reply=(route:Route,items:unknown[])=> {
@@ -54,6 +56,38 @@ test('capture operator guide examples', async ({ page }) => {
     await page.getByRole('button',{name:'밤',exact:true}).click();
     await expect(page.locator('body')).toHaveAttribute('data-time','night');
     await board.screenshot({path:`docs/design/phase-9/admin-boards/${id}-night.png`,animations:'disabled'});
+  }
+  if(workspaceOnly) {
+    mkdirSync('docs/design/phase-9/admin-workspace',{recursive:true});
+    await page.setViewportSize({width:1440,height:1500});
+    const names=['설교 영상','설교 의도','요약과 문제','격자 배치','최종 확인','발행'];
+    for(let step=1;step<=6;step++) {
+      await open(`/admin/quiz/weekly?step=${step}`);
+      await expect(page.getByRole('heading',{name:names[step-1],exact:true})).toBeVisible();
+      if(step===5)await expect(page.getByLabel('어린이 Top N')).toHaveValue('3');
+      for(const [label,time] of [['낮','actual'],['밤','night']]) {
+        await page.getByRole('button',{name:label!,exact:true}).click();
+        await page.mouse.move(0,0);await page.evaluate(()=>scrollTo(0,0));
+        await page.screenshot({path:`docs/design/phase-9/admin-workspace/step-${step}-${time}.png`,animations:'disabled'});
+      }
+    }
+    await open('/admin/quiz/published-example');
+    await page.locator('[data-admin-tool=quiz-metadata] > summary').click();
+    await expect(page.getByRole('textbox',{name:'설교 제목',exact:true})).toHaveValue('함께 걷는 기쁨 · 연습');
+    for(const [label,time] of [['낮','actual'],['밤','night']]) {
+      await page.getByRole('button',{name:label!,exact:true}).click();
+      await page.mouse.move(0,0);await page.evaluate(()=>scrollTo(0,0));
+      await page.screenshot({path:`docs/design/phase-9/admin-workspace/settings-${time}.png`,animations:'disabled'});
+    }
+    await open('/admin/quiz/weekly?step=1');
+    await expect(page.getByRole('textbox',{name:'설교 제목',exact:true})).toHaveValue('서로 돕는 한 주 · 연습');
+    await between('input',page.locator('section[aria-labelledby="sermon-drafts-title"]'),page.getByRole('textbox',{name:'성경 장절',exact:true}));
+    await open('/admin/quiz/weekly?step=3');
+    await expect(page.getByRole('textbox',{name:'요약 문단 1',exact:true})).toBeVisible();
+    await between('review',page.locator('#review-targets'),page.locator('#snapshot-summary'));
+    await open('/admin/quiz/published-example');
+    await between('settings',page.locator('[data-admin-tool=quiz-metadata]'),page.locator('[data-admin-tool=quiz-correction]'));
+    expect(writes).toEqual([]); return;
   }
   if(process.env.BIBLEQUIZ_CAPTURE_ADMIN_GUIDE_ONLY === 'manual') {
     await page.setViewportSize({width:1440,height:1100});

@@ -528,7 +528,9 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
   const selectionLabel = selectedIntent?.kind === "intent" ? selectedIntent.value.kind === "analysis" ? "최초 분석" : selectedIntent.value.kind === "critique" ? "비판 검토를 반영한 분석" : "직접 수정한 분석" : null;
   const currentTimedSegment = current?.content.format === "timed_segments" ? current.content.segments[timedSegmentIndex] : undefined;
 
-  return <section className={`${styles.page} ${weekly ? styles.weeklyPage : ""}`} aria-labelledby="sermon-input-title">
+  const quickHelp = <div className={styles.quickHelp}><AdminConcepts terms={step === 1 ? ["초안", "확정", "자동 저장"] : step === 2 ? ["설교 의도", "비판 검토", "확정"] : step === 3 ? ["검수", "자동 저장", "재생성"] : step === 4 ? ["격자 배치", "검수"] : ["발행", "접수 마감", "Top N"]}/>
+    <AdminScreenshots key={step} ids={step === 1 ? ["input"] : step <= 3 ? ["review"] : ["settings"]} compact/></div>;
+  return <section className={`${styles.page} ${weekly ? styles.weeklyPage : ""}`} data-admin-workflow={weekly || undefined} aria-labelledby="sermon-input-title">
     <header className={styles.hero}>
       <div>
         {!weekly && <p className={styles.kicker}>현재 관리자 작업</p>}
@@ -547,14 +549,13 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       {weekly && (step === 2 && selectedIntent || step === 3) && <a className={styles.reviewJump} href={step === 2 ? `#snapshot-${c?.intent?.selectedId}` : "#review-targets"}>{step === 2 ? "현재 선택본 확인" : "검수할 내용 선택"}</a>}
       {weekly && step < 6 && <Button type="button" disabled={!available[step] || changedInput || contentDirty || feedback.state === "loading"} onClick={() => selectStep(step + 1)}>다음: {stepNames[step]}</Button>}
     </header>
-    {weekly && <ol className={weeklyStyles.stepper} aria-label="주간 발행 6단계">{stepNames.map((label,index)=><li key={label}><button type="button" disabled={!available[index]} aria-current={step===index+1?"step":undefined} onClick={()=>selectStep(index+1)}><span className={weeklyStyles.stepNumber} aria-hidden="true">{index+1<recommended ? "✓" : index+1}</span><span>{label}</span><small>{!available[index]?reasons[index]:index+1<recommended?"완료 · 수정 가능":step===index+1?"현재 단계":"이동 가능"}</small></button></li>)}</ol>}
+    {weekly && <ol className={weeklyStyles.stepper} aria-label="주간 발행 6단계">{stepNames.map((label,index)=><li key={label}><button type="button" disabled={!available[index]} data-complete={index+1<recommended || undefined} aria-current={step===index+1?"step":undefined} onClick={()=>selectStep(index+1)}><span className={weeklyStyles.stepNumber} aria-hidden="true">{index+1<recommended ? "✓" : index+1}</span><span>{label}</span><small>{!available[index]?reasons[index]:step===index+1?"현재 단계":index+1<recommended?"완료 · 수정 가능":"이동 가능"}</small></button></li>)}</ol>}
     {blocker.state === "blocked" && <div role="alert"><p>저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.</p><Button type="button" onClick={() => blocker.reset()}>작업 계속하기</Button><Button type="button" onClick={() => blocker.proceed()}>저장하지 않고 이동</Button></div>}
     {weekly && <p className={styles.saveGuidance} role="status">{changedInput || contentDirty ? "저장 확인 필요. " : ""}<GuideText text="편집은 잠시 멈추면 자동 저장됩니다. 확정·AI 재생성·발행은 직접 실행합니다."/></p>}
 
-    <div className={styles.quickHelp}><AdminConcepts terms={step === 1 ? ["초안", "확정", "자동 저장"] : step === 2 ? ["설교 의도", "비판 검토", "확정"] : step === 3 ? ["검수", "자동 저장", "재생성"] : step === 4 ? ["격자 배치", "검수"] : ["발행", "접수 마감", "Top N"]}/>
-    <AdminScreenshots key={step} ids={step === 1 ? ["input"] : step <= 3 ? ["review"] : ["settings"]} compact/></div>
+    {weekly ? <details className={weeklyStyles.workspaceHelp}><summary><AdminLabel text="용어·화면 안내"/></summary>{quickHelp}</details> : quickHelp}
     {costQuizSetId && <AiCostDetails key={`${costQuizSetId}-${costRefresh}`} quizSetId={costQuizSetId} refreshKey={costRefresh} />}
-    <div hidden={weekly && step !== 1}>
+    <div hidden={weekly && step !== 1} data-admin-sheet={weekly || undefined} className={weekly ? styles.stageBody : undefined}>
     <SermonDrafts selectedId={loadedSermonId} onSelect={refreshWorkspace} onMetadataSaved={() => { setMetadataVersion(v => v + 1); onSaved?.(); }} onCostQuizSetId={onCostQuiz} initialCreating={weekly && !initialSermonId} disabled={workspace.state === "loading" || feedback.state === "loading"} />
     {!weekly && <form className={styles.lookup} onSubmit={submitLoad}>
       <label htmlFor="admin-sermon-id">설교 ID

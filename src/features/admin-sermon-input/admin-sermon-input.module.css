@@ -583,6 +583,7 @@
 .publicationDialog {
   width: min(38rem, calc(100% - 2rem));
   max-height: calc(100dvh - 2rem);
+  margin: auto;
   overflow: auto;
   padding: clamp(1rem, 4vw, 2rem);
   border: 1px solid var(--border);
@@ -919,4 +920,48 @@
   :global([data-admin-tool-page]) .steps li { grid-template-columns: 24px minmax(0,1fr); column-gap: 6px; min-height: 72px; padding: 10px 8px; font-size: 13px; }
   :global([data-admin-tool-page]) .steps span { width: 24px; height: 24px; }
   :global([data-admin-tool-page]) .steps small { font-size: 12px; }
+}
+
+/* A single reading sheet owns each stage; its nested tools use dividers. */
+.weeklyPage { gap: 12px; }
+.weeklyPage > .hero { padding: 0 0 12px; gap: 12px 20px; border: 0; }
+.weeklyPage > .hero > div { flex: 1 1 420px; }
+.weeklyPage > .hero h2 { margin-bottom: 6px; }
+.weeklyPage > .hero p:last-child { max-width: 48rem; line-height: 1.75; }
+.weeklyPage .quickHelp { margin: 0 0 8px; }
+.weeklyPage .costStrip { padding: 0; border: 0; }
+.stageBody:not([hidden]) { display: grid; gap: 24px; }
+:global([data-admin-workspace]) .stageBody :is(.panel,.currentPreview,.readOnlyPanel),
+:global([data-admin-workspace]) .panel .panel,
+:global([data-admin-workspace]) :global([data-admin-tool]) .panel,
+:global([data-admin-workspace]) :global([data-admin-sheet]) > .panel { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+:global([data-admin-workspace]) .stageBody > :is(.panel,.currentPreview,.readOnlyPanel) + :is(.panel,.currentPreview,.readOnlyPanel) { padding-top: 24px; border-top: 1px solid var(--line); }
+:global([data-admin-workspace]) .sectionHeading { align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+:global([data-admin-workspace]) .sectionHeading :is(h3,h4) { margin: 0; }
+:global([data-admin-workspace]) .sectionHeading > span { padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+:global([data-admin-workspace]) .actionGrid { gap: 24px; padding-top: 24px; border-top: 1px solid var(--line); }
+:global([data-admin-workspace]) .displayEditor { gap: 16px; }
+:global([data-admin-workspace]) :is([data-admin-sheet],[data-admin-tool]) > .displayEditor { margin-top: 0; }
+:global([data-admin-workspace]) .displayEditor > p { margin: 0; }
+:global([data-admin-workspace]) .panel > h2 { padding-bottom: 16px; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
+.weeklyPage .snapshotDisclosure { margin-top: 20px; border-bottom: 0; }
+.weeklyPage .snapshotDisclosure > summary { color: var(--ink); }
+.weeklyPage .snapshotDisclosure .sectionHeading { border: 0; padding: 0; margin-block: 8px 16px; }
+.weeklyPage .reviewActions { padding: 16px; border-radius: 8px; background: var(--ui-attention-bg); border-color: color-mix(in srgb,var(--ui-attention) 25%,transparent); }
+.weeklyPage .placementLevel { padding-block: 20px; gap: 16px; }
+.weeklyPage .placementLevel > :global(.action-button) { justify-self: start; }
+.weeklyPage .previewTools { gap: 8px 20px; }
+.previewTools .previewTheme { display: grid; grid-template-columns: max-content minmax(0,1fr); width: min(100%,280px); word-break: keep-all; }
+.weeklyPage .previewViewport { padding: 16px; border: 1px solid var(--line); border-radius: 8px; }
+/* Explicit light/dark previews use the current sky palette, not the retired forest palette. */
+.previewViewport[data-preview-theme=light] { --page: #eaf2f8; --surface: #f0f7fc; --ink: #17344a; --muted: #38536a; --text: var(--muted); --text-strong: var(--ink); --border: #bacfdc; --cell: #f7fbff; --blocked: #284963; --grid-border: #7992a7; --selection: #dbeeff; }
+.previewViewport[data-preview-theme=dark] { --page: #0b2039; --surface: #162e46; --ink: #edf4fb; --muted: #d2dfea; --text: var(--muted); --text-strong: var(--ink); --border: #879fb6; --cell: #162e46; --blocked: #071a2c; --grid-border: #87a4bf; --selection: #284b6a; }
+.weeklyPage .publicationDialog { background: var(--admin-sheet); border-color: var(--admin-sheet-edge); padding: var(--admin-sheet-block) var(--admin-sheet-inline); }
+.generationActions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-block: 12px; }
+@media (max-width: 767px) {
+ .weeklyPage > .hero > div { flex-basis: 100%; }
+ .weeklyPage > .hero > button { width: auto; }
+ :global([data-admin-workspace]) .actionGrid { gap: 20px; }
+ :global([data-admin-workspace]) .actionGrid > :is(.panel,.readOnlyPanel) + :is(.panel,.readOnlyPanel) { padding-top: 20px; border-top: 1px solid var(--line); }
+ .weeklyPage .previewViewport { padding: 12px; }
 }

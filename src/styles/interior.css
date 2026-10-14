@@ -136,11 +136,15 @@ body[data-time=night] .admin-layout {
 .sky-app .admin-main:has(> [data-admin-clear]) { background: var(--glass-clear); }
 .sky-app .admin-main [data-admin-manual] > header > h2 { font-family: 'Noto Sans KR',sans-serif; font-weight: 700; }
 
-/* One reading material and spacing scale for the manual and maintenance tools. */
+/* One reading material and spacing scale for the manual, tools and quiz workspace. */
 .admin-layout { --admin-sheet: var(--glass-solid); --admin-sheet-edge: color-mix(in srgb,var(--line) 65%,transparent); --admin-sheet-block: 24px; --admin-sheet-inline: 28px; }
 .sky-app .admin-main :is([data-admin-sheet], [data-admin-tool-page] [data-admin-tool]) { min-width: 0; border: 1px solid var(--admin-sheet-edge); border-radius: 12px; background: var(--admin-sheet); box-shadow: 0 8px 20px -14px var(--glass-shadow); }
 .sky-app .admin-main [data-admin-sheet] { padding: var(--admin-sheet-block) var(--admin-sheet-inline); }
 .sky-app:not(.home-shell) .admin-main [data-admin-tool-page] :is(h2,h3,h4) { font-family: 'Noto Sans KR',sans-serif; font-weight: 700; }
+.sky-app:not(.home-shell) .admin-main [data-admin-workspace] :is(h2,h3,h4,h5,h6) { font-family: 'Noto Sans KR',sans-serif; font-weight: 700; }
+.sky-app:not(.home-shell) .admin-main [data-admin-workspace] > header h2 { font-size: clamp(23px,2.1vw,28px); }
+.sky-app:not(.home-shell) .admin-main [data-admin-workflow] > header h2 { font-size: 23px; }
+.sky-app:not(.home-shell) .admin-main [data-admin-workspace] :is(h5,h6) { margin: 0 0 8px; font-size: 16px; line-height: 1.6; }
 .sky-app .admin-main [data-admin-tool-page] [data-admin-sheet] > h3 { padding-bottom: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--line); font-size: 20px; }
 .sky-app .admin-main [data-admin-tool-page] [data-admin-tool] > summary { padding: 18px var(--admin-sheet-inline); background: transparent; color: var(--ink); }
 .sky-app .admin-main [data-admin-tool-page] [data-admin-tool] > summary:hover { background: color-mix(in srgb,var(--ui-action) 6%,var(--admin-sheet)); }

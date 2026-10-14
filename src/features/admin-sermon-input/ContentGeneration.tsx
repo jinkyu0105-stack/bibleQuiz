@@ -312,17 +312,17 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
       await refresh();
     } finally { setBusy(false); lock.current = false; setIntentDialog(null); }
   }
-  if (view?.status === "withdrawn") return <section className={styles.panel} aria-label="발행 취소 완료">
+  if (view?.status === "withdrawn") return <section className={styles.panel} data-admin-sheet={weeklyStep !== undefined || undefined} aria-label="발행 취소 완료">
     <h3><AdminLabel text="발행 취소 완료"/></h3><p>공개를 중단하고 검수 대기로 돌렸습니다. 발행 당시 문제·정답과 최신 제목·설교일은 보존됩니다.</p>
     <a href="/admin/tools#withdraw-title">공개를 취소한 퀴즈 검수 자료 확인</a>
   </section>;
-  if (view?.publication) return <section className={styles.panel} aria-label="발행 완료">
+  if (view?.publication) return <section className={styles.panel} data-admin-sheet={weeklyStep !== undefined || undefined} aria-label="발행 완료">
     <h3><AdminLabel text="발행 완료"/></h3><p>발행 시각 {new Date(view.publication.publishedAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (한국 시간)</p>
     <p>마감 시각 {new Date(view.publication.closesAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (한국 시간)</p>
     <a href={`/quiz/${view.publication.slug}`}>공개된 퀴즈 보기</a>
   </section>;
-  return <section hidden={weeklyStep === 1} className={styles.panel} aria-labelledby="content-generation-title" aria-busy={loading}>
-    <div className={styles.sectionHeading}><h3 id="content-generation-title"><AdminLabel text="설교 요약·문제 생성"/></h3><span>{view ? ({ failed: "생성 실패", stale: "입력 변경으로 중단", uncertain: "응답 확인 필요" } as Record<string, string>)[view.status] ?? stages[view.stage] ?? "상태 확인" : "연결 확인 중"}</span></div>
+  return <section hidden={weeklyStep === 1} className={styles.panel} data-admin-sheet={weeklyStep !== undefined || undefined} aria-labelledby="content-generation-title" aria-busy={loading}>
+    <div className={styles.sectionHeading}><h3 id="content-generation-title"><AdminLabel text={weeklyStep === 4 ? "두 난도 격자 배치" : weeklyStep === 5 ? "공개 전 최종 확인" : weeklyStep === 6 ? "발행 준비" : "설교 요약·문제 생성"}/></h3><span>{view ? ({ failed: "생성 실패", stale: "입력 변경으로 중단", uncertain: "응답 확인 필요" } as Record<string, string>)[view.status] ?? stages[view.stage] ?? "상태 확인" : "연결 확인 중"}</span></div>
     <div hidden={weeklyStep !== undefined && weeklyStep > 3}>
     <details className={styles.generationGuide} open={weeklyStep === undefined || !view?.jobId || newDraft}><summary><AdminLabel text="생성 안내·예상 비용"/></summary>
     <p>{view?.recoveredCritiqueId ? "보관한 분석과 비판 결과를 재사용합니다. 의도를 확정하면 요약·어린이·장년 문제를 이어서 만듭니다." : view?.recoveredAnalysisId ? "보관한 분석을 재사용해 비판 검토부터 이어갑니다. 교정과 의도 분석을 다시 호출하지 않습니다."
@@ -333,13 +333,15 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
     {view && !view.enabled && <p>AI 실행 연결을 아직 활성화하지 않았습니다.</p>}
     {!inputConfirmed && <p>현재 본문을 먼저 확정해 주세요.</p>}
     </details>
+    <div className={styles.generationActions}>
     {view?.jobId && (["review_ready", "failed", "stale", "needs_revision", "uncertain"].includes(view.status) || view.status === "awaiting_intent_review" && !!c?.intent && view.quality[c.intent.selectedId]?.status === "regenerate") && !newDraft && <Button type="button" disabled={controlBusy} onClick={() => { pending.current = null; setPaid(false); setNewDraft(true); }}>{view.recoveredAnalysisId ? "보관 분석으로 생성 이어가기" : "기존 자료를 보존하고 새 초안 생성"}</Button>}
+    <Button type="button" disabled={acting || loading} onClick={() => void refresh()}>생성 상태 확인</Button>
+    </div>
     {(!view?.jobId || newDraft) && <>
       <div className={styles.formGrid}>{(["child", "adult"] as const).map(d => <div key={d}><label className={styles.field}>{d === "child" ? "어린이" : "장년"} 격자 크기<select value={sizes[d]} onChange={e => setSizes({ ...sizes, [d]: Number(e.currentTarget.value) })}>{[5, 6, 7, 8, 9, 10].map(n => <option key={n} value={n}>{n} × {n}</option>)}</select></label><label className={styles.field}>목표 단어 수<input type="number" min={1} max={100} value={counts[d]} onChange={e => setCounts({ ...counts, [d]: Number(e.currentTarget.value) })} /></label></div>)}</div>
       <label className={styles.checkbox}><input type="checkbox" checked={paid} onChange={e => setPaid(e.currentTarget.checked)} />예상 비용과 무료 대안을 확인하고 생성을 요청합니다.</label>
       <Button type="button" disabled={controlBusy || !view?.enabled || !view.quizSetId || !paid || !inputConfirmed} onClick={() => void start()}>{view?.recoveredCritiqueId ? "보관 결과로 검수 이어가기" : view?.recoveredAnalysisId ? "보관 분석으로 비판 검토 시작" : "분석·비판 검토 시작"}</Button>
     </>}
-    <Button type="button" disabled={acting || loading} onClick={() => void refresh()}>생성 상태 확인</Button>
     {view?.jobId && <details className={styles.regenerationDisclosure} open={weeklyStep === undefined}><summary><AdminLabel text="다시 생성·이전 결과 선택"/></summary><ContentRegeneration key={view.jobId} view={view} inputConfirmed={inputConfirmed} busy={controlBusy} act={act} /></details>}
     {view?.status === "uncertain" && <p>사용량이나 결과가 확인되지 않아 자동 재호출을 중단했습니다. 이전 비용을 확인해 주세요.</p>}
     {intentWaitJobId && c?.intent?.confirmation && <Button type="button" disabled={controlBusy || !view?.enabled || view.quality[c.intent.selectedId]?.status === "regenerate" || !!partialIntentWait && c.intent.rootAnalysisId !== partialIntentWait.analysisId} onClick={() => setIntentDialog(c.intent!.selectedId)}>{partialIntentWait ? "재확정한 의도 반영 완료" : "확정한 의도로 생성 시작"}</Button>}
