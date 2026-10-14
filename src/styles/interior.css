@@ -76,12 +76,13 @@ body[data-time=dawn] .admin-layout {
   --ui-action-fill: #354fc0;
 }
 body[data-time=dusk] .admin-layout {
-  --ui-action: #3d4cb0; --ui-action-bg: #eeeafe;
+  --ui-action: var(--dusk-action); --ui-action-bg: var(--dusk-action-bg);
   --ui-success: #30623e; --ui-success-bg: #ebf3e5;
   --ui-attention: #8d480d; --ui-attention-bg: #fff0d7;
   --ui-guide: #972492; --ui-guide-bg: #fce7fa;
   --ui-danger: #b22d3b; --ui-danger-bg: #ffe8e6;
-  --ui-action-fill: #3d4cb0;
+  --ui-action-fill: var(--dusk-action);
+  --admin-tooltip-surface: #fff5ec;
 }
 body[data-time=night] .admin-layout {
   --admin-tooltip-surface: #182c41;

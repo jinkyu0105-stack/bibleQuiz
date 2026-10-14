@@ -32,7 +32,22 @@ body[data-time=dawn] {
   --glass-soft: rgb(224 225 245 / .45);
 }
 body[data-time=dusk] {
-  --muted: #514157;
+  /* Registered sunset pair: apricot reading surfaces and copper actions. */
+  --dusk-action: #8a432f;
+  --dusk-action-bg: #f9e4d9;
+  --ink: #3f2c2b;
+  --muted: #715750;
+  --line: rgb(107 80 67 / .24);
+  --accent: var(--dusk-action);
+  --accent-hover: #682d20;
+  --glass-solid: #f7e9df;
+  --glass-solid-selected: #fff5ec;
+  --glass-field: rgb(255 248 241 / .88);
+  --glass-selected: rgb(255 245 235 / .76);
+  --glass-selected-ink: var(--dusk-action);
+  --glass-tint: var(--dusk-action);
+  --glass-on-tint: #fff8f2;
+  --glass-shadow: rgb(82 42 31 / .18);
   --glass-clear: rgb(255 244 230 / .63);
   --glass-reading: rgb(255 249 240 / .78);
   --glass-soft: rgb(244 223 205 / .42);

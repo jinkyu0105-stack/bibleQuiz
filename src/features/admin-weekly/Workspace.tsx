@@ -13,6 +13,7 @@ import { WithdrawPublication } from "../admin-sermon-input/WithdrawPublication";
 import { ProblemCorrection } from "../admin-sermon-input/ProblemCorrection";
 import { QuizDeadline } from "../admin-sermon-input/QuizDeadline";
 import { WinnerSettings } from "./WinnerSettings";
+import { WorkspaceMeta } from "./WorkspaceMeta";
 import { weeklyRequest } from "./client";
 import styles from "./weekly.module.css";
 export function Component(){
@@ -30,7 +31,7 @@ export function Component(){
   const published=quiz&&['published','archived'].includes(quiz.status);
   return <div className={`${styles.page} ${styles.workspace}`} data-admin-clear data-admin-workspace data-admin-tool-page={published || undefined}><Link className={styles.backLink} to="/admin">← 퀴즈 목록</Link>{message&&<div><p role="alert">{message}</p><Button onClick={()=>{setMessage('');setAttempt(a=>a+1);}}>다시 불러오기</Button></div>}
     {!id?(newChecked?<AdminSermonInput weekly/>:!message&&<p role="status">기존 초안을 확인하고 있습니다.</p>):!quiz?!message&&<p role="status">퀴즈를 불러오고 있습니다.</p>:<>
-      <header className={styles.workspaceHeader}><h2><AdminEmoji>🧩</AdminEmoji>{quiz.title}</h2><p>{quiz.sermonDate} · {published?quiz.status==='archived'?'마감된 퀴즈':'발행된 퀴즈':'작성 중인 퀴즈'}</p><details><summary><AdminLabel text="저장·초안 보관 정보"/></summary><p>마지막 저장: {new Date(quiz.updatedAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})} (한국 시간) · 초안 본문 정리 예정: {due?new Date(due).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'}):'초안 보관 현황에서 확인'}</p></details></header>
+      <header className={styles.workspaceHeader}><h2><AdminEmoji>🧩</AdminEmoji>{quiz.title}</h2><WorkspaceMeta quiz={quiz} due={due}/></header>
       {published?<>
         <details className={styles.workspaceHelp}><summary><AdminLabel text="용어·화면 안내"/></summary><div className={styles.quickHelp}><AdminConcepts terms={["발행", "접수 마감", "Top N"]}/>
         <AdminScreenshots ids={["settings"]} compact/></div></details>

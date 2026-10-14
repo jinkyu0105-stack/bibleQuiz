@@ -34,11 +34,16 @@ body[data-time=dusk] {
   --glass-clear: rgb(255 244 230 / .24);
   --glass-reading: rgb(255 249 240 / .65);
   --glass-home-reading: rgb(255 249 240 / .48);
-  --glass-rim-cool: rgb(130 218 249 / .66);
-  --glass-rim-violet: rgb(209 145 228 / .62);
+  --glass-rim-cool: rgb(255 183 158 / .66);
+  --glass-rim-violet: rgb(226 158 178 / .62);
   --glass-rim-warm: rgb(255 209 141 / .85);
   --glass-reflection: rgb(255 227 187 / .18);
-  --glass-control-ink: #392c42;
+  --glass-control-ink: #3f2c2b;
+  --glass-header-ink: #3f2c2b;
+  --glass-bottom: rgb(255 208 174 / .42);
+  --glass-selected: rgb(255 245 235 / .65);
+  --glass-shadow: rgb(82 42 31 / .22);
+  --glass-admin-fill: rgb(255 245 235 / .24);
 }
 body[data-time=night] {
   --glass-clear: rgb(10 27 48 / .38);

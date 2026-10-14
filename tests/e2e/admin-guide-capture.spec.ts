@@ -65,7 +65,7 @@ test('capture operator guide examples', async ({ page }) => {
       await open(`/admin/quiz/weekly?step=${step}`);
       await expect(page.getByRole('heading',{name:names[step-1],exact:true})).toBeVisible();
       if(step===5)await expect(page.getByLabel('어린이 Top N')).toHaveValue('3');
-      for(const [label,time] of [['낮','actual'],['밤','night']]) {
+      for(const [label,time] of [['낮','actual'],['밤','night'],...(step===3?[['노을','dusk']]:[])]) {
         await page.getByRole('button',{name:label!,exact:true}).click();
         await page.mouse.move(0,0);await page.evaluate(()=>scrollTo(0,0));
         await page.screenshot({path:`docs/design/phase-9/admin-workspace/step-${step}-${time}.png`,animations:'disabled'});
@@ -74,11 +74,16 @@ test('capture operator guide examples', async ({ page }) => {
     await open('/admin/quiz/published-example');
     await page.locator('[data-admin-tool=quiz-metadata] > summary').click();
     await expect(page.getByRole('textbox',{name:'설교 제목',exact:true})).toHaveValue('함께 걷는 기쁨 · 연습');
-    for(const [label,time] of [['낮','actual'],['밤','night']]) {
+    for(const [label,time] of [['낮','actual'],['밤','night'],['노을','dusk']]) {
       await page.getByRole('button',{name:label!,exact:true}).click();
       await page.mouse.move(0,0);await page.evaluate(()=>scrollTo(0,0));
       await page.screenshot({path:`docs/design/phase-9/admin-workspace/settings-${time}.png`,animations:'disabled'});
     }
+    await open('/admin/manual');
+    await page.getByRole('button',{name:'노을',exact:true}).click();
+    await expect(page.locator('[data-admin-sheet]')).toBeVisible();
+    await page.mouse.move(0,0);await page.evaluate(()=>scrollTo(0,0));
+    await page.screenshot({path:'docs/design/phase-9/admin-workspace/manual-dusk.png',animations:'disabled'});
     await open('/admin/quiz/weekly?step=1');
     await expect(page.getByRole('textbox',{name:'설교 제목',exact:true})).toHaveValue('서로 돕는 한 주 · 연습');
     await between('input',page.locator('section[aria-labelledby="sermon-drafts-title"]'),page.getByRole('textbox',{name:'성경 장절',exact:true}));

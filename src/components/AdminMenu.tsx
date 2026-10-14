@@ -15,7 +15,7 @@ function measureSelection(nav: HTMLElement, item: HTMLElement | null): Selection
   };
 }
 
-/** Shared selection surface for the app navigation and the manual's topic navigation. */
+/** Shared selection surface for admin navigation, topics and workflow steps. */
 export function AdminMenu({ label, selectionKey, className = "", children }: {
   label: string; selectionKey: string; className?: string | undefined; children: ReactNode;
 }) {
@@ -24,7 +24,9 @@ export function AdminMenu({ label, selectionKey, className = "", children }: {
 
   function show(item: HTMLElement | null) {
     const nav = navigation.current;
-    setSelection(nav ? measureSelection(nav, item) : null);
+    // Locked workflow steps never acquire the travelling, actionable surface.
+    const target = item?.matches(':disabled, [aria-disabled="true"]') ? nav?.querySelector<HTMLElement>(`${itemSelector}[aria-current]`) ?? null : item;
+    setSelection(nav ? measureSelection(nav, target) : null);
   }
   function restore() {
     show(navigation.current?.querySelector<HTMLElement>(`${itemSelector}[aria-current]`) ?? null);

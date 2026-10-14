@@ -19,6 +19,8 @@
 .viewActions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 12px; }
 .viewActions > span { color: var(--muted); font-size: 12px; }
 .imageArea { overflow: auto; max-height: 65dvh; border: 1px solid var(--control-border); border-radius: 4px; background: #eef3fa; }
+:global(body[data-time=dusk]) .imageArea { background: var(--glass-solid); }
+:global(body[data-time=dusk]) .viewer::backdrop { background: rgb(50 26 27 / .7); }
 .imageArea img { display: block; width: 100%; height: auto; }
 .imageArea[data-actual-size] img { width: auto; max-width: none; }
 .caption.caption { font-size: 14px; margin: 14px 0 0; }

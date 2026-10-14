@@ -30,6 +30,16 @@ body {
   font-weight: 400;
   line-height: 1.7;
 }
+body[data-time=dusk] {
+  --page: #f2ded4;
+  --control-border: #9d7363;
+  --selection: #f3d1bf;
+  --cell: #fff8f0;
+  --blocked: #6f5148;
+  --grid-border: #ad8070;
+  --correct-surface: #e6ecd9;
+  --incorrect-surface: #fae3c6;
+}
 body[data-time=night] {
   color-scheme: dark;
   --page: #0b2039;

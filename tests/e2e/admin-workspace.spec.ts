@@ -1,5 +1,58 @@
 import {expect,test} from '@playwright/test';
 import {mockAdminWorkspace} from './fixtures/admin-workspace';
+import {mockAdminGuide} from './fixtures/admin-guide';
+
+test('workflow highlight carries its icon well while current, complete and locked steps stay distinct',async({page,isMobile})=>{
+  const writes=await mockAdminGuide(page);
+  await page.goto('/admin/quiz/weekly?step=3');
+  const menu=page.getByRole('navigation',{name:'초안 편집 단계'});
+  const current=menu.getByRole('button',{name:/^요약과 문제/});
+  const completed=menu.getByRole('button',{name:/^설교 영상/});
+  const locked=menu.getByRole('button',{name:/^격자 배치/});
+  await expect(current).toHaveAttribute('aria-current','step');
+  await expect(current).toContainText('현재 단계');
+  await expect(completed).toHaveAttribute('data-complete','true');
+  await expect(completed).toContainText('완료 · 수정 가능');
+  await expect(locked).toBeDisabled();await expect(locked).toContainText('잠김');
+  const surface=menu.locator('[data-admin-menu-selection]');
+  const well=surface.locator('[data-admin-menu-icon-surface]');
+  const aligned=async(target:typeof completed)=>{
+    await expect.poll(async()=>{const a=await target.boundingBox(),b=await surface.boundingBox();return a&&b?Math.abs(a.x-b.x)+Math.abs(a.y-b.y):999;}).toBeLessThan(1);
+    const icon=await target.locator('[data-admin-menu-icon]').boundingBox(),box=await well.boundingBox();
+    expect(icon&&box&&Math.abs(icon.x-box.x)+Math.abs(icon.y-box.y)).toBeLessThan(1);
+  };
+  await aligned(current);
+  if(!isMobile){
+    await completed.hover();await aligned(completed);
+    await expect(completed.locator('[data-admin-menu-icon]')).toHaveCSS('background-color','rgba(0, 0, 0, 0)');
+    await expect(current).toHaveAttribute('aria-current','step');
+    await locked.hover({force:true});await aligned(current);
+  }
+  await completed.focus();await aligned(completed);
+  await page.keyboard.press('Enter');await expect(completed).toHaveAttribute('aria-current','step');
+  await page.emulateMedia({reducedMotion:'reduce'});await expect(surface).toHaveCSS('transition-duration','0s');
+  await page.emulateMedia({forcedColors:'active'});await expect(completed).toBeEnabled();await expect(locked).toBeDisabled();
+  expect(writes).toEqual([]);
+});
+
+test('workspace date stays compact and state and retention icons explain on focus and tap',async({page})=>{
+  const writes=await mockAdminWorkspace(page);
+  await page.goto('/admin/quiz/weekly?step=1');
+  const header=page.locator('[data-admin-workspace] > header');
+  await expect(header.locator('time')).toHaveAttribute('datetime','2026-10-11');
+  await expect(header.locator('time')).toHaveText('2026.10.11');
+  for(const [name,detail] of [['작성 중인 퀴즈','아직 공개되지 않은 초안'],['저장·초안 보관 정보','마지막 저장:']]) {
+    const icon=header.getByRole('button',{name,exact:true});
+    await expect(icon).toHaveText('');await icon.focus();
+    const tip=page.getByRole('tooltip').filter({hasText:detail});
+    await expect(tip).toBeVisible();await expect(tip).toHaveAttribute('data-side','above');
+    await page.keyboard.press('Escape');await expect(tip).toBeHidden();
+    await icon.click();await expect(tip).toBeVisible();
+    await page.keyboard.press('Escape');
+  }
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect(writes).toEqual([]);
+});
 
 test('six-stage workspace keeps selections, preview controls and publication confirmation usable',async({page})=>{
   const writes=await mockAdminWorkspace(page);

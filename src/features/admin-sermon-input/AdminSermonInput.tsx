@@ -1,4 +1,6 @@
 import { AdminRefreshButton } from "../../components/AdminListTools";
+import { AdminMenu } from "../../components/AdminMenu";
+import { AdminIcon } from "../../components/AdminIcon";
 import { AdminConcepts, AdminLabel, GuideText } from "../../components/AdminHelp";
 import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { Button } from "../../components/Button";
@@ -549,7 +551,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       {weekly && (step === 2 && selectedIntent || step === 3) && <a className={styles.reviewJump} href={step === 2 ? `#snapshot-${c?.intent?.selectedId}` : "#review-targets"}>{step === 2 ? "현재 선택본 확인" : "검수할 내용 선택"}</a>}
       {weekly && step < 6 && <Button type="button" disabled={!available[step] || changedInput || contentDirty || feedback.state === "loading"} onClick={() => selectStep(step + 1)}>다음: {stepNames[step]}</Button>}
     </header>
-    {weekly && <ol className={weeklyStyles.stepper} aria-label="주간 발행 6단계">{stepNames.map((label,index)=><li key={label}><button type="button" disabled={!available[index]} data-complete={index+1<recommended || undefined} aria-current={step===index+1?"step":undefined} onClick={()=>selectStep(index+1)}><span className={weeklyStyles.stepNumber} aria-hidden="true">{index+1<recommended ? "✓" : index+1}</span><span>{label}</span><small>{!available[index]?reasons[index]:step===index+1?"현재 단계":index+1<recommended?"완료 · 수정 가능":"이동 가능"}</small></button></li>)}</ol>}
+    {weekly && <AdminMenu label="초안 편집 단계" selectionKey={String(step)} className={weeklyStyles.stepNavigation}><ol className={weeklyStyles.stepper} aria-label="주간 발행 6단계">{stepNames.map((label,index)=><li key={label}><button type="button" data-admin-menu-item disabled={!available[index]} data-complete={index+1<recommended || undefined} aria-current={step===index+1?"step":undefined} onClick={()=>selectStep(index+1)}><span className={weeklyStyles.stepNumber} data-admin-menu-icon aria-hidden="true">{!available[index] ? <AdminIcon name="lock"/> : index+1<recommended && step!==index+1 ? <AdminIcon name="check"/> : index+1}</span><span className={weeklyStyles.stepTitle}>{label}{step===index+1 && <span className={weeklyStyles.currentStepDot} aria-hidden="true"/>}</span><small>{!available[index]?`잠김 · ${reasons[index]}`:step===index+1?"현재 단계":index+1<recommended?"완료 · 수정 가능":"이동 가능"}</small></button></li>)}</ol></AdminMenu>}
     {blocker.state === "blocked" && <div role="alert"><p>저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.</p><Button type="button" onClick={() => blocker.reset()}>작업 계속하기</Button><Button type="button" onClick={() => blocker.proceed()}>저장하지 않고 이동</Button></div>}
     {weekly && <p className={styles.saveGuidance} role="status">{changedInput || contentDirty ? "저장 확인 필요. " : ""}<GuideText text="편집은 잠시 멈추면 자동 저장됩니다. 확정·AI 재생성·발행은 직접 실행합니다."/></p>}
 
