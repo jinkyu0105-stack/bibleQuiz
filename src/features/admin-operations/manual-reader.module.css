@@ -1,4 +1,4 @@
-.reader { --manual-sheet: var(--glass-solid); --manual-sheet-edge: color-mix(in srgb,var(--line) 65%,transparent); display: grid; grid-template-columns: 210px minmax(0,1fr); gap: 16px; align-items: start; }
+.reader { display: grid; grid-template-columns: 210px minmax(0,1fr); gap: 16px; align-items: start; }
 .contents { display: block; min-width: 0; padding-block: 12px 0; border-right: 1px solid var(--line); padding-right: 16px; }
 .contents h3 { font-family: 'Noto Sans KR',sans-serif !important; font-size: 13px !important; font-weight: 700 !important; color: var(--muted) !important; letter-spacing: 0 !important; margin: 0 10px 12px !important; }
 .contents ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
@@ -11,7 +11,7 @@
 .contents > details[open] > summary { color: var(--ui-action); }
 .contents > details > summary:hover { color: var(--ui-action); }
 .contents > details[open] > summary svg { transform: rotate(180deg); }
-.article { min-width: 0; padding: 24px 28px; border: 1px solid var(--manual-sheet-edge); border-radius: 12px; background: var(--manual-sheet); box-shadow: 0 8px 20px -14px var(--glass-shadow); }
+.article { min-width: 0; }
 .article > div { max-width: none; }
 .articleHeader { padding-bottom: 20px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
 .articleHeader > p:first-child { display: table; padding: 3px 8px; border-radius: 4px; background: var(--admin-tone-bg,var(--glass-soft)); color: color-mix(in srgb,var(--admin-tone, var(--muted)) 50%,var(--ink)); font-size: 12px; font-weight: 700; margin-bottom: 10px; }
@@ -34,30 +34,26 @@
 .next > span { color: var(--muted); font-size: 12px; }
 .next button { display: inline-flex; gap: 16px; align-items: center; min-height: 44px; padding: 8px 0; border: 0; background: transparent; color: var(--ui-action); font-size: 14px; }
 .mobileTopics { display: none; }
-@media(max-width: 1100px) and (min-width: 761px) { .reader { grid-template-columns: 174px minmax(0,1fr); gap: 16px; } .contents { padding-right: 12px; } .contents button { font-size: 13px; gap: 8px; padding-inline: 8px; } .article { padding: 22px; } }
+@media(max-width: 1100px) and (min-width: 761px) { .reader { grid-template-columns: 174px minmax(0,1fr); gap: 16px; } .contents { padding-right: 12px; } .contents button { font-size: 13px; gap: 8px; padding-inline: 8px; } }
 @media(max-width: 760px) {
  .reader { display: block; }
  .contents { display: none; }
  .mobileTopics { display: grid; gap: 8px; margin-bottom: 16px; font-size: 12px !important; color: var(--muted); }
  .mobileTopics select { width: 100%; min-width: 0; }
  .articleHeader { margin-bottom: 22px; }
- .article { padding: 20px; }
  .articleHeader h3 { font-size: 23px !important; }
  .article ol > li { padding-left: 42px; }
  .article ol > li > strong:first-child { font-size: 17px; }
  .serviceReading .lead { font-size: 15px; }
 }
 @media(forced-colors: active) {
- .article { background: Canvas; border-color: CanvasText; box-shadow: none; }
  .article ol > li::before { color: CanvasText; background: Canvas; border-color: CanvasText; }
  .article ol > li:not(:last-child)::after { background: CanvasText; forced-color-adjust: none; }
 }
 
 .articleHeader h3 > span[aria-hidden] { flex: 0 0 36px; width: 36px; height: 36px; }
 
-@media (max-width: 400px) { .article { padding: 16px 14px; } .articleHeader h3 { font-size: 21px !important; } }
-:global(body[data-time=night]) .reader { --manual-sheet: #43515c; --manual-sheet-edge: rgb(216 232 242 / .28); }
-:global(body[data-time=night]) .article { --muted: #d2dfea; }
+@media (max-width: 400px) { .articleHeader h3 { font-size: 21px !important; } }
 
 /* Separate troubleshooting and monthly-cost sections from their supporting paragraphs. */
 .article:is([data-topic="guide-9"], [data-topic="guide-7"]) > div:first-of-type > h4 { border-top: 1px solid var(--line); padding-top: 24px; margin-top: 18px !important; }

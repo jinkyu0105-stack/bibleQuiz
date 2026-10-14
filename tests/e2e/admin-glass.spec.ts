@@ -61,6 +61,10 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
     const highlight = navigation.locator(':scope > span[aria-hidden="true"]');
     await expect(highlight).toBeVisible();
     await target.hover();
+    const iconSurface = highlight.locator('[data-admin-menu-icon-surface]');
+    await expect(iconSurface).toHaveCount(1);
+    // The target's glyph stays transparent; only the travelling row carries an icon well.
+    await expect(target.locator('[data-admin-menu-icon]')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
     await expect(current).toHaveAttribute("aria-current", "page");
     await expect(navigation.locator('.glass-indicator, [data-glass-convex]')).toHaveCount(0);
     await expect(highlight).toHaveCSS("border-width", "0px");
@@ -135,7 +139,10 @@ test("manual topics and app navigation share selection feedback while keeping th
       }
       await hover.hover();
       await expect(current).toHaveAttribute('aria-current','true');
+      await expect(hover.locator('[data-admin-menu-icon]')).toHaveCSS('background-color','rgba(0, 0, 0, 0)');
+      await expect(selection.locator('[data-admin-menu-icon-surface]')).toHaveCount(1);
       await expect.poll(async()=>Math.abs((await selection.boundingBox())!.y-(await hover.boundingBox())!.y)).toBeLessThan(1);
+      await expect.poll(async()=>Math.abs((await selection.locator('[data-admin-menu-icon-surface]').boundingBox())!.y-(await hover.locator('[data-admin-menu-icon]').boundingBox())!.y)).toBeLessThan(1);
       await page.getByRole('article').hover();
       await expect.poll(async()=>Math.abs((await selection.boundingBox())!.y-(await current.boundingBox())!.y)).toBeLessThan(1);
     }
@@ -152,5 +159,35 @@ test("manual topics and app navigation share selection feedback while keeping th
   await page.emulateMedia({forcedColors:'active',reducedMotion:'reduce'});
   await expect(page.getByRole('article')).toHaveCSS('box-shadow','none');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect(writes).toEqual([]);
+});
+
+test('choosing lower manual topics returns fully to the top and keeps reading focus', async ({page,isMobile}) => {
+  const writes = await mockAdminGuide(page);
+  await page.goto('/admin/manual');
+  await expect(page.locator('#manual-article-title')).toBeVisible();
+  const nav = page.getByRole('navigation',{name:'매뉴얼 주제'});
+  const choices = [
+    {group:'설정과 자료 보호',label:'용어 모아보기'},
+    {group:'서비스 사전',label:'서비스 주소'},
+    {group:'설정과 자료 보호',label:'개인정보와 성경 본문'},
+  ];
+  for (const choice of choices) {
+    if (isMobile) {
+      await page.evaluate(()=>scrollTo(0,250));
+      const selector = page.getByRole('combobox',{name:'읽을 주제'});
+      // Use the actual option value so this regression follows the registry's identifier.
+      const value = await selector.locator('option').filter({hasText:choice.label}).getAttribute('value');
+      await selector.selectOption(value!);
+    } else {
+      const group = nav.locator('details').filter({has:page.getByText(choice.group,{exact:true})});
+      if (!await group.evaluate(node=>(node as HTMLDetailsElement).open)) await group.locator('summary').click();
+      const item = nav.getByRole('button',{name:choice.label,exact:true});
+      await item.focus(); await page.keyboard.press('Enter');
+    }
+    await expect(page.locator('#manual-article-title')).toBeFocused();
+    await expect.poll(()=>page.evaluate(()=>scrollY)).toBe(0);
+    await expect(page.getByRole('heading',{name:'운영 매뉴얼',exact:true})).toBeInViewport();
+  }
   expect(writes).toEqual([]);
 });

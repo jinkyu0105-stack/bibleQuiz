@@ -135,6 +135,35 @@ body[data-time=night] .admin-layout {
 .sky-app .admin-main:has(> :is([data-admin-board], [data-admin-clear])) { --muted: color-mix(in srgb,var(--ink) 88%,var(--glass-solid)); }
 .sky-app .admin-main:has(> [data-admin-clear]) { background: var(--glass-clear); }
 .sky-app .admin-main [data-admin-manual] > header > h2 { font-family: 'Noto Sans KR',sans-serif; font-weight: 700; }
+
+/* One reading material and spacing scale for the manual and maintenance tools. */
+.admin-layout { --admin-sheet: var(--glass-solid); --admin-sheet-edge: color-mix(in srgb,var(--line) 65%,transparent); --admin-sheet-block: 24px; --admin-sheet-inline: 28px; }
+.sky-app .admin-main :is([data-admin-sheet], [data-admin-tool-page] [data-admin-tool]) { min-width: 0; border: 1px solid var(--admin-sheet-edge); border-radius: 12px; background: var(--admin-sheet); box-shadow: 0 8px 20px -14px var(--glass-shadow); }
+.sky-app .admin-main [data-admin-sheet] { padding: var(--admin-sheet-block) var(--admin-sheet-inline); }
+.sky-app:not(.home-shell) .admin-main [data-admin-tool-page] :is(h2,h3,h4) { font-family: 'Noto Sans KR',sans-serif; font-weight: 700; }
+.sky-app .admin-main [data-admin-tool-page] [data-admin-sheet] > h3 { padding-bottom: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--line); font-size: 20px; }
+.sky-app .admin-main [data-admin-tool-page] [data-admin-tool] > summary { padding: 18px var(--admin-sheet-inline); background: transparent; color: var(--ink); }
+.sky-app .admin-main [data-admin-tool-page] [data-admin-tool] > summary:hover { background: color-mix(in srgb,var(--ui-action) 6%,var(--admin-sheet)); }
+.sky-app .admin-main [data-admin-tool-page] [data-admin-tool] > summary strong { font-size: 18px; font-weight: 700; }
+.sky-app .admin-main [data-admin-tool-page] [data-admin-tool] > div { padding: var(--admin-sheet-block) var(--admin-sheet-inline); }
+.sky-app .admin-main [data-admin-filter-list] > ul { gap: 0; margin-top: 20px; }
+.sky-app .admin-main [data-admin-filter-list] > ul > li { padding: 20px 0; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent; box-shadow: none; }
+.sky-app .admin-main [data-admin-filter-list] > ul > li:last-child { padding-bottom: 0; }
+body[data-time=night] .admin-layout { --admin-sheet: #43515c; --admin-sheet-edge: rgb(216 232 242 / .28); }
+body[data-time=night] .admin-main :is([data-admin-sheet], [data-admin-tool-page] [data-admin-tool]) { --muted: #d2dfea; }
+@media (max-width: 1100px) { .admin-layout { --admin-sheet-block: 22px; --admin-sheet-inline: 22px; } }
+@media (max-width: 760px) {
+  .admin-layout { --admin-sheet-block: 20px; --admin-sheet-inline: 20px; }
+  .sky-app .admin-main [data-admin-tool-page] [data-admin-tool] > summary { padding-block: 16px; }
+  .sky-app .admin-main [data-admin-tool-page] [data-admin-tool] > summary strong { font-size: 17px; }
+  .sky-app .admin-main [data-admin-tool-page] [data-admin-sheet] > h3 { font-size: 18px; padding-bottom: 16px; margin-bottom: 18px; }
+}
+@media (max-width: 400px) { .admin-layout { --admin-sheet-block: 16px; --admin-sheet-inline: 14px; } }
+@media (forced-colors: active) {
+  body[data-time] .admin-layout { --admin-sheet: Canvas; --admin-sheet-edge: CanvasText; }
+  body[data-time] .admin-main :is([data-admin-sheet], [data-admin-tool-page] [data-admin-tool]) { --muted: CanvasText; box-shadow: none; }
+  .sky-app .admin-main [data-admin-tool-page] [data-admin-tool] > summary:hover { background: Canvas; color: Highlight; }
+}
 .sky-app .admin-main:has(> [data-admin-board]) {
   --admin-board-solid: var(--glass-solid);
   --admin-board-surface: var(--admin-board-solid);

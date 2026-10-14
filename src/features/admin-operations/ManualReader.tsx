@@ -67,10 +67,7 @@ export function ManualReader({ source }: { source: string }) {
     setSelected(id);
     requestAnimationFrame(() => {
       heading.current?.focus({ preventScroll: true });
-      const box = heading.current?.getBoundingClientRect();
-      if (box && (window.matchMedia("(max-width: 760px)").matches || box.top < 140 || box.bottom > window.innerHeight)) {
-        heading.current?.scrollIntoView({block: "start", behavior: "instant"});
-      }
+      window.scrollTo({ top: 0, behavior: "instant" });
     });
   }
   return <div className={css.reader}>
@@ -84,7 +81,7 @@ export function ManualReader({ source }: { source: string }) {
     <label className={css.mobileTopics}>읽을 주제
       <select value={current.id} onChange={event => choose(event.target.value)}>{groups.map(group => <optgroup key={group.title} label={group.title}>{group.items.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}</optgroup>)}</select>
     </label>
-    <article className={css.article} data-topic={current.id} aria-labelledby="manual-article-title">
+    <article className={css.article} data-admin-sheet data-topic={current.id} aria-labelledby="manual-article-title">
       <header className={css.articleHeader} data-admin-tone={topicTones[current.id] ?? "guide"}><p>{category}</p><h3 id="manual-article-title" tabIndex={-1} ref={heading}>{service && <TopicIcon id={current.id}/>}<span><AdminLabel text={section?.title ?? service?.name ?? "운영 안내"}/></span></h3>{service && <p className={css.subtitle}><code>{service.plainLanguageName}</code></p>}</header>
       {section && <ManualBody source={section.body}/>}
       {current.id === "guide-12" && <div className={css.futureRecord}><AdminIcon name="document" tone="action"/><div><Link to="/admin/manual/future/member-auth">기능 검토 기록</Link><p>회원 로그인 등 제안된 기능의 검토 내용을 읽어 보세요.</p></div></div>}

@@ -908,3 +908,15 @@
 .correctionConfirm > button { margin: 4px 8px 0 0; }
 .panel > label:not(.checkbox) { margin-block: 12px; }
 .panel > :global(.action-button) + p { margin-top: 12px; }
+
+/* Maintenance tools already provide a reading sheet around the editor. */
+:global([data-admin-tool-page]) .page { margin: 0; gap: 20px; }
+:global([data-admin-tool-page]) .page > .hero { padding: 0 0 20px; gap: 24px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; }
+:global([data-admin-tool-page]) .page .panel { padding: 20px 0 0; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent; }
+:global([data-admin-tool-page]) .page .panel .panel { padding-inline: 0; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent; }
+@media (max-width: 767px) {
+  :global([data-admin-tool-page]) .steps { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  :global([data-admin-tool-page]) .steps li { grid-template-columns: 24px minmax(0,1fr); column-gap: 6px; min-height: 72px; padding: 10px 8px; font-size: 13px; }
+  :global([data-admin-tool-page]) .steps span { width: 24px; height: 24px; }
+  :global([data-admin-tool-page]) .steps small { font-size: 12px; }
+}

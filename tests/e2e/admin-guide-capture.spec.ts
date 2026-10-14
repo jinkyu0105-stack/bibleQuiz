@@ -75,6 +75,32 @@ test('capture operator guide examples', async ({ page }) => {
     await readerShot('layered-service');
     expect(writes).toEqual([]); return;
   }
+  if(process.env.BIBLEQUIZ_CAPTURE_ADMIN_GUIDE_ONLY === 'tools') {
+    mkdirSync('docs/design/phase-9/admin-tools',{recursive:true});
+    await page.setViewportSize({width:1440,height:1300});
+    for(const name of ['tools','moderation','operations']) {
+      await open(`/admin/${name}`);
+      if(name==='moderation') {
+        await page.locator('[data-admin-tool="filter-add"] > summary').click();
+        await expect(page.getByLabel('관리용 이름')).toBeEnabled();
+      }
+      if(name==='operations') await expect(page.locator('#operations-title + dl dd').last()).not.toHaveText('미확인');
+      for(const [label,time] of [['낮','actual'],['밤','night']]) {
+        await page.getByRole('button',{name:label!,exact:true}).click();
+        await page.mouse.move(0,0);
+        await page.evaluate(()=>{if(document.activeElement instanceof HTMLElement)document.activeElement.blur();scrollTo(0,0);});
+        await page.screenshot({path:`docs/design/phase-9/admin-tools/${name}-${time}.png`,animations:'disabled'});
+      }
+    }
+    await open('/admin/moderation');
+    await page.locator('[data-admin-tool="filter-test"] > summary').click();
+    await expect(page.getByRole('button',{name:'저장 없이 시험'})).toBeEnabled();
+    await shot('filters',page.locator('[data-admin-tool="filter-test"]'));
+    await open('/admin/operations');
+    await expect(page.locator('#operations-title + dl dd').last()).not.toHaveText('미확인');
+    await shot('operations',page.locator('section[aria-labelledby="operations-title"]'));
+    expect(writes).toEqual([]); return;
+  }
   const dashboardOnly=process.env.BIBLEQUIZ_CAPTURE_ADMIN_GUIDE_ONLY === 'dashboard';
   await open('/admin');
   await shot('dashboard',page.locator('section[aria-labelledby="quiz-library-heading"]'));

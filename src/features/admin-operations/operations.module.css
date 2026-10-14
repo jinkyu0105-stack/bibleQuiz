@@ -1,6 +1,8 @@
 .drawer { position: fixed; inset: 0 0 0 auto; margin: 0; max-height: 100dvh; height: 100dvh; width: min(720px, 100%); max-width: 100%; padding: clamp(1rem, 3vw, 2rem); overflow-y: auto; border: 1px solid var(--border); background: var(--page); color: var(--text); }
 .drawer::backdrop { background: rgb(0 0 0 / .45); }
-.header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; position: sticky; top: -1rem; background: var(--page); padding-block: .5rem; z-index: 1; }
+.header { display: flex; justify-content: space-between; align-items: center; gap: 16px; position: sticky; top: calc(-1 * var(--admin-sheet-block)); background: var(--admin-sheet); padding-block: 16px; margin-top: calc(-1 * var(--admin-sheet-block)); margin-bottom: 16px; border-bottom: 1px solid var(--line); z-index: 1; }
+.header h2 { margin: 0; }
+.header > button { flex-shrink: 0; }
 .service { border-block-end: 1px solid var(--border); padding-block: 1rem; }
 .service summary { cursor: pointer; font-weight: 650; padding: .4rem; }
 .metrics { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: .5rem; }
@@ -22,7 +24,7 @@
 .overview dt { font-size: 13px; color: var(--muted); }
 .overview dd { margin: 6px 0 0; color: var(--ink); font-weight: 600; }
 .section { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 8px; }
-.section > summary { padding-block: 16px; min-height: 48px; font-family: 'Noto Serif KR',serif; font-size: 20px; font-weight: 600; color: var(--ink); }
+.section > summary { padding-block: 16px; min-height: 48px; font-family: 'Noto Sans KR',sans-serif; font-size: 18px; font-weight: 700; color: var(--ink); }
 .section > h3 { margin-top: 16px; }
 .drawer > section, .drawer > .section { border-top: 1px solid var(--line); padding-top: 20px; }
 .drawer li { padding-block: 10px; border-bottom: 1px solid var(--line); }

@@ -24,13 +24,13 @@ export function OperationsPanel(){
   const latestSql=backups?.items.find(i=>i.kind!=="deletion_manifest"),latestManifest=backups?.items.find(i=>i.kind==="deletion_manifest");
   const backupProblem=[latestSql,latestManifest].some(i=>i?.status==="failed"||!!i?.errorCode);
   const worst=!data||data.items.some(i=>i.status==="delayed")?"사용량 확인 지연":data.items.some(i=>i.status==="warning")?"주의":data.items.some(i=>i.status==="check")?"확인":"여유";
-  return <section className={styles.panel} aria-labelledby="operations-title"><h3 id="operations-title"><AdminLabel text="사이트 상태"/></h3><dl className={local.overview}><div><dt>서비스 사용량</dt><dd className={local.state} data-tone={worst === "여유" ? "success" : "attention"}>{worst}</dd></div><div><dt>최근 정상 백업</dt><dd>{time(backups?.items.find(i=>i.kind!=="deletion_manifest"&&i.status==="verified")?.completedAt??null)}</dd></div></dl>
+  return <section className={styles.panel} data-admin-sheet aria-labelledby="operations-title"><h3 id="operations-title"><AdminLabel text="사이트 상태"/></h3><dl className={local.overview}><div><dt>서비스 사용량</dt><dd className={local.state} data-tone={worst === "여유" ? "success" : "attention"}>{worst}</dd></div><div><dt>최근 정상 백업</dt><dd>{time(backups?.items.find(i=>i.kind!=="deletion_manifest"&&i.status==="verified")?.completedAt??null)}</dd></div></dl>
     {data?.items.some(i=>i.status==="warning")&&<p role="alert">무료 포함량의 80% 이상을 사용한 항목이 있습니다. 공식 관리 화면에서 확인해 주세요.</p>}
     {backupProblem&&<p role="alert">최근 백업·삭제 기록에 실패가 있습니다. 마지막 정상본을 보존하고 상세 상태를 확인하세요.</p>}
     {backups?.enabled&&<p>최근 데이터베이스 백업 완료: {time(backups.items.find(i=>i.kind!=="deletion_manifest"&&i.status==="verified")?.completedAt??null)} · 주간 정상본 {backups.weeklyVerifiedCount}/8</p>}
     {data?.policyCheckNeeded&&<p className={local.policyNotice}><strong>이번 달 요금 정책 확인 필요</strong><Link to="/admin/manual">매뉴얼의 월간 확인 항목 보기</Link></p>}
     {error&&<p role="alert">{error}</p>}<div className={local.actions}><Button type="button" onClick={()=>void open()}>비용·백업 상세 열기</Button>{!data&&<Button type="button" onClick={()=>{setError("");setAttempt(v=>v+1);}}>사용량 다시 조회</Button>}</div>
-    <dialog ref={dialog} className={local.drawer} aria-labelledby="operations-dialog-title"><header className={local.header}><h2 id="operations-dialog-title"><AdminLabel text="비용·사용량과 백업"/></h2><Button type="button" onClick={()=>dialog.current?.close()}>닫기</Button></header>
+    <dialog ref={dialog} className={local.drawer} data-admin-sheet aria-labelledby="operations-dialog-title"><header className={local.header}><h2 id="operations-dialog-title"><AdminLabel text="비용·사용량과 백업"/></h2><Button type="button" onClick={()=>dialog.current?.close()}>닫기</Button></header>
       <AdminConcepts terms={["예상 비용", "미확인", "백업"]}/>
       <h3><AdminLabel text="서비스 사용량"/></h3><p>서비스 이름을 펼치면 사용량과 공식 확인 링크를 볼 수 있습니다.</p><p>앱에 기록된 사용량과 예상 비용입니다. 실제 청구 금액과 남은 무료 한도는 각 서비스 관리 화면에서 확인하세요. 계정 전체의 사용량과 이 사이트의 사용량은 따로 표시합니다.</p>
       <Button type="button" disabled={busy} onClick={()=>void refresh()}>{busy?"처리 중…":"사용량·백업 갱신"}</Button>
