@@ -2,11 +2,11 @@
 .emoji { display: inline-block; margin-inline-end: .4em; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: .88em; font-weight: 400; line-height: 1; vertical-align: .03em; }
 .term.term { display: inline; width: auto; min-height: 24px; margin: 0; padding: 1px 2px; border: 0; border-radius: 3px; background: none; color: var(--admin-tone, var(--ui-guide)); font: inherit; line-height: inherit; text-decoration: underline dotted; text-decoration-color: color-mix(in srgb, currentColor 65%, transparent); text-underline-offset: 4px; cursor: help; white-space: nowrap; box-shadow: none; }
 .term.term:hover { background: var(--admin-tone-bg, var(--ui-guide-bg)); }
-.tooltip { position: fixed; inset: auto; margin: 0; width: min(340px, calc(100vw - 24px)); box-sizing: border-box; padding: 16px 18px 18px; border: 1px solid var(--line); border-top: 3px solid var(--admin-tone, var(--ui-guide)); border-radius: 12px; background: var(--admin-tooltip-surface, #fff); color: var(--ink); font-family: "Noto Sans KR", sans-serif; font-size: 14px; font-weight: 400; line-height: 1.8; white-space: normal; word-break: keep-all; overflow-wrap: anywhere; text-align: left; overflow: visible; box-shadow: 0 6px 12px #10234612, 0 16px 38px #10234624; }
+.tooltip { position: fixed; inset: auto; margin: 0; width: min(340px, calc(100vw - 24px)); box-sizing: border-box; padding: 16px 18px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--admin-tooltip-surface, #fff); color: var(--ink); font-family: "Noto Sans KR", sans-serif; font-size: 14px; font-weight: 400; line-height: 1.8; white-space: normal; word-break: keep-all; overflow-wrap: anywhere; text-align: left; overflow: visible; box-shadow: 0 6px 12px #10234612, 0 16px 38px #10234624; }
 .tooltip:popover-open { display: grid; gap: 10px; }
 .tooltip::after { content: ''; position: absolute; left: var(--pointer-x, 24px); width: 10px; height: 10px; background: var(--admin-tooltip-surface, #fff); transform: translateX(-50%) rotate(45deg); }
 .tooltip[data-side=above]::after { bottom: -6px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.tooltip[data-side=below]::after { top: -7px; border-top: 1px solid var(--admin-tone); border-left: 1px solid var(--admin-tone); }
+.tooltip[data-side=below]::after { top: -6px; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .tooltipHeading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .tooltip strong { color: var(--ink); font-size: 15px; font-weight: 700; }
 .kind { color: var(--admin-tone); background: var(--admin-tone-bg); border-radius: 4px; padding: 2px 6px; font-size: 10px; font-weight: 600; white-space: nowrap; }
@@ -23,7 +23,7 @@
 }
 
 .hint { display: inline-flex; align-items: center; min-width: 0; flex-shrink: 0; }
-.compact { width: max-content; max-width: min(280px, calc(100vw - 24px)); padding: 7px 10px; border-top-width: 1px; border-radius: 7px; font-size: 12px; line-height: 1.6; box-shadow: 0 4px 14px #10234624; }
+.compact { width: max-content; max-width: min(280px, calc(100vw - 24px)); padding: 7px 10px; border-radius: 7px; font-size: 12px; line-height: 1.6; box-shadow: 0 4px 14px #10234624; }
 .compact:popover-open { display: block; }
 .compact::after { width: 7px; height: 7px; }
 .compact[data-side=above]::after { bottom: -5px; }

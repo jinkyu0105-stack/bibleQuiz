@@ -4,18 +4,20 @@ P9-23 사용자 요청의 확대 가능한 설명용 이미지다. 새 디자인
 
 2026-10-14 P9-23 인덱스·불투명 목록 바탕 보정으로 dashboard/privacy/submissions3종을 다시 촬영했다. 후속 도구 읽기 바탕 통일에서 filters/operations2종, 초안/설정 통일에서 input/review/settings3종을 다시 촬영했다. 마지막3종은 `tests/e2e/fixtures/admin-workspace.ts`의 합성 GET 자료를 쓴다. 비교 페이지용 퀴즈 촬영본에는 투명 사이드바도 포함한다. 게시판 예시는 같은 캡처 경로의 `boards` 모드에서 여러 건의 합성 자료로 만들며, 실제 DB를 바꾸지 않는다. 도움말 비교용3장은 `manual` 모드로 별도 생성하고 설명용8종에 섞지 않는다.
 
+제목 정보 아이콘과 한쪽 강조선 제거 후 `workspace`·`boards` 모드로 관련 예시를 다시 촬영했다.
+
 퀴즈 목록·설교 정보·요약/난도 검수·발행 후 설정·참여 조치·문의 답변·필터 시험·비용/백업의 8개 설명에 사용한다. 표시 위치/제목/대체 텍스트/설명은 `src/config/admin-screenshots.ts`, 확대 기능은 `src/components/AdminScreenshots.tsx`를 따른다.
 
 | 파일 | 해상도 | 크기(bytes) |
 |---|---|---|
 | dashboard.png | 990 × 364 | 61,228 |
 | filters.png | 990 × 375 | 25,574 |
-| input.png | 932 × 543 | 39,671 |
+| input.png | 932 × 543 | 39,673 |
 | operations.png | 990 × 354 | 22,558 |
-| privacy.png | 988 × 410 | 32,733 |
-| review.png | 932 × 635 | 71,622 |
-| settings.png | 990 × 423 | 43,665 |
-| submissions.png | 988 × 484 | 46,057 |
+| privacy.png | 988 × 410 | 32,909 |
+| review.png | 932 × 693 | 71,781 |
+| settings.png | 990 × 423 | 44,931 |
+| submissions.png | 988 × 486 | 46,433 |
 
 재생성은 프로젝트 루트에서 명시적으로 실행한다. 기존 로컬 연습 DB를 바꾸지 않는 격리 E2E 서버를 사용한다.
 

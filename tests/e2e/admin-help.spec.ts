@@ -31,6 +31,8 @@ test('admin concepts work with hover, keyboard, touch and dismissal without writ
     await page.getByRole('button',{name,exact:true}).click();
     await term.click();
     await expect(page.getByRole('tooltip')).toBeVisible();
+    const borders=await page.getByRole('tooltip').evaluate(el=>{const s=getComputedStyle(el);return ['top','right','bottom','left'].map(side=>`${s.getPropertyValue(`border-${side}-width`)}/${s.getPropertyValue(`border-${side}-color`)}`);});
+    expect(new Set(borders).size).toBe(1);
     const box=await page.getByRole('tooltip').boundingBox();
     expect(box!.x).toBeGreaterThanOrEqual(0);
     expect(box!.x+box!.width).toBeLessThanOrEqual(320);

@@ -33,7 +33,7 @@
 .sky-app:not(.home-shell) .admin-main :is(a, button, summary, input, select, textarea):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .sky-app:not(.home-shell) .admin-main summary { cursor: pointer; }
 .sky-app:not(.home-shell) .admin-main summary:hover { color: var(--accent); }
-.sky-app:not(.home-shell) .admin-main [role=alert]:not(:empty) { border-left: 3px solid var(--accent); padding: 12px 16px; background: var(--glass-soft); border-radius: 0 8px 8px 0; }
+.sky-app:not(.home-shell) .admin-main [role=alert]:not(:empty) { border: 1px solid var(--border); padding: 12px 16px; background: var(--glass-soft); border-radius: 8px; }
 .sky-app:not(.home-shell) .public-layout h2 { font-size: clamp(26px, 3vw, 36px); }
 .sky-app:not(.home-shell) .public-layout h3 { font-size: 21px; }
 .sky-app:not(.home-shell) .public-layout h4 { font-size: 18px; }

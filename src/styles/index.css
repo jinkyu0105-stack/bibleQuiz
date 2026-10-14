@@ -220,7 +220,7 @@ button:disabled { cursor: not-allowed; background: var(--surface); color: var(--
 .primary-button { min-height: 48px; background: var(--accent); color: var(--button-text); border-color: var(--accent); font-weight: 700; }
 .theme-control { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: .875rem; }
 .theme-control p { flex-basis: 100%; margin: 0; }
-.preview-notice { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--selection); font-size: .8125rem; }
+.preview-notice { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 12px 16px; border: 1px solid var(--border); background: var(--selection); font-size: .8125rem; }
 .sermon-header { padding-block: clamp(24px, 4vw, 40px); }
 .sermon-header h2 { max-width: 48rem; }
 .sermon-meta { display: flex; flex-wrap: wrap; gap: 20px 32px; padding-block: 20px; margin-block: 24px; border-block: 1px solid var(--border); }
@@ -244,7 +244,7 @@ footer { margin-top: 32px; font-size: .75rem; }
 .loading-meta { width: min(100%, 50rem); height: 6rem; margin-bottom: 32px; }
 .loading-workspace { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); gap: 32px; }
 .loading-workspace > div { min-height: 18rem; }
-.quiz-availability { margin-block: 24px; padding: 16px; border-left: 3px solid var(--accent); background: var(--selection); }
+.quiz-availability { margin-block: 24px; padding: 16px; border: 1px solid var(--border); background: var(--selection); }
 .quiz-availability p:last-child { margin-bottom: 0; }
 .summary-copy { white-space: pre-wrap; overflow-wrap: anywhere; }
 .sermon-summary p { max-width: 65ch; }

@@ -9,7 +9,7 @@
 .count { display: flex; flex-wrap: wrap; gap: 4px; align-items: baseline; margin: -4px 0; font-size: 12px; color: var(--muted); }
 .count strong { font-size: 14px; color: var(--ink); font-variant-numeric: tabular-nums; }
 .count > span { margin-left: auto; font-size: 11px; }
-.note { padding: 10px 12px; margin: 0; border-left: 2px solid var(--ui-attention); border-radius: 0 5px 5px 0; background: var(--ui-attention-bg); color: var(--ink); font-size: 12px; line-height: 1.7; }
+.note { padding: 10px 12px; margin: 0; border: 1px solid var(--border); border-radius: 5px; background: var(--ui-attention-bg); color: var(--ink); font-size: 12px; line-height: 1.7; }
 .note p { margin: 0 0 4px; }
 .empty { padding: 28px 20px; border: 1px dashed var(--control-border); border-radius: 8px; text-align: center; }
 .empty h3 { margin: 0 0 8px; }
@@ -29,7 +29,7 @@
 .answers dd { margin: 0; font-size: 16px; font-weight: 600; color: var(--admin-tone); overflow-wrap: anywhere; }
 .comment { margin-top: 22px; }
 .comment blockquote, .inquiryMessage blockquote { margin: 0; padding: 0; font-size: 13px; line-height: 1.85; overflow-wrap: anywhere; white-space: pre-wrap; }
-.comment blockquote { padding: 12px; background: var(--glass-soft); border-left: 2px solid var(--ui-guide); border-radius: 0 6px 6px 0; }
+.comment blockquote { padding: 12px; background: var(--glass-soft); border: 1px solid var(--border); border-radius: 6px; }
 .inquiryMessage { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
 .inquiryHeading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 12px; }
 .inquiryHeading > :is(a,span) { font-size: 12px; }

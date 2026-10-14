@@ -8,5 +8,5 @@
 .fields select { max-width: 280px; }
 .page button { justify-self: start; font-size: 14px; margin-block: 4px; }
 .page ul { padding: 0; list-style: none; display: grid; gap: 8px; }
-.page [role=status] { padding: 20px; margin-top: 16px; border-left: 3px solid var(--accent); background: var(--glass-reading); }
+.page [role=status] { padding: 20px; margin-top: 16px; border: 1px solid var(--border); background: var(--glass-reading); }
 @media (max-width: 500px) { .fields { grid-template-columns: 1fr; } }

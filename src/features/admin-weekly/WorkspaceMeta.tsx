@@ -3,8 +3,8 @@ import { AdminTooltip } from "../../components/AdminHelp";
 import { AdminIcon, type AdminIconName } from "../../components/AdminIcon";
 import styles from "./weekly.module.css";
 
-function InfoIcon({ label, detail, icon, tone = "action" }: { label: string; detail: string; icon: AdminIconName; tone?: string }) {
-  return <AdminTooltip label={detail}>{descriptionId => <button type="button" className={styles.metadataIcon} aria-label={label} aria-describedby={descriptionId} popoverTarget={descriptionId} popoverTargetAction="show" data-tone={tone}><AdminIcon name={icon}/></button>}</AdminTooltip>;
+function InfoIcon({ label, detail, icon, tone = "action", dateTime }: { label: string; detail: string; icon: AdminIconName; tone?: string; dateTime?: string }) {
+  return <AdminTooltip label={detail}>{descriptionId => <button type="button" className={styles.metadataIcon} aria-label={label} aria-describedby={descriptionId} popoverTarget={descriptionId} popoverTargetAction="show" data-tone={tone}><AdminIcon name={icon}/>{dateTime && <time className="sr-only" dateTime={dateTime}>{detail}</time>}</button>}</AdminTooltip>;
 }
 
 const savedTime = (value: string) => new Date(value).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" });
@@ -16,9 +16,9 @@ export function WorkspaceMeta({ quiz, due }: { quiz: WeeklyQuiz; due: string | n
     : quiz.status === "published" ? { label: "발행된 퀴즈", detail: "발행된 퀴즈입니다. 공개 화면과 참여 기록을 확인할 수 있습니다.", icon: "globe" as const, tone: "success" }
     : { label: "작성 중인 퀴즈", detail: "아직 공개되지 않은 초안입니다. 여섯 단계를 확인한 뒤 발행할 수 있습니다.", icon: "edit" as const, tone: "action" };
   const retention = quiz.expired ? "초안 본문 정리 완료." : due ? `초안 본문 정리 예정: ${savedTime(due)} (한국 시간).` : "초안 본문 정리 일정은 수정·보관 도구의 초안 보관 현황에서 확인하세요.";
-  const weekday = new Date(`${quiz.sermonDate}T12:00:00+09:00`).toLocaleDateString("ko-KR", { weekday: "short", timeZone: "Asia/Seoul" });
-  return <div className={styles.workspaceMeta}>
-    <span className={styles.sermonDate}><AdminIcon name="calendar"/><span className="sr-only">설교일 </span><time dateTime={quiz.sermonDate}>{quiz.sermonDate.replaceAll("-", ".")}</time><small>{weekday}</small></span>
+  const weekday = new Date(`${quiz.sermonDate}T12:00:00+09:00`).toLocaleDateString("ko-KR", { weekday: "long", timeZone: "Asia/Seoul" });
+  return <div className={styles.workspaceMeta} role="group" aria-label="퀴즈 정보">
+    <InfoIcon label="설교일" detail={`${quiz.sermonDate.replaceAll("-", ".")} · ${weekday}`} icon="calendar" dateTime={quiz.sermonDate}/>
     <InfoIcon label={state.label} detail={`${state.label}. ${state.detail}`} icon={state.icon} tone={state.tone}/>
     <InfoIcon label="저장·초안 보관 정보" detail={`마지막 저장: ${savedTime(quiz.updatedAt)} (한국 시간). ${retention}`} icon="database"/>
   </div>;

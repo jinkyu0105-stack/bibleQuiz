@@ -35,17 +35,25 @@ test('workflow highlight carries its icon well while current, complete and locke
   expect(writes).toEqual([]);
 });
 
-test('workspace date stays compact and state and retention icons explain on focus and tap',async({page})=>{
+test('workspace metadata shares one compact group beside the title with accessible date and icon tips',async({page})=>{
   const writes=await mockAdminWorkspace(page);
   await page.goto('/admin/quiz/weekly?step=1');
   const header=page.locator('[data-admin-workspace] > header');
   await expect(header.locator('time')).toHaveAttribute('datetime','2026-10-11');
-  await expect(header.locator('time')).toHaveText('2026.10.11');
-  for(const [name,detail] of [['작성 중인 퀴즈','아직 공개되지 않은 초안'],['저장·초안 보관 정보','마지막 저장:']]) {
+  await expect(header.locator('time')).toHaveText('2026.10.11 · 일요일');
+  const group=header.getByRole('group',{name:'퀴즈 정보'});
+  await expect(group.getByRole('button')).toHaveCount(3);
+  const titleBox=await header.getByRole('heading').boundingBox(),groupBox=await group.boundingBox();
+  expect(titleBox&&groupBox&&groupBox.x>=titleBox.x+titleBox.width).toBe(true);
+  expect(titleBox&&groupBox&&Math.abs(titleBox.y+titleBox.height/2-groupBox.y-groupBox.height/2)).toBeLessThan(1);
+  const timeBox=await header.locator('time').boundingBox();expect(timeBox?.width).toBeLessThanOrEqual(1);
+  for(const [name,detail] of [['설교일','2026.10.11 · 일요일'],['작성 중인 퀴즈','아직 공개되지 않은 초안'],['저장·초안 보관 정보','마지막 저장:']]) {
     const icon=header.getByRole('button',{name,exact:true});
-    await expect(icon).toHaveText('');await icon.focus();
+    await expect(icon.locator('svg')).toHaveCount(1);await icon.focus();
     const tip=page.getByRole('tooltip').filter({hasText:detail});
     await expect(tip).toBeVisible();await expect(tip).toHaveAttribute('data-side','above');
+    const borders=await tip.evaluate(el=>{const s=getComputedStyle(el);return ['Top','Right','Bottom','Left'].map(side=>[s.getPropertyValue(`border-${side.toLowerCase()}-width`),s.getPropertyValue(`border-${side.toLowerCase()}-color`)].join('/'));});
+    expect(new Set(borders).size).toBe(1);
     await page.keyboard.press('Escape');await expect(tip).toBeHidden();
     await icon.click();await expect(tip).toBeVisible();
     await page.keyboard.press('Escape');

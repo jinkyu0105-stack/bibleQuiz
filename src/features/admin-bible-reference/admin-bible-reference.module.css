@@ -17,7 +17,7 @@
 
 .notice {
   padding: 12px 16px;
-  border-left: 3px solid var(--accent);
+  border: 1px solid var(--border);
   background: var(--selection);
   color: var(--text-strong);
 }
@@ -137,7 +137,7 @@
 }
 
 .loading {
-  border-left: 3px solid var(--accent);
+  border: 1px solid var(--border);
   background: var(--selection);
 }
 
