@@ -1,6 +1,6 @@
 import { AdminLabel } from "../../components/AdminHelp";
 import { AdminSteps } from "../../components/AdminGuide";
-import { AdminBoardHeader, AdminFilterTabs, AdminRefreshButton } from "../../components/AdminListTools";
+import { AdminBoardHeader, AdminIndexedBoard, AdminRefreshButton } from "../../components/AdminListTools";
 import { AdminRecord } from "../../components/AdminRecord";
 import record from "./records.module.css";
 import { Button } from "../../components/Button";
@@ -18,9 +18,9 @@ export function Component(){
   const visible=items?.filter(item=>filter==='all'||(filter==='pending'?pending(item.status):!pending(item.status)));
   return <div className={record.page} data-admin-board="inquiries">
     <AdminBoardHeader terms={["처리 완료", "개인정보 삭제"]} screenshots={["privacy"]} title="문의·삭제 요청" description="문의 내용을 확인하고 답변을 남기세요."/>
-    <AdminFilterTabs label="문의 상태 필터" value={filter} onChange={setFilter} options={([['pending','답변 대기','attention'],['done','처리한 문의','success'],['all','전체','action']] as const).map(([value,label,tone])=>({value,label,tone,count:items?.filter(item=>value==='all'||(value==='pending'?pending(item.status):!pending(item.status))).length??'—'}))}>
+    <AdminIndexedBoard label="문의 상태 필터" value={filter} onChange={setFilter} options={([['pending','답변 대기','attention'],['done','처리한 문의','success'],['all','전체','action']] as const).map(([value,label,tone])=>({value,label,tone,count:items?.filter(item=>value==='all'||(value==='pending'?pending(item.status):!pending(item.status))).length??'—'}))} controls={
       <AdminRefreshButton label="문의 목록 새로고침" disabled={busy} onClick={()=>{setMessage('');setAttempt(a=>a+1);}}/>
-    </AdminFilterTabs>
+    }>
     {message&&<p role="status">{message}</p>}
     {items===null?(!message&&<p role="status">문의 목록을 불러오고 있습니다.</p>):visible?.length===0?<div className={record.empty}><h3><AdminLabel text={filter==='pending'?'답변을 기다리는 문의가 없습니다':'이곳에 문의가 표시됩니다'}/></h3><p>새 문의가 들어오면 내용과 처리 상태를 확인할 수 있습니다.</p></div>:<ul className={record.list}>{visible?.map(item=><AdminRecord key={`${item.id}/${item.updatedAt}`} title={item.submittedName??'이름 미기재'} preview={item.message} label={item.requestType==='delete_submission'?'삭제 요청':'개인정보 문의'} status={privacyLabels[item.status]} tone={pending(item.status)?'attention':'success'} meta={<><time dateTime={item.createdAt}>{new Date(item.createdAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'2-digit'})}</time></>}>
       <div className={record.inquiryMessage}><div className={record.inquiryHeading}><h4><AdminLabel text="요청 내용"/></h4>{item.quizSlug&&(quizSlugSchema.safeParse(item.quizSlug).success?<Link to={`/quiz/${item.quizSlug}`}>관련 퀴즈 보기 ↗</Link>:<span>대상: {item.quizSlug}</span>)}</div><blockquote>{item.message}</blockquote></div>
@@ -37,6 +37,7 @@ export function Component(){
         </fieldset>
       </form>
     </AdminRecord>)}</ul>}
+    </AdminIndexedBoard>
     <AdminSteps steps={[
       {title:"내용 확인",description:"이름과 관련 퀴즈를 보고 누구의 어떤 요청인지 확인합니다."},
       {title:"삭제 요청 처리",description:"제출 기록에서 실제 삭제한 뒤 처리 상태를 바꿉니다. 상태 변경만으로 기록은 삭제되지 않습니다."},

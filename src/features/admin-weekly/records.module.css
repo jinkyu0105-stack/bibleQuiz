@@ -1,6 +1,8 @@
 .page { display: grid; gap: 16px; min-width: 0; }
 .list { display: grid; gap: 0; list-style: none; padding: 0; margin: 0; border: 1px solid var(--admin-board-border,var(--line)); border-radius: 10px; background: var(--admin-board-surface,var(--glass-solid)); min-width: 0; overflow: clip; }
 .list:empty { display: none; }
+:global([data-admin-indexed-panel]) > .list { border: 0; border-radius: 0; background: transparent; }
+:global([data-admin-indexed-panel]) > .empty { border: 0; border-radius: 0; }
 .fields { display: grid; grid-template-columns: minmax(0,2fr) minmax(0,1fr) minmax(0,1fr); gap: 12px; align-items: end; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
 .fields label { display: grid; gap: 6px; min-width: 0; font-size: 12px; color: var(--muted); }
 .fields select { width: 100%; min-width: 0; }

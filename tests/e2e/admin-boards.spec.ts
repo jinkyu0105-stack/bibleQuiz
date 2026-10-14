@@ -37,7 +37,7 @@ test('record boards open answers beside management and preserve drafts when coll
   expect(writes).toEqual([]);
 });
 
-test('quiz and inbox filters share a full-width baseline and circular refresh',async({page})=>{
+test('quiz and inbox indexes stay joined to the list while filtering',async({page})=>{
   const writes=await mockAdminGuide(page);
   for(const [path,label,refresh] of [['/admin','퀴즈 상태','운영 상태 새로고침'],['/admin/privacy-requests','문의 상태 필터','문의 목록 새로고침']]){
     await page.goto(path!);await circularRefresh(page.getByRole('button',{name:refresh!,exact:true}));
@@ -46,6 +46,14 @@ test('quiz and inbox filters share a full-width baseline and circular refresh',a
     expect(layout.width).toBeGreaterThan(layout.parent-2);expect(layout.border).toBe('1px');
     const selected=tabs.locator('[aria-pressed=true]');await expect(selected).toHaveCSS('border-top-left-radius','4px');
     await tabs.getByRole('button').last().click();await expect(tabs.getByRole('button').last()).toHaveAttribute('aria-pressed','true');
+    await expect(selected).toHaveCSS('background-color',await page.locator('[data-admin-indexed-panel]').evaluate(n=>getComputedStyle(n).backgroundColor));
+    const joined=await page.locator('[data-admin-indexed-board]').evaluate(n=>{
+      const toolbar=n.querySelector('[data-admin-list-toolbar]')!,panel=n.querySelector('[data-admin-indexed-panel]')!,selected=toolbar.querySelector('[aria-pressed=true]')!;
+      const bar=toolbar.getBoundingClientRect(),body=panel.getBoundingClientRect(),tab=selected.getBoundingClientRect();
+      return {gap:body.top-bar.bottom,edge:body.top-tab.bottom,width:body.width-bar.width,panel:getComputedStyle(panel).backgroundColor,tab:getComputedStyle(selected).backgroundColor};
+    });
+    expect(Math.abs(joined.gap)).toBeLessThan(1);expect(Math.abs(joined.edge)).toBeLessThanOrEqual(1);
+    expect(Math.abs(joined.width)).toBeLessThan(1);expect(joined.tab).toBe(joined.panel);
   }
   const row=page.locator('[data-admin-record]').first(),reply=row.locator('summary').first();
   await reply.click();await row.getByLabel('관리자 답변').fill('입력한 답변 유지');await reply.click();await reply.click();await expect(row.getByLabel('관리자 답변')).toHaveValue('입력한 답변 유지');

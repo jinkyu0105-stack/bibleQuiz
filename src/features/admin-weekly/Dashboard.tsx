@@ -1,5 +1,5 @@
 import { AdminEmoji, AdminLabel, AdminTooltip } from "../../components/AdminHelp";
-import { AdminBoardHeader, AdminFilterTabs, AdminRefreshButton, AdminIconLink } from "../../components/AdminListTools";
+import { AdminBoardHeader, AdminIndexedBoard, AdminRefreshButton, AdminIconLink } from "../../components/AdminListTools";
 import { AdminIcon } from "../../components/AdminIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -68,9 +68,9 @@ export function Component() {
       <div className={styles.sectionHeading}><h3 id="quiz-library-heading"><AdminLabel text="퀴즈 목록"/> <span>{items.length}</span></h3>
         <AdminRefreshButton disabled={loading} onClick={() => { setMessage(""); setLoading(true); setAttempt(v => v + 1); }} label="운영 상태 새로고침" title="퀴즈 목록 새로고침"/>
       </div>
-      <AdminFilterTabs label="퀴즈 상태" value={filter} onChange={setFilter} options={([['all', '전체', items.length, 'action'], ['draft', '작성 중', drafts.length, 'action'], ['published', '공개 중', published.length, 'success'], ['archived', '지난 퀴즈', archived.length, 'guide']] as const).map(([value,label,count,tone])=>({value,label,count,tone}))}>
+      <AdminIndexedBoard label="퀴즈 상태" value={filter} onChange={setFilter} options={([['all', '전체', items.length, 'action'], ['draft', '작성 중', drafts.length, 'action'], ['published', '공개 중', published.length, 'success'], ['archived', '지난 퀴즈', archived.length, 'guide']] as const).map(([value,label,count,tone])=>({value,label,count,tone}))} controls={
         <label className={styles.search}><span className="sr-only">퀴즈 검색</span><input type="search" placeholder="제목 또는 날짜 검색" value={search} onChange={e => setSearch(e.target.value)}/></label>
-      </AdminFilterTabs>
+      }>
       {!data && loading ? <div className={styles.empty} role="status">퀴즈를 불러오고 있습니다.</div> : !data ? <div className={styles.empty}>새로고침을 눌러 목록을 다시 불러오세요.</div> : rows.length === 0 ? <div className={styles.empty}><h4>{items.length ? "조건에 맞는 퀴즈가 없습니다" : "첫 퀴즈를 준비해 보세요"}</h4><p>{items.length ? "검색어나 상태를 바꾸면 다른 퀴즈를 볼 수 있습니다." : "설교 영상 등록부터 문제 검토와 발행까지 한 화면에서 이어집니다."}</p>{!items.length && <ButtonLink to="/admin/new">퀴즈 준비하기</ButtonLink>}</div> :
         <><div className={styles.boardHeading} aria-hidden="true"><span>설교일</span><span>퀴즈</span><span>참여 · 관리</span></div>
         <ul className={styles.quizList}>{rows.map(q => {
@@ -91,6 +91,7 @@ export function Component() {
           </article></li>;
         })}</ul></>}
 
+      </AdminIndexedBoard>
     </section>
     {due.length > 0 && <details className={styles.cleanup}><summary><span><AdminLabel text="초안 보관 알림"/></span><span>{due.length}건</span></summary><p>본문 정리 예정이거나 확인이 필요한 초안입니다.</p><ul>{due.map(q => <li key={q.sermonId}><span>{q.title}</span><span>{q.state === "blocked" ? "확인 필요" : q.dueAt ? time(q.dueAt) : "시각 미확인"}</span></li>)}</ul><Link to="/admin/tools#cleanup">보관 현황 열기 →</Link></details>}
     <footer className={styles.footer}><Link data-tone="guide" to="/admin/manual">퀴즈 운영이 처음이신가요? <span>사용 안내 ↗</span></Link><Link to="/admin/operations">비용·백업 확인 ↗</Link></footer>

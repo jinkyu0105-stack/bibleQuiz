@@ -17,15 +17,19 @@ export function AdminIconLink({ label, icon, ...props }: Omit<ComponentProps<typ
   return <AdminTooltip label={label}><ButtonLink {...props} className={styles.iconControl} aria-label={label} data-admin-icon-action><AdminIcon name={icon}/></ButtonLink></AdminTooltip>;
 }
 
-export function AdminFilterTabs<T extends string>({ label, options, value, onChange, children }: {
+/** The selected index and every list state share one continuous reading surface. */
+export function AdminIndexedBoard<T extends string>({ label, options, value, onChange, controls, children }: {
   label: string; options: readonly { value: T; label: string; count: number | string; tone?: AdminTone }[];
-  value: T; onChange: (value: T) => void; children?: ReactNode;
+  value: T; onChange: (value: T) => void; controls?: ReactNode; children: ReactNode;
 }) {
-  return <div className={styles.toolbar} data-admin-list-toolbar>
-    <div className={styles.filters} role="group" aria-label={label}>
-      {options.map(option => <button type="button" key={option.value} data-admin-tone={option.tone ?? "action"} aria-pressed={value === option.value} onClick={() => onChange(option.value)}>{option.label}<span>{option.count}</span></button>)}
+  return <div className={styles.indexedBoard} data-admin-indexed-board>
+    <div className={styles.toolbar} data-admin-list-toolbar>
+      <div className={styles.filters} role="group" aria-label={label}>
+        {options.map(option => <button type="button" key={option.value} data-admin-tone={option.tone ?? "action"} aria-pressed={value === option.value} onClick={() => onChange(option.value)}>{option.label}<span>{option.count}</span></button>)}
+      </div>
+      {controls && <div className={styles.controls}>{controls}</div>}
     </div>
-    {children && <div className={styles.controls}>{children}</div>}
+    <div className={styles.indexedPanel} data-admin-indexed-panel>{children}</div>
   </div>;
 }
 
