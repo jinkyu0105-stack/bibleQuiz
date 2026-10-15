@@ -215,6 +215,7 @@ html[data-home-scrolling] body[data-view=home] :is(.glass, .convex-lens)::after 
   backdrop-filter: none !important;
 }
 @media (max-width: 700px) {
+  #grass-toggle > svg { width: 22px; height: 22px; }
   body[data-time] #grass-toggle[aria-pressed] .grass-blades { color: inherit; }
   .page-dock.glass { bottom: calc(12px + env(safe-area-inset-bottom, 0px)); width: max-content; max-width: calc(100vw - 24px); padding: 5px 6px; gap: 2px; }
   .page-dock > span { font-size: 9px; padding: 0 5px; }

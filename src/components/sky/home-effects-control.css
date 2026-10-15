@@ -85,6 +85,7 @@ body[data-time=night] .hero-light-panel { --veil-thumb: var(--accent); }
   .hero-effect-surface.glass { flex-direction: row; gap: 0; }
   .hero-effect-surface button { width: 44px; min-width: 44px; height: 44px; min-height: 44px; }
   .hero-effect-surface svg { width: 19px; height: 19px; }
+  .hero-effect-trigger svg { width: 20px; height: 20px; }
   .hero-effect-surface small { font-size: 8px; }
   .hero-effect-surface .effect-check { width: 8px; height: 8px; top: 3px; right: 3px; }
   .effect-storage-status { right: -40px; top: auto; bottom: 112px; }
