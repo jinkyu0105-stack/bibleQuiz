@@ -231,3 +231,36 @@ test("separate clouds keep drifting while the weekly section is stationary", asy
   await page.waitForTimeout(150);
   expect(await page.locator("#clouds").getAttribute("data-time")).toBe(stopped);
 });
+
+test("home defers invisible optics and clouds, and prepares them on descent", async ({ page, browserName }) => {
+  test.skip(browserName !== "chromium", "Exact backdrop displacement is a Chromium enhancement.");
+  await mockQuiz(page);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const clouds: string[] = [], puzzles: string[] = [];
+  page.on("request", request => {
+    if (/cumulus-.*\.webp/.test(request.url())) clouds.push(request.url());
+    if (/features\/quiz\/public-page\.tsx/.test(request.url())) puzzles.push(request.url());
+  });
+  await page.goto("/");
+  await expect(page.locator(".sky-video")).toBeVisible();
+  await expect(page.locator(".site-header")).toHaveAttribute("data-lens-ready", "true");
+  await expect(page.locator(".weekly-sheet")).not.toHaveAttribute("data-lens-ready");
+  await expect(page.locator("#sky-banks")).toBeHidden();
+  expect(clouds).toEqual([]); expect(puzzles).toEqual([]);
+  await page.locator(".weekly-sheet").scrollIntoViewIfNeeded();
+  await expect(page.locator(".weekly-sheet")).toHaveAttribute("data-lens-ready", "true");
+  await expect(page.locator("#clouds")).toHaveAttribute("data-renderer", "webgl-billboards");
+  expect(new Set(clouds).size).toBe(5);
+  await page.getByRole("link", { name: /어린이 퀴즈/ }).click();
+  await expect(page.getByRole("grid")).toBeVisible();
+  expect(puzzles.length).toBeGreaterThan(0);
+  // Verify fallback startup in a fresh tab. Router correctly restores the
+  // previous weekly position in this tab, where the hero is offscreen.
+  const fallback = await page.context().newPage();
+  await mockQuiz(fallback);
+  await fallback.emulateMedia({ reducedMotion: "reduce" });
+  await fallback.goto("/?video=off");
+  await expect(fallback.locator(".sky-vault")).toHaveAttribute("data-banks", "ready");
+  await expect(fallback.locator("#sky-banks")).toBeVisible();
+  await fallback.close();
+});

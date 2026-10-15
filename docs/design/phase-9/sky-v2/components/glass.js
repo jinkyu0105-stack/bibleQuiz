@@ -1,9 +1,11 @@
-/* global window, document, CSS, navigator, ResizeObserver, MutationObserver,
+/* global window, document, CSS, navigator, ResizeObserver, MutationObserver, IntersectionObserver,
    requestAnimationFrame, cancelAnimationFrame, AbortController */
 import { installDockMotion } from './dock-motion.js';
 
 const mounts = new WeakMap();
 let nextInstance = 0;
+// Just two normalized capsule maps (horizontal/vertical), shared by menus.
+const capsuleMaps = new Map();
 
 /**
  * Enhance static glass markup in a Document or Element. See README.md.
@@ -144,9 +146,10 @@ export function mountGlassComponents(root = document, { prismatic = true, descen
     const soften = document.createElementNS(svgNS, 'feGaussianBlur');
     soften.setAttribute('stdDeviation', flexible ? '.0035' : prismatic ? '.35' : '.7');
     filter.append(soften); defs.append(filter);
-    return { element, filter, map, id, flexible, size: '' };
+    return { element, filter, map, id, flexible, size: '', nearby: false };
   }) : [];
   function measureLens(lens) {
+    if (!lens.nearby) return;
     const { element, filter, map, id, flexible } = lens;
     // A normalized capsule follows the spring's dimensions. Rebuild only
     // when its layout axis changes, never for an animation frame.
@@ -157,33 +160,40 @@ export function mountGlassComponents(root = document, { prismatic = true, descen
     const radius = flexible ? 42 : Math.min(parseFloat(window.getComputedStyle(element).borderTopLeftRadius), width / 2, height / 2);
     const size = `${width}:${height}:${radius}`;
     if (size === lens.size) return;
-    lens.size = size;
-    const canvas = document.createElement('canvas');
-    canvas.width = width; canvas.height = height;
-    const context = canvas.getContext('2d');
-    if (!context) return;
-    const pixels = context.createImageData(width, height);
     const reading = element.dataset.glassLens === 'reading';
-    // Home cards share the header's clear outer refraction; their separate
-    // inset reading surface supplies the stronger blur behind text.
-    const edge = Math.min(flexible ? 18 : reading ? 22 : 16, radius);
-    for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
-      const dx = x + .5 - Math.max(radius, Math.min(width - radius, x + .5));
-      const dy = y + .5 - Math.max(radius, Math.min(height - radius, y + .5));
-      const distance = Math.hypot(dx, dy);
-      const inside = radius - distance;
-      // The convex capsule samples inward, magnifying its inner backdrop at
-      // the shoulder without pulling empty pixels across its outer border.
-      const strength = distance > 0 && inside >= 0 && inside < edge ? Math.sin(Math.PI * inside / edge) * (flexible || reading ? -112 : 112) : 0;
-      const offset = (y * width + x) * 4;
-      pixels.data[offset] = 128 + (distance ? dx / distance * strength : 0);
-      pixels.data[offset + 1] = 128 + (distance ? dy / distance * strength : 0);
-      pixels.data[offset + 2] = 128; pixels.data[offset + 3] = 255;
+    let source = flexible ? capsuleMaps.get(size) : null;
+    if (!source) {
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      // This canvas is CPU-authored data, never displayed. Avoid a GPU readback
+      // competing with video/WebGL when serializing the displacement map.
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      if (!context) return;
+      const pixels = context.createImageData(width, height);
+      // Home cards share the header's clear outer refraction; their separate
+      // inset reading surface supplies the stronger blur behind text.
+      const edge = Math.min(flexible ? 18 : reading ? 22 : 16, radius);
+      for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+        const dx = x + .5 - Math.max(radius, Math.min(width - radius, x + .5));
+        const dy = y + .5 - Math.max(radius, Math.min(height - radius, y + .5));
+        const distance = Math.hypot(dx, dy);
+        const inside = radius - distance;
+        // The convex capsule samples inward, magnifying its inner backdrop at
+        // the shoulder without pulling empty pixels across its outer border.
+        const strength = distance > 0 && inside >= 0 && inside < edge ? Math.sin(Math.PI * inside / edge) * (flexible || reading ? -112 : 112) : 0;
+        const offset = (y * width + x) * 4;
+        pixels.data[offset] = 128 + (distance ? dx / distance * strength : 0);
+        pixels.data[offset + 1] = 128 + (distance ? dy / distance * strength : 0);
+        pixels.data[offset + 2] = 128; pixels.data[offset + 3] = 255;
+      }
+      context.putImageData(pixels, 0, 0);
+      source = canvas.toDataURL();
+      if (flexible) capsuleMaps.set(size, source);
     }
-    context.putImageData(pixels, 0, 0);
+    lens.size = size;
     filter.setAttribute('width', String(flexible ? 1 : width)); filter.setAttribute('height', String(flexible ? 1 : height));
     map.setAttribute('width', String(flexible ? 1 : width)); map.setAttribute('height', String(flexible ? 1 : height));
-    map.setAttribute('href', canvas.toDataURL());
+    map.setAttribute('href', source);
     element.style.setProperty('--glass-optics', flexible ? `url("#${id}")` : prismatic ? `blur(${reading ? 14 : 1.5}px) url("#${id}")` : `url("#${id}") blur(3px)`);
     element.dataset.lensReady = 'true';
   }
@@ -195,6 +205,16 @@ export function mountGlassComponents(root = document, { prismatic = true, descen
       groups.forEach(measureSelection); lenses.forEach(measureLens);
     });
   }
+  // Leave CSS glass in place. Prepare its exact optical map shortly before it
+  // enters view, rather than rasterizing every below-the-fold panel on startup.
+  const visibility = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      const lens = lenses.find(item => item.element === entry.target);
+      if (lens) lens.nearby = entry.isIntersecting;
+    }
+    scheduleMeasurement();
+  }, { rootMargin: '80px' });
+  for (const lens of lenses) visibility.observe(lens.element);
   const resize = new ResizeObserver(scheduleMeasurement);
   for (const { element } of [...groups, ...lenses.filter(lens => !lens.flexible)]) resize.observe(element);
   const selection = new MutationObserver(records => {
@@ -247,7 +267,7 @@ export function mountGlassComponents(root = document, { prismatic = true, descen
     resetInteraction();
     lifetime.abort();
     cancelAnimationFrame(measurementFrame);
-    resize.disconnect(); selection.disconnect(); motion.disconnect();
+    resize.disconnect(); selection.disconnect(); motion.disconnect(); visibility.disconnect();
     filters.remove();
     for (const decoration of decorations) decoration.remove();
     for (const restore of restorations.reverse()) restore();

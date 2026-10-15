@@ -1,0 +1,457 @@
+{
+  "date": "2026-10-15",
+  "baseline": "aa422c4 (app c677d93)",
+  "conditions": {
+    "width": 390,
+    "height": 844,
+    "dpr": 1,
+    "cpu": 4,
+    "downloadMbps": 10,
+    "latencyMs": 40,
+    "gpu": "Chromium SwiftShader",
+    "cache": "new browser and empty cache per run",
+    "order": [
+      "before",
+      "after",
+      "after",
+      "before",
+      "before",
+      "after"
+    ],
+    "video": true,
+    "mercury": true,
+    "veil": true
+  },
+  "before": {
+    "lcp": 2408,
+    "video": 5389.9000000003725,
+    "blocking": 1893,
+    "resourceBytes": 1107950,
+    "bytes": 5703556,
+    "mapSerializationsOver1ms": 13,
+    "cloudRequests": 5,
+    "scriptBytes": 186610
+  },
+  "after": {
+    "lcp": 1824,
+    "video": 3826.9000000003725,
+    "blocking": 730,
+    "resourceBytes": 647607,
+    "bytes": 5244397,
+    "mapSerializationsOver1ms": 4,
+    "cloudRequests": 0,
+    "scriptBytes": 157142
+  },
+  "samples": [
+    {
+      "target": "before",
+      "round": 0,
+      "lcp": 2408,
+      "video": 5389.9000000003725,
+      "blocking": 3210,
+      "resourceBytes": 1107950,
+      "bytes": 5703556,
+      "mapSerializationsOver1ms": 13,
+      "cloudRequests": 5,
+      "scriptBytes": 186610,
+      "errors": []
+    },
+    {
+      "target": "after",
+      "round": 1,
+      "lcp": 1676,
+      "video": 3826.9000000003725,
+      "blocking": 730,
+      "resourceBytes": 647607,
+      "bytes": 5244397,
+      "mapSerializationsOver1ms": 4,
+      "cloudRequests": 0,
+      "scriptBytes": 157142,
+      "errors": []
+    },
+    {
+      "target": "after",
+      "round": 2,
+      "lcp": 1824,
+      "video": 3899.4000000003725,
+      "blocking": 688,
+      "resourceBytes": 647607,
+      "bytes": 5244397,
+      "mapSerializationsOver1ms": 5,
+      "cloudRequests": 0,
+      "scriptBytes": 157142,
+      "errors": []
+    },
+    {
+      "target": "before",
+      "round": 3,
+      "lcp": 2432,
+      "video": 5359.799999998882,
+      "blocking": 1893,
+      "resourceBytes": 1107950,
+      "bytes": 5703556,
+      "mapSerializationsOver1ms": 13,
+      "cloudRequests": 5,
+      "scriptBytes": 186610,
+      "errors": []
+    },
+    {
+      "target": "before",
+      "round": 4,
+      "lcp": 2228,
+      "video": 5914.200000001118,
+      "blocking": 1882,
+      "resourceBytes": 1107950,
+      "bytes": 5703556,
+      "mapSerializationsOver1ms": 13,
+      "cloudRequests": 5,
+      "scriptBytes": 186610,
+      "errors": []
+    },
+    {
+      "target": "after",
+      "round": 5,
+      "lcp": 2328,
+      "video": 2671.2000000011176,
+      "blocking": 988,
+      "resourceBytes": 647607,
+      "bytes": 5244397,
+      "mapSerializationsOver1ms": 4,
+      "cloudRequests": 0,
+      "scriptBytes": 157142,
+      "errors": []
+    }
+  ],
+  "visual": {
+    "screens": [
+      {
+        "size": {
+          "width": 1440,
+          "height": 900
+        },
+        "time": "dawn",
+        "playback": {
+          "src": "sky-dawn-4k.mp4",
+          "paused": false,
+          "width": 3840,
+          "height": 2160
+        },
+        "panel": {
+          "x": 1079,
+          "y": 441.0625,
+          "width": 268,
+          "height": 311.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 1440,
+          "height": 900
+        },
+        "time": "day",
+        "playback": {
+          "src": "sky-day-4k.mp4",
+          "paused": false,
+          "width": 3840,
+          "height": 2160
+        },
+        "panel": {
+          "x": 1079,
+          "y": 441.0625,
+          "width": 268,
+          "height": 311.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 1440,
+          "height": 900
+        },
+        "time": "dusk",
+        "playback": {
+          "src": "sky-dusk-4k.mp4",
+          "paused": false,
+          "width": 3840,
+          "height": 2160
+        },
+        "panel": {
+          "x": 1079,
+          "y": 441.0625,
+          "width": 268,
+          "height": 311.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 1440,
+          "height": 900
+        },
+        "time": "night",
+        "playback": {
+          "src": "sky-night-4k-optimized.mp4",
+          "paused": false,
+          "width": 3840,
+          "height": 2160
+        },
+        "panel": {
+          "x": 1079,
+          "y": 441.0625,
+          "width": 268,
+          "height": 311.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "time": "dawn",
+        "playback": {
+          "src": "sky-dawn-1080p.mp4",
+          "paused": false,
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "x": 61,
+          "y": 290.125,
+          "width": 268,
+          "height": 343.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "time": "day",
+        "playback": {
+          "src": "sky-day-1080p.mp4",
+          "paused": false,
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "x": 61,
+          "y": 290.125,
+          "width": 268,
+          "height": 343.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "time": "dusk",
+        "playback": {
+          "src": "sky-dusk-1080p.mp4",
+          "paused": false,
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "x": 61,
+          "y": 290.125,
+          "width": 268,
+          "height": 343.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "time": "night",
+        "playback": {
+          "src": "sky-night-1080p.mp4",
+          "paused": false,
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "x": 61,
+          "y": 290.125,
+          "width": 268,
+          "height": 343.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 667
+        },
+        "time": "dawn",
+        "playback": {
+          "src": "sky-dawn-1080p.mp4",
+          "paused": false,
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "x": 26,
+          "y": 113.125,
+          "width": 268,
+          "height": 343.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 667
+        },
+        "time": "day",
+        "playback": {
+          "src": "sky-day-1080p.mp4",
+          "paused": false,
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "x": 26,
+          "y": 113.125,
+          "width": 268,
+          "height": 343.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 667
+        },
+        "time": "dusk",
+        "playback": {
+          "src": "sky-dusk-1080p.mp4",
+          "paused": false,
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "x": 26,
+          "y": 113.125,
+          "width": 268,
+          "height": 343.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      },
+      {
+        "size": {
+          "width": 320,
+          "height": 667
+        },
+        "time": "night",
+        "playback": {
+          "src": "sky-night-1080p.mp4",
+          "paused": false,
+          "width": 1920,
+          "height": 1080
+        },
+        "panel": {
+          "x": 26,
+          "y": 113.125,
+          "width": 268,
+          "height": 343.875
+        },
+        "overflow": false,
+        "bottom": 0,
+        "glass": "blur(1.5px) url(\"#liquid-edge-19-0\") saturate(1.15)"
+      }
+    ],
+    "comparisons": [
+      {
+        "size": {
+          "width": 1440,
+          "height": 900
+        },
+        "name": "before",
+        "pixels": {
+          "effect": "945e7445fe2073e90835e403b45313da7c3db47c659f408c75f989c9d5036d76",
+          "headerMap": "414f7ad86354a254aeef0dc3d4509b9a419bf2b953e8b801c56619c1c463696a",
+          "width": 640,
+          "height": 400
+        }
+      },
+      {
+        "size": {
+          "width": 1440,
+          "height": 900
+        },
+        "name": "after",
+        "pixels": {
+          "effect": "945e7445fe2073e90835e403b45313da7c3db47c659f408c75f989c9d5036d76",
+          "headerMap": "414f7ad86354a254aeef0dc3d4509b9a419bf2b953e8b801c56619c1c463696a",
+          "width": 640,
+          "height": 400
+        }
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "name": "before",
+        "pixels": {
+          "effect": "4dbdc2111be12440e02cc5031bde9d1ea989b81d5acd938c8865837fc814eb9e",
+          "headerMap": "6ee93eabac478fcfa1ae64b7642f6a29a77b7b5c1c1cc072de9e459abf391388",
+          "width": 222,
+          "height": 480
+        }
+      },
+      {
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "name": "after",
+        "pixels": {
+          "effect": "4dbdc2111be12440e02cc5031bde9d1ea989b81d5acd938c8865837fc814eb9e",
+          "headerMap": "6ee93eabac478fcfa1ae64b7642f6a29a77b7b5c1c1cc072de9e459abf391388",
+          "width": 222,
+          "height": 480
+        }
+      }
+    ],
+    "errors": [],
+    "writes": []
+  },
+  "lighthouse": {
+    "conditions": "Separate Lighthouse 13.5.0 simulated mobile run; video, Mercury and Veil enabled",
+    "performance": 65,
+    "accessibility": 100,
+    "lcpMs": 4071.4164999999994,
+    "tbtMs": 604.4702499999996,
+    "cls": 0.00011682094461071798
+  }
+}

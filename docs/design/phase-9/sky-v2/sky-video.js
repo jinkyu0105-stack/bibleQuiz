@@ -135,6 +135,9 @@ export function createSkyVideo(vault, wake, onPlaybackPolicyChange, media = null
   window.addEventListener('pagehide', pagehide);
   return {
     update, dispose,
+    // While the selected poster/movie is arriving the static sky is sufficient;
+    // do not compile the animated-photo fallback only to hide it a moment later.
+    get pending() { return eligible() && !failed && !blocked && !posterReady && !frameReady; },
     get blocked() { return policyBlocked(); },
     retry() {
       blocked = false; state = { ...state, moving: true };

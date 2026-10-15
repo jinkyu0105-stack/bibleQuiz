@@ -2,8 +2,9 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { GlassMenu } from "../glass/GlassMenu";
 import { readSkyFlag, saveSkyPreference } from "./preferences";
-import { readVeilSettings, type VeilSettings } from "./veil-settings";
-import { VeilControls } from "./VeilControls";
+import { defaultVeilSettings, readVeilSettings, type VeilSettings } from "./veil-settings";
+import { defaultMercurySettings, readMercurySettings, type MercurySettings } from "./mercury-settings";
+import { EffectControls } from "./EffectControls";
 import "./home-effects-control.css";
 
 function EffectIcon({ kind }: { kind: "effects" | "mercury" | "veil" }) {
@@ -17,14 +18,16 @@ function EffectIcon({ kind }: { kind: "effects" | "mercury" | "veil" }) {
 /** The surface grows in place; independent toggles keep their own checked state. */
 export function HomeEffectsControl({ night = false }: { night?: boolean }) {
   const [open, setOpen] = useState(false);
-  const [tuning, setTuning] = useState(false);
+  const [tuning, setTuning] = useState<"mercury" | "veil" | null>(null);
   const [mercury, setMercury] = useState(() => !readSkyFlag("mercury-hidden"));
   const [veil, setVeil] = useState(() => readSkyFlag("veil-rays"));
   const [storageFailed, setStorageFailed] = useState(false);
   const [settings, setSettings] = useState(readVeilSettings);
+  const [reflectionSettings, setReflectionSettings] = useState(readMercurySettings);
   const root = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const raysTrigger = useRef<HTMLButtonElement>(null);
+  const reflectionTrigger = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const keyboardOpen = useRef(false);
   const id = useId();
@@ -38,6 +41,11 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
     document.body.dataset.veilStrength = String(settings.strength);
     document.body.dataset.veilSpread = String(settings.spread);
   }, [settings]);
+  useLayoutEffect(() => {
+    document.body.dataset.mercuryStrength = String(reflectionSettings.strength);
+    document.body.dataset.mercuryScale = String(reflectionSettings.scale);
+    document.body.dataset.mercurySpeed = String(reflectionSettings.speed);
+  }, [reflectionSettings]);
   useEffect(() => () => clearTimeout(closeTimer.current), []);
   useEffect(() => {
     if (!open) return;
@@ -45,7 +53,7 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
       if (event.target instanceof Node && !root.current?.contains(event.target) && !document.getElementById(`${id}-panel`)?.contains(event.target)) {
         clearTimeout(closeTimer.current);
         keyboardOpen.current = false;
-        setTuning(false);
+        setTuning(null);
         setOpen(false);
       }
     };
@@ -57,28 +65,32 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
     clearTimeout(closeTimer.current);
     keyboardOpen.current = false;
     if (restoreFocus) trigger.current?.focus({ preventScroll: true });
-    setTuning(false);
+    setTuning(null);
     setOpen(false);
   }
   function closeTuning() {
-    raysTrigger.current?.focus({ preventScroll: true });
-    setTuning(false);
+    (tuning === "mercury" ? reflectionTrigger : raysTrigger).current?.focus({ preventScroll: true });
+    setTuning(null);
   }
   function adjust(next: VeilSettings) {
     setSettings(next);
     setStorageFailed(!saveSkyPreference("veil-settings", JSON.stringify(next)));
   }
+  function adjustReflection(next: MercurySettings) {
+    setReflectionSettings(next);
+    setStorageFailed(!saveSkyPreference("mercury-settings", JSON.stringify(next)));
+  }
   function toggle(kind: "mercury" | "veil") {
+    // Reopen a dismissed controller without turning its effect off. A second
+    // click on the same open controller turns off only that effect.
+    const next = !((kind === "mercury" ? mercury : veil) && tuning === kind);
+    clearTimeout(closeTimer.current);
+    setTuning(next ? kind : null);
     if (kind === "mercury") {
-      setMercury(!mercury);
-      setStorageFailed(!saveSkyPreference("mercury-hidden", String(mercury)));
+      setMercury(next);
+      setStorageFailed(!saveSkyPreference("mercury-hidden", String(!next)));
     } else {
-      // Reopening a dismissed controller keeps the light on. Clicking the
-      // selected ray again while its controller is open turns both off.
-      const next = !(veil && tuning);
-      clearTimeout(closeTimer.current);
       setVeil(next);
-      setTuning(next);
       setStorageFailed(!saveSkyPreference("veil-rays", String(next)));
     }
   }
@@ -114,15 +126,22 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
         <EffectIcon kind="effects" />
       </button>
         {([['mercury', '물결 반사 (Mercury)', '반사', mercury], ['veil', '빛줄기 (Veil Rays)', '빛줄기', veil]] as const).map(([kind, label, short, enabled]) =>
-          <button key={kind} id={`${id}-${kind}`} ref={kind === "veil" ? raysTrigger : undefined} className="hero-effect-option" type="button" aria-label={label} aria-pressed={enabled}
-            aria-expanded={kind === "veil" ? tuning : undefined} aria-controls={kind === "veil" ? `${id}-panel` : undefined}
+          <button key={kind} id={`${id}-${kind}`} ref={kind === "veil" ? raysTrigger : reflectionTrigger} className="hero-effect-option" type="button" aria-label={label} aria-pressed={enabled}
+            aria-expanded={tuning === kind} aria-controls={`${id}-panel`}
             aria-hidden={!open} inert={!open} onClick={() => toggle(kind)}>
             <EffectIcon kind={kind} /><small>{short}</small>
             {enabled && <svg className="effect-check" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="m2 6 2.5 2.5L10 3" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>}
           </button>)}
     </GlassMenu>
-    {tuning && createPortal(<VeilControls id={`${id}-panel`} anchor={raysTrigger} settings={settings} night={night}
-      onChange={adjust} onClose={closeTuning} />, document.body)}
+    {tuning === "veil" && createPortal(<EffectControls key="veil" id={`${id}-panel`} anchor={raysTrigger} label="빛줄기 조절"
+      title={night ? "달빛 조절" : "빛줄기 조절"} description={night ? "달 쪽에서 부드럽게 번지는 은빛" : "넓은 광원에서 내려오는 부드러운 빛"}
+      settings={settings} defaults={defaultVeilSettings} fields={[
+        { key: "width", label: "광원 너비", min: 0, max: 100 }, { key: "strength", label: "밝기", min: 10, max: 100 }, { key: "spread", label: "퍼짐", min: 0, max: 100 },
+      ]} onChange={adjust} onClose={closeTuning} />, document.body)}
+    {tuning === "mercury" && createPortal(<EffectControls key="mercury" id={`${id}-panel`} anchor={reflectionTrigger} label="반사 조절"
+      description="하늘 위로 천천히 흐르는 물결 반사" settings={reflectionSettings} defaults={defaultMercurySettings} fields={[
+        { key: "strength", label: "밝기", min: 10, max: 100 }, { key: "scale", label: "물결 크기", min: 0, max: 100 }, { key: "speed", label: "흐름 속도", min: 0, max: 100 },
+      ]} onChange={adjustReflection} onClose={closeTuning} />, document.body)}
     {storageFailed && <span className="effect-storage-status" role="status">효과 설정은 이 화면에서만 유지됩니다.</span>}
   </div>;
 }

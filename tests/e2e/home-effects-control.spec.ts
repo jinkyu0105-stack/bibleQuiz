@@ -27,6 +27,10 @@ test("effect capsule opens without choosing an effect and preserves independent 
   await expect(page.getByRole("button", { name: "빛줄기 조절", exact: true })).toHaveCount(0);
   await expect(reflection).toHaveAttribute("aria-pressed", "true");
   await reflection.click();
+  await expect(page.getByRole("group", { name: "반사 조절", exact: true })).toBeVisible();
+  await expect(page.getByRole("group", { name: "빛줄기 조절", exact: true })).toHaveCount(0);
+  await expect(reflection).toHaveAttribute("aria-pressed", "true");
+  await reflection.click();
   await expect(page.locator("body")).toHaveAttribute("data-hero-mercury", "off");
   await expect(rays).toHaveAttribute("aria-pressed", "true");
   await page.reload();
@@ -58,6 +62,12 @@ test("effect disclosure supports keyboard, escape, outside dismissal and reduced
   const reflection = page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true });
   await expect(reflection).toBeFocused();
   await page.keyboard.press("Space");
+  await expect(page.getByRole("slider", { name: "밝기", exact: true })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(reflection).toBeFocused();
+  await expect(reflection).toHaveAttribute("aria-pressed", "true");
+  await page.keyboard.press("Space");
+  await reflection.click();
   await expect(reflection).toHaveAttribute("aria-pressed", "false");
   await page.keyboard.press("Tab");
   const rays = page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true });
@@ -177,4 +187,37 @@ test("light controls recover from invalid storage and keep the time bar's spring
     await expect.poll(async () => (await lens.boundingBox())!.y).toBeGreaterThan(start!.y + 20);
     await expect(rays).toHaveAttribute("aria-pressed", "true");
   }
+});
+
+test("reflection tuning saves independent values, resets and fits the small screen", async ({ page, isMobile }) => {
+  await page.setViewportSize({ width: isMobile ? 320 : 1280, height: isMobile ? 667 : 600 });
+  await home(page); await expand(page, isMobile);
+  const reflection = page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true });
+  await reflection.click();
+  const brightness = page.getByRole("slider", { name: "밝기", exact: true });
+  const scale = page.getByRole("slider", { name: "물결 크기", exact: true });
+  const speed = page.getByRole("slider", { name: "흐름 속도", exact: true });
+  await expect(brightness).toBeFocused();
+  await brightness.press("Home"); await brightness.press("ArrowRight");
+  await scale.press("End"); await speed.press("Home");
+  await expect(brightness).toHaveValue("11"); await expect(scale).toHaveValue("100"); await expect(speed).toHaveValue("0");
+  const box = (await page.getByRole("group", { name: "반사 조절", exact: true }).boundingBox())!;
+  expect(box.x).toBeGreaterThanOrEqual(0); expect(box.y).toBeGreaterThanOrEqual(0);
+  expect(box.x + box.width).toBeLessThanOrEqual(page.viewportSize()!.width);
+  expect(box.y + box.height).toBeLessThanOrEqual(page.viewportSize()!.height);
+  await page.keyboard.press("Escape");
+  await expect(reflection).toBeFocused(); await expect(reflection).toHaveAttribute("aria-pressed", "true");
+  await page.reload(); await expand(page, isMobile); await reflection.click();
+  await expect(brightness).toHaveValue("11"); await expect(scale).toHaveValue("100"); await expect(speed).toHaveValue("0");
+  const rays = page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true });
+  await rays.click();
+  await expect(page.getByRole("slider", { name: "광원 너비", exact: true })).toHaveValue("65");
+  await expect(brightness).toHaveValue("55");
+  await reflection.click(); await expect(brightness).toHaveValue("11");
+  await page.getByRole("button", { name: "기본값으로", exact: true }).click();
+  await expect(brightness).toHaveValue("50"); await expect(scale).toHaveValue("50"); await expect(speed).toHaveValue("50");
+  await reflection.click();
+  await expect(reflection).toHaveAttribute("aria-pressed", "false");
+  await expect(rays).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".hero-light-panel")).toHaveCount(0);
 });

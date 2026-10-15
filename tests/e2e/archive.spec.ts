@@ -130,7 +130,7 @@ test("main shows recent3, explicit difficulty links, and responsive archive in b
   }
 });
 
-test("one final wheel reaches the footer and scrolling glass restores without changing preferences", async ({ page, isMobile }) => {
+test("one final wheel reaches the footer and scrolling glass restores without changing preferences", async ({ page, isMobile, browserName }) => {
   test.skip(isMobile, "Desktop section wheel; mobile keeps native touch scrolling");
   await page.setViewportSize({ width: 1440, height: 900 });
   await mocks(page); await page.goto("/?video=off"); await expect(cards(page)).toHaveCount(3);
@@ -139,7 +139,10 @@ test("one final wheel reaches the footer and scrolling glass restores without ch
   await expect.poll(() => page.locator("#weekly").evaluate(n => Math.abs(n.getBoundingClientRect().top))).toBeLessThan(2);
   await expect(page.locator("html")).not.toHaveAttribute("data-home-scrolling");
   const glass = page.locator(".archive-list");
-  const optics = await glass.evaluate(n => getComputedStyle(n, "::before").backdropFilter);
+  // The archive's precise lens is now deferred until it approaches the viewport.
+  // Compare restoration on the already visible header, then check the new lens.
+  const header = page.locator(".site-header");
+  const optics = await header.evaluate(n => getComputedStyle(n, "::before").backdropFilter);
   expect(optics).not.toBe("none");
   await page.mouse.move(600, 350); await page.mouse.wheel(0, 80);
   await expect(page.locator("html")).toHaveAttribute("data-home-scrolling", "true");
@@ -147,7 +150,9 @@ test("one final wheel reaches the footer and scrolling glass restores without ch
   await expect.poll(() => page.evaluate(() => Math.abs(document.documentElement.scrollHeight - innerHeight - scrollY))).toBeLessThan(2);
   await expect(page.locator("footer")).toBeInViewport();
   await expect(page.locator("html")).not.toHaveAttribute("data-home-scrolling");
-  await expect.poll(() => glass.evaluate(n => getComputedStyle(n, "::before").backdropFilter)).toBe(optics);
+  await expect.poll(() => header.evaluate(n => getComputedStyle(n, "::before").backdropFilter)).toBe(optics);
+  await expect.poll(() => glass.evaluate(n => getComputedStyle(n, "::before").backdropFilter)).not.toBe("none");
+  if (browserName === "chromium") await expect(glass).toHaveAttribute("data-lens-ready", "true");
   await expect(page.locator("body")).toHaveAttribute("data-transparency", before!);
   await page.getByRole("link", { name: "지난 퀴즈 전체 보기" }).click();
   await expect(page.locator("html")).not.toHaveAttribute("data-home-scrolling");

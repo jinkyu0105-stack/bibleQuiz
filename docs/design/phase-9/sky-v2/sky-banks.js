@@ -19,7 +19,7 @@ const BANKS = [
 export function createSkyBanks(vault, wake) {
   const canvas = vault.querySelector('#sky-banks');
   const images = [...vault.querySelectorAll('picture img')];
-  const gl = canvas.getContext('webgl', { alpha: false, antialias: false, depth: false, powerPreference: 'low-power' });
+  let gl = null, attempted = false;
   let program, buffer, uniforms, lost = false, disposed = false;
   let textures = [], sources = [], lastState = '', lastTime = -1, frames = 0;
   let night = 0;
@@ -28,15 +28,17 @@ export function createSkyBanks(vault, wake) {
     if (!canvas.hidden) canvas.hidden = true;
     if (vault.dataset.banks !== 'static') vault.dataset.banks = 'static';
   }
-  if (!gl) { fallback(); return { render() {}, dispose() {} }; }
-
   function release() {
+    if (!gl) return;
     textures.forEach(texture => { if (texture) gl.deleteTexture(texture); });
     if (program) gl.deleteProgram(program);
     if (buffer) gl.deleteBuffer(buffer);
     textures = []; sources = []; program = null; buffer = null;
   }
   function setup() {
+    attempted = true;
+    gl ??= canvas.getContext('webgl', { alpha: false, antialias: false, depth: false, powerPreference: 'low-power' });
+    if (!gl) { fallback(); return; }
     try {
       const vertex = 'attribute vec2 aPosition; varying vec2 vUv; void main(){vUv=vec2(aPosition.x,1.0-aPosition.y);gl_Position=vec4(aPosition*2.0-1.0,0.0,1.0);}';
       const fragment = `
@@ -98,6 +100,7 @@ export function createSkyBanks(vault, wake) {
     return true;
   }
   function render({ time, width, height, theme, visible, moving }) {
+    if (!disposed && !lost && visible && !attempted) setup();
     if (disposed || lost || !program || !visible) { fallback(); return; }
     if (!upload(0) || !upload(1)) { fallback(); return; }
     const state = `${width}/${height}/${theme}/${moving}/${sources.join('/')}`;
@@ -136,6 +139,5 @@ export function createSkyBanks(vault, wake) {
   }
   images.forEach(image => { image.addEventListener('load', wake); image.addEventListener('error', wake); });
   canvas.addEventListener('webglcontextlost', onLoss); canvas.addEventListener('webglcontextrestored', onRestore);
-  setup();
   return { render, dispose };
 }

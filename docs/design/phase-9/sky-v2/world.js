@@ -24,7 +24,7 @@ export function createWorld({ asset = path => path, videoMedia = null, initially
   const header = document.querySelector('.site-header');
   const media = window.matchMedia('(prefers-reduced-motion: reduce)');
   const motionButton = document.querySelector('#motion');
-  const gl = canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, premultipliedAlpha: true, powerPreference: 'low-power' });
+  let gl = null, cloudStarted = false;
   let program, buffer, rect, tint, alpha, flip;
   const textures = [];
   let textureSize = '', textureGeneration = 0;
@@ -65,6 +65,8 @@ export function createWorld({ asset = path => path, videoMedia = null, initially
     return shader;
   }
   function setup() {
+    cloudStarted = true;
+    gl ??= canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, premultipliedAlpha: true, powerPreference: 'low-power' });
     if (!gl) { canvas.dataset.renderer = 'static-fallback'; return; }
     textures.length = 0;
     const vertex = compile(gl.VERTEX_SHADER, 'attribute vec2 aPosition; uniform vec4 uRect; uniform float uFlip; varying vec2 vUv; void main(){vUv=vec2(mix(aPosition.x,1.0-aPosition.x,uFlip),1.0-aPosition.y); gl_Position=vec4(uRect.xy+(aPosition-0.5)*uRect.zw,0.0,1.0);}');
@@ -132,7 +134,7 @@ export function createWorld({ asset = path => path, videoMedia = null, initially
     vault.style.opacity = String(vaultOpacity);
     vault.style.setProperty('--sky-edge-alpha', String(quiet ? 1 : 1 - Math.min(1, progress / .045)));
     const videoVisible = skyVideo.update({ theme: document.body.dataset.time, visible: !quiet && vaultOpacity > 0, moving: !paused && !media.matches, width });
-    skyBanks.render({ time, width, height, theme: document.body.dataset.time, visible: !quiet && vaultOpacity > 0 && !videoVisible, moving: !paused && !media.matches });
+    skyBanks.render({ time, width, height, theme: document.body.dataset.time, visible: !quiet && vaultOpacity > 0 && !videoVisible && !skyVideo.pending, moving: !paused && !media.matches });
     const ground = Math.max(0, Math.min(1, (progress - .40) / .60));
     meadow.style.transform = `translate3d(0,${height * (1 - ground) * .95}px,0) scale(${1.01 + .12 * ground})`;
     let grassVisible = false;
@@ -165,11 +167,14 @@ export function createWorld({ asset = path => path, videoMedia = null, initially
     if (grassStatus && grassStatus.textContent !== grassMessage) grassStatus.textContent = grassMessage;
     canvas.dataset.progress = progress.toFixed(4); canvas.dataset.time = time.toFixed(3);
     canvas.dataset.camera = cameraY.toFixed(3); canvas.dataset.ground = ground.toFixed(4);
+    const reveal = quiet ? 1 : Math.max(0, Math.min(1, progress / .22));
+    const cloudArrival = reveal * reveal * (3 - 2 * reveal);
+    // These five foreground sprites are entirely transparent at the hero top.
+    // Fetch/upload them when descent begins; video and hero light get priority.
+    if (!cloudStarted && cloudArrival > 0) setup();
     if (!ready || lost) return;
     gl.clear(gl.COLOR_BUFFER_BIT); gl.useProgram(program); gl.uniform3fv(tint, color);
     const aspect = width / height;
-    const reveal = quiet ? 1 : Math.max(0, Math.min(1, progress / .22));
-    const cloudArrival = reveal * reveal * (3 - 2 * reveal);
     if (cloudArrival === 0) return;
     clouds.forEach((cloud, index) => {
       const focal = cloud.depth * .75;
@@ -235,7 +240,7 @@ export function createWorld({ asset = path => path, videoMedia = null, initially
     if (gl && !lost) { textures.forEach(texture => gl.deleteTexture(texture)); if (program) gl.deleteProgram(program); if (buffer) gl.deleteBuffer(buffer); }
   }
   window.addEventListener('pagehide', event => { if (!event.persisted) dispose(); }, { signal });
-  setup(); measure(); updateMotion();
+  measure(); updateMotion();
   return {
     dispose,
     setGround(mode) { groundMode = mode === 'grass' ? 'grass' : 'photo'; document.body.dataset.ground = groundMode; wake(); },

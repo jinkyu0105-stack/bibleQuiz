@@ -94,6 +94,7 @@ test("both hero effects can be mixed or stopped without adding a second canvas",
   const reflection = page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true });
   const rays = page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true });
   await reflection.click();
+  await reflection.click();
   await expect(canvas).toHaveAttribute("data-state", "disabled");
   await expect(canvas).toHaveCSS("visibility", "hidden");
   await expectStill(canvas);
@@ -142,12 +143,50 @@ test("the original home and quiz remain usable when the decorative GPU layer is 
   await expect(page.getByRole("grid")).toBeVisible();
 });
 
+test("reflection tuning changes actual pixels and zero speed holds its flow", async ({ page }) => {
+  const canvas = await home(page);
+  await expect(canvas).toHaveAttribute("data-state", "running");
+  await page.locator("#motion").focus(); await page.keyboard.press("Enter");
+  const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
+  const reflection = page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true });
+  await trigger.focus(); await page.keyboard.press("Enter");
+  await reflection.focus(); await page.keyboard.press("Enter");
+  const pixels = () => canvas.evaluate(node => {
+    const canvas = node as HTMLCanvasElement, gl = canvas.getContext("webgl")!;
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    const data = new Uint8Array(canvas.width * canvas.height * 4);
+    gl.readPixels(0, 0, canvas.width, canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, data);
+    let alpha = 0, hash = 0;
+    for (let i = 3; i < data.length; i += 4) { alpha += data[i]!; hash = (hash * 31 + data[i]!) | 0; }
+    return { alpha, hash };
+  });
+  const brightness = page.getByRole("slider", { name: "밝기", exact: true });
+  await brightness.press("Home"); const dim = await pixels();
+  await brightness.press("End"); await expect.poll(async () => (await pixels()).alpha).toBeGreaterThan(dim.alpha * 2);
+  const scale = page.getByRole("slider", { name: "물결 크기", exact: true });
+  await scale.press("Home"); const small = await pixels();
+  await scale.press("End"); await expect.poll(async () => (await pixels()).hash).not.toBe(small.hash);
+  const speed = page.getByRole("slider", { name: "흐름 속도", exact: true });
+  await speed.press("Home"); await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
+  await page.locator("#motion").focus(); await page.keyboard.press("Enter");
+  await expect(canvas).toHaveAttribute("data-state", "running");
+  const held = await pixels(), time = await canvas.getAttribute("data-time");
+  await expect.poll(() => canvas.getAttribute("data-time")).not.toBe(time);
+  expect((await pixels()).hash).toBe(held.hash);
+  await trigger.focus(); await page.keyboard.press("Enter");
+  await reflection.focus(); await page.keyboard.press("Enter");
+  await speed.press("End");
+  await expect.poll(async () => (await pixels()).hash).not.toBe(held.hash);
+  expect(await canvas.evaluate(node => (node as HTMLCanvasElement).getContext("webgl")!.getError())).toBe(0);
+});
+
 test("light width and brightness change the rendered light even while motion is paused", async ({ page }) => {
   const canvas = await home(page);
   await page.getByRole("button", { name: "낮", exact: true }).click();
   await page.locator("#motion").click();
   const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
   await trigger.focus(); await page.keyboard.press("Enter");
+  await page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true }).click();
   await page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true }).click();
   await page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true }).click();
   const width = page.getByRole("slider", { name: "광원 너비", exact: true });

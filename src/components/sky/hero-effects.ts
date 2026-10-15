@@ -1,6 +1,7 @@
 // Original procedural shaders inspired by the public Mercury Veins / Veil Rays previews.
 // No purchased source, texture, video sampling, or additional dependencies.
 import { defaultVeilSettings, normalizeVeilSettings } from "./veil-settings";
+import { defaultMercurySettings, normalizeMercurySettings } from "./mercury-settings";
 
 const vertex = `
 attribute vec2 aPosition;
@@ -19,6 +20,8 @@ uniform float uTime;
 uniform vec3 uTint;
 uniform vec2 uEffects;
 uniform vec3 uVeilSettings;
+uniform vec2 uMercurySettings;
+uniform float uMercuryTime;
 uniform vec3 uMoon;
 float hash(vec2 p) {
   vec3 q = fract(vec3(p.x, p.y, p.x) * vec3(.1031, .11369, .13787));
@@ -33,8 +36,8 @@ float noise(vec2 p) {
 }
 vec4 mercury() {
   vec2 uv = vUv;
-  vec2 p = (uv - .5) * vec2(uResolution.x / uResolution.y, 1.) * 3.2;
-  float t = uTime * .13;
+  vec2 p = (uv - .5) * vec2(uResolution.x / uResolution.y, 1.) * 3.2 / mix(.5, 1.5, uMercurySettings.y);
+  float t = uMercuryTime * .13;
   vec2 fromPointer = (uv - uPointer) * vec2(uResolution.x / uResolution.y, 1.);
   p += fromPointer * exp(-dot(fromPointer, fromPointer) * 7.) * .65;
   vec2 drift = vec2(t * .31, -t * .22);
@@ -53,6 +56,7 @@ vec4 mercury() {
     * smoothstep(0., .14, uv.y) * smoothstep(0., .12, 1. - uv.y);
   float alpha = clamp(glow * .53 + shade + grain * glow, 0., .64) * edge * mix(.25, 1., center);
   vec3 color = mix(uTint * .2, uTint, smoothstep(.02, .3, glow));
+  alpha = min(.85, alpha * uMercurySettings.x);
   return vec4(color * alpha, alpha);
 }
 vec4 veil() {
@@ -106,9 +110,10 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
 
   let program: WebGLProgram | null = null, buffer: WebGLBuffer | null = null;
   let uniforms: Record<string, WebGLUniformLocation | null> = {};
-  let frame = 0, lastFrame = 0, time = 0, visible = false, lost = false, disposed = false;
+  let frame = 0, lastFrame = 0, time = 0, mercuryTime = 0, visible = false, lost = false, disposed = false;
   let pointerX = -2, pointerY = -2, targetX = -2, targetY = -2;
   let veilSettings = { ...defaultVeilSettings }, moonX = .74, moonY = .86;
+  let mercurySettings = { ...defaultMercurySettings };
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const contrast = matchMedia("(forced-colors: active)");
   const transparency = matchMedia("(prefers-reduced-transparency: reduce)");
@@ -139,7 +144,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
       gl!.bufferData(gl!.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl!.STATIC_DRAW);
       const position = gl!.getAttribLocation(program, "aPosition");
       gl!.enableVertexAttribArray(position); gl!.vertexAttribPointer(position, 2, gl!.FLOAT, false, 0, 0);
-      uniforms = Object.fromEntries(["uResolution", "uPointer", "uTime", "uTint", "uEffects", "uVeilSettings", "uMoon"].map(name => [name, gl!.getUniformLocation(program!, name)]));
+      uniforms = Object.fromEntries(["uResolution", "uPointer", "uTime", "uTint", "uEffects", "uVeilSettings", "uMercurySettings", "uMercuryTime", "uMoon"].map(name => [name, gl!.getUniformLocation(program!, name)]));
     } catch {
       release(); canvas.dataset.state = "unavailable";
     } finally {
@@ -158,6 +163,8 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
     gl!.uniform2f(uniforms.uResolution!, canvas.width, canvas.height);
     gl!.uniform2f(uniforms.uPointer!, pointerX, pointerY);
     gl!.uniform1f(uniforms.uTime!, time);
+    gl!.uniform1f(uniforms.uMercuryTime!, mercuryTime);
+    gl!.uniform2f(uniforms.uMercurySettings!, mercurySettings.strength / 50, mercurySettings.scale / 100);
     gl!.uniform3f(uniforms.uTint!, tint[0]!, tint[1]!, tint[2]!);
     gl!.uniform2f(uniforms.uEffects!, Number(effects()[0]), Number(effects()[1]));
     gl!.uniform3f(uniforms.uVeilSettings!, veilSettings.width / 100, veilSettings.strength / 100, veilSettings.spread / 100);
@@ -171,6 +178,9 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
     if (!lastFrame || now - lastFrame >= 1000 / 30) {
       const dt = lastFrame ? Math.min((now - lastFrame) / 1000, .1) : 0;
       time += dt; lastFrame = now;
+      // Integrate speed rather than multiplying elapsed time: changing the
+      // slider must not jump the reflection to another point in its animation.
+      mercuryTime += dt * mercurySettings.speed / 50;
       const ease = 1 - Math.exp(-dt * 4);
       pointerX += (targetX - pointerX) * ease; pointerY += (targetY - pointerY) * ease;
       draw();
@@ -181,6 +191,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
     cancelAnimationFrame(frame); frame = 0; lastFrame = 0;
     if (disposed || lost || !program) return;
     veilSettings = normalizeVeilSettings({ width: Number(document.body.dataset.veilWidth), strength: Number(document.body.dataset.veilStrength), spread: Number(document.body.dataset.veilSpread) });
+    mercurySettings = normalizeMercurySettings({ strength: Number(document.body.dataset.mercuryStrength), scale: Number(document.body.dataset.mercuryScale), speed: Number(document.body.dataset.mercurySpeed) });
     locateMoon();
     canvas.dataset.state = !effects().some(Boolean) ? "disabled" : clear() ? "clear" : hidden() ? "offscreen" : moving() ? "running" : "paused";
     if (!effects().some(Boolean) || clear() || hidden()) return;
@@ -218,7 +229,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
   const intersection = new IntersectionObserver(([entry]) => { visible = (entry?.intersectionRatio ?? 0) > .01; sync(); }, { threshold: .01 });
   intersection.observe(hero);
   const settings = new MutationObserver(sync);
-  settings.observe(document.body, { attributes: true, attributeFilter: ["data-time", "data-motion", "data-transparency", "data-hero-mercury", "data-hero-veil", "data-veil-width", "data-veil-strength", "data-veil-spread", "data-sky-video"] });
+  settings.observe(document.body, { attributes: true, attributeFilter: ["data-time", "data-motion", "data-transparency", "data-hero-mercury", "data-hero-veil", "data-veil-width", "data-veil-strength", "data-veil-spread", "data-mercury-strength", "data-mercury-scale", "data-mercury-speed", "data-sky-video"] });
   document.addEventListener("visibilitychange", sync, options);
   for (const media of [reduced, contrast, transparency]) media.addEventListener("change", sync, options);
   hero.addEventListener("pointermove", event => {

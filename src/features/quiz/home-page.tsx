@@ -1,16 +1,21 @@
+import { lazy, Suspense } from "react";
 import { Link, useLoaderData, useLocation, useSearchParams } from "react-router-dom";
 import { GlassPanel } from "../../components/glass/GlassPanel";
 import { GlassArrow } from "../../components/glass/GlassArrow";
 import { useGlass } from "../../components/glass/useGlass";
 import { HeroEffects } from "../../components/sky/HeroEffects";
 import { RecentArchive } from "../archive/RecentArchive";
-import { Component as PublicQuiz, PublicQuizContent } from "./public-page";
+import { QuizLoading } from "./QuizLoading";
 import type { QuizLoadResult } from "./public-loader";
+
+// The landing page does not need the puzzle editor, submission UI or its CSS.
+const PublicQuiz = lazy(() => import("./public-page").then(module => ({ default: module.Component })));
+const PublicQuizContent = lazy(() => import("./public-page").then(module => ({ default: module.PublicQuizContent })));
 
 export function Component() {
   const [params] = useSearchParams();
   // Existing shared /?level= links still open the same quiz and saved draft.
-  return params.has("level") ? <PublicQuiz /> : <HomeContent />;
+  return params.has("level") ? <Suspense fallback={<QuizLoading />}><PublicQuiz /></Suspense> : <HomeContent />;
 }
 
 function HomeContent() {
@@ -34,7 +39,7 @@ function HomeContent() {
         {quiz.sermon.summary && <p className="weekly-summary">{quiz.sermon.summary.text.length > 150 ? `${quiz.sermon.summary.text.slice(0, 150)}…` : quiz.sermon.summary.text}</p>}
         <div className="difficulty-links">{(["child", "adult"] as const).filter(level => quiz.availableDifficulties.includes(level)).map((level, index) => <Link key={level} to={`/quiz/${quiz.slug}?level=${level}`}><span className="difficulty-number">0{index + 1}</span><span><strong>{level === "child" ? "어린이 퀴즈" : "장년 퀴즈"}</strong><small>{level === "child" ? "쉽고 친근한 단서로 시작해요" : "말씀을 한 번 더 깊이 생각해요"}</small></span><GlassArrow /></Link>)}</div>
         {quiz.sermon.summary && <p className="summary-disclosure">{quiz.sermon.summary.disclosure}</p>}
-      </GlassPanel> : <GlassPanel as="div" className="weekly-sheet"><PublicQuizContent /></GlassPanel>}
+      </GlassPanel> : <GlassPanel as="div" className="weekly-sheet"><Suspense fallback={<QuizLoading />}><PublicQuizContent /></Suspense></GlassPanel>}
     </section>
     <RecentArchive landing />
   </div>;
