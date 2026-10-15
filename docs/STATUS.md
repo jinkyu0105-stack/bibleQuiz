@@ -6,7 +6,7 @@
 
 Chromium 관련44대상은 최종42통과/2실패 뒤 준비 조건을 고친 재검사8건 모두 통과. iPhone 설정 WebKit 핵심8건 확인; 영상 켠 첫 로딩2건은 시간초과 실패로 남는다. 실제 영상 켠 네 시간대×5크기20상태에서 넘침/오류/별 이동0. lint/typecheck/build 통과. 실제 iPhone의 복귀 현상을 자동 환경에서 그대로 재현한 것은 아니므로 기기 재확인이 필요하다. 2026-10-16 푸시 전 전체 `pnpm check` 2,552건·lint/typecheck/build 통과. 전체 브라우저 검사는 원격 CI에서 진행 중이다.
 
-사용자의 명시적 push 요청으로 기능 소스 `d80b80eac8cbdd0f89237ce299188db19b0c2f37`를 main에 push하고 원격 해시 일치를 확인했다. Preview 자동 배포와 CI38763709735는 진행 중이며 배포 완료로 보고하지 않는다. 직전 Preview851e4dc/version04d70dfd 기록은 보존한다. 실제 자료·AI·원격 설정·Production은 변경하지 않았다.
+사용자의 명시적 push 요청으로 기능 소스 `d80b80eac8cbdd0f89237ce299188db19b0c2f37`를 main에 push하고 원격 해시 일치를 확인했다. Preview 자동 배포는 main a403d7f/version5598f5e5의100%·2026-10-16 00:56:20KST 반영을 확인했다. CI38763709735의 전체 결과는 별도 확인 대상이다. 직전 Preview851e4dc/version04d70dfd 기록은 보존한다. 실제 자료·AI·원격 설정·Production은 변경하지 않았다.
 
 **현재 P9-25 후속 main 반영 완료 · 부모 모바일 보정 실기기 재확인 대기 · 다음 Preview 자동 배포 결과/사용자 iPhone 확인 · 세션 유지 · 추천 GPT-6.1-sol/medium** — 한정된 터치 피드백 확인에 적합하다.
 

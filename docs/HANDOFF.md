@@ -13,7 +13,7 @@
 
 ## Git·다음 범위
 
-2026-10-16 사용자 “깃 푸시 하세요” 승인으로 기능 소스 `d80b80eac8cbdd0f89237ce299188db19b0c2f37`를 main에 push했고 원격 해시 일치를 확인했다. 시작/푸시 직전 worktree clean. 검사 로그 `/tmp/biblequiz-push-check.log`, exit0. 원격 CI38763709735의 validate/browser는 진행 중이다. Preview 자동 배포의 새 version은 아직 확인하지 않았으며 완료로 보고하지 않는다. 직전 원격851e4dc/Preview04d70dfd 기록은 `.wrangler/releases/p9-25-loading/final-deployment-proof.json`에 보존한다. [폰 Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/). 실제 자료·AI·원격 설정·Production7aea6843은 변경하지 않았다. 이 결과 문서 커밋은 기능 변경 없이 별도로 push한다. 다음은 자동 배포/원격 CI 결과 확인과 사용자 실제 iPhone 재확인이다.
+2026-10-16 사용자 “깃 푸시 하세요” 승인으로 기능 소스 `d80b80eac8cbdd0f89237ce299188db19b0c2f37`를 main에 push했고 원격 해시 일치를 확인했다. 시작/푸시 직전 worktree clean. 검사 로그 `/tmp/biblequiz-push-check.log`, exit0. 원격 CI38763709735의 validate/browser는 진행 중이다. 2026-10-16 00:56:20KST 확인: main a403d7f의 Workers Builds bd16892f-096e-4f2f-bf2c-5fe0a61d0df7 success, Preview version5598f5e5-3f1a-44ac-aa83-1221189fb8b7의100% 배포를 deployments API와 대조했다. push 직후에는 이전04d70dfd가 유지됐고 이후 빌드가 시작됐다. 상세 Builds API403으로 지연의 내부 원인은 확정하지 못했다. 배포 결과 기록만 로컬 커밋하며 불필요한 재배포 push는 하지 않는다. 실제 iPhone 재확인은 남는다. 직전 원격851e4dc/Preview04d70dfd 기록은 `.wrangler/releases/p9-25-loading/final-deployment-proof.json`에 보존한다. [폰 Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/). 실제 자료·AI·원격 설정·Production7aea6843은 변경하지 않았다. 이 결과 문서 커밋은 기능 변경 없이 별도로 push한다. 다음은 자동 배포/원격 CI 결과 확인과 사용자 실제 iPhone 재확인이다.
 
 ## 실행 환경
 
