@@ -80,7 +80,7 @@ for (const choice of choices) test(`${choice.kind} renders adjustable pixels and
     let alpha = 0, hash = 2166136261;
     for (let i = 0; i < pixels.length; i++) { hash = Math.imul(hash ^ pixels[i]!, 16777619); if (i % 4 === 3) alpha += pixels[i]!; }
     const uniform = gl.getUniform(program, gl.getUniformLocation(program, name));
-    return { hash, alpha, time: typeof uniform === "number" ? uniform : uniform[2] as number, error: gl.getError() };
+    return { hash, alpha, elapsed: Number(c.dataset.time), time: typeof uniform === "number" ? uniform : uniform[2] as number, error: gl.getError() };
   }, choice.uniform);
   const speed = page.getByRole("slider", { name: "흐름 속도", exact: true });
   await speed.focus(); await speed.press("Home");
@@ -101,6 +101,14 @@ for (const choice of choices) test(`${choice.kind} renders adjustable pixels and
   await scale.press("End"); await expect.poll(async () => (await sample()).hash).not.toBe(small.hash);
   await speed.focus(); await speed.press("End");
   const moving = await sample(); await expect.poll(async () => (await sample()).hash).not.toBe(moving.hash);
+  if (choice.kind === "veil") {
+    // Check the actual renderer clock: the former 2x ceiling looked static.
+    // A full-speed slider must now advance at least 12 animation seconds per
+    // active render second, independently of a slow CI machine's frame rate.
+    await expect.poll(async () => (await sample()).elapsed - moving.elapsed).toBeGreaterThan(.12);
+    const fast = await sample();
+    expect((fast.time - moving.time) / (fast.elapsed - moving.elapsed)).toBeGreaterThan(12);
+  }
   await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
   await page.locator("#motion").click(); await expect(canvas).toHaveAttribute("data-state", "paused");
   const stopped = await sample(); await page.waitForTimeout(160); expect((await sample()).hash).toBe(stopped.hash);

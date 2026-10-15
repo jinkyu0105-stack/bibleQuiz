@@ -108,41 +108,57 @@ float flowEdge() {
   return smoothstep(0., .06, vUv.x) * smoothstep(0., .06, 1. - vUv.x)
     * smoothstep(0., .16, vUv.y) * smoothstep(0., .1, 1. - vUv.y);
 }
+// Advected multi-scale density: broad folds break into drifting wisps rather
+// than remaining smooth sine bands. Fine structure follows the same flow.
+float turbulence(vec2 p) {
+  return noise(p) * .57 + noise(p * 2.07 + 7.3) * .28
+    + noise(p * 4.13 - 5.8) * .15;
+}
 vec4 silk() {
-  float t = uSilkSettings.z * .16;
-  vec2 p = (vUv - .5) * vec2(uResolution.x / uResolution.y, 1.);
+  float t = uSilkSettings.z * .42;
+  // Keep the full fold visible on portrait screens instead of a flat crop.
+  vec2 p = (vUv - .5) * vec2(max(1.25, uResolution.x / uResolution.y), 1.);
   p /= mix(.65, 1.65, uSilkSettings.y);
-  vec2 drift = vec2(p.x - t, p.y);
-  float warp = noise(drift * vec2(1.3, 3.)) - .5;
-  float fold = p.y * 18. - p.x * 1.4 + warp * 2.8
-    + sin(p.x * 1.4 - t * .6) * .6;
-  float crest = pow(.5 + .5 * sin(fold), 3.);
-  float filament = noise(drift * vec2(2.2, 32.) + warp);
-  float sheen = crest * (.65 + filament * .35);
-  float shadow = pow(.5 + .5 * sin(fold + 1.8), 2.);
-  float center = mix(.65, 1., smoothstep(.1, .45, length(vUv - vec2(.5, .55))));
-  float grain = (hash(gl_FragCoord.xy) - .5) * .05;
-  float alpha = clamp((sheen * .75 + shadow * .18 + grain * sheen) * uSilkSettings.x * 1.65, 0., .72) * flowEdge() * center;
-  vec3 color = mix(uTint * .24, uTint, smoothstep(.03, .58, sheen));
+  vec2 drift = vec2(p.x * 1.6 - t, p.y * 4.4);
+  float curl = turbulence(drift * .75 + vec2(0., t * .13)) - .5;
+  float ripple = turbulence(drift * vec2(1.1, 2.8) + curl * 2.2) - .5;
+  float fold = p.y * 19. + curl * 5.8 + ripple * 1.7 - p.x * .8;
+  float crest = pow(.5 + .5 * sin(fold), 2.6);
+  float fibers = turbulence(vec2(drift.x * 2.2, drift.y * 9. + curl * 8.));
+  float fray = turbulence(drift * vec2(2.8, 5.5) + vec2(-t * .55, curl * 4.));
+  // Density erodes unevenly and leaves small translucent trails outside folds.
+  float body = crest * smoothstep(.12, .78, fibers + fray * .23);
+  float wisps = pow(smoothstep(.32, .85, fibers), 2.)
+    * (.35 + .65 * crest) * smoothstep(.15, .8, fray);
+  float grain = mix(.86, 1.12, hash(gl_FragCoord.xy + floor(t * 13.)));
+  float density = (body * .9 + wisps * .5) * grain;
+  float alpha = min(.78, density * uSilkSettings.x * 2.5) * flowEdge();
+  vec3 color = mix(uTint * .48, uTint, smoothstep(.03, .55, density));
   return vec4(color * alpha, alpha);
 }
 vec4 aurora() {
-  float t = uAuroraSettings.z * .18;
-  float aspect = uResolution.x / uResolution.y;
-  vec2 p = vec2((vUv.x - .54) * aspect / mix(.22, .85, uAuroraSettings.y), vUv.y);
-  // Features translate up, with layered, irregular folds wrapping the column.
-  float rise = p.y * 3.2 - t;
-  float warp = noise(vec2(p.x * 1.4, rise)) - .5;
-  float center = sin(rise * 1.7) * .14 + warp * .32;
-  float envelope = exp(-pow((p.x - center) * 1.7, 2.));
-  float fold = p.x * 12. + warp * 6. + sin(rise * 2.1 + p.x * 1.2) * 1.7;
-  float veil = pow(.5 + .5 * sin(fold), 3.);
-  float detail = noise(vec2(p.x * 5. + warp, rise * 2.4));
-  float glow = envelope * (.15 + veil * .65) * (.35 + detail * .8);
-  float grain = (hash(gl_FragCoord.xy) - .5) * .025;
-  float title = mix(.7, 1., smoothstep(.08, .4, length(vUv - vec2(.5, .55))));
-  float alpha = clamp((glow + grain * glow) * uAuroraSettings.x * 3.0, 0., .72) * flowEdge() * title;
-  vec3 color = mix(uAuroraTint, uTint, smoothstep(.35, .9, veil * detail));
+  float t = uAuroraSettings.z * .38;
+  float aspect = max(1.1, uResolution.x / uResolution.y);
+  vec2 p = vec2((vUv.x - .53) * aspect / mix(.25, .94, uAuroraSettings.y), vUv.y);
+  float rise = p.y * 3.6 - t;
+  float turn = turbulence(vec2(p.x * 1.2, rise * .8)) - .5;
+  float center = sin(rise * 1.3) * .16 + turn * .7;
+  float billow = turbulence(vec2(p.x * 2.2 + turn * 2., rise * 1.5));
+  // The plume opens and disperses as it rises; the envelope is not a fixed tube.
+  float width = .28 + p.y * .2 + billow * .48;
+  float envelope = exp(-pow((p.x - center) / width, 2.) * 1.5);
+  float strands = turbulence(vec2((p.x - center) * 12. + turn * 6., rise * 1.7));
+  float breakup = turbulence(vec2(p.x * 7. + turn * 4., rise * 3.1 - t * .35));
+  float ribbon = pow(smoothstep(.23, .84, strands), 1.5);
+  float core = envelope * ribbon * smoothstep(.12, .78, billow + breakup * .2);
+  float halo = exp(-pow((p.x - center) / (width * 1.7), 2.) * 1.3)
+    * pow(smoothstep(.34, .86, breakup), 2.) * .32;
+  float grain = mix(.86, 1.12, hash(gl_FragCoord.xy + floor(t * 11.)));
+  float density = (core * 1.2 + halo) * grain;
+  float alpha = min(.78, density * uAuroraSettings.x * 3.4) * flowEdge();
+  vec3 lowerTint = min(vec3(1.), uAuroraTint * vec3(1.55, 1.05, 1.));
+  vec3 hue = mix(lowerTint, uAuroraTint, smoothstep(.1, .85, vUv.y));
+  vec3 color = mix(hue, uTint, smoothstep(.38, .9, density) * .65);
   return vec4(color * alpha, alpha);
 }
 void main() {
@@ -241,7 +257,11 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
       // Integrate speed rather than multiplying elapsed time: changing the
       // slider must not jump the reflection to another point in its animation.
       mercuryTime += dt * mercurySettings.speed / 50;
-      veilTime += dt * veilSettings.speed / 50;
+      // Preserve the old lower half, then open a useful fast range. At 100%
+      // the rays run 16x baseline (8x the former maximum), without phase jumps.
+      const raySpeed = veilSettings.speed <= 50 ? veilSettings.speed / 50
+        : 1 + 15 * Math.pow((veilSettings.speed - 50) / 50, 1.35);
+      veilTime += dt * raySpeed;
       silkTime += dt * silkSettings.speed / 50;
       auroraTime += dt * auroraSettings.speed / 50;
       const ease = 1 - Math.exp(-dt * 4);
