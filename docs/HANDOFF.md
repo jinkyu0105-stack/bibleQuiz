@@ -2,7 +2,7 @@
 
 ## 현재 작업과 Git
 
-**P9-23 메인 효과 조작·작은 목록·스크롤 — 로컬 검증 완료, Preview 반영 준비.** 실제 /home/onegem/work/bibleQuiz의 main/origin5f13983·clean에서 시작했다. 현재 변경은 이번 요청 범위이며 관련 없는 변경은 없었다. 정확한 커밋/상태는 git status --short·git log -3·git rev-list --left-right --count origin/main...HEAD로 확인한다. 사용자의 앞선 main push 승인은 Preview 자동 반영만 포함하며 Production/원격 자료/AI/migration은 제외한다.
+**P9-23 메인 효과 조작·작은 목록·스크롤 — 검수·푸시·Preview 반영 완료.** 실제 /home/onegem/work/bibleQuiz의 main/origin5f13983·clean에서 시작했다. 검증한 기능 소스는 **c677d9319c410646c5305514d5a3dd6e88136e37**이며 main에 push했다. 결과만 기록하는 후속 문서 커밋은 이 기능 소스와 구별한다. 관련 없는 변경은 없었다. 정확한 커밋/상태는 git status --short·git log -3·git rev-list --left-right --count origin/main...HEAD로 확인한다. 사용자의 앞선 main push 승인은 Preview 자동 반영만 포함하며 Production/원격 자료/AI/migration은 제외한다.
 
 ## 구현과 코드 진입점
 
@@ -13,15 +13,17 @@
 
 ## 확정 검사와 한계
 
-`pnpm check`2548건·lint/typecheck/build/구성 검사 통과. 관련 PC/모바일39항목 통과·PC전용1항목 모바일 제외, Firefox14항목 통과이며 초기 실패2건의 단독 재검사를 포함한다. 최초 실행은 Chromium38통과/1실패/1제외, Firefox13통과/1실패다. Chromium의 Router 임시 위치 관측은 실제 도착/이동 종료 대기로 보정했다. Firefox의 종료값 관측 실패는 동일 코드의 단독 trace 검사에서 통과했으며 최초 전체 성공으로 보고하지 않는다. 원격 전체CI는 별도로 확인한다.
+`pnpm check`2548건·lint/typecheck/build/구성 검사 통과. 관련 PC/모바일39항목 통과·PC전용1항목 모바일 제외, Firefox14항목 통과이며 초기 실패2건의 단독 재검사를 포함한다. 최초 실행은 Chromium38통과/1실패/1제외, Firefox13통과/1실패다. Chromium의 Router 임시 위치 관측은 실제 도착/이동 종료 대기로 보정했다. Firefox의 종료값 관측 실패는 동일 코드의 단독 trace 검사에서 통과했고, 후속 전체14항목도1.4분에 재시도 없이 통과했다(home-followup-firefox-final.log). 최초 전체 실행의 실패 기록과 구별한다. [원격 전체CI38673298137](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/38673298137)는 최종 success다. 같은 소스의 pnpm check2548건·PC/모바일284통과·조건4제외·실패/재시도0(17.5분)을 확인했다. home-ci-{validate,browser}.log가 최종 근거다.
 
 실제5173에서 네 시간대×1440/390/320px의 제어판/목록24장·말풍선3장, 넘침/pageerror/쓰기API0을 확인했다. 소프트웨어 GPU의 같은 스크롤에서 평균 프레임 간격3회 중앙값191→84ms였으나 실기기 보장은 아니다. Lighthouse 모바일 성능28/접근성100·LCP7.9초/TBT6110ms로 초기 효과의 부담은 남는다. 실기기·Safari·화면 읽기 프로그램·Access 로그인 뒤 원격 저장은 미검증이다. 기존 fontkit 큰 청크/선명하게 이름 진단은 범위 밖이다.
 
 근거는 ignored .wrangler/releases/p9-23/home-*의 로그/JSON/trace/PNG다. 마지막 전체check의 소스와 후속 문서만의 변경을 구별한다. 임시4187은 종료했으며5173과 .wrangler/ui-demo-state를 보존했다.
 
-## 현재 Preview와 다음 동작
+## 검증한 기능 Preview와 후속 문서
 
-푸시 전 Preview는 **5a00bd79-65ac-41d9-816b-5ccfe8739b7d**·100%·2026-10-15 10:29:16KST이며 소스5f13983이다. Production app은 **7aea6843-5288-42da-9bef-bc673e1d9dfe**·100% 그대로임을 읽기 전용으로 확인했다. 다음은 검토한 파일만 stage/로컬 커밋하고 main push 후 정확한 소스/CI/Workers Builds/version을 대조하는 것이다. 원격 자료·Secret/Access·migration은 바꾸지 않는다.
+소스 **c677d9319c410646c5305514d5a3dd6e88136e37**의 main push와 Workers Builds **61f5a323-fb48-4f5c-8259-75c25f9a735f** success를 확인했다. GitHub check가 이 SHA와 Preview version **7ab44205-1f1b-4af3-9afb-9eb2d51aac91**을 명시하며, 실제 deployment **bbda167c-aabb-4de4-9402-8fdd0720a312**·100%·2026-10-15 **11:53:54KST**, 이전 바인딩16개 동일을 대조했다. 근거는 home-preview-{build-proof,proof}.json이다. Builds 목록 커넥터12004 대신 GitHub check의 명시적 소스/버전 연결을 사용했다. Preview 요청은Access302이며 원격UI 저장 검증은 아니다.
+
+결과만 담는 문서3개는 git diff --check·링크/사실 대조 후 별도 커밋/push한다. 앱/검사/워크플로가 c677d93과 동일함을 확인하고 이 문서 커밋에만 [skip actions]를 사용한다. Cloudflare 자동 빌드는 유지하며 문서 push의 실제 소스/버전 결과는 ignored home-docs-push-proof.json에서 확인한다. 이를 기능 소스에서 실행한 전체 검사와 혼동하지 않는다. Production app **7aea6843-5288-42da-9bef-bc673e1d9dfe**·100%와 Preview AI_GENERATION_ENABLED=false를 반영 뒤 확인했다. 원격 자료·Secret/Access·migration은 바꾸지 않았다.
 
 ## 실행과 화면 확인
 
@@ -34,4 +36,4 @@
 
 폐기한 접근: 홈 제거를 이유로 공개 API/자료 삭제, 원형 링크에 새 무거운 굴절 인스턴스 추가, 선명 모드를 강제 켜서 해결, 스크롤마다 같은 DOM 속성 쓰기, 짧은 스크롤 측정을 실기기 FPS 보장으로 표현하기.
 
-**현재 P9-23 로컬 검증 완료 · 부모 메인 후속 보정의 Preview 반영 준비 · 다음 main push/원격 검증 · 세션 유지 · 다음 추천 GPT-6.1-sol/high** — 소스와 검사/배포 결과를 함께 확인한다.
+**현재 P9-23 완료 · 부모 메인 후속 보정/Preview 반영 완료 · 다음 사용자 실제 화면 피드백 · 세션 유지 · 다음 추천 GPT-6.1-sol/medium** — 한정된 화면 보정과 관련 검수에 적합하다.
