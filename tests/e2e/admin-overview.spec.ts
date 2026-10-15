@@ -1,10 +1,11 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { expect, test } from "@playwright/test";
 import { mockOverview, overview } from "../fixtures/admin-overview";
 
 test("quiz manager shows the actual automatic home quiz and separates editing, published and archived records",async({page},info)=>{
  const writes=await mockOverview(page);
  await page.goto("/admin");
- await page.getByRole("button",{name:"낮",exact:true}).click();
+ await selectSkyTime(page, "낮");
  const library=page.getByRole("region",{name:"퀴즈 목록 4"});
  await expect(library.getByRole("article")).toHaveCount(4);
  await expect(page.locator('section[aria-labelledby="home-quiz-heading"]').getByText("자동 선택",{exact:false})).toBeVisible();
@@ -24,7 +25,7 @@ test("quiz manager shows the actual automatic home quiz and separates editing, p
  await page.getByRole("searchbox",{name:"퀴즈 검색"}).fill("");
  await page.getByRole("group",{name:"퀴즈 상태"}).getByRole("button",{name:/전체/}).click();
  await page.locator(".admin-main").screenshot({path:info.outputPath("manager-filled.png")});
- await page.getByRole("button",{name:"밤",exact:true}).click();
+ await selectSkyTime(page, "밤");
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.locator(".admin-main").screenshot({path:info.outputPath("manager-night.png")});
  await page.emulateMedia({reducedMotion:"reduce",forcedColors:"active"});

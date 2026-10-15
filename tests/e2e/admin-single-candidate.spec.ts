@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import type { AdminContentView } from "../../shared/api/admin-content-generation";
@@ -76,10 +77,10 @@ test("select one answer and clue, recover the same request, compare and adopt wh
   await expect(replacement.getByLabel("배치에 사용할지 선택").nth(0)).toHaveValue("locked");
   await expect(replacement.getByLabel("배치에 사용할지 선택").nth(1)).toHaveValue("excluded");
   expect(view.content.state === "present" && view.content.child?.id).toBe("child");
-  await page.getByRole("button", { name: "밤", exact: true }).click();
+  await selectSkyTime(page, "밤");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await comparison.screenshot({ path: `/tmp/p5-56-${testInfo.project.name}-dark.png` });
-  await page.getByRole("button", { name: "낮", exact: true }).click();
+  await selectSkyTime(page, "낮");
   await comparison.screenshot({ path: `/tmp/p5-56-${testInfo.project.name}-light.png` });
   await replacement.getByRole("button", { name: "이 자료 선택" }).click();
   await expect(replacement.getByRole("button", { name: "이 내용 검수 완료", exact: true })).toBeDisabled();

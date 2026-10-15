@@ -1,3 +1,4 @@
+import { openSkySettings, selectSkyTime } from "./sky-control-helpers";
 import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
@@ -20,7 +21,7 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
   await page.goto("/quiz/2026-08-31-test01?level=child");
   const solution = page.getByRole("button", { name: "정답보기", exact: true });
   await expect(solution).toHaveAttribute("aria-disabled", "false");
-  await page.getByRole("button", { name: "낮", exact: true }).click();
+  await selectSkyTime(page, "낮");
   await page.goto("/admin");
   const refresh = page.getByRole("button", { name: "운영 상태 새로고침", exact: true });
   await expect(refresh).toBeEnabled();
@@ -100,8 +101,9 @@ test("admin menus group tasks, use a flat moving highlight and use compact share
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
   await page.goto("/admin/operations");
-  await page.getByRole("button", { name: "밤", exact: true }).click();
+  await selectSkyTime(page, "밤");
   await expect(page.locator(".admin-main button.secondary-button").first()).toHaveCSS("color", "rgb(172, 200, 255)");
+  await openSkySettings(page);
   await page.getByRole("button", { name: "투명도 줄이기", exact: true }).click();
   expect(await page.locator(".admin-main button.secondary-button").first().evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
   await page.setViewportSize({ width: 320, height: 740 });
@@ -133,7 +135,7 @@ test("manual topics and app navigation share selection feedback while keeping th
     const selection = nav.locator('[data-admin-menu-selection]');
     const appSelection = page.getByRole('navigation', {name:'관리자 운영 메뉴'}).locator('[data-admin-menu-selection]');
     for (const time of ['낮','밤']) {
-      await page.getByRole('button', {name:time,exact:true}).click();
+      await selectSkyTime(page, time);
       for (const property of ['background-color','border-radius','box-shadow']) {
         await expect(selection).toHaveCSS(property,await appSelection.evaluate((n,p)=>getComputedStyle(n).getPropertyValue(p),property));
       }

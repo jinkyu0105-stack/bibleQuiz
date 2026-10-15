@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { expect, test, type Page } from "@playwright/test";
 import type { ArchiveItem } from "../../shared/api/archive";
 import { publicResponse } from "../fixtures/public-response";
@@ -120,7 +121,7 @@ test("main shows recent3, explicit difficulty links, and responsive archive in b
   await expect(cards(page).nth(1).getByRole("link", { name: /^장년용/ })).toHaveCount(0);
   await expect(cards(page).first().getByRole("link", { name: /^어린이용/ })).toHaveAttribute("href", "/quiz/2026-08-30-000026?level=child");
   for (const theme of ["light", "dark"]) {
-    await page.getByRole("button", { name: (theme) === "dark" ? "밤" : "낮", exact: true }).click();
+    await selectSkyTime(page, (theme) === "dark" ? "밤" : "낮");
     for (const width of [320, 768, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

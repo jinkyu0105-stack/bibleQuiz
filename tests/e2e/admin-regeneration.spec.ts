@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 const hash = "a".repeat(64);
@@ -84,10 +85,10 @@ test("administrator explicitly regenerates one scope, recovers a lost response a
   await expect(region.getByLabel("개별 재생성 비용과 무료 대안을 확인했습니다.")).not.toBeChecked();
   await expect(region.getByLabel("재생성 범위")).toBeEnabled();
   expect(requests).toHaveLength(3);
-  await page.getByRole("button", { name: "밤", exact: true }).click();
+  await selectSkyTime(page, "밤");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await region.screenshot({ path: `/tmp/p5-53-${testInfo.project.name}-dark.png` });
-  await page.getByRole("button", { name: "낮", exact: true }).click();
+  await selectSkyTime(page, "낮");
   await region.screenshot({ path: `/tmp/p5-53-${testInfo.project.name}-light.png` });
 });
 

@@ -238,12 +238,14 @@ footer { margin-top: 32px; font-size: .75rem; }
 @media (max-width: 767px) { .sermon-meta { display: grid; } .difficulty-tabs { display: flex; } .difficulty-tabs button { flex: 1; min-width: 0; } }
 @media (prefers-reduced-motion: no-preference) { button:active:not(:disabled) { transform: translateY(1px); } }
 
-.quiz-loading { padding-block: 32px; }
-.loading-title, .loading-meta, .loading-workspace > div { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
-.loading-title { width: min(100%, 36rem); height: 3rem; margin-bottom: 24px; }
-.loading-meta { width: min(100%, 50rem); height: 6rem; margin-bottom: 32px; }
-.loading-workspace { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); gap: 32px; }
-.loading-workspace > div { min-height: 18rem; }
+.quiz-loading { padding-block: 20px; font-size: 14px; }
+.quiz-loading p { margin: 0; }
+.app-loading { min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 24px; background: #e8f2f8; color: #243c50; }
+.app-loading[data-time=dawn] { background: #edf0f7; color: #414363; }
+.app-loading[data-time=dusk] { background: #f7e9df; color: #694538; }
+.app-loading[data-time=night] { background: #142338; color: #e2eaf3; }
+.app-loading-brand { margin: 0 0 12px; font-size: 24px; font-weight: 600; letter-spacing: -.04em; }
+.app-loading [role=status] { margin: 0; font-size: 13px; }
 .quiz-availability { margin-block: 24px; padding: 16px; border: 1px solid var(--border); background: var(--selection); }
 .quiz-availability p:last-child { margin-bottom: 0; }
 .summary-copy { white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -255,7 +257,6 @@ footer { margin-top: 32px; font-size: .75rem; }
 .other-open-quizzes li { border-top: 1px solid var(--border); padding-block: 24px; }
 .other-open-quizzes li > div { display: flex; flex-wrap: wrap; gap: 24px; }
 .other-open-quizzes a { display: inline-flex; align-items: center; min-height: 44px; }
-@media (max-width: 1023px) { .loading-workspace { grid-template-columns: minmax(0, 1fr); } }
 
 /* Step panels must remain hidden regardless of their grid/flex layout. */
 [hidden] { display: none !important; }

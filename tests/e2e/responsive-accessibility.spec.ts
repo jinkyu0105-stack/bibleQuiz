@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { expect, test, type Page } from '@playwright/test';
 import { participationBoardDataSchema } from '../../shared/api/participation-board';
 import { publicResponse } from '../fixtures/public-response';
@@ -80,7 +81,7 @@ for (const level of ['child', 'adult']) test(`${level} uses responsive sky sourc
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     if (width === 320 || width === 1440) {
       for (const theme of ['light', 'dark']) {
-        await page.getByRole("button", { name: (theme) === "dark" ? "밤" : "낮", exact: true }).click();
+        await selectSkyTime(page, (theme) === "dark" ? "밤" : "낮");
         await page.screenshot({ path: test.info().outputPath(`hero-${level}-${width}-${theme}.png`), fullPage: true });
       }
     }
@@ -106,7 +107,7 @@ test('public forms and archive reflow at 320px and equivalent doubled CSS text s
 test('actual control and focus colors meet non-text contrast in both themes', async ({ page }) => {
   await page.goto('/dev/quiz?level=child');
   for (const theme of ['light', 'dark']) {
-    await page.getByRole("button", { name: (theme) === "dark" ? "밤" : "낮", exact: true }).click();
+    await selectSkyTime(page, (theme) === "dark" ? "밤" : "낮");
     const ratios = await page.evaluate(() => {
       const css = getComputedStyle(document.documentElement);
       const light = (name: string) => {

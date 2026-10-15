@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import {expect,test} from '@playwright/test';
 import {serviceIds,pricingVersion} from '../../src/config/service-registry';
 const at='2026-10-01T00:00:00.000Z';
@@ -80,7 +81,7 @@ test('manual formats reading cues, explains services and retries only after a fa
  await expect(page.locator('code').filter({hasText:'OPENAI_API_KEY'})).toBeHidden();
  await page.locator('summary').filter({hasText:'안내문 수정일과 서버 정보'}).click();
  await expect(page.getByText(/서비스 장애를 뜻하지는 않습니다/)).toBeVisible();
- await page.getByRole('button',{name:'밤',exact:true}).click();
+ await selectSkyTime(page, '밤');
  await expect(page.locator('body')).toHaveAttribute('data-time','night');
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });

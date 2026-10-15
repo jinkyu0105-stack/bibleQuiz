@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import type { AdminContentView } from "../../shared/api/admin-content-generation";
@@ -59,7 +60,7 @@ for (const selected of [false, true]) test(`administrator publishes ${selected ?
   await launch.click();
   await dialog.getByRole("button", { name: "취소" }).click();
   expect(requests).toHaveLength(0);
-  await page.getByRole("button", { name: "밤", exact: true }).click(); await launch.click();
+  await selectSkyTime(page, "밤"); await launch.click();
   await dialog.screenshot({ path: testInfo.outputPath("publication-dark.png") });
   await dialog.getByRole("button", { name: "지금 발행", exact: true }).click();
   await expect(dialog.getByRole("status")).toContainText("같은 요청");
@@ -74,7 +75,7 @@ for (const selected of [false, true]) test(`administrator publishes ${selected ?
   await expect(done.getByText(/마감 시각/)).toContainText("2026. 9. 29.");
   await expect(page.getByRole("button", { name: "분석·비판 검토 시작" })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "지금 발행", exact: true })).toHaveCount(0);
-  await page.getByRole("button", { name: "낮", exact: true }).click();
+  await selectSkyTime(page, "낮");
   await done.screenshot({ path: testInfo.outputPath("publication-light.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });

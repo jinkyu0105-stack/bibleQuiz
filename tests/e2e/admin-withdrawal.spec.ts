@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import type { WithdrawalView } from "../../shared/api/admin-withdraw";
@@ -40,7 +41,7 @@ test("confirms withdrawal, retries a lost response exactly and restores private 
   await panel.getByText("어린이 문제·정답 보존 자료", { exact: true }).click();
   await expect(panel).toContainText("합성 단서 · 정답: 가나");
   await panel.screenshot({ path: testInfo.outputPath("withdrawal-light.png") });
-  await page.getByRole("button", { name: "밤", exact: true }).click();
+  await selectSkyTime(page, "밤");
   await panel.screenshot({ path: testInfo.outputPath("withdrawal-dark.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.reload(); await openAdminTool(page, "withdrawal"); await panel.getByLabel("공개를 취소한 퀴즈 다시 검토").selectOption("synthetic");

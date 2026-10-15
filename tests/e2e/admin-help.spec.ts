@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { expect, test } from '@playwright/test';
 import { mockAdminGuide } from './fixtures/admin-guide';
 import { adminScreenshots } from '../../src/config/admin-screenshots';
@@ -28,7 +29,7 @@ test('admin concepts work with hover, keyboard, touch and dismissal without writ
   await expect(page.getByRole('tooltip')).toBeHidden();
   await page.setViewportSize({width:320,height:740});
   for(const name of ['새벽','낮','노을','밤']) {
-    await page.getByRole('button',{name,exact:true}).click();
+    await selectSkyTime(page, name);
     await term.click();
     await expect(page.getByRole('tooltip')).toBeVisible();
     const borders=await page.getByRole('tooltip').evaluate(el=>{const s=getComputedStyle(el);return ['top','right','bottom','left'].map(side=>`${s.getPropertyValue(`border-${side}-width`)}/${s.getPropertyValue(`border-${side}-color`)}`);});
@@ -197,7 +198,7 @@ test('manual uses meaning colours, official service icons and natural Korean wra
   }
   const colours = new Map<string, string[]>();
   for (const theme of ['새벽', '낮', '노을', '밤']) {
-    await page.getByRole('button', { name: theme, exact: true }).click();
+    await selectSkyTime(page, theme);
     await choose('guide-3', '퀴즈 만들기', '');
     const current: string[] = [];
     for (const name of ['발행', '확정', '발행 완료', '설교 의도']) {

@@ -12,3 +12,13 @@ export async function openSkySettings(page: Page) {
     await expect.poll(() => popup.evaluate(node => node.getAnimations().every(animation => animation.playState === "finished"))).toBe(true);
   }
 }
+
+/** Select through the visible UI, then return to the page being inspected. */
+export async function selectSkyTime(page: Page, name: string, keepOpen = false) {
+  await openSkySettings(page);
+  await page.getByRole("button", { name, exact: true }).click();
+  if (!keepOpen && await page.evaluate(() => matchMedia("(max-width: 700px)").matches)) {
+    await page.getByRole("button", { name: "화면 설정 닫기", exact: true }).click();
+    await expect(page.getByRole("dialog", { name: "화면 설정", exact: true })).toBeHidden();
+  }
+}

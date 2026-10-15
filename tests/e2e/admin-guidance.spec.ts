@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { expect, test, type Page } from "@playwright/test";
 import { openAdminTool } from "../fixtures/admin-tools";
 
@@ -22,7 +23,7 @@ async function emptyAdmin(page: Page) {
 test("operators choose a tool by purpose and retain unfinished input when closing it", async ({ page }, info) => {
   const writes = await emptyAdmin(page);
   await page.goto("/admin/tools");
-  await page.getByRole("button", { name: "낮", exact: true }).click();
+  await selectSkyTime(page, "낮");
   await expect(page.locator("details[data-admin-tool]")).toHaveCount(6);
   await expect(page.locator("details[data-admin-tool][open]")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "퀴즈 목록으로" })).toHaveAttribute("href", "/admin");
@@ -44,7 +45,7 @@ test("operators choose a tool by purpose and retain unfinished input when closin
   await expect(field).toHaveValue("요한복음 3:16");
   await expect(page.locator("details[data-admin-tool][open]")).toHaveCount(2);
   expect(writes).toEqual([]);
-  await page.getByRole("button", { name: "밤", exact: true }).click();
+  await selectSkyTime(page, "밤");
   await bible.screenshot({ path: info.outputPath("tool-open-night.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" });

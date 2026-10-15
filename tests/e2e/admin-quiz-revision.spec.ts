@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { openAdminTool } from "../fixtures/admin-tools";
 import { expect,test } from "@playwright/test";
 import { generatePuzzle,PUZZLE_FIXTURES,serializePublicPuzzle } from "../../shared/puzzle";
@@ -59,7 +60,7 @@ test("saves, restores, compares a free layout, reviews both difficulties and ret
  await panel.getByRole("button",{name:"입력 유지",exact:true}).click();await expect(panel.getByLabel("편집 제목",{exact:true})).toHaveValue("저장 전 변경");
  await panel.getByRole("button",{name:"저장본 다시 불러오기",exact:true}).click();await panel.getByRole("button",{name:"입력 버리고 불러오기",exact:true}).click();
  await panel.screenshot({path:testInfo.outputPath("revision-light.png")});
- await page.getByRole("button", { name: "밤", exact: true }).click();await panel.screenshot({path:testInfo.outputPath("revision-dark.png")});
+ await selectSkyTime(page, "밤");await panel.screenshot({path:testInfo.outputPath("revision-dark.png")});
  await panel.getByRole("group",{name:"설교 정보와 요약",exact:true}).screenshot({path:testInfo.outputPath("revision-metadata-dark.png")});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await panel.getByRole("button",{name:"재발행 확인",exact:true}).click();

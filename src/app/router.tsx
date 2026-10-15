@@ -4,8 +4,8 @@ import {
   RootError,
   RootLayout,
 } from "./screens";
-import { loadPublicQuiz } from "../features/quiz/public-loader";
-import { QuizLoading } from "../features/quiz/QuizLoading";
+import { loadHome, loadPublicQuiz } from "../features/quiz/public-loader";
+import { AppLoading } from "./AppLoading";
 
 export const router = createBrowserRouter([
   { path: "/quiz/:slug/print", lazy: () => import("../features/export/print-page"), errorElement: <RootError />, hydrateFallbackElement: <main className="print-route"><p role="status">출력 파일을 준비하고 있어요.</p></main> },
@@ -13,9 +13,9 @@ export const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     errorElement: <RootError />,
-    hydrateFallbackElement: <div className="app-shell"><QuizLoading /></div>,
+    hydrateFallbackElement: <AppLoading />,
     children: [
-      { index: true, loader: loadPublicQuiz, lazy: () => import("../features/quiz/home-page") },
+      { index: true, loader: loadHome, lazy: () => import("../features/quiz/home-page") },
       { path: "archive", lazy: () => import("../features/archive/page") },
       { path: "quiz/:slug/export", lazy: () => import("../features/export/blank-page") },
       { path: "quiz/:slug", loader: loadPublicQuiz, lazy: () => import("../features/quiz/public-page") },

@@ -1,12 +1,12 @@
 import { lazy, Suspense } from "react";
-import { Link, useLoaderData, useLocation, useSearchParams } from "react-router-dom";
+import { Await, Link, useLoaderData, useLocation, useSearchParams } from "react-router-dom";
 import { GlassPanel } from "../../components/glass/GlassPanel";
 import { GlassArrow } from "../../components/glass/GlassArrow";
 import { useGlass } from "../../components/glass/useGlass";
 import { HeroEffects } from "../../components/sky/HeroEffects";
 import { RecentArchive } from "../archive/RecentArchive";
 import { QuizLoading } from "./QuizLoading";
-import type { QuizLoadResult } from "./public-loader";
+import type { HomeLoadResult, QuizLoadResult } from "./public-loader";
 
 // The landing page does not need the puzzle editor, submission UI or its CSS.
 const PublicQuiz = lazy(() => import("./public-page").then(module => ({ default: module.Component })));
@@ -19,11 +19,10 @@ export function Component() {
 }
 
 function HomeContent() {
-  const result = useLoaderData<QuizLoadResult>();
+  const result = useLoaderData<HomeLoadResult>();
   const cta = useGlass<HTMLAnchorElement>();
   const location = useLocation();
   const weeklyTarget = { search: location.search, hash: "#weekly" };
-  const quiz = result.state === "ready" ? result.data.quiz : null;
   return <div id="home-view">
     <section className="sky-home-hero" aria-labelledby="home-title">
       <HeroEffects />
@@ -33,14 +32,21 @@ function HomeContent() {
     </section>
     <section id="weekly" className="weekly-section" aria-labelledby="weekly-title">
       <div className="section-heading"><p className="eyebrow">이번 주 성경퀴즈</p><h2 id="weekly-title">기억에 남는 말씀,<br />함께 풀어 보세요.</h2><p>나에게 맞는 퀴즈를 고르고<br />한 칸씩, 천천히 채워 가세요.</p></div>
-      {quiz ? <GlassPanel as="div" className="weekly-sheet">
+      <Suspense fallback={<GlassPanel as="div" className="weekly-sheet"><QuizLoading /></GlassPanel>}>
+        <Await resolve={result.quiz}>{(resolved: QuizLoadResult) => <WeeklyQuiz result={resolved} />}</Await>
+      </Suspense>
+    </section>
+    <RecentArchive landing />
+  </div>;
+}
+
+function WeeklyQuiz({ result }: { result: QuizLoadResult }) {
+  const quiz = result.state === "ready" ? result.data.quiz : null;
+  return quiz ? <GlassPanel as="div" className="weekly-sheet">
         <div className="sheet-meta"><span className="status-mark">{quiz.acceptingSubmissions ? "함께 풀어요" : quiz.mode === "practice" ? "다시 풀어 보세요" : "이번 주 말씀"}</span><time dateTime={quiz.sermon.date}>{quiz.sermon.date}</time></div>
         <h3>{quiz.sermon.title}</h3><p className="weekly-reference">{quiz.sermon.bibleReferenceLabel} · {quiz.sermon.translation}</p>
         {quiz.sermon.summary && <p className="weekly-summary">{quiz.sermon.summary.text.length > 150 ? `${quiz.sermon.summary.text.slice(0, 150)}…` : quiz.sermon.summary.text}</p>}
         <div className="difficulty-links">{(["child", "adult"] as const).filter(level => quiz.availableDifficulties.includes(level)).map((level, index) => <Link key={level} to={`/quiz/${quiz.slug}?level=${level}`}><span className="difficulty-number">0{index + 1}</span><span><strong>{level === "child" ? "어린이 퀴즈" : "장년 퀴즈"}</strong><small>{level === "child" ? "쉽고 친근한 단서로 시작해요" : "말씀을 한 번 더 깊이 생각해요"}</small></span><GlassArrow /></Link>)}</div>
         {quiz.sermon.summary && <p className="summary-disclosure">{quiz.sermon.summary.disclosure}</p>}
-      </GlassPanel> : <GlassPanel as="div" className="weekly-sheet"><Suspense fallback={<QuizLoading />}><PublicQuizContent /></Suspense></GlassPanel>}
-    </section>
-    <RecentArchive landing />
-  </div>;
+      </GlassPanel> : <GlassPanel as="div" className="weekly-sheet"><Suspense fallback={<QuizLoading />}><PublicQuizContent resolvedResult={result} /></Suspense></GlassPanel>;
 }

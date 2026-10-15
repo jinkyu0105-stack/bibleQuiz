@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { expect, test, type Page } from '@playwright/test';
 import { parseBibleReference } from '../../shared/bible-reference';
 import { adminContentViewSchema, type AdminContentView } from '../../shared/api/admin-content-generation';
@@ -154,7 +155,7 @@ test('filter management registers aliases, warns before exceptions and tests tex
   await expect(page.getByText('예외는 비교를 위해 정리한 전체 문구가 정확히 같을 때만 적용됩니다. 연락처·입력 형식·보호 이름 검사는 유지됩니다.',{exact:true})).toBeVisible();
   await page.getByLabel('이 문구가 기존 금지 규칙을 건너뛰는 영향을 확인했습니다.').check();await page.getByRole('button',{name:'필터 등록',exact:true}).click();
   await page.locator('[data-admin-tool=filter-test] > summary').click();await page.getByLabel('시험 문구',{exact:true}).fill('금 지 어');await page.getByRole('button',{name:'저장 없이 시험'}).click();await expect(page.getByText('차단 · 비교에 사용한 문구: 금지어 · 적용된 규칙 번호: rule',{exact:true})).toBeVisible();expect(creates).toBe(2);expect(testCalls).toBe(1);
-  await page.getByRole("button", { name: "밤", exact: true }).click();await page.screenshot({path:`/tmp/p5-72-policy-${testInfo.project.name}.png`,fullPage:true});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await selectSkyTime(page, "밤");await page.screenshot({path:`/tmp/p5-72-policy-${testInfo.project.name}.png`,fullPage:true});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 
 test('review targets preserve a failed draft and every candidate control without triggering generation', async ({page}) => {

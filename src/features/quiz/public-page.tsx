@@ -55,8 +55,9 @@ export function Component() {
   return <><PublicQuizContent />{location.pathname === "/" && <RecentArchive />}</>;
 }
 
-export function PublicQuizContent() {
-  const result = useLoaderData<QuizLoadResult>();
+export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoadResult } = {}) {
+  const routeResult = useLoaderData<QuizLoadResult>();
+  const result = resolvedResult ?? routeResult;
   const navigation = useNavigation();
   const revalidator = useRevalidator();
   const [params, setParams] = useSearchParams();

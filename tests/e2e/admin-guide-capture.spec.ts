@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { expect, test, type Locator, type Page, type Route } from '@playwright/test';
 import { mkdirSync, readFileSync } from 'node:fs';
 import { mockAdminGuide } from './fixtures/admin-guide';
@@ -35,7 +36,7 @@ test('capture operator guide examples', async ({ page }) => {
   const emojiFont=fontPath ? readFileSync(fontPath).toString('base64') : null;
   async function open(path:string) {
     await page.goto(path);
-    await page.getByRole('button',{name:'낮',exact:true}).click();
+    await selectSkyTime(page, '낮');
     if(emojiFont) await page.addStyleTag({content:`@font-face {font-family:'Segoe UI Emoji'; src:url(data:font/ttf;base64,${emojiFont}) format('truetype');}`} );
     await page.evaluate(()=>document.fonts.ready);
   }
@@ -53,7 +54,7 @@ test('capture operator guide examples', async ({ page }) => {
   async function boardShot(id:string) {
     const board=page.locator(id==='quiz'?'.admin-layout':'.admin-main');
     await board.screenshot({path:`docs/design/phase-9/admin-boards/${id}-actual.png`,animations:'disabled'});
-    await page.getByRole('button',{name:'밤',exact:true}).click();
+    await selectSkyTime(page, '밤');
     await expect(page.locator('body')).toHaveAttribute('data-time','night');
     await board.screenshot({path:`docs/design/phase-9/admin-boards/${id}-night.png`,animations:'disabled'});
   }
@@ -66,7 +67,7 @@ test('capture operator guide examples', async ({ page }) => {
       await expect(page.getByRole('heading',{name:names[step-1],exact:true})).toBeVisible();
       if(step===5)await expect(page.getByLabel('어린이 Top N')).toHaveValue('3');
       for(const [label,time] of [['낮','actual'],['밤','night'],...(step===3?[['노을','dusk']]:[])]) {
-        await page.getByRole('button',{name:label!,exact:true}).click();
+        await selectSkyTime(page, label!);
         await page.mouse.move(0,0);await page.evaluate(()=>scrollTo(0,0));
         await page.screenshot({path:`docs/design/phase-9/admin-workspace/step-${step}-${time}.png`,animations:'disabled'});
       }
@@ -75,12 +76,12 @@ test('capture operator guide examples', async ({ page }) => {
     await page.locator('[data-admin-tool=quiz-metadata] > summary').click();
     await expect(page.getByRole('textbox',{name:'설교 제목',exact:true})).toHaveValue('함께 걷는 기쁨 · 연습');
     for(const [label,time] of [['낮','actual'],['밤','night'],['노을','dusk']]) {
-      await page.getByRole('button',{name:label!,exact:true}).click();
+      await selectSkyTime(page, label!);
       await page.mouse.move(0,0);await page.evaluate(()=>scrollTo(0,0));
       await page.screenshot({path:`docs/design/phase-9/admin-workspace/settings-${time}.png`,animations:'disabled'});
     }
     await open('/admin/manual');
-    await page.getByRole('button',{name:'노을',exact:true}).click();
+    await selectSkyTime(page, '노을');
     await expect(page.locator('[data-admin-sheet]')).toBeVisible();
     await page.mouse.move(0,0);await page.evaluate(()=>scrollTo(0,0));
     await page.screenshot({path:'docs/design/phase-9/admin-workspace/manual-dusk.png',animations:'disabled'});
@@ -105,9 +106,9 @@ test('capture operator guide examples', async ({ page }) => {
       await page.screenshot({path:`docs/design/phase-9/manual-reader/${file}.png`,animations:'disabled'});
     }
     await readerShot('layered-actual');
-    await page.getByRole('button',{name:'밤',exact:true}).click();
+    await selectSkyTime(page, '밤');
     await readerShot('layered-night');
-    await page.getByRole('button',{name:'낮',exact:true}).click();
+    await selectSkyTime(page, '낮');
     const topics=page.getByRole('navigation',{name:'매뉴얼 주제'});
     await topics.locator('summary').filter({hasText:'서비스 사전'}).click();
     await topics.getByRole('button',{name:'OpenAI API',exact:true}).click();
@@ -125,7 +126,7 @@ test('capture operator guide examples', async ({ page }) => {
       }
       if(name==='operations') await expect(page.locator('#operations-title + dl dd').last()).not.toHaveText('미확인');
       for(const [label,time] of [['낮','actual'],['밤','night']]) {
-        await page.getByRole('button',{name:label!,exact:true}).click();
+        await selectSkyTime(page, label!);
         await page.mouse.move(0,0);
         await page.evaluate(()=>{if(document.activeElement instanceof HTMLElement)document.activeElement.blur();scrollTo(0,0);});
         await page.screenshot({path:`docs/design/phase-9/admin-tools/${name}-${time}.png`,animations:'disabled'});

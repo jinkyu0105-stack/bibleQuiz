@@ -1,3 +1,4 @@
+import { selectSkyTime } from "./sky-control-helpers";
 import { openAdminTool } from "../fixtures/admin-tools";
 import { expect, test } from "@playwright/test";
 import type { AdminContentView } from "../../shared/api/admin-content-generation";
@@ -83,12 +84,12 @@ test("administrator compares layouts, restores choices and reviews public and an
   await expect(final.getByRole("grid", { name: "어린이 정답 격자" })).toBeVisible();
   expect(await final.getByRole("grid").first().textContent()).toContain("가");
   await panel.getByLabel("모바일 폭으로 보기").check(); await panel.getByLabel("크게 보기").check();
-  await page.getByRole("button", { name: "밤", exact: true }).click();
+  await selectSkyTime(page, "밤");
   await expect(final.getByRole("link", { name: "대한성서공회에서 읽기" })).toHaveAttribute("href", view.preview!.metadata.bibleReadingUrl);
   await expect(final.getByText(/아직 발행하지 않았습니다/)).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await final.screenshot({ path: `/tmp/p5-52-${testInfo.project.name}-dark.png` });
-  await page.getByRole("button", { name: "낮", exact: true }).click();
+  await selectSkyTime(page, "낮");
   await panel.getByLabel("모바일 폭으로 보기").uncheck(); await panel.getByLabel("크게 보기").uncheck();
   await final.screenshot({ path: `/tmp/p5-52-${testInfo.project.name}-light.png` });
   // A failed trial cannot leave its previous success selectable.

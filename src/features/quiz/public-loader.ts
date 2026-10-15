@@ -14,6 +14,15 @@ export type QuizLoadResult =
   | { state: "error"; requestId?: string };
 const errorSchema = z.object({ error: z.object({ requestId: z.uuid() }) });
 
+export type HomeLoadResult = { quiz: Promise<QuizLoadResult> };
+
+// The introduction is independent of quiz data. Keep direct solving links blocking
+// so their existing submission checks and draft restoration remain unchanged.
+export function loadHome(args: Pick<LoaderFunctionArgs, "request" | "params">) {
+  if (new URL(args.request.url).searchParams.has("level")) return loadPublicQuiz(args);
+  return { quiz: loadPublicQuiz(args) } satisfies HomeLoadResult;
+}
+
 export async function loadPublicQuiz({ request, params }: Pick<LoaderFunctionArgs, "request" | "params">): Promise<QuizLoadResult> {
   const url = new URL(request.url);
   const difficulty = url.searchParams.get("level") === "adult" ? "adult" : "child";
