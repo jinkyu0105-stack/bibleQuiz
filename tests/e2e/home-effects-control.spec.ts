@@ -1,3 +1,4 @@
+import { openSkySettings } from "./sky-control-helpers";
 import { expect, test, type Page } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
 
@@ -5,16 +6,18 @@ async function home(page: Page) {
   await page.route("**/api/quizzes/**", route => route.fulfill({ json: new URL(route.request().url()).pathname.endsWith("/me") ? { data: { submission: null } } : publicResponse("child") }));
   await page.goto("/?video=off");
   await expect(page.locator("#home-title")).toBeVisible();
+  await openSkySettings(page);
 }
 async function expand(page: Page, touch: boolean) {
-  const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
+  await openSkySettings(page);
+  const trigger = page.locator(".hero-effect-trigger");
   if (touch) await trigger.tap(); else await trigger.hover();
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
 }
 
 test("effect capsule opens without choosing an effect and preserves independent choices", async ({ page, isMobile }) => {
   await home(page);
-  const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
+  const trigger = page.locator(".hero-effect-trigger");
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
   await expand(page, isMobile);
   const reflection = page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true });
@@ -54,7 +57,7 @@ test("effect capsule opens without choosing an effect and preserves independent 
 
 test("effect disclosure supports keyboard, escape, outside dismissal and reduced motion", async ({ page, isMobile }) => {
   await home(page);
-  const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
+  const trigger = page.locator(".hero-effect-trigger");
   await trigger.focus();
   await page.keyboard.press("Enter");
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
@@ -86,6 +89,7 @@ test("effect disclosure supports keyboard, escape, outside dismissal and reduced
   await page.locator("#home-title").click();
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
   await page.emulateMedia({ reducedMotion: "reduce" });
+  await openSkySettings(page);
   await trigger.focus();
   await page.keyboard.press("ArrowDown");
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
@@ -121,7 +125,7 @@ test("light tuning supports live input, saved values, reset and returning focus"
   await page.setViewportSize({ width: isMobile ? 320 : 1280, height: isMobile ? 667 : 600 });
   await home(page);
   await expand(page, isMobile);
-  const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
+  const trigger = page.locator(".hero-effect-trigger");
   await expect(trigger).toHaveText("");
   const tune = page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true });
   await tune.click();

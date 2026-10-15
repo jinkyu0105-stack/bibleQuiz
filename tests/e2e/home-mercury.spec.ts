@@ -1,3 +1,4 @@
+import { openSkySettings } from "./sky-control-helpers";
 import { expect as baseExpect, test, type Locator, type Page } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
 
@@ -12,6 +13,7 @@ async function home(page: Page) {
   await page.route("**/api/quizzes/**", route => route.fulfill({ json: new URL(route.request().url()).pathname.endsWith("/me") ? { data: { submission: null } } : publicResponse("child") }));
   await page.goto("/?video=off");
   await expect(page.locator("#home-title")).toBeVisible();
+  await openSkySettings(page);
   return page.locator(".hero-effects");
 }
 

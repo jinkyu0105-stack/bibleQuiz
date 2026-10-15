@@ -1,3 +1,4 @@
+import { openSkySettings } from "./sky-control-helpers";
 import { expect, test } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
 
@@ -53,6 +54,7 @@ test("sky choice and clarity persist, respect reduced motion, and do not change 
   await page.clock.setFixedTime(new Date("2026-06-21T15:00:00Z"));
   await page.goto("/?video=off");
   await expect(page.locator("body")).toHaveAttribute("data-time", "night");
+  await openSkySettings(page);
   for (const [label, time] of [["새벽", "dawn"], ["낮", "day"], ["노을", "dusk"], ["밤", "night"]]) {
     await page.getByRole("button", { name: label!, exact: true }).click();
     await expect(page.locator("body")).toHaveAttribute("data-time", time!);
@@ -71,6 +73,7 @@ test("sky choice and clarity persist, respect reduced motion, and do not change 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator("body")).toHaveAttribute("data-motion", "off");
   await expect(page.locator("#motion")).toBeDisabled();
+  await openSkySettings(page);
   await page.getByRole("button", { name: "낮", exact: true }).click();
   await page.emulateMedia({ colorScheme: "light" });
   await expect(page.locator("body")).toHaveAttribute("data-time", "day");
@@ -94,6 +97,7 @@ test("selected movies pause offscreen and in reduced motion, with a readable med
   const video = page.locator(".sky-video video");
   await expect.poll(() => video.evaluate(element => (element as HTMLVideoElement).paused)).toBe(false);
   await expect(video).toHaveAttribute("src", new RegExp(isMobile ? "1080p\\.mp4$" : "4k\\.mp4$"));
+  await openSkySettings(page);
   await page.getByRole("button", { name: "밤", exact: true }).click();
   await expect(video).toHaveAttribute("src", new RegExp(isMobile ? "night-1080p\\.mp4$" : "night-4k-optimized\\.mp4$"));
   await expect.poll(() => video.evaluate(element => (element as HTMLVideoElement).readyState)).toBeGreaterThanOrEqual(2);
@@ -123,6 +127,7 @@ test("Seoul time is automatic on a fresh tab and manual choices last for the cur
   await page.clock.setFixedTime(new Date("2026-12-20T21:00:00Z")); // Winter 06:00 KST: still night.
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await expect(page.locator("body")).toHaveAttribute("data-time", "night");
+  await openSkySettings(page);
   await page.getByRole("button", { name: "노을", exact: true }).click();
   await page.clock.setFixedTime(new Date("2026-12-21T03:00:00Z"));
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
@@ -146,12 +151,14 @@ test("grass switches to the original photo and the dock links use the real pages
   await page.locator("footer").scrollIntoViewIfNeeded();
   await expect(page.locator("#origin-grass")).toHaveAttribute("data-active", "true");
   await expect(page.locator(".distant-mountains")).toBeVisible();
+  await openSkySettings(page);
   await page.getByRole("button", { name: "잔디 끄기", exact: true }).click();
   await expect(page.locator("#origin-grass")).toBeHidden();
   await expect(page.locator(".meadow")).toHaveCSS("opacity", "1");
   await expect(page.locator(".distant-mountains")).toBeHidden();
   await expect(page.locator("#grass-toggle")).toHaveText("");
   await page.reload();
+  await openSkySettings(page);
   await expect(page.getByRole("button", { name: "잔디 켜기", exact: true })).toHaveAttribute("aria-pressed", "false");
   await expect(page.locator("#grass-toggle .grass-state[data-on=false]")).toBeVisible();
   await page.locator("footer").scrollIntoViewIfNeeded();
@@ -202,6 +209,7 @@ test("home snaps to sections and its weekly anchor, short-screen buttons and foo
 test("separate clouds keep drifting while the weekly section is stationary", async ({ page }) => {
   await mockQuiz(page);
   await page.goto("/?video=off");
+  await openSkySettings(page);
   await page.getByRole("button", { name: "낮", exact: true }).click();
   await page.locator("#home-view").getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
   await expect(page.locator("#clouds")).toHaveAttribute("data-renderer", "webgl-billboards");
@@ -225,6 +233,7 @@ test("separate clouds keep drifting while the weekly section is stationary", asy
   const first = await pixels();
   expect(first.visible).toBeGreaterThan(1000);
   await expect.poll(async () => (await pixels()).hash).not.toBe(first.hash);
+  await openSkySettings(page);
   await page.getByRole("button", { name: "배경 움직임 멈춤", exact: true }).click();
   await expect(page.locator("body")).toHaveAttribute("data-motion", "off");
   const stopped = await page.locator("#clouds").getAttribute("data-time");

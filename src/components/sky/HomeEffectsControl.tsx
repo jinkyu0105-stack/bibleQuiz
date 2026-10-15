@@ -15,19 +15,18 @@ function EffectIcon({ kind }: { kind: "effects" | EffectKind }) {
     {kind === "effects" ? <><path d="m12 3 2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3Z" /><path d="M20 3v4M18 5h4" /></>
       : kind === "mercury" ? <><path d="M3 7c3-5 6 5 9 0s6 5 9 0M3 12c3-5 6 5 9 0s6 5 9 0M3 17c3-5 6 5 9 0s6 5 9 0" /></>
       : kind === "silk" ? <><path d="M3 6c6-5 12 5 18 0M3 12c6-5 12 5 18 0M3 18c6-5 12 5 18 0" /></>
-      : kind === "aurora" ? <><path d="M7 21c-5-7 9-10 5-18M12 21c8-7-5-11 3-17M17 21c5-7-4-10 2-15" /></>
       : <><path d="M12 3 3 20M12 3 8 21M12 3v18M12 3l4 18M12 3l9 17" /><path d="M10 3h4" /></>}
   </svg>;
 }
 
 /** The surface grows in place; independent toggles keep their own checked state. */
-export function HomeEffectsControl({ night = false }: { night?: boolean }) {
+export function HomeEffectsControl({ night = false, available = true }: { night?: boolean; available?: boolean }) {
   const [open, setOpen] = useState(false);
   const [tuning, setTuning] = useState<EffectKind | null>(null);
   const [mercury, setMercury] = useState(() => !readSkyFlag("mercury-hidden"));
   const [veil, setVeil] = useState(() => readSkyFlag("veil-rays"));
-  const [flows, setFlows] = useState(() => ({ silk: readSkyFlag("silk-flow"), aurora: readSkyFlag("aurora-spire") }));
-  const [flowSettings, setFlowSettings] = useState(() => ({ silk: readFlowSettings("silk"), aurora: readFlowSettings("aurora") }));
+  const [flows, setFlows] = useState(() => ({ silk: readSkyFlag("silk-flow") }));
+  const [flowSettings, setFlowSettings] = useState(() => ({ silk: readFlowSettings("silk") }));
   const [storageFailed, setStorageFailed] = useState(false);
   const [settings, setSettings] = useState(readVeilSettings);
   const [reflectionSettings, setReflectionSettings] = useState(readMercurySettings);
@@ -36,8 +35,7 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
   const raysTrigger = useRef<HTMLButtonElement>(null);
   const reflectionTrigger = useRef<HTMLButtonElement>(null);
   const silkTrigger = useRef<HTMLButtonElement>(null);
-  const auroraTrigger = useRef<HTMLButtonElement>(null);
-  const effectTriggers = { mercury: reflectionTrigger, veil: raysTrigger, silk: silkTrigger, aurora: auroraTrigger };
+  const effectTriggers = { mercury: reflectionTrigger, veil: raysTrigger, silk: silkTrigger };
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const keyboardOpen = useRef(false);
   const id = useId();
@@ -58,7 +56,7 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
     document.body.dataset.mercurySpeed = String(reflectionSettings.speed);
   }, [reflectionSettings]);
   useLayoutEffect(() => {
-    for (const kind of ["silk", "aurora"] as const) {
+    for (const kind of ["silk"] as const) {
       document.body.setAttribute(`data-hero-${kind}`, flows[kind] ? "on" : "off");
       for (const key of ["strength", "scale", "speed"] as const) {
         document.body.setAttribute(`data-${kind}-${key}`, String(flowSettings[kind][key]));
@@ -79,6 +77,9 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
     document.addEventListener("pointerdown", outside);
     return () => document.removeEventListener("pointerdown", outside);
   }, [open, id]);
+
+  // Closing the mobile settings also dismisses its nested panel; effect values stay mounted.
+  if (!available && (open || tuning)) { setOpen(false); setTuning(null); }
 
   function close(restoreFocus = false) {
     clearTimeout(closeTimer.current);
@@ -117,7 +118,7 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
       setStorageFailed(!saveSkyPreference("veil-rays", String(next)));
     } else {
       setFlows(previous => ({ ...previous, [kind]: next }));
-      setStorageFailed(!saveSkyPreference(kind === "silk" ? "silk-flow" : "aurora-spire", String(next)));
+      setStorageFailed(!saveSkyPreference("silk-flow", String(next)));
     }
   }
   function revealForPointer(event: { pointerType: string }) {
@@ -147,11 +148,11 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
     }}>
     <GlassMenu className="hero-effect-surface" role="group" aria-label="메인 배경 효과">
       <button ref={trigger} type="button" className="hero-effect-trigger" aria-label="배경 효과" aria-expanded={open}
-        aria-controls={`${id}-mercury ${id}-veil ${id}-silk ${id}-aurora`}
+        aria-controls={`${id}-mercury ${id}-veil ${id}-silk`}
         onClick={() => { clearTimeout(closeTimer.current); if (open) close(); else setOpen(true); }}>
         <EffectIcon kind="effects" />
       </button>
-        {([['mercury', '물결 반사 (Mercury)', '반사', mercury], ['veil', '빛줄기 (Veil Rays)', '빛줄기', veil], ['silk', '비단결 (Silk Flow)', '비단결', flows.silk], ['aurora', '오로라 (Aurora Spire)', '오로라', flows.aurora]] as const).map(([kind, label, short, enabled]) =>
+        {([['mercury', '물결 반사 (Mercury)', '반사', mercury], ['veil', '빛줄기 (Veil Rays)', '빛줄기', veil], ['silk', '비단결 (Silk Flow)', '비단결', flows.silk]] as const).map(([kind, label, short, enabled]) =>
           <button key={kind} id={`${id}-${kind}`} ref={effectTriggers[kind]} className="hero-effect-option" type="button" aria-label={label} aria-pressed={enabled}
             aria-expanded={tuning === kind} aria-controls={`${id}-panel`}
             aria-hidden={!open} inert={!open} onClick={() => toggle(kind)}>
@@ -168,12 +169,12 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
       description="하늘 위로 천천히 흐르는 물결 반사" settings={reflectionSettings} defaults={defaultMercurySettings} fields={[
         { key: "strength", label: "밝기", min: 10, max: 100 }, { key: "scale", label: "물결 크기", min: 0, max: 100 }, { key: "speed", label: "흐름 속도", min: 0, max: 100 },
       ]} onChange={adjustReflection} onClose={closeTuning} />, document.body)}
-    {(tuning === "silk" || tuning === "aurora") && createPortal(<EffectControls key={tuning} id={`${id}-panel`} anchor={effectTriggers[tuning]}
-      label={tuning === "silk" ? "비단결 조절" : "오로라 조절"}
-      description={tuning === "silk" ? "옆으로 부드럽게 흐르는 비단 주름" : "위로 피어오르며 감기는 빛기둥"}
+    {tuning === "silk" && createPortal(<EffectControls key={tuning} id={`${id}-panel`} anchor={effectTriggers[tuning]}
+      label={"비단결 조절"}
+      description={"옆으로 부드럽게 흐르는 비단 주름"}
       settings={flowSettings[tuning]} defaults={defaultFlowSettings[tuning]} fields={[
         { key: "strength", label: "밝기", min: 10, max: 100 },
-        { key: "scale", label: tuning === "silk" ? "주름 크기" : "기둥 너비", min: 0, max: 100 },
+        { key: "scale", label: "주름 크기", min: 0, max: 100 },
         { key: "speed", label: "흐름 속도", min: 0, max: 100 },
       ]} onChange={next => adjustFlow(tuning, next)} onClose={closeTuning} />, document.body)}
     {storageFailed && <span className="effect-storage-status" role="status">효과 설정은 이 화면에서만 유지됩니다.</span>}

@@ -1,3 +1,4 @@
+import { openSkySettings } from "./sky-control-helpers";
 import { expect, test, type Page } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
 
@@ -9,6 +10,7 @@ async function home(page: Page) {
 
 test("all three circular controls have pointer light and grass restores both ground choices", async ({ page, isMobile }) => {
   await home(page);
+  await openSkySettings(page);
   if (!isMobile) {
     for (const id of ["motion", "glass-clarity", "grass-toggle"]) {
       const control = page.locator(`#${id}`);

@@ -1,10 +1,9 @@
 import { browserStorage } from "../../lib/browser-storage";
 
-export type FlowKind = "silk" | "aurora";
+export type FlowKind = "silk";
 export type FlowSettings = { strength: number; scale: number; speed: number };
 export const defaultFlowSettings: Record<FlowKind, FlowSettings> = {
   silk: { strength: 50, scale: 50, speed: 50 },
-  aurora: { strength: 55, scale: 50, speed: 50 },
 };
 
 export function normalizeFlowSettings(kind: FlowKind, value: unknown): FlowSettings {

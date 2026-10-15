@@ -16,13 +16,14 @@ export function EffectControls<Key extends string>({ id, anchor, label, title = 
       const box = origin.getBoundingClientRect();
       const rail = origin.closest(".time-rail")?.getBoundingClientRect() ?? box;
       const mobile = window.matchMedia("(max-width: 700px)").matches;
+      const beside = mobile && innerWidth >= 560 && innerHeight <= 540;
       const menuTop = Math.min(rail.top, origin.closest(".hero-effect-surface")?.getBoundingClientRect().top ?? rail.top);
       // Four light controls must not cover the effect choices on short phones.
       // Keep the choices reachable and scroll only the controller when needed.
-      element.style.maxHeight = mobile ? `${Math.max(120, menuTop - 24)}px` : "";
+      element.style.maxHeight = mobile ? `${beside ? innerHeight - 24 : Math.max(120, menuTop - 24)}px` : "";
       const { width, height } = element.getBoundingClientRect();
-      element.style.left = `${Math.max(12, Math.min(innerWidth - width - 12, mobile ? (innerWidth - width) / 2 : box.left - width - 14))}px`;
-      element.style.top = `${Math.max(12, Math.min(innerHeight - height - 12, mobile ? menuTop - height - 10 : box.top + box.height / 2 - height / 2))}px`;
+      element.style.left = `${Math.max(12, Math.min(innerWidth - width - 12, beside ? rail.right + 12 : mobile ? (innerWidth - width) / 2 : box.left - width - 14))}px`;
+      element.style.top = `${Math.max(12, Math.min(innerHeight - height - 12, beside ? 12 : mobile ? menuTop - height - 10 : box.top + box.height / 2 - height / 2))}px`;
     };
     const schedulePlace = () => {
       cancelAnimationFrame(placementFrame);
@@ -47,6 +48,7 @@ export function EffectControls<Key extends string>({ id, anchor, label, title = 
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
       </button>
     </div>
+    <div className="hero-light-body">
     <p className="hero-light-description">{description}</p>
     {fields.map(({ key, label: fieldLabel, min, max }) =>
       <label className="hero-light-slider" key={key}>
@@ -57,5 +59,6 @@ export function EffectControls<Key extends string>({ id, anchor, label, title = 
           onChange={event => onChange({ ...settings, [key]: event.currentTarget.valueAsNumber })} />
       </label>)}
     <button className="hero-light-reset" type="button" onClick={() => onChange({ ...defaults })}>기본값으로</button>
+    </div>
   </div>;
 }

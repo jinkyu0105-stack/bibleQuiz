@@ -21,7 +21,7 @@ it("upgrades existing light settings without changing their appearance", () => {
   expect(normalizeVeilSettings({ width: 21, strength: 73, spread: 42 })).toEqual({ width: 21, strength: 73, spread: 42, speed: 50 });
   expect(normalizeVeilSettings({ speed: 0 }).speed).toBe(0);
 });
-for (const kind of ["silk", "aurora"] as const) {
+for (const kind of ["silk"] as const) {
   it(`${kind} preserves defaults for invalid storage and clamps valid numbers`, () => {
     for (const value of [null, false, [], "bad", { strength: Infinity, speed: NaN, scale: "50" }]) {
       expect(normalizeFlowSettings(kind, value)).toEqual(defaultFlowSettings[kind]);

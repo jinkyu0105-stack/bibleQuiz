@@ -1,3 +1,4 @@
+import { openSkySettings } from "./sky-control-helpers";
 import { expect, test, type Page } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
 
@@ -6,13 +7,14 @@ test.use({ launchOptions: { args: ["--enable-webgl", "--use-angle=swiftshader", 
 const choices = [
   { kind: "veil", name: "빛줄기 (Veil Rays)", scale: "광원 너비", uniform: "uVeilTime" },
   { kind: "silk", name: "비단결 (Silk Flow)", scale: "주름 크기", uniform: "uSilkSettings" },
-  { kind: "aurora", name: "오로라 (Aurora Spire)", scale: "기둥 너비", uniform: "uAuroraSettings" },
 ] as const;
 async function home(page: Page) {
   await page.route("**/api/quizzes/**", route => route.fulfill({ json: new URL(route.request().url()).pathname.endsWith("/me") ? { data: { submission: null } } : publicResponse("child") }));
-  await page.addInitScript(() => localStorage.setItem("bibleQuiz:mercury-hidden", "true"));
+  await page.addInitScript(() => { localStorage.setItem("bibleQuiz:mercury-hidden", "true"); localStorage.setItem("bibleQuiz:aurora-spire", "true"); });
   await page.goto("/?video=off");
   await expect(page.locator("#home-title")).toBeVisible();
+  await expect(page.locator(".hero-effects")).toHaveAttribute("data-state", "disabled");
+  await openSkySettings(page);
   const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
   await trigger.focus();
   await expect(trigger).toBeFocused();
@@ -20,7 +22,7 @@ async function home(page: Page) {
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
 }
 
-test("four effect choices preserve independent settings, focus and stationary narrow-screen controls", async ({ page, isMobile }) => {
+test("three effect choices preserve independent settings, focus and stationary narrow-screen controls", async ({ page, isMobile }) => {
   const errors: string[] = [];
   page.on("pageerror", error => errors.push(error.message));
   await page.setViewportSize({ width: isMobile ? 320 : 1280, height: isMobile ? 667 : 600 });
@@ -51,6 +53,7 @@ test("four effect choices preserve independent settings, focus and stationary na
   if (isMobile) expect(await page.locator("#motion").boundingBox()).toEqual(pauseBefore);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.reload();
+  await openSkySettings(page);
   await page.getByRole("button", { name: "배경 효과", exact: true }).focus(); await page.keyboard.press("Enter");
   for (const choice of choices) {
     const button = page.getByRole("button", { name: choice.name, exact: true });

@@ -81,7 +81,7 @@ html { scroll-padding-top: 120px; }
 .site-navigation a:hover { background: var(--glass-soft); }
 .site-navigation a.active { color: var(--ink); }
 .admin-link { display: inline-flex; align-items: center; border-radius: 24px; padding: 9px 17px; min-height: 44px; text-decoration: none; font-size: 13px; background: var(--glass-admin-fill); }
-.admin-link span > span { margin-left: 16px; }
+.admin-link .admin-link-arrow { margin-left: 16px; }
 .public-layout, #main-content { min-width: 0; }
 #main-content:focus { outline: none; }
 .time-rail { position: fixed; z-index: 30; right: 24px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; width: 60px; }
@@ -143,15 +143,18 @@ body[data-motion=off] .descent-cue span:last-child { animation: none; }
   .sky-app { padding-left: 24px; }
 }
 @media (max-width: 700px) {
-  html { scroll-padding-top: 132px; }
-  .sky-app { padding: 136px 16px 32px; }
-  .sky-app .site-header { top: 12px; left: 12px; right: 12px; height: 100px; border-radius: 26px; padding: 10px 18px; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; }
-  .brand-word { font-size: 24px; }
-  .site-navigation { grid-column: 1 / -1; grid-row: 2; justify-content: center; padding: 0; gap: 8px; font-size: 12px; }
-  .site-navigation a { padding: 8px 24px; }
-  .admin-link { font-size: 12px; padding: 8px 14px; }
+  html { scroll-padding-top: 88px; }
+  .sky-app { padding: 96px 16px 32px; }
+  .sky-app .site-header { top: 12px; left: 12px; right: 12px; height: 60px; min-height: 60px; border-radius: 32px; padding: 6px 8px 6px 14px; flex-direction: row; flex-wrap: nowrap; gap: 6px; }
+  .brand { gap: 7px; }
+  .brand-word { font-size: 22px; }
+  .brand-detail { padding-left: 7px; font-size: 8px; }
+  .sky-app .site-header .site-navigation { position: static; flex-direction: row; width: auto; gap: 0; padding: 0; font-size: 11px; white-space: nowrap; }
+  .sky-app .site-header .site-navigation a { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 6px 8px; }
+  .admin-link.glass { flex: 0 0 44px; width: 44px; height: 44px; min-height: 44px; padding: 0; border-radius: 50%; justify-content: center; }
+  .admin-link .admin-link-label { font-size: 11px; }
+  .admin-link .admin-link-arrow { display: none; }
   .time-rail, body[data-view=admin] .time-rail { position: relative; top: auto; right: auto; transform: none; width: auto; flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 16px; gap: 10px; background: var(--glass-solid); }
-  body[data-view=home] .time-rail { position: fixed; bottom: 12px; right: 12px; left: 12px; padding: 5px 8px; border-radius: 30px; background: var(--glass-reading); backdrop-filter: blur(16px); gap: 6px; }
   .time-options { flex-direction: row; padding: 4px; }
   .time-options button { min-height: 44px; width: 44px; }
   .time-options button span { font-size: 20px; }
@@ -208,24 +211,24 @@ html[data-home-scrolling] body[data-view=home] :is(.glass, .convex-lens)::after 
   backdrop-filter: none !important;
 }
 @media (max-width: 700px) {
-  body[data-view=home] .time-rail { bottom: 86px; max-width: 380px; margin-inline: auto; }
-  .page-dock.glass { bottom: 16px; max-width: calc(100vw - 24px); padding: 6px 8px; gap: 2px; }
+  .page-dock.glass { bottom: calc(12px + env(safe-area-inset-bottom, 0px)); width: max-content; max-width: calc(100vw - 24px); padding: 5px 6px; gap: 2px; }
   .page-dock > span { font-size: 9px; padding: 0 5px; }
-  .page-dock a { padding: 10px 15px; font-size: 11px; }
-  #home-view .weekly-section { padding-top: 144px; padding-bottom: 226px; }
-  #home-view .archive-section { padding-top: 144px; padding-bottom: 24px; }
+  .page-dock a { min-width: 44px; padding: 8px 12px; font-size: 11px; }
+  #home-view .weekly-section { padding-top: 96px; padding-bottom: 110px; }
+  #home-view .archive-section { padding-top: 96px; padding-bottom: 24px; }
   #home-view .archive-list { margin-top: 20px; padding: 12px 16px; }
-  .sky-home-hero { padding-bottom: 238px; }
-  .descent-cue { bottom: 218px; }
-  .hero-side-note { bottom: 218px; }
-  .home-shell .site-footer { padding-bottom: 224px; }
+  .sky-home-hero { padding-bottom: 124px; }
+  .descent-cue { bottom: 104px; }
+  .hero-side-note { bottom: 104px; }
+  .home-shell .site-footer { padding-bottom: 100px; }
 }
+@media (max-width: 380px) { .brand-detail { display: none; } }
 @media (prefers-reduced-motion: reduce) {
   html:has(body[data-view=home]) { scroll-snap-type: none; scroll-behavior: auto; }
 }
 
 @media (max-width: 700px) and (max-height: 740px) {
-  .sky-home-hero { padding-top: 126px; padding-bottom: 238px; }
+  .sky-home-hero { padding-top: 96px; padding-bottom: 124px; }
   .descent-cue { display: none; }
 }
 

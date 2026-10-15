@@ -7,7 +7,7 @@
   align-self: center;
   transition: width 360ms cubic-bezier(.22, 1, .36, 1), height 360ms cubic-bezier(.22, 1, .36, 1);
 }
-.hero-effect-control[data-open=true] { width: 60px; height: 266px; }
+.hero-effect-control[data-open=true] { width: 60px; height: 212px; }
 .hero-effect-surface.glass {
   width: 100%; height: 100%; border: 0; border-radius: 30px; overflow: hidden;
   display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -36,13 +36,14 @@
 .hero-light-panel.glass {
   --veil-thumb: var(--glass-solid);
   position: fixed; z-index: 31; width: min(268px, calc(100vw - 24px)); max-height: calc(100svh - 24px);
-  overflow-y: auto; padding: 14px 18px 10px; border-radius: 20px;
+  display: flex; flex-direction: column; overflow: hidden; padding: 14px 18px 10px; border-radius: 20px;
   background: color-mix(in srgb, var(--glass-solid) 88%, var(--glass-rail));
   color: var(--ink); box-shadow: 0 12px 32px var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
   animation: hero-light-enter 220ms ease-out both;
 }
 body[data-time=night] .hero-light-panel { --veil-thumb: var(--accent); }
-.hero-light-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.hero-light-heading { display: flex; flex: none; align-items: center; justify-content: space-between; gap: 12px; }
+.hero-light-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
 .hero-light-heading strong { font-size: 14px; }
 .hero-light-close { display: grid; place-items: center; min-height: 44px; width: 44px; padding: 0; margin: -6px -8px -6px 0; border: 0; background: transparent; color: var(--ink); border-radius: 50%; }
 .hero-light-close:hover { background: var(--glass-soft); }
@@ -72,13 +73,12 @@ body[data-time=night] .hero-light-panel { --veil-thumb: var(--accent); }
   body[data-view=home] .time-rail:has(.hero-effect-control) .time-options button { min-height: 44px; }
 }
 @media (max-width: 700px) {
-  body[data-view=home] .time-rail:has(.hero-effect-control) { max-width: 330px; }
   .sky-controls:has(.hero-effect-control) { width: 100%; justify-content: center; }
   .hero-effect-control { position: static; width: 44px; height: 44px; }
-  /* Keep the existing rail stationary; four choices open just above it. */
+  /* Keep the existing rail stationary; three choices open just above it. */
   .hero-effect-control[data-open=true] { width: 44px; height: 44px; }
   .hero-effect-control[data-open=true] .hero-effect-surface {
-    position: absolute; width: 220px; height: 44px; left: 50%; bottom: calc(100% + 8px);
+    position: absolute; width: 176px; height: 44px; left: 50%; bottom: calc(100% + 8px);
     transform: translateX(-50%); box-shadow: 0 8px 24px var(--glass-shadow);
     animation: hero-options-enter 260ms ease-out both;
   }
@@ -87,13 +87,9 @@ body[data-time=night] .hero-light-panel { --veil-thumb: var(--accent); }
   .hero-effect-surface svg { width: 19px; height: 19px; }
   .hero-effect-surface small { font-size: 8px; }
   .hero-effect-surface .effect-check { width: 8px; height: 8px; top: 3px; right: 3px; }
-  .sky-controls:has(.hero-effect-control[data-open=true]) { gap: 0; }
   .effect-storage-status { right: -40px; top: auto; bottom: 112px; }
   .hero-light-slider input[type=range] { height: 44px; }
   .hero-light-reset { min-height: 44px; }
-}
-@media (max-width: 360px) {
-  body[data-view=home] .time-rail:has(.hero-effect-control) { left: 4px; right: 4px; padding-inline: 2px; }
 }
 body[data-motion=off] :is(.hero-effect-control, .hero-effect-option) { transition: none; }
 body[data-motion=off] .hero-light-panel { animation: none; }

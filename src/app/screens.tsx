@@ -5,7 +5,6 @@ import { GlassMenu } from "../components/glass/GlassMenu";
 import { GlassLink } from "../components/glass/GlassLink";
 import { GlassPanel } from "../components/glass/GlassPanel";
 import { useGlass } from "../components/glass/useGlass";
-import { PageDock } from "../components/glass/PageDock";
 import { SkyEnvironment } from "../components/sky/SkyEnvironment";
 
 export function RootLayout() {
@@ -24,7 +23,7 @@ export function RootLayout() {
         <GlassMenu as="nav" clear={false} data-glass-hover-only="" className="site-navigation" aria-label="주요 메뉴">
           <NavLink end to="/">이번 주 퀴즈</NavLink><NavLink to="/archive">지난 퀴즈</NavLink>
         </GlassMenu>
-        <GlassLink className="admin-link" to="/admin">관리 <span aria-hidden="true">↗</span></GlassLink>
+        <GlassLink className="admin-link" to="/admin" aria-label="관리 공간"><span className="admin-link-label">관리</span><span className="admin-link-arrow" aria-hidden="true">↗</span></GlassLink>
       </header>
       <div className={admin ? "admin-layout" : "public-layout"}>
         {admin && <AdminNavigation />}
@@ -32,7 +31,6 @@ export function RootLayout() {
           : <main id="main-content" tabIndex={-1}><Outlet /></main>}
       </div>
       <footer className="site-footer"><span>다사랑교회 성경퀴즈</span><Link to={{ pathname: location.pathname, search: location.search, hash: "#main-content" }}>맨 위로 ↑</Link></footer>
-      {home && <PageDock />}
     </div>
   </SkyEnvironment>;
 }
