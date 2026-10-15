@@ -1,7 +1,9 @@
-// Original procedural shaders inspired by the public Mercury Veins / Veil Rays previews.
+// Original procedural shaders inspired by the public Mercury Veins, Veil Rays, Silk Flow and Aurora Spire previews.
 // No purchased source, texture, video sampling, or additional dependencies.
 import { defaultVeilSettings, normalizeVeilSettings } from "./veil-settings";
 import { defaultMercurySettings, normalizeMercurySettings } from "./mercury-settings";
+
+import { defaultFlowSettings, normalizeFlowSettings } from "./flow-settings";
 
 const vertex = `
 attribute vec2 aPosition;
@@ -22,6 +24,11 @@ uniform vec2 uEffects;
 uniform vec3 uVeilSettings;
 uniform vec2 uMercurySettings;
 uniform float uMercuryTime;
+uniform float uVeilTime;
+uniform vec2 uFlows;
+uniform vec3 uSilkSettings;
+uniform vec3 uAuroraSettings;
+uniform vec3 uAuroraTint;
 uniform vec3 uMoon;
 float hash(vec2 p) {
   vec3 q = fract(vec3(p.x, p.y, p.x) * vec3(.1031, .11369, .13787));
@@ -60,7 +67,7 @@ vec4 mercury() {
   return vec4(color * alpha, alpha);
 }
 vec4 veil() {
-  float t = uTime * .18;
+  float t = uVeilTime * .18;
   float aspect = uResolution.x / uResolution.y;
   float night = uMoon.z;
   float width = uVeilSettings.x;
@@ -91,16 +98,62 @@ vec4 veil() {
   // Moonlight blooms softly below the moon, never from the top edge.
   falloff *= mix(1., smoothstep(.015, .18, depth), night);
   float sides = smoothstep(0., .07, vUv.x) * smoothstep(0., .07, 1. - vUv.x);
-  float grain = (hash(gl_FragCoord.xy + floor(uTime * 8.)) - .5) * .045;
+  float grain = (hash(gl_FragCoord.xy + floor(uVeilTime * 8.)) - .5) * .045;
   float alpha = clamp(cone * (threads + shaft + grain) * falloff * sides * strength * mix(1.05, .72, night), 0., .62);
   return vec4(uTint * alpha, alpha);
+}
+// Both new materials use the same small framebuffer and analytic fields.
+// Their dark folds are translucent: the existing sky remains the background.
+float flowEdge() {
+  return smoothstep(0., .06, vUv.x) * smoothstep(0., .06, 1. - vUv.x)
+    * smoothstep(0., .16, vUv.y) * smoothstep(0., .1, 1. - vUv.y);
+}
+vec4 silk() {
+  float t = uSilkSettings.z * .16;
+  vec2 p = (vUv - .5) * vec2(uResolution.x / uResolution.y, 1.);
+  p /= mix(.65, 1.65, uSilkSettings.y);
+  vec2 drift = vec2(p.x - t, p.y);
+  float warp = noise(drift * vec2(1.3, 3.)) - .5;
+  float fold = p.y * 18. - p.x * 1.4 + warp * 2.8
+    + sin(p.x * 1.4 - t * .6) * .6;
+  float crest = pow(.5 + .5 * sin(fold), 3.);
+  float filament = noise(drift * vec2(2.2, 32.) + warp);
+  float sheen = crest * (.65 + filament * .35);
+  float shadow = pow(.5 + .5 * sin(fold + 1.8), 2.);
+  float center = mix(.65, 1., smoothstep(.1, .45, length(vUv - vec2(.5, .55))));
+  float grain = (hash(gl_FragCoord.xy) - .5) * .05;
+  float alpha = clamp((sheen * .75 + shadow * .18 + grain * sheen) * uSilkSettings.x * 1.65, 0., .72) * flowEdge() * center;
+  vec3 color = mix(uTint * .24, uTint, smoothstep(.03, .58, sheen));
+  return vec4(color * alpha, alpha);
+}
+vec4 aurora() {
+  float t = uAuroraSettings.z * .18;
+  float aspect = uResolution.x / uResolution.y;
+  vec2 p = vec2((vUv.x - .54) * aspect / mix(.22, .85, uAuroraSettings.y), vUv.y);
+  // Features translate up, with layered, irregular folds wrapping the column.
+  float rise = p.y * 3.2 - t;
+  float warp = noise(vec2(p.x * 1.4, rise)) - .5;
+  float center = sin(rise * 1.7) * .14 + warp * .32;
+  float envelope = exp(-pow((p.x - center) * 1.7, 2.));
+  float fold = p.x * 12. + warp * 6. + sin(rise * 2.1 + p.x * 1.2) * 1.7;
+  float veil = pow(.5 + .5 * sin(fold), 3.);
+  float detail = noise(vec2(p.x * 5. + warp, rise * 2.4));
+  float glow = envelope * (.15 + veil * .65) * (.35 + detail * .8);
+  float grain = (hash(gl_FragCoord.xy) - .5) * .025;
+  float title = mix(.7, 1., smoothstep(.08, .4, length(vUv - vec2(.5, .55))));
+  float alpha = clamp((glow + grain * glow) * uAuroraSettings.x * 3.0, 0., .72) * flowEdge() * title;
+  vec3 color = mix(uAuroraTint, uTint, smoothstep(.35, .9, veil * detail));
+  return vec4(color * alpha, alpha);
 }
 void main() {
   vec4 reflection = vec4(0.);
   vec4 rays = vec4(0.);
   if (uEffects.x > .5) reflection = mercury();
   if (uEffects.y > .5) rays = veil();
-  gl_FragColor = rays + reflection * (1. - rays.a);
+  vec4 color = rays + reflection * (1. - rays.a);
+  if (uFlows.x > .5) { vec4 fabric = silk(); color = fabric + color * (1. - fabric.a); }
+  if (uFlows.y > .5) { vec4 column = aurora(); color = column + color * (1. - column.a); }
+  gl_FragColor = color;
 }`;
 
 export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
@@ -110,10 +163,11 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
 
   let program: WebGLProgram | null = null, buffer: WebGLBuffer | null = null;
   let uniforms: Record<string, WebGLUniformLocation | null> = {};
-  let frame = 0, lastFrame = 0, time = 0, mercuryTime = 0, visible = false, lost = false, disposed = false;
+  let frame = 0, lastFrame = 0, time = 0, mercuryTime = 0, veilTime = 0, silkTime = 0, auroraTime = 0, visible = false, lost = false, disposed = false;
   let pointerX = -2, pointerY = -2, targetX = -2, targetY = -2;
   let veilSettings = { ...defaultVeilSettings }, moonX = .74, moonY = .86;
   let mercurySettings = { ...defaultMercurySettings };
+  let silkSettings = { ...defaultFlowSettings.silk }, auroraSettings = { ...defaultFlowSettings.aurora };
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const contrast = matchMedia("(forced-colors: active)");
   const transparency = matchMedia("(prefers-reduced-transparency: reduce)");
@@ -144,7 +198,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
       gl!.bufferData(gl!.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl!.STATIC_DRAW);
       const position = gl!.getAttribLocation(program, "aPosition");
       gl!.enableVertexAttribArray(position); gl!.vertexAttribPointer(position, 2, gl!.FLOAT, false, 0, 0);
-      uniforms = Object.fromEntries(["uResolution", "uPointer", "uTime", "uTint", "uEffects", "uVeilSettings", "uMercurySettings", "uMercuryTime", "uMoon"].map(name => [name, gl!.getUniformLocation(program!, name)]));
+      uniforms = Object.fromEntries(["uResolution", "uPointer", "uTime", "uTint", "uEffects", "uVeilSettings", "uMercurySettings", "uMercuryTime", "uMoon", "uVeilTime", "uFlows", "uSilkSettings", "uAuroraSettings", "uAuroraTint"].map(name => [name, gl!.getUniformLocation(program!, name)]));
     } catch {
       release(); canvas.dataset.state = "unavailable";
     } finally {
@@ -154,7 +208,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
   const hidden = () => document.hidden || !visible;
   const clear = () => contrast.matches || transparency.matches || document.body.dataset.transparency === "reduced";
   const moving = () => !reduced.matches && document.body.dataset.motion !== "off";
-  const effects = () => [document.body.dataset.heroMercury !== "off", document.body.dataset.heroVeil === "on"] as const;
+  const effects = () => [document.body.dataset.heroMercury !== "off", document.body.dataset.heroVeil === "on", document.body.dataset.heroSilk === "on", document.body.dataset.heroAurora === "on"] as const;
 
   function draw() {
     if (!program || lost || disposed) return;
@@ -164,6 +218,12 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
     gl!.uniform2f(uniforms.uPointer!, pointerX, pointerY);
     gl!.uniform1f(uniforms.uTime!, time);
     gl!.uniform1f(uniforms.uMercuryTime!, mercuryTime);
+    gl!.uniform1f(uniforms.uVeilTime!, veilTime);
+    gl!.uniform2f(uniforms.uFlows!, Number(effects()[2]), Number(effects()[3]));
+    gl!.uniform3f(uniforms.uSilkSettings!, silkSettings.strength / 100, silkSettings.scale / 100, silkTime);
+    gl!.uniform3f(uniforms.uAuroraSettings!, auroraSettings.strength / 100, auroraSettings.scale / 100, auroraTime);
+    const auroraTint = document.body.dataset.time === "dusk" ? [1, .51, .38] : document.body.dataset.time === "day" ? [.36, .69, .92] : document.body.dataset.time === "dawn" ? [.72, .51, .9] : [.55, .4, 1];
+    gl!.uniform3f(uniforms.uAuroraTint!, auroraTint[0]!, auroraTint[1]!, auroraTint[2]!);
     gl!.uniform2f(uniforms.uMercurySettings!, mercurySettings.strength / 50, mercurySettings.scale / 100);
     gl!.uniform3f(uniforms.uTint!, tint[0]!, tint[1]!, tint[2]!);
     gl!.uniform2f(uniforms.uEffects!, Number(effects()[0]), Number(effects()[1]));
@@ -181,6 +241,9 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
       // Integrate speed rather than multiplying elapsed time: changing the
       // slider must not jump the reflection to another point in its animation.
       mercuryTime += dt * mercurySettings.speed / 50;
+      veilTime += dt * veilSettings.speed / 50;
+      silkTime += dt * silkSettings.speed / 50;
+      auroraTime += dt * auroraSettings.speed / 50;
       const ease = 1 - Math.exp(-dt * 4);
       pointerX += (targetX - pointerX) * ease; pointerY += (targetY - pointerY) * ease;
       draw();
@@ -190,8 +253,10 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
   function sync() {
     cancelAnimationFrame(frame); frame = 0; lastFrame = 0;
     if (disposed || lost || !program) return;
-    veilSettings = normalizeVeilSettings({ width: Number(document.body.dataset.veilWidth), strength: Number(document.body.dataset.veilStrength), spread: Number(document.body.dataset.veilSpread) });
+    veilSettings = normalizeVeilSettings({ width: Number(document.body.dataset.veilWidth), strength: Number(document.body.dataset.veilStrength), spread: Number(document.body.dataset.veilSpread), speed: Number(document.body.dataset.veilSpeed) });
     mercurySettings = normalizeMercurySettings({ strength: Number(document.body.dataset.mercuryStrength), scale: Number(document.body.dataset.mercuryScale), speed: Number(document.body.dataset.mercurySpeed) });
+    silkSettings = normalizeFlowSettings("silk", { strength: Number(document.body.dataset.silkStrength), scale: Number(document.body.dataset.silkScale), speed: Number(document.body.dataset.silkSpeed) });
+    auroraSettings = normalizeFlowSettings("aurora", { strength: Number(document.body.dataset.auroraStrength), scale: Number(document.body.dataset.auroraScale), speed: Number(document.body.dataset.auroraSpeed) });
     locateMoon();
     canvas.dataset.state = !effects().some(Boolean) ? "disabled" : clear() ? "clear" : hidden() ? "offscreen" : moving() ? "running" : "paused";
     if (!effects().some(Boolean) || clear() || hidden()) return;
@@ -229,7 +294,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
   const intersection = new IntersectionObserver(([entry]) => { visible = (entry?.intersectionRatio ?? 0) > .01; sync(); }, { threshold: .01 });
   intersection.observe(hero);
   const settings = new MutationObserver(sync);
-  settings.observe(document.body, { attributes: true, attributeFilter: ["data-time", "data-motion", "data-transparency", "data-hero-mercury", "data-hero-veil", "data-veil-width", "data-veil-strength", "data-veil-spread", "data-mercury-strength", "data-mercury-scale", "data-mercury-speed", "data-sky-video"] });
+  settings.observe(document.body, { attributes: true, attributeFilter: ["data-time", "data-motion", "data-transparency", "data-hero-mercury", "data-hero-veil", "data-veil-width", "data-veil-strength", "data-veil-spread", "data-mercury-strength", "data-mercury-scale", "data-mercury-speed", "data-sky-video", "data-veil-speed", "data-hero-silk", "data-hero-aurora", ...["silk", "aurora"].flatMap(kind => ["strength", "scale", "speed"].map(key => `data-${kind}-${key}`))] });
   document.addEventListener("visibilitychange", sync, options);
   for (const media of [reduced, contrast, transparency]) media.addEventListener("change", sync, options);
   hero.addEventListener("pointermove", event => {

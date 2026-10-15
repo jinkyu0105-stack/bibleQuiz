@@ -1,6 +1,6 @@
 import { browserStorage } from "../../lib/browser-storage";
 
-export const defaultVeilSettings = { width: 65, strength: 55, spread: 60 };
+export const defaultVeilSettings = { width: 65, strength: 55, spread: 60, speed: 50 };
 export type VeilSettings = typeof defaultVeilSettings;
 
 export function normalizeVeilSettings(value: unknown): VeilSettings {
@@ -11,7 +11,7 @@ export function normalizeVeilSettings(value: unknown): VeilSettings {
       ? Math.round(Math.min(100, Math.max(key === "strength" ? 10 : 0, number)))
       : defaultVeilSettings[key];
   };
-  return { width: read("width"), strength: read("strength"), spread: read("spread") };
+  return { width: read("width"), strength: read("strength"), spread: read("spread"), speed: read("speed") };
 }
 
 export function readVeilSettings(): VeilSettings {

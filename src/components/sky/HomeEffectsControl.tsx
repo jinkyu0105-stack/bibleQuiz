@@ -4,13 +4,18 @@ import { GlassMenu } from "../glass/GlassMenu";
 import { readSkyFlag, saveSkyPreference } from "./preferences";
 import { defaultVeilSettings, readVeilSettings, type VeilSettings } from "./veil-settings";
 import { defaultMercurySettings, readMercurySettings, type MercurySettings } from "./mercury-settings";
+import { defaultFlowSettings, readFlowSettings, type FlowKind, type FlowSettings } from "./flow-settings";
 import { EffectControls } from "./EffectControls";
 import "./home-effects-control.css";
 
-function EffectIcon({ kind }: { kind: "effects" | "mercury" | "veil" }) {
+type EffectKind = "mercury" | "veil" | FlowKind;
+
+function EffectIcon({ kind }: { kind: "effects" | EffectKind }) {
   return <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     {kind === "effects" ? <><path d="m12 3 2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3Z" /><path d="M20 3v4M18 5h4" /></>
       : kind === "mercury" ? <><path d="M3 7c3-5 6 5 9 0s6 5 9 0M3 12c3-5 6 5 9 0s6 5 9 0M3 17c3-5 6 5 9 0s6 5 9 0" /></>
+      : kind === "silk" ? <><path d="M3 6c6-5 12 5 18 0M3 12c6-5 12 5 18 0M3 18c6-5 12 5 18 0" /></>
+      : kind === "aurora" ? <><path d="M7 21c-5-7 9-10 5-18M12 21c8-7-5-11 3-17M17 21c5-7-4-10 2-15" /></>
       : <><path d="M12 3 3 20M12 3 8 21M12 3v18M12 3l4 18M12 3l9 17" /><path d="M10 3h4" /></>}
   </svg>;
 }
@@ -18,9 +23,11 @@ function EffectIcon({ kind }: { kind: "effects" | "mercury" | "veil" }) {
 /** The surface grows in place; independent toggles keep their own checked state. */
 export function HomeEffectsControl({ night = false }: { night?: boolean }) {
   const [open, setOpen] = useState(false);
-  const [tuning, setTuning] = useState<"mercury" | "veil" | null>(null);
+  const [tuning, setTuning] = useState<EffectKind | null>(null);
   const [mercury, setMercury] = useState(() => !readSkyFlag("mercury-hidden"));
   const [veil, setVeil] = useState(() => readSkyFlag("veil-rays"));
+  const [flows, setFlows] = useState(() => ({ silk: readSkyFlag("silk-flow"), aurora: readSkyFlag("aurora-spire") }));
+  const [flowSettings, setFlowSettings] = useState(() => ({ silk: readFlowSettings("silk"), aurora: readFlowSettings("aurora") }));
   const [storageFailed, setStorageFailed] = useState(false);
   const [settings, setSettings] = useState(readVeilSettings);
   const [reflectionSettings, setReflectionSettings] = useState(readMercurySettings);
@@ -28,6 +35,9 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
   const trigger = useRef<HTMLButtonElement>(null);
   const raysTrigger = useRef<HTMLButtonElement>(null);
   const reflectionTrigger = useRef<HTMLButtonElement>(null);
+  const silkTrigger = useRef<HTMLButtonElement>(null);
+  const auroraTrigger = useRef<HTMLButtonElement>(null);
+  const effectTriggers = { mercury: reflectionTrigger, veil: raysTrigger, silk: silkTrigger, aurora: auroraTrigger };
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const keyboardOpen = useRef(false);
   const id = useId();
@@ -40,12 +50,21 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
     document.body.dataset.veilWidth = String(settings.width);
     document.body.dataset.veilStrength = String(settings.strength);
     document.body.dataset.veilSpread = String(settings.spread);
+    document.body.dataset.veilSpeed = String(settings.speed);
   }, [settings]);
   useLayoutEffect(() => {
     document.body.dataset.mercuryStrength = String(reflectionSettings.strength);
     document.body.dataset.mercuryScale = String(reflectionSettings.scale);
     document.body.dataset.mercurySpeed = String(reflectionSettings.speed);
   }, [reflectionSettings]);
+  useLayoutEffect(() => {
+    for (const kind of ["silk", "aurora"] as const) {
+      document.body.setAttribute(`data-hero-${kind}`, flows[kind] ? "on" : "off");
+      for (const key of ["strength", "scale", "speed"] as const) {
+        document.body.setAttribute(`data-${kind}-${key}`, String(flowSettings[kind][key]));
+      }
+    }
+  }, [flows, flowSettings]);
   useEffect(() => () => clearTimeout(closeTimer.current), []);
   useEffect(() => {
     if (!open) return;
@@ -69,7 +88,7 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
     setOpen(false);
   }
   function closeTuning() {
-    (tuning === "mercury" ? reflectionTrigger : raysTrigger).current?.focus({ preventScroll: true });
+    (tuning ? effectTriggers[tuning] : trigger).current?.focus({ preventScroll: true });
     setTuning(null);
   }
   function adjust(next: VeilSettings) {
@@ -80,18 +99,25 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
     setReflectionSettings(next);
     setStorageFailed(!saveSkyPreference("mercury-settings", JSON.stringify(next)));
   }
-  function toggle(kind: "mercury" | "veil") {
+  function adjustFlow(kind: FlowKind, next: FlowSettings) {
+    setFlowSettings(previous => ({ ...previous, [kind]: next }));
+    setStorageFailed(!saveSkyPreference(`${kind}-settings`, JSON.stringify(next)));
+  }
+  function toggle(kind: EffectKind) {
     // Reopen a dismissed controller without turning its effect off. A second
     // click on the same open controller turns off only that effect.
-    const next = !((kind === "mercury" ? mercury : veil) && tuning === kind);
+    const next = !((kind === "mercury" ? mercury : kind === "veil" ? veil : flows[kind]) && tuning === kind);
     clearTimeout(closeTimer.current);
     setTuning(next ? kind : null);
     if (kind === "mercury") {
       setMercury(next);
       setStorageFailed(!saveSkyPreference("mercury-hidden", String(!next)));
-    } else {
+    } else if (kind === "veil") {
       setVeil(next);
       setStorageFailed(!saveSkyPreference("veil-rays", String(next)));
+    } else {
+      setFlows(previous => ({ ...previous, [kind]: next }));
+      setStorageFailed(!saveSkyPreference(kind === "silk" ? "silk-flow" : "aurora-spire", String(next)));
     }
   }
   function revealForPointer(event: { pointerType: string }) {
@@ -121,12 +147,12 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
     }}>
     <GlassMenu className="hero-effect-surface" role="group" aria-label="메인 배경 효과">
       <button ref={trigger} type="button" className="hero-effect-trigger" aria-label="배경 효과" aria-expanded={open}
-        aria-controls={`${id}-mercury ${id}-veil`}
+        aria-controls={`${id}-mercury ${id}-veil ${id}-silk ${id}-aurora`}
         onClick={() => { clearTimeout(closeTimer.current); if (open) close(); else setOpen(true); }}>
         <EffectIcon kind="effects" />
       </button>
-        {([['mercury', '물결 반사 (Mercury)', '반사', mercury], ['veil', '빛줄기 (Veil Rays)', '빛줄기', veil]] as const).map(([kind, label, short, enabled]) =>
-          <button key={kind} id={`${id}-${kind}`} ref={kind === "veil" ? raysTrigger : reflectionTrigger} className="hero-effect-option" type="button" aria-label={label} aria-pressed={enabled}
+        {([['mercury', '물결 반사 (Mercury)', '반사', mercury], ['veil', '빛줄기 (Veil Rays)', '빛줄기', veil], ['silk', '비단결 (Silk Flow)', '비단결', flows.silk], ['aurora', '오로라 (Aurora Spire)', '오로라', flows.aurora]] as const).map(([kind, label, short, enabled]) =>
+          <button key={kind} id={`${id}-${kind}`} ref={effectTriggers[kind]} className="hero-effect-option" type="button" aria-label={label} aria-pressed={enabled}
             aria-expanded={tuning === kind} aria-controls={`${id}-panel`}
             aria-hidden={!open} inert={!open} onClick={() => toggle(kind)}>
             <EffectIcon kind={kind} /><small>{short}</small>
@@ -136,12 +162,20 @@ export function HomeEffectsControl({ night = false }: { night?: boolean }) {
     {tuning === "veil" && createPortal(<EffectControls key="veil" id={`${id}-panel`} anchor={raysTrigger} label="빛줄기 조절"
       title={night ? "달빛 조절" : "빛줄기 조절"} description={night ? "달 쪽에서 부드럽게 번지는 은빛" : "넓은 광원에서 내려오는 부드러운 빛"}
       settings={settings} defaults={defaultVeilSettings} fields={[
-        { key: "width", label: "광원 너비", min: 0, max: 100 }, { key: "strength", label: "밝기", min: 10, max: 100 }, { key: "spread", label: "퍼짐", min: 0, max: 100 },
+        { key: "width", label: "광원 너비", min: 0, max: 100 }, { key: "strength", label: "밝기", min: 10, max: 100 }, { key: "spread", label: "퍼짐", min: 0, max: 100 }, { key: "speed", label: "흐름 속도", min: 0, max: 100 },
       ]} onChange={adjust} onClose={closeTuning} />, document.body)}
     {tuning === "mercury" && createPortal(<EffectControls key="mercury" id={`${id}-panel`} anchor={reflectionTrigger} label="반사 조절"
       description="하늘 위로 천천히 흐르는 물결 반사" settings={reflectionSettings} defaults={defaultMercurySettings} fields={[
         { key: "strength", label: "밝기", min: 10, max: 100 }, { key: "scale", label: "물결 크기", min: 0, max: 100 }, { key: "speed", label: "흐름 속도", min: 0, max: 100 },
       ]} onChange={adjustReflection} onClose={closeTuning} />, document.body)}
+    {(tuning === "silk" || tuning === "aurora") && createPortal(<EffectControls key={tuning} id={`${id}-panel`} anchor={effectTriggers[tuning]}
+      label={tuning === "silk" ? "비단결 조절" : "오로라 조절"}
+      description={tuning === "silk" ? "옆으로 부드럽게 흐르는 비단 주름" : "위로 피어오르며 감기는 빛기둥"}
+      settings={flowSettings[tuning]} defaults={defaultFlowSettings[tuning]} fields={[
+        { key: "strength", label: "밝기", min: 10, max: 100 },
+        { key: "scale", label: tuning === "silk" ? "주름 크기" : "기둥 너비", min: 0, max: 100 },
+        { key: "speed", label: "흐름 속도", min: 0, max: 100 },
+      ]} onChange={next => adjustFlow(tuning, next)} onClose={closeTuning} />, document.body)}
     {storageFailed && <span className="effect-storage-status" role="status">효과 설정은 이 화면에서만 유지됩니다.</span>}
   </div>;
 }

@@ -1,5 +1,10 @@
 # 현재 상태
 
+## P9-24 메인 효과 확장 — 진행 중
+
+2026-10-15 사용자 요청. 빛줄기 속도, Silk Flow/비단결, Aurora Spire/오로라와 공통 컨트롤러를 추가한다. P9-23 완료 결과를 보존하며 새 작업으로 관리한다. 실제 네 시간대×1440/390/320px의24상태·동시 효과3상태를 확인했다. 첫 관련34통과, 작은 패널 겹침/진입 위치/관찰 경고 보정 뒤 최종27통과·GPU전용3제외다. 최종 전체check2553건·lint/typecheck·build 통과. main push/Preview 반영이 남아 있다. 새 의존성·유료 코드/AI·원격 자료·Production 변경은 제외한다. [작업](work/P9-24.md).
+
+
 ## P9-23 초기 로딩·반사 조절 — 완료
 
 영상·빛줄기·투명 유리의 기본 모습을 유지하며 화면 밖 굴절 지도/구름과 풀이 코드를 필요할 때 준비한다. 반사에도 밝기·물결 크기·흐름 속도 제어판을 추가해 빛줄기와 같은 부품·배치·키보드 동작을 사용하고 값은 따로 저장한다. [현재 구현·측정·검사](work/P9-23.md#초기-로딩과-반사-조절-후속) · [실제 전후 화면/수치](design/phase-9/home-effects/loading-review.html).
@@ -184,4 +189,4 @@ Production/Preview migration0000~0038·이력39개를 유지한다. 운영 app `
 
 ## Git과 다음 재개
 
-현재 Git 상태와 Preview 반영은 상단 P9-23과 [HANDOFF](HANDOFF.md)를 따른다. Production 앱 소스37b7254·content 기존 소스56bb1bf는 그대로다. 사용자가 이번 main push를 명시 승인했으며 GitHub 소스와 실제 Preview Worker version을 각각 기록한다. 실제 자료·키·유료 결과와 기존 미커밋 변경을 보존한다.
+현재 Git 상태와 Preview 반영은 상단 P9-24와 [HANDOFF](HANDOFF.md)를 따른다. Production 앱 소스37b7254·content 기존 소스56bb1bf는 그대로다. 사용자가 이번 main push를 명시 승인했으며 GitHub 소스와 실제 Preview Worker version을 각각 기록한다. 실제 자료·키·유료 결과와 기존 미커밋 변경을 보존한다.

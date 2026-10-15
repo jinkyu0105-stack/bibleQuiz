@@ -11,22 +11,33 @@ export function EffectControls<Key extends string>({ id, anchor, label, title = 
     const element = panel.current;
     const origin = anchor.current;
     if (!element || !origin) return;
+    let placementFrame = 0;
     const place = () => {
       const box = origin.getBoundingClientRect();
       const rail = origin.closest(".time-rail")?.getBoundingClientRect() ?? box;
       const mobile = window.matchMedia("(max-width: 700px)").matches;
+      const menuTop = Math.min(rail.top, origin.closest(".hero-effect-surface")?.getBoundingClientRect().top ?? rail.top);
+      // Four light controls must not cover the effect choices on short phones.
+      // Keep the choices reachable and scroll only the controller when needed.
+      element.style.maxHeight = mobile ? `${Math.max(120, menuTop - 24)}px` : "";
       const { width, height } = element.getBoundingClientRect();
       element.style.left = `${Math.max(12, Math.min(innerWidth - width - 12, mobile ? (innerWidth - width) / 2 : box.left - width - 14))}px`;
-      element.style.top = `${Math.max(12, Math.min(innerHeight - height - 12, mobile ? rail.top - height - 10 : box.top + box.height / 2 - height / 2))}px`;
+      element.style.top = `${Math.max(12, Math.min(innerHeight - height - 12, mobile ? menuTop - height - 10 : box.top + box.height / 2 - height / 2))}px`;
     };
-    const observer = new ResizeObserver(place);
+    const schedulePlace = () => {
+      cancelAnimationFrame(placementFrame);
+      placementFrame = requestAnimationFrame(place);
+    };
+    // Sizing an observed panel inside its observer can re-enter layout before
+    // paint. Coalesce those writes into the following frame and clean it up.
+    const observer = new ResizeObserver(schedulePlace);
     observer.observe(element); observer.observe(origin);
     const capsule = origin.closest(".hero-effect-control");
     if (capsule) observer.observe(capsule);
-    window.addEventListener("resize", place);
+    window.addEventListener("resize", schedulePlace);
     place();
     element.querySelector("input")?.focus({ preventScroll: true });
-    return () => { observer.disconnect(); window.removeEventListener("resize", place); };
+    return () => { cancelAnimationFrame(placementFrame); observer.disconnect(); window.removeEventListener("resize", schedulePlace); };
   }, [anchor, panel]);
 
   return <div ref={panel} id={id} className="hero-light-panel glass glass-clear" role="group" aria-label={label}>
