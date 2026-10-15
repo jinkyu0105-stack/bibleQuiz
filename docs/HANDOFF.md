@@ -2,7 +2,7 @@
 
 ## 현재 작업과 Git
 
-**P9-23 광원 조절·달빛·효과 메뉴 — 구현·로컬 검수 완료, Preview 반영 중.** `/home/onegem/work/bibleQuiz`, main `f841cea`/clean에서 재개했다. 시작 시 origin/main `0fbde84`보다37커밋 앞섰다. 사용자가 이번 검사 후 push를 명시 승인했으며 누적 UI 변경과 이번 수정이 함께 Preview 자동 배포에 들어간다. Production 배포·원격 자료 변경·AI·migration 승인은 아니다. 정확한 Git 상태는 `git status --short`·`git log -3`으로 재확인한다.
+**P9-23 광원 조절·달빛·효과 메뉴 — 구현·Preview 반영 완료, GitHub 브라우저 검사 재실행 중.** `/home/onegem/work/bibleQuiz`, main `f841cea`/clean에서 재개했다. 시작 시 origin/main `0fbde84`보다37커밋 앞섰다. 사용자가 이번 검사 후 push를 명시 승인했으며 누적 UI 변경과 이번 수정이 함께 Preview 자동 배포에 들어간다. Production 배포·원격 자료 변경·AI·migration 승인은 아니다. 정확한 Git 상태는 `git status --short`·`git log -3`으로 재확인한다.
 
 ## 현재 구현과 코드 진입점
 
@@ -16,7 +16,7 @@
 
 관련 E2E39항목 성공을 여러 실행에서 확인했다. 최초33통과·6실패·6제외 뒤 테스트 동기화5건을 고치고 모바일 스크롤1건과 함께 최종9건을 통과했다. Firefox GPU전용6항목은 제외하며 실패 없는 단일45항목 실행이라고 보고하지 않는다. 전체 `pnpm check`2548건·lint/typecheck/build 통과. 최종640×480 상한에서도 GPU12건과 전체check2548건·lint/typecheck/build를 재통과했다. Lighthouse 효과 없음/혼합55/33, TBT250/1590ms로 소프트웨어 GPU의 합성 부담은 남으며 픽셀 감소를 실행 성능 개선으로 단정하지 않는다. 기존500kB fontkit·정적/동적 import 경고는 남는다.
 
-실제5173의 네 시간대×1440/390/320px에서 재생·정지·빛줄기/혼합·조절·범위 양 끝과 유리 받침 이동을 확인했다. 가로 넘침·GPU/pageerror·자료 쓰기0. 실기기·Safari·화면 읽기 프로그램과 Access 로그인 뒤 실제 원격 저장은 검증하지 않는다. Lighthouse는 소프트웨어 GPU의 모바일 모의값이며 실기기 성능 보장값이 아니다.
+실제5173의 네 시간대×1440/390/320px에서 재생·정지·빛줄기/혼합·조절·범위 양 끝과 유리 받침 이동을 확인했다. 가로 넘침·GPU/pageerror·쓰기API 요청0. 실기기·Safari·화면 읽기 프로그램과 Access 로그인 뒤 실제 원격 저장은 검증하지 않는다. Lighthouse는 소프트웨어 GPU의 모바일 모의값이며 실기기 성능 보장값이 아니다.
 
 증거는 ignored `.wrangler/releases/p9-23/light-*`의 로그·JSON·PNG다. 대표 실제 이미지만 `docs/design/phase-9/home-effects/`에 보존한다. `.wrangler` HTTP는403이므로 사용자에게 링크하지 않는다.
 
@@ -33,8 +33,8 @@
 
 시작 Pro잔여63%×사용자 지정10=630%, 별도5시간 창 없음. 다음 구현 전 현재 사용량을 확인한다. AGENTS → PROJECT_CONTEXT → DECISIONS → STATUS → HANDOFF → implementation 관련 정본 → P9-23 → Git상태/diff/log 순서다.
 
-배포 전 Preview는 소스 `0fbde84` / version `cd6efb0e-2c05-4401-b0bf-692bdf18c5b1`이다. 이번 push 후 실제 버전을 확인해 이 절을 갱신한다. Production은 소스 `37b7254` / version `7aea6843-5288-42da-9bef-bc673e1d9dfe`를 유지한다.
+현재 Preview는 소스 `7dce3c204baf135fd50ce4900f376e246e9f7d2b` / version `2974476d-53ae-403f-8d9c-9f617f9fc5c7`·100%·2026-10-15 09:16:30KST다. Workers Builds f42a77f9 성공을 해당 SHA의 GitHub check와 실제 deployments/version으로 대조했다. [CI38658863333](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/38658863333)의 validate는 성공했고 browser는15분 작업 한도로 취소됐다. `.github/workflows/ci.yml`의 browser 한도만25분으로 늘려 재실행한다. 기능/개별 검사 조건은 바꾸지 않았다. Production은 소스 `37b7254` / version `7aea6843-5288-42da-9bef-bc673e1d9dfe`를 유지한다.
 
 폐기한 접근: 밤의 상단 중앙 광원, 모바일 달을 가상으로 이동, 효과마다 새 루프, overflow 영역 안의 조절 패널, spring 중간 좌표를 도착 위치로 검사하기. 새 구현은 같은 P9-23의 사용자 피드백으로만 진행한다.
 
-**현재 P9-23 Preview 반영 중 · 부모 홈 효과 보정 로컬 완료 · 다음 push/자동 검사·배포 확인 · 세션 유지 · 다음 추천 GPT-6.1-sol/medium** — 자동 검사와 소스/버전 대조에 적합하다.
+**현재 P9-23 GitHub 검사 중 · 부모 홈 효과 보정/Preview 반영 완료 · 다음 전체 검사 결과 확인 · 세션 유지 · 다음 추천 GPT-6.1-sol/medium** — 자동 검사와 소스/버전 대조에 적합하다.
