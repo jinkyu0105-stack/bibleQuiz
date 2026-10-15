@@ -41,6 +41,50 @@ test("phone header stays in one row and the fourth dock button reveals all setti
   }
 });
 
+test("the mobile dock lends its glass lens to settings and returns it home on every close", async ({ page, isMobile }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await home(page);
+  const dock = page.getByRole("navigation", { name: "빠른 이동" });
+  const homeLink = dock.getByRole("link", { name: "홈", exact: true });
+  const settings = dock.getByRole("button", { name: "화면 설정", exact: true });
+  const lens = dock.locator(":scope > .glass-indicator");
+  async function at(target: typeof settings) {
+    await expect(lens).toHaveCount(1);
+    await expect.poll(async () => {
+      const a = (await lens.boundingBox())!, b = (await target.boundingBox())!;
+      return Math.abs(a.x + a.width / 2 - b.x - b.width / 2);
+    }).toBeLessThan(1);
+    await expect(homeLink).toHaveAttribute("aria-current", "page");
+  }
+  async function toggle() { if (isMobile) await settings.tap(); else await settings.click(); }
+  await at(homeLink);
+  const travel = page.evaluate(() => new Promise<number[]>(resolve => {
+    const positions: number[] = [], end = performance.now() + 1000;
+    function sample(time: number) {
+      positions.push(document.querySelector(".page-dock > .glass-indicator")!.getBoundingClientRect().x);
+      if (time < end) requestAnimationFrame(sample); else resolve(positions);
+    }
+    requestAnimationFrame(sample);
+  }));
+  await toggle(); await at(settings);
+  expect(new Set((await travel).map(x => x.toFixed(1))).size).toBeGreaterThan(2);
+  await expect(settings).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await toggle(); await at(homeLink);
+  await expect(settings).toBeFocused();
+  await settings.press("Enter"); await at(settings);
+  await page.keyboard.press("Escape"); await at(homeLink);
+  await expect(settings).toBeFocused();
+  await toggle(); await at(settings);
+  await page.mouse.click(4, 200); await at(homeLink);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await toggle(); await at(settings);
+  await page.getByRole("button", { name: "화면 설정 닫기", exact: true }).click(); await at(homeLink);
+  await page.setViewportSize({ width: 1280, height: 844 });
+  await expect(settings).toBeHidden(); await at(homeLink);
+  await expect(page.locator(".admin-link-label")).toBeVisible();
+  await expect(page.locator("#glass-clarity small")).toBeVisible();
+});
+
 test("nested controls close in order, retain values and ignore old aurora preferences", async ({ page }) => {
   const errors: string[] = []; page.on("pageerror", error => errors.push(error.message));
   await page.setViewportSize({ width: 320, height: 667 });

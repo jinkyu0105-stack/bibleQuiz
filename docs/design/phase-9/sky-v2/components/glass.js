@@ -71,7 +71,8 @@ export function mountGlassComponents(root = document, { prismatic = true, descen
     indicator.className = 'glass-indicator'; indicator.setAttribute('aria-hidden', 'true');
     element.prepend(indicator); decorations.push(indicator);
     const motion = prismatic && element.dataset.glassMotion === 'elastic'
-      ? installDockMotion({ element, indicator, signal, canMove }) : null;
+      ? installDockMotion({ element, indicator, signal,
+        canMove: () => canAnimate() && (finePointer.matches || element.hasAttribute('data-glass-selection-only')) }) : null;
     if (motion && element.hasAttribute('data-glass-convex')) {
       element.dataset.dockMaterial = 'convex';
       indicator.classList.add('convex-lens');
@@ -81,7 +82,8 @@ export function mountGlassComponents(root = document, { prismatic = true, descen
   });
   function measureSelection({ element, indicator, motion }) {
     if (motion) { motion.measure(); return; }
-    const selected = element.querySelector(':scope > [aria-pressed=true], :scope > [aria-current=page], :scope > [aria-selected=true]');
+    const selected = (element.hasAttribute('data-glass-selection-only') && element.querySelector(':scope > [aria-expanded=true]')) ||
+      element.querySelector(':scope > [aria-pressed=true], :scope > [aria-current=page], :scope > [aria-selected=true]');
     if (!selected || !element.getClientRects().length) return;
     indicator.style.width = `${selected.offsetWidth}px`;
     indicator.style.height = `${selected.offsetHeight}px`;
@@ -222,7 +224,7 @@ export function mountGlassComponents(root = document, { prismatic = true, descen
       if (group.motion) group.motion.syncSelection(); else measureSelection(group);
     }
   });
-  for (const { element } of groups) selection.observe(element, { subtree: true, attributes: true, attributeFilter: ['aria-pressed', 'aria-current', 'aria-selected'] });
+  for (const { element } of groups) selection.observe(element, { subtree: true, attributes: true, attributeFilter: ['aria-pressed', 'aria-current', 'aria-selected', 'aria-expanded', 'data-glass-selection-only'] });
   scheduleMeasurement();
   document.fonts.ready.then(() => { if (!signal.aborted) scheduleMeasurement(); });
 
@@ -233,7 +235,8 @@ export function mountGlassComponents(root = document, { prismatic = true, descen
     activeGlass?.style.removeProperty('--glint-x'); activeGlass?.style.removeProperty('--glint-y');
     activeGlass = null;
   }
-  function canMove() { return !reduceTransparency.matches && document.body.dataset.transparency !== 'reduced' && finePointer.matches && !reduceMotion.matches && document.body.dataset.motion !== 'off' && !document.hidden; }
+  function canAnimate() { return !reduceTransparency.matches && document.body.dataset.transparency !== 'reduced' && !reduceMotion.matches && document.body.dataset.motion !== 'off' && !document.hidden; }
+  function canMove() { return finePointer.matches && canAnimate(); }
   for (const element of find('[data-glint]')) {
     element.addEventListener('pointermove', event => {
       // Nested arrow lenses own their pointer; the parent card must not steal it.

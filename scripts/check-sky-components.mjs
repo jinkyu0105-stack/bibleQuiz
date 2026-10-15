@@ -48,16 +48,22 @@ try {
       await expect(page.locator('#example-note')).toHaveValue('재연결해도 남아야 하는 메모');
       await expect(menu.getByRole('button', { name: '장년' })).toHaveAttribute('aria-pressed', 'true');
       // Independent roots, root-as-panel, globally unique filters, and cleanup.
-      const lifecycle = await page.evaluate(async () => {
+      const lifecycle = await page.evaluate(async chromiumOptics => {
         const { mountGlassComponents } = await import('./glass.js?v=20261010-components-1');
         const panel = document.createElement('article');
-        panel.className = 'glass'; panel.dataset.glassPanel = 'reading'; panel.style.width = '320px';
+        panel.className = 'glass'; panel.dataset.glassPanel = 'reading';
+        panel.style.cssText = 'position:fixed;top:20px;left:20px;width:320px';
         panel.textContent = '별도 위치에 재사용한 박스'; document.body.append(panel);
         const first = mountGlassComponents(panel);
         const second = mountGlassComponents(panel); // Same root replaces its own mount.
         first.destroy(); // A stale controller cannot destroy the replacement.
         second.refresh();
-        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        // Optical maps are now prepared on visibility, after the observer fires.
+        // Check the visible panel's readiness instead of assuming two frames.
+        for (let frame = 0; frame < 120; frame++) {
+          await new Promise(resolve => requestAnimationFrame(resolve));
+          if (!chromiumOptics || panel.dataset.lensReady === 'true') break;
+        }
         const ids = [...document.querySelectorAll('filter[id]')].map(node => node.id);
         const count = panel.querySelectorAll('.glass-reading-core').length;
         const ready = panel.dataset.lensReady;
@@ -72,7 +78,7 @@ try {
         await new Promise(resolve => requestAnimationFrame(resolve));
         emptyMount.destroy(); empty.remove();
         return { count, unique: new Set(ids).size === ids.length, clean, preserved, ready, remaining: document.querySelectorAll('.liquid-filter-definitions').length };
-      });
+      }, name === 'chromium');
       assert.equal(lifecycle.count, 1); assert(lifecycle.unique && lifecycle.clean && lifecycle.preserved);
       assert.equal(lifecycle.remaining, 1);
       assert.equal(lifecycle.ready, name === 'chromium' ? 'true' : undefined);

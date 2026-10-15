@@ -45,6 +45,7 @@ glass.destroy();
 - 버튼의 현재 선택은 `aria-pressed="true"`, 페이지 링크는 `aria-current="page"`, 탭은 `aria-selected="true"`로 표시한다. 클릭/키보드 동작과 이 속성 변경은 호스트가 맡고, 컴포넌트는 이를 관찰해 선택 유리만 움직인다. hover로 데이터나 실제 선택을 바꾸지 않는다. 여러 그룹의 상태는 독립적이다.
 - `data-glass-motion`을 생략하면 기존 단순 선택 표시다. `data-glass-convex`를 생략하면 탄성 이동과 평평한 재질을 조합할 수 있다.
 - 현재 선택이 없는 헤더형 메뉴는 `data-glass-hover-only`를 추가한다. 읽기 패널 안의 메뉴에는 `data-glass-nested`를 추가해 밝은 시간대의 기존 CSS 굴절 대안을 사용한다.
+- 모바일 하단처럼 선택만 따라가는 메뉴는 `data-glass-selection-only`를 사용한다. 열려 있는 직접 자식(`aria-expanded=true`)이 유리 표시를 잠시 가져가며 닫히면 현재 페이지로 돌아온다. 현재 링크의 `aria-current`와 버튼의 초점 테두리는 보존한다. 이 메뉴는 터치에서도 기존 탄성 이동을 사용하고, 호버/초점만으로 표시를 옮기지 않는다. 움직임·투명도 감소 설정에서는 즉시 이동한다. 속성이 없는 기존 메뉴의 동작은 유지한다.
 - 일반 유리 표면의 포인터 반사는 `data-glint`로 연결한다. `data-glint-shape="spot"`은 작은 원형, `edge`는 위아래 테두리다. `data-glass-lens`는 맑은 표면의 광학 효과를 연결한다. 박스와 입체 버튼은 필요한 속성/장식을 자동으로 갖춘다.
 - `body[data-motion="off"]`는 공통 정지, `body[data-transparency="reduced"]`는 선명한 표면이다. OS 움직임/투명도 감소·터치·숨은 문서도 기존 대안을 유지한다. Firefox는 CSS 재질을 사용한다. 전체 WebKit/실기기 검증을 뜻하지 않는다.
 

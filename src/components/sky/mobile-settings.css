@@ -5,7 +5,6 @@
     display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; min-height: 44px;
     padding: 0; border: 0; border-radius: 50%; color: var(--glass-control-ink); background: transparent;
   }
-  .page-dock .mobile-settings-trigger[aria-expanded=true] { background: var(--glass-selected); }
   body[data-view=home] .time-rail {
     position: fixed; z-index: 40; inset: auto 0 calc(78px + env(safe-area-inset-bottom, 0px));
     width: 236px; max-width: calc(100vw - 24px); margin-inline: auto; padding: 8px 16px 14px;

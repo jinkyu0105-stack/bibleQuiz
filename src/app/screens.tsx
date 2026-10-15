@@ -6,6 +6,7 @@ import { GlassLink } from "../components/glass/GlassLink";
 import { GlassPanel } from "../components/glass/GlassPanel";
 import { useGlass } from "../components/glass/useGlass";
 import { SkyEnvironment } from "../components/sky/SkyEnvironment";
+import { AdminIcon } from "../components/AdminIcon";
 
 export function RootLayout() {
   const location = useLocation();
@@ -23,7 +24,7 @@ export function RootLayout() {
         <GlassMenu as="nav" clear={false} data-glass-hover-only="" className="site-navigation" aria-label="주요 메뉴">
           <NavLink end to="/">이번 주 퀴즈</NavLink><NavLink to="/archive">지난 퀴즈</NavLink>
         </GlassMenu>
-        <GlassLink className="admin-link" to="/admin" aria-label="관리 공간"><span className="admin-link-label">관리</span><span className="admin-link-arrow" aria-hidden="true">↗</span></GlassLink>
+        <GlassLink className="admin-link" to="/admin" aria-label="관리 공간"><AdminIcon name="grid" className="admin-link-icon" /><span className="admin-link-label">관리</span><span className="admin-link-arrow" aria-hidden="true">↗</span></GlassLink>
       </header>
       <div className={admin ? "admin-layout" : "public-layout"}>
         {admin && <AdminNavigation />}

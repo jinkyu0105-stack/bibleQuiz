@@ -9,8 +9,11 @@ export function installDockMotion({ element, indicator, signal, canMove }) {
   const spring = (value = 0) => ({ value, velocity: 0 });
   const state = { position: spring(), length: spring(), crossPosition: spring(), crossLength: spring(), stretch: spring(), lift: spring() };
   let boxes = [], target = null, hovered = null, frame = 0, previousTime = 0, ready = false, vertical = false;
-  const selected = () => links.find(link => link.matches('[aria-current=page], [aria-selected=true], [aria-pressed=true]'));
-  const focused = () => links.find(link => link === document.activeElement && link.matches(':focus-visible'));
+  const selectionOnly = () => element.hasAttribute('data-glass-selection-only');
+  // An open disclosure temporarily borrows the lens; the page remains current.
+  const selected = () => (selectionOnly() && links.find(link => link.matches('[aria-expanded=true]'))) ||
+    links.find(link => link.matches('[aria-current=page], [aria-selected=true], [aria-pressed=true]'));
+  const focused = () => !selectionOnly() && links.find(link => link === document.activeElement && link.matches(':focus-visible'));
   const enabled = () => canMove() && !forcedColors.matches;
   element.dataset.dockMotion = 'elastic';
 
@@ -120,13 +123,14 @@ export function installDockMotion({ element, indicator, signal, canMove }) {
   function syncSelection() {
     // A click changes the real selection without interrupting a hovered spring
     // or remeasuring the other menus on every aria-pressed update.
+    if (selectionOnly()) hovered = null;
     aim(enabled() ? hovered || focused() || selected() : selected());
   }
   function leave() {
     hovered = null; aim(enabled() ? focused() || selected() : selected());
   }
   element.addEventListener('pointermove', event => {
-    if (event.pointerType === 'touch' || !enabled() || !boxes.length) return;
+    if (event.pointerType === 'touch' || selectionOnly() || !enabled() || !boxes.length) return;
     const bounds = element.getBoundingClientRect();
     const coordinate = vertical ? event.clientY - bounds.top - element.clientTop : event.clientX - bounds.left - element.clientLeft;
     if (coordinate < Math.min(...boxes.map(box => box.start)) || coordinate > Math.max(...boxes.map(box => box.end))) { if (hovered) leave(); return; }
