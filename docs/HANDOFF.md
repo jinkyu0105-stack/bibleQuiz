@@ -14,7 +14,7 @@
 
 ## 검사와 남은 범위
 
-관련 E2E39항목 성공을 여러 실행에서 확인했다. 최초33통과·6실패·6제외 뒤 테스트 동기화5건을 고치고 모바일 스크롤1건과 함께 최종9건을 통과했다. Firefox GPU전용6항목은 제외하며 실패 없는 단일45항목 실행이라고 보고하지 않는다. 전체 `pnpm check`2548건·lint/typecheck/build 통과. 최종640×480 상한에서도 GPU12건과 전체check2548건·lint/typecheck/build를 재통과했다. Lighthouse 효과 없음/혼합55/33, TBT250/1590ms로 소프트웨어 GPU의 합성 부담은 남으며 픽셀 감소를 실행 성능 개선으로 단정하지 않는다. 기존500kB fontkit·정적/동적 import 경고는 남는다.
+관련 E2E39항목 성공을 여러 실행에서 확인했다. 최초33통과·6실패·6제외 뒤 테스트 동기화5건을 고치고 모바일 스크롤1건과 함께 최종9건을 통과했다. Firefox GPU전용6항목은 제외하며 실패 없는 단일45항목 실행이라고 보고하지 않는다. 추가 전체 PC/모바일은283통과·기존 조건3제외·실패/재시도0(10.7분)이다. 전체 `pnpm check`2548건·lint/typecheck/build 통과. 최종640×480 상한에서도 GPU12건과 전체check2548건·lint/typecheck/build를 재통과했다. Lighthouse 효과 없음/혼합55/33, TBT250/1590ms로 소프트웨어 GPU의 합성 부담은 남으며 픽셀 감소를 실행 성능 개선으로 단정하지 않는다. 기존500kB fontkit·정적/동적 import 경고는 남는다.
 
 실제5173의 네 시간대×1440/390/320px에서 재생·정지·빛줄기/혼합·조절·범위 양 끝과 유리 받침 이동을 확인했다. 가로 넘침·GPU/pageerror·쓰기API 요청0. 실기기·Safari·화면 읽기 프로그램과 Access 로그인 뒤 실제 원격 저장은 검증하지 않는다. Lighthouse는 소프트웨어 GPU의 모바일 모의값이며 실기기 성능 보장값이 아니다.
 
@@ -33,7 +33,7 @@
 
 시작 Pro잔여63%×사용자 지정10=630%, 별도5시간 창 없음. 다음 구현 전 현재 사용량을 확인한다. AGENTS → PROJECT_CONTEXT → DECISIONS → STATUS → HANDOFF → implementation 관련 정본 → P9-23 → Git상태/diff/log 순서다.
 
-현재 Preview는 소스 `7dce3c204baf135fd50ce4900f376e246e9f7d2b` / version `2974476d-53ae-403f-8d9c-9f617f9fc5c7`·100%·2026-10-15 09:16:30KST다. Workers Builds f42a77f9 성공을 해당 SHA의 GitHub check와 실제 deployments/version으로 대조했다. [CI38658863333](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/38658863333)의 validate는 성공했고 browser는15분 작업 한도로 취소됐다. `.github/workflows/ci.yml`의 browser 한도만25분으로 늘려 재실행한다. 기능/개별 검사 조건은 바꾸지 않았다. Production은 소스 `37b7254` / version `7aea6843-5288-42da-9bef-bc673e1d9dfe`를 유지한다.
+현재 Preview는 소스 `8c8c2905d2fe9db754bb8baaee1d89431a1a20f6` / version `85197f3b-2793-470c-9b61-25182bec2d3c`·100%·2026-10-15 09:33:07KST다. Workers Builds178c13b1 성공을 해당 SHA의 GitHub check와 실제 deployments/version으로 대조했다. UI 코드는7dce3c2와 같다. 첫 CI38658863333의 browser는15분 작업 한도로 취소됐다. 한도를25분으로 늘린 [두 번째 CI38660517814](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/38660517814)는 validate 성공, browser276통과·6재시도 성공·3제외·1실패다. CPU2개에 제한한 로컬 검사에서 초기 화면/GPU 대기 실패를 재현했다. `home-mercury.spec.ts`만 실제 준비 상태를20초/시나리오90초까지 기다리며, `sky-controls-polish.spec.ts`는 애니메이션 시작/끝 시간과 서로 다른 중간 위치를 함께 검사한다. 기능/픽셀/450ms 이상 이동 조건은 유지한다. 같은 CPU2개·재시도 없는 관련14건과 lint/typecheck가 통과했다. 원격 전체 검사는 재확인한다. Production은 소스 `37b7254` / version `7aea6843-5288-42da-9bef-bc673e1d9dfe`를 유지한다.
 
 폐기한 접근: 밤의 상단 중앙 광원, 모바일 달을 가상으로 이동, 효과마다 새 루프, overflow 영역 안의 조절 패널, spring 중간 좌표를 도착 위치로 검사하기. 새 구현은 같은 P9-23의 사용자 피드백으로만 진행한다.
 

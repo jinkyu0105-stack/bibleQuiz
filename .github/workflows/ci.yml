@@ -35,7 +35,7 @@ jobs:
   browser:
     runs-on: ubuntu-latest
     # The full desktop/mobile suite exceeded the old 15-minute job limit.
-    # Keep individual Playwright timeouts and assertions unchanged.
+    # Allow the complete suite, including software GPU startup checks, to finish.
     timeout-minutes: 25
     steps:
       - name: Checkout

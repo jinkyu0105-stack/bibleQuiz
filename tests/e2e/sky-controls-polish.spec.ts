@@ -39,22 +39,38 @@ test("all three circular controls have pointer light and grass restores both gro
   await expect(page.locator("#grass-toggle")).not.toHaveAttribute("data-glint-active");
 });
 
-type SampleWindow = Window & { scrollSamples?: { y: number; time: number }[] };
+type SampleWindow = Window & {
+  scrollSamples?: { y: number; time: number }[];
+  scrollStarted?: number;
+  scrollFinished?: number;
+};
 async function observeScroll(page: Page) {
   await page.evaluate(() => {
+    const probe = window as SampleWindow;
     const samples: { y: number; time: number }[] = [];
-    (window as SampleWindow).scrollSamples = samples;
+    probe.scrollSamples = samples;
     window.addEventListener("scroll", () => samples.push({ y: scrollY, time: performance.now() }), { passive: true });
+    new MutationObserver(() => {
+      if (document.documentElement.dataset.homeScrollAnimating === "true") {
+        probe.scrollStarted = performance.now();
+        delete probe.scrollFinished;
+      } else if (probe.scrollStarted !== undefined) probe.scrollFinished = performance.now();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-home-scroll-animating"] });
   });
 }
 async function expectGradual(page: Page) {
   await expect.poll(() => page.locator("#weekly").evaluate(node => Math.abs(node.getBoundingClientRect().top))).toBeLessThan(2);
-  const duration = await page.evaluate(() => {
+  await expect.poll(() => page.evaluate(() => (window as SampleWindow).scrollFinished)).toBeDefined();
+  const movement = await page.evaluate(() => {
+    const probe = window as SampleWindow;
     const target = document.querySelector<HTMLElement>("#weekly")!.offsetTop;
-    const samples = (window as SampleWindow).scrollSamples!.filter(sample => sample.y > target * .05 && sample.y < target * .95);
-    return samples.length > 1 ? samples.at(-1)!.time - samples[0]!.time : 0;
+    const samples = probe.scrollSamples!.filter(sample => sample.y > target * .05 && sample.y < target * .95);
+    return { duration: probe.scrollFinished! - probe.scrollStarted!, intermediatePositions: new Set(samples.map(sample => sample.y)).size };
   });
-  expect(duration).toBeGreaterThan(450);
+  // Slow CPU rendering can omit the first/last interior scroll events. Check
+  // the real transition interval AND visible movement, rather than that subset's span.
+  expect(movement.duration).toBeGreaterThan(450);
+  expect(movement.intermediatePositions).toBeGreaterThan(1);
 }
 
 test("wheel and weekly links take time to travel and manual input can interrupt", async ({ page, isMobile }) => {

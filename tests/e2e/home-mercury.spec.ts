@@ -1,6 +1,10 @@
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expect as baseExpect, test, type Locator, type Page } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
 
+// SwiftShader shares CPU with Vite on CI. Wait for actual painted/visible states,
+// including routes that recreate a GPU context, without weakening those states.
+const expect = baseExpect.configure({ timeout: 20_000 });
+test.describe.configure({ timeout: 90_000 });
 test.use({ launchOptions: { args: ["--enable-webgl", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"] } });
 test.skip(({ browserName }) => browserName !== "chromium", "GPU rendering uses Chromium SwiftShader; shared navigation also runs in sky-app.");
 
