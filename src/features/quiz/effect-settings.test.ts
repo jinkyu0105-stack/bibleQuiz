@@ -1,4 +1,4 @@
-import { defaultFlowSettings, normalizeFlowSettings } from "../../components/sky/flow-settings";
+import { defaultFlowSettings, normalizeFlowSettings, flowRenderSettings, restoreFlowSettings } from "../../components/sky/flow-settings";
 import { describe, expect, it } from "vitest";
 import { defaultMercurySettings, normalizeMercurySettings } from "../../components/sky/mercury-settings";
 import { defaultVeilSettings, normalizeVeilSettings } from "../../components/sky/veil-settings";
@@ -30,3 +30,18 @@ for (const kind of ["silk"] as const) {
     expect(normalizeFlowSettings(kind, { strength: 44.8, scale: 20.1, speed: 500 })).toEqual({ strength: 45, scale: 20, speed: 100 });
   });
 }
+
+it("caps silk rendering at the approved brightness, fold size and speed", () => {
+  expect(flowRenderSettings({ strength: 100, scale: 0, speed: 100 })).toEqual({ strength: 21, scale: 80, speed: 24 });
+  expect(flowRenderSettings({ strength: 10, scale: 100, speed: 0 })).toEqual({ strength: 2.1, scale: 100, speed: 0 });
+});
+it("converts legacy silk settings once, preserving allowed appearance and clamping outliers", () => {
+  expect(restoreFlowSettings("silk", { strength: 21, scale: 80, speed: 24 })).toEqual({ strength: 100, scale: 0, speed: 100 });
+  expect(restoreFlowSettings("silk", { strength: 50, scale: 50, speed: 50 })).toEqual({ strength: 100, scale: 0, speed: 100 });
+  expect(restoreFlowSettings("silk", { strength: 10.5, scale: 90, speed: 12 })).toEqual({ strength: 50, scale: 50, speed: 50 });
+  expect(restoreFlowSettings("silk", { version: 2, strength: 21, scale: 80, speed: 24 })).toEqual({ strength: 21, scale: 80, speed: 24 });
+  expect(restoreFlowSettings("silk", { speed: 0 }).speed).toBe(0);
+  for (const value of [null, false, [], { strength: Infinity, scale: NaN, speed: "bad" }]) {
+    expect(restoreFlowSettings("silk", value)).toEqual(defaultFlowSettings.silk);
+  }
+});

@@ -87,7 +87,7 @@ for (const choice of choices) test(`${choice.kind} renders adjustable pixels and
     let alpha = 0, hash = 2166136261;
     for (let i = 0; i < pixels.length; i++) { hash = Math.imul(hash ^ pixels[i]!, 16777619); if (i % 4 === 3) alpha += pixels[i]!; }
     const uniform = gl.getUniform(program, gl.getUniformLocation(program, name));
-    return { hash, alpha, elapsed: Number(c.dataset.time), time: typeof uniform === "number" ? uniform : uniform[2] as number, error: gl.getError() };
+    return { hash, alpha, elapsed: Number(c.dataset.time), time: typeof uniform === "number" ? uniform : uniform[2] as number, strength: typeof uniform === "number" ? null : uniform[0] as number, scale: typeof uniform === "number" ? null : uniform[1] as number, error: gl.getError() };
   }, choice.uniform);
   const speed = page.getByRole("slider", { name: "흐름 속도", exact: true });
   await speed.focus(); await speed.press("Home");
@@ -101,10 +101,12 @@ for (const choice of choices) test(`${choice.kind} renders adjustable pixels and
   await speed.press("Home");
   const brightness = page.getByRole("slider", { name: "밝기", exact: true });
   await brightness.focus(); await brightness.press("End"); const bright = await sample();
+  if (choice.kind === "silk") expect(bright.strength).toBeCloseTo(.21, 5);
   await brightness.press("Home");
   await expect.poll(async () => (await sample()).alpha).toBeLessThan(bright.alpha * .5);
   const scale = page.getByRole("slider", { name: choice.scale, exact: true });
   await scale.focus(); await scale.press("Home"); const small = await sample();
+  if (choice.kind === "silk") expect(small.scale).toBeCloseTo(.8, 5);
   await scale.press("End"); await expect.poll(async () => (await sample()).hash).not.toBe(small.hash);
   await speed.focus(); await speed.press("End");
   const moving = await sample(); await expect.poll(async () => (await sample()).hash).not.toBe(moving.hash);
@@ -115,6 +117,12 @@ for (const choice of choices) test(`${choice.kind} renders adjustable pixels and
     await expect.poll(async () => (await sample()).elapsed - moving.elapsed).toBeGreaterThan(.12);
     const fast = await sample();
     expect((fast.time - moving.time) / (fast.elapsed - moving.elapsed)).toBeGreaterThan(12);
+  }
+  if (choice.kind === "silk") {
+    await expect.poll(async () => (await sample()).elapsed - moving.elapsed).toBeGreaterThan(.12);
+    const fast = await sample();
+    expect((fast.time - moving.time) / (fast.elapsed - moving.elapsed)).toBeCloseTo(.48, 2);
+    expect(fast.scale).toBeCloseTo(1, 5);
   }
   await page.keyboard.press("Escape");
   if ((page.viewportSize()?.width ?? 1280) > 700) await page.keyboard.press("Escape");

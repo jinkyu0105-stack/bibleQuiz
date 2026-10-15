@@ -126,7 +126,7 @@ export function HomeEffectsControl({ night = false, available = true, mobile = f
   }
   function adjustFlow(kind: FlowKind, next: FlowSettings) {
     setFlowSettings(previous => ({ ...previous, [kind]: next }));
-    setStorageFailed(!saveSkyPreference(`${kind}-settings`, JSON.stringify(next)));
+    setStorageFailed(!saveSkyPreference(`${kind}-settings`, JSON.stringify({ ...next, version: 2 })));
   }
   function setEnabled(kind: EffectKind, next: boolean) {
     if (kind === "mercury") {

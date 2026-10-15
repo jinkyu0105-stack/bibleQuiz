@@ -3,7 +3,7 @@
 import { defaultVeilSettings, normalizeVeilSettings } from "./veil-settings";
 import { defaultMercurySettings, normalizeMercurySettings } from "./mercury-settings";
 
-import { defaultFlowSettings, normalizeFlowSettings } from "./flow-settings";
+import { defaultFlowSettings, normalizeFlowSettings, flowRenderSettings } from "./flow-settings";
 
 const vertex = `
 attribute vec2 aPosition;
@@ -155,7 +155,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
   let pointerX = -2, pointerY = -2, targetX = -2, targetY = -2;
   let veilSettings = { ...defaultVeilSettings }, moonX = .74, moonY = .86;
   let mercurySettings = { ...defaultMercurySettings };
-  let silkSettings = { ...defaultFlowSettings.silk };
+  let silkSettings = flowRenderSettings(defaultFlowSettings.silk);
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const contrast = matchMedia("(forced-colors: active)");
   const transparency = matchMedia("(prefers-reduced-transparency: reduce)");
@@ -243,7 +243,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
     if (disposed || lost || !program) return;
     veilSettings = normalizeVeilSettings({ width: Number(document.body.dataset.veilWidth), strength: Number(document.body.dataset.veilStrength), spread: Number(document.body.dataset.veilSpread), speed: Number(document.body.dataset.veilSpeed) });
     mercurySettings = normalizeMercurySettings({ strength: Number(document.body.dataset.mercuryStrength), scale: Number(document.body.dataset.mercuryScale), speed: Number(document.body.dataset.mercurySpeed) });
-    silkSettings = normalizeFlowSettings("silk", { strength: Number(document.body.dataset.silkStrength), scale: Number(document.body.dataset.silkScale), speed: Number(document.body.dataset.silkSpeed) });
+    silkSettings = flowRenderSettings(normalizeFlowSettings("silk", { strength: Number(document.body.dataset.silkStrength), scale: Number(document.body.dataset.silkScale), speed: Number(document.body.dataset.silkSpeed) }));
     locateMoon();
     canvas.dataset.state = !effects().some(Boolean) ? "disabled" : clear() ? "clear" : hidden() ? "offscreen" : moving() ? "running" : "paused";
     if (!effects().some(Boolean) || clear() || hidden()) return;

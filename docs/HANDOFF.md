@@ -2,6 +2,10 @@
 
 ## 현재 작업
 
+**P9-25 최신 후속: 비단결 조절 범위 로컬 보정 완료.** 비단결 조절 범위 보정: 새 밝기100%=기존21%, 주름0%=기존80%, 속도100%=기존24%. 기본 표시50/50/50, 속도0 정지 유지. 기존 저장값은 외관 기준으로 환산하고 범위 밖만 제한하며 version2로 재환산을 방지한다. 단위6건·PC/모바일 GPU E2E6건·lint/typecheck·diff 검사 통과. 전체check와 실기기 검수는 이번 범위에서 반복하지 않았다. 시작d091caa/clean, 변경 파일은 실제 Git log/show 참조. 이번 수정은 로컬 커밋이며 push/배포 없음. [상세](work/P9-25.md#비단결-조절-범위-보정--2026-10-16). 현재 Pro89%×10=890%. 다음은 로컬 화면 확인과 기존 iPhone 재검수.
+
+### 직전 모바일 수정·배포 근거
+
 **P9-25 iPhone 터치·모바일 효과 제어 후속: 로컬 보정/관련 검수 완료, 실제 기기 재확인 대기.** 시작 main851e4dc/clean. 히어로 화살표 배경 제거, 모바일 헤더 좌표 기준 수정, 터치 앵커의 중복 rAF 제거, null blur로 효과가 다시 켜지는 경로 수정. 별 버튼 고정/시간대 줄을 세 효과로 전환/초기화 아이콘·ON/OFF/닫으면 시간대 및 초점 복귀를 적용했다. PC 기존 모션·설정 값·하늘/영상/유리는 유지한다. [현재 상세와 실패 기록](work/P9-25.md#iphone-터치와-모바일-효과-제어-후속).
 
 ## 검사·한계
@@ -13,7 +17,7 @@
 
 ## Git·다음 범위
 
-2026-10-16 사용자 “깃 푸시 하세요” 승인으로 기능 소스 `d80b80eac8cbdd0f89237ce299188db19b0c2f37`를 main에 push했고 원격 해시 일치를 확인했다. 시작/푸시 직전 worktree clean. 검사 로그 `/tmp/biblequiz-push-check.log`, exit0. 원격 CI38763709735의 validate/browser는 진행 중이다. 2026-10-16 00:56:20KST 확인: main a403d7f의 Workers Builds bd16892f-096e-4f2f-bf2c-5fe0a61d0df7 success, Preview version5598f5e5-3f1a-44ac-aa83-1221189fb8b7의100% 배포를 deployments API와 대조했다. push 직후에는 이전04d70dfd가 유지됐고 이후 빌드가 시작됐다. 상세 Builds API403으로 지연의 내부 원인은 확정하지 못했다. 배포 결과 기록만 로컬 커밋하며 불필요한 재배포 push는 하지 않는다. 실제 iPhone 재확인은 남는다. 직전 원격851e4dc/Preview04d70dfd 기록은 `.wrangler/releases/p9-25-loading/final-deployment-proof.json`에 보존한다. [폰 Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/). 실제 자료·AI·원격 설정·Production7aea6843은 변경하지 않았다. 이 결과 문서 커밋은 기능 변경 없이 별도로 push한다. 다음은 자동 배포/원격 CI 결과 확인과 사용자 실제 iPhone 재확인이다.
+2026-10-16 사용자 “깃 푸시 하세요” 승인으로 기능 소스 `d80b80eac8cbdd0f89237ce299188db19b0c2f37`를 main에 push했고 원격 해시 일치를 확인했다. 시작/푸시 직전 worktree clean. 검사 로그 `/tmp/biblequiz-push-check.log`, exit0. 원격 CI38763709735의 validate/browser는 진행 중이다. 2026-10-16 00:56:20KST 확인: main a403d7f의 Workers Builds bd16892f-096e-4f2f-bf2c-5fe0a61d0df7 success, Preview version5598f5e5-3f1a-44ac-aa83-1221189fb8b7의100% 배포를 deployments API와 대조했다. push 직후에는 이전04d70dfd가 유지됐고 이후 빌드가 시작됐다. 상세 Builds API403으로 지연의 내부 원인은 확정하지 못했다. 배포 결과 기록만 로컬 커밋하며 불필요한 재배포 push는 하지 않는다. 실제 iPhone 재확인은 남는다. 직전 원격851e4dc/Preview04d70dfd 기록은 `.wrangler/releases/p9-25-loading/final-deployment-proof.json`에 보존한다. [폰 Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/). 실제 자료·AI·원격 설정·Production7aea6843은 변경하지 않았다. 배포 결과 기록d091caa는 로컬에만 남겼다. 다음은 자동 배포/원격 CI 결과 확인과 사용자 실제 iPhone 재확인이다.
 
 ## 실행 환경
 
