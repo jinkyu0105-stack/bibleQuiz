@@ -79,7 +79,10 @@ test("wheel and weekly links take time to travel and manual input can interrupt"
   await home(page);
   await observeScroll(page);
   await page.locator("#home-view").getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
-  await expectGradual(page);
+  if (isMobile) {
+    await expect.poll(() => page.locator("#weekly").evaluate(node => Math.abs(node.getBoundingClientRect().top))).toBeLessThan(2);
+    await expect(page.locator("html")).not.toHaveAttribute("data-home-scroll-animating");
+  } else await expectGradual(page);
   await expect(page).toHaveURL(/\?video=off#weekly$/);
   if (!isMobile) {
     await page.goto("/?video=off");

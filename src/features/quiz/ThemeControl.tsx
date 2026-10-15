@@ -16,6 +16,8 @@ export function ThemeControl({ home, time, onChange, grass, onGrassChange, stora
   const [clarityStorageFailed, setClarityStorageFailed] = useState(false);
   const [compact, setCompact] = useState(() => window.matchMedia("(max-width: 700px)").matches);
   const [popupOpen, setPopupOpen] = useState(false);
+  const [effectsOpen, setEffectsOpen] = useState(false);
+  const [effectsSlot, setEffectsSlot] = useState<HTMLDivElement | null>(null);
   const location = useLocation();
   const [popupLocation, setPopupLocation] = useState(location.key);
   if (popupLocation !== location.key) {
@@ -26,6 +28,7 @@ export function ThemeControl({ home, time, onChange, grass, onGrassChange, stora
   const id = useId();
   const mobilePopup = compact;
   const available = !mobilePopup || popupOpen;
+  const showEffects = compact && home && available && effectsOpen;
   const clarityLabel = systemClarity ? "시스템 투명도 감소 적용 중" : clarity ? "유리 투명도 복원" : "투명도 줄이기";
   const motionRef = useGlass<HTMLButtonElement>();
   const clarityRef = useGlass<HTMLButtonElement>();
@@ -88,12 +91,15 @@ export function ThemeControl({ home, time, onChange, grass, onGrassChange, stora
     <div className="mobile-settings-heading"><strong>화면 설정</strong><button type="button" aria-label="화면 설정 닫기" onClick={closePopup}>
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
     </button></div>
-    <GlassMenu className="time-options" role="group" aria-label="하늘 시간대">
+    <div className="sky-settings-choices" data-effects-open={showEffects}>
+    <GlassMenu className="time-options" role="group" aria-label="하늘 시간대" aria-hidden={showEffects} inert={showEffects}>
       {([["dawn", "새벽", "☀"], ["day", "낮", "☼"], ["dusk", "노을", "◒"], ["night", "밤", "☾"]] as const).map(([value, label, icon]) => <button key={value} type="button" title={label} aria-label={label} aria-pressed={time === value} onClick={() => onChange(value)}><span aria-hidden="true">{icon}</span><small>{label}</small></button>)}
     </GlassMenu>
+    {compact && <div ref={setEffectsSlot} className="mobile-effects-slot" />}
+    </div>
     <div className="sky-controls">
       <button ref={motionRef} id="motion" className="glass glass-clear" data-glint type="button" aria-label="배경 움직임 멈춤" aria-pressed="false"><span aria-hidden="true">Ⅱ</span></button>
-      {home && <HomeEffectsControl night={time === "night"} available={available} />}
+      {home && <HomeEffectsControl night={time === "night"} available={available} mobile={compact} mobileSlot={effectsSlot} onOpenChange={setEffectsOpen} />}
       <button ref={clarityRef} id="glass-clarity" data-glint className="glass glass-clear" type="button" aria-label={clarityLabel} title={compact ? clarityLabel : undefined} aria-pressed={clarity || systemClarity} disabled={systemClarity} onClick={() => { setClarity(!clarity); setClarityStorageFailed(!saveSkyPreference("clarity", String(!clarity))); }}>
         <svg className="clarity-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="12" cy="12" r="8" /><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none" /></svg>
         <span className="clarity-label" aria-hidden="true">가</span><small className="clarity-label">선명하게</small>

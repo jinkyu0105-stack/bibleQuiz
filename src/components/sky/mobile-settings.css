@@ -1,4 +1,5 @@
 .mobile-settings-trigger, .mobile-settings-heading { display: none; }
+.sky-settings-choices { display: contents; }
 
 @media (max-width: 700px) {
   .page-dock .mobile-settings-trigger {
@@ -24,6 +25,10 @@
     padding: 0; border: 0; border-radius: 50%; color: inherit; background: transparent;
   }
   body[data-view] .time-rail .time-options { width: 100%; justify-content: space-between; padding: 4px; }
+  .sky-settings-choices { display: block; position: relative; width: 100%; height: 52px; flex: none; }
+  .sky-settings-choices[data-effects-open=true] .time-options { visibility: hidden; pointer-events: none; }
+  .mobile-effects-slot { position: absolute; inset: 0; pointer-events: none; }
+  .mobile-effects-slot > * { pointer-events: auto; }
   body[data-view] .time-rail .sky-controls { width: 100%; justify-content: space-between; gap: 4px; }
   body[data-view] .time-rail .quiet-message { width: 100%; margin: 0; padding: 0; background: transparent; }
   body[data-view] .hero-light-panel.glass { z-index: 41; }

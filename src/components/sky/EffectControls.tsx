@@ -1,10 +1,11 @@
 import { useLayoutEffect, useRef, type CSSProperties, type RefObject } from "react";
 
-export function EffectControls<Key extends string>({ id, anchor, label, title = label, description, settings, defaults, fields, onChange, onClose }: {
+export function EffectControls<Key extends string>({ id, anchor, label, title = label, description, settings, defaults, fields, onChange, onClose, enabled, onEnabledChange }: {
   id: string; anchor: RefObject<HTMLElement | null>; label: string; title?: string; description: string;
   settings: Record<Key, number>; defaults: Record<Key, number>;
   fields: readonly { key: Key; label: string; min: number; max: number }[];
   onChange: (settings: Record<Key, number>) => void; onClose: () => void;
+  enabled: boolean; onEnabledChange: (enabled: boolean) => void;
 }) {
   const panel = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -58,7 +59,15 @@ export function EffectControls<Key extends string>({ id, anchor, label, title = 
           style={{ "--veil-value": `${(settings[key] - min) / (max - min) * 100}%` } as CSSProperties}
           onChange={event => onChange({ ...settings, [key]: event.currentTarget.valueAsNumber })} />
       </label>)}
-    <button className="hero-light-reset" type="button" onClick={() => onChange({ ...defaults })}>기본값으로</button>
+    </div>
+    <div className="hero-light-actions">
+      <button className="hero-light-reset" type="button" aria-label="기본값으로" title="기본값으로" onClick={() => onChange({ ...defaults })}>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6" /></svg>
+        <span>기본값으로</span>
+      </button>
+      <button className="hero-light-toggle" type="button" role="switch" aria-label="효과 사용" aria-checked={enabled} onClick={() => onEnabledChange(!enabled)}>
+        <span className="hero-light-switch" aria-hidden="true" /><span aria-hidden="true">{enabled ? "ON" : "OFF"}</span>
+      </button>
     </div>
   </div>;
 }

@@ -61,12 +61,13 @@ test("effect disclosure supports keyboard, escape, outside dismissal and reduced
   await trigger.focus();
   await page.keyboard.press("Enter");
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  await page.keyboard.press("Tab");
+  if (!isMobile) await page.keyboard.press("Tab");
   const reflection = page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true });
   await expect(reflection).toBeFocused();
   await page.keyboard.press("Space");
   await expect(page.getByRole("slider", { name: "밝기", exact: true })).toBeFocused();
   await page.keyboard.press("Escape");
+  if (isMobile) { await expect(trigger).toBeFocused(); await trigger.press("Enter"); }
   await expect(reflection).toBeFocused();
   await expect(reflection).toHaveAttribute("aria-pressed", "true");
   await page.keyboard.press("Space");
@@ -78,9 +79,11 @@ test("effect disclosure supports keyboard, escape, outside dismissal and reduced
   await page.keyboard.press("Enter");
   await expect(rays).toHaveAttribute("aria-pressed", "true");
   await page.keyboard.press("Escape");
-  await expect(rays).toBeFocused();
-  await expect(rays).toHaveAttribute("aria-pressed", "true");
-  await page.keyboard.press("Escape");
+  if (!isMobile) {
+    await expect(rays).toBeFocused();
+    await expect(rays).toHaveAttribute("aria-pressed", "true");
+    await page.keyboard.press("Escape");
+  }
   await expect(trigger).toBeFocused();
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
   await page.keyboard.press("Tab");
@@ -158,7 +161,8 @@ test("light tuning supports live input, saved values, reset and returning focus"
   expect(box.x + box.width).toBeLessThanOrEqual(page.viewportSize()!.width);
   expect(box.y + box.height).toBeLessThanOrEqual(page.viewportSize()!.height);
   await spread.focus(); await page.keyboard.press("Escape");
-  await expect(tune).toBeFocused(); await expect(tune).toHaveAttribute("aria-expanded", "false");
+  if (isMobile) { await expect(trigger).toBeFocused(); await expect(tune).toHaveCount(0); }
+  else { await expect(tune).toBeFocused(); await expect(tune).toHaveAttribute("aria-expanded", "false"); }
   await page.reload(); await expand(page, isMobile); await tune.click();
   await expect(width).toHaveValue("100"); await expect(strength).toHaveValue("11"); await expect(spread).toHaveValue(String(value));
   await page.getByRole("button", { name: "기본값으로", exact: true }).click();
@@ -210,7 +214,8 @@ test("reflection tuning saves independent values, resets and fits the small scre
   expect(box.x + box.width).toBeLessThanOrEqual(page.viewportSize()!.width);
   expect(box.y + box.height).toBeLessThanOrEqual(page.viewportSize()!.height);
   await page.keyboard.press("Escape");
-  await expect(reflection).toBeFocused(); await expect(reflection).toHaveAttribute("aria-pressed", "true");
+  if (isMobile) await expect(page.locator(".hero-effect-trigger")).toBeFocused();
+  else { await expect(reflection).toBeFocused(); await expect(reflection).toHaveAttribute("aria-pressed", "true"); }
   await page.reload(); await expand(page, isMobile); await reflection.click();
   await expect(brightness).toHaveValue("11"); await expect(scale).toHaveValue("100"); await expect(speed).toHaveValue("0");
   const rays = page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true });

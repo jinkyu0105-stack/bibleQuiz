@@ -2,16 +2,25 @@
 
 ## 현재 작업
 
-**P9-25 모바일 정리·새로고침 첫 화면 개선 및 Preview 반영 완료.** 시작4f8a2aa/clean·origin/main a8abc99. loadHome이 메인 자료를 지연하고 HomeContent의 이번 주 영역만 Await로 기다린다. 최상위 AppLoading과 영역 QuizLoading에서 큰 임시 박스를 제거했다. 기존 직접 풀이·오류/재시도·자료/영상/유리는 보존한다. 이전 로컬5개 커밋도 기능 소스f9581acbf884bfc47b207944753bd9a6672f19c3와 함께 main push했다. 이번 사용자 지시는 Preview까지 명시 승인하며 Production·원격 데이터·AI·인증 변경은 포함하지 않는다.
+**P9-25 iPhone 터치·모바일 효과 제어 후속: 로컬 보정/관련 검수 완료, 실제 기기 재확인 대기.** 시작 main851e4dc/clean. 히어로 화살표 배경 제거, 모바일 헤더 좌표 기준 수정, 터치 앵커의 중복 rAF 제거, null blur로 효과가 다시 켜지는 경로 수정. 별 버튼 고정/시간대 줄을 세 효과로 전환/초기화 아이콘·ON/OFF/닫으면 시간대 및 초점 복귀를 적용했다. PC 기존 모션·설정 값·하늘/영상/유리는 유지한다. [현재 상세와 실패 기록](work/P9-25.md#iphone-터치와-모바일-효과-제어-후속).
 
 ## 검사·한계
 
-pnpm check 최종2552건/lint/typecheck/build 통과·종료파일0. 첫 실행은 완료 로그 뒤143이므로 재실행해 정상 종료를 확인했다. 첫 관련42건33통과/9실패, 전체314건304통과/6실패/4조건제외 뒤 남은6건 재검사 모두 통과. 실패는 이전 모바일 설정창 접근 가정 및 본문/폰트 준비 전의 스크롤 검사였으며 공통 도우미와 준비 조건으로 수정했다. 마지막 테스트 변경 뒤 lint/typecheck 통과. 실제5173 네 시간대×390/1440px8조합의 API 대기/완료를 비교해 제목 위치 유지·오류/넘침0. 원자료 ignored `.wrangler/releases/p9-25-loading/`. 실기기 검수·인증 후 Preview 화면은 아직 확인하지 않았다.
+- Chromium PC/모바일 첫44통과, 최종 보정 뒤42통과/2실패. 풀이 lazy 본문 도착 전 푸터 측정 조건을 수정한 재검사8건 모두 통과해44개 대상 확인. 실패 이력을 지우지 않는다.
+- iPhone12ProMax 설정 Linux WebKit10건 중7통과/3실패. 연속 효과1건은45초 제한으로 실패했으나 이벤트 추적26.08초 정상 완료, 동일 검증의90초 제한 재검사32초 통과. 영상 제외 핵심8건 확인. 영상 켠 첫 로딩2건은5초/45초 시간초과 실패로 남으며 영상 렌더/실기기 성공으로 보고하지 않는다.
+- 실제5173 영상 켠 네 시간대×320/375/428/가로667/PC1440의20상태: 넘침0·오류0·별 이동0. 직접320밤/428노을 대조. lint/typecheck/build 통과, 기존fontkit 큰 번들 경고 유지. 마지막 테스트 준비 조건 변경 후 lint/typecheck도 통과. 이번에는 전체check/전체E2E를 반복하지 않았다.
+- 실제 iPhone의 ‘도착 후 원위치’는 Linux에서 정확히 재현하지 못했다. 중복 처리 제거 뒤 도착/지연 자료/반복 이동/뒤로·앞으로 검사를 통과했으며, 사용자 실기기 재확인은 남는다.
 
-## 배포·다음
+## Git·다음 범위
 
-Workers Builds1649e0da-b374-4af1-abac-e4c9879c57c6 success와 Preview913accf3-9417-43f2-98c5-cc35364a52ba·100%·2026-10-15 19:28:11KST 확인. 기존 바인딩16개 변경/제거0·AI=false·Production7aea6843 유지. Builds API403은 GitHub 공식check+deployments/version GET으로 대조했다. CI38720299539는 completed/success. validate2552건, browser309통과·1건 재시도 통과·4조건제외. 재시도는 모바일 유리 표시 이동의 중간 좌표 표본이2개였던 검사이며 두 번째는 통과했다. 이 검사 타이밍의 불안정성은 남긴다. 이번 결과 문서만 [skip actions] 후속 커밋/push하고 자동 Preview 빌드를 별도 대조한다. 기능 CI 소스는f9581ac이며 문서 후속 커밋은 앱·테스트·설정을 바꾸지 않는다. 직접 wrangler 배포로 우회하지 않는다. [상세 작업](work/P9-25.md#새로고침-첫-화면과-최신본-preview-반영). 휴대전화 주소 https://biblequiz-app-preview.jinkyu0105.workers.dev/ 는 기존 Cloudflare 계정 로그인이며 로컬 연습자료와 Preview DB는 다르다.
+이번 보정은 검토한 파일만 명시적으로 stage해 로컬 커밋한다. 최종 커밋/clean 상태는 실제 Git log/status를 확인한다. **이번 push/배포 없음.** 직전 원격 main851e4dc4bbad4992c0f24513bdc1cbc9d7cc7bdb·Preview04d70dfd-d2a2-4480-94fd-d0996cd70af2·100%·2026-10-15 19:45:39KST는 이전 작업의 `.wrangler/releases/p9-25-loading/final-deployment-proof.json` 근거다. 기능 소스f9581ac의 이전 전체check2552건·CI38720299539 성공을 이번 코드 검사로 재사용하지 않는다. [기존 폰 Preview](https://biblequiz-app-preview.jinkyu0105.workers.dev/)에는 이번 수정이 아직 없다. 실제 자료·AI·원격 설정·Production7aea6843은 보존했다. 다음은 Preview 반영 범위 확정 후 실제 iPhone 확인이며 Production 승인이 아니다.
 
-Node24.18.0/pnpm11.14.0, /bin/bash·login:false·명시workdir·require_escalated 승인 검토 경로. PATH 필요 시 /home/onegem/.nvm/versions/node/v24.18.0/bin 추가. 서버5173/.wrangler/ui-demo-state 보존, 재시작 pnpm dev:demo --port 5173 --strictPort. E2E4173 격리자료. Pro95%×사용자 기준10=950%. 다음 시작은 실제 사용량·Git 상태와 AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 정본→P9-25 순서 확인.
+## 실행 환경
 
-**현재 P9-25 완료 · 부모 개선/Preview 반영 완료 · 다음 사용자 휴대전화 확인 · 세션 유지 · 추천 GPT-6.1-sol/medium** — 한정된 화면 피드백과 사용성 보정에 적합하다.
+Node24.18.0/pnpm11.14.0. /bin/bash·login:false·명시workdir·require_escalated 승인 검토 경로를 사용한다. PATH 필요 시 `/home/onegem/.nvm/versions/node/v24.18.0/bin` 추가. 서버5173/.wrangler/ui-demo-state 보존, 재시작 `pnpm dev:demo --port 5173 --strictPort`. E2E4173 격리자료. 시작 Pro92%×사용자 기준10=920%, 별도5시간 창 없음.
+
+WebKit은 기본 런처의 시스템 라이브러리 누락 때문에 실패했다. 공식 Ubuntu 패키지만 `/tmp/biblequiz-webkit/root`에 풀고 ELF/GLES를 점검했다. `/tmp/biblequiz-webkit/launch.sh`가 WPE bin/lib/sys/lib 및 임시 라이브러리를 연결한다. 시스템 설치/프로젝트 의존성 추가는 없다. 재부팅하면 이 임시 환경은 재준비한다. 원자료와 `webkit.config.ts`는 ignored `.wrangler/releases/p9-25-touch/`에 있다. 이 설정은 cwd가 저장소 루트여야 한다. 실제 영상/GPU를 제외한 검사를 모든 iPhone 동작의 성공으로 확대하지 않는다.
+
+다음 시작은 실제 사용량·경로 확인, AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 정본→P9-25→Git status/diff/log 순서. 현재 변경과 실제 자료를 보존한다.
+
+**현재 P9-25 후속 로컬 완료 · 부모 모바일 보정 실기기 재확인 대기 · 다음 Preview 반영 범위 확정/사용자 iPhone 확인 · 세션 유지 · 추천 GPT-6.1-sol/medium** — 한정된 기기 피드백 검수에 적합하다.

@@ -92,6 +92,8 @@ test("mobile pages share one floating dock and settings close on route changes",
   const popup = page.getByRole("dialog", { name: "화면 설정", exact: true });
   for (const route of ["/archive?video=off", "/?level=child&video=off", "/privacy-requests?video=off", "/admin/manual?video=off"]) {
     await page.goto(route);
+    if (route.startsWith("/?level=")) await expect(page.getByRole("grid")).toBeAttached();
+    await page.evaluate(() => document.fonts.ready);
     await expect(dock).toHaveCount(1); await expect(dock).toBeVisible();
     await expect(dock).toHaveCSS("position", "fixed");
     const before = (await dock.boundingBox())!;
@@ -148,9 +150,9 @@ test("nested controls close in order, retain values and ignore old aurora prefer
   await silk.click();
   const speed = page.getByRole("slider", { name: "흐름 속도", exact: true });
   await speed.press("End");
-  await page.keyboard.press("Escape"); await expect(silk).toBeFocused();
-  await expect(page.locator(".hero-light-panel")).toHaveCount(0);
   await page.keyboard.press("Escape"); await expect(effects).toBeFocused();
+  await expect(page.locator(".hero-light-panel")).toHaveCount(0);
+  await expect(page.getByRole("group", { name: "하늘 시간대" })).toBeVisible();
   await expect(settings).toHaveAttribute("aria-expanded", "true");
   await page.keyboard.press("Escape"); await expect(settings).toBeFocused();
   await expect(settings).toHaveAttribute("aria-expanded", "false");
@@ -162,7 +164,7 @@ test("nested controls close in order, retain values and ignore old aurora prefer
   await expect(page.locator(".hero-light-panel")).toHaveCount(0);
   await page.reload(); await openSkySettings(page); await effects.focus(); await page.keyboard.press("Enter"); await silk.click();
   await expect(speed).toHaveValue("100");
-  await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
+  await page.keyboard.press("Escape");
   await page.locator("#grass-toggle").focus(); await page.keyboard.press("Tab");
   await expect(settings).toHaveAttribute("aria-expanded", "false");
   expect(errors).toEqual([]);

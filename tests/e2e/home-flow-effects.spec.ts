@@ -43,11 +43,15 @@ test("three effect choices preserve independent settings, focus and stationary n
       // The panel enters by 5px; verify the settled gap without disabling motion.
       await expect.poll(async () => {
         const panelBox = (await page.locator(".hero-light-panel").boundingBox())!;
-        const choicesBox = (await page.locator(".hero-effect-surface").boundingBox())!;
+        const choicesBox = (await page.locator(".mobile-effect-choices .hero-effect-surface").boundingBox())!;
         return choicesBox.y - panelBox.y - panelBox.height;
       }).toBeGreaterThanOrEqual(8);
     }
-    await page.keyboard.press("Escape"); await expect(button).toBeFocused();
+    await page.keyboard.press("Escape");
+    if (isMobile) {
+      const star = page.getByRole("button", { name: "배경 효과", exact: true });
+      await expect(star).toBeFocused(); await star.press("Enter");
+    } else await expect(button).toBeFocused();
     await expect(button).toHaveAttribute("aria-pressed", "true");
   }
   if (isMobile) expect(await page.locator("#motion").boundingBox()).toEqual(pauseBefore);
@@ -112,7 +116,8 @@ for (const choice of choices) test(`${choice.kind} renders adjustable pixels and
     const fast = await sample();
     expect((fast.time - moving.time) / (fast.elapsed - moving.elapsed)).toBeGreaterThan(12);
   }
-  await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
+  await page.keyboard.press("Escape");
+  if ((page.viewportSize()?.width ?? 1280) > 700) await page.keyboard.press("Escape");
   await page.locator("#motion").click(); await expect(canvas).toHaveAttribute("data-state", "paused");
   const stopped = await sample(); await page.waitForTimeout(160); expect((await sample()).hash).toBe(stopped.hash);
   await page.locator("#glass-clarity").click(); await expect(canvas).toHaveAttribute("data-state", "clear");

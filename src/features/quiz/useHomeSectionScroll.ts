@@ -132,6 +132,10 @@ function installHomeScroll(): ScrollController {
   }, { passive: false, signal });
 
   document.addEventListener("click", event => {
+    // Touch keeps one native smooth/snap operation owned by ScrollRestoration.
+    // Restoring the old position for a second rAF animation and re-enabling snap
+    // at its end can make WebKit reselect the section that was snapped before.
+    if (!fine.matches) return;
     if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || !(event.target instanceof Element)) return;
     const link = event.target.closest<HTMLAnchorElement>("a[href]");
     if (!link || link.target || link.hasAttribute("download") || link.classList.contains("skip-link")) return;
