@@ -41,6 +41,10 @@ test("mercury stays behind the home introduction and stops after the weekly link
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/#weekly$/);
   await expect(page.locator("#weekly")).toBeInViewport();
+  // Router first restores the hash, then the deliberate scroll animates from
+  // its captured origin. Wait for arrival, not that transient offscreen state.
+  await expect.poll(() => page.locator("#weekly").evaluate(n => Math.abs(n.getBoundingClientRect().top))).toBeLessThan(2);
+  await expect(page.locator("html")).not.toHaveAttribute("data-home-scroll-animating");
   await expect(canvas).toHaveAttribute("data-state", "offscreen");
   await expectStill(canvas);
   await page.getByRole("link", { name: /어린이 퀴즈/ }).click();
@@ -146,7 +150,6 @@ test("light width and brightness change the rendered light even while motion is 
   await trigger.focus(); await page.keyboard.press("Enter");
   await page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true }).click();
   await page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true }).click();
-  await page.getByRole("button", { name: "빛줄기 조절", exact: true }).click();
   const width = page.getByRole("slider", { name: "광원 너비", exact: true });
   const brightness = page.getByRole("slider", { name: "밝기", exact: true });
   const light = () => canvas.evaluate(node => {

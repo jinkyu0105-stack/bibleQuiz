@@ -25,6 +25,7 @@ async function mocks(page: Page) {
       return route.fulfill({ json: { data: { submission: null } } });
     }
     const body = publicResponse(url.searchParams.get("difficulty") === "adult" ? "adult" : "child");
+    body.data.otherOpenQuizzes = [{ slug: "2026-08-24-open01", title: "다른 참여 중인 퀴즈", sermonDate: "2026-08-24", bibleReferenceLabel: "마태복음 5:1-12", closesAt: "2099-09-07T00:00:00.000Z", availableDifficulties: ["child", "adult"] }];
     if (!url.pathname.endsWith("latest")) body.data.quiz!.slug = url.pathname.split("/").at(-1)!;
     return route.fulfill({ json: body });
   });
@@ -99,6 +100,22 @@ test("late search responses cannot overwrite new filters; loading is announced",
 });
 test("main shows recent3, explicit difficulty links, and responsive archive in both themes", async ({ page }) => {
   await mocks(page); await page.goto("/"); await expect(cards(page)).toHaveCount(3);
+  await expect(page.getByRole("heading", { name: "아직 참여할 수 있는 퀴즈" })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "다른 참여 중인 퀴즈" })).toHaveCount(0);
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    const row = cards(page).first();
+    const title = (await row.getByRole("heading").boundingBox())!;
+    for (const link of await row.getByRole("link").all()) {
+      const box = (await link.boundingBox())!;
+      expect(box.width).toBe(44); expect(box.height).toBe(44);
+      expect(box.x).toBeGreaterThanOrEqual(title.x + title.width);
+      expect(box.y).toBeLessThan(title.y + title.height);
+      await expect(link.locator("svg")).toHaveCount(1);
+      await expect(link).toHaveText("");
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
   await page.getByRole("link", { name: "지난 퀴즈 전체 보기" }).click(); await expect(cards(page)).toHaveCount(12);
   await expect(cards(page).nth(1).getByRole("link", { name: /^장년용/ })).toHaveCount(0);
   await expect(cards(page).first().getByRole("link", { name: /^어린이용/ })).toHaveAttribute("href", "/quiz/2026-08-30-000026?level=child");
@@ -111,4 +128,28 @@ test("main shows recent3, explicit difficulty links, and responsive archive in b
     }
     await page.screenshot({ path: test.info().outputPath(`archive-${theme}.png`), fullPage: true });
   }
+});
+
+test("one final wheel reaches the footer and scrolling glass restores without changing preferences", async ({ page, isMobile }) => {
+  test.skip(isMobile, "Desktop section wheel; mobile keeps native touch scrolling");
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await mocks(page); await page.goto("/?video=off"); await expect(cards(page)).toHaveCount(3);
+  const before = await page.locator("body").getAttribute("data-transparency");
+  await page.locator(".hero-cta").click();
+  await expect.poll(() => page.locator("#weekly").evaluate(n => Math.abs(n.getBoundingClientRect().top))).toBeLessThan(2);
+  await expect(page.locator("html")).not.toHaveAttribute("data-home-scrolling");
+  const glass = page.locator(".archive-list");
+  const optics = await glass.evaluate(n => getComputedStyle(n, "::before").backdropFilter);
+  expect(optics).not.toBe("none");
+  await page.mouse.move(600, 350); await page.mouse.wheel(0, 80);
+  await expect(page.locator("html")).toHaveAttribute("data-home-scrolling", "true");
+  await expect.poll(() => glass.evaluate(n => getComputedStyle(n, "::before").backdropFilter)).toBe("none");
+  await expect.poll(() => page.evaluate(() => Math.abs(document.documentElement.scrollHeight - innerHeight - scrollY))).toBeLessThan(2);
+  await expect(page.locator("footer")).toBeInViewport();
+  await expect(page.locator("html")).not.toHaveAttribute("data-home-scrolling");
+  await expect.poll(() => glass.evaluate(n => getComputedStyle(n, "::before").backdropFilter)).toBe(optics);
+  await expect(page.locator("body")).toHaveAttribute("data-transparency", before!);
+  await page.getByRole("link", { name: "지난 퀴즈 전체 보기" }).click();
+  await expect(page.locator("html")).not.toHaveAttribute("data-home-scrolling");
+  await expect.poll(() => page.locator("html").evaluate(n => (n as HTMLElement).style.getPropertyValue("--home-footer-height"))).toBe("");
 });

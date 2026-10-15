@@ -1,7 +1,6 @@
 import { Link, useLoaderData, useLocation, useSearchParams } from "react-router-dom";
 import { GlassPanel } from "../../components/glass/GlassPanel";
 import { GlassArrow } from "../../components/glass/GlassArrow";
-import { GlassLink } from "../../components/glass/GlassLink";
 import { useGlass } from "../../components/glass/useGlass";
 import { HeroEffects } from "../../components/sky/HeroEffects";
 import { RecentArchive } from "../archive/RecentArchive";
@@ -37,7 +36,6 @@ function HomeContent() {
         {quiz.sermon.summary && <p className="summary-disclosure">{quiz.sermon.summary.disclosure}</p>}
       </GlassPanel> : <GlassPanel as="div" className="weekly-sheet"><PublicQuizContent /></GlassPanel>}
     </section>
-    {result.state === "ready" && result.data.otherOpenQuizzes.length > 0 && <GlassPanel className="home-other-quizzes"><h2>아직 참여할 수 있는 퀴즈</h2>{result.data.otherOpenQuizzes.map(other => <div key={other.slug}><h3>{other.title}</h3><p>{other.sermonDate} · {other.bibleReferenceLabel}</p>{other.availableDifficulties.map(level => <GlassLink key={level} to={`/quiz/${other.slug}?level=${level}`}>{level === "child" ? "어린이용" : "장년용"} 풀기</GlassLink>)}</div>)}</GlassPanel>}
     <RecentArchive landing />
   </div>;
 }

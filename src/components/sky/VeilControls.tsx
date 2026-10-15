@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef, type CSSProperties, type RefObject } from "react";
 import { defaultVeilSettings, type VeilSettings } from "./veil-settings";
 
-export function VeilControls({ id, anchor, settings, enabled, night, onChange, onEnable, onClose }: {
-  id: string; anchor: RefObject<HTMLElement | null>; settings: VeilSettings; enabled: boolean; night: boolean;
-  onChange: (settings: VeilSettings) => void; onEnable: () => void; onClose: () => void;
+export function VeilControls({ id, anchor, settings, night, onChange, onClose }: {
+  id: string; anchor: RefObject<HTMLElement | null>; settings: VeilSettings; night: boolean;
+  onChange: (settings: VeilSettings) => void; onClose: () => void;
 }) {
   const panel = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -16,10 +16,12 @@ export function VeilControls({ id, anchor, settings, enabled, night, onChange, o
       const mobile = window.matchMedia("(max-width: 700px)").matches;
       const { width, height } = element.getBoundingClientRect();
       element.style.left = `${Math.max(12, Math.min(innerWidth - width - 12, mobile ? (innerWidth - width) / 2 : box.left - width - 14))}px`;
-      element.style.top = `${Math.max(12, Math.min(innerHeight - height - 12, mobile ? rail.top - height - 10 : box.top - 32))}px`;
+      element.style.top = `${Math.max(12, Math.min(innerHeight - height - 12, mobile ? rail.top - height - 10 : box.top + box.height / 2 - height / 2))}px`;
     };
     const observer = new ResizeObserver(place);
     observer.observe(element); observer.observe(origin);
+    const capsule = origin.closest(".hero-effect-control");
+    if (capsule) observer.observe(capsule);
     window.addEventListener("resize", place);
     place();
     element.querySelector("input")?.focus({ preventScroll: true });
@@ -34,7 +36,6 @@ export function VeilControls({ id, anchor, settings, enabled, night, onChange, o
       </button>
     </div>
     <p className="hero-light-description">{night ? "달 쪽에서 부드럽게 번지는 은빛" : "넓은 광원에서 내려오는 부드러운 빛"}</p>
-    {!enabled && <p className="hero-light-off">빛줄기가 꺼져 있습니다. <button type="button" onClick={onEnable}>켜기</button></p>}
     {([['width', '광원 너비'], ['strength', '밝기'], ['spread', '퍼짐']] as const).map(([key, label]) =>
       <label className="hero-light-slider" key={key}>
         <span>{label}<output htmlFor={`${id}-${key}`}>{settings[key]}<small>%</small></output></span>

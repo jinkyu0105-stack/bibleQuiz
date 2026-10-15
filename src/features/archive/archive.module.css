@@ -59,6 +59,26 @@
 .compact .actions { border: 0; }
 .compact .actions a { min-height: 44px; padding: 8px 12px 8px 0; font-size: 13px; }
 .compact .actions a + a { padding-left: 12px; }
+.homeHeading { flex-direction: row; align-items: center; gap: 8px 16px; margin-bottom: 8px; }
+.homeHeading :global(.text-link) { min-height: 44px; display: inline-flex; align-items: center; gap: 4px; font-size: 11px; }
+.homeCards .card { padding-block: 12px; }
+.titleRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; }
+.homeCards .titleRow h3 { margin: 0; }
+.iconActions { display: flex; align-items: center; gap: 4px; --admin-tooltip-surface: var(--glass-solid); }
+.iconActions a { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--glass-edge); border-radius: 50%; color: var(--ink); background: var(--glass-clear); box-shadow: inset 0 1px 0 var(--glass-highlight), 0 2px 5px var(--glass-shadow); transition: background 180ms ease, box-shadow 180ms ease; }
+.iconActions a:hover { background: var(--glass-selected); box-shadow: inset 0 1px 0 var(--glass-highlight), 0 3px 9px var(--glass-shadow); }
+.iconActions a:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.homeMeta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 12px; margin-top: 5px; font-size: 12px; line-height: 1.6; color: var(--muted); overflow-wrap: anywhere; }
+.homeMeta time { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.homeMeta .latest { font-size: 10px; color: var(--accent); }
+@media (max-width: 580px) {
+  .titleRow { gap: 8px; }
+  .iconActions { gap: 2px; }
+  .homeMeta { font-size: 11px; gap: 2px 8px; }
+  .homeHeading :global(.text-link) { max-width: 124px; font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .iconActions a { transition: none; } }
+@media (forced-colors: active) { .iconActions a { border-color: ButtonText; background: Canvas; color: LinkText; } }
 .filters { border: 1px solid var(--line); border-radius: 20px; padding: 20px; background: var(--glass-reading); }
 .heading h2 { color: var(--ink); }
 /* The full archive uses a consistent record size; the home excerpt is preserved. */

@@ -23,6 +23,8 @@ test("effect capsule opens without choosing an effect and preserves independent 
   await expect(rays).toHaveAttribute("aria-pressed", "false");
   await rays.click();
   await expect(page.locator("body")).toHaveAttribute("data-hero-veil", "on");
+  await expect(page.getByRole("slider", { name: "광원 너비", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "빛줄기 조절", exact: true })).toHaveCount(0);
   await expect(reflection).toHaveAttribute("aria-pressed", "true");
   await reflection.click();
   await expect(page.locator("body")).toHaveAttribute("data-hero-mercury", "off");
@@ -38,6 +40,12 @@ test("effect capsule opens without choosing an effect and preserves independent 
   await expand(page, isMobile);
   await expect(reflection).toHaveAttribute("aria-pressed", "false");
   await expect(rays).toHaveAttribute("aria-pressed", "true");
+  await rays.click();
+  await expect(rays).toHaveAttribute("aria-expanded", "true");
+  await expect(rays).toHaveAttribute("aria-pressed", "true");
+  await rays.click();
+  await expect(rays).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator(".hero-light-panel")).toHaveCount(0);
 });
 
 test("effect disclosure supports keyboard, escape, outside dismissal and reduced motion", async ({ page, isMobile }) => {
@@ -55,6 +63,9 @@ test("effect disclosure supports keyboard, escape, outside dismissal and reduced
   const rays = page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true });
   await expect(rays).toBeFocused();
   await page.keyboard.press("Enter");
+  await expect(rays).toHaveAttribute("aria-pressed", "true");
+  await page.keyboard.press("Escape");
+  await expect(rays).toBeFocused();
   await expect(rays).toHaveAttribute("aria-pressed", "true");
   await page.keyboard.press("Escape");
   await expect(trigger).toBeFocused();
@@ -102,8 +113,7 @@ test("light tuning supports live input, saved values, reset and returning focus"
   await expand(page, isMobile);
   const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
   await expect(trigger).toHaveText("");
-  await page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true }).click();
-  const tune = page.getByRole("button", { name: "빛줄기 조절", exact: true });
+  const tune = page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true });
   await tune.click();
   const width = page.getByRole("slider", { name: "광원 너비", exact: true });
   await expect(width).toBeFocused();
@@ -147,7 +157,7 @@ test("light tuning supports live input, saved values, reset and returning focus"
 test("light controls recover from invalid storage and keep the time bar's spring hover", async ({ page, isMobile }) => {
   await page.addInitScript(() => localStorage.setItem("bibleQuiz:veil-settings", '{"width":1000,"strength":"bad","spread":null}'));
   await home(page); await expand(page, isMobile);
-  await page.getByRole("button", { name: "빛줄기 조절", exact: true }).click();
+  await page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true }).click();
   await expect(page.getByRole("slider", { name: "광원 너비", exact: true })).toHaveValue("100");
   await expect(page.getByRole("slider", { name: "밝기", exact: true })).toHaveValue("55");
   await expect(page.getByRole("slider", { name: "퍼짐", exact: true })).toHaveValue("60");
@@ -165,6 +175,6 @@ test("light controls recover from invalid storage and keep the time bar's spring
     await rays.hover();
     await expect(rays).toHaveAttribute("data-dock-preview", "");
     await expect.poll(async () => (await lens.boundingBox())!.y).toBeGreaterThan(start!.y + 20);
-    await expect(rays).toHaveAttribute("aria-pressed", "false");
+    await expect(rays).toHaveAttribute("aria-pressed", "true");
   }
 });

@@ -26,6 +26,23 @@ function installHomeScroll(): ScrollController {
   const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
   let frame = 0, direction = 0, lastWheel = -Infinity, intent = 0, suppressMomentum = false;
   let pending: { hash: string; search: string; from: number } | null = null;
+  let settled: ReturnType<typeof setTimeout> | undefined;
+  // Keep the glass tint/rim during movement, but defer the costly backdrop
+  // refraction until scrolling settles. Native touch/keyboard use this too.
+  function markScrolling() {
+    if (!root.hasAttribute("data-home-scrolling")) root.dataset.homeScrolling = "true";
+    clearTimeout(settled);
+    settled = setTimeout(() => {
+      if (frame) markScrolling();
+      else delete root.dataset.homeScrolling;
+    }, 240);
+  }
+  window.addEventListener("scroll", markScrolling, { passive: true, signal });
+  const footer = document.querySelector<HTMLElement>(".home-shell .site-footer");
+  const measureFooter = () => root.style.setProperty("--home-footer-height", `${footer?.getBoundingClientRect().height ?? 100}px`);
+  const footerSize = new ResizeObserver(measureFooter);
+  if (footer) footerSize.observe(footer);
+  measureFooter();
   const maxScroll = () => Math.max(0, root.scrollHeight - innerHeight);
   const clamp = (top: number) => Math.max(0, Math.min(maxScroll(), top));
   const jump = (top: number) => window.scrollTo({ top, behavior: "instant" });
@@ -38,6 +55,7 @@ function installHomeScroll(): ScrollController {
     const destination = clamp(top), distance = destination - from;
     if (reduced.matches || Math.abs(distance) < 2) { jump(destination); return; }
     root.dataset.homeScrollAnimating = "true";
+    markScrolling();
     jump(from);
     const started = performance.now();
     // A full section takes 1.2s; the longer footer return gets a little more time.
@@ -70,9 +88,10 @@ function installHomeScroll(): ScrollController {
   }
   function wheelTarget(delta: number) {
     const y = scrollY;
-    const sections = [...document.querySelectorAll<HTMLElement>("#home-view > section, .home-shell .site-footer")].map(element => {
+    const sections = [...document.querySelectorAll<HTMLElement>("#home-view > section")].map(element => {
       const box = element.getBoundingClientRect();
-      return { start: clamp(box.top + y), end: clamp(box.bottom + y - innerHeight) };
+      // The archive and footer form one final destination, not two wheel stops.
+      return { start: clamp(box.top + y), end: element.id === "archive" ? maxScroll() : clamp(box.bottom + y - innerHeight) };
     });
     let index = sections.findLastIndex(section => section.start <= y + 2);
     if (index < 0) index = 0;
@@ -134,6 +153,10 @@ function installHomeScroll(): ScrollController {
       const element = document.getElementById(next.hash.slice(1));
       if (element) animate(element.getBoundingClientRect().top + scrollY, requested.from);
     },
-    destroy() { cancel(); lifetime.abort(); delete root.dataset.homeScroll; },
+    destroy() {
+      cancel(); lifetime.abort(); footerSize.disconnect(); clearTimeout(settled);
+      delete root.dataset.homeScroll; delete root.dataset.homeScrolling;
+      root.style.removeProperty("--home-footer-height");
+    },
   };
 }

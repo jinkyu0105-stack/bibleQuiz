@@ -104,8 +104,6 @@ body[data-view=admin] .time-rail { top: 130px; transform: none; }
 .summary-disclosure { font-size: 11px; color: var(--muted); margin: 0; padding-top: 14px; border-top: 1px solid var(--line); }
 .difficulty-links a { text-decoration: none; }
 .round-arrow { flex-shrink: 0; }
-.home-other-quizzes { max-width: 800px; padding: 32px; margin: 0 auto; }
-.home-other-quizzes a { display: inline-flex; min-height: 44px; padding: 8px 16px; margin: 6px; border-radius: 24px; }
 .archive-section .archive-list { width: 100%; max-width: 635px; padding: 28px; }
 .archive-list h2 { font-size: 20px; margin-bottom: 0; }
 .archive-list .text-link { font-size: 12px; }
@@ -198,15 +196,25 @@ html:has(body[data-view=home]) { scroll-snap-type: y mandatory; scroll-padding-t
 html:has(body[data-view=home]):is([data-home-scroll=managed], [data-home-scroll-animating]) { scroll-snap-type: none; scroll-behavior: auto; }
 #home-view > section { scroll-snap-align: start; scroll-snap-stop: always; }
 #home-view .weekly-section { min-height: 100svh; padding-top: 130px; padding-bottom: 110px; }
-#home-view .archive-section { min-height: 100svh; padding-top: 130px; padding-bottom: 110px; }
-#home-view .home-other-quizzes { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
-.home-shell .site-footer { scroll-snap-align: end; }
+#home-view .archive-section { min-height: calc(100svh - var(--home-footer-height, 100px)); padding-top: 130px; padding-bottom: 24px; scroll-snap-align: end; scroll-margin-bottom: var(--home-footer-height, 100px); }
+#home-view .archive-list { margin-top: 24px; padding: 16px 24px; }
+.home-shell .site-footer { scroll-snap-align: none; }
+/* Moving glass keeps its colour, highlights and edge. Resume the multi-pass
+   backdrop optics at rest instead of re-sampling the animated sky each frame. */
+html[data-home-scrolling] body[data-view=home] :is(.glass, .glass-reading-core, .convex-lens, .time-rail),
+html[data-home-scrolling] body[data-view=home] :is(.glass, .convex-lens)::before,
+html[data-home-scrolling] body[data-view=home] :is(.glass, .convex-lens)::after {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
 @media (max-width: 700px) {
   body[data-view=home] .time-rail { bottom: 86px; max-width: 380px; margin-inline: auto; }
   .page-dock.glass { bottom: 16px; max-width: calc(100vw - 24px); padding: 6px 8px; gap: 2px; }
   .page-dock > span { font-size: 9px; padding: 0 5px; }
   .page-dock a { padding: 10px 15px; font-size: 11px; }
-  #home-view .weekly-section, #home-view .archive-section { padding-top: 144px; padding-bottom: 226px; }
+  #home-view .weekly-section { padding-top: 144px; padding-bottom: 226px; }
+  #home-view .archive-section { padding-top: 144px; padding-bottom: 24px; }
+  #home-view .archive-list { margin-top: 20px; padding: 12px 16px; }
   .sky-home-hero { padding-bottom: 238px; }
   .descent-cue { bottom: 218px; }
   .hero-side-note { bottom: 218px; }
