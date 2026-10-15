@@ -1,4 +1,5 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { GlassMenu } from "../../components/glass/GlassMenu";
 import { useGlass } from "../../components/glass/useGlass";
 import { readSkyFlag, saveSkyPreference } from "../../components/sky/preferences";
@@ -15,10 +16,15 @@ export function ThemeControl({ home, time, onChange, grass, onGrassChange, stora
   const [clarityStorageFailed, setClarityStorageFailed] = useState(false);
   const [compact, setCompact] = useState(() => window.matchMedia("(max-width: 700px)").matches);
   const [popupOpen, setPopupOpen] = useState(false);
+  const location = useLocation();
+  const [popupLocation, setPopupLocation] = useState(location.key);
+  if (popupLocation !== location.key) {
+    setPopupLocation(location.key); setPopupOpen(false);
+  }
   const rail = useRef<HTMLElement>(null);
   const popupTrigger = useRef<HTMLButtonElement>(null);
   const id = useId();
-  const mobilePopup = home && compact;
+  const mobilePopup = compact;
   const available = !mobilePopup || popupOpen;
   const clarityLabel = systemClarity ? "시스템 투명도 감소 적용 중" : clarity ? "유리 투명도 복원" : "투명도 줄이기";
   const motionRef = useGlass<HTMLButtonElement>();
@@ -93,7 +99,7 @@ export function ThemeControl({ home, time, onChange, grass, onGrassChange, stora
         <span className="clarity-label" aria-hidden="true">가</span><small className="clarity-label">선명하게</small>
       </button>
       <button ref={grassRef} id="grass-toggle" data-glint className="glass glass-clear" type="button" aria-label={grass ? "잔디 끄기" : "잔디 켜기"} title={grass ? "잔디 끄기" : "잔디 켜기"} aria-pressed={grass} onClick={onGrassChange}>
-        <svg viewBox="0 0 28 28" width="26" height="26" aria-hidden="true" fill="none">
+        <svg viewBox="0 0 28 28" width="23" height="23" aria-hidden="true" fill="none">
           <path className="grass-blades" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" d="M4 22H24 M8 22V11 M14 22V5 M20 22V13"/>
           {!grass && <g className="grass-state" data-on={false} transform="translate(2 2) scale(.9)">
             <circle cx="22" cy="22" r="5"/>
@@ -103,7 +109,7 @@ export function ThemeControl({ home, time, onChange, grass, onGrassChange, stora
       </button>
     </div>
     {(storageFailed || clarityStorageFailed) && <p className="quiet-message" role="status">설정은 이 화면에서만 유지됩니다.</p>}
-  </aside>{home && <PageDock mobile={mobilePopup} settings={<button ref={popupTrigger} className="mobile-settings-trigger" type="button" aria-label="화면 설정"
+  </aside>{(home || compact) && <PageDock mobile={mobilePopup} settings={<button ref={popupTrigger} className="mobile-settings-trigger" type="button" aria-label="화면 설정"
     aria-expanded={mobilePopup && popupOpen} aria-controls={id} aria-haspopup="dialog"
     onClick={() => popupOpen ? closePopup() : setPopupOpen(true)} onKeyDown={event => { if (event.key === "Escape") closePopup(); }}>
     <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">

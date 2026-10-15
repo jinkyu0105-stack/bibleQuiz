@@ -85,6 +85,55 @@ test("the mobile dock lends its glass lens to settings and returns it home on ev
   await expect(page.locator("#glass-clarity small")).toBeVisible();
 });
 
+test("mobile pages share one floating dock and settings close on route changes", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 667 });
+  await home(page);
+  const dock = page.getByRole("navigation", { name: "빠른 이동" });
+  const popup = page.getByRole("dialog", { name: "화면 설정", exact: true });
+  for (const route of ["/archive?video=off", "/?level=child&video=off", "/privacy-requests?video=off", "/admin/manual?video=off"]) {
+    await page.goto(route);
+    await expect(dock).toHaveCount(1); await expect(dock).toBeVisible();
+    await expect(dock).toHaveCSS("position", "fixed");
+    const before = (await dock.boundingBox())!;
+    await page.locator(".site-footer").scrollIntoViewIfNeeded();
+    const after = (await dock.boundingBox())!;
+    expect(Math.abs(after.y - before.y)).toBeLessThan(1);
+    expect(after.y + after.height).toBeLessThanOrEqual(655);
+    const footerLink = (await page.locator(".site-footer a").boundingBox())!;
+    expect(footerLink.y + footerLink.height).toBeLessThan(after.y);
+    await openSkySettings(page); await page.getByRole("button", { name: "밤", exact: true }).click();
+    await expect(page.locator("body")).toHaveAttribute("data-time", "night");
+    await expect(popup).toHaveCSS("position", "fixed");
+    const settingsBox = (await popup.boundingBox())!;
+    expect(settingsBox.y).toBeGreaterThan(0); expect(settingsBox.y + settingsBox.height).toBeLessThan(after.y);
+    await page.getByRole("button", { name: "화면 설정 닫기", exact: true }).click();
+    if (route.startsWith("/archive") || route.startsWith("/admin")) {
+      await expect(dock.locator("[aria-current=page]")).toHaveCount(0);
+      await expect(dock.locator(":scope > .glass-indicator")).toHaveCSS("opacity", "0");
+    } else await expect(dock.getByRole("link", { name: route.startsWith("/privacy") ? "문의" : "퀴즈", exact: true })).toHaveAttribute("aria-current", "page");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+  await openSkySettings(page);
+  await dock.getByRole("link", { name: "퀴즈", exact: true }).click();
+  await expect(popup).toBeHidden();
+  const input = page.getByRole("textbox", { name: /^낱말 입력:/ });
+  await expect(input).toBeAttached();
+  await input.evaluate(element => {
+    (element as HTMLInputElement).value = "값";
+    element.dispatchEvent(new InputEvent("input", { bubbles: true }));
+  });
+  await expect(page.getByTestId("progress")).toHaveText("1 / 21칸 작성");
+  await openSkySettings(page); await page.keyboard.press("Escape");
+  await expect(page.getByTestId("progress")).toHaveText("1 / 21칸 작성");
+  await dock.getByRole("link", { name: "문의", exact: true }).click();
+  await openSkySettings(page);
+  await page.goBack(); await expect(popup).toBeHidden();
+  await expect(page.getByTestId("progress")).toHaveText("1 / 21칸 작성");
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await expect(dock).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "밤", exact: true })).toBeVisible();
+});
+
 test("nested controls close in order, retain values and ignore old aurora preferences", async ({ page }) => {
   const errors: string[] = []; page.on("pageerror", error => errors.push(error.message));
   await page.setViewportSize({ width: 320, height: 667 });

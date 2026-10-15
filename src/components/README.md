@@ -8,7 +8,7 @@ P9-06 검토본과 같은 유리 재질·움직임을 실제 React 페이지에�
 | `GlassMenu` | `as="nav"` 또는 `div`; `clear`, `nested`, `structure` | 주요 메뉴/시간대/난도/운영 메뉴/검수 대상 |
 | `Button` / `ButtonLink` | 기본 `secondary`는 정답보기형, `primary`는 입력 확인·빈 격자 받기형; native props/ref 전달 | 관리자 실행/저장/재조회/확인·풀이 버튼 |
 | `GlassLink` | React Router `LinkProps`, 입체 링크 | 관리자 진입, 참여 가능한 다른 퀴즈 |
-| `PageDock` | `GlassMenu`로 구성한 실제 페이지 바로가기 | 메인 하단 |
+| `PageDock` | `GlassMenu`로 구성한 실제 페이지 바로가기 | 메인 및 모바일 모든 일반 페이지 하단 |
 | `GlassArrow` | 링크 안의 장식 화살표 | 첫 화면 난도 링크 |
 | `useGlass` | 기존 DOM 태그를 보존한 채 효과 연결 | 헤더/본문 앵커/접는 관리자 메뉴/설정 버튼 |
 | `SkyEnvironment` | `view="home|quiz|archive|admin"` | 루트 레이아웃의 단일 배경/설정 |

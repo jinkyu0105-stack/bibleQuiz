@@ -226,6 +226,8 @@ html[data-home-scrolling] body[data-view=home] :is(.glass, .convex-lens)::after 
   .descent-cue { bottom: 104px; }
   .hero-side-note { bottom: 104px; }
   .home-shell .site-footer { padding-bottom: 100px; }
+  .sky-app:not(.home-shell) .site-footer { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  html:has(body:not([data-view=home])) { scroll-padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (max-width: 380px) { .brand-detail { display: none; } }
 @media (prefers-reduced-motion: reduce) {
