@@ -30,8 +30,8 @@ test("mercury stays behind the home introduction and stops after the weekly link
   const canvasBox = (await canvas.boundingBox())!;
   expect(canvasBox).toEqual(heroBox);
   const dimensions = await canvas.evaluate(node => ({ width: (node as HTMLCanvasElement).width, height: (node as HTMLCanvasElement).height }));
-  expect(dimensions.width).toBeLessThanOrEqual(960);
-  expect(dimensions.height).toBeLessThanOrEqual(720);
+  expect(dimensions.width).toBeLessThanOrEqual(640);
+  expect(dimensions.height).toBeLessThanOrEqual(480);
   const link = page.locator(".hero-content").getByRole("link", { name: "이번 주 퀴즈", exact: true });
   await link.focus();
   await page.keyboard.press("Enter");
@@ -132,4 +132,41 @@ test("the original home and quiz remain usable when the decorative GPU layer is 
   await page.locator(".hero-content").getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
   await page.getByRole("link", { name: /어린이 퀴즈/ }).click();
   await expect(page.getByRole("grid")).toBeVisible();
+});
+
+test("light width and brightness change the rendered light even while motion is paused", async ({ page }) => {
+  const canvas = await home(page);
+  await page.getByRole("button", { name: "낮", exact: true }).click();
+  await page.locator("#motion").click();
+  const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
+  await trigger.focus(); await page.keyboard.press("Enter");
+  await page.getByRole("button", { name: "물결 반사 (Mercury)", exact: true }).click();
+  await page.getByRole("button", { name: "빛줄기 (Veil Rays)", exact: true }).click();
+  await page.getByRole("button", { name: "빛줄기 조절", exact: true }).click();
+  const width = page.getByRole("slider", { name: "광원 너비", exact: true });
+  const brightness = page.getByRole("slider", { name: "밝기", exact: true });
+  const light = () => canvas.evaluate(node => {
+    const canvas = node as HTMLCanvasElement, gl = canvas.getContext("webgl")!;
+    // Repaint the current paused frame so readPixels is independent of buffer discard.
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    const pixels = new Uint8Array(canvas.width * canvas.height * 4);
+    gl.readPixels(0, 0, canvas.width, canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+    let alpha = 0;
+    for (let i = 3; i < pixels.length; i += 4) alpha += pixels[i]!;
+    return alpha;
+  });
+  await width.press("Home");
+  const narrow = await light();
+  await width.press("End");
+  await expect.poll(light).toBeGreaterThan(narrow * 1.08);
+  const wide = await light();
+  await brightness.press("Home");
+  await expect.poll(light).toBeLessThan(wide * .5);
+  await expect(canvas).toHaveAttribute("data-state", "paused");
+  await expectStill(canvas);
+  await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "밤", exact: true }).click();
+  await expect(canvas).toHaveAttribute("data-state", "paused");
+  expect(await light()).toBeGreaterThan(0);
+  expect(await canvas.evaluate(node => (node as HTMLCanvasElement).getContext("webgl")!.getError())).toBe(0);
 });

@@ -1,17 +1,17 @@
-/* The same round glass as the sky selector, with a short, non-elastic reveal. */
+/* Reuse the time selector's convex spring; only the small shell changes size. */
 .hero-effect-control {
   position: relative;
   width: 50px;
   height: 50px;
   flex: none;
   align-self: center;
-  transition: width 220ms cubic-bezier(.16, 1, .3, 1), height 220ms cubic-bezier(.16, 1, .3, 1);
+  transition: width 360ms cubic-bezier(.22, 1, .36, 1), height 360ms cubic-bezier(.22, 1, .36, 1);
 }
-.hero-effect-control[data-open=true] { width: 60px; height: 164px; }
+.hero-effect-control[data-open=true] { width: 60px; height: 214px; }
 .hero-effect-surface.glass {
-  width: 100%; height: 100%; border: 0; border-radius: 30px;
-  display: flex; flex-direction: column; align-items: center;
-  color: var(--glass-control-ink);
+  width: 100%; height: 100%; border: 0; border-radius: 30px; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  color: var(--glass-control-ink); --glass-selected-ink: var(--glass-control-ink);
   background: color-mix(in srgb, var(--glass-rail) 60%, var(--glass-solid) 40%);
 }
 .hero-effect-surface button {
@@ -22,54 +22,83 @@
 }
 .hero-effect-surface button:active { transform: none; }
 .hero-effect-surface small { font-size: 9px; line-height: 1.5; }
-.hero-effect-trigger svg { width: 21px; height: 21px; }
-.hero-effect-options {
-  display: flex; flex-direction: column; gap: 4px;
-  opacity: 0; visibility: hidden; transform: translateY(-5px);
-  transition: opacity 120ms ease, transform 220ms cubic-bezier(.16, 1, .3, 1), visibility 0s 220ms;
-}
-.hero-effect-control[data-open=true] .hero-effect-options {
-  opacity: 1; visibility: visible; transform: none;
-  transition-delay: 60ms, 0ms, 0ms;
-}
-.hero-effect-options button[aria-pressed=true] {
-  background: var(--glass-selected);
-  box-shadow: inset 0 1px 1px var(--glass-highlight), inset 0 -1px 1px var(--glass-bottom), 0 2px 5px var(--glass-shadow);
-}
-.hero-effect-options button:hover { background: var(--glass-soft); }
-.hero-effect-options button[aria-pressed=true]:hover { background: var(--glass-selected); }
+.hero-effect-trigger svg { width: 22px; height: 22px; }
+.hero-effect-option { opacity: 0; visibility: hidden; transition: opacity 180ms ease, visibility 0s 360ms; }
+.hero-effect-control[data-open=true] .hero-effect-option { opacity: 1; visibility: visible; transition-delay: 80ms, 0ms; }
+.hero-effect-control[data-open=false] .glass-indicator { opacity: 0; }
+.hero-effect-surface button[aria-pressed=true] small { font-weight: 700; }
+/* Multiple effects can be on; checks persist while the single lens follows hover. */
+.hero-effect-surface.glass-segmented > button[aria-pressed=true]::after { display: none; }
 .hero-effect-surface .effect-check { position: absolute; top: 4px; right: 4px; color: var(--glass-control-ink); }
 .hero-effect-surface button:focus-visible { outline: 2px solid var(--focus); outline-offset: -3px; }
-.effect-storage-status { position: absolute; right: 70px; top: 0; width: 170px; padding: 8px 12px; font-size: 11px; border-radius: 12px; background: var(--glass-solid); color: var(--ink); }
+.effect-storage-status { position: absolute; right: 70px; top: -52px; width: 190px; padding: 8px 12px; font-size: 11px; border-radius: 12px; background: var(--glass-solid); color: var(--ink); z-index: 2; }
+
+.hero-light-panel.glass {
+  --veil-thumb: var(--glass-solid);
+  position: fixed; z-index: 31; width: min(268px, calc(100vw - 24px)); max-height: calc(100svh - 24px);
+  overflow-y: auto; padding: 14px 18px 10px; border-radius: 20px;
+  background: color-mix(in srgb, var(--glass-solid) 88%, var(--glass-rail));
+  color: var(--ink); box-shadow: 0 12px 32px var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
+  animation: hero-light-enter 220ms ease-out both;
+}
+body[data-time=night] .hero-light-panel { --veil-thumb: var(--accent); }
+.hero-light-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.hero-light-heading strong { font-size: 14px; }
+.hero-light-close { display: grid; place-items: center; min-height: 44px; width: 44px; padding: 0; margin: -6px -8px -6px 0; border: 0; background: transparent; color: var(--ink); border-radius: 50%; }
+.hero-light-close:hover { background: var(--glass-soft); }
+.hero-light-description, .hero-light-off { margin: 4px 0 10px; font-size: 11px; line-height: 1.6; color: var(--muted); }
+.hero-light-off button { padding: 0 8px; min-height: 30px; background: var(--glass-selected); border: 1px solid var(--glass-edge); border-radius: 8px; color: var(--ink); }
+.hero-light-slider { display: block; margin: 6px 0 0; }
+.hero-light-slider > span { display: flex; align-items: baseline; justify-content: space-between; font-size: 12px; font-weight: 500; }
+.hero-light-slider output { font-variant-numeric: tabular-nums; font-size: 13px; font-weight: 600; }
+.hero-light-slider output small { padding-left: 3px; font-size: 10px; color: var(--muted); }
+.hero-light-slider input[type=range] { display: block; appearance: none; width: 100%; height: 36px; min-height: 36px; margin: 0; padding: 0; border: 0; background: transparent; accent-color: var(--accent); cursor: pointer; box-shadow: none; }
+.hero-light-slider input[type=range]::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: linear-gradient(to right, var(--accent) var(--veil-value), var(--glass-bottom) var(--veil-value)); }
+.hero-light-slider input[type=range]::-moz-range-track { height: 4px; border-radius: 4px; background: var(--glass-bottom); }
+.hero-light-slider input[type=range]::-moz-range-progress { height: 4px; border-radius: 4px; background: var(--accent); }
+.hero-light-slider input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; margin-top: -7px; border-radius: 50%; border: 1px solid var(--glass-edge); background: var(--veil-thumb); box-shadow: 0 2px 5px var(--glass-shadow), inset 0 1px 1px var(--glass-highlight); }
+.hero-light-slider input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--glass-edge); background: var(--veil-thumb); box-shadow: 0 2px 5px var(--glass-shadow), inset 0 1px 1px var(--glass-highlight); }
+.hero-light-reset { display: block; margin: 0 auto; min-height: 36px; padding: 4px 12px; border: 0; border-radius: 10px; font-size: 11px; color: var(--muted); background: transparent; }
+.hero-light-reset:hover { color: var(--ink); background: var(--glass-soft); }
+.hero-light-panel :is(button, input):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+@keyframes hero-light-enter { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
 @media (min-width: 701px) {
   /* Expansion never drags the time selector or the pause button away from the pointer. */
   body[data-view=home] .time-rail:has(.hero-effect-control) { top: max(108px, calc(50% - 240px)); transform: none; }
   .sky-controls:has(.hero-effect-control) { align-items: center; }
 }
-@media (min-width: 701px) and (max-height: 760px) {
+@media (min-width: 701px) and (max-height: 810px) {
   body[data-view=home] .time-rail:has(.hero-effect-control) { top: 100px; max-height: calc(100svh - 108px); overflow-y: auto; scrollbar-width: thin; width: 76px; padding: 4px; }
   body[data-view=home] .time-rail:has(.hero-effect-control) .time-options button { min-height: 44px; }
 }
 @media (max-width: 700px) {
-  /* Match the mobile sky selector's horizontal capsule. All targets stay 44px. */
   body[data-view=home] .time-rail:has(.hero-effect-control) { max-width: 330px; }
   .sky-controls:has(.hero-effect-control) { width: 100%; justify-content: center; }
   .hero-effect-control { width: 44px; height: 44px; }
-  .hero-effect-control[data-open=true] { width: 132px; height: 44px; }
-  .hero-effect-surface.glass { flex-direction: row; }
+  .hero-effect-control[data-open=true] { width: 176px; height: 44px; }
+  .hero-effect-surface.glass { flex-direction: row; gap: 0; }
   .hero-effect-surface button { width: 44px; min-width: 44px; height: 44px; min-height: 44px; }
   .hero-effect-surface svg { width: 19px; height: 19px; }
   .hero-effect-surface small { font-size: 8px; }
-  .hero-effect-options { flex-direction: row; gap: 0; transform: translateX(-5px); }
   .hero-effect-surface .effect-check { width: 8px; height: 8px; top: 3px; right: 3px; }
-  .effect-storage-status { right: 0; top: auto; bottom: 60px; }
+  .sky-controls:has(.hero-effect-control[data-open=true]) { gap: 0; }
+  .effect-storage-status { right: -40px; top: auto; bottom: 112px; }
+  .hero-light-slider input[type=range] { height: 44px; }
+  .hero-light-reset { min-height: 44px; }
 }
-body[data-motion=off] :is(.hero-effect-control, .hero-effect-options) { transition: none; }
-body[data-transparency=reduced] .hero-effect-surface.glass { background: var(--glass-solid); }
+@media (max-width: 360px) {
+  body[data-view=home] .time-rail:has(.hero-effect-control) { left: 4px; right: 4px; padding-inline: 2px; }
+}
+body[data-motion=off] :is(.hero-effect-control, .hero-effect-option) { transition: none; }
+body[data-motion=off] .hero-light-panel { animation: none; }
+body[data-transparency=reduced] :is(.hero-effect-surface, .hero-light-panel).glass { background: var(--glass-solid); }
 @media (prefers-reduced-motion: reduce) {
-  .hero-effect-control, .hero-effect-options { transition: none; }
+  .hero-effect-control, .hero-effect-option { transition: none; }
+  .hero-light-panel { animation: none; }
 }
 @media (forced-colors: active) {
-  .hero-effect-surface.glass { background: Canvas; border: 1px solid ButtonText; color: ButtonText; }
-  .hero-effect-options button[aria-pressed=true] { outline: 2px solid Highlight; outline-offset: -4px; }
+  :is(.hero-effect-surface, .hero-light-panel).glass { background: Canvas; border: 1px solid ButtonText; color: ButtonText; }
+  .hero-effect-surface button[aria-pressed=true] { outline: 2px solid Highlight; outline-offset: -4px; }
+  .hero-light-slider input[type=range] { appearance: auto; }
 }

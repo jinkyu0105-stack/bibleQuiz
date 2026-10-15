@@ -1,5 +1,7 @@
 // Original procedural shaders inspired by the public Mercury Veins / Veil Rays previews.
 // No purchased source, texture, video sampling, or additional dependencies.
+import { defaultVeilSettings, normalizeVeilSettings } from "./veil-settings";
+
 const vertex = `
 attribute vec2 aPosition;
 varying vec2 vUv;
@@ -16,6 +18,8 @@ uniform vec2 uPointer;
 uniform float uTime;
 uniform vec3 uTint;
 uniform vec2 uEffects;
+uniform vec3 uVeilSettings;
+uniform vec3 uMoon;
 float hash(vec2 p) {
   vec3 q = fract(vec3(p.x, p.y, p.x) * vec3(.1031, .11369, .13787));
   q += dot(q, q.yzx + 19.19);
@@ -54,21 +58,37 @@ vec4 mercury() {
 vec4 veil() {
   float t = uTime * .18;
   float aspect = uResolution.x / uResolution.y;
+  float night = uMoon.z;
+  float width = uVeilSettings.x;
+  float strength = uVeilSettings.y;
+  float spread = mix(.34, 1.1, uVeilSettings.z);
   float pointer = uPointer.x < 0. ? 0. : (uPointer.x - .5) * .035;
   float depth = 1.08 - vUv.y;
   float source = .51 + sin(t * .27) * .035 + pointer;
-  float angle = (vUv.x - source) * aspect / (depth + .12);
-  float breath = 1. + sin(t * .6) * .12;
-  float cone = exp(-angle * angle * 2.6 / breath);
-  // Project irregular bands from a single source, rather than parallel stripes.
+  float lateral = (vUv.x - source) * aspect;
+  if (night > .5) {
+    // Follow the existing crescent's crop. No extra sun or luminous disc.
+    vec2 fromMoon = (vUv - uMoon.xy) * vec2(aspect, 1.);
+    vec2 direction = normalize(vec2(-.48, -.88));
+    depth = dot(fromMoon, direction);
+    lateral = dot(fromMoon, vec2(-direction.y, direction.x));
+  }
+  // A wide emitting band retains its width at the top, unlike a point spotlight.
+  float sourceWidth = mix(.025, mix(.8, .22, night), width);
+  float distanceFromBand = max(abs(lateral) - sourceWidth * .5, 0.);
+  float opening = .10 + max(depth, 0.) * spread;
+  float cone = exp(-pow(distanceFromBand / opening, 2.) * 2.2);
+  float angle = lateral / (max(depth, 0.) + .13 + sourceWidth);
   float fold = noise(vec2(angle * 8. + t * .15, depth * .65 - t * .22));
   float fine = noise(vec2(angle * 25. + fold * 2., t * .28));
   float threads = .2 + .52 * fold + .28 * fine;
   float shaft = pow(max(0., sin(angle * 32. + fold * 4. + t * .3)), 5.) * .12;
-  float falloff = exp(-depth * .8) * smoothstep(0., .14, vUv.y);
+  float falloff = exp(-max(depth, 0.) * .8) * smoothstep(0., .14, vUv.y);
+  // Moonlight blooms softly below the moon, never from the top edge.
+  falloff *= mix(1., smoothstep(.015, .18, depth), night);
   float sides = smoothstep(0., .07, vUv.x) * smoothstep(0., .07, 1. - vUv.x);
   float grain = (hash(gl_FragCoord.xy + floor(uTime * 8.)) - .5) * .045;
-  float alpha = clamp(cone * (threads + shaft + grain) * falloff * sides * .57, 0., .5);
+  float alpha = clamp(cone * (threads + shaft + grain) * falloff * sides * strength * mix(1.05, .72, night), 0., .62);
   return vec4(uTint * alpha, alpha);
 }
 void main() {
@@ -88,6 +108,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
   let uniforms: Record<string, WebGLUniformLocation | null> = {};
   let frame = 0, lastFrame = 0, time = 0, visible = false, lost = false, disposed = false;
   let pointerX = -2, pointerY = -2, targetX = -2, targetY = -2;
+  let veilSettings = { ...defaultVeilSettings }, moonX = .74, moonY = .86;
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const contrast = matchMedia("(forced-colors: active)");
   const transparency = matchMedia("(prefers-reduced-transparency: reduce)");
@@ -118,7 +139,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
       gl!.bufferData(gl!.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl!.STATIC_DRAW);
       const position = gl!.getAttribLocation(program, "aPosition");
       gl!.enableVertexAttribArray(position); gl!.vertexAttribPointer(position, 2, gl!.FLOAT, false, 0, 0);
-      uniforms = Object.fromEntries(["uResolution", "uPointer", "uTime", "uTint", "uEffects"].map(name => [name, gl!.getUniformLocation(program!, name)]));
+      uniforms = Object.fromEntries(["uResolution", "uPointer", "uTime", "uTint", "uEffects", "uVeilSettings", "uMoon"].map(name => [name, gl!.getUniformLocation(program!, name)]));
     } catch {
       release(); canvas.dataset.state = "unavailable";
     } finally {
@@ -139,6 +160,8 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
     gl!.uniform1f(uniforms.uTime!, time);
     gl!.uniform3f(uniforms.uTint!, tint[0]!, tint[1]!, tint[2]!);
     gl!.uniform2f(uniforms.uEffects!, Number(effects()[0]), Number(effects()[1]));
+    gl!.uniform3f(uniforms.uVeilSettings!, veilSettings.width / 100, veilSettings.strength / 100, veilSettings.spread / 100);
+    gl!.uniform3f(uniforms.uMoon!, moonX, moonY, Number(document.body.dataset.time === "night"));
     gl!.drawArrays(gl!.TRIANGLES, 0, 3);
     canvas.dataset.time = time.toFixed(3);
   }
@@ -157,15 +180,33 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
   function sync() {
     cancelAnimationFrame(frame); frame = 0; lastFrame = 0;
     if (disposed || lost || !program) return;
+    veilSettings = normalizeVeilSettings({ width: Number(document.body.dataset.veilWidth), strength: Number(document.body.dataset.veilStrength), spread: Number(document.body.dataset.veilSpread) });
+    locateMoon();
     canvas.dataset.state = !effects().some(Boolean) ? "disabled" : clear() ? "clear" : hidden() ? "offscreen" : moving() ? "running" : "paused";
     if (!effects().some(Boolean) || clear() || hidden()) return;
     draw();
     if (moving()) frame = requestAnimationFrame(tick);
   }
+  function locateMoon() {
+    if (document.body.dataset.time !== "night") return;
+    const image = document.querySelector<HTMLImageElement>(document.body.dataset.skyVideo === "on" ? ".sky-video > img" : ".night-sky");
+    if (!image) return;
+    const bounds = image.getBoundingClientRect(), local = hero!.getBoundingClientRect();
+    if (!bounds.width || !bounds.height || !local.width || !local.height) return;
+    // Both approved night assets place the crescent at this normalized location.
+    // Map object-fit: cover and object-position, so narrow screens keep it offscreen.
+    const ratio = image.naturalWidth && image.naturalHeight ? image.naturalWidth / image.naturalHeight : 16 / 9;
+    const width = Math.max(bounds.width, bounds.height * ratio), height = width / ratio;
+    const position = getComputedStyle(image).objectPosition.split(" ").map(Number.parseFloat);
+    const x = bounds.left + (bounds.width - width) * ((position[0] ?? 50) / 100) + width * .744;
+    const y = bounds.top + (bounds.height - height) * ((position[1] ?? 50) / 100) + height * .145;
+    moonX = (x - local.left) / local.width; moonY = 1 - (y - local.top) / local.height;
+  }
   function resize() {
     const { width, height } = hero!.getBoundingClientRect();
-    // Broad reflections need no retina buffer; cap work alongside the video.
-    const scale = Math.min(devicePixelRatio, 1, 960 / Math.max(width, 1), 720 / Math.max(height, 1));
+    // These diffuse layers stay smooth when upscaled; leave room for the video
+    // and glass interaction instead of shading a full-resolution background.
+    const scale = Math.min(devicePixelRatio, 1, 640 / Math.max(width, 1), 480 / Math.max(height, 1));
     canvas.width = Math.max(1, Math.round(width * scale));
     canvas.height = Math.max(1, Math.round(height * scale));
     sync();
@@ -177,7 +218,7 @@ export function createHeroEffects(canvas: HTMLCanvasElement): () => void {
   const intersection = new IntersectionObserver(([entry]) => { visible = (entry?.intersectionRatio ?? 0) > .01; sync(); }, { threshold: .01 });
   intersection.observe(hero);
   const settings = new MutationObserver(sync);
-  settings.observe(document.body, { attributes: true, attributeFilter: ["data-time", "data-motion", "data-transparency", "data-hero-mercury", "data-hero-veil"] });
+  settings.observe(document.body, { attributes: true, attributeFilter: ["data-time", "data-motion", "data-transparency", "data-hero-mercury", "data-hero-veil", "data-veil-width", "data-veil-strength", "data-veil-spread", "data-sky-video"] });
   document.addEventListener("visibilitychange", sync, options);
   for (const media of [reduced, contrast, transparency]) media.addEventListener("change", sync, options);
   hero.addEventListener("pointermove", event => {
