@@ -497,7 +497,7 @@
 .cluePanel { grid-column: 2; grid-row: 2; }
 .mobileTools { margin-top: 14px; }
 @media (min-width: 1024px) {
- .columns { padding-top: 24px; }
+ .columns { padding-top: 40px; }
 }
 @media (max-width: 1023px) {
  .cluePanel { grid-column: 1; grid-row: 3; margin-top: 18px; }
@@ -506,12 +506,12 @@
  .cluePanel { margin-top: 14px; }
 }
 
-/* Compact section labels share the same edges and inset as the clue rows. */
+/* Editorial section labels contrast with the selectable clue rows. */
 :global(.sky-app .quiz-page) .cluePanel h3 {
- min-height: 34px; padding: 5px 13px 5px 9px; border: 1px solid var(--quiz-sheet-edge);
- border-radius: 6px; background: var(--glass-soft); font-size: 13px; line-height: 1.5;
+ min-height: 34px; padding: 0 13px 8px 9px; border: 0; border-bottom: 1px solid var(--quiz-sheet-edge);
+ border-radius: 0; background: transparent; font-size: 14px; font-weight: 750; line-height: 1.5;
 }
-.cluePanel h3 > small { padding: 0; border: 0; background: transparent; font-variant-numeric: tabular-nums; }
+.cluePanel h3 > small { padding: 1px 6px; border: 0; border-radius: 4px; background: var(--glass-soft); font-variant-numeric: tabular-nums; }
 @media (min-width: 1024px) {
  /* Retain the input's accessible description without repeating the visible clue. */
  .currentClue { position: absolute; width: 1px; height: 1px; min-height: 0; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

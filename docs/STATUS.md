@@ -2,6 +2,8 @@
 
 ## P9-26 공개 퀴즈 풀이 리디자인 — 후속 보정 로컬 완료
 
+최신 승인 push 범위: 데스크톱 추가 위 여백40px와 박스 없는 단서 제목(굵은 글씨·작은 개수·얇은 하단선)을 적용했다. 사용자는 누적 로컬 변경 전체의 main push를 승인했다. 전체 pnpm check(lint/typecheck·전체 테스트·build) exit0, 풀이/제출/삭제/공유/출력 Chromium·모바일 E2E58건 통과. 실제24상태와 출력3폭·메인 외4경로 검수도 통과했다. 로그 /tmp/p926-push-{check,e2e,visual}.log. 기존 fontkit711KB 빌드 경고는 유지한다. 이번 push는 Preview 자동 빌드 대상이며 배포 완료 판정은 별도다. 아래 과거 후속의 Preview 미반영 표기는 당시 상태다.
+
 최신 후속: 풀이 여백 추가·주보 조작부 축소·난이도 탭 문구 변경·메인 전용 잔디 제어. 로컬 장년 시연10×10, 기존5/8버전 보존. lint/typecheck·E2E16건·실제24상태 및 출력/잔디 경로 검사 확인. Preview 미반영.
 
 최신 단서 표시 후속: PC 중복 현재 단서 숨김/접근성 설명 유지, 모바일 단서 여백, 제목+개수 박스, 저장 안내 중앙 배치. lint/typecheck·E2E4건·실제24상태 확인. 로컬 완료/Preview 미반영.
@@ -227,4 +229,4 @@ Production/Preview migration0000~0038·이력39개를 유지한다. 운영 app `
 
 ## Git과 다음 재개
 
-현재 로컬 Git 상태는 상단 P9-26과 [HANDOFF](HANDOFF.md)를 따른다. 현재 원격 main은 ceb50e3, Preview는2227f720 100%다. 비단결 범위 보정의 이전 main e074617·Preview2ca17260 기록은 보존한다. 직전 main a403d7f·Preview5598f5e5와 기존 Production 근거는 P9-25/P9-04 기록에 보존한다. 실제 자료·키·유료 결과와 기존 변경을 보존한다.
+현재 로컬 Git 상태는 상단 P9-26과 [HANDOFF](HANDOFF.md)를 따른다. 직전 배포 확인 소스는 ceb50e3, Worker는2227f720였다. 최신 승인 push와 해당 Worker 반영 여부를 구분한다. 비단결 범위 보정의 이전 main e074617·Preview2ca17260 기록은 보존한다. 직전 main a403d7f·Preview5598f5e5와 기존 Production 근거는 P9-25/P9-04 기록에 보존한다. 실제 자료·키·유료 결과와 기존 변경을 보존한다.
