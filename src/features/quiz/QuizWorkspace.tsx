@@ -293,7 +293,7 @@ export function QuizWorkspace({
       {latinNoticeVisible && <p className={styles.inputToast} aria-hidden="true" data-testid="latin-input-notice">{latinInputMessage}</p>}
       <div className={styles.tools}>
         <p><AdminIcon name="grid"/><code>{quiz.grid.gridSize} × {quiz.grid.gridSize}</code><span>{quiz.grid.entries.length}개 낱말</span></p>
-        <Tooltip label="입력 안내">{id => <button type="button" className={styles.helpToggle} aria-label="입력 안내" aria-describedby={id} aria-expanded={helpOpen} aria-controls="input-help" onClick={() => setHelpOpen(open => !open)}><AdminIcon name="book"/></button>}</Tooltip>
+        <Tooltip label="입력 안내">{id => <button type="button" className={styles.helpToggle} aria-label="입력 안내" aria-describedby={id} aria-expanded={helpOpen} aria-controls="input-help" onClick={() => setHelpOpen(open => !open)}><AdminIcon name="arrowKeys"/></button>}</Tooltip>
       </div>
       <div className={styles.help} hidden={!helpOpen}><div id="input-help">
           <p>칸이나 단서를 누르고 한글을 입력하세요. 모르는 칸은 건너뛰어도 됩니다.</p>

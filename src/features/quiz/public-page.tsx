@@ -1,5 +1,5 @@
 import { AdminIcon } from "../../components/AdminIcon";
-import { Tooltip } from "../../components/Tooltip";
+import { QuizShare } from "./QuizShare";
 import { GlassPanel } from "../../components/glass/GlassPanel";
 import { SermonHero } from "./SermonHero";
 import { BlankExportPanel } from "../export/BlankExportPanel";
@@ -94,7 +94,7 @@ export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoa
       <p className="published-date"><AdminIcon name="calendar"/>발행 <time dateTime={quiz.publishedAt}>{new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "long" }).format(new Date(quiz.publishedAt))}</time></p>
       </details>
 
-      <Tooltip label="이 퀴즈의 고유 주소 열기">{id => <Link className="quiz-icon-button" aria-label="이 퀴즈의 고유 주소" aria-describedby={id} to={`/quiz/${quiz.slug}?level=${difficulty}`}><AdminIcon name="external"/></Link>}</Tooltip>
+      <QuizShare key={`${quiz.slug}:${difficulty}`} slug={quiz.slug} difficulty={difficulty} title={quiz.sermon.title}/>
     </div>
     <div className="quiz-index-toolbar"><DifficultyTabs difficulty={difficulty} available={quiz.availableDifficulties} onChange={(level) => {
       if (level === difficulty) return;

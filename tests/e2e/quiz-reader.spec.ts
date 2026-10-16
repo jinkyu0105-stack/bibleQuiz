@@ -106,3 +106,36 @@ test("input help stays under the same pointer while opening and closing", async 
     await expect(button).toHaveAttribute("aria-expanded", "false");
   }
 });
+
+
+test("share copies the stable quiz URL and offers manual copy on failure", async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "share", { value: undefined, configurable: true });
+    Object.defineProperty(navigator, "clipboard", { value: { writeText: async (url: string) => { localStorage.setItem("copiedShare", url); } }, configurable: true });
+  });
+  await page.goto("/?level=adult&extra=private#ignored");
+  await page.getByRole("button", { name: "퀴즈 공유", exact: true }).click();
+  await expect(page.getByText("퀴즈 주소를 복사했습니다.")).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem("copiedShare"))).toBe("http://127.0.0.1:4173/quiz/2026-08-31-test01?level=adult");
+  await page.evaluate(() => { Object.defineProperty(navigator, "clipboard", { value: { writeText: async () => { throw new Error("denied"); } } }); });
+  await page.getByRole("button", { name: "퀴즈 공유", exact: true }).click();
+  const field=page.getByRole("textbox", { name: "공유할 퀴즈 주소" });
+  await expect(field).toHaveValue("http://127.0.0.1:4173/quiz/2026-08-31-test01?level=adult");
+  await field.focus();
+  expect(await field.evaluate(node => (node as HTMLInputElement).selectionEnd)).toBe((await field.inputValue()).length);
+});
+
+test("native share uses the selected quiz and cancellation does not copy", async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "share", { value: async (data: ShareData) => { localStorage.setItem("nativeShare", JSON.stringify(data)); throw new DOMException("cancel", "AbortError"); } });
+    Object.defineProperty(navigator, "clipboard", { value: { writeText: async () => { localStorage.setItem("unexpectedCopy", "true"); } } });
+  });
+  await page.goto("/?level=child");
+  await page.getByRole("button", { name: "퀴즈 공유", exact: true }).click();
+  await expect(page.getByRole("button", { name: "퀴즈 공유", exact: true })).toBeEnabled();
+  const shared=JSON.parse((await page.evaluate(() => localStorage.getItem("nativeShare")))!);
+  expect(shared.url).toBe("http://127.0.0.1:4173/quiz/2026-08-31-test01?level=child");
+  expect(shared.title).toContain("어린이용");
+  expect(await page.evaluate(() => localStorage.getItem("unexpectedCopy"))).toBeNull();
+  await expect(page.getByText("퀴즈 주소를 복사했습니다.")).toHaveCount(0);
+});

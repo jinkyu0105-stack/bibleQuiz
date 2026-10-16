@@ -3,6 +3,8 @@ import type { AdminTone } from "../config/admin-help";
 
 // Shared line icons extend the existing admin navigation's stroke and proportions.
 const shapes = {
+  share: <><path d="M12 15V3 M8 7l4-4 4 4 M5 11v10h14V11"/></>,
+  arrowKeys: <><rect x="9" y="2" width="6" height="8" rx="1"/><rect x="1" y="12" width="6" height="8" rx="1"/><rect x="9" y="12" width="6" height="8" rx="1"/><rect x="17" y="12" width="6" height="8" rx="1"/><path d="M10.5 6 12 4.5 13.5 6 M4.5 14.5 3 16l1.5 1.5 M10.5 15.5l1.5 1.5 1.5-1.5 M19.5 14.5l1.5 1.5-1.5 1.5"/></>,
   refresh: <><path d="M4 12a8 8 0 0 1 13.66-5.66L20 9 M20 4v5h-5"/><path d="M4 12a8 8 0 0 1 13.66-5.66L20 9 M20 4v5h-5" transform="rotate(180 12 12)"/></>,
   settings: <><path d="M4 7h16 M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></>,
   document: <path d="M4 3h12l4 4v14H4z M16 3v5h4 M8 12h8 M8 16h5"/>,
