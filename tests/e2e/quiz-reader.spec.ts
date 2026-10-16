@@ -12,6 +12,13 @@ test.beforeEach(async ({ page }) => {
 
 test("compact reader keeps summary, icon help and index navigation accessible", async ({ page }) => {
   await page.goto("/quiz/2026-08-31-test01?level=child");
+  const tools = page.locator(".quiz-meta-tools");
+  await expect(tools.getByRole("button")).toHaveCount(2);
+  await expect(tools.getByRole("button").nth(0)).toHaveAccessibleName("설교일");
+  await expect(tools.getByRole("button").nth(1)).toHaveAccessibleName("퀴즈 공유");
+  await expect(page.getByRole("link", { name: "이번 주 말씀으로 돌아가기" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: /대한성서공회에서 성경 읽기/ })).toHaveCount(0);
+  await expect(page.locator(".quiz-scripture")).not.toContainText("개역개정");
   const summary = page.locator(".sermon-summary > summary");
   await expect(page.locator(".summary-copy")).toBeHidden();
   await summary.focus();

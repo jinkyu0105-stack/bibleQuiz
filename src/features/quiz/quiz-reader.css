@@ -9,12 +9,12 @@ body[data-time=night] .quiz-page { --quiz-sheet: #43515c; --quiz-sheet-edge: rgb
 .sky-app .quiz-page .sky-quiz-heading { margin: 0 0 16px; }
 .quiz-title-row { display: contents; }
 .sky-app .quiz-page .sky-quiz-heading h2 { margin: 0; font: 700 clamp(21px, 2.2vw, 30px)/1.45 "Noto Sans KR",sans-serif; letter-spacing: -.04em; }
-.quiz-meta-tools { display: flex; flex-shrink: 0; border: 1px solid var(--glass-edge); border-radius: 10px; background: var(--glass-soft); }
+.quiz-meta-tools { position: relative; display: flex; flex-shrink: 0; border: 1px solid var(--glass-edge); border-radius: 10px; background: var(--glass-soft); }
 .quiz-meta-tools > span + span { border-left: 1px solid var(--line); }
 .quiz-page .quiz-icon-button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 0; border-radius: 9px; background: transparent; color: var(--ui-action); text-decoration: none; }
 .quiz-page .quiz-meta-tools .quiz-icon-button { border-radius: 0; }
 .quiz-page .quiz-meta-tools > span:first-child > .quiz-icon-button { border-radius: 9px 0 0 9px; }
-.quiz-page .quiz-meta-tools > span:last-child > .quiz-icon-button { border-radius: 0 9px 9px 0; }
+.quiz-page .quiz-meta-tools > span:last-of-type > .quiz-icon-button { border-radius: 0 9px 9px 0; }
 .quiz-icon-button svg { width: 18px; height: 18px; flex-shrink: 0; }
 .quiz-page .quiz-icon-button:hover, .quiz-page .quiz-icon-button[aria-pressed=true] { background: var(--ui-action-bg); box-shadow: inset 0 1px 0 rgb(255 255 255 / .3); }
 .quiz-scripture { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 8px 0 0; font-size: 12px; color: var(--muted); }
@@ -119,6 +119,13 @@ body[data-time=night] .quiz-page { --quiz-sheet: #43515c; --quiz-sheet-edge: rgb
 .quiz-participation-panel > section { margin: 0; padding: 0; border: 0; }
 .sky-app:not(.home-shell) .public-layout .quiz-participation-panel h3 { font: 700 17px/1.5 "Noto Sans KR", sans-serif; }
 
-.quiz-page .sermon-details .quiz-share-status { flex-basis: 100%; margin: 0 0 10px; font-size: 12px; color: var(--ui-success); }
+.quiz-page .quiz-share-status { flex-basis: 100%; margin: 0 0 10px; font-size: 12px; color: var(--ui-success); }
 .quiz-share-fallback { display: grid; gap: 6px; flex-basis: 100%; min-width: 0; margin-bottom: 10px; font-size: 12px; }
 .quiz-share-fallback input { width: 100%; min-width: 0; min-height: 44px; padding: 8px; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); background: var(--glass-field); font: inherit; }
+
+.quiz-share-feedback { position: absolute; top: calc(100% + 8px); right: 0; z-index: 5; width: min(280px, calc(100vw - 48px)); padding: 12px; border: 1px solid var(--quiz-sheet-edge); border-radius: 8px; background: var(--quiz-sheet); box-shadow: 0 8px 24px rgb(0 0 0 / .12); }
+.quiz-page .quiz-share-feedback .quiz-share-status { margin: 0; }
+.quiz-share-feedback .quiz-share-fallback { margin: 10px 0 0; }
+.quiz-meta-tools > span:only-of-type > .quiz-icon-button { border-radius: 9px; }
+
+.quiz-share-feedback > button { min-height: 44px; margin-top: 4px; font-size: 12px; }

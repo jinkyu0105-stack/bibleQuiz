@@ -1,5 +1,4 @@
 import { AdminIcon } from "../../components/AdminIcon";
-import { QuizShare } from "./QuizShare";
 import { GlassPanel } from "../../components/glass/GlassPanel";
 import { SermonHero } from "./SermonHero";
 import { BlankExportPanel } from "../export/BlankExportPanel";
@@ -83,7 +82,7 @@ export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoa
   const restoredSubmission = ownSubmission?.state === "ready" ? ownSubmission.data ?? undefined : undefined;
   const currentSubmissionAccess = submissionAccess(quiz, ownSubmission!);
   return <><GlassPanel as="article" surface="standard" className="quiz-page quiz-reader" data-difficulty={difficulty}>
-    <SermonHero difficulty={difficulty} title={quiz.sermon.title} date={quiz.sermon.date}
+    <SermonHero slug={quiz.slug} difficulty={difficulty} title={quiz.sermon.title} date={quiz.sermon.date}
       reference={quiz.sermon.bibleReferenceLabel} translation={quiz.sermon.translation}
       readingUrl={quiz.sermon.bibleReadingUrl} excerpt={quiz.sermon.summary?.text}
       desktopPath={quiz.variant.desktopBackgroundPath} mobilePath={quiz.variant.mobileBackgroundPath} />
@@ -94,7 +93,6 @@ export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoa
       <p className="published-date"><AdminIcon name="calendar"/>발행 <time dateTime={quiz.publishedAt}>{new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "long" }).format(new Date(quiz.publishedAt))}</time></p>
       </details>
 
-      <QuizShare key={`${quiz.slug}:${difficulty}`} slug={quiz.slug} difficulty={difficulty} title={quiz.sermon.title}/>
     </div>
     <div className="quiz-index-toolbar"><DifficultyTabs difficulty={difficulty} available={quiz.availableDifficulties} onChange={(level) => {
       if (level === difficulty) return;
