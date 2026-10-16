@@ -317,9 +317,9 @@ export function QuizWorkspace({
           } else setNotice("기존 저장을 지우지 못했습니다.");
         }}>기존 임시 저장 지우기</button>
       </aside>}
-      {displayedSolution === null ? <div className={styles.columns}>
-        <div className={styles.gridPanel} style={gridStyle}>
-          <div className={styles.currentClue} id="current-clue"><strong>{directionLabel} {activeEntry.number}번</strong><span>{activeEntry.clue}</span></div>
+      {displayedSolution === null ? <div className={styles.columns} style={gridStyle}>
+        <div className={styles.currentClue} id="current-clue"><strong>{directionLabel} {activeEntry.number}번</strong><span>{activeEntry.clue}</span></div>
+        <div className={styles.gridPanel}>
           <div className={styles.gridBoundary} data-testid="grid-boundary">
             <div className={styles.gridFrame} style={gridStyle}>
               <div role="grid" aria-label="낱말 퀴즈 격자" aria-rowcount={quiz.grid.gridSize} aria-colcount={quiz.grid.gridSize}>
