@@ -229,19 +229,18 @@ test("storage failures leave editing and theme controls usable", async ({ page }
   await expect(page.getByText("설정은 이 화면에서만 유지됩니다.")).toBeVisible();
 });
 
-test("themes and large view persist, with bounded page width at 320px", async ({ page }) => {
+test("themes persist and retired large-view settings do not change the grid at 320px", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark", reducedMotion: "reduce" });
   await page.goto("/dev/quiz?level=adult&size=10");
   await selectSkyTime(page, "밤");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(11, 32, 57)");
   await selectSkyTime(page, "낮");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(234, 242, 248)");
-  await page.getByRole("button", { name: "크게 보기" }).click();
-  await expect(page.getByRole("button", { name: "기본 보기" })).toHaveAttribute("aria-pressed", "true");
+  await page.evaluate(() => localStorage.setItem("bibleQuiz:largeView", "true"));
   await page.reload();
   await openSkySettings(page);
   await expect(page.getByRole("button", { name: "낮", exact: true })).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByRole("button", { name: "기본 보기" })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: /^(크게 보기|기본 보기)$/ })).toHaveCount(0);
   await page.setViewportSize({ width: 320, height: 720 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   const cell = await page.locator('[data-cell="r0c0"]').boundingBox();
@@ -301,7 +300,7 @@ test("default layouts stay within the page and text tokens meet AA contrast", as
   }
 });
 
-test("all grid sizes fit in both view modes, with usable controls and separate cell labels", async ({ page }) => {
+test("all grid sizes fit with compact controls and separate cell labels", async ({ page }) => {
   test.setTimeout(60000);
   for (const size of [5, 8, 10]) {
     await page.goto(`/dev/quiz?level=adult&size=${size}`);
@@ -310,9 +309,6 @@ test("all grid sizes fit in both view modes, with usable controls and separate c
     else await page.locator('[data-cell="r0c0"]').click();
     for (const theme of ["light", "dark"]) {
       await selectSkyTime(page, (theme) === "dark" ? "밤" : "낮");
-      for (const large of [false, true]) {
-        const toggle = page.getByRole("button", { name: /^(크게 보기|기본 보기)$/ });
-        if (await toggle.getAttribute("aria-pressed") !== String(large)) await toggle.click();
         for (const width of [320, 360, 375, 568, 768, 1024, 1440, 1920]) {
           await page.setViewportSize({ width, height: width === 568 ? 320 : 900 });
           await expectWholeGridFits(page);
@@ -327,16 +323,15 @@ test("all grid sizes fit in both view modes, with usable controls and separate c
             separate: spans.every((a, index) => spans.slice(index + 1).every((b) => a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top)),
           };
         });
-        expect(labels, `${size}×${size}, ${theme}, large=${large}`).toEqual({ count: 3, contained: true, separate: true });
+        expect(labels, `${size}×${size}, ${theme}`).toEqual({ count: 3, contained: true, separate: true });
         for (const name of ["이전 칸", "다음 칸", "방향 전환"]) {
           const box = await page.getByRole("button", { name: new RegExp(name) }).boundingBox();
           expect(box!.height).toBeGreaterThanOrEqual(48);
           expect(box!.width).toBeGreaterThanOrEqual(48);
         }
-        if (size === 10 && !large) {
+        if (size === 10) {
           await page.getByTestId("grid-boundary").screenshot({ path: test.info().outputPath(`fit-10x10-${theme}.png`) });
         }
-      }
     }
   }
   // A cell at the far side remains directly clickable, without panning first.

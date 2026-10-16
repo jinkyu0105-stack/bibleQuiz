@@ -4,16 +4,12 @@
   margin-top: 24px;
 }
 
-.workspace[data-large="true"] { --max-cell-size: 112px; --cell-text-ratio: .56; }
-.workspace[data-large="true"] .clue { padding: 16px; font-size: 1.125rem; }
 .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-bottom: 24px; }
 .tools p { margin: 0 auto 0 0; color: var(--text-strong); font-weight: 700; }
 .tools p span { margin-left: 12px; color: var(--text); font-size: .875rem; font-weight: 400; }
 .help { width: 100%; }
-.help summary { display: list-item; width: fit-content; min-height: 44px; padding-block: 12px; cursor: pointer; }
 .help p { max-width: 60ch; margin-bottom: 8px; }
 .columns { display: grid; grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr); gap: clamp(24px, 3vw, 48px); align-items: start; }
-.workspace[data-large="true"] .columns { grid-template-columns: minmax(0, 1fr); }
 .gridPanel { min-width: 0; container-type: inline-size; }
 .currentClue { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; min-height: 64px; padding-bottom: 16px; }
 .currentClue strong { color: var(--text-strong); white-space: nowrap; }
@@ -289,7 +285,6 @@
 .workspace { padding: clamp(16px, 2.4vw, 32px); border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
 .tools { padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
 .tools .help { width: auto; margin-left: auto; }
-.tools .help[open] { flex-basis: 100%; }
 .cluePanel { background: var(--page); border-radius: 10px; padding: clamp(16px, 2vw, 24px); }
 .clue { background: transparent; }
 .progressPanel { margin-top: 24px; padding: 20px; border: 1px solid var(--border); border-radius: 10px; background: var(--page); }
@@ -359,10 +354,9 @@
 .tools p code { font: inherit; font-variant-numeric: tabular-nums; }
 .tools p span { margin: 0; font-size: 12px; font-weight: 400; }
 .help { width: auto; margin: 0; }
-.help > summary { display: flex; gap: 6px; align-items: center; min-height: 44px; padding: 0 8px; border-radius: 8px; font-size: 12px; list-style: none; }
-.help > summary > svg { width: 16px; color: var(--ui-guide); }
-.help > summary:hover { background: var(--ui-guide-bg); color: var(--ui-guide); }
-.help[open] { flex-basis: 100%; }
+.helpToggle { display: flex; gap: 6px; align-items: center; min-height: 44px; padding: 0 8px; border-radius: 8px; font-size: 12px; list-style: none; }
+.helpToggle > svg { width: 16px; color: var(--ui-guide); }
+.helpToggle:hover { background: var(--ui-guide-bg); color: var(--ui-guide); }
 .help > div { padding: 12px 16px; border: 1px solid var(--quiz-sheet-edge); border-radius: 8px; background: var(--glass-soft); font-size: 13px; }
 .help p { max-width: none; margin: 0 0 8px; }
 .help p:last-child { margin: 0; }
@@ -436,8 +430,8 @@
  .tools p { gap: 5px; }
  .tools p > svg { display: none; }
  .tools p span { font-size: 11px; }
- .help > summary { gap: 4px; padding-inline: 4px; font-size: 11px; }
- .help > summary > svg:last-child { display: none; }
+ .helpToggle { gap: 4px; padding-inline: 4px; font-size: 11px; }
+ .helpToggle > svg:last-child { display: none; }
  .columns { gap: 14px; }
  .currentClue { gap: 6px; font-size: 13px; min-height: 40px; padding-bottom: 10px; }
  .currentClue strong { padding-inline: 5px; font-size: 11px; }
@@ -470,3 +464,12 @@
 .boardPreview > svg { flex: 0 0 34px; width: 34px; height: 34px; padding: 8px; border: 1px solid color-mix(in srgb, var(--ui-success) 25%, transparent); border-radius: 9px; color: var(--ui-success); background: var(--ui-success-bg); }
 .boardPreview h3 { margin: 0 0 4px; font: 700 15px/1.5 "Noto Sans KR", sans-serif; color: var(--ink); }
 .boardPreview p { margin: 0; font-size: 12px; line-height: 1.7; color: var(--muted); }
+
+.helpToggle { flex-shrink: 0; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
+.helpToggle[aria-expanded=true] > svg:last-child { transform: rotate(180deg); }
+.help:not([hidden]) { margin-bottom: 12px; }
+.mobileTools { width: fit-content; max-width: 100%; grid-template-columns: auto auto auto; gap: 0; margin: 8px auto 0; border: 1px solid var(--quiz-sheet-edge, var(--border)); border-radius: 8px; background: var(--glass-soft); }
+.mobileTools button { min-width: 56px; min-height: 48px; padding: 4px 10px; border: 0; border-radius: 0; background: transparent; gap: 4px; }
+.mobileTools button + button { border-left: 1px solid var(--quiz-sheet-edge, var(--border)); }
+.mobileTools button:first-child { border-radius: 7px 0 0 7px; }
+.mobileTools button:last-child { border-radius: 0 7px 7px 0; }

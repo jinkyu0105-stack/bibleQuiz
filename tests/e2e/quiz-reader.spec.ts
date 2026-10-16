@@ -80,3 +80,29 @@ test("weekly reader replaces archive with a private participation preview", asyn
   await expect(page.getByRole("heading", { name: "참여 현황", exact: true })).toHaveCount(1);
   expect(boardRequests).toEqual([]);
 });
+
+
+test("input help stays under the same pointer while opening and closing", async ({ page }) => {
+  await page.goto("/?level=child");
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    const button = page.getByRole("button", { name: "입력 안내", exact: true });
+    await button.scrollIntoViewIfNeeded();
+    const before = (await button.boundingBox())!;
+    const x = before.x + before.width / 2, y = before.y + before.height / 2;
+    await page.mouse.click(x, y);
+    await expect(button).toHaveAttribute("aria-expanded", "true");
+    await expect(page.locator("#input-help")).toBeVisible();
+    const after = (await button.boundingBox())!;
+    expect(Math.abs(after.x-before.x)).toBeLessThan(1);
+    expect(Math.abs(after.y-before.y)).toBeLessThan(1);
+    await page.mouse.click(x, y);
+    await expect(button).toHaveAttribute("aria-expanded", "false");
+    await expect(page.locator("#input-help")).toBeHidden();
+    await button.focus();
+    await page.keyboard.press("Enter");
+    await expect(button).toHaveAttribute("aria-expanded", "true");
+    await page.keyboard.press("Space");
+    await expect(button).toHaveAttribute("aria-expanded", "false");
+  }
+});

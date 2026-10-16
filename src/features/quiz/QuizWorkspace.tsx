@@ -1,7 +1,6 @@
 import { createPortal } from "react-dom";
 import { GlassPanel } from "../../components/glass/GlassPanel";
 import { AdminIcon } from "../../components/AdminIcon";
-import { Tooltip } from "../../components/Tooltip";
 import { Button } from "../../components/Button";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 
@@ -137,9 +136,7 @@ export function QuizWorkspace({
   const [practiceResult, setPracticeResult] = useState<PracticeCheckData | null>(null);
   const [practiceSolution, setPracticeSolution] = useState<RevealedSolution | null>(null);
   const [deletedSubmission, setDeletedSubmission] = useState<DeletedOwnSubmission | null>(initialSubmission?.status === "deleted" ? initialSubmission : null);
-  const [large, setLarge] = useState(() => {
-    try { return browserStorage()?.getItem("bibleQuiz:largeView") === "true"; } catch { return false; }
-  });
+  const [helpOpen, setHelpOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const bridge = useRef<ReturnType<typeof connectNativeInput> | null>(null);
   const nativeTouch = useRef<{ pointerId: number; focused: boolean; startedAt: number; x: number; y: number } | null>(null);
@@ -202,7 +199,7 @@ export function QuizWorkspace({
       viewport?.removeEventListener("scroll", scheduleReveal);
       window.removeEventListener("resize", scheduleReveal);
     };
-  }, [state.activeCell, large]);
+  }, [state.activeCell]);
 
   function act(action: InputAction) {
     if (
@@ -291,25 +288,18 @@ export function QuizWorkspace({
         </section>
       : null;
   return (
-    <section className={`${styles.workspace} quiz-workspace-glass`} data-large={large}>
+    <section className={`${styles.workspace} quiz-workspace-glass`}>
       {latinNoticeVisible && <p className={styles.inputToast} aria-hidden="true" data-testid="latin-input-notice">{latinInputMessage}</p>}
       <div className={styles.tools}>
         <p><AdminIcon name="grid"/><code>{quiz.grid.gridSize} × {quiz.grid.gridSize}</code><span>{quiz.grid.entries.length}개 낱말</span></p>
-        <Tooltip label={large ? "기본 크기로 보기" : "격자와 단서를 크게 보기"}>{id =>
-        <button type="button" className="quiz-icon-button" aria-label={large ? "기본 보기" : "크게 보기"} aria-describedby={id} aria-pressed={large} onClick={() => {
-          setLarge(!large);
-          try {
-            const storage = browserStorage();
-            if (!storage) throw new Error("Storage unavailable");
-            storage.setItem("bibleQuiz:largeView", String(!large));
-          } catch { setNotice("보기 설정은 현재 화면에서만 유지됩니다."); }
-        }}><AdminIcon name="grid"/></button>}</Tooltip>
-        <details className={styles.help}><summary><AdminIcon name="alert"/><span>입력 안내</span><AdminIcon name="chevron"/></summary><div id="input-help">
+        <button type="button" className={styles.helpToggle} aria-expanded={helpOpen} aria-controls="input-help" onClick={() => setHelpOpen(open => !open)}><AdminIcon name="alert"/><span>입력 안내</span><AdminIcon name="chevron"/></button>
+      </div>
+      <div className={styles.help} hidden={!helpOpen}><div id="input-help">
           <p>칸이나 단서를 누르고 한글을 입력하세요. 모르는 칸은 건너뛰어도 됩니다.</p>
           <p><kbd>Tab</kbd> 다음 칸 · <kbd>Shift + Tab</kbd> 이전 칸 · <kbd>방향키</kbd> 옆 칸 이동</p>
           <p>교차 칸에서 <kbd>Enter</kbd>로 가로·세로를 바꿉니다. 모바일에서는 키보드를 연 뒤 같은 칸을 짧게 다시 누르거나 아래 방향 전환 버튼을 쓰세요. 낱말 끝에서 Tab을 누르면 격자 밖으로 나갑니다.</p>
           <p>작은 화면에서도 격자 전체가 보입니다. 칸이 작다면 단서와 이전·다음 버튼으로 이동하세요.</p>
-        </div></details>
+        </div>
       </div>
       {discardKeys.length > 0 && <aside className={styles.draftWarning} role="status">
         <p>{loaded.status === "invalid" ? "저장된 입력을 안전하게 읽을 수 없습니다." : "다른 문제 버전의 임시 저장이 있어 적용하지 않았습니다."} {saveBlocked ? "기존 저장을 지우기 전까지 새 입력을 덮어쓰지 않습니다." : "현재 버전의 저장은 복구했습니다. 이전 버전만 지울 수 있습니다."}</p>
