@@ -113,3 +113,8 @@ body[data-time=night] .quiz-page { --quiz-sheet: #43515c; --quiz-sheet-edge: rgb
  .quiz-page .sermon-summary > summary { gap: 5px; }
  .quiz-page .sermon-summary > summary > small { font-size: 10px; }
 }
+
+.quiz-participation-slot:empty { display: none; }
+.quiz-participation-separate > hr { margin: 24px 0; border: 0; border-top: 1px solid var(--line); }
+.quiz-participation-panel > section { margin: 0; padding: 0; border: 0; }
+.sky-app:not(.home-shell) .public-layout .quiz-participation-panel h3 { font: 700 17px/1.5 "Noto Sans KR", sans-serif; }

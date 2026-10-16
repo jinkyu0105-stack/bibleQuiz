@@ -4,7 +4,7 @@ import { GlassPanel } from "../../components/glass/GlassPanel";
 import { SermonHero } from "./SermonHero";
 import { BlankExportPanel } from "../export/BlankExportPanel";
 import { ProblemHistory } from "./ProblemHistory";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link, useLoaderData, useNavigation, useRevalidator, useSearchParams } from "react-router-dom";
 import type { PublicQuiz } from "../../../shared/api/public-quiz";
 import { DifficultyTabs } from "./DifficultyTabs";
@@ -56,6 +56,7 @@ export function Component() {
 }
 
 export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoadResult } = {}) {
+  const [participationContainer, setParticipationContainer] = useState<HTMLDivElement | null>(null);
   const routeResult = useLoaderData<QuizLoadResult>();
   const result = resolvedResult ?? routeResult;
   const navigation = useNavigation();
@@ -81,7 +82,7 @@ export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoa
   const difficulty = quiz.variant.difficulty;
   const restoredSubmission = ownSubmission?.state === "ready" ? ownSubmission.data ?? undefined : undefined;
   const currentSubmissionAccess = submissionAccess(quiz, ownSubmission!);
-  return <GlassPanel as="article" surface="standard" className="quiz-page quiz-reader" data-difficulty={difficulty}>
+  return <><GlassPanel as="article" surface="standard" className="quiz-page quiz-reader" data-difficulty={difficulty}>
     <SermonHero difficulty={difficulty} title={quiz.sermon.title} date={quiz.sermon.date}
       reference={quiz.sermon.bibleReferenceLabel} translation={quiz.sermon.translation}
       readingUrl={quiz.sermon.bibleReadingUrl} excerpt={quiz.sermon.summary?.text}
@@ -109,7 +110,7 @@ export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoa
           {ownSubmission.requestId && <p className="request-id">문의용 번호: {ownSubmission.requestId}</p>}
         </aside>}
         {quiz.correction && <aside className="quiz-availability"><p>{quiz.correction.nonRanked ? "정정된 지난 퀴즈": "문제 수정본"}</p><p>{quiz.correction.notice}</p><ProblemHistory key={`${quiz.slug}:${difficulty}`} slug={quiz.slug} difficulty={difficulty}/></aside>}
-        <QuizWorkspace key={`${inputView.quizId}:${inputView.variantRevision}`} quiz={inputView} deadline={<QuizDeadline
+        <QuizWorkspace participationContainer={participationContainer} key={`${inputView.quizId}:${inputView.variantRevision}`} quiz={inputView} deadline={<QuizDeadline
           closesAt={quiz.closesAt}
           closesAtLabel={quiz.closesAtLabel}
           refreshOnExpiry={quiz.availability === "open" || quiz.availability === "paused" || quiz.availability === "upcoming"}
@@ -147,13 +148,5 @@ export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoa
     <details className="quiz-export-disclosure"><summary><AdminIcon name="document"/><span>주보 편집 자료</span><small>빈 격자 · 문제 텍스트</small><AdminIcon name="chevron"/></summary>
     <BlankExportPanel key={`${quiz.slug}:${difficulty}`} slug={quiz.slug} difficulty={difficulty} available={quiz.availableDifficulties} />
     </details>
-    {result.state === "ready" && result.data.otherOpenQuizzes.length > 0 && <section className="other-open-quizzes" aria-labelledby="other-open-heading">
-      <h2 id="other-open-heading">아직 참여할 수 있는 퀴즈</h2>
-      <ul>{result.data.otherOpenQuizzes.map((other) => <li key={other.slug}>
-        <h3>{other.title}</h3><p>{other.sermonDate} · {other.bibleReferenceLabel}</p>
-        <p>마감: {new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "long", timeStyle: "short" }).format(new Date(other.closesAt))} (한국 시간)</p>
-        <div>{other.availableDifficulties.map((level) => <Link className="text-link" key={level} to={`/quiz/${other.slug}?level=${level}`}>{level === "child" ? "어린이용" : "장년용"} 풀기</Link>)}</div>
-      </li>)}</ul>
-    </section>}
-  </GlassPanel>;
+  </GlassPanel><div ref={setParticipationContainer} className="quiz-participation-slot"/></>;
 }

@@ -1,3 +1,5 @@
+import { createPortal } from "react-dom";
+import { GlassPanel } from "../../components/glass/GlassPanel";
 import { AdminIcon } from "../../components/AdminIcon";
 import { Tooltip } from "../../components/Tooltip";
 import { Button } from "../../components/Button";
@@ -86,6 +88,7 @@ export function QuizWorkspace({
   deadline,
   initialSubmission,
   participationBoard,
+  participationContainer,
   practiceCheck,
   quiz,
   submission,
@@ -94,6 +97,7 @@ export function QuizWorkspace({
 }: {
   deadline?: ReactNode;
   initialSubmission?: OwnSubmission;
+  participationContainer?: HTMLElement | null;
   participationBoard?: {
     target: ParticipationBoardTarget;
     visibility: "after-submission" | "public";
@@ -276,6 +280,16 @@ export function QuizWorkspace({
     (deletedSubmission !== null && practiceCheck === undefined);
   const cellLabel = `${activeCell.row + 1}행 ${activeCell.column + 1}열, ${directionLabel} ${activeEntry.number}번, ${state.cellValues.get(state.activeCell) ?? "빈칸"}`;
   const gridStyle = { "--grid-size": quiz.grid.gridSize } as CSSProperties;
+  const canViewBoard = participationBoard !== undefined &&
+    (participationBoard.visibility === "public" || (deletedSubmission === null && hasVerifiedSubmission));
+  const participationContent = canViewBoard
+    ? <ParticipationBoard grid={quiz.grid} target={participationBoard.target} printable={participationBoard.printable ?? true} />
+    : participationBoard?.visibility === "after-submission" && deletedSubmission === null && !hasVerifiedSubmission
+      ? <section className={styles.boardPreview} aria-labelledby="participation-preview-title">
+          <AdminIcon name="people"/>
+          <div><h3 id="participation-preview-title">참여 현황</h3><p>답안을 제출하면 함께 참여한 분들의 답안을 볼 수 있어요.</p></div>
+        </section>
+      : null;
   return (
     <section className={`${styles.workspace} quiz-workspace-glass`} data-large={large}>
       {latinNoticeVisible && <p className={styles.inputToast} aria-hidden="true" data-testid="latin-input-notice">{latinInputMessage}</p>}
@@ -438,14 +452,9 @@ export function QuizWorkspace({
         <Button type="button" variant="primary" disabled={!progress.canConfirm} onClick={() => setConfirmation(true)}>입력 확인</Button>
         {confirmation && <p role="status" className={styles.confirmMessage}>작성 {progress.filled}칸, 빈칸 {progress.remaining}칸입니다. 입력 형식을 확인했습니다. 정답 여부는 검사하지 않았으며 서버로 전송하지 않았습니다.</p>}
       </section>}
-      {participationBoard !== undefined &&
-        (participationBoard.visibility === "public" || (deletedSubmission === null && hasVerifiedSubmission)) &&
-        <ParticipationBoard grid={quiz.grid} target={participationBoard.target} printable={participationBoard.printable ?? true} />}
-      {participationBoard?.visibility === "after-submission" && deletedSubmission === null && !hasVerifiedSubmission &&
-        <section className={styles.boardPreview} aria-labelledby="participation-preview-title">
-          <AdminIcon name="people"/>
-          <div><h3 id="participation-preview-title">참여 현황</h3><p>답안을 제출하면 함께 참여한 분들의 답안을 볼 수 있어요.</p></div>
-        </section>}
+      {participationContainer === undefined ? participationContent : participationContainer && participationContent
+        ? createPortal(<div className="quiz-participation-separate"><hr aria-hidden="true"/><GlassPanel className="quiz-page quiz-reader quiz-participation-panel" surface="standard">{participationContent}</GlassPanel></div>, participationContainer)
+        : null}
     </section>
   );
 }
