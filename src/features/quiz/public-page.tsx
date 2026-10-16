@@ -5,8 +5,7 @@ import { SermonHero } from "./SermonHero";
 import { BlankExportPanel } from "../export/BlankExportPanel";
 import { ProblemHistory } from "./ProblemHistory";
 import { useMemo } from "react";
-import { Link, useLoaderData, useLocation, useNavigation, useRevalidator, useSearchParams } from "react-router-dom";
-import { RecentArchive } from "../archive/RecentArchive";
+import { Link, useLoaderData, useNavigation, useRevalidator, useSearchParams } from "react-router-dom";
 import type { PublicQuiz } from "../../../shared/api/public-quiz";
 import { DifficultyTabs } from "./DifficultyTabs";
 import { QuizLoading } from "./QuizLoading";
@@ -53,8 +52,7 @@ function submissionAccess(quiz: PublicQuiz, ownSubmission: OwnSubmissionLoadResu
 }
 
 export function Component() {
-  const location = useLocation();
-  return <><PublicQuizContent />{location.pathname === "/" && <RecentArchive />}</>;
+  return <PublicQuizContent />;
 }
 
 export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoadResult } = {}) {

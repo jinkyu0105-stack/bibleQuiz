@@ -59,3 +59,18 @@ test("four sky times retain full square grids and readable tools at narrow width
     }
   }
 });
+
+
+test("weekly reader replaces archive with a private participation preview", async ({ page }) => {
+  const boardRequests: string[] = [];
+  page.on("request", request => { if (new URL(request.url()).pathname.endsWith("/board")) boardRequests.push(request.url()); });
+  await page.goto("/?level=child");
+  await expect(page.getByRole("heading", { name: "참여 현황", exact: true })).toBeVisible();
+  await expect(page.getByText("답안을 제출하면 함께 참여한 분들의 답안을 볼 수 있어요.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "지난 퀴즈", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "참여 현황 보기", exact: true })).toHaveCount(0);
+  await page.getByRole("tab", { name: "장년용" }).click();
+  await expect(page.getByTestId("progress")).toHaveText("0 / 40칸 작성");
+  await expect(page.getByRole("heading", { name: "참여 현황", exact: true })).toHaveCount(1);
+  expect(boardRequests).toEqual([]);
+});

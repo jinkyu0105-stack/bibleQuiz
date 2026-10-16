@@ -464,3 +464,9 @@
 
 .workspace { --max-cell-size: 80px; }
 .tools { padding-bottom: 0; margin-bottom: 10px; border-bottom: 0; }
+
+/* The participation preview shares the reading sheet without exposing answers. */
+.boardPreview { display: flex; align-items: center; gap: 12px; margin-top: 20px; padding: 16px 0 0; border-top: 1px solid var(--quiz-sheet-edge, var(--border)); }
+.boardPreview > svg { flex: 0 0 34px; width: 34px; height: 34px; padding: 8px; border: 1px solid color-mix(in srgb, var(--ui-success) 25%, transparent); border-radius: 9px; color: var(--ui-success); background: var(--ui-success-bg); }
+.boardPreview h3 { margin: 0 0 4px; font: 700 15px/1.5 "Noto Sans KR", sans-serif; color: var(--ink); }
+.boardPreview p { margin: 0; font-size: 12px; line-height: 1.7; color: var(--muted); }

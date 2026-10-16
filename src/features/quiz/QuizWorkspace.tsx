@@ -441,6 +441,11 @@ export function QuizWorkspace({
       {participationBoard !== undefined &&
         (participationBoard.visibility === "public" || (deletedSubmission === null && hasVerifiedSubmission)) &&
         <ParticipationBoard grid={quiz.grid} target={participationBoard.target} printable={participationBoard.printable ?? true} />}
+      {participationBoard?.visibility === "after-submission" && deletedSubmission === null && !hasVerifiedSubmission &&
+        <section className={styles.boardPreview} aria-labelledby="participation-preview-title">
+          <AdminIcon name="people"/>
+          <div><h3 id="participation-preview-title">참여 현황</h3><p>답안을 제출하면 함께 참여한 분들의 답안을 볼 수 있어요.</p></div>
+        </section>}
     </section>
   );
 }
