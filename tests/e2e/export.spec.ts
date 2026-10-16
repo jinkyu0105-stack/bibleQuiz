@@ -116,7 +116,10 @@ test("blocked popup falls back to actual PDF download on the original page", asy
 });
 test("unsubmitted public quiz hides Top N print and does not load PDF, font or wasm eagerly", async ({ page, context }) => {
   await mock(context); const requests: string[] = []; page.on("request", request => requests.push(request.url()));
-  await page.goto(`/quiz/${slug}`); await expect(page.getByRole("button", { name: "빈 격자 받기", exact: true })).toBeVisible();
+  await page.goto(`/quiz/${slug}`);
+  await expect(page.getByRole("button", { name: "빈 격자 받기", exact: true })).toBeHidden();
+  await page.locator(".quiz-export-disclosure > summary").click();
+  await expect(page.getByRole("button", { name: "빈 격자 받기", exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Top N 출력", exact: true })).toHaveCount(0);
   expect(requests.filter(url => /fontkit|NotoSansKR\.ttf|index_bg\.wasm|pdf-lib/u.test(url))).toHaveLength(0);
 });

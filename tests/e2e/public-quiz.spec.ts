@@ -134,6 +134,7 @@ test("public quiz loads, keeps difficulty-specific drafts and survives permalink
   await mockPublic(page);
   await page.goto("/?level=child");
   await expect(page.getByRole("heading", { name: "함께 돌아보는 한 주 (테스트)" })).toBeVisible();
+  await page.locator(".sermon-summary > summary").click();
   await expect(page.getByText(/설교자의 원문이 아닙니다/)).toBeVisible();
   await expect(page.locator('time[datetime="2099-09-07T00:00:00.000Z"]')).toContainText("한국 시간");
   await expect(page.getByTestId("remaining-time")).toContainText("남은 기간:");
@@ -208,7 +209,9 @@ test("public layout keeps the grid visible in both themes, with plain-text summa
   });
   await page.goto("/?level=adult");
   await expect(page.getByRole("tabpanel").getByText("문제를 확인하고 있습니다.").first()).toBeVisible();
-  await expect(page.getByText("현재 장년용에 12명이 참여했습니다.")).toBeVisible();
+  await expect(page.locator(".quiz-participants")).toHaveText("12명 참여");
+  await page.locator(".sermon-summary > summary").click();
+  await expect(page.locator(".summary-copy")).toContainText('<img src=x onerror="alert(1)"> 테스트 문구');
   await expect(page.locator(".summary-copy img")).toHaveCount(0);
   for (const theme of ["light", "dark"]) {
     await selectSkyTime(page, (theme) === "dark" ? "밤" : "낮");

@@ -1,3 +1,4 @@
+import { AdminIcon } from "../../components/AdminIcon";
 import { Button } from "../../components/Button";
 import { useEffect, useId, useRef, useState } from "react";
 
@@ -62,8 +63,7 @@ export function SolutionDisclosure({
 
   return <section className={styles.solutionSection} aria-labelledby={headingId}>
     <div>
-      <p className={styles.solutionKicker}>내 답안과 공식 정답</p>
-      <h3 id={headingId}>정답보기</h3>
+      <h3 id={headingId}><AdminIcon name={available ? "check" : "lock"}/>정답보기</h3>
       <p>{isRevealed
         ? "내 답안과 공식 정답을 비교하고 있습니다."
         : available

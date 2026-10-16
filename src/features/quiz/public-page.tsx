@@ -1,3 +1,5 @@
+import { AdminIcon } from "../../components/AdminIcon";
+import { Tooltip } from "../../components/Tooltip";
 import { GlassPanel } from "../../components/glass/GlassPanel";
 import { SermonHero } from "./SermonHero";
 import { BlankExportPanel } from "../export/BlankExportPanel";
@@ -81,27 +83,28 @@ export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoa
   const difficulty = quiz.variant.difficulty;
   const restoredSubmission = ownSubmission?.state === "ready" ? ownSubmission.data ?? undefined : undefined;
   const currentSubmissionAccess = submissionAccess(quiz, ownSubmission!);
-  return <article className="quiz-page" data-difficulty={difficulty}>
+  return <GlassPanel as="article" surface="standard" className="quiz-page quiz-reader" data-difficulty={difficulty}>
     <SermonHero difficulty={difficulty} title={quiz.sermon.title} date={quiz.sermon.date}
       reference={quiz.sermon.bibleReferenceLabel} translation={quiz.sermon.translation}
       readingUrl={quiz.sermon.bibleReadingUrl} excerpt={quiz.sermon.summary?.text}
       desktopPath={quiz.variant.desktopBackgroundPath} mobilePath={quiz.variant.mobileBackgroundPath} />
-    <GlassPanel className={`sermon-details${quiz.sermon.summary ? "" : " sermon-details-compact"}`} id="sermon-details" aria-label="설교 내용과 발행 정보">
-      {quiz.sermon.summary && <section className="sermon-summary" aria-labelledby="summary-heading">
-        <h3 id="summary-heading">AI가 요약한 설교 핵심 내용</h3>
-        <p className="summary-copy">{quiz.sermon.summary.text}</p><p>{quiz.sermon.summary.disclosure}</p>
-      </section>}
-      <p className="published-date">발행일 <time dateTime={quiz.publishedAt}>{new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "long" }).format(new Date(quiz.publishedAt))}</time></p>
-      <Link className="text-link" to={`/quiz/${quiz.slug}?level=${difficulty}`}>이 퀴즈의 고유 주소</Link>
-    </GlassPanel>
-    <DifficultyTabs difficulty={difficulty} available={quiz.availableDifficulties} onChange={(level) => {
+    <div className={`sermon-details${quiz.sermon.summary ? "" : " sermon-details-compact"}`} id="sermon-details" aria-label="설교 내용과 발행 정보">
+      <details className="sermon-summary">
+        <summary><AdminIcon name="book"/><span>{quiz.sermon.summary ? "설교 핵심 내용" : "설교·발행 정보"}</span>{quiz.sermon.summary && <small>AI 요약</small>}<AdminIcon name="chevron"/></summary>
+        {quiz.sermon.summary && <><p className="summary-copy">{quiz.sermon.summary.text}</p><p className="summary-disclosure">{quiz.sermon.summary.disclosure}</p></>}
+      <p className="published-date"><AdminIcon name="calendar"/>발행 <time dateTime={quiz.publishedAt}>{new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "long" }).format(new Date(quiz.publishedAt))}</time></p>
+      </details>
+
+      <Tooltip label="이 퀴즈의 고유 주소 열기">{id => <Link className="quiz-icon-button" aria-label="이 퀴즈의 고유 주소" aria-describedby={id} to={`/quiz/${quiz.slug}?level=${difficulty}`}><AdminIcon name="external"/></Link>}</Tooltip>
+    </div>
+    <div className="quiz-index-toolbar"><DifficultyTabs difficulty={difficulty} available={quiz.availableDifficulties} onChange={(level) => {
       if (level === difficulty) return;
       const next = new URLSearchParams(params); next.set("level", level);
       setParams(next, { preventScrollReset: true });
-    }} />
+    }} /><span className="quiz-participants"><AdminIcon name="people"/><span><b>{quiz.submissionCount}</b>명 참여</span></span></div>
     <div role="tabpanel" id="quiz-panel" aria-labelledby={`tab-${difficulty}`} aria-busy={loading}>
       {loading ? <QuizLoading /> : <>
-        <aside className="quiz-availability"><p><strong>{availabilityText(quiz)}</strong></p><p>{quiz.acceptingSubmissions ? "한 글자 이상 작성한 부분 답안도 제출할 수 있습니다." : "입력한 내용은 현재 브라우저에 임시 저장됩니다."}</p><p>현재 {difficulty === "child" ? "어린이용" : "장년용"}에 {quiz.submissionCount}명이 참여했습니다.</p></aside>
+        <aside className="quiz-availability" data-availability={quiz.availability}><AdminIcon name={quiz.availability === "open" ? "check" : "alert"}/><strong>{availabilityText(quiz)}</strong><span>{quiz.acceptingSubmissions ? "모르는 칸은 비워 두어도 괜찮아요." : "입력은 이 브라우저에 임시 저장됩니다."}</span></aside>
         {ownSubmission?.state === "error" && <aside className="quiz-availability" role="alert">
           <p>기존 제출 결과를 확인하지 못했습니다. 중복 제출을 막기 위해 확인 전에는 새 제출을 받지 않습니다.</p>
           <button className="primary-button" type="button" onClick={() => void revalidator.revalidate()}>제출 결과 다시 확인</button>
@@ -143,7 +146,9 @@ export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoa
         {...(restoredSubmission === undefined ? {} : { initialSubmission: restoredSubmission })} />
       </>}
     </div>
+    <details className="quiz-export-disclosure"><summary><AdminIcon name="document"/><span>주보 편집 자료</span><small>빈 격자 · 문제 텍스트</small><AdminIcon name="chevron"/></summary>
     <BlankExportPanel key={`${quiz.slug}:${difficulty}`} slug={quiz.slug} difficulty={difficulty} available={quiz.availableDifficulties} />
+    </details>
     {result.state === "ready" && result.data.otherOpenQuizzes.length > 0 && <section className="other-open-quizzes" aria-labelledby="other-open-heading">
       <h2 id="other-open-heading">아직 참여할 수 있는 퀴즈</h2>
       <ul>{result.data.otherOpenQuizzes.map((other) => <li key={other.slug}>
@@ -152,5 +157,5 @@ export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoa
         <div>{other.availableDifficulties.map((level) => <Link className="text-link" key={level} to={`/quiz/${other.slug}?level=${level}`}>{level === "child" ? "어린이용" : "장년용"} 풀기</Link>)}</div>
       </li>)}</ul>
     </section>}
-  </article>;
+  </GlassPanel>;
 }

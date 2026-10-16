@@ -17,12 +17,13 @@
 .gridPanel { min-width: 0; container-type: inline-size; }
 .currentClue { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; min-height: 64px; padding-bottom: 16px; }
 .currentClue strong { color: var(--text-strong); white-space: nowrap; }
-.gridBoundary { width: fit-content; max-width: 100%; border: 1px solid var(--grid-border); border-radius: 4px; background: var(--blocked); }
+.gridBoundary { width: max-content; max-width: none; border: 1px solid var(--grid-border); border-radius: 4px; background: var(--blocked); }
 .gridFrame {
   /* D-015: all columns fit, including the boundary's two 1px borders. */
   --cell-size: min(calc((100cqi - 2px) / var(--grid-size)), var(--max-cell-size));
   position: relative;
-  width: calc(var(--grid-size) * var(--cell-size));
+  /* Size the frame from the rendered tracks: Firefox rounds each fractional track separately. */
+  width: max-content;
 }
 .row { display: grid; grid-template-columns: repeat(var(--grid-size), var(--cell-size)); }
 .cell, .blocked { width: var(--cell-size); height: var(--cell-size); }
@@ -349,3 +350,117 @@
  --selection: #e6f0ff; --focus: #195bcf; --accent: #095bac; --warning: #825800;
  --surface: #edf4fc; --correct-surface: #e1f0e5; --incorrect-surface: #fff0dc;
 }
+
+/* P9-26 solving sheet: transparent frame lives on the page, only content is solid. */
+.workspace:global(.quiz-workspace-glass) { margin: 0; padding: clamp(14px, 2vw, 24px); border: 0; border-radius: 0; background: transparent; }
+.tools { gap: 8px; margin: 0 0 16px; }
+.tools p { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 12px; }
+.tools p > svg { width: 16px; color: var(--ui-action); }
+.tools p code { font: inherit; font-variant-numeric: tabular-nums; }
+.tools p span { margin: 0; font-size: 12px; font-weight: 400; }
+.help { width: auto; margin: 0; }
+.help > summary { display: flex; gap: 6px; align-items: center; min-height: 44px; padding: 0 8px; border-radius: 8px; font-size: 12px; list-style: none; }
+.help > summary > svg { width: 16px; color: var(--ui-guide); }
+.help > summary:hover { background: var(--ui-guide-bg); color: var(--ui-guide); }
+.help[open] { flex-basis: 100%; }
+.help > div { padding: 12px 16px; border: 1px solid var(--quiz-sheet-edge); border-radius: 8px; background: var(--glass-soft); font-size: 13px; }
+.help p { max-width: none; margin: 0 0 8px; }
+.help p:last-child { margin: 0; }
+.help kbd { padding: 2px 5px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; background: var(--glass-field); color: var(--ink); font: inherit; font-size: 12px; }
+.columns { grid-template-columns: minmax(0, 1.2fr) minmax(280px, 1fr); gap: 24px; }
+.currentClue { align-items: center; flex-wrap: nowrap; min-height: 44px; gap: 10px; padding: 0 0 12px; font-size: 14px; line-height: 1.65; }
+.currentClue strong { padding: 3px 8px; border: 1px solid color-mix(in srgb,var(--ui-action) 25%,transparent); border-radius: 5px; background: var(--ui-action-bg); color: var(--ui-action); font-size: 12px; }
+.gridBoundary { margin-inline: auto; box-shadow: 0 4px 10px rgb(18 42 68 / .08); }
+.mobileTools { grid-template-columns: 1fr 1.45fr 1fr; gap: 6px; margin-top: 12px; }
+.mobileTools button { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; padding: 8px; border: 1px solid var(--quiz-sheet-edge); border-radius: 7px; background: var(--glass-soft); color: var(--ink); font-size: 12px; }
+.mobileTools button:hover { background: var(--ui-action-bg); color: var(--ui-action); }
+.mobileTools button > svg { width: 16px; height: 16px; }
+.mobileTools span { display: inline; font-size: inherit; }
+.mobileTools b { padding: 1px 4px; border-radius: 3px; background: var(--ui-action-bg); color: var(--ui-action); font-size: 10px; }
+.previousIcon { transform: rotate(90deg); }
+.nextIcon { transform: rotate(-90deg); }
+.inputStatus { min-height: 1.6em; margin: 8px 0 0; font-size: 11px; color: var(--muted); }
+.cluePanel { padding: 0 0 0 24px; border: 0; border-left: 1px solid var(--quiz-sheet-edge); border-radius: 0; background: transparent; }
+.cluePanel section + section { margin-top: 16px; padding-top: 16px; }
+:global(.sky-app .quiz-page) .cluePanel h3 { gap: 7px; min-height: 32px; margin: 0 0 8px; font: 700 15px/1.5 "Noto Sans KR",sans-serif; }
+.cluePanel h3 > span { color: var(--ui-action); }
+.cluePanel h3 > small { margin-left: auto; padding: 0 6px; border: 1px solid var(--quiz-sheet-edge); border-radius: 4px; color: var(--muted); font-size: 11px; font-weight: 400; }
+.cluePanel ol { gap: 4px; }
+.clue { align-items: start; gap: 8px; min-height: 48px; padding: 9px; border-radius: 7px; background: transparent; line-height: 1.65; font-size: 14px; }
+.clue > strong { display: grid; place-items: center; flex-shrink: 0; width: 25px; height: 25px; border: 1px solid var(--quiz-sheet-edge); border-radius: 5px; background: var(--glass-soft); color: var(--ink); font-size: 12px; }
+.clue > span { flex: 1; }
+.clue > small { flex-shrink: 0; margin: 3px 0 0; padding: 0 4px; font-size: 10px; color: var(--muted); }
+.clue:hover { background: var(--glass-soft); border-color: var(--quiz-sheet-edge); }
+.clue[aria-pressed=true] { border-color: color-mix(in srgb,var(--ui-action) 40%,transparent); background: var(--ui-action-bg); color: var(--ui-action); }
+.clue[aria-pressed=true] > strong { border-color: var(--ui-action); background: var(--ui-action-fill); color: var(--ui-on-action); box-shadow: inset 0 1px rgb(255 255 255 / .3), 0 2px 4px rgb(0 0 0 / .1); }
+.clue[aria-pressed=true] > small { color: inherit; }
+.progressPanel { grid-template-columns: minmax(150px, 1fr) minmax(160px, 1fr) minmax(200px, 1fr); gap: 16px; margin-top: 18px; padding: 14px 0; border-radius: 0; background: transparent; border-block: 1px solid var(--quiz-sheet-edge); }
+.progressPanel strong { font-size: 12px; }
+.progressPanel progress { margin-top: 6px; height: 5px; accent-color: var(--ui-action); }
+.progressPanel p { font-size: 11px; line-height: 1.7; }
+.saved, .deadline { display: flex; align-items: start; gap: 6px; }
+.saved > svg, .deadline > svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: 3px; color: var(--ui-action); }
+.progressPanel :global(.remaining-time) { margin-top: 0; font-weight: 400; color: var(--muted); }
+.confirmPanel { gap: 12px; padding: 20px 0 0; }
+:global(.sky-app .quiz-page) .confirmPanel h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; font: 700 16px/1.6 "Noto Sans KR",sans-serif; }
+.confirmPanel h3 > svg { color: var(--ui-action); width: 18px; flex-shrink: 0; }
+.confirmPanel p { font-size: 13px; }
+.solutionSection { gap: 8px 16px; margin-top: 16px; padding: 12px 14px; background: var(--glass-soft); border-color: var(--quiz-sheet-edge); border-radius: 8px; }
+:global(.sky-app .quiz-page) .solutionSection h3 { display: flex; align-items: center; gap: 6px; margin: 0; font: 600 13px/1.7 "Noto Sans KR",sans-serif; }
+.solutionSection h3 svg { width: 15px; color: var(--ui-guide); }
+.solutionSection p { margin-top: 3px; font-size: 12px; }
+.solutionAction > button { min-height: 44px; font-size: 12px; }
+.submissionForm { margin-top: 8px; }
+.submissionForm fieldset { padding: 16px; background: var(--glass-soft); border-color: var(--quiz-sheet-edge); border-radius: 8px; }
+.submissionForm legend { font-size: 14px; }
+.submissionForm .formIntro { margin: 0 0 4px; padding: 10px 12px; border: 1px solid color-mix(in srgb,var(--ui-attention) 30%,transparent); border-radius: 6px; background: var(--ui-attention-bg); color: var(--ui-attention); font-size: 12px; }
+.submissionFields { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.35fr); gap: 16px; }
+.submissionFields > div { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.submissionFields label { font-size: 13px; }
+.submissionFields input[type=text], .submissionFields textarea { min-height: 44px; padding: 10px; font-size: 16px; }
+.submissionFields textarea { min-height: 72px; }
+.submissionForm .fieldHelp { font-size: 11px; }
+.submissionForm .consent { margin: 8px 0; gap: 8px; }
+.submissionForm .consent span { font-size: 12px !important; }
+.submissionForm :global(.primary-button) { justify-self: end; min-width: 140px; }
+@media (max-width: 1023px) {
+ .columns { grid-template-columns: minmax(0,1fr); gap: 18px; }
+ .cluePanel { padding: 16px 0 0; border: 0; border-top: 1px solid var(--quiz-sheet-edge); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+ .cluePanel section + section { margin: 0; padding: 0 0 0 16px; border: 0; border-left: 1px solid var(--quiz-sheet-edge); }
+ .progressPanel { grid-template-columns: 1fr 1fr; }
+ .progressPanel > div { grid-column: 1 / -1; }
+}
+@media (max-width: 767px) {
+ .workspace:global(.quiz-workspace-glass) { padding: 12px; }
+ .tools { gap: 4px; margin-bottom: 10px; }
+ .tools p { gap: 5px; }
+ .tools p > svg { display: none; }
+ .tools p span { font-size: 11px; }
+ .help > summary { gap: 4px; padding-inline: 4px; font-size: 11px; }
+ .help > summary > svg:last-child { display: none; }
+ .columns { gap: 14px; }
+ .currentClue { gap: 6px; font-size: 13px; min-height: 40px; padding-bottom: 10px; }
+ .currentClue strong { padding-inline: 5px; font-size: 11px; }
+ .cluePanel { display: block; padding-top: 12px; }
+ .cluePanel section + section { margin-top: 12px; padding: 12px 0 0; border: 0; border-top: 1px solid var(--quiz-sheet-edge); }
+ .clue { font-size: 13px; padding: 8px 6px; }
+ .clue > small { padding: 0; }
+ .progressPanel { gap: 10px; margin-top: 12px; padding: 12px 0; }
+ .confirmPanel { padding-top: 16px; }
+ .confirmPanel > :global(.action-button) { width: 100%; }
+ .solutionSection { grid-template-columns: minmax(0,1fr) auto; padding: 10px; gap: 8px; }
+ .solutionSection p { font-size: 11px; }
+ .solutionAction > button { padding-inline: 10px; }
+ .submissionFields { grid-template-columns: 1fr; gap: 12px; }
+ .submissionForm fieldset { padding: 12px; }
+ .submissionForm :global(.primary-button) { width: 100%; }
+ .mobileTools button { gap: 4px; padding-inline: 4px; }
+ .mobileTools button > svg { width: 14px; }
+}
+
+.tools { padding-bottom: 12px; }
+.tools .help { margin-left: 0; }
+.progressPanel { border-inline: 0; }
+
+.workspace { --max-cell-size: 80px; }
+.tools { padding-bottom: 0; margin-bottom: 10px; border-bottom: 0; }

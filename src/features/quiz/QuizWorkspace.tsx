@@ -1,3 +1,5 @@
+import { AdminIcon } from "../../components/AdminIcon";
+import { Tooltip } from "../../components/Tooltip";
 import { Button } from "../../components/Button";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 
@@ -23,7 +25,6 @@ import {
   SubmissionResultSummary,
   type SubmissionTarget,
 } from "./SubmissionPanel";
-import { GlassPanel } from "../../components/glass/GlassPanel";
 import styles from "./quiz.module.css";
 
 const latinInputMessage = "영문이 입력됐어요. 한/영 키로 한글로 바꿔 주세요.";
@@ -276,19 +277,25 @@ export function QuizWorkspace({
   const cellLabel = `${activeCell.row + 1}행 ${activeCell.column + 1}열, ${directionLabel} ${activeEntry.number}번, ${state.cellValues.get(state.activeCell) ?? "빈칸"}`;
   const gridStyle = { "--grid-size": quiz.grid.gridSize } as CSSProperties;
   return (
-    <GlassPanel className={`${styles.workspace} quiz-workspace-glass`} data-large={large}>
+    <section className={`${styles.workspace} quiz-workspace-glass`} data-large={large}>
       {latinNoticeVisible && <p className={styles.inputToast} aria-hidden="true" data-testid="latin-input-notice">{latinInputMessage}</p>}
       <div className={styles.tools}>
-        <p>{quiz.grid.gridSize} × {quiz.grid.gridSize} 격자 <span>{quiz.grid.entries.length}개 낱말</span></p>
-        <button type="button" aria-pressed={large} onClick={() => {
+        <p><AdminIcon name="grid"/><code>{quiz.grid.gridSize} × {quiz.grid.gridSize}</code><span>{quiz.grid.entries.length}개 낱말</span></p>
+        <Tooltip label={large ? "기본 크기로 보기" : "격자와 단서를 크게 보기"}>{id =>
+        <button type="button" className="quiz-icon-button" aria-label={large ? "기본 보기" : "크게 보기"} aria-describedby={id} aria-pressed={large} onClick={() => {
           setLarge(!large);
           try {
             const storage = browserStorage();
             if (!storage) throw new Error("Storage unavailable");
             storage.setItem("bibleQuiz:largeView", String(!large));
           } catch { setNotice("보기 설정은 현재 화면에서만 유지됩니다."); }
-        }}>{large ? "기본 보기" : "크게 보기"}</button>
-        <details className={styles.help}><summary>입력 안내</summary><p id="input-help">칸을 누르고 한글을 입력하세요. Tab은 다음 칸, Shift+Tab은 이전 칸, 방향키는 옆 칸으로 이동합니다. 교차 칸에서 Enter를 누르거나, 키보드가 열린 모바일에서 같은 칸을 짧게 다시 누르면 가로·세로가 바뀝니다. 화면 아래 방향 전환 버튼도 사용할 수 있습니다. 낱말 끝에서 Tab을 누르면 격자 밖으로 나갑니다. 작은 화면에서는 퍼즐 전체가 보이도록 칸이 줄어듭니다. 칸을 누르기 어렵다면 단서와 이전/다음 버튼을 사용하세요.</p></details>
+        }}><AdminIcon name="grid"/></button>}</Tooltip>
+        <details className={styles.help}><summary><AdminIcon name="alert"/><span>입력 안내</span><AdminIcon name="chevron"/></summary><div id="input-help">
+          <p>칸이나 단서를 누르고 한글을 입력하세요. 모르는 칸은 건너뛰어도 됩니다.</p>
+          <p><kbd>Tab</kbd> 다음 칸 · <kbd>Shift + Tab</kbd> 이전 칸 · <kbd>방향키</kbd> 옆 칸 이동</p>
+          <p>교차 칸에서 <kbd>Enter</kbd>로 가로·세로를 바꿉니다. 모바일에서는 키보드를 연 뒤 같은 칸을 짧게 다시 누르거나 아래 방향 전환 버튼을 쓰세요. 낱말 끝에서 Tab을 누르면 격자 밖으로 나갑니다.</p>
+          <p>작은 화면에서도 격자 전체가 보입니다. 칸이 작다면 단서와 이전·다음 버튼으로 이동하세요.</p>
+        </div></details>
       </div>
       {discardKeys.length > 0 && <aside className={styles.draftWarning} role="status">
         <p>{loaded.status === "invalid" ? "저장된 입력을 안전하게 읽을 수 없습니다." : "다른 문제 버전의 임시 저장이 있어 적용하지 않았습니다."} {saveBlocked ? "기존 저장을 지우기 전까지 새 입력을 덮어쓰지 않습니다." : "현재 버전의 저장은 복구했습니다. 이전 버전만 지울 수 있습니다."}</p>
@@ -336,20 +343,20 @@ export function QuizWorkspace({
             </div>
           </div>
           <div className={styles.mobileTools} aria-label="격자 이동">
-            <button type="button" disabled={submissionLocked} onPointerDown={preserveNativeTouchFocus} onClick={() => act({ type: "move", step: -1 })}>이전 칸</button>
-            <button type="button" disabled={submissionLocked} onPointerDown={preserveNativeTouchFocus} onClick={() => act({ type: "toggle-direction" })}>방향 전환 <span>{directionLabel}</span></button>
-            <button type="button" disabled={submissionLocked} onPointerDown={preserveNativeTouchFocus} onClick={() => act({ type: "move", step: 1 })}>다음 칸</button>
+            <button type="button" disabled={submissionLocked} onPointerDown={preserveNativeTouchFocus} onClick={() => act({ type: "move", step: -1 })} aria-label="이전 칸"><AdminIcon name="chevron" className={styles.previousIcon!}/><span>이전</span></button>
+            <button type="button" disabled={submissionLocked} onPointerDown={preserveNativeTouchFocus} onClick={() => act({ type: "toggle-direction" })} aria-label={`방향 전환 ${directionLabel}`}><AdminIcon name="flow"/><span>방향 전환</span><b>{directionLabel}</b></button>
+            <button type="button" disabled={submissionLocked} onPointerDown={preserveNativeTouchFocus} onClick={() => act({ type: "move", step: 1 })} aria-label="다음 칸"><span>다음</span><AdminIcon name="chevron" className={styles.nextIcon!}/></button>
           </div>
           <p id="input-status" className={styles.inputStatus} role="status">{notice || (state.isComposing ? "한글을 조합하고 있습니다." : cellLabel)}</p>
         </div>
         <aside className={styles.cluePanel} aria-label="낱말 단서">
           {(["across", "down"] as const).map((direction) => <section key={direction}>
-            <h3>{direction === "across" ? "가로" : "세로"} 단서</h3>
+            <h3><span aria-hidden="true">{direction === "across" ? "→" : "↓"}</span>{direction === "across" ? "가로" : "세로"} 단서 <small>{quiz.grid.entries.filter(entry => entry.direction === direction).length}</small></h3>
             <ol>{quiz.grid.entries.filter((entry) => entry.direction === direction).map((entry) => <li key={entry.id}>
               <button type="button" className={styles.clue} aria-pressed={entry.id === state.activeEntry}
                 disabled={submissionLocked}
                 onPointerDown={preserveNativeTouchFocus} onClick={() => act({ type: "select-entry", entryId: entry.id })}>
-                <strong>{entry.number}</strong><span>{entry.clue}<small>{entry.length}글자</small></span>
+                <strong>{entry.number}</strong><span>{entry.clue}</span><small>{entry.length}글자</small>
               </button>
             </li>)}</ol>
           </section>)}
@@ -370,8 +377,8 @@ export function QuizWorkspace({
       </div><ResultComparisonGrids answers={displayedAnswers} grid={quiz.grid} solution={displayedSolution} /></div>}
       <div className={styles.progressPanel}>
         <div><strong data-testid="progress">{progress.filled} / {progress.total}칸 작성</strong><progress aria-label="작성 진행률" value={progress.filled} max={progress.total} /></div>
-        <p role="status" className={styles.saved}>{submissionResult !== null ? "제출한 답안의 채점 결과를 표시하고 있습니다." : hasVerifiedSubmission ? "제출한 답안이 확인되었습니다. 정답보기를 눌러 결과를 복원할 수 있습니다." : practiceResult !== null ? "지난 퀴즈 답안의 채점 결과를 표시하고 있습니다." : practiceSolution !== null ? "현재 답안과 공식 정답을 비교하고 있습니다." : deletedSubmission !== null && practiceCheck === undefined ? saved : saveBlocked ? "기존 저장 확인이 필요합니다. 새 입력은 아직 저장하지 않습니다." : saved}</p>
-        {deadline && <p>{deadline}</p>}
+        <p role="status" className={styles.saved}><AdminIcon name="database"/>{submissionResult !== null ? "제출한 답안의 채점 결과를 표시하고 있습니다." : hasVerifiedSubmission ? "제출한 답안이 확인되었습니다. 정답보기를 눌러 결과를 복원할 수 있습니다." : practiceResult !== null ? "지난 퀴즈 답안의 채점 결과를 표시하고 있습니다." : practiceSolution !== null ? "현재 답안과 공식 정답을 비교하고 있습니다." : deletedSubmission !== null && practiceCheck === undefined ? saved : saveBlocked ? "기존 저장 확인이 필요합니다. 새 입력은 아직 저장하지 않습니다." : saved}</p>
+        {deadline && <p className={styles.deadline}><AdminIcon name="calendar"/><span>{deadline}</span></p>}
       </div>
       {solutionDisclosure !== undefined &&
         (deletedSubmission === null || solutionDisclosure.policy === "public") && <SolutionDisclosure
@@ -414,7 +421,7 @@ export function QuizWorkspace({
           setPracticeResult(result);
         }}
       /> : submission?.state === "enabled" ? <section className={styles.confirmPanel} aria-labelledby="confirm-title">
-        <div><h3 id="confirm-title">입력한 내용을 확인해 보세요</h3><p>모르는 칸은 비워 두어도 됩니다. 제출하면 바로 채점 결과와 정답을 확인할 수 있습니다.</p></div>
+        <div><h3 id="confirm-title"><AdminIcon name="document"/>입력한 내용을 확인해 보세요</h3><p>모르는 칸은 비워 두어도 됩니다. 제출하면 바로 채점 결과와 정답을 확인할 수 있습니다.</p></div>
         <Button type="button" variant="primary" disabled={!progress.canConfirm} onClick={() => setConfirmation(true)}>입력 확인</Button>
         {confirmation && <SubmissionPanel cells={state.cellValues} target={submission.target} onSuccess={(result) => {
           const answers = Object.fromEntries(state.cellValues);
@@ -424,16 +431,16 @@ export function QuizWorkspace({
           setSubmissionResult(result);
         }} />}
       </section> : submission?.state === "disabled" ? <section className={styles.confirmPanel} aria-labelledby="confirm-title">
-        <div><h3 id="confirm-title">입력한 내용을 확인해 보세요</h3><p>{submission.message}</p></div>
+        <div><h3 id="confirm-title"><AdminIcon name="document"/>입력한 내용을 확인해 보세요</h3><p>{submission.message}</p></div>
         <Button type="button" variant="primary" disabled>지금은 제출할 수 없음</Button>
       </section> : deletedSubmission !== null ? null : <section className={styles.confirmPanel} aria-labelledby="confirm-title">
-        <div><h3 id="confirm-title">입력한 내용을 확인해 보세요</h3><p>모르는 칸은 비워 두어도 됩니다. 이 시험 화면에서는 제출·채점을 하지 않습니다.</p></div>
+        <div><h3 id="confirm-title"><AdminIcon name="document"/>입력한 내용을 확인해 보세요</h3><p>모르는 칸은 비워 두어도 됩니다. 이 시험 화면에서는 제출·채점을 하지 않습니다.</p></div>
         <Button type="button" variant="primary" disabled={!progress.canConfirm} onClick={() => setConfirmation(true)}>입력 확인</Button>
         {confirmation && <p role="status" className={styles.confirmMessage}>작성 {progress.filled}칸, 빈칸 {progress.remaining}칸입니다. 입력 형식을 확인했습니다. 정답 여부는 검사하지 않았으며 서버로 전송하지 않았습니다.</p>}
       </section>}
       {participationBoard !== undefined &&
         (participationBoard.visibility === "public" || (deletedSubmission === null && hasVerifiedSubmission)) &&
         <ParticipationBoard grid={quiz.grid} target={participationBoard.target} printable={participationBoard.printable ?? true} />}
-    </GlassPanel>
+    </section>
   );
 }

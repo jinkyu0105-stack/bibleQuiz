@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment } from "react";
 import { useAdminTooltip } from "./useAdminTooltip";
 import { adminTerms, adminTermTones, adminToneLabels, adminTitleEmoji, type AdminTerm } from "../config/admin-help";
 import css from "./admin-help.module.css";
@@ -10,14 +10,7 @@ export function AdminLabel({ text, explain = false }: { text: string; explain?: 
   return <>{adminTitleEmoji[text] && <AdminEmoji>{adminTitleEmoji[text]}</AdminEmoji>}{explain ? <GuideText text={text}/> : text}</>;
 }
 
-/** Shared compact explanation for an icon, status or count. */
-export function AdminTooltip({ label, children }: { label: string; children: ReactNode | ((descriptionId: string) => ReactNode) }) {
-  const { id, triggerRef, bubbleRef, triggerEvents, bubbleEvents } = useAdminTooltip<HTMLSpanElement>();
-  return <span ref={triggerRef} className={css.hint} {...triggerEvents}>
-    {typeof children === "function" ? children(id) : children}
-    <span id={id} ref={bubbleRef} role="tooltip" popover="auto" className={`${css.tooltip} ${css.compact}`} data-compact data-admin-tone="action" {...bubbleEvents}>{label}</span>
-  </span>;
-}
+export { Tooltip as AdminTooltip } from "./Tooltip";
 
 /** Native top layer avoids clipping inside glass panels and nested disclosures. */
 export function HelpTerm({ term }: { term: AdminTerm }) {

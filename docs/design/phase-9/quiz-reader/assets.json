@@ -1,0 +1,88 @@
+{
+  "task": "P9-26",
+  "generated": "2026-10-16",
+  "source": "image_gen; four separate desktop/mobile workspace/submission references. Placeholder marks are not Bible text or product content.",
+  "screenshots": "Local demo at localhost:5173 with isolated browser storage. No answer submission or DB changes. Submission screenshots show night palette.",
+  "files": [
+    {
+      "file": "actual-desktop-dawn.png",
+      "bytes": 621906,
+      "sha256": "4288ac2da993253849840773d725475a14d1726f6f46ff6524e4d754c7a8afd9"
+    },
+    {
+      "file": "actual-desktop-day.png",
+      "bytes": 657810,
+      "sha256": "b6c20c197a4c549e0253d9330ebedd96553aed1722fcb628b180ebcd22d47bc6"
+    },
+    {
+      "file": "actual-desktop-dusk.png",
+      "bytes": 647094,
+      "sha256": "b3f793ddeb4d2df537a747665e87b8ea0ef21a58f5dba4760f93ed832aee9633"
+    },
+    {
+      "file": "actual-desktop-night.png",
+      "bytes": 578506,
+      "sha256": "562a7921db9eccd2224f4990146b510990b2f3b6b4af2a2570d3d45e388095cd"
+    },
+    {
+      "file": "actual-desktop-submit.png",
+      "bytes": 29665,
+      "sha256": "d825873f21bddf1d2356e50639ea5fe7899f7851d9092a1f21b8148f5626875e"
+    },
+    {
+      "file": "actual-mobile-dawn.png",
+      "bytes": 298421,
+      "sha256": "fc89d0089437d14e6f39b8272a5033207dc27482c8cdf356ea6946193326270f"
+    },
+    {
+      "file": "actual-mobile-day.png",
+      "bytes": 319025,
+      "sha256": "4080afa2afe84c429e1a089872e244891e809d1557e7da8fde698d37349b1dc4"
+    },
+    {
+      "file": "actual-mobile-dusk.png",
+      "bytes": 301779,
+      "sha256": "a0d6c052109885b295807eb95764df6a2cbbb0ecacf5097e1dd2af3a35f932ec"
+    },
+    {
+      "file": "actual-mobile-night.png",
+      "bytes": 287140,
+      "sha256": "67820aa0c3c4b41d8c864c38074be190f811358bd7162986a4d80e45632bc685"
+    },
+    {
+      "file": "actual-mobile-submit.png",
+      "bytes": 28329,
+      "sha256": "fba96cb405587d77a5067baddd5f8180819fd99d15f830b1fda695c3659dac19"
+    },
+    {
+      "file": "before-desktop.png",
+      "bytes": 1190188,
+      "sha256": "27c328edeceea25439b20cf5eab027a5ea5436ed2968e3dc64dee5dbd5efa587"
+    },
+    {
+      "file": "before-mobile.png",
+      "bytes": 477834,
+      "sha256": "8e6fec6380b96d5cf8ef21581c70826563d6114fdb4ce2cd56424fea0fc1038a"
+    },
+    {
+      "file": "desktop-submit.png",
+      "bytes": 1382482,
+      "sha256": "1f1306eeb5a7d9cbf48e10efeb134e77531fde460b5fa553374a3be0d28aa42a"
+    },
+    {
+      "file": "desktop.png",
+      "bytes": 1339843,
+      "sha256": "e87d959a77594fde1b3d80711a18e71a668a7b346e1113ad14357f1dbba9d398"
+    },
+    {
+      "file": "mobile-submit.png",
+      "bytes": 1413955,
+      "sha256": "2bc2e442c3d53ff76f4cd6e201262ae2591b40b40ab21b83f13c8ac49ab385c3"
+    },
+    {
+      "file": "mobile.png",
+      "bytes": 1325956,
+      "sha256": "faecec30f3708500894abc11243934b267ea8cd72a0255a91140832c0ca6f623"
+    }
+  ]
+}

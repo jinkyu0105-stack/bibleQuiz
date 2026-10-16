@@ -141,14 +141,17 @@ export function SubmissionPanel({
     <fieldset disabled={submitting || sessionState !== "ready"}>
       <legend>제출 정보</legend>
       <p className={styles.formIntro}>{sessionState === "loading" ? "제출 세션을 준비하고 있습니다." : "한 글자 이상 작성한 부분 답안도 제출할 수 있습니다."}</p>
+      <div className={styles.submissionFields}><div>
       <label htmlFor="submission-name">이름</label>
       <input ref={nameRef} id="submission-name" name="name" type="text" value={name} onChange={(event) => setName(event.currentTarget.value)} autoComplete="name" aria-invalid={submitError?.field === "name"} aria-describedby="submission-name-help submission-error" />
       <p id="submission-name-help" className={styles.fieldHelp}>2자에서 12자, 한글·영문·숫자와 한 칸 공백을 사용할 수 있습니다.</p>
 
+      </div><div>
       <label htmlFor="submission-comment">한줄평 <span>(선택)</span></label>
       <textarea ref={commentRef} id="submission-comment" name="comment" value={comment} onChange={(event) => setComment(event.currentTarget.value)} rows={3} aria-invalid={submitError?.field === "comment"} aria-describedby="submission-comment-help submission-error" />
       <p id="submission-comment-help" className={styles.fieldHelp}>80자 이내로 입력해 주세요. 현재 {graphemeCount(comment.normalize("NFC").trim())}자</p>
 
+      </div></div>
       <label className={styles.consent}>
         <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.currentTarget.checked)} />
         <span>입력한 표시 이름, 답안 및 코멘트가 참여현황에 공개되고, 참여 기록이 운영되는 동안 보관되는 것에 동의합니다.</span>
