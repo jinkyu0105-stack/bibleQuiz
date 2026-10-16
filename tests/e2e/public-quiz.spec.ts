@@ -136,7 +136,7 @@ test("public quiz loads, keeps difficulty-specific drafts and survives permalink
   await expect(page.getByRole("heading", { name: "함께 돌아보는 한 주 (테스트)" })).toBeVisible();
   await page.locator(".sermon-summary > summary").click();
   await expect(page.getByText(/설교자의 원문이 아닙니다/)).toBeVisible();
-  await expect(page.locator('time[datetime="2099-09-07T00:00:00.000Z"]')).toContainText("한국 시간");
+  await expect(page.locator('time[datetime="2099-09-07T00:00:00.000Z"]')).not.toContainText("한국 시간");
   await expect(page.getByTestId("remaining-time")).toContainText("남은 기간:");
   await inputValue(page, "갑세");
   await page.getByRole("tab", { name: "어린이용" }).focus();
@@ -147,7 +147,8 @@ test("public quiz loads, keeps difficulty-specific drafts and survives permalink
   await inputValue(page, "값");
   await page.getByRole("tab", { name: "어린이용" }).click();
   await expect(page.getByTestId("progress")).toHaveText("2 / 21칸 작성");
-  await page.getByRole("link", { name: "이 퀴즈의 고유 주소" }).click();
+  // Sharing is covered separately; verify drafts survive opening the stable address.
+  await page.goto("/quiz/2026-08-31-test01?level=child");
   await expect(page).toHaveURL(/\/quiz\/2026-08-31-test01\?level=child/);
   await page.reload();
   await expect(page.getByTestId("progress")).toHaveText("2 / 21칸 작성");
@@ -238,7 +239,7 @@ test("deadline keeps exact Korean time beside a readable remaining period", asyn
     return route.fulfill({ json: body });
   });
   await page.goto("/?level=child");
-  await expect(page.locator(`time[datetime="${closesAt}"]`)).toHaveText("검증용 정확한 마감 시각 (한국 시간)");
+  await expect(page.locator(`time[datetime="${closesAt}"]`)).toHaveText("검증용 정확한 마감 시각");
   await expect(page.getByTestId("remaining-time")).toHaveText("남은 기간: 1일 2시간");
 });
 

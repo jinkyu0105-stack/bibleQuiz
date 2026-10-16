@@ -106,9 +106,9 @@ body[data-time=night] .quiz-page { --quiz-sheet: #43515c; --quiz-sheet-edge: rgb
 .quiz-page .quiz-meta-tools { grid-column: 2; grid-row: 1; }
 .quiz-page .quiz-scripture { grid-column: 1 / -1; grid-row: 2; margin: 0; }
 @media (max-width: 767px) {
- .quiz-page .sky-quiz-heading h2 { grid-column: 1 / -1; }
- .quiz-page .quiz-meta-tools { grid-row: 2; }
- .quiz-page .quiz-scripture { grid-column: 1; margin: 0; max-width: none; }
+ .quiz-page .sky-quiz-heading h2 { grid-column: 1; }
+ .quiz-page .quiz-meta-tools { grid-row: 1; align-self: start; }
+ .quiz-page .quiz-scripture { grid-column: 1 / -1; margin: 0; max-width: none; }
  .quiz-page .sermon-summary { flex-basis: 0; }
  .quiz-page .sermon-summary > summary { gap: 5px; }
  .quiz-page .sermon-summary > summary > small { font-size: 10px; }

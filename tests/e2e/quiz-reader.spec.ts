@@ -146,3 +146,25 @@ test("native share uses the selected quiz and cancellation does not copy", async
   expect(await page.evaluate(() => localStorage.getItem("unexpectedCopy"))).toBeNull();
   await expect(page.getByText("퀴즈 주소를 복사했습니다.")).toHaveCount(0);
 });
+
+
+test("heading tools stay beside the title and help follows the input layout", async ({ page }) => {
+  await page.goto("/?level=child");
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    const title=(await page.locator("#sermon-heading").boundingBox())!;
+    const tools=(await page.locator(".quiz-meta-tools").boundingBox())!;
+    expect(tools.x).toBeGreaterThanOrEqual(title.x+title.width);
+    expect(tools.y).toBeLessThan(title.y+title.height);
+    await page.getByRole("button", { name: "입력 안내", exact: true }).click();
+    const mobile = width < 768 || await page.evaluate(() => matchMedia("(pointer: coarse)").matches);
+    if (mobile) {
+      await expect(page.getByText("빈칸을 터치해 키보드를 열고 한글을 입력하세요.", { exact: false })).toBeVisible();
+      await expect(page.locator("#input-help kbd:visible")).toHaveCount(0);
+    } else {
+      await expect(page.locator("#input-help kbd").first()).toBeVisible();
+      await expect(page.getByText("빈칸을 터치해 키보드를 열고 한글을 입력하세요.", { exact: false })).toBeHidden();
+    }
+    await page.getByRole("button", { name: "입력 안내", exact: true }).click();
+  }
+});

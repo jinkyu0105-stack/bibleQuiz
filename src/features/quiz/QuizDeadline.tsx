@@ -34,7 +34,7 @@ export function QuizDeadline({ closesAt, closesAtLabel, refreshOnExpiry = false,
   }, [onExpire, refreshOnExpiry, remaining]);
 
   return <>
-    <span>참여 마감: </span><time dateTime={closesAt}>{closesAtLabel}</time>
+    <span>참여 마감: </span><time dateTime={closesAt}>{closesAtLabel.replace(/\s*\(한국 시간\)\s*$/u, "")}</time>
     <span className="remaining-time" data-testid="remaining-time" aria-live="polite">남은 기간: {remaining}</span>
   </>;
 }

@@ -293,13 +293,19 @@ export function QuizWorkspace({
       {latinNoticeVisible && <p className={styles.inputToast} aria-hidden="true" data-testid="latin-input-notice">{latinInputMessage}</p>}
       <div className={styles.tools}>
         <p><AdminIcon name="grid"/><code>{quiz.grid.gridSize} × {quiz.grid.gridSize}</code><span>{quiz.grid.entries.length}개 낱말</span></p>
-        <Tooltip label="입력 안내">{id => <button type="button" className={styles.helpToggle} aria-label="입력 안내" aria-describedby={id} aria-expanded={helpOpen} aria-controls="input-help" onClick={() => setHelpOpen(open => !open)}><AdminIcon name="arrowKeys"/></button>}</Tooltip>
+        <Tooltip label="입력 안내">{id => <button type="button" className={styles.helpToggle} aria-label="입력 안내" aria-describedby={id} aria-expanded={helpOpen} aria-controls="input-help" onClick={() => setHelpOpen(open => !open)}><AdminIcon name="help"/></button>}</Tooltip>
       </div>
       <div className={styles.help} hidden={!helpOpen}><div id="input-help">
-          <p>칸이나 단서를 누르고 한글을 입력하세요. 모르는 칸은 건너뛰어도 됩니다.</p>
-          <p><kbd>Tab</kbd> 다음 칸 · <kbd>Shift + Tab</kbd> 이전 칸 · <kbd>방향키</kbd> 옆 칸 이동</p>
-          <p>교차 칸에서 <kbd>Enter</kbd>로 가로·세로를 바꿉니다. 모바일에서는 키보드를 연 뒤 같은 칸을 짧게 다시 누르거나 아래 방향 전환 버튼을 쓰세요. 낱말 끝에서 Tab을 누르면 격자 밖으로 나갑니다.</p>
-          <p>작은 화면에서도 격자 전체가 보입니다. 칸이 작다면 단서와 이전·다음 버튼으로 이동하세요.</p>
+          <div className={styles.desktopInputHelp}>
+            <p>칸이나 단서를 클릭하고 한글을 입력하세요. 모르는 칸은 건너뛰어도 됩니다.</p>
+            <p><kbd>Tab</kbd> 다음 칸 · <kbd>Shift + Tab</kbd> 이전 칸 · <kbd>방향키</kbd> 옆 칸 이동</p>
+            <p>교차 칸에서 <kbd>Enter</kbd>로 가로·세로를 바꿉니다. 낱말 끝에서 Tab을 누르면 격자 밖으로 나갑니다.</p>
+          </div>
+          <div className={styles.mobileInputHelp}>
+            <p>빈칸을 터치해 키보드를 열고 한글을 입력하세요. 단서를 누르면 그 낱말로 이동합니다.</p>
+            <p>가로·세로를 바꾸려면 <strong>방향 전환</strong>을 누르세요. 키보드를 연 상태에서 같은 교차 칸을 짧게 다시 눌러도 바뀝니다.</p>
+            <p>칸이 작을 때는 <strong>이전·다음</strong> 버튼으로 이동하세요. 모르는 칸은 비워 두어도 됩니다.</p>
+          </div>
         </div>
       </div>
       {discardKeys.length > 0 && <aside className={styles.draftWarning} role="status">
