@@ -159,3 +159,60 @@ test("one final wheel reaches the footer and scrolling glass restores without ch
   await expect(page.locator("html")).not.toHaveAttribute("data-home-scrolling");
   await expect.poll(() => page.locator("html").evaluate(n => (n as HTMLElement).style.getPropertyValue("--home-footer-height"))).toBe("");
 });
+
+test("archive reading sheet keeps compact icon actions and readable long titles at every size", async ({ page }) => {
+  await mocks(page);
+  await page.route("**/api/archive?**", route => route.fulfill({ json: { data: {
+    items: [
+      { ...items[0]!, title: "함께 걸어가는 길에서 다시 기억하는 말씀과 이웃을 향한 사랑", bibleReferenceLabel: "요한복음 3:16 · 마태복음 5:1-12" },
+      { ...items[1]!, title: "가".repeat(120) },
+    ], nextCursor: null, availableYears: [2026], availableMonths: [8],
+  } } }));
+  await page.goto("/archive");
+  await expect(cards(page)).toHaveCount(2);
+  for (const time of ["새벽", "낮", "노을", "밤"] as const) {
+    await selectSkyTime(page, time);
+    for (const width of [1268, 768, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      const rows = await cards(page).all();
+      const row1 = (await rows[0]!.boundingBox())!, row2 = (await rows[1]!.boundingBox())!;
+      expect(row1.x).toBe(row2.x);
+      expect(row1.width).toBe(row2.width);
+      expect(Math.abs(row2.y - row1.y - row1.height)).toBeLessThan(2);
+      for (const row of rows) {
+        const title = (await row.getByRole("heading").boundingBox())!;
+        for (const link of await row.getByRole("link").all()) {
+          const box = (await link.boundingBox())!;
+          expect(box.width).toBe(44); expect(box.height).toBe(44);
+          expect(box.x).toBeGreaterThanOrEqual(title.x + title.width);
+          await expect(link.locator("svg")).toHaveCount(1);
+          await expect(link).toHaveText("");
+        }
+      }
+    }
+  }
+  const child = cards(page).first().getByRole("link", { name: /^어린이용/ });
+  await child.scrollIntoViewIfNeeded(); await child.focus();
+  await expect(page.getByRole("tooltip", { name: "어린이 퀴즈 풀기", exact: true })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("tooltip", { name: "어린이 퀴즈 풀기", exact: true })).toBeHidden();
+  await expect(child).toBeFocused();
+  await page.keyboard.press("Enter"); await expect(page).toHaveURL(/level=child/);
+  await expect(page.getByRole("grid")).toBeVisible();
+});
+
+test("archive search supports Enter, inline validation and a clear filtered state", async ({ page }) => {
+  await mocks(page); await page.goto("/archive");
+  await expect(cards(page)).toHaveCount(12);
+  const search = page.getByLabel("설교 제목 · 성경 장절", { exact: true });
+  await search.fill("가".repeat(61)); await search.press("Enter");
+  await expect(search).toHaveAttribute("aria-invalid", "true");
+  await expect(page.getByRole("alert")).toContainText("60자");
+  await expect(cards(page)).toHaveCount(12);
+  await search.fill("함께 나눈 말씀 26"); await search.press("Enter");
+  await expect(cards(page)).toHaveCount(1);
+  await expect(page.locator("code").filter({ hasText: "함께 나눈 말씀 26" })).toBeVisible();
+  await page.getByRole("link", { name: "검색 조건 지우기" }).click();
+  await expect(search).toHaveValue(""); await expect(cards(page)).toHaveCount(12);
+});

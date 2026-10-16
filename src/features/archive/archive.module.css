@@ -78,15 +78,116 @@
 }
 @media (prefers-reduced-motion: reduce) { .iconActions a { transition: none; } }
 @media (forced-colors: active) { .iconActions a { border-color: ButtonText; background: Canvas; color: LinkText; } }
-.filters { border: 1px solid var(--line); border-radius: 20px; padding: 20px; background: var(--glass-reading); }
-.heading h2 { color: var(--ink); }
-/* The full archive uses a consistent record size; the home excerpt is preserved. */
-:global(.archive-shell) .page { margin-top: 8px; }
-:global(.archive-shell) .cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
-:global(.archive-shell) .card:first-child { grid-column: auto; background: transparent; border-color: var(--line); }
-:global(.archive-shell) .card { border-radius: 16px; }
-:global(.archive-shell) .cardBody { padding: 24px; }
-:global(.archive-shell) .date { margin-bottom: 16px; }
-:global(.archive-shell) .card h3 { font-size: 22px; }
-:global(.archive-shell) .filters :is(input, select, button) { height: 46px; min-height: 46px; }
-@media (max-width: 580px) { :global(.archive-shell) .cards { grid-template-columns: minmax(0,1fr); } }
+
+/* P9-26 archive: one transparent window, one calm reading sheet. */
+:global(.archive-shell) .page {
+  --archive-sheet: var(--glass-solid);
+  --archive-edge: var(--line);
+  max-width: 1100px;
+  margin: 8px auto 40px;
+  padding: clamp(16px, 2.6vw, 32px);
+  border: 1px solid var(--glass-edge);
+  border-radius: 22px;
+  background: transparent;
+  color: var(--ink);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+:global(body[data-time=night]) .page { --archive-sheet: #43515c; --archive-edge: rgb(216 232 242 / .28); }
+.archiveHeading { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+.headingIcon { display: grid; place-items: center; flex: 0 0 46px; height: 46px; border: 1px solid var(--glass-edge); border-radius: 12px; background: var(--glass-soft); color: var(--ui-action); box-shadow: inset 0 1px 0 var(--glass-highlight), 0 3px 7px -3px var(--glass-shadow); }
+.headingIcon svg { width: 23px; height: 23px; }
+:global(.sky-app.archive-shell .public-layout) .archiveHeading h2 { margin: 0; font: 700 clamp(24px,2.5vw,30px)/1.4 'Noto Sans KR',sans-serif; letter-spacing: -.04em; }
+.archiveHeading p { margin: 6px 0 0; font-size: 13px; color: var(--ink); }
+.page .filters { display: grid; grid-template-columns: minmax(0,1fr) minmax(280px,.6fr); gap: 12px; align-items: stretch; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.searchField { display: flex; align-items: stretch; min-width: 0; height: 48px; border: 1px solid var(--control-border); border-radius: 9px; background: var(--archive-sheet); box-shadow: inset 0 1px 0 var(--glass-highlight); }
+.page .searchField input { min-width: 0; width: 100%; height: 46px; padding: 10px 14px; border: 0; border-radius: 8px 0 0 8px; background: transparent; font-size: 16px; font-weight: 400; color: var(--ink); }
+.page .searchField input::placeholder { color: var(--muted); font-size: 14px; font-weight: 400; }
+.page .searchButton { display: grid; place-items: center; min-width: 46px; width: 46px; height: 46px; min-height: 46px; margin: 0; padding: 0; border: 0; border-radius: 0 8px 8px 0; color: var(--ui-on-action); background: var(--ui-action-fill); box-shadow: inset 0 1px 0 var(--glass-highlight); transition: box-shadow 160ms ease; }
+.page .searchButton:hover { box-shadow: inset 0 0 0 30px rgb(255 255 255 / .12), inset 0 1px 0 var(--glass-highlight); }
+.dateFilters { display: grid; grid-template-columns: 1fr 1fr; min-width: 0; border: 1px solid var(--control-border); border-radius: 9px; background: var(--glass-soft); }
+.page .dateFilters label { display: flex; align-items: center; gap: 0; min-width: 0; padding-left: 12px; font-weight: 400; }
+.dateFilters label + label { border-left: 1px solid var(--line); }
+.dateFilters label > span { flex-shrink: 0; color: var(--muted); font-size: 11px; }
+.page .dateFilters select { width: 100%; min-width: 0; min-height: 46px; height: 46px; padding: 8px 6px; border: 0; border-radius: 8px; background: transparent; color: var(--ink); font-size: 14px; font-weight: 600; }
+.page .filterSummary { margin: 12px 0 0; gap: 8px; font-size: 12px; }
+.filterSummary > div { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.filterSummary code { padding: 3px 8px; border: 1px solid var(--archive-edge); border-radius: 5px; background: var(--glass-soft); color: var(--ink); font: inherit; }
+.reset { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; padding: 0 6px; color: var(--ui-action); font-size: 12px; text-decoration: none; }
+.reset svg { width: 15px; height: 15px; }
+.reset:hover { text-decoration: underline; }
+.listHeading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 22px 2px 10px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--ink); font-size: 12px; }
+.page .resultCount { margin: 0; font-size: 12px; }
+.resultCount strong { margin-right: 3px; color: var(--ink); font-size: 16px; font-variant-numeric: tabular-nums; }
+.listHeading > span { color: var(--ink); }
+.records { margin: 0; padding: 0; list-style: none; border: 1px solid var(--archive-edge); border-radius: 10px; background: var(--archive-sheet); box-shadow: 0 8px 20px -16px var(--glass-shadow); }
+.record { display: grid; grid-template-columns: 64px minmax(0,1fr) auto; align-items: center; gap: 20px; min-height: 106px; padding: 16px 22px; transition: background-color 160ms ease; }
+.record + .record { border-top: 1px solid var(--archive-edge); }
+.record:first-child { border-radius: 9px 9px 0 0; }
+.record:last-child { border-radius: 0 0 9px 9px; }
+.record:only-child { border-radius: 9px; }
+.record:is(:hover,:focus-within) { background: color-mix(in srgb,var(--ui-action) 6%,transparent); }
+.calendarTile { display: grid; text-align: center; overflow: hidden; width: 64px; border: 1px solid color-mix(in srgb,var(--ui-action) 22%,var(--archive-sheet)); border-radius: 8px; background: color-mix(in srgb,var(--archive-sheet) 88%,white); box-shadow: 0 2px 5px -3px var(--glass-shadow); font-variant-numeric: tabular-nums; }
+.calendarTile > span { padding: 2px 4px; background: var(--ui-action-bg); color: var(--ui-action); font-size: 11px; font-weight: 650; }
+.calendarTile > strong { padding: 5px 1px; font-size: 18px; font-weight: 700; letter-spacing: -.06em; line-height: 1.55; color: var(--ink); }
+.calendarTile small { font-size: 12px; color: var(--muted); font-weight: 400; }
+.recordBody { min-width: 0; }
+:global(.sky-app.archive-shell .public-layout) .record h3 { margin: 0; font: 650 17px/1.6 'Noto Sans KR',sans-serif; letter-spacing: -.025em; color: var(--ink); overflow-wrap: anywhere; word-break: keep-all; }
+.record h3:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+.recordMeta { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 11px; line-height: 1.5; }
+.recordMeta > time { display: none; color: var(--muted); font-variant-numeric: tabular-nums; }
+.recordLatest { display: inline-flex; align-items: center; gap: 3px; margin-bottom: 3px; font-size: 10px; font-weight: 600; color: var(--ui-success); }
+.recordLatest svg { width: 12px; height: 12px; }
+.recordReference { display: flex; align-items: baseline; gap: 6px; margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+.recordReference svg { position: relative; top: 2px; flex-shrink: 0; width: 14px; height: 14px; }
+.recordReference code { padding: 1px 6px; border: 1px solid var(--archive-edge); border-radius: 4px; background: color-mix(in srgb,var(--ink) 4%,transparent); color: var(--ink); font: inherit; overflow-wrap: anywhere; }
+.recordActions { display: flex; align-items: center; gap: 8px; }
+.recordActions a { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--archive-edge); border-radius: 50%; color: var(--ui-action); background: color-mix(in srgb,var(--archive-sheet) 94%,white); box-shadow: inset 0 1px 0 var(--glass-highlight), 0 2px 4px -1px var(--glass-shadow); transition: background-color 160ms ease,box-shadow 160ms ease; }
+.recordActions a:is(:hover,:focus-visible) { background: var(--ui-action-bg); border-color: color-mix(in srgb,var(--ui-action) 45%,var(--archive-edge)); box-shadow: inset 0 1px 0 var(--glass-highlight),0 3px 6px -2px var(--glass-shadow); }
+.page :is(a,button,input,select):focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.page .more { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 46px; margin: 12px 0 0; border: 1px solid var(--archive-edge); border-radius: 8px; background: var(--glass-soft); color: var(--ui-action); font-size: 13px; font-weight: 600; }
+.page .more:hover:not(:disabled) { background: var(--ui-action-bg); }
+.page .more svg { width: 16px; height: 16px; }
+.practiceNote { display: flex; align-items: flex-start; gap: 9px; margin: 16px 0 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--glass-soft); color: var(--ink); font-size: 12px; line-height: 1.8; }
+.practiceNote > svg { flex: 0 0 17px; height: 17px; margin-top: 2px; color: var(--ui-success); }
+.practiceNote p { margin: 0; }
+.practiceNote strong { margin-right: 6px; font-weight: 650; }
+.page .state { padding: 40px 16px; margin-top: 18px; border: 1px solid var(--archive-edge); border-radius: 10px; background: var(--archive-sheet); color: var(--ink); }
+.state > svg { width: 28px; height: 28px; color: var(--ui-action); }
+:global(.sky-app.archive-shell .public-layout) .page .state h3 { margin: 12px 0 6px; font: 650 17px/1.6 'Noto Sans KR',sans-serif; }
+.state p { margin: 8px 0 14px; font-size: 13px; }
+.state .primary-button { font-size: 13px; }
+.page .alert { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid color-mix(in srgb,var(--ui-danger) 35%,transparent); border-radius: 8px; background: var(--ui-danger-bg); color: var(--ui-danger); font-size: 13px; }
+.alert svg { flex-shrink: 0; }
+@media (max-width: 767px) {
+  :global(.archive-shell) .page { padding: 16px; border-radius: 18px; }
+  .archiveHeading { gap: 10px; margin-bottom: 20px; }
+  .headingIcon { flex-basis: 40px; height: 40px; border-radius: 10px; }
+  .headingIcon svg { width: 20px; height: 20px; }
+  .archiveHeading p { font-size: 12px; margin-top: 4px; }
+  .page .filters { grid-template-columns: minmax(0,1fr); gap: 10px; }
+  .page .dateFilters select { font-size: 16px; padding-left: 10px; }
+  .listHeading { margin-top: 18px; }
+  .record { grid-template-columns: minmax(0,1fr) auto; gap: 12px; min-height: 106px; padding: 15px 14px; }
+  .calendarTile { display: none; }
+  .recordMeta { margin-bottom: 5px; }
+  .recordMeta > time { display: inline; }
+  .recordLatest { margin: 0; }
+  :global(.sky-app.archive-shell .public-layout) .record h3 { font-size: 15px; line-height: 1.65; }
+  .recordReference { font-size: 11px; }
+  .recordReference > svg { display: none; }
+  .practiceNote { padding: 10px 12px; font-size: 11px; }
+}
+@media (max-width: 379px) {
+  :global(.archive-shell) .page { padding: 12px 10px; }
+  .headingIcon { display: none; }
+  .record { padding-inline: 10px; gap: 8px; }
+  .recordActions { gap: 6px; }
+  .recordLatest { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .record, .recordActions a, .page .searchButton { transition: none; } }
+@media (forced-colors: active) {
+  :global(body[data-time]) .page { --archive-sheet: Canvas; --archive-edge: CanvasText; --ui-action: LinkText; --ui-action-bg: Canvas; --ui-success: CanvasText; }
+  .recordActions a, .calendarTile, .practiceNote { color: CanvasText; background: Canvas; border-color: CanvasText; box-shadow: none; }
+  .page .searchButton { color: ButtonText; background: ButtonFace; border: 1px solid ButtonText; }
+}

@@ -4,12 +4,15 @@ import { archiveFilterKey, parseArchiveQuery, type ArchivePage, type ArchiveQuer
 import { appendArchive, ArchiveLoadError, archiveSearch, fetchArchive, parseArchiveLocation, restoreArchive } from "./api";
 import { ArchiveCards } from "./ArchiveCards";
 import { readArchiveHistory, writeArchiveHistory } from "./history";
+import { GlassPanel } from "../../components/glass/GlassPanel";
+import { AdminIcon } from "../../components/AdminIcon";
+import { Tooltip } from "../../components/Tooltip";
 import styles from "./archive.module.css";
 
 export function Component() {
   const location = useLocation();
   const query = useMemo(() => { try { return parseArchiveLocation(location.search); } catch { return null; } }, [location.search]);
-  if (!query) return <section className={styles.page}><h2>지난 퀴즈</h2><p role="alert">검색 조건이 올바르지 않습니다.</p><Link className="text-link" to="/archive">검색 조건 지우기</Link></section>;
+  if (!query) return <GlassPanel className={`${styles.page} archive-browser`} surface="standard"><header className={styles.archiveHeading}><AdminIcon name="book"/><h2>지난 퀴즈</h2></header><div className={styles.state} role="alert"><AdminIcon name="alert"/><p>검색 조건이 올바르지 않습니다.</p><Link className="text-link" to="/archive">검색 조건 지우기</Link></div></GlassPanel>;
   return <ArchiveResults key={location.key} query={query} search={location.search} />;
 }
 
@@ -87,27 +90,41 @@ function ArchiveResults({ query, search }: { query: ArchiveQuery; search: string
   }
   const years = view.state === "ready" ? view.page.availableYears ?? [] : [];
   const months = view.state === "ready" ? view.page.availableMonths ?? [] : [];
-  return <section className={styles.page} aria-labelledby="archive-heading">
-    <header className={styles.heading}><div><p className="eyebrow">말씀을 다시 만나는 시간</p><h2 id="archive-heading">지난 퀴즈</h2></div><p>함께 나눈 말씀을 찾아<br />원하는 난이도로 다시 풀어보세요.</p></header>
+  const hasFilters = Boolean(query.q || query.year !== null || query.month !== null);
+  return <GlassPanel className={`${styles.page} archive-browser`} surface="standard" aria-labelledby="archive-heading">
+    <header className={styles.archiveHeading}>
+      <span className={styles.headingIcon}><AdminIcon name="book"/></span>
+      <div><h2 id="archive-heading">지난 퀴즈</h2><p>함께 나눈 말씀을 찾아 다시 풀어보세요.</p></div>
+    </header>
     <form className={styles.filters} role="search" aria-label="지난 퀴즈 검색" onSubmit={(event) => changeFilters(query.year === null ? "" : String(query.year).padStart(4, "0"), query.month === null ? "" : String(query.month), event)}>
-      <label className={styles.search}>설교 제목 · 성경 장절<input type="search" value={q} onChange={(event) => setQ(event.target.value)} placeholder="제목이나 성경 장절을 입력하세요" aria-describedby={formError ? "archive-form-error" : undefined} /></label>
-      <label>연도<select value={query.year === null ? "" : String(query.year).padStart(4, "0")} disabled={view.state !== "ready"} onChange={(event) => changeFilters(event.target.value, query.month === null ? "" : String(query.month))}>
-        <option value="">모든 연도</option>{query.year !== null && !years.includes(query.year) && <option value={String(query.year).padStart(4, "0")} disabled>{query.year}년 (결과 없음)</option>}{years.map((year) => <option value={String(year).padStart(4, "0")} key={year}>{year}년</option>)}
-      </select></label>
-      <label>월<select value={query.month ?? ""} disabled={view.state !== "ready"} onChange={(event) => changeFilters(query.year === null ? "" : String(query.year).padStart(4, "0"), event.target.value)}>
-        <option value="">모든 월</option>{query.month !== null && !months.includes(query.month) && <option value={query.month} disabled>{query.month}월 (결과 없음)</option>}{months.map((month) => <option value={month} key={month}>{month}월</option>)}
-      </select></label><button className="primary-button" type="submit">검색</button>
+      <div className={styles.searchField}>
+        <label className="sr-only" htmlFor="archive-search">설교 제목 · 성경 장절</label>
+        <input id="archive-search" type="search" value={q} onChange={(event) => setQ(event.target.value)} placeholder="설교 제목 · 성경 장절" aria-invalid={formError || undefined} aria-describedby={formError ? "archive-form-error" : undefined} />
+        <Tooltip label="입력한 제목이나 장절로 검색">{descriptionId => <button className={styles.searchButton} type="submit" aria-label="검색" aria-describedby={descriptionId}><AdminIcon name="search"/></button>}</Tooltip>
+      </div>
+      <div className={styles.dateFilters}>
+        <label><span>연도</span><select value={query.year === null ? "" : String(query.year).padStart(4, "0")} disabled={view.state !== "ready"} onChange={(event) => changeFilters(event.target.value, query.month === null ? "" : String(query.month))}>
+          <option value="">모든 연도</option>{query.year !== null && !years.includes(query.year) && <option value={String(query.year).padStart(4, "0")} disabled>{query.year}년 (결과 없음)</option>}{years.map((year) => <option value={String(year).padStart(4, "0")} key={year}>{year}년</option>)}
+        </select></label>
+        <label><span>월</span><select value={query.month ?? ""} disabled={view.state !== "ready"} onChange={(event) => changeFilters(query.year === null ? "" : String(query.year).padStart(4, "0"), event.target.value)}>
+          <option value="">모든 월</option>{query.month !== null && !months.includes(query.month) && <option value={query.month} disabled>{query.month}월 (결과 없음)</option>}{months.map((month) => <option value={month} key={month}>{month}월</option>)}
+        </select></label>
+      </div>
     </form>
-    {formError && <p role="alert" id="archive-form-error">검색어는 정규화 후 60자 이내로 입력해 주세요.</p>}
-    {(query.q || query.year !== null || query.month !== null) && <div className={styles.filterSummary}><p>검색 조건: {query.q ? `“${query.q}” · ` : ""}{query.year === null ? "모든 연도" : `${query.year}년`} · {query.month === null ? "모든 월" : `${query.month}월`}</p><Link className="text-link" to="/archive">검색 조건 지우기</Link></div>}
-    {view.state === "loading" ? <div className={styles.state} role="status">지난 퀴즈를 불러오고 있습니다.</div> : view.state === "error" ? <div className={styles.state} role="alert">
-      <h3>{view.invalid ? "검색 조건을 다시 확인해 주세요" : "지난 퀴즈를 불러오지 못했습니다"}</h3><p>입력한 검색 조건은 그대로 남아 있습니다.</p>
+    {formError && <p className={styles.alert} role="alert" id="archive-form-error"><AdminIcon name="alert"/>검색어는 60자 이내로 입력해 주세요.</p>}
+    {hasFilters && <div className={styles.filterSummary}>
+      <div><span className="sr-only">검색 조건: </span>{query.q && <code>“{query.q}”</code>}{query.year !== null && <code>{query.year}년</code>}{query.month !== null && <code>{query.month}월</code>}</div>
+      <Tooltip label="검색어와 날짜 조건 지우기"><Link className={styles.reset} to="/archive" aria-label="검색 조건 지우기"><AdminIcon name="refresh"/><span>초기화</span></Link></Tooltip>
+    </div>}
+    {view.state === "loading" ? <div className={styles.state} role="status"><AdminIcon name="book"/><p>지난 퀴즈를 불러오고 있습니다.</p></div> : view.state === "error" ? <div className={styles.state} role="alert">
+      <AdminIcon name="alert"/><h3>{view.invalid ? "검색 조건을 다시 확인해 주세요" : "지난 퀴즈를 불러오지 못했습니다"}</h3><p>입력한 검색 조건은 그대로 남아 있습니다.</p>
       {view.invalid ? <Link className="text-link" to="/archive">검색 조건 지우기</Link> : <button className="primary-button" type="button" onClick={() => { setView({ state: "loading" }); setRetry((value) => value + 1); }}>다시 시도</button>}
     </div> : <>
-      <p className={styles.resultCount} role="status" aria-live="polite">{view.page.items.length}개의 지난 퀴즈를 표시하고 있습니다.</p>
-      {count ? <ArchiveCards items={view.page.items} onNavigate={savePosition} /> : <div className={styles.state}><h3>찾는 지난 퀴즈가 없습니다</h3><p>검색어나 날짜를 바꾸어 다시 찾아보세요.</p>{!(query.q || query.year !== null || query.month !== null) && <Link className="text-link" to="/archive">검색 조건 지우기</Link>}</div>}
-      {moreError && <p role="alert">{moreError === "invalid" ? "목록의 연결 정보가 변경되었습니다. 처음부터 다시 불러와 주세요." : "다음 목록을 불러오지 못했습니다. 기존 목록은 남아 있습니다."}</p>}
-      {moreError === "invalid" ? <button className="primary-button" type="button" onClick={() => { restoringScroll.current = 0; void navigate(`/archive${search}`, { replace: true }); }}>목록 처음부터 다시 불러오기</button> : view.page.nextCursor && <button className={styles.more} type="button" onClick={() => void more()} disabled={moreBusy} aria-busy={moreBusy}>{moreBusy ? "불러오는 중…" : moreError ? "더 보기 다시 시도" : "더 보기"}</button>}
+      <div className={styles.listHeading}><p className={styles.resultCount} role="status" aria-live="polite"><strong>{view.page.items.length}</strong>개 표시</p><span>최근 설교 순</span></div>
+      {count ? <ArchiveCards items={view.page.items} onNavigate={savePosition} /> : <div className={styles.state}><AdminIcon name="search"/><h3>찾는 지난 퀴즈가 없습니다</h3><p>{hasFilters ? "검색어나 날짜를 바꾸어 다시 찾아보세요." : "퀴즈 참여가 마감되면 이곳에서 다시 풀 수 있습니다."}</p></div>}
+      {moreError && <p className={styles.alert} role="alert">{moreError === "invalid" ? "목록의 연결 정보가 변경되었습니다. 처음부터 다시 불러와 주세요." : "다음 목록을 불러오지 못했습니다. 기존 목록은 남아 있습니다."}</p>}
+      {moreError === "invalid" ? <button className="primary-button" type="button" onClick={() => { restoringScroll.current = 0; void navigate(`/archive${search}`, { replace: true }); }}>목록 처음부터 다시 불러오기</button> : view.page.nextCursor && <button className={styles.more} type="button" onClick={() => void more()} disabled={moreBusy} aria-busy={moreBusy}><AdminIcon name={moreError ? "refresh" : "chevron"}/>{moreBusy ? "불러오는 중…" : moreError ? "더 보기 다시 시도" : "더 보기"}</button>}
     </>}
-  </section>;
+    <aside className={styles.practiceNote}><AdminIcon name="check"/><p><strong>부담 없이 다시 풀어보세요.</strong> 어린이·장년 아이콘으로 퀴즈를 열 수 있습니다. 지난 퀴즈는 새 참여 기록을 남기지 않습니다.</p></aside>
+  </GlassPanel>;
 }

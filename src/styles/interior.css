@@ -56,7 +56,7 @@
 .sky-app:not(.home-shell) .sermon-details-compact .published-date { margin: 0; }
 
 /* Semantic roles retain their meaning across all four sky times. Day is the fallback. */
-:is(.admin-layout, .quiz-page) {
+:is(.admin-layout, .quiz-page, .archive-browser) {
   --ui-action: #245bc1; --ui-action-bg: #eaf1ff;
   --ui-success: #216648; --ui-success-bg: #e7f4eb;
   --ui-attention: #87520c; --ui-attention-bg: #fff1d8;
@@ -67,7 +67,7 @@
   --focus: var(--ui-action);
   --admin-tooltip-surface: #fffefa;
 }
-body[data-time=dawn] :is(.admin-layout, .quiz-page) {
+body[data-time=dawn] :is(.admin-layout, .quiz-page, .archive-browser) {
   --ui-action: #354fc0; --ui-action-bg: #eaeffd;
   --ui-success: #226253; --ui-success-bg: #e6f4ec;
   --ui-attention: #86500e; --ui-attention-bg: #fcedd9;
@@ -75,7 +75,7 @@ body[data-time=dawn] :is(.admin-layout, .quiz-page) {
   --ui-danger: #ae3555; --ui-danger-bg: #fbe8f0;
   --ui-action-fill: #354fc0;
 }
-body[data-time=dusk] :is(.admin-layout, .quiz-page) {
+body[data-time=dusk] :is(.admin-layout, .quiz-page, .archive-browser) {
   --ui-action: var(--dusk-action); --ui-action-bg: var(--dusk-action-bg);
   --ui-success: #30623e; --ui-success-bg: #ebf3e5;
   --ui-attention: #8d480d; --ui-attention-bg: #fff0d7;
@@ -84,7 +84,7 @@ body[data-time=dusk] :is(.admin-layout, .quiz-page) {
   --ui-action-fill: var(--dusk-action);
   --admin-tooltip-surface: #fff5ec;
 }
-body[data-time=night] :is(.admin-layout, .quiz-page) {
+body[data-time=night] :is(.admin-layout, .quiz-page, .archive-browser) {
   --admin-tooltip-surface: #182c41;
   --ui-action: #acc8ff; --ui-action-bg: #1b3558;
   --ui-success: #94dab4; --ui-success-bg: #153e31;
