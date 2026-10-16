@@ -431,7 +431,6 @@
  .tools p > svg { display: none; }
  .tools p span { font-size: 11px; }
  .helpToggle { gap: 4px; padding-inline: 4px; font-size: 11px; }
- .helpToggle > svg:last-child { display: none; }
  .columns { gap: 14px; }
  .currentClue { gap: 6px; font-size: 13px; min-height: 40px; padding-bottom: 10px; }
  .currentClue strong { padding-inline: 5px; font-size: 11px; }
@@ -466,10 +465,13 @@
 .boardPreview p { margin: 0; font-size: 12px; line-height: 1.7; color: var(--muted); }
 
 .helpToggle { flex-shrink: 0; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
-.helpToggle[aria-expanded=true] > svg:last-child { transform: rotate(180deg); }
+.helpToggle[aria-expanded=true] { background: var(--ui-guide-bg); color: var(--ui-guide); }
 .help:not([hidden]) { margin-bottom: 12px; }
 .mobileTools { width: fit-content; max-width: 100%; grid-template-columns: auto auto auto; gap: 0; margin: 8px auto 0; border: 1px solid var(--quiz-sheet-edge, var(--border)); border-radius: 8px; background: var(--glass-soft); }
 .mobileTools button { min-width: 56px; min-height: 48px; padding: 4px 10px; border: 0; border-radius: 0; background: transparent; gap: 4px; }
 .mobileTools button + button { border-left: 1px solid var(--quiz-sheet-edge, var(--border)); }
 .mobileTools button:first-child { border-radius: 7px 0 0 7px; }
 .mobileTools button:last-child { border-radius: 0 7px 7px 0; }
+
+.helpToggle { width: 44px; height: 44px; padding: 0; justify-content: center; border: 1px solid var(--quiz-sheet-edge, var(--border)); }
+.helpToggle > svg { width: 18px; height: 18px; }

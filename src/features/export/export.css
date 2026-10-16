@@ -15,3 +15,39 @@
 .print-controls button, .print-controls select { color: #36434a; background: #f4f0d9; border: 1px solid #79856d; border-radius: .35rem; padding: .5rem .75rem; }
 .pdf-preview { display: block; width: 100%; min-height: 85dvh; border: 0; }
 @media print { .print-controls { display: none; } .pdf-preview { height: 100vh; } }
+
+/* The bulletin tools share the compact reader controls and semantic palette. */
+.blank-export-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.blank-export-panel .export-heading p { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+.blank-export-level { display: flex; align-items: center; gap: 8px; font-size: 12px; white-space: nowrap; }
+.blank-export-panel select { margin: 0; min-height: 44px; padding: 6px 28px 6px 10px; border: 1px solid var(--quiz-sheet-edge, var(--border)); border-radius: 7px; background: var(--glass-field); color: var(--ink); font: inherit; }
+.blank-export-panel .export-actions { gap: 8px; margin: 12px 0; }
+.blank-export-panel .export-actions button, .blank-export-panel .blank-export-vector button { display: inline-flex; gap: 7px; align-items: center; justify-content: center; min-height: 44px; padding: 8px 12px; border-radius: 7px; font-size: 12px; }
+.blank-export-panel button > svg { width: 16px; height: 16px; flex-shrink: 0; }
+.blank-export-panel .secondary-button { background: var(--glass-soft); color: var(--ui-action); border: 1px solid var(--quiz-sheet-edge, var(--border)); box-shadow: none; }
+.blank-export-panel .secondary-button:hover:not(:disabled) { background: var(--ui-action-bg); }
+.blank-export-panel code { padding: 2px 5px; border: 1px solid currentColor; border-radius: 4px; font: 500 10px/1.4 "Noto Sans KR",sans-serif; white-space: nowrap; }
+.blank-export-panel .blank-export-advanced { margin: 0; border-top: 1px solid var(--quiz-sheet-edge, var(--border)); }
+.blank-export-advanced > summary { display: flex; align-items: center; gap: 7px; min-height: 44px; list-style: none; cursor: pointer; font-size: 12px; }
+.blank-export-advanced > summary > svg { width: 15px; color: var(--ui-guide); }
+.blank-export-advanced > summary > svg:last-child { margin-left: auto; }
+.blank-export-vector { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; padding: 10px 12px; border: 1px solid var(--quiz-sheet-edge, var(--border)); border-radius: 7px; background: var(--glass-soft); }
+.blank-export-vector > p { flex-basis: 100%; margin: 0; font-size: 12px; }
+.blank-export-panel .blank-export-vector label { display: inline-flex; align-items: center; gap: 6px; margin: 0 auto 0 0; font-size: 12px; }
+.blank-export-panel [role=status] { margin: 10px 0 0; font-size: 12px; }
+.blank-export-panel [role=status]:empty, .blank-export-panel .blank-previews:empty { display: none; }
+.blank-export-panel .blank-previews { gap: 16px; margin-top: 16px; }
+.blank-export-panel .blank-previews article { min-width: 0; border-top: 1px solid var(--quiz-sheet-edge, var(--border)); padding-top: 12px; }
+.sky-app .public-layout .blank-export-panel .blank-previews h4 { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; font: 700 13px/1.5 "Noto Sans KR",sans-serif; }
+.blank-previews h4 > svg { width: 16px; color: var(--ui-action); }
+.blank-previews h4 > code { margin-left: auto; color: var(--muted); }
+.blank-preview-content { display: grid; grid-template-columns: minmax(80px,140px) minmax(0,1fr); align-items: start; gap: 12px; }
+.blank-preview-content img { width: 100%; margin: 0; }
+.blank-preview-content pre { max-height: 220px; margin: 0; overflow: auto; padding: 8px; border: 1px solid var(--quiz-sheet-edge, var(--border)); border-radius: 5px; font-size: 12px; line-height: 1.7; background: var(--glass-soft); }
+@media (max-width: 479px) {
+ .blank-export-panel .export-actions { display: grid; grid-template-columns: 1fr; gap: 6px; }
+ .blank-export-panel .export-actions > span, .blank-export-panel .export-actions button { width: 100%; }
+ .blank-export-level { width: 100%; justify-content: space-between; }
+ .blank-preview-content { grid-template-columns: minmax(0,1fr); }
+ .blank-preview-content img { width: min(160px,100%); justify-self: center; }
+}
