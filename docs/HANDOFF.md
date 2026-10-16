@@ -17,7 +17,7 @@
 
 ## Git과 다음 범위
 
-시작 main `b1977f9`/clean. 현재 변경은 P9-26 소스·시안/실제 사진·관련 검사·정본/상태 기록이다. 로컬 커밋하며 push/배포는 하지 않는다. 사용자 피드백을 받으면 같은 P9-26 안에서 보정한다. 새 의존성·실제 콘텐츠 AI·원격 자료/DB·Production 변경은 없다.
+시작 main `b1977f9`/clean. 기능·시안·검사·정본 소스는 로컬 커밋 `0e3e510`에 저장했다. 직후 worktree clean을 확인했고, 현재 인계의 해시 기록과 Tooltip 파일 끝 빈 줄 정리만 후속 로컬 커밋한다. push/배포는 하지 않았다. 사용자 피드백을 받으면 같은 P9-26 안에서 보정한다. 새 의존성·실제 콘텐츠 AI·원격 자료/DB·Production 변경은 없다.
 
 P9-25의 비단결/모바일 실제 폰 확인 대기는 그대로 남는다. 직전 Preview 기능 소스e0746172f0b7a44f54e7a3d12bd59db53469b458 / Worker2ca17260-1973-4c6f-8018-a3405b6ce13b100% / Builds688c1b33-7bee-41ce-ac56-fe25d844e447success(2026-10-16 01:25:15KST). 그 이후 이번 작업에서 원격 상태를 새로 확인하지 않았다. [P9-25 기록](work/P9-25.md). Preview 주소 https://biblequiz-app-preview.jinkyu0105.workers.dev/ 는 이번 리디자인이 반영된 주소가 아니다.
 

@@ -10,4 +10,3 @@ export function Tooltip({ label, children }: { label: string; children: ReactNod
     <span id={id} ref={bubbleRef} role="tooltip" popover="auto" className={`${css.tooltip} ${css.compact}`} data-compact data-admin-tone="action" {...bubbleEvents}>{label}</span>
   </span>;
 }
-
