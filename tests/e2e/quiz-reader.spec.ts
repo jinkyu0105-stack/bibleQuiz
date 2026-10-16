@@ -168,3 +168,38 @@ test("heading tools stay beside the title and help follows the input layout", as
     await page.getByRole("button", { name: "입력 안내", exact: true }).click();
   }
 });
+
+test("reader toolbar groups status and help and aligns the active clue with the grid", async ({ page }) => {
+  await page.goto("/?level=child");
+  await expect(page.locator(".quiz-availability-label")).toHaveText("참여 가능");
+  await expect(page.locator(".quiz-availability[data-availability=open]")).toHaveCount(0);
+  await expect(page.getByText(/5 × 5|6개 낱말/)).toHaveCount(0);
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    const clue = (await page.locator("#current-clue").boundingBox())!;
+    const grid = (await page.getByTestId("grid-boundary").boundingBox())!;
+    expect(Math.abs(clue.x - grid.x)).toBeLessThan(1);
+    const help = (await page.getByRole("button", { name: "입력 안내", exact: true }).boundingBox())!;
+    const count = (await page.locator(".quiz-participants").boundingBox())!;
+    const status = (await page.locator(".quiz-availability-label").boundingBox())!;
+    expect(help.x).toBeGreaterThan(count.x + count.width);
+    expect(status.y + status.height).toBeLessThanOrEqual(count.y);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+  }
+});
+
+test("archived reader retains the practice notice in a callout", async ({ page }) => {
+  await page.route("**/api/quizzes/**", route => {
+    const url = new URL(route.request().url());
+    if (url.pathname.endsWith("/me")) return route.fulfill({ json: { data: { submission: null } } });
+    const response = publicResponse();
+    Object.assign(response.data.quiz!, { status: "archived", submissionState: "paused", mode: "practice", acceptingSubmissions: false, availability: "archived", solutionAccess: "public" });
+    return route.fulfill({ json: response });
+  });
+  await page.goto("/quiz/2026-08-31-test01?level=child");
+  await expect(page.locator(".quiz-availability-label")).toHaveText("마감");
+  const notice = page.locator(".quiz-availability-callout");
+  await expect(notice).toContainText("마감된 퀴즈입니다. 기록을 남기지 않고 다시 풀어볼 수 있습니다.");
+  await expect(notice).toContainText("입력은 이 브라우저에 임시 저장됩니다.");
+  await expect(page.locator("#input-status")).toContainText("빈칸");
+});

@@ -86,6 +86,7 @@ function ArchivedSolutionSummary({
 
 export function QuizWorkspace({
   deadline,
+  helpContainer,
   initialSubmission,
   participationBoard,
   participationContainer,
@@ -96,6 +97,7 @@ export function QuizWorkspace({
   solutionDisclosure,
 }: {
   deadline?: ReactNode;
+  helpContainer?: HTMLElement | null;
   initialSubmission?: OwnSubmission;
   participationContainer?: HTMLElement | null;
   participationBoard?: {
@@ -288,13 +290,11 @@ export function QuizWorkspace({
           <div><h3 id="participation-preview-title">참여 현황</h3><p>답안을 제출하면 함께 참여한 분들의 답안을 볼 수 있어요.</p></div>
         </section>
       : null;
+  const helpButton = <Tooltip label="입력 안내">{id => <button type="button" className={styles.helpToggle} aria-label="입력 안내" aria-describedby={id} aria-expanded={helpOpen} aria-controls="input-help" onClick={() => setHelpOpen(open => !open)}><AdminIcon name="help"/></button>}</Tooltip>;
   return (
     <section className={`${styles.workspace} quiz-workspace-glass`}>
       {latinNoticeVisible && <p className={styles.inputToast} aria-hidden="true" data-testid="latin-input-notice">{latinInputMessage}</p>}
-      <div className={styles.tools}>
-        <p><AdminIcon name="grid"/><code>{quiz.grid.gridSize} × {quiz.grid.gridSize}</code><span>{quiz.grid.entries.length}개 낱말</span></p>
-        <Tooltip label="입력 안내">{id => <button type="button" className={styles.helpToggle} aria-label="입력 안내" aria-describedby={id} aria-expanded={helpOpen} aria-controls="input-help" onClick={() => setHelpOpen(open => !open)}><AdminIcon name="help"/></button>}</Tooltip>
-      </div>
+      {helpContainer === undefined ? <div className={styles.tools}>{helpButton}</div> : helpContainer ? createPortal(helpButton, helpContainer) : null}
       <div className={styles.help} hidden={!helpOpen}><div id="input-help">
           <div className={styles.desktopInputHelp}>
             <p>칸이나 단서를 클릭하고 한글을 입력하세요. 모르는 칸은 건너뛰어도 됩니다.</p>
@@ -318,7 +318,7 @@ export function QuizWorkspace({
         }}>기존 임시 저장 지우기</button>
       </aside>}
       {displayedSolution === null ? <div className={styles.columns}>
-        <div className={styles.gridPanel}>
+        <div className={styles.gridPanel} style={gridStyle}>
           <div className={styles.currentClue} id="current-clue"><strong>{directionLabel} {activeEntry.number}번</strong><span>{activeEntry.clue}</span></div>
           <div className={styles.gridBoundary} data-testid="grid-boundary">
             <div className={styles.gridFrame} style={gridStyle}>

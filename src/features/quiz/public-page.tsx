@@ -55,6 +55,7 @@ export function Component() {
 }
 
 export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoadResult } = {}) {
+  const [helpContainer, setHelpContainer] = useState<HTMLSpanElement | null>(null);
   const [participationContainer, setParticipationContainer] = useState<HTMLDivElement | null>(null);
   const routeResult = useLoaderData<QuizLoadResult>();
   const result = resolvedResult ?? routeResult;
@@ -98,17 +99,20 @@ export function PublicQuizContent({ resolvedResult }: { resolvedResult?: QuizLoa
       if (level === difficulty) return;
       const next = new URLSearchParams(params); next.set("level", level);
       setParams(next, { preventScrollReset: true });
-    }} /><span className="quiz-participants"><AdminIcon name="people"/><span><b>{quiz.submissionCount}</b>명 참여</span></span></div>
+    }} /><div className="quiz-reader-actions"><div className="quiz-participation-meta">
+      <span className="quiz-availability-label" data-availability={quiz.availability}><AdminIcon name={quiz.acceptingSubmissions ? "check" : "alert"}/>{quiz.acceptingSubmissions ? "참여 가능" : quiz.availability === "paused" ? "잠시 중지" : quiz.availability === "upcoming" ? "시작 전" : "마감"}</span>
+      <span className="quiz-participants"><AdminIcon name="people"/><span><b>{quiz.submissionCount}</b>명 참여</span></span>
+    </div><span ref={setHelpContainer} className="quiz-help-slot"/></div></div>
     <div role="tabpanel" id="quiz-panel" aria-labelledby={`tab-${difficulty}`} aria-busy={loading}>
       {loading ? <QuizLoading /> : <>
-        <aside className="quiz-availability" data-availability={quiz.availability}><AdminIcon name={quiz.availability === "open" ? "check" : "alert"}/><strong>{availabilityText(quiz)}</strong><span>{quiz.acceptingSubmissions ? "모르는 칸은 비워 두어도 괜찮아요." : "입력은 이 브라우저에 임시 저장됩니다."}</span></aside>
+        {!quiz.acceptingSubmissions && <aside className="quiz-availability quiz-availability-callout" data-availability={quiz.availability}><AdminIcon name={quiz.availability === "open" ? "check" : "alert"}/><strong>{availabilityText(quiz)}</strong><span>입력은 이 브라우저에 임시 저장됩니다.</span></aside>}
         {ownSubmission?.state === "error" && <aside className="quiz-availability" role="alert">
           <p>기존 제출 결과를 확인하지 못했습니다. 중복 제출을 막기 위해 확인 전에는 새 제출을 받지 않습니다.</p>
           <button className="primary-button" type="button" onClick={() => void revalidator.revalidate()}>제출 결과 다시 확인</button>
           {ownSubmission.requestId && <p className="request-id">문의용 번호: {ownSubmission.requestId}</p>}
         </aside>}
         {quiz.correction && <aside className="quiz-availability"><p>{quiz.correction.nonRanked ? "정정된 지난 퀴즈": "문제 수정본"}</p><p>{quiz.correction.notice}</p><ProblemHistory key={`${quiz.slug}:${difficulty}`} slug={quiz.slug} difficulty={difficulty}/></aside>}
-        <QuizWorkspace participationContainer={participationContainer} key={`${inputView.quizId}:${inputView.variantRevision}`} quiz={inputView} deadline={<QuizDeadline
+        <QuizWorkspace helpContainer={helpContainer} participationContainer={participationContainer} key={`${inputView.quizId}:${inputView.variantRevision}`} quiz={inputView} deadline={<QuizDeadline
           closesAt={quiz.closesAt}
           closesAtLabel={quiz.closesAtLabel}
           refreshOnExpiry={quiz.availability === "open" || quiz.availability === "paused" || quiz.availability === "upcoming"}

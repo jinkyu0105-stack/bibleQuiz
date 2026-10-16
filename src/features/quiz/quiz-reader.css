@@ -129,3 +129,18 @@ body[data-time=night] .quiz-page { --quiz-sheet: #43515c; --quiz-sheet-edge: rgb
 .quiz-meta-tools > span:only-of-type > .quiz-icon-button { border-radius: 9px; }
 
 .quiz-share-feedback > button { min-height: 44px; margin-top: 4px; font-size: 12px; }
+
+.quiz-reader-actions { display: flex; align-items: center; gap: 12px; padding: 0 0 5px; }
+.quiz-participation-meta { display: grid; gap: 2px; }
+.quiz-availability-label { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--ui-attention); white-space: nowrap; }
+.quiz-availability-label[data-availability=open] { color: var(--ui-success); }
+.quiz-availability-label > svg { width: 14px; height: 14px; }
+.quiz-reader-actions .quiz-participants { padding: 0; font-size: 11px; }
+.quiz-help-slot { display: block; width: 44px; height: 44px; }
+.sky-app .quiz-page .quiz-availability-callout { margin: 14px 14px 0; padding: 12px; border: 1px solid color-mix(in srgb, var(--ui-attention) 25%, transparent); border-radius: 8px; background: var(--ui-attention-bg); }
+.quiz-page .quiz-availability-callout > span { flex-basis: 100%; margin-left: 26px; }
+@media (max-width: 359px) {
+ .quiz-index-toolbar { gap: 4px; }
+ .quiz-page .difficulty-tabs button { padding-inline: 6px; gap: 3px; font-size: 12px; }
+ .quiz-reader-actions { gap: 6px; }
+}
