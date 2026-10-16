@@ -2,7 +2,7 @@
 
 ## 현재 작업
 
-**P9-26 공개 퀴즈 풀이 리디자인 — 구현·로컬 검수 완료.**
+**P9-26 공개 퀴즈 풀이 리디자인 — 구현·로컬 검수·Preview 배포 완료.**
 
 사용자 요청으로 imagegen-frontend-web/mobile 시안4장을 먼저 생성하고 design-taste-frontend 기준으로 실제 공개 풀이에 적용했다. 투명 외곽·불투명 본문, 맞닿은 난이도 인덱스, 제목 옆 아이콘/위쪽 말풍선, 장절 코드, 단서 번호/글자 수, 컴팩트 진행/저장/마감, 제출 두 열/한 열과 접힌 출력 도구가 포함된다. 한글 입력·자료·부분 제출·정답/연습/삭제·동의·출력 기능은 보존했다. [범위·코드·실패/수정 상세](work/P9-26.md), [디자인 정본](spec/design.md#p9-26-공개-풀이-화면--2026-10-16).
 
@@ -17,9 +17,11 @@
 
 ## Git과 다음 범위
 
-시작 main `b1977f9`/clean. 기능·시안·검사·정본 소스는 로컬 커밋 `0e3e510`에 저장했다. 직후 worktree clean을 확인했고, 현재 인계의 해시 기록과 Tooltip 파일 끝 빈 줄 정리만 후속 로컬 커밋한다. push/배포는 하지 않았다. 사용자 피드백을 받으면 같은 P9-26 안에서 보정한다. 새 의존성·실제 콘텐츠 AI·원격 자료/DB·Production 변경은 없다.
+시작 main `b1977f9`/clean. 기능 소스 `0e3e510`, 후속 인계/공백 정리 `ceb50e3`을 사용자 승인에 따라 main에 push했다. 원격 HEAD `ceb50e38a1d8eeb5a2bcf99bff8e1f6a62203128` 일치 확인. Workers Builds `6ac531ee-4ad5-4026-afda-bc9f89d56b73` 성공 출력의 version ID와 Preview 최신 deployment의 `2227f720-c164-4c04-a014-cb2720fea411` 100%가 일치한다(2026-10-16 12:51:24 KST). 증거는 ignored `.wrangler/releases/p9-26/deployment-proof.json`에 보존한다. 이 배포 확인 문서만 후속 로컬 커밋하며 추가 push는 하지 않는다.
 
-P9-25의 비단결/모바일 실제 폰 확인 대기는 그대로 남는다. 직전 Preview 기능 소스e0746172f0b7a44f54e7a3d12bd59db53469b458 / Worker2ca17260-1973-4c6f-8018-a3405b6ce13b100% / Builds688c1b33-7bee-41ce-ac56-fe25d844e447success(2026-10-16 01:25:15KST). 그 이후 이번 작업에서 원격 상태를 새로 확인하지 않았다. [P9-25 기록](work/P9-25.md). Preview 주소 https://biblequiz-app-preview.jinkyu0105.workers.dev/ 는 이번 리디자인이 반영된 주소가 아니다.
+폰 확인 주소: https://biblequiz-app-preview.jinkyu0105.workers.dev/?level=child (장년은level=adult). HTTP302 Access 로그인 이동 확인. 인증 뒤 실제 폰 화면 검수는 사용자 확인 대기다. 별도 GitHub CI38847478687의 validate/browser는 확인 시 진행 중이며, 성공한 Workers Builds와 구분한다. Cloudflare Builds API는403/인증 제한으로 직접 조회할 수 없어 GitHub의 해당 커밋 Workers Builds check 결과와 Cloudflare deployments GET을 대조했다.
+
+P9-25의 비단결/모바일 실제 폰 확인 대기는 그대로 남는다. [P9-25 기록](work/P9-25.md). 새 의존성·실제 콘텐츠 AI·원격 자료/DB·Production 변경은 없다. 같은 P9-26에서 사용자 화면 피드백을 반영한다.
 
 ## 실행 환경
 
@@ -29,4 +31,4 @@ Node24.18.0/pnpm11.14.0. `/bin/bash`, `login:false`, 명시workdir, `require_esc
 
 다음 시작은 실제 사용량·경로 확인, AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 정본→P9-26→Git status/diff/log 순서. 기존 자료·유료 결과·현재 변경을 보존한다.
 
-**현재 P9-26 로컬 완료 · 부모 풀이 리디자인 구현/검수 완료 · 다음 사용자 화면 피드백(기존 P9-25 실기기 확인은 별도) · 세션 유지 · 추천 GPT-6.1-sol/high** — 디자인 세부 조정과 입력/모바일 회귀를 함께 확인하기에 적합하다.
+**현재 P9-26 Preview 배포 완료 · 부모 풀이 리디자인 구현/검수 완료 · 다음 사용자 화면 피드백(기존 P9-25 실기기 확인은 별도) · 세션 유지 · 추천 GPT-6.1-sol/high** — 디자인 세부 조정과 입력/모바일 회귀를 함께 확인하기에 적합하다.
