@@ -391,6 +391,12 @@ export function QuizWorkspace({
         <p role="status" className={styles.saved}><AdminIcon name="database"/>{submissionResult !== null ? "제출한 답안의 채점 결과를 표시하고 있습니다." : hasVerifiedSubmission ? "제출한 답안이 확인되었습니다. 정답보기를 눌러 결과를 복원할 수 있습니다." : practiceResult !== null ? "지난 퀴즈 답안의 채점 결과를 표시하고 있습니다." : practiceSolution !== null ? "현재 답안과 공식 정답을 비교하고 있습니다." : deletedSubmission !== null && practiceCheck === undefined ? saved : saveBlocked ? "기존 저장 확인이 필요합니다. 새 입력은 아직 저장하지 않습니다." : saved}</p>
         {deadline && <p className={styles.deadline}><AdminIcon name="calendar"/><span>{deadline}</span></p>}
       </div>
+      {deletedSubmission !== null && <section className={styles.deletedPanel} aria-labelledby="submission-deleted-title" aria-live="polite">
+        <h3 id="submission-deleted-title">제출이 삭제되었습니다</h3>
+        <p>이름, 답안과 한줄평을 공개 기록에서 제거했습니다. 이 퀴즈의 {difficultyLabel}에는 다시 제출할 수 없습니다.</p>
+        <p className={styles.submittedAt}><time dateTime={deletedSubmission.deletedAt}>{new Intl.DateTimeFormat("ko-KR", { dateStyle: "long", timeStyle: "short", timeZone: "Asia/Seoul" }).format(new Date(deletedSubmission.deletedAt))}</time> 삭제</p>
+      </section>}
+      <div className={styles.readerActions}>
       {solutionDisclosure !== undefined &&
         (deletedSubmission === null || solutionDisclosure.policy === "public") && <SolutionDisclosure
         available={solutionDisclosure.policy === "public" || hasVerifiedSubmission}
@@ -415,11 +421,6 @@ export function QuizWorkspace({
           return true;
         }}
       />}
-      {deletedSubmission !== null && <section className={styles.deletedPanel} aria-labelledby="submission-deleted-title" aria-live="polite">
-        <h3 id="submission-deleted-title">제출이 삭제되었습니다</h3>
-        <p>이름, 답안과 한줄평을 공개 기록에서 제거했습니다. 이 퀴즈의 {difficultyLabel}에는 다시 제출할 수 없습니다.</p>
-        <p className={styles.submittedAt}><time dateTime={deletedSubmission.deletedAt}>{new Intl.DateTimeFormat("ko-KR", { dateStyle: "long", timeStyle: "short", timeZone: "Asia/Seoul" }).format(new Date(deletedSubmission.deletedAt))}</time> 삭제</p>
-      </section>}
       {displayedSolution !== null ? null : hasVerifiedSubmission ? <section className={styles.confirmPanel} aria-labelledby="confirmed-submission-title">
         <div><h3 id="confirmed-submission-title">제출한 답안이 확인되었습니다</h3><p>정답보기를 누르면 저장된 답안과 공식 정답을 다시 비교합니다.</p></div>
       </section> : practiceCheck !== undefined ? <PracticeCheckPanel
@@ -434,21 +435,22 @@ export function QuizWorkspace({
       /> : submission?.state === "enabled" ? <section className={styles.confirmPanel} aria-labelledby="confirm-title">
         <div><h3 id="confirm-title"><AdminIcon name="document"/>입력한 내용을 확인해 보세요</h3><p>모르는 칸은 비워 두어도 됩니다. 제출하면 바로 채점 결과와 정답을 확인할 수 있습니다.</p></div>
         <Button type="button" variant="primary" disabled={!progress.canConfirm} onClick={() => setConfirmation(true)}>입력 확인</Button>
-        {confirmation && <SubmissionPanel cells={state.cellValues} target={submission.target} onSuccess={(result) => {
-          const answers = Object.fromEntries(state.cellValues);
-          inputRef.current?.blur();
-          setSubmittedAnswers(answers);
-          setVerifiedSubmissionResult(result);
-          setSubmissionResult(result);
-        }} />}
       </section> : submission?.state === "disabled" ? <section className={styles.confirmPanel} aria-labelledby="confirm-title">
         <div><h3 id="confirm-title"><AdminIcon name="document"/>입력한 내용을 확인해 보세요</h3><p>{submission.message}</p></div>
         <Button type="button" variant="primary" disabled>지금은 제출할 수 없음</Button>
       </section> : deletedSubmission !== null ? null : <section className={styles.confirmPanel} aria-labelledby="confirm-title">
         <div><h3 id="confirm-title"><AdminIcon name="document"/>입력한 내용을 확인해 보세요</h3><p>모르는 칸은 비워 두어도 됩니다. 이 시험 화면에서는 제출·채점을 하지 않습니다.</p></div>
         <Button type="button" variant="primary" disabled={!progress.canConfirm} onClick={() => setConfirmation(true)}>입력 확인</Button>
-        {confirmation && <p role="status" className={styles.confirmMessage}>작성 {progress.filled}칸, 빈칸 {progress.remaining}칸입니다. 입력 형식을 확인했습니다. 정답 여부는 검사하지 않았으며 서버로 전송하지 않았습니다.</p>}
       </section>}
+      </div>
+      {displayedSolution === null && !hasVerifiedSubmission && practiceCheck === undefined && submission?.state === "enabled" && (confirmation && <SubmissionPanel cells={state.cellValues} target={submission.target} onSuccess={(result) => {
+          const answers = Object.fromEntries(state.cellValues);
+          inputRef.current?.blur();
+          setSubmittedAnswers(answers);
+          setVerifiedSubmissionResult(result);
+          setSubmissionResult(result);
+        }} />)}
+      {displayedSolution === null && !hasVerifiedSubmission && practiceCheck === undefined && submission === undefined && deletedSubmission === null && (confirmation && <p role="status" className={styles.confirmMessage}>작성 {progress.filled}칸, 빈칸 {progress.remaining}칸입니다. 입력 형식을 확인했습니다. 정답 여부는 검사하지 않았으며 서버로 전송하지 않았습니다.</p>)}
       {participationContainer === undefined ? participationContent : participationContainer && participationContent
         ? createPortal(<div className="quiz-participation-separate"><hr aria-hidden="true"/><GlassPanel className="quiz-page quiz-reader quiz-participation-panel" surface="standard">{participationContent}</GlassPanel></div>, participationContainer)
         : null}

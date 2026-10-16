@@ -524,3 +524,19 @@
 
 /* Space separates the two clue groups; each heading keeps its own underline. */
 .cluePanel section + section { border: 0; }
+
+
+/* Keep the two primary reader actions side by side, including narrow phones. */
+.readerActions { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); align-items: start; gap: 12px; margin-top: 16px; }
+.readerActions > section { min-width: 0; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.readerActions .solutionSection, .readerActions .confirmPanel { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+.readerActions .solutionAction, .readerActions .confirmPanel > button { order: -1; }
+.readerActions button { width: 100%; min-width: 0; min-height: 48px; }
+.readerActions .solutionSection h3, .readerActions .confirmPanel h3:global(#confirm-title) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.readerActions .solutionSection p, .readerActions .confirmPanel p { margin: 0; font-size: 12px; line-height: 1.6; }
+.readerActions .solutionStatus, .readerActions .solutionError { order: 1; }
+@media (max-width: 767px) {
+ .readerActions { gap: 8px; }
+ .readerActions .solutionSection p, .readerActions .confirmPanel p { font-size: 11px; }
+}
+:global(.sky-app .quiz-page) .readerActions button { min-height: 48px; min-width: 0; }

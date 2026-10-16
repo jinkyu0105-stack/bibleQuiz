@@ -208,3 +208,18 @@ test("archived reader retains the practice notice in a callout", async ({ page }
   await expect(notice).toContainText("입력은 이 브라우저에 임시 저장됩니다.");
   await expect(page.locator("#input-status")).toContainText("빈칸");
 });
+
+test("solution and input confirmation share one row on desktop and mobile", async ({ page }) => {
+  await page.goto("/?level=child");
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    const solution = (await page.getByRole("button", { name: "정답보기", exact: true }).boundingBox())!;
+    const confirm = (await page.getByRole("button", { name: "입력 확인", exact: true }).boundingBox())!;
+    expect(Math.abs(solution.y - confirm.y)).toBeLessThan(1);
+    expect(confirm.x).toBeGreaterThan(solution.x + solution.width);
+    expect(Math.min(solution.height, confirm.height)).toBeGreaterThanOrEqual(48);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+    await expect(page.getByRole("button", { name: "정답보기", exact: true })).toHaveAttribute("aria-disabled", "true");
+    await expect(page.getByRole("button", { name: "입력 확인", exact: true })).toBeDisabled();
+  }
+});
