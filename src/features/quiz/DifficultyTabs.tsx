@@ -16,6 +16,6 @@ export function DifficultyTabs({ difficulty, available = ["child", "adult"], onC
         if (!next) return;
         onChange(next);
         document.getElementById(`tab-${next}`)?.focus();
-      }}><AdminIcon name={level === "child" ? "child" : "adult"}/>{level === "child" ? "어린이용" : "장년용"}</button>)}
+      }}><AdminIcon name={level === "child" ? "child" : "adult"}/>{level === "child" ? "어린이 퀴즈" : "장년 퀴즈"}</button>)}
   </div>;
 }

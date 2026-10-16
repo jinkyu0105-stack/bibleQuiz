@@ -100,11 +100,11 @@ test("composition defers persistence, but direct cell and difficulty clicks canc
   await expect(page.getByTestId("progress")).toHaveText("0 / 21칸 작성");
   await nativeInput(page).dispatchEvent("compositionstart");
   await snapshot(page, "ㄹ", true);
-  await page.getByRole("tab", { name: "장년용" }).click();
+  await page.getByRole("tab", { name: "장년 퀴즈" }).click();
   await expect(page).toHaveURL(/level=adult/);
-  await expect(page.getByRole("tab", { name: "장년용" })).toBeFocused();
+  await expect(page.getByRole("tab", { name: "장년 퀴즈" })).toBeFocused();
   await expect(page.getByTestId("progress")).toHaveText("0 / 40칸 작성");
-  await page.getByRole("tab", { name: "어린이용" }).click();
+  await page.getByRole("tab", { name: "어린이 퀴즈" }).click();
   await expect(page.getByTestId("progress")).toHaveText("0 / 21칸 작성");
 });
 
@@ -174,9 +174,9 @@ test("keyboard selection, deletion and Tab exit preserve native focus", async ({
   await page.locator('[data-cell="r0c4"]').click();
   await nativeInput(page).press("Tab");
   await expect(page.getByRole("button", { name: "이전 칸", exact: true })).toBeFocused();
-  await page.getByRole("tab", { name: "어린이용" }).focus();
+  await page.getByRole("tab", { name: "어린이 퀴즈" }).focus();
   await page.keyboard.press("ArrowRight");
-  await expect(page.getByRole("tab", { name: "장년용" })).toBeFocused();
+  await expect(page.getByRole("tab", { name: "장년 퀴즈" })).toBeFocused();
   await expect(page.getByRole("tabpanel")).toHaveAttribute("aria-labelledby", "tab-adult");
 });
 

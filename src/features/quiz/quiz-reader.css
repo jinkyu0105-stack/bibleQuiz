@@ -144,3 +144,12 @@ body[data-time=night] .quiz-page { --quiz-sheet: #43515c; --quiz-sheet-edge: rgb
  .quiz-page .difficulty-tabs button { padding-inline: 6px; gap: 3px; font-size: 12px; }
  .quiz-reader-actions { gap: 6px; }
 }
+
+.quiz-page.quiz-reader:has(> .quiz-export-disclosure:not([open])) { padding-bottom: 8px; }
+.quiz-export-disclosure { margin-top: 10px; }
+.quiz-export-disclosure > summary { min-height: 44px; }
+@media (max-width: 479px) {
+ .quiz-page .difficulty-tabs button { gap: 4px; padding-inline: 8px; font-size: 12px; }
+ .quiz-page .difficulty-tabs button > svg { display: none; }
+ .quiz-reader-actions { gap: 5px; }
+}

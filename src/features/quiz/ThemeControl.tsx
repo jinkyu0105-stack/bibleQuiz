@@ -104,7 +104,7 @@ export function ThemeControl({ home, time, onChange, grass, onGrassChange, stora
         <svg className="clarity-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="12" cy="12" r="8" /><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none" /></svg>
         <span className="clarity-label" aria-hidden="true">가</span><small className="clarity-label">선명하게</small>
       </button>
-      <button ref={grassRef} id="grass-toggle" data-glint className="glass glass-clear" type="button" aria-label={grass ? "잔디 끄기" : "잔디 켜기"} title={grass ? "잔디 끄기" : "잔디 켜기"} aria-pressed={grass} onClick={onGrassChange}>
+      {home && <button ref={grassRef} id="grass-toggle" data-glint className="glass glass-clear" type="button" aria-label={grass ? "잔디 끄기" : "잔디 켜기"} title={grass ? "잔디 끄기" : "잔디 켜기"} aria-pressed={grass} onClick={onGrassChange}>
         <svg viewBox="0 0 28 28" width="23" height="23" aria-hidden="true" fill="none">
           <path className="grass-blades" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" d="M4 22H24 M8 22V11 M14 22V5 M20 22V13"/>
           {!grass && <g className="grass-state" data-on={false} transform="translate(2 2) scale(.9)">
@@ -112,7 +112,7 @@ export function ThemeControl({ home, time, onChange, grass, onGrassChange, stora
             <path d="M20 22h4"/>
           </g>}
         </svg>
-      </button>
+      </button>}
     </div>
     {(storageFailed || clarityStorageFailed) && <p className="quiet-message" role="status">설정은 이 화면에서만 유지됩니다.</p>}
   </aside>{(home || compact) && <PageDock mobile={mobilePopup} settings={<button ref={popupTrigger} className="mobile-settings-trigger" type="button" aria-label="화면 설정"

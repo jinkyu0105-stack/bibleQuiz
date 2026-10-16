@@ -139,13 +139,13 @@ test("public quiz loads, keeps difficulty-specific drafts and survives permalink
   await expect(page.locator('time[datetime="2099-09-07T00:00:00.000Z"]')).not.toContainText("한국 시간");
   await expect(page.getByTestId("remaining-time")).toContainText("남은 기간:");
   await inputValue(page, "갑세");
-  await page.getByRole("tab", { name: "어린이용" }).focus();
+  await page.getByRole("tab", { name: "어린이 퀴즈" }).focus();
   await page.keyboard.press("ArrowRight");
-  await expect(page.getByRole("tab", { name: "장년용" })).toBeFocused();
+  await expect(page.getByRole("tab", { name: "장년 퀴즈" })).toBeFocused();
   await expect(page).toHaveURL(/level=adult/);
   await expect(page.getByTestId("progress")).toHaveText("0 / 40칸 작성");
   await inputValue(page, "값");
-  await page.getByRole("tab", { name: "어린이용" }).click();
+  await page.getByRole("tab", { name: "어린이 퀴즈" }).click();
   await expect(page.getByTestId("progress")).toHaveText("2 / 21칸 작성");
   // Sharing is covered separately; verify drafts survive opening the stable address.
   await page.goto("/quiz/2026-08-31-test01?level=child");

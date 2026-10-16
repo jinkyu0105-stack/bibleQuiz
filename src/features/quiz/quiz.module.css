@@ -497,7 +497,7 @@
 .cluePanel { grid-column: 2; grid-row: 2; }
 .mobileTools { margin-top: 14px; }
 @media (min-width: 1024px) {
- .columns { padding-top: 12px; }
+ .columns { padding-top: 24px; }
 }
 @media (max-width: 1023px) {
  .cluePanel { grid-column: 1; grid-row: 3; margin-top: 18px; }
@@ -519,5 +519,5 @@
  .progressPanel .saved { justify-self: center; max-width: 85%; }
 }
 @media (max-width: 1023px) {
- .currentClue { padding-top: 10px; padding-bottom: 16px; }
+ .currentClue { padding-top: 10px; padding-bottom: 22px; }
 }

@@ -52,9 +52,9 @@ export function BlankExportPanel({ slug, difficulty, available = ["child", "adul
       {available.length > 1 && <option value="both">둘 다</option>}
     </select></label></div>
     <div className="export-actions">
-      <Button variant="primary" aria-label="빈 격자 받기" disabled={busy} onClick={() => void run("png")}><AdminIcon name="grid"/><span>빈 격자 받기</span><code>PNG</code></Button>
-      <Button disabled={busy} onClick={() => void run("copy")}><AdminIcon name="document"/><span>문제 텍스트 복사</span></Button>
-      <Tooltip label="다운로드 전에 빈 격자와 문제를 확인하세요">{id => <Button aria-describedby={id} disabled={busy} onClick={() => void run("preview")}><AdminIcon name="book"/><span>자료 미리보기</span></Button>}</Tooltip>
+      <Button variant="primary" aria-label="빈 격자 받기" disabled={busy} onClick={() => void run("png")}><AdminIcon name="grid"/><span>격자 받기</span><code>PNG</code></Button>
+      <Button aria-label="문제 텍스트 복사" disabled={busy} onClick={() => void run("copy")}><AdminIcon name="document"/><span>문제 복사</span></Button>
+      <Tooltip label="다운로드 전에 빈 격자와 문제를 확인하세요">{id => <Button aria-label="자료 미리보기" aria-describedby={id} disabled={busy} onClick={() => void run("preview")}><AdminIcon name="book"/><span>미리보기</span></Button>}</Tooltip>
     </div>
     <details className="blank-export-advanced"><summary><AdminIcon name="settings"/><span>고급 설정</span><code>SVG</code><AdminIcon name="chevron"/></summary>
       <div className="blank-export-vector"><p><code>SVG</code>는 크기를 늘려도 선이 선명한 편집용 파일입니다.</p>

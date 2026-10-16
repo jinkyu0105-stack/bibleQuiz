@@ -32,9 +32,9 @@ test("home opens the real quiz, restores its draft and cleans glass on repeated 
       element.dispatchEvent(new InputEvent("input", { bubbles: true }));
     });
     await expect(page.getByTestId("progress")).toHaveText("1 / 21칸 작성");
-    await page.getByRole("tab", { name: "어린이용" }).focus();
+    await page.getByRole("tab", { name: "어린이 퀴즈" }).focus();
     await page.keyboard.press("ArrowRight");
-    await expect(page.getByRole("tab", { name: "장년용" })).toBeFocused();
+    await expect(page.getByRole("tab", { name: "장년 퀴즈" })).toBeFocused();
     await expect(page.locator(".difficulty-tabs > .glass-indicator")).toHaveCount(1);
     await expect(page.getByTestId("progress")).toHaveText("0 / 40칸 작성");
     await page.getByRole("link", { name: "← 이번 주 말씀" }).click();

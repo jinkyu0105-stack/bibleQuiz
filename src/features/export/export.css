@@ -51,3 +51,16 @@
  .blank-preview-content { grid-template-columns: minmax(0,1fr); }
  .blank-preview-content img { width: min(160px,100%); justify-self: center; }
 }
+
+.blank-export-panel .export-actions { display: flex; gap: 6px; margin: 8px 0; }
+.blank-export-panel .export-actions > span { width: auto; }
+.sky-app .quiz-page .blank-export-panel .export-actions button,
+.blank-export-panel .export-actions button { width: auto; min-width: 0; min-height: 36px; padding: 5px 8px; gap: 5px; font-size: 11px; }
+.blank-export-panel select { min-height: 36px; padding: 4px 24px 4px 8px; font-size: 11px; }
+.blank-export-toolbar { gap: 8px; }
+@media (max-width: 767px), (pointer: coarse) {
+ .sky-app .quiz-page .blank-export-panel .export-actions button,
+ .blank-export-panel .export-actions button, .blank-export-panel select { min-height: 44px; }
+ .blank-export-panel .export-actions code { display: none; }
+ .blank-export-level { width: auto; }
+}

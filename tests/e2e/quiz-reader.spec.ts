@@ -36,9 +36,9 @@ test("compact reader keeps summary, icon help and index navigation accessible", 
   if (triggerBox.y - tipBox.height - 8 >= 12) expect(placement).toBe("above");
   await page.keyboard.press("Escape");
   await expect(tip).toBeHidden();
-  await page.getByRole("tab", { name: "어린이용" }).focus();
+  await page.getByRole("tab", { name: "어린이 퀴즈" }).focus();
   await page.keyboard.press("ArrowRight");
-  await expect(page.getByRole("tab", { name: "장년용" })).toBeFocused();
+  await expect(page.getByRole("tab", { name: "장년 퀴즈" })).toBeFocused();
   await expect(page.getByTestId("progress")).toHaveText("0 / 40칸 작성");
   const tabs = await page.getByRole("tablist", { name: "퀴즈 난이도" }).getByRole("tab").evaluateAll(nodes => nodes.map(node => { const b=node.getBoundingClientRect();return {top:b.top,bottom:b.bottom,left:b.left,right:b.right}; }));
   expect(Math.abs(tabs[0]!.top-tabs[1]!.top)).toBeLessThan(.1);
@@ -82,7 +82,7 @@ test("weekly reader replaces archive with a private participation preview", asyn
   expect(participationBox.y).toBeGreaterThan(exportBox.y + exportBox.height);
   await expect(page.locator("#quiz-panel").getByRole("heading", { name: "참여 현황", exact: true })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "참여 현황 보기", exact: true })).toHaveCount(0);
-  await page.getByRole("tab", { name: "장년용" }).click();
+  await page.getByRole("tab", { name: "장년 퀴즈" }).click();
   await expect(page.getByTestId("progress")).toHaveText("0 / 40칸 작성");
   await expect(page.getByRole("heading", { name: "참여 현황", exact: true })).toHaveCount(1);
   expect(boardRequests).toEqual([]);
