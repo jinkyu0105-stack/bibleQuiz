@@ -521,3 +521,6 @@
 @media (max-width: 1023px) {
  .currentClue { padding-top: 10px; padding-bottom: 22px; }
 }
+
+/* Space separates the two clue groups; each heading keeps its own underline. */
+.cluePanel section + section { border: 0; }
