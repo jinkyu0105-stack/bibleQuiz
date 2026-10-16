@@ -178,7 +178,12 @@ test("reader toolbar groups status and help and aligns the active clue with the 
     await page.setViewportSize({ width, height: 900 });
     const clue = (await page.locator("#current-clue").boundingBox())!;
     const grid = (await page.getByTestId("grid-boundary").boundingBox())!;
-    expect(Math.abs(clue.x - grid.x)).toBeLessThan(1);
+    if (width < 1024) expect(Math.abs(clue.x - grid.x)).toBeLessThan(1);
+    else {
+      await expect(page.locator("#current-clue")).toHaveCSS("clip-path", "inset(50%)");
+      const list = (await page.getByRole("complementary", { name: "낱말 단서" }).boundingBox())!;
+      expect(Math.abs(list.y - grid.y)).toBeLessThan(1);
+    }
     const help = (await page.getByRole("button", { name: "입력 안내", exact: true }).boundingBox())!;
     const count = (await page.locator(".quiz-participants").boundingBox())!;
     const status = (await page.locator(".quiz-availability-label").boundingBox())!;
