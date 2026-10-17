@@ -137,9 +137,9 @@ body[data-time=night] .quiz-page { --quiz-sheet: #43515c; --quiz-sheet-edge: rgb
 .quiz-availability-label > svg { width: 14px; height: 14px; }
 .quiz-reader-actions .quiz-participants { padding: 0; font-size: 11px; }
 .quiz-help-slot { display: block; width: 44px; height: 44px; }
-.sky-app .quiz-page .quiz-availability-callout { margin: 14px clamp(14px, 2vw, 24px) 0; padding: 12px; border: 1px solid color-mix(in srgb, var(--ui-attention) 25%, transparent); border-radius: 8px; background: var(--ui-attention-bg); }
+.sky-app .quiz-page .quiz-availability-callout { margin: clamp(14px, 2vw, 24px) clamp(14px, 2vw, 24px) 0; padding: 12px; border: 1px solid color-mix(in srgb, var(--ui-attention) 25%, transparent); border-radius: 8px; background: var(--ui-attention-bg); }
 @media (max-width: 767px) {
- .sky-app .quiz-page .quiz-availability-callout { margin-inline: 12px; }
+ .sky-app .quiz-page .quiz-availability-callout { margin: 12px 12px 0; }
 }
 .quiz-page .quiz-availability-callout > span { flex-basis: 100%; margin-left: 26px; }
 @media (max-width: 359px) {
