@@ -104,10 +104,10 @@ function ArchiveResults({ query, search }: { query: ArchiveQuery; search: string
         <Tooltip label="입력한 제목이나 장절로 검색">{descriptionId => <button className={styles.searchButton} type="submit" aria-label="검색" aria-describedby={descriptionId}><AdminIcon name="search"/></button>}</Tooltip>
       </div>
       <div className={styles.dateFilters}>
-        <label><span>연도</span><select value={query.year === null ? "" : String(query.year).padStart(4, "0")} disabled={view.state !== "ready"} onChange={(event) => changeFilters(event.target.value, query.month === null ? "" : String(query.month))}>
+        <label><span className="sr-only">연도</span><select value={query.year === null ? "" : String(query.year).padStart(4, "0")} disabled={view.state !== "ready"} onChange={(event) => changeFilters(event.target.value, query.month === null ? "" : String(query.month))}>
           <option value="">모든 연도</option>{query.year !== null && !years.includes(query.year) && <option value={String(query.year).padStart(4, "0")} disabled>{query.year}년 (결과 없음)</option>}{years.map((year) => <option value={String(year).padStart(4, "0")} key={year}>{year}년</option>)}
         </select></label>
-        <label><span>월</span><select value={query.month ?? ""} disabled={view.state !== "ready"} onChange={(event) => changeFilters(query.year === null ? "" : String(query.year).padStart(4, "0"), event.target.value)}>
+        <label><span className="sr-only">월</span><select value={query.month ?? ""} disabled={view.state !== "ready"} onChange={(event) => changeFilters(query.year === null ? "" : String(query.year).padStart(4, "0"), event.target.value)}>
           <option value="">모든 월</option>{query.month !== null && !months.includes(query.month) && <option value={query.month} disabled>{query.month}월 (결과 없음)</option>}{months.map((month) => <option value={month} key={month}>{month}월</option>)}
         </select></label>
       </div>

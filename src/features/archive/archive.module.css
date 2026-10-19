@@ -101,15 +101,16 @@
 .archiveHeading p { margin: 6px 0 0; font-size: 13px; color: var(--ink); }
 .page .filters { display: grid; grid-template-columns: minmax(0,1fr) minmax(280px,.6fr); gap: 12px; align-items: stretch; padding: 0; border: 0; border-radius: 0; background: transparent; }
 .searchField { display: flex; align-items: stretch; min-width: 0; height: 48px; border: 1px solid var(--control-border); border-radius: 9px; background: var(--archive-sheet); box-shadow: inset 0 1px 0 var(--glass-highlight); }
+.searchField > span { display: flex; align-items: stretch; flex: 0 0 46px; align-self: stretch; }
 .page .searchField input { min-width: 0; width: 100%; height: 46px; padding: 10px 14px; border: 0; border-radius: 8px 0 0 8px; background: transparent; font-size: 16px; font-weight: 400; color: var(--ink); }
 .page .searchField input::placeholder { color: var(--muted); font-size: 14px; font-weight: 400; }
-.page .searchButton { display: grid; place-items: center; min-width: 46px; width: 46px; height: 46px; min-height: 46px; margin: 0; padding: 0; border: 0; border-radius: 0 8px 8px 0; color: var(--ui-on-action); background: var(--ui-action-fill); box-shadow: inset 0 1px 0 var(--glass-highlight); transition: box-shadow 160ms ease; }
+.page .searchButton { display: grid; place-items: center; min-width: 46px; width: 46px; height: 100%; min-height: 0; transform: none; margin: 0; padding: 0; border: 0; border-radius: 0 8px 8px 0; color: var(--ui-on-action); background: var(--ui-action-fill); box-shadow: inset 0 1px 0 var(--glass-highlight); transition: box-shadow 160ms ease; }
 .page .searchButton:hover { box-shadow: inset 0 0 0 30px rgb(255 255 255 / .12), inset 0 1px 0 var(--glass-highlight); }
 .dateFilters { display: grid; grid-template-columns: 1fr 1fr; min-width: 0; border: 1px solid var(--control-border); border-radius: 9px; background: var(--glass-soft); }
 .page .dateFilters label { display: flex; align-items: center; gap: 0; min-width: 0; padding-left: 12px; font-weight: 400; }
 .dateFilters label + label { border-left: 1px solid var(--line); }
 .dateFilters label > span { flex-shrink: 0; color: var(--muted); font-size: 11px; }
-.page .dateFilters select { width: 100%; min-width: 0; min-height: 46px; height: 46px; padding: 8px 6px; border: 0; border-radius: 8px; background: transparent; color: var(--ink); font-size: 14px; font-weight: 600; }
+.page .dateFilters select { width: 100%; min-width: 0; min-height: 46px; height: 46px; padding: 8px 6px; border: 0; border-radius: 8px; background: transparent; color: var(--ink); font-size: 13px; font-weight: 400; }
 .page .filterSummary { margin: 12px 0 0; gap: 8px; font-size: 12px; }
 .filterSummary > div { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
 .filterSummary code { padding: 3px 8px; border: 1px solid var(--archive-edge); border-radius: 5px; background: var(--glass-soft); color: var(--ink); font: inherit; }
@@ -166,7 +167,7 @@
   .headingIcon svg { width: 20px; height: 20px; }
   .archiveHeading p { font-size: 12px; margin-top: 4px; }
   .page .filters { grid-template-columns: minmax(0,1fr); gap: 10px; }
-  .page .dateFilters select { font-size: 16px; padding-left: 10px; }
+  .page .dateFilters select { font-size: 14px; padding-left: 6px; }
   .listHeading { margin-top: 18px; }
   .record { grid-template-columns: minmax(0,1fr) auto; gap: 12px; min-height: 106px; padding: 15px 14px; }
   .calendarTile { display: none; }
