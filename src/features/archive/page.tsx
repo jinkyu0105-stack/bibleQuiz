@@ -94,8 +94,9 @@ function ArchiveResults({ query, search }: { query: ArchiveQuery; search: string
   return <GlassPanel className={`${styles.page} archive-browser`} surface="standard" aria-labelledby="archive-heading">
     <header className={styles.archiveHeading}>
       <span className={styles.headingIcon}><AdminIcon name="book"/></span>
-      <div><h2 id="archive-heading">지난 퀴즈</h2><p>함께 나눈 말씀을 찾아 다시 풀어보세요.</p></div>
+      <h2 id="archive-heading">지난 퀴즈</h2>
     </header>
+    <aside className={styles.practiceNote}><AdminIcon name="check"/><p><strong>부담 없이 다시 풀어보세요.</strong> 지난 퀴즈는 새 참여 기록을 남기지 않습니다.</p></aside>
     <form className={styles.filters} role="search" aria-label="지난 퀴즈 검색" onSubmit={(event) => changeFilters(query.year === null ? "" : String(query.year).padStart(4, "0"), query.month === null ? "" : String(query.month), event)}>
       <div className={styles.searchField}>
         <label className="sr-only" htmlFor="archive-search">설교 제목 · 성경 장절</label>
@@ -125,6 +126,5 @@ function ArchiveResults({ query, search }: { query: ArchiveQuery; search: string
       {moreError && <p className={styles.alert} role="alert">{moreError === "invalid" ? "목록의 연결 정보가 변경되었습니다. 처음부터 다시 불러와 주세요." : "다음 목록을 불러오지 못했습니다. 기존 목록은 남아 있습니다."}</p>}
       {moreError === "invalid" ? <button className="primary-button" type="button" onClick={() => { restoringScroll.current = 0; void navigate(`/archive${search}`, { replace: true }); }}>목록 처음부터 다시 불러오기</button> : view.page.nextCursor && <button className={styles.more} type="button" onClick={() => void more()} disabled={moreBusy} aria-busy={moreBusy}><AdminIcon name={moreError ? "refresh" : "chevron"}/>{moreBusy ? "불러오는 중…" : moreError ? "더 보기 다시 시도" : "더 보기"}</button>}
     </>}
-    <aside className={styles.practiceNote}><AdminIcon name="check"/><p><strong>부담 없이 다시 풀어보세요.</strong> 어린이·장년 아이콘으로 퀴즈를 열 수 있습니다. 지난 퀴즈는 새 참여 기록을 남기지 않습니다.</p></aside>
   </GlassPanel>;
 }

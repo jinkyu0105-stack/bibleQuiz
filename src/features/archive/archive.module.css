@@ -148,7 +148,7 @@
 .page .more { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 46px; margin: 12px 0 0; border: 1px solid var(--archive-edge); border-radius: 8px; background: var(--glass-soft); color: var(--ui-action); font-size: 13px; font-weight: 600; }
 .page .more:hover:not(:disabled) { background: var(--ui-action-bg); }
 .page .more svg { width: 16px; height: 16px; }
-.practiceNote { display: flex; align-items: flex-start; gap: 9px; margin: 16px 0 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--glass-soft); color: var(--ink); font-size: 12px; line-height: 1.8; }
+.practiceNote { display: flex; align-items: flex-start; gap: 9px; margin: 0 0 20px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--glass-soft); color: var(--ink); font-size: 12px; line-height: 1.8; }
 .practiceNote > svg { flex: 0 0 17px; height: 17px; margin-top: 2px; color: var(--ui-success); }
 .practiceNote p { margin: 0; }
 .practiceNote strong { margin-right: 6px; font-weight: 650; }
