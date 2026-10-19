@@ -8,8 +8,9 @@ import { MutationRequestError, readSameOriginJson } from "../_shared/http/mutati
 import { WeeklyError, readWeeklyDashboard, listAdminSubmissions, readWinnerSettings, saveWinnerSettings,
   listAdminPolicy, createAdminPolicy, patchAdminPolicy, testAdminPolicy, listPrivacyRequests, replyPrivacyRequest } from "../_shared/services/admin-weekly";
 import { PrivacyChallengeError, readPrivacyRequest, submitPrivacyRequest } from "../_shared/services/privacy-requests";
+import { readSermonTheme, saveSermonTheme } from "../_shared/services/sermon-themes";
 export const weeklyRoutes=new Hono<AppEnvironment>();
-const weeklyPaths = ['/api/admin/dashboard','/api/admin/quiz-sets/:id/workspace','/api/admin/submissions','/api/admin/quiz-sets/:id/winner-settings','/api/admin/reserved-names','/api/admin/reserved-names/:id','/api/admin/moderation-terms','/api/admin/moderation-terms/:id','/api/admin/moderation-exceptions','/api/admin/moderation-exceptions/:id','/api/admin/moderation-test','/api/admin/privacy-requests','/api/admin/privacy-requests/:id','/api/privacy-requests','/api/privacy-requests/:token'];
+const weeklyPaths = ['/api/admin/sermon-themes/:month','/api/admin/dashboard','/api/admin/quiz-sets/:id/workspace','/api/admin/submissions','/api/admin/quiz-sets/:id/winner-settings','/api/admin/reserved-names','/api/admin/reserved-names/:id','/api/admin/moderation-terms','/api/admin/moderation-terms/:id','/api/admin/moderation-exceptions','/api/admin/moderation-exceptions/:id','/api/admin/moderation-test','/api/admin/privacy-requests','/api/admin/privacy-requests/:id','/api/privacy-requests','/api/privacy-requests/:token'];
 const isWeekly = (path: string) => weeklyPaths.some(pattern => new RegExp(`^${pattern.replace(/:[^/]+/gu, '[^/]+')}$`, 'u').test(path));
 weeklyRoutes.use('*',async(c,next)=>{if(isWeekly(c.req.path)) c.header('Cache-Control','private, no-store');await next();});
 function errorResponse(c:Context<AppEnvironment>,error:unknown) {
@@ -29,6 +30,9 @@ weeklyRoutes.use('*',async(c,next)=>{
     await next();}catch(error){return errorResponse(c,error);}
 });
 function id(value:string) {return adminSubmissionIdSchema.parse(value);}
+weeklyRoutes.on(['GET','PATCH'],'/api/admin/sermon-themes/:month',async c=>c.json(success(c.req.method==='GET'
+  ? await readSermonTheme(c.env.DB,c.req.param('month'))
+  : await saveSermonTheme(c.env.DB,c.req.param('month'),await readSameOriginJson(c.req.raw),c.get('accessIdentity').email))));
 weeklyRoutes.get('/api/admin/dashboard',async c=>c.json(success(await readWeeklyDashboard(c.env.DB))));
 weeklyRoutes.get('/api/admin/quiz-sets/:id/workspace',async c=>{
   const quiz=(await readWeeklyDashboard(c.env.DB)).items.find(q=>q.quizSetId===id(c.req.param('id')));

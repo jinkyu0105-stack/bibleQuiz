@@ -7,6 +7,7 @@ import { ButtonLink } from "../../components/Button";
 import { weeklyDashboardSchema, type WeeklyQuiz } from "../../../shared/api/admin-weekly";
 import { draftCleanupListSchema } from "../../../shared/api/admin-draft-cleanup";
 import { weeklyRequest } from "./client";
+import { MonthlySermonTheme } from "./MonthlySermonTheme";
 import styles from "./dashboard.module.css";
 
 const date = (value: string) => new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", month: "long", day: "numeric" }).format(new Date(value));
@@ -64,6 +65,7 @@ export function Component() {
       {featured?.slug && <ButtonLink to={`/quiz/${featured.slug}`}>공개 화면 <span aria-hidden="true">↗</span></ButtonLink>}
     </section>}
     </div>
+    <MonthlySermonTheme/>
     <section className={styles.library} aria-labelledby="quiz-library-heading" aria-busy={loading}>
       <div className={styles.sectionHeading}><h3 id="quiz-library-heading"><AdminLabel text="퀴즈 목록"/> <span>{items.length}</span></h3>
         <AdminRefreshButton disabled={loading} onClick={() => { setMessage(""); setLoading(true); setAttempt(v => v + 1); }} label="운영 상태 새로고침" title="퀴즈 목록 새로고침"/>

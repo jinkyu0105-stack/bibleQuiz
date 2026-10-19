@@ -106,7 +106,7 @@ test('quiz board uses sermon dates, compact named icons and above-first tooltips
   await action.evaluate(n=>{const anchor=n.parentElement!;anchor.style.transform=`translateY(${2-anchor.getBoundingClientRect().top}px)`;});
   await action.evaluate(n=>{n.blur();n.focus({preventScroll:true});});expect((await action.boundingBox())!.y).toBeLessThan(12);await expect(tip).toHaveAttribute('data-side','below');
   await page.keyboard.press('Escape');
-  await expect(page.locator('.site-header').getByRole('link',{name:'이번 주 퀴즈',exact:true})).toHaveAttribute('href','/');
+  await expect(page.locator('.site-header').getByRole('button',{name:'이번 주 퀴즈',exact:true})).toHaveAttribute('aria-haspopup','dialog');
   await expect(page.locator('aside').getByRole('link',{name:'사이트 보기',exact:true})).toHaveCount(0);
   await page.goto('/admin/tools');const tool=page.locator('[data-admin-tool]').first(),summary=tool.locator('summary').first();
   await expect(summary.locator('svg')).toHaveCount(1);await expect(summary).not.toContainText('열기');

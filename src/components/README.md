@@ -12,6 +12,7 @@ P9-06 검토본과 같은 유리 재질·움직임을 실제 React 페이지에�
 | `GlassLink` | React Router `LinkProps`, 입체 링크 | 관리자 진입, 참여 가능한 다른 퀴즈 |
 | `PageDock` | `GlassMenu`로 구성한 실제 페이지 바로가기 | 메인 및 모바일 모든 일반 페이지 하단 |
 | `GlassArrowButton` | **유리 화살표 버튼**. 그림32px/단독 터치44px,9px 모서리·1px 전체 테두리·윗빛·작은 그림자·160ms 호버. `label` 필수, native button props 지원. `decorative`는 전체 행 버튼 안의 장식이며 부모 `data-glass-arrow-group`과 함께 반응 | 지난 퀴즈 행, 부품 모음 |
+| `QuizChoiceDialog` | **난이도 선택창**. 네이티브 모달 대화상자, 어린이·장년 사각 선택 버튼, Esc/바깥 클릭 닫기·초점 복원 | 헤더 이번 주 퀴즈·지난 퀴즈 목록·부품 모음 |
 | `CompactSelect` | **연결형 선택기**. 네이티브 select·숨긴 접근성 이름·안쪽14px 화살표. `pointerFocus="surface"` 기본(추가 클릭 테두리 없음), 필요 시 `ring`, 키보드 초점은 두 방식 모두 표시 | 지난 퀴즈 연도·월, 부품 모음 |
 | `AdminMenu` | **이동형 메뉴**. 선택 면과 아이콘 받침이 함께 이동 | 관리자 사이드바·도움말·초안 단계 |
 | `AdminIndexedBoard` | **파일 인덱스 탭**. 선택 탭과 본문이 한 면으로 이어짐 | 관리자 게시판 |

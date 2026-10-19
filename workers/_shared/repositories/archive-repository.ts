@@ -24,6 +24,7 @@ export function createArchiveRepository(database: Database, secret: string | und
       const rowsQuery = database.select({
         id: quizSets.id, slug: sql<string>`coalesce(${publishedQuizContent.slug},${sermons.slug})`, title: titleColumn,
         sermonDate: dateColumn, bibleReferenceLabel: referenceColumn,
+        monthlyTheme: sql<string | null>`(SELECT nullif(value,'') FROM site_state WHERE key='sermon_theme:' || substr(${dateColumn},1,7))`,
         child: sql<number>`${activeVariant("child")}`, adult: sql<number>`${activeVariant("adult")}`,
       }).from(quizSets).innerJoin(sermons, eq(sermons.id, quizSets.sermonId))
         .leftJoin(publishedQuizContent, eq(publishedQuizContent.quizSetId, quizSets.id)).where(and(
@@ -48,7 +49,7 @@ export function createArchiveRepository(database: Database, secret: string | und
         ? await signArchiveCursor({ date: last.sermonDate, id: last.id }, query, secret) : null;
       return archivePageSchema.parse({
         items: visible.map((row) => ({ slug: row.slug, title: row.title, sermonDate: row.sermonDate,
-          bibleReferenceLabel: row.bibleReferenceLabel,
+          bibleReferenceLabel: row.bibleReferenceLabel, monthlyTheme: row.monthlyTheme,
           availableDifficulties: [...(row.child ? ["child"] : []), ...(row.adult ? ["adult"] : [])],
         })), nextCursor,
         ...(years && months ? { availableYears: years.map((row) => row.value), availableMonths: months.map((row) => row.value) } : {}),

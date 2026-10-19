@@ -1,3 +1,4 @@
+import { sermonThemeTextSchema } from "./sermon-themes";
 import { z } from "zod";
 import { difficultySchema, quizSlugSchema } from "./public-quiz";
 
@@ -38,6 +39,7 @@ export const archiveItemSchema = z.strictObject({
   title: z.string().trim().min(1).max(300),
   sermonDate: z.iso.date(),
   bibleReferenceLabel: z.string().trim().min(1).max(300),
+  monthlyTheme: sermonThemeTextSchema.nullable().optional(),
   availableDifficulties: z.array(difficultySchema).min(1).max(2).refine((values) => new Set(values).size === values.length),
 });
 export const archivePageSchema = z.strictObject({

@@ -66,8 +66,12 @@ function ArchiveResults({ query, search }: { query: ArchiveQuery; search: string
     return () => { cancelAnimationFrame(frame); clearTimeout(timer); window.removeEventListener("scroll", onScroll); window.removeEventListener("pagehide", savePosition); document.removeEventListener("click", savePosition, true); window.history.scrollRestoration = previousRestoration; };
   }, [view, savePosition]);
 
-  function changeFilters(year: string, month: string, event?: FormEvent) {
+  function changeFilters(change: { year?: string; month?: string }, event?: FormEvent) {
     event?.preventDefault();
+    // A second selection can arrive after history updates but before this render
+    // is replaced. Preserve the other date filter from the latest address.
+    const current = new URLSearchParams(window.location.search);
+    const year = change.year ?? current.get("year") ?? "", month = change.month ?? current.get("month") ?? "";
     const params = new URLSearchParams();
     if (q) params.set("q", q); if (year) params.set("year", year); if (month) params.set("month", month);
     try {
@@ -98,17 +102,17 @@ function ArchiveResults({ query, search }: { query: ArchiveQuery; search: string
       <h2 id="archive-heading">지난 퀴즈</h2>
     </header>
     <aside className={styles.practiceNote}><AdminIcon name="check"/><p><strong>부담 없이 다시 풀어보세요.</strong> 지난 퀴즈는 새 참여 기록을 남기지 않습니다.</p></aside>
-    <form className={styles.filters} role="search" aria-label="지난 퀴즈 검색" onSubmit={(event) => changeFilters(query.year === null ? "" : String(query.year).padStart(4, "0"), query.month === null ? "" : String(query.month), event)}>
+    <form className={styles.filters} role="search" aria-label="지난 퀴즈 검색" onSubmit={(event) => changeFilters({}, event)}>
       <div className={styles.searchField}>
         <label className="sr-only" htmlFor="archive-search">설교 제목 · 성경 장절</label>
         <input id="archive-search" type="search" value={q} onChange={(event) => setQ(event.target.value)} placeholder="설교 제목 · 성경 장절" aria-invalid={formError || undefined} aria-describedby={formError ? "archive-form-error" : undefined} />
         <Tooltip label="입력한 제목이나 장절로 검색">{descriptionId => <button className={styles.searchButton} type="submit" aria-label="검색" aria-describedby={descriptionId}><AdminIcon name="search"/></button>}</Tooltip>
       </div>
       <div className={styles.dateFilters}>
-        <CompactSelect label="연도" value={query.year === null ? "" : String(query.year).padStart(4, "0")} disabled={view.state !== "ready"} onChange={(event) => changeFilters(event.target.value, query.month === null ? "" : String(query.month))}>
+        <CompactSelect label="연도" value={query.year === null ? "" : String(query.year).padStart(4, "0")} disabled={view.state !== "ready"} onChange={(event) => changeFilters({ year: event.target.value })}>
           <option value="">모든 연도</option>{query.year !== null && !years.includes(query.year) && <option value={String(query.year).padStart(4, "0")} disabled>{query.year}년 (결과 없음)</option>}{years.map((year) => <option value={String(year).padStart(4, "0")} key={year}>{year}년</option>)}
         </CompactSelect>
-        <CompactSelect label="월" pointerFocus="surface" value={query.month ?? ""} disabled={view.state !== "ready"} onChange={(event) => changeFilters(query.year === null ? "" : String(query.year).padStart(4, "0"), event.target.value)}>
+        <CompactSelect label="월" pointerFocus="surface" value={query.month ?? ""} disabled={view.state !== "ready"} onChange={(event) => changeFilters({ month: event.target.value })}>
           <option value="">모든 월</option>{query.month !== null && !months.includes(query.month) && <option value={query.month} disabled>{query.month}월 (결과 없음)</option>}{months.map((month) => <option value={month} key={month}>{month}월</option>)}
         </CompactSelect>
       </div>

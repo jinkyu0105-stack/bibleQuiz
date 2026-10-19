@@ -60,7 +60,7 @@ GET  /api/archive?cursor=...&q=...&year=YYYY&month=1..12&limit=12
 - `q`는 trim·NFKC 정규화 후 최대 60자로 제한하고 설교 제목과 `bible_reference_label`에 매개변수화한 `instr(lower(...), lower(?))` 부분 검색을 적용한다. `%`, `_`, `\\`도 일반 문자로 찾으며 기존 ASCII 대소문자 무시와 한글 비교를 유지한다. P5-58에서 허용 범위 내 한글 검색어도 D1 LIKE 패턴 byte 제한에 걸릴 수 있음을 확인해 검색식을 변경했다.
 - `year`와 `month`는 `sermon_date` 기준이며 잘못된 범위는 `400 INVALID_ARCHIVE_FILTER`로 거부한다.
 - 정렬은 `sermon_date DESC, quiz_sets.id DESC`이며 cursor도 이 두 값과 현재 filter fingerprint를 담은 불투명한 서명값으로 만들어 다른 검색 조건의 cursor 혼용과 중복·누락을 방지한다.
-- 응답 item은 `slug`, 설교 제목·일자, 성경 장절 label, 어린이·장년 variant 존재 여부만 기본 포함한다. 정답·참여 답안·관리자 정보는 목록 응답에 포함하지 않는다.
+- 응답 item은 `slug`, 설교 제목·일자, 성경 장절 label, 어린이·장년 variant 존재 여부, 해당 공개 설교 월의 `monthlyTheme`(미등록은null)를 포함한다. 클라이언트는 이전 응답의 필드 생략도 미등록으로 처리한다. 정답·참여 답안·관리자 정보는 목록 응답에 포함하지 않는다.
 - 첫 페이지 응답에는 `availableYears`와 선택한 연도에 맞는 `availableMonths`를 함께 넣어 실제 데이터에 존재하는 필터만 렌더링한다.
 - `nextCursor`가 null이면 `더 보기`를 숨긴다. 검색·연도·월이 바뀌면 기존 item과 cursor를 초기화한다.
 - 메인 화면의 최근 3개도 같은 repository와 정렬 규칙을 사용하되 `limit=3`으로 요청한다.
@@ -499,3 +499,10 @@ Access·private/no-store와 공개/비공개 자료형 경계를 유지한다. �
 | GET manual / manual/future/member-auth | Git 정본 Markdown·갱신일·로컬 검증 표시·환경·실제 version metadata(없으면 미연결). React text로 escape하며 HTML 실행 금지 |
 
 공개 session·submission·삭제·연습·privacy 경로의 요청 제한은 [submissions7.4](submissions.md#74-멱등성과-속도-제한)를 따른다. 성공 재생과 개인정보·정답 분리 계약을 유지하며 수치 조회 실패를 0이나 여유로 바꾸지 않는다.
+
+### 월별 설교 주제 — P9-26
+
+- `GET /api/admin/sermon-themes/:month`: `{ data: { month: "YYYY-MM", theme: string, revision: ISO시각|null } }`. 미등록은빈 문자열/null.
+- `PATCH /api/admin/sermon-themes/:month`: 같은 출처 JSON `{ theme, expectedRevision }`. 관리자 Access 인증 필수. 저장 결과는GET과 같은형태다.
+- 월형식0001-01~9999-12, trim한 주제 최대120자·제어/숨김 문자 금지. 모르는필드/query는400, 오래된revision은409, 다른출처403, JSON외415, 지원하지않는method405. 응답은private,no-store.
+- 빈 주제를 저장하면 공개표시를 미등록으로 되돌리되revision을 유지한다. 저장과본문없는감사는동일D1트랜잭션이다. 입력·오류는관리자화면에보존한다.

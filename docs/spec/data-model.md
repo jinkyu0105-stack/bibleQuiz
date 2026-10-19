@@ -358,10 +358,12 @@ solution_sha256
 `site_state`
 
 ```text
-key PK                  # featured_quiz_set_id 등
+key PK                  # featured_quiz_set_id, sermon_theme:YYYY-MM 등
 value
 updated_at
 ```
+
+`sermon_theme:YYYY-MM`은 달별 설교 주제다. value는 trim한 한 줄 문자열(최대120자), 빈 값은 미등록이다. 월은0001-01~9999-12이며 기존 `site_state`의 key 기본키로 조회한다. 새 테이블/migration 없이 사용한다. 수정 요청의 expectedRevision과 updated_at을 비교하고, 감사 삽입과 upsert를 같은 D1 batch에서 처리한다. 빈 값으로 지워도 수정 번호를 남겨 오래된 탭의 재생성을 막는다. 감사에는 대상 연월과 행위만 기록하고 주제 본문은 복제하지 않는다. 기존 전체 DB SQL 백업에 함께 포함된다. 공개 archive는 최종 공개 설교일의 YYYY-MM과 일치하는 값만 `monthlyTheme`로 직렬화하며 다른 site_state 값·수정 시각·관리자 정보는 노출하지 않는다.
 
 `featured_quiz_set_id`는 메인 최상단에서 소개할 최신 세트만 가리킨다. 신규 제출 가능 여부의 정본으로 site state를 사용하지 않는다. 각 세트가 자신의 `status = published`, `submission_state = open`, `opens_at <= now < closes_at` 조건을 충족하는지 서버에서 검사하므로 여러 세트가 동시에 제출을 받을 수 있다.
 

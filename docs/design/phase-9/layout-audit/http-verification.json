@@ -1,0 +1,132 @@
+{
+  "url": "http://localhost:5173/docs/design/phase-9/layout-audit/review",
+  "status": 200,
+  "images": [
+    {
+      "url": "/docs/design/phase-9/layout-audit/home-3440-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/home-3440-b.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/quiz-3440-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/quiz-3440-b.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/archive-3440-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/archive-3440-b.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/admin-3440-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/admin-3440-b.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/choice-dusk-390.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/archive-dawn-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/archive-dawn-390.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/admin-dawn-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/admin-dawn-390.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/archive-day-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/archive-day-390.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/admin-day-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/admin-day-390.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/archive-dusk-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/archive-dusk-390.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/admin-dusk-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/admin-dusk-390.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/archive-night-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/archive-night-390.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/admin-night-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "url": "/docs/design/phase-9/layout-audit/admin-night-390.png",
+      "status": 200,
+      "type": "image/png"
+    }
+  ],
+  "overflow": 0
+}

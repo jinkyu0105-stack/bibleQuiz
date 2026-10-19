@@ -119,17 +119,19 @@
 .resultCount strong { margin-right: 3px; color: var(--ink); font-size: 16px; font-variant-numeric: tabular-nums; }
 .listHeading > span { color: var(--ink); }
 .records { --glass-arrow-edge: var(--archive-edge); margin: 0; padding: 0; list-style: none; border: 1px solid var(--archive-edge); border-radius: 10px; background: var(--archive-sheet); box-shadow: 0 8px 20px -16px var(--glass-shadow); }
-.record { position: relative; display: grid; grid-template-columns: 64px minmax(0,1fr) 32px; align-items: center; gap: 18px; min-height: 86px; padding: 12px 18px; transition: background-color 160ms ease; }
+.record { position: relative; display: grid; grid-template-columns: 54px minmax(0,1fr) 32px; align-items: center; gap: 14px; min-height: 76px; padding: 9px 18px; transition: background-color 160ms ease; }
 .record + .record { border-top: 1px solid var(--archive-edge); }
 .record:first-child { border-radius: 9px 9px 0 0; }
 .record:last-child { border-radius: 0 0 9px 9px; }
 .record:only-child { border-radius: 9px; }
 .record:is(:hover,:focus-within) { background: color-mix(in srgb,var(--glass-highlight) 20%,transparent); }
-.calendarTile { display: grid; text-align: center; overflow: hidden; width: 64px; border: 1px solid color-mix(in srgb,var(--ui-action) 22%,var(--archive-sheet)); border-radius: 8px; background: color-mix(in srgb,var(--archive-sheet) 88%,white); box-shadow: 0 2px 5px -3px var(--glass-shadow); font-variant-numeric: tabular-nums; }
-.calendarTile > span { padding: 2px 4px; background: var(--ui-action-bg); color: var(--ui-action); font-size: 11px; font-weight: 650; }
-.calendarTile > strong { padding: 5px 1px; font-size: 18px; font-weight: 700; letter-spacing: -.06em; line-height: 1.55; color: var(--ink); }
+.calendarTile { display: grid; text-align: center; overflow: hidden; width: 54px; border: 1px solid color-mix(in srgb,var(--ui-action) 22%,var(--archive-sheet)); border-radius: 8px; background: color-mix(in srgb,var(--archive-sheet) 88%,white); box-shadow: 0 2px 5px -3px var(--glass-shadow); font-variant-numeric: tabular-nums; }
+.calendarTile > span { padding: 2px 4px; background: var(--ui-action-bg); color: var(--ui-action); font-size: 10px; font-weight: 650; }
+.calendarTile > strong { padding: 3px 1px; font-size: 16px; font-weight: 700; letter-spacing: -.06em; line-height: 1.55; color: var(--ink); }
 .calendarTile small { font-size: 12px; color: var(--muted); font-weight: 400; }
-.recordBody { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+.recordBody { min-width: 0; display: grid; gap: 4px; }
+.recordSummary { display: flex; align-items: baseline; flex-wrap: wrap; gap: 3px 12px; }
+.monthlyTheme { color: var(--muted); font-size: 11px; }
 :global(.sky-app.archive-shell .public-layout) .record h3 { margin: 0; font: 650 17px/1.6 'Noto Sans KR',sans-serif; letter-spacing: -.025em; color: var(--ink); overflow-wrap: anywhere; word-break: keep-all; }
 .record h3:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
 .recordMeta { margin: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 11px; line-height: 1.5; }
@@ -165,7 +167,7 @@
   .archiveHeading p { font-size: 12px; margin-top: 4px; }
   .page .filters { grid-template-columns: minmax(0,1fr); gap: 10px; }
   .listHeading { margin-top: 18px; }
-  .record { grid-template-columns: minmax(0,1fr) 32px; gap: 12px; min-height: 84px; padding: 12px 14px; }
+  .record { grid-template-columns: minmax(0,1fr) 32px; gap: 12px; min-height: 76px; padding: 9px 14px; }
   .calendarTile { display: none; }
   .recordBody { gap: 5px 8px; }
   .recordMeta > time { display: inline; }
@@ -189,15 +191,3 @@
 
 .page .recordOpen { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; min-height: 44px; margin: 0; padding: 0; border: 0; border-radius: inherit; background: transparent; box-shadow: none; transform: none; cursor: pointer; }
 .page .recordOpen:focus-visible { outline-offset: -3px; }
-.levelDialog { width: min(360px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); margin: auto; padding: 20px; overflow-y: auto; border: 1px solid var(--archive-edge); border-radius: 16px; background: var(--archive-sheet); color: var(--ink); box-shadow: 0 18px 60px rgb(16 36 58 / .25); }
-.levelDialog::backdrop { background: rgb(16 36 58 / .3); }
-.levelHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-:global(.sky-app.archive-shell .public-layout) .levelHeader h3 { margin: 0; font: 700 18px/1.5 'Noto Sans KR',sans-serif; }
-.page .levelClose { display: grid; place-items: center; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 1px solid var(--archive-edge); border-radius: 9px; color: var(--ink); background: var(--glass-soft); box-shadow: none; font: 400 24px/1 sans-serif; }
-.levelTitle { margin: 6px 0 18px; color: var(--muted); font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
-.levelChoices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
-.levelChoices a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; aspect-ratio: 1; min-width: 0; border: 1px solid var(--archive-edge); border-radius: 12px; background: var(--glass-soft); color: var(--ui-action); text-decoration: none; font-size: 14px; font-weight: 600; box-shadow: inset 0 1px 0 var(--glass-highlight), 0 3px 6px -3px var(--glass-shadow); transition: background-color 160ms ease; }
-.levelChoices a:is(:hover,:focus-visible) { background: var(--ui-action-bg); border-color: var(--ui-action); }
-.levelChoices a > svg { width: 36px; height: 36px; }
-@media (prefers-reduced-motion: reduce) { .levelChoices a { transition: none; } }
-@media (forced-colors: active) { .levelDialog, .levelChoices a { background: Canvas; color: CanvasText; border-color: CanvasText; } }

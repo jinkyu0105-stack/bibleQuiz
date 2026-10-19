@@ -36,6 +36,15 @@ async function read(query = "") {
 }
 
 describe("archive API / isolated migrated D1", () => {
+  it("shares only the theme for each published sermon month and leaves unregistered months empty", async () => {
+    await seed(1,"2026-08-02"); await seed(2,"2026-08-30"); await seed(3,"2026-09-06");
+    await database.insert(siteState).values([{key:"sermon_theme:2026-08",value:"함께 자라는 믿음",updatedAt:now},{key:"private-key",value:canary,updatedAt:now}]);
+    const result = await read();
+    expect(result.items.map(item => item.monthlyTheme)).toEqual([null,"함께 자라는 믿음","함께 자라는 믿음"]);
+    expect(JSON.stringify(result)).not.toContain(canary);
+    await database.update(siteState).set({value:""}).where(eq(siteState.key,"sermon_theme:2026-08"));
+    expect((await read()).items.every(item => item.monthlyTheme === null)).toBe(true);
+  });
   it("has an explicit empty page and no-store headers", async () => {
     const response = await fetchArchive();
     expect(response.status).toBe(200);

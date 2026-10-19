@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { GlassPanel } from "../../components/glass/GlassPanel";
 import { GlassArrowButton } from "../../components/glass/GlassArrowButton";
+import { QuizChoiceDialog } from "../../components/QuizChoiceDialog";
 import { CompactSelect } from "../../components/CompactSelect";
 import { AdminMenu, AdminMenuIcon } from "../../components/AdminMenu";
 import { AdminIcon } from "../../components/AdminIcon";
@@ -11,7 +12,7 @@ import { Button } from "../../components/Button";
 import styles from "./catalog.module.css";
 
 const entries = [
-  ["arrow", "유리 화살표 버튼"], ["select", "연결형 선택기"], ["menu", "이동형 메뉴"],
+  ["choice", "난이도 선택창"], ["arrow", "유리 화살표 버튼"], ["select", "연결형 선택기"], ["menu", "이동형 메뉴"],
   ["index", "파일 인덱스 탭"], ["refresh", "원형 새로고침"], ["tooltip", "작은 말풍선"],
   ["actions", "기본 작업 버튼"], ["surface", "투명 창과 읽기 면"],
 ] as const;
@@ -25,6 +26,7 @@ function Sample({ id, name, component, children }: { id: string; name: string; c
 
 /** Development-only catalogue: real shared components, isolated from saved quiz data. */
 export function Component() {
+  const [choiceOpen, setChoiceOpen] = useState(false);
   const [message, setMessage] = useState("예시 버튼을 눌러보세요.");
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
@@ -37,6 +39,11 @@ export function Component() {
       <nav aria-label="부품 바로가기" className={styles.contents}>{entries.map(([id, name]) => <a key={id} href={`#${id}`}>{name}</a>)}</nav>
       <p className={styles.links}><Link to="/archive">지난 퀴즈에서 보기</Link><a href="/docs/design/phase-9/archive/refinement.html">주차 시안·헤더 너비 비교</a></p>
     </GlassPanel>
+    <Sample id="choice" name="난이도 선택창" component="QuizChoiceDialog">
+      <p>어린이·장년을 고르는 공통 모달 대화상자입니다. Esc로 닫으면 원래 버튼으로 돌아갑니다.</p>
+      <Button onClick={() => setChoiceOpen(true)}>선택창 열기</Button>
+      <QuizChoiceDialog open={choiceOpen} description="디자인 예시 · 선택하면 현재 퀴즈를 엽니다." choices={[{difficulty:"child",to:"/?level=child"},{difficulty:"adult",to:"/?level=adult"}]} onClose={() => setChoiceOpen(false)}/>
+    </Sample>
     <Sample id="arrow" name="유리 화살표 버튼" component="GlassArrowButton">
       <p>지난 퀴즈 오른쪽에 추가한 바로 그 버튼입니다. 얇은 전체 테두리, 윗빛과 작은 그림자를 유지합니다.</p>
       <div className={styles.arrowExamples}>
