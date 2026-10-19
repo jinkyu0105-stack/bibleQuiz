@@ -1,0 +1,183 @@
+{
+  "contrast": [
+    {
+      "time": "dawn",
+      "ratio": 5.727078709309452
+    },
+    {
+      "time": "day",
+      "ratio": 5.219305857634779
+    },
+    {
+      "time": "dusk",
+      "ratio": 5.45495182031819
+    },
+    {
+      "time": "night",
+      "ratio": 4.775579030859742
+    }
+  ],
+  "images": [
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/week-reference.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/actual-day-1268.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/focus-year.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/focus-month.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/header-home-a.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/header-home-b.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/header-archive-a.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/header-archive-b.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/header-admin-a.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/header-admin-b.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/actual-dawn-1268.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/actual-dawn-390.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/actual-day-390.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/actual-dusk-1268.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/actual-dusk-390.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/actual-night-1268.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/docs/design/phase-9/archive/refinement/actual-night-390.png",
+      "status": 200
+    }
+  ],
+  "decode": [
+    {
+      "src": "week-reference.png",
+      "w": 1672,
+      "h": 941
+    },
+    {
+      "src": "refinement/actual-day-1268.png",
+      "w": 1268,
+      "h": 1000
+    },
+    {
+      "src": "refinement/focus-year.png",
+      "w": 1034,
+      "h": 49
+    },
+    {
+      "src": "refinement/focus-month.png",
+      "w": 1034,
+      "h": 49
+    },
+    {
+      "src": "refinement/header-home-a.png",
+      "w": 1600,
+      "h": 1000
+    },
+    {
+      "src": "refinement/header-home-b.png",
+      "w": 1600,
+      "h": 1000
+    },
+    {
+      "src": "refinement/header-archive-a.png",
+      "w": 1600,
+      "h": 1000
+    },
+    {
+      "src": "refinement/header-archive-b.png",
+      "w": 1600,
+      "h": 1000
+    },
+    {
+      "src": "refinement/header-admin-a.png",
+      "w": 1600,
+      "h": 1000
+    },
+    {
+      "src": "refinement/header-admin-b.png",
+      "w": 1600,
+      "h": 1000
+    },
+    {
+      "src": "refinement/actual-dawn-1268.png",
+      "w": 1268,
+      "h": 1000
+    },
+    {
+      "src": "refinement/actual-dawn-390.png",
+      "w": 390,
+      "h": 1000
+    },
+    {
+      "src": "refinement/actual-day-1268.png",
+      "w": 1268,
+      "h": 1000
+    },
+    {
+      "src": "refinement/actual-day-390.png",
+      "w": 390,
+      "h": 1000
+    },
+    {
+      "src": "refinement/actual-dusk-1268.png",
+      "w": 1268,
+      "h": 1000
+    },
+    {
+      "src": "refinement/actual-dusk-390.png",
+      "w": 390,
+      "h": 1000
+    },
+    {
+      "src": "refinement/actual-night-1268.png",
+      "w": 1268,
+      "h": 1000
+    },
+    {
+      "src": "refinement/actual-night-390.png",
+      "w": 390,
+      "h": 1000
+    }
+  ],
+  "reviewMobileOverflow": 0
+}

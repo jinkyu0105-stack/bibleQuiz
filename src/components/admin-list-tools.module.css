@@ -13,10 +13,10 @@
 .filters span { display: inline-flex; justify-content: center; align-items: center; min-width: 22px; min-height: 22px; padding-inline: 5px; border: 1px solid color-mix(in srgb,var(--admin-tone) 24%,transparent); border-radius: 4px; background: var(--admin-tone-bg); color: var(--admin-tone); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .controls { display: flex; align-items: center; gap: 8px; min-width: 0; margin-bottom: 8px; }
 /* One size rule for every refresh and square action; touch keeps a generous target. */
-:global(.sky-app:not(.home-shell) .admin-main) .iconControl:global(.action-button) { --admin-icon-size: 36px; display: inline-flex; justify-content: center; align-items: center; flex: 0 0 var(--admin-icon-size); width: var(--admin-icon-size); height: var(--admin-icon-size); min-width: var(--admin-icon-size); min-height: var(--admin-icon-size); padding: 0; border: 1px solid var(--control-border); border-radius: 8px; color: var(--ui-action); background: var(--glass-field); box-shadow: none; }
-:global(.sky-app:not(.home-shell) .admin-main) .iconControl.refresh:global(.action-button) { border-radius: 50%; }
+:global(.sky-app:not(.home-shell) :is(.admin-main,.design-catalog)) .iconControl:global(.action-button) { --admin-icon-size: 36px; display: inline-flex; justify-content: center; align-items: center; flex: 0 0 var(--admin-icon-size); width: var(--admin-icon-size); height: var(--admin-icon-size); min-width: var(--admin-icon-size); min-height: var(--admin-icon-size); padding: 0; border: 1px solid var(--control-border); border-radius: 8px; color: var(--ui-action); background: var(--glass-field); box-shadow: none; }
+:global(.sky-app:not(.home-shell) :is(.admin-main,.design-catalog)) .iconControl.refresh:global(.action-button) { border-radius: 50%; }
 .iconControl svg { display: block; width: 18px; height: 18px; flex: 0 0 18px; }
-@media (pointer: coarse) { :global(.sky-app:not(.home-shell) .admin-main) .iconControl:global(.action-button) { --admin-icon-size: 44px; } }
+@media (pointer: coarse) { :global(.sky-app:not(.home-shell) :is(.admin-main,.design-catalog)) .iconControl:global(.action-button) { --admin-icon-size: 44px; } }
 @media (max-width: 1200px) { .controls:has(input) { width: 100%; order: -1; } }
 @media (max-width: 600px) { .toolbar { gap: 8px; } .filters button { min-width: 0; padding-inline: 7px; gap: 4px; font-size: 12px; } .filters span { min-width: 20px; min-height: 20px; padding-inline: 4px; } }
 @media (prefers-reduced-motion: reduce) { .filters button, .filters button::before { transition: none; } }

@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AdminIcon } from "../../components/AdminIcon";
 import { AdminTooltip } from "../../components/AdminHelp";
+import { GlassArrowButton } from "../../components/glass/GlassArrowButton";
 import type { ArchiveItem } from "../../../shared/api/archive";
+import { sermonWeekLabel } from "./sermon-week";
 import styles from "./archive.module.css";
 
 export function ArchiveCards({ items, compact = false, iconActions = false, onNavigate }: { items: ArchiveItem[]; compact?: boolean; iconActions?: boolean; onNavigate?: () => void }) {
@@ -41,16 +43,16 @@ function ArchiveRecords({ items, onNavigate }: { items: ArchiveItem[]; onNavigat
     if (selected && !dialog.current?.open) dialog.current?.showModal();
   }, [selected]);
   return <><ol className={styles.records} aria-label="지난 퀴즈 목록">
-    {items.map(item => <li className={styles.record} key={item.slug} data-testid="archive-card">
+    {items.map(item => <li className={styles.record} key={item.slug} data-testid="archive-card" data-glass-arrow-group>
       <time className={styles.calendarTile} dateTime={item.sermonDate} aria-label={`설교일 ${item.sermonDate}`}>
         <span>{item.sermonDate.slice(0, 4)}</span><strong>{Number(item.sermonDate.slice(5, 7))}<small> / </small>{Number(item.sermonDate.slice(8, 10))}</strong>
       </time>
       <div className={styles.recordBody}>
-        <div className={styles.recordMeta}><time dateTime={item.sermonDate}>{item.sermonDate.replaceAll("-", ". ")}</time></div>
+        <div className={styles.recordMeta}><span className={styles.weekLabel}>{sermonWeekLabel(item.sermonDate)}</span><time dateTime={item.sermonDate}>{item.sermonDate.replaceAll("-", ". ")}</time></div>
         <h3 id={`archive-${item.slug}`} tabIndex={-1}>{item.title}</h3>
         <p className={styles.recordReference}><AdminIcon name="book"/><code>{item.bibleReferenceLabel}</code></p>
       </div>
-      <span className={styles.recordArrow} aria-hidden="true"><AdminIcon name="chevron"/></span>
+      <GlassArrowButton decorative/>
       <button className={styles.recordOpen} type="button" aria-labelledby={`archive-${item.slug}`} aria-haspopup="dialog" aria-expanded={selected?.slug === item.slug} onClick={() => setSelected(item)}/>
     </li>)}
   </ol>

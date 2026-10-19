@@ -30,7 +30,10 @@ export const router = createBrowserRouter([
       { path: "admin/privacy-requests", lazy: () => import("../features/admin-weekly/PrivacyInbox") },
       { path: "admin/tools", lazy: () => import("../features/admin-bible-reference/page") },
       { path: "privacy-requests", lazy: () => import("../features/privacy/page") },
-      ...(import.meta.env.DEV ? [{ path: "dev/quiz", lazy: () => import("../features/quiz/preview-page") }] : []),
+      ...(import.meta.env.DEV ? [
+        { path: "dev/quiz", lazy: () => import("../features/quiz/preview-page") },
+        { path: "dev/design", lazy: () => import("../features/design-catalog/page") },
+      ] : []),
     ],
   },
 ]);

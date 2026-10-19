@@ -223,3 +223,76 @@ test("archive search supports Enter, inline validation and a clear filtered stat
   await page.getByRole("link", { name: "검색 조건 지우기" }).click();
   await expect(search).toHaveValue(""); await expect(cards(page)).toHaveCount(12);
 });
+
+test("archive date controls fill their frames and keep pointer and keyboard focus distinct", async ({ page, isMobile }) => {
+  await mocks(page); await page.goto("/archive"); await expect(cards(page)).toHaveCount(12);
+  for (const name of ["연도", "월"]) {
+    const field = page.getByRole("combobox", { name, exact: true });
+    const geometry = await field.evaluate(n => {
+      const select = n.getBoundingClientRect(), label = n.parentElement!.getBoundingClientRect();
+      const arrow = n.parentElement!.querySelector("svg")!.getBoundingClientRect();
+      return { leftGap: select.left - label.left, rightGap: label.right - select.right, arrowInset: label.right - arrow.right };
+    });
+    expect(geometry.leftGap).toBeLessThanOrEqual(1);
+    expect(geometry.rightGap).toBeLessThanOrEqual(1);
+    expect(geometry.arrowInset).toBeGreaterThanOrEqual(12);
+  }
+  await expect(cards(page).first()).toContainText("8월 다섯째 주");
+  if (!isMobile) {
+    const year = page.getByRole("combobox", { name: "연도", exact: true });
+    const month = page.getByRole("combobox", { name: "월", exact: true });
+    const shadow = (field: ReturnType<Page["getByRole"]>) => field.evaluate(n => getComputedStyle(n.parentElement!).boxShadow);
+    await year.click(); await page.keyboard.press("Escape"); expect(await shadow(year)).not.toBe("none");
+    await month.click(); await page.keyboard.press("Escape"); expect(await shadow(month)).toBe("none");
+    await page.keyboard.press("Shift+Tab"); await expect(year).toBeFocused(); expect(await shadow(year)).not.toBe("none");
+    await page.keyboard.press("Tab"); await expect(month).toBeFocused(); expect(await shadow(month)).not.toBe("none");
+  }
+});
+
+test("short archive footer stays below the content at the viewport bottom", async ({ page }) => {
+  await mocks(page);
+  await page.route("**/api/archive?**", route => route.fulfill({ json: { data: { items: items.slice(0, 2), nextCursor: null, availableYears: [2026], availableMonths: [8] } } }));
+  await page.goto("/archive"); await expect(cards(page)).toHaveCount(2);
+  for (const width of [1268, 390, 320]) {
+    await page.setViewportSize({ width, height: 1200 });
+    const footer = (await page.locator(".site-footer").boundingBox())!;
+    const content = (await page.locator(".archive-browser").boundingBox())!;
+    expect(footer.y).toBeGreaterThanOrEqual(content.y + content.height);
+    expect(Math.abs(footer.y + footer.height - 1200)).toBeLessThan(2);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    if (width <= 700) {
+      const link = (await page.getByRole("link", { name: "맨 위로 ↑" }).boundingBox())!;
+      const dock = (await page.locator(".page-dock").boundingBox())!;
+      expect(link.y + link.height).toBeLessThan(dock.y);
+    }
+  }
+});
+
+test("home descent cue clears the floating shortcut bar", async ({ page }) => {
+  await mocks(page); await page.goto("/"); await expect(page.locator(".hero-cta")).toBeVisible();
+  for (const width of [1600, 1268, 390, 320]) {
+    await page.setViewportSize({ width, height: 908 });
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+    const cue = (await page.locator(".descent-cue").boundingBox())!;
+    const dock = (await page.locator(".page-dock").boundingBox())!;
+    // Reserve the arrow's full bounce as well as its resting box.
+    expect(cue.y + cue.height + 8).toBeLessThan(dock.y);
+  }
+});
+
+test("design catalogue uses the live buttons and isolated examples", async ({ page }) => {
+  await page.goto("/dev/design");
+  await expect(page.getByRole("heading", { name: "디자인 부품 모음" })).toBeVisible();
+  await page.getByRole("button", { name: "다음 예시 보기", exact: true }).click();
+  await expect(page.getByRole("status")).toHaveText("유리 화살표 버튼을 눌렀습니다.");
+  await page.getByRole("button", { name: "행 전체와 함께 밝아지는 버튼" }).click();
+  await expect(page.getByRole("status")).toHaveText("행 어디를 눌러도 같은 동작입니다.");
+  const refresh = page.getByRole("button", { name: "예시 새로고침" });
+  const box = (await refresh.boundingBox())!;
+  expect(box.width).toBe(box.height); expect(box.width).toBeGreaterThanOrEqual(36);
+  await refresh.click(); await expect(page.getByRole("status")).toContainText("새로고침 버튼");
+  await page.getByRole("button", { name: "참여 기록", exact: true }).click();
+  await expect(page.getByRole("button", { name: "참여 기록", exact: true })).toHaveAttribute("aria-current", "true");
+  await page.getByRole("button", { name: "작성 중 1" }).click();
+  await expect(page.getByText("작성 중인 항목을 선택했습니다.")).toBeVisible();
+});

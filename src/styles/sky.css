@@ -243,3 +243,9 @@ html[data-home-scrolling] body[data-view=home] :is(.glass, .convex-lens)::after 
 
 /* Admin labels can wrap inside narrow panels; the material comes from Button. */
 .admin-main .action-button.secondary-button { min-width: min(136px, 100%); max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+
+/* Short pages put the footer at the viewport edge; long pages retain natural flow. */
+.sky-app:not(.home-shell) { display: flex; flex-direction: column; min-height: 100dvh; padding-bottom: 0; }
+.sky-app:not(.home-shell) > :is(.public-layout,.admin-layout) { flex: 1; }
+.sky-app:not(.home-shell) > .site-footer { flex-shrink: 0; }
+@media (min-width: 701px) { .descent-cue { bottom: 104px; } }

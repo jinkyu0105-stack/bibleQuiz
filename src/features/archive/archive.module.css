@@ -3,8 +3,7 @@
 .heading h2 { margin: 0; }
 .heading > p { margin: 0; line-height: 1.8; }
 .filters { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(100px, 150px) minmax(100px, 140px) auto; align-items: end; gap: 16px; padding-block: 24px; border-block: 1px solid var(--border); }
-.filters label { display: grid; gap: 8px; font-size: 0.875rem; font-weight: 650; }
-.filters input, .filters select { width: 100%; min-width: 0; height: 52px; padding: 12px; border: 1px solid var(--grid-border); border-radius: 8px; background: var(--cell); color: var(--text-strong); font: inherit; font-size: 1rem; }
+.filters input { width: 100%; min-width: 0; height: 52px; padding: 12px; border: 1px solid var(--grid-border); border-radius: 8px; background: var(--cell); color: var(--text-strong); font: inherit; font-size: 1rem; }
 .filters input::placeholder { color: var(--text); opacity: 1; }
 .filters button { min-height: 52px; margin: 0; }
 .filterSummary { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 20px; margin-top: 20px; overflow-wrap: anywhere; }
@@ -107,21 +106,19 @@
 .page .searchButton { display: grid; place-items: center; min-width: 46px; width: 46px; height: 100%; min-height: 0; transform: none; margin: 0; padding: 0; border: 0; border-radius: 0 8px 8px 0; color: var(--ui-on-action); background: var(--ui-action-fill); box-shadow: none; transition: box-shadow 160ms ease; }
 .page .searchButton:hover { box-shadow: inset 0 0 0 30px rgb(255 255 255 / .12); }
 .dateFilters { display: grid; grid-template-columns: 1fr 1fr; min-width: 0; border: 1px solid var(--control-border); border-radius: 9px; background: var(--glass-soft); }
-.page .dateFilters label { display: flex; align-items: center; gap: 0; min-width: 0; padding-left: 12px; font-weight: 400; }
-.dateFilters label + label { border-left: 1px solid var(--line); }
-.dateFilters label > span { flex-shrink: 0; color: var(--muted); font-size: 11px; }
-.page .dateFilters select { width: 100%; min-width: 0; min-height: 46px; height: 46px; padding: 8px 6px; border: 0; border-radius: 8px; background: transparent; color: var(--ink); font-size: 13px; font-weight: 400; }
+.dateFilters label:first-child { border-radius: 8px 0 0 8px; }
+.dateFilters label + label { border-left: 1px solid var(--line); border-radius: 0 8px 8px 0; }
 .page .filterSummary { margin: 12px 0 0; gap: 8px; font-size: 12px; }
 .filterSummary > div { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
 .filterSummary code { padding: 3px 8px; border: 1px solid var(--archive-edge); border-radius: 5px; background: var(--glass-soft); color: var(--ink); font: inherit; }
 .reset { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; padding: 0 6px; color: var(--ui-action); font-size: 12px; text-decoration: none; }
 .reset svg { width: 15px; height: 15px; }
 .reset:hover { text-decoration: underline; }
-.listHeading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 22px 2px 10px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--ink); font-size: 12px; }
+.listHeading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 22px 2px 10px; padding: 14px 10px 0; border-top: 1px solid var(--line); color: var(--ink); font-size: 12px; }
 .page .resultCount { margin: 0; font-size: 12px; }
 .resultCount strong { margin-right: 3px; color: var(--ink); font-size: 16px; font-variant-numeric: tabular-nums; }
 .listHeading > span { color: var(--ink); }
-.records { margin: 0; padding: 0; list-style: none; border: 1px solid var(--archive-edge); border-radius: 10px; background: var(--archive-sheet); box-shadow: 0 8px 20px -16px var(--glass-shadow); }
+.records { --glass-arrow-edge: var(--archive-edge); margin: 0; padding: 0; list-style: none; border: 1px solid var(--archive-edge); border-radius: 10px; background: var(--archive-sheet); box-shadow: 0 8px 20px -16px var(--glass-shadow); }
 .record { position: relative; display: grid; grid-template-columns: 64px minmax(0,1fr) 32px; align-items: center; gap: 20px; min-height: 106px; padding: 16px 22px; transition: background-color 160ms ease; }
 .record + .record { border-top: 1px solid var(--archive-edge); }
 .record:first-child { border-radius: 9px 9px 0 0; }
@@ -135,10 +132,10 @@
 .recordBody { min-width: 0; }
 :global(.sky-app.archive-shell .public-layout) .record h3 { margin: 0; font: 650 17px/1.6 'Noto Sans KR',sans-serif; letter-spacing: -.025em; color: var(--ink); overflow-wrap: anywhere; word-break: keep-all; }
 .record h3:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
-.recordMeta { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 11px; line-height: 1.5; }
+.recordMeta { margin-bottom: 4px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 11px; line-height: 1.5; }
+.weekLabel { padding: 1px 7px; border: 1px solid color-mix(in srgb,var(--ui-action) 18%,transparent); border-radius: 5px; color: var(--ui-action); background: color-mix(in srgb,var(--ui-action) 7%,var(--archive-sheet)); font-size: 10px; font-weight: 600; white-space: nowrap; }
+:global(body[data-time=night]) .weekLabel { color: color-mix(in srgb,var(--ui-action) 80%,white); }
 .recordMeta > time { display: none; color: var(--muted); font-variant-numeric: tabular-nums; }
-.recordLatest { display: inline-flex; align-items: center; gap: 3px; margin-bottom: 3px; font-size: 10px; font-weight: 600; color: var(--ui-success); }
-.recordLatest svg { width: 12px; height: 12px; }
 .recordReference { display: flex; align-items: baseline; gap: 6px; margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
 .recordReference svg { position: relative; top: 2px; flex-shrink: 0; width: 14px; height: 14px; }
 .recordReference code { padding: 1px 6px; border: 1px solid var(--archive-edge); border-radius: 4px; background: color-mix(in srgb,var(--ink) 4%,transparent); color: var(--ink); font: inherit; overflow-wrap: anywhere; }
@@ -167,13 +164,11 @@
   .headingIcon svg { width: 20px; height: 20px; }
   .archiveHeading p { font-size: 12px; margin-top: 4px; }
   .page .filters { grid-template-columns: minmax(0,1fr); gap: 10px; }
-  .page .dateFilters select { font-size: 14px; padding-left: 6px; }
   .listHeading { margin-top: 18px; }
   .record { grid-template-columns: minmax(0,1fr) 32px; gap: 12px; min-height: 106px; padding: 15px 14px; }
   .calendarTile { display: none; }
   .recordMeta { margin-bottom: 5px; }
   .recordMeta > time { display: inline; }
-  .recordLatest { margin: 0; }
   :global(.sky-app.archive-shell .public-layout) .record h3 { font-size: 15px; line-height: 1.65; }
   .recordReference { font-size: 11px; }
   .recordReference > svg { display: none; }
@@ -184,7 +179,6 @@
   .headingIcon { display: none; }
   .record { padding-inline: 10px; gap: 8px; }
   .recordActions { gap: 6px; }
-  .recordLatest { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .record, .recordActions a, .page .searchButton { transition: none; } }
 @media (forced-colors: active) {
@@ -207,9 +201,3 @@
 .levelChoices a > svg { width: 36px; height: 36px; }
 @media (prefers-reduced-motion: reduce) { .levelChoices a { transition: none; } }
 @media (forced-colors: active) { .levelDialog, .levelChoices a { background: Canvas; color: CanvasText; border-color: CanvasText; } }
-
-.recordArrow { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--archive-edge); border-radius: 9px; color: var(--ui-action); background: var(--glass-soft); box-shadow: inset 0 1px 0 var(--glass-highlight), 0 2px 4px -2px var(--glass-shadow); transition: background-color 160ms ease, border-color 160ms ease; }
-.recordArrow > svg { width: 17px; height: 17px; transform: rotate(-90deg); }
-.record:is(:hover,:focus-within) .recordArrow { background: color-mix(in srgb,var(--glass-highlight) 40%,var(--ui-action-bg)); border-color: color-mix(in srgb,var(--ui-action) 35%,var(--archive-edge)); }
-@media (prefers-reduced-motion: reduce) { .recordArrow { transition: none; } }
-@media (forced-colors: active) { .recordArrow { border-color: ButtonText; color: ButtonText; background: ButtonFace; box-shadow: none; } }

@@ -1,5 +1,7 @@
 # 실제 앱의 공통 UI
 
+[직접 눌러보는 디자인 부품 모음](http://localhost:5173/dev/design)은 개발 서버 전용이다. 실제 React 컴포넌트를 렌더하며 이름·사용처·호버·키보드 동작을 확인할 수 있다. 새 공통 부품을 추가하거나 외형을 변경하면 이 목록과 `src/features/design-catalog/page.tsx`의 예시를 함께 갱신한다. 단순 복제 마크업을 예시로 만들지 않는다.
+
 P9-06 검토본과 같은 유리 재질·움직임을 실제 React 페이지에서 사용한다. [native 모듈/계약](../../docs/design/phase-9/sky-v2/components/README.md)이 효과의 정본이고, 이 폴더는 타입·DOM·연결 수명을 담당한다. 새 패키지는 없다.
 
 | 컴포넌트 | 역할/선택 값 | 사용처 |
@@ -9,6 +11,12 @@ P9-06 검토본과 같은 유리 재질·움직임을 실제 React 페이지에�
 | `Button` / `ButtonLink` | 기본 `secondary`는 정답보기형, `primary`는 입력 확인·빈 격자 받기형; native props/ref 전달 | 관리자 실행/저장/재조회/확인·풀이 버튼 |
 | `GlassLink` | React Router `LinkProps`, 입체 링크 | 관리자 진입, 참여 가능한 다른 퀴즈 |
 | `PageDock` | `GlassMenu`로 구성한 실제 페이지 바로가기 | 메인 및 모바일 모든 일반 페이지 하단 |
+| `GlassArrowButton` | **유리 화살표 버튼**. 그림32px/단독 터치44px,9px 모서리·1px 전체 테두리·윗빛·작은 그림자·160ms 호버. `label` 필수, native button props 지원. `decorative`는 전체 행 버튼 안의 장식이며 부모 `data-glass-arrow-group`과 함께 반응 | 지난 퀴즈 행, 부품 모음 |
+| `CompactSelect` | **연결형 선택기**. 네이티브 select·숨긴 접근성 이름·안쪽14px 화살표. `pointerFocus="ring"` 기본/`surface` 비교, 키보드 초점은 두 방식 모두 표시 | 지난 퀴즈 연도·월, 부품 모음 |
+| `AdminMenu` | **이동형 메뉴**. 선택 면과 아이콘 받침이 함께 이동 | 관리자 사이드바·도움말·초안 단계 |
+| `AdminIndexedBoard` | **파일 인덱스 탭**. 선택 탭과 본문이 한 면으로 이어짐 | 관리자 게시판 |
+| `AdminRefreshButton` | **원형 새로고침**.36px, 터치44px | 관리자 목록 |
+| `Tooltip` | **작은 말풍선**. 위 우선, 공간 부족 시 아래 | 아이콘·짧은 설명 |
 | `GlassArrow` | 링크 안의 장식 화살표 | 첫 화면 난도 링크 |
 | `useGlass` | 기존 DOM 태그를 보존한 채 효과 연결 | 헤더/본문 앵커/접는 관리자 메뉴/설정 버튼 |
 | `SkyEnvironment` | `view="home|quiz|archive|admin"` | 루트 레이아웃의 단일 배경/설정 |
@@ -57,3 +65,16 @@ import { Button, ButtonLink } from "./components/Button";
 
 
 `AdminIntro`는 관리자 페이지의 목적 설명, `AdminSteps`는 짧은 사용 순서, `AdminTool`은 제목/조건/설명으로 선택하는 접기 도구다. `AdminTool`의 native details/summary는 키보드로 열고 닫을 수 있으며 자식 폼을 계속 마운트하므로 단순 접기에서 편집값을 잃지 않는다. 실제 저장/API/단계 잠금은 기존 feature가 소유한다. 공통 색상과 CSS만 사용하며 새 효과 엔진은 연결하지 않는다. [화면 계약](../../docs/spec/design.md#관리자-콘텐츠-안내--p9-13).
+
+## 유리 화살표 버튼 사용
+
+```tsx
+<GlassArrowButton label="다음 항목" onClick={next} />
+
+<button type="button" data-glass-arrow-group onClick={openQuiz}>
+  <span>퀴즈 제목</span>
+  <GlassArrowButton decorative />
+</button>
+```
+
+장식 모드에 별도 클릭/키보드 이벤트를 붙이지 않는다. 행 버튼이 접근성 이름과 동작을 소유한다. 행 자체의 밝기 전환은160ms로 맞춘다. 테두리 색을 해당 읽기 면에 맞추려면 `--glass-arrow-edge`를 지정한다. 다른 공통 유리 원형 화살표 `GlassArrow`와 구별한다.

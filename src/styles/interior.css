@@ -28,8 +28,8 @@
 .sky-app:not(.home-shell) .admin-main textarea { padding: 12px; line-height: 1.75; }
 .sky-app:not(.home-shell) .admin-main fieldset { margin: 0; min-width: 0; }
 .sky-app:not(.home-shell) .admin-main legend { margin-bottom: 12px; }
-.sky-app:not(.home-shell) .admin-main .action-button { width: auto; min-width: 0; min-height: 44px; padding: 10px 16px; font-size: 14px; font-weight: 600; border-radius: 8px; line-height: 1.5; gap: 8px; }
-.sky-app:not(.home-shell) .admin-main .action-button:disabled { cursor: not-allowed; }
+.sky-app:not(.home-shell) :is(.admin-main,.design-catalog) .action-button { width: auto; min-width: 0; min-height: 44px; padding: 10px 16px; font-size: 14px; font-weight: 600; border-radius: 8px; line-height: 1.5; gap: 8px; }
+.sky-app:not(.home-shell) :is(.admin-main,.design-catalog) .action-button:disabled { cursor: not-allowed; }
 .sky-app:not(.home-shell) .admin-main :is(a, button, summary, input, select, textarea):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .sky-app:not(.home-shell) .admin-main summary { cursor: pointer; }
 .sky-app:not(.home-shell) .admin-main summary:hover { color: var(--accent); }
@@ -56,7 +56,7 @@
 .sky-app:not(.home-shell) .sermon-details-compact .published-date { margin: 0; }
 
 /* Semantic roles retain their meaning across all four sky times. Day is the fallback. */
-:is(.admin-layout, .quiz-page, .archive-browser) {
+:is(.admin-layout, .quiz-page, .archive-browser, .design-catalog) {
   --ui-action: #245bc1; --ui-action-bg: #eaf1ff;
   --ui-success: #216648; --ui-success-bg: #e7f4eb;
   --ui-attention: #87520c; --ui-attention-bg: #fff1d8;
@@ -67,7 +67,7 @@
   --focus: var(--ui-action);
   --admin-tooltip-surface: #fffefa;
 }
-body[data-time=dawn] :is(.admin-layout, .quiz-page, .archive-browser) {
+body[data-time=dawn] :is(.admin-layout, .quiz-page, .archive-browser, .design-catalog) {
   --ui-action: #354fc0; --ui-action-bg: #eaeffd;
   --ui-success: #226253; --ui-success-bg: #e6f4ec;
   --ui-attention: #86500e; --ui-attention-bg: #fcedd9;
@@ -75,7 +75,7 @@ body[data-time=dawn] :is(.admin-layout, .quiz-page, .archive-browser) {
   --ui-danger: #ae3555; --ui-danger-bg: #fbe8f0;
   --ui-action-fill: #354fc0;
 }
-body[data-time=dusk] :is(.admin-layout, .quiz-page, .archive-browser) {
+body[data-time=dusk] :is(.admin-layout, .quiz-page, .archive-browser, .design-catalog) {
   --ui-action: var(--dusk-action); --ui-action-bg: var(--dusk-action-bg);
   --ui-success: #30623e; --ui-success-bg: #ebf3e5;
   --ui-attention: #8d480d; --ui-attention-bg: #fff0d7;
@@ -84,7 +84,7 @@ body[data-time=dusk] :is(.admin-layout, .quiz-page, .archive-browser) {
   --ui-action-fill: var(--dusk-action);
   --admin-tooltip-surface: #fff5ec;
 }
-body[data-time=night] :is(.admin-layout, .quiz-page, .archive-browser) {
+body[data-time=night] :is(.admin-layout, .quiz-page, .archive-browser, .design-catalog) {
   --admin-tooltip-surface: #182c41;
   --ui-action: #acc8ff; --ui-action-bg: #1b3558;
   --ui-success: #94dab4; --ui-success-bg: #153e31;
@@ -99,35 +99,35 @@ body[data-time=night] :is(.admin-layout, .quiz-page, .archive-browser) {
 .sky-app .admin-main p + p { margin-top: 12px; }
 .sky-app .admin-main :is(section,form) > h3 + :is(p,div) { margin-top: 12px; }
 .sky-app .admin-main a:not(.action-button) { color: var(--ui-action); text-decoration-thickness: 1px; }
-.sky-app .admin-main .primary-button { background: var(--ui-action-fill); color: var(--ui-on-action); border-color: var(--ui-action-fill); }
-.sky-app .admin-main .primary-button:disabled { background: var(--glass-field); color: var(--muted); border-color: var(--line); }
+.sky-app :is(.admin-main,.design-catalog) .primary-button { background: var(--ui-action-fill); color: var(--ui-on-action); border-color: var(--ui-action-fill); }
+.sky-app :is(.admin-main,.design-catalog) .primary-button:disabled { background: var(--glass-field); color: var(--muted); border-color: var(--line); }
 .sky-app .admin-main [role=alert]:not(:empty) { color: var(--ui-danger); border-color: var(--ui-danger); background: var(--ui-danger-bg); }
 .sky-app .admin-main details > summary { font-weight: 600; }
 .sky-app .admin-main details[open] > summary { margin-bottom: 12px; }
 .sky-app .admin-main code { padding: 2px 6px; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); background: var(--glass-soft); font-family: ui-monospace, 'Noto Sans KR', monospace; font-size: .9em; overflow-wrap: anywhere; box-decoration-break: clone; }
 @media (forced-colors: active) {
-  .sky-app .admin-main .primary-button { color: ButtonText; background: ButtonFace; border-color: ButtonText; }
+  .sky-app :is(.admin-main,.design-catalog) .primary-button { color: ButtonText; background: ButtonFace; border-color: ButtonText; }
   .sky-app .admin-main :is(code,[role=alert]) { color: CanvasText; background: Canvas; border-color: CanvasText; }
 }
 .sky-app .admin-main a[data-tone=attention] { color: var(--ui-attention); }
 .sky-app .admin-main a[data-tone=guide] { color: var(--ui-guide); }
 
 /* Shared meaning colours for authored text, icons and local UI accents. */
-.admin-layout [data-admin-tone=action] { --admin-tone: var(--ui-action); --admin-tone-bg: var(--ui-action-bg); }
-.admin-layout [data-admin-tone=success] { --admin-tone: var(--ui-success); --admin-tone-bg: var(--ui-success-bg); }
-.admin-layout [data-admin-tone=attention] { --admin-tone: var(--ui-attention); --admin-tone-bg: var(--ui-attention-bg); }
-.admin-layout [data-admin-tone=guide] { --admin-tone: var(--ui-guide); --admin-tone-bg: var(--ui-guide-bg); }
-.admin-layout [data-admin-tone=danger] { --admin-tone: var(--ui-danger); --admin-tone-bg: var(--ui-danger-bg); }
+:is(.admin-layout,.design-catalog) [data-admin-tone=action] { --admin-tone: var(--ui-action); --admin-tone-bg: var(--ui-action-bg); }
+:is(.admin-layout,.design-catalog) [data-admin-tone=success] { --admin-tone: var(--ui-success); --admin-tone-bg: var(--ui-success-bg); }
+:is(.admin-layout,.design-catalog) [data-admin-tone=attention] { --admin-tone: var(--ui-attention); --admin-tone-bg: var(--ui-attention-bg); }
+:is(.admin-layout,.design-catalog) [data-admin-tone=guide] { --admin-tone: var(--ui-guide); --admin-tone-bg: var(--ui-guide-bg); }
+:is(.admin-layout,.design-catalog) [data-admin-tone=danger] { --admin-tone: var(--ui-danger); --admin-tone-bg: var(--ui-danger-bg); }
 .sky-app .admin-main :is(strong,code)[data-admin-tone] { color: var(--admin-tone); }
 .sky-app .admin-main code[data-admin-tone] { background: var(--admin-tone-bg); border-color: color-mix(in srgb,var(--admin-tone) 25%,transparent); }
 @media (forced-colors: active) {
- .admin-layout [data-admin-tone] { --admin-tone: CanvasText; --admin-tone-bg: Canvas; }
+ :is(.admin-layout,.design-catalog) [data-admin-tone] { --admin-tone: CanvasText; --admin-tone-bg: Canvas; }
 }
 
 .admin-layout svg[data-admin-tone] { color: var(--admin-tone); }
 
 /* Admin actions share one optical alignment, border and text treatment. */
-.sky-app:not(.home-shell) .admin-main .action-button { display: inline-flex; align-items: center; justify-content: center; }
+.sky-app:not(.home-shell) :is(.admin-main,.design-catalog) .action-button { display: inline-flex; align-items: center; justify-content: center; }
 .sky-app:not(.home-shell) .admin-main .secondary-button:not(:disabled):not([aria-disabled=true]) { color: var(--ui-action); }
 .sky-app:not(.home-shell) .admin-main .secondary-button:hover:not(:disabled):not([aria-disabled=true]) { background: var(--ui-action-bg); border-color: var(--ui-action); }
 @media (forced-colors: active) { .sky-app:not(.home-shell) .admin-main .secondary-button:not(:disabled):not([aria-disabled=true]) { color: ButtonText; } }
