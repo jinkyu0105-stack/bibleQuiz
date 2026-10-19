@@ -58,10 +58,12 @@
 @media (max-width: 760px) {
  .overview > :is(button,a) { min-height: 78px; padding: 10px; }
  .metricValue strong { font-size: 24px; }
- .featured { flex-wrap: wrap; padding: 12px; gap: 10px; }
- .featuredCopy { flex-basis: 100%; grid-template-columns: minmax(0,1fr); }
- .featured p { grid-column: 1; }
- .featured > a { margin-left: auto; }
+ .featured { display: grid; grid-template-columns: minmax(0,1fr) auto; padding: 12px; gap: 4px 10px; }
+ .featuredCopy { display: contents; }
+ .featured .caption { grid-column: 1 / -1; }
+ :global(.sky-app:not(.home-shell) .admin-main) .featured h3 { grid-column: 1; min-width: 0; white-space: nowrap; text-wrap: nowrap; overflow: hidden; text-overflow: ellipsis; }
+ .featured p { grid-column: 1 / -1; grid-row: 3; }
+ .featured > a { grid-column: 2; grid-row: 2; padding-inline: 10px; white-space: nowrap; }
  .quizRow { grid-template-columns: 54px minmax(0,1fr); gap: 6px 10px; padding: 10px 12px; }
  .date strong { font-size: 14px; }
  .rowActions { grid-column: 1 / -1; justify-self: end; }

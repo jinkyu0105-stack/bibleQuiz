@@ -170,7 +170,6 @@
   .record { grid-template-columns: minmax(0,1fr) 32px; gap: 12px; min-height: 76px; padding: 9px 14px; }
   .calendarTile { display: none; }
   .recordBody { gap: 5px 8px; }
-  .recordMeta > time { display: inline; }
   :global(.sky-app.archive-shell .public-layout) .record h3 { font-size: 15px; line-height: 1.65; }
   .recordReference { font-size: 11px; }
   .recordReference > svg { display: none; }

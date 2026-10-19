@@ -1,0 +1,161 @@
+{
+  "galleryStatus": 200,
+  "images": [
+    {
+      "name": "admin-1440-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "admin-1440-c.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "admin-3440-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "admin-3440-c.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "admin-dawn-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "admin-day-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "admin-dusk-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "admin-night-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "archive-1440-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "archive-1440-c.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "archive-3440-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "archive-3440-c.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "archive-dawn-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "archive-day-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "archive-dusk-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "archive-night-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "mobile-list-concept.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "quiz-1024-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "quiz-1024-c.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "quiz-1440-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "quiz-1440-c.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "quiz-2560-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "quiz-2560-c.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "quiz-3440-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "quiz-3440-c.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "quiz-768-a.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "name": "quiz-768-c.png",
+      "status": 200,
+      "type": "image/png"
+    }
+  ],
+  "overflow": 0,
+  "decodedVariants": 18,
+  "initialOverflow375": 64,
+  "finalViewportChecks": [
+    {
+      "width": 320,
+      "overflow": 0
+    },
+    {
+      "width": 375,
+      "overflow": 0
+    },
+    {
+      "width": 768,
+      "overflow": 0
+    },
+    {
+      "width": 1440,
+      "overflow": 0
+    }
+  ]
+}
