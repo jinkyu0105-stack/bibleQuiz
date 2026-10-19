@@ -5,7 +5,7 @@ import styles from "./compact-select.module.css";
 type Props = Omit<ComponentPropsWithoutRef<"select">, "aria-label"> & { label: string; pointerFocus?: "ring" | "surface" };
 
 /** Native options and keyboard behavior, with an inset chevron and one full-width focus surface. */
-export function CompactSelect({ label, pointerFocus = "ring", className = "", onPointerDown, onKeyDown, onBlur, children, ...props }: Props) {
+export function CompactSelect({ label, pointerFocus = "surface", className = "", onPointerDown, onKeyDown, onBlur, children, ...props }: Props) {
   const [pointer, setPointer] = useState(false);
   return <label className={`${styles.field} ${className}`} data-focus-style={pointerFocus} data-pointer-focus={pointer ? "true" : undefined}>
     <span className="sr-only">{label}</span>

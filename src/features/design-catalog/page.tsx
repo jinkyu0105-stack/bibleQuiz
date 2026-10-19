@@ -46,7 +46,7 @@ export function Component() {
       <p className={styles.note}>버튼 그림은 32px, 단독 버튼의 누를 수 있는 영역은 44px입니다. 행 안에서는 전체 행이 반응합니다.</p>
     </Sample>
     <Sample id="select" name="연결형 선택기" component="CompactSelect">
-      <p>연도는 클릭 테두리를 표시하고, 월은 테두리 대신 바탕만 밝아집니다. 키보드로 이동하면 두 칸 모두 테두리로 위치를 알립니다.</p>
+      <p>클릭하면 추가 테두리 없이 바탕만 밝아집니다. 키보드로 이동하면 두 칸 모두 테두리로 위치를 알립니다.</p>
       <div className={styles.selectPair}>
         <CompactSelect label="연도 예시" value={year} onChange={e => setYear(e.target.value)}><option value="">모든 연도</option><option value="2026">2026년</option><option value="2025">2025년</option></CompactSelect>
         <CompactSelect label="월 예시" pointerFocus="surface" value={month} onChange={e => setMonth(e.target.value)}><option value="">모든 월</option><option value="10">10월</option><option value="9">9월</option></CompactSelect>

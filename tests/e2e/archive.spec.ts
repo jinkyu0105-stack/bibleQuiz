@@ -242,7 +242,7 @@ test("archive date controls fill their frames and keep pointer and keyboard focu
     const year = page.getByRole("combobox", { name: "연도", exact: true });
     const month = page.getByRole("combobox", { name: "월", exact: true });
     const shadow = (field: ReturnType<Page["getByRole"]>) => field.evaluate(n => getComputedStyle(n.parentElement!).boxShadow);
-    await year.click(); await page.keyboard.press("Escape"); expect(await shadow(year)).not.toBe("none");
+    await year.click(); await page.keyboard.press("Escape"); expect(await shadow(year)).toBe("none");
     await month.click(); await page.keyboard.press("Escape"); expect(await shadow(month)).toBe("none");
     await page.keyboard.press("Shift+Tab"); await expect(year).toBeFocused(); expect(await shadow(year)).not.toBe("none");
     await page.keyboard.press("Tab"); await expect(month).toBeFocused(); expect(await shadow(month)).not.toBe("none");

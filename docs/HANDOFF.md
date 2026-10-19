@@ -4,14 +4,16 @@
 
 **P9-26 공개 풀이·지난 퀴즈 후속: 로컬 구현·검수 완료, 사용자 화면 확인 대기.**
 
-2026-10-19 시작 main37a13af/clean. 실제 저장소 `/home/onegem/work/bibleQuiz` 확인. Pro잔여98%×사용자 지정10=980%, 별도5시간 값 없음. 이번 요청은 화살표 공통화/부품 모음, 날짜 선택기 비교, 주차 시안/표시, 목록·푸터·하단 바 간격, 헤더3쌍 비교였다. `imagegen-frontend-web`과 `design-taste-frontend`를 사용했다. 새 시안1회 외 실제 AI 콘텐츠·원격 자료·의존성·push/배포는 범위에서 제외했다.
+최신 후속은2026-10-19 main e5348fc/clean에서 시작했다. Pro잔여96%×10=960%. 선택기 클릭은 두 칸 모두 테두리 없는 바탕 강조로 확정하고 목록 주차·제목·장절을 한 줄 흐름으로 압축했다. 좁은 폭/긴 제목은 자연 줄바꿈. 관련 브라우저12건·lint/typecheck 통과. 실제 네 시간대×1600/1268/390/320의16상태에서 넘침/오류0, PC 한 줄 중심 정렬을 확인했다. 최신 PNG는 refinement/inline-1268.png·inline-390.png. 헤더1376px/패널right24px는 실제 재측정도 동일하다. 아래는 직전 공통화 기록을 포함한다.
+
+직전 공통화는2026-10-19 시작 main37a13af/clean. 실제 저장소 `/home/onegem/work/bibleQuiz` 확인. Pro잔여98%×사용자 지정10=980%, 별도5시간 값 없음. 이번 요청은 화살표 공통화/부품 모음, 날짜 선택기 비교, 주차 시안/표시, 목록·푸터·하단 바 간격, 헤더3쌍 비교였다. `imagegen-frontend-web`과 `design-taste-frontend`를 사용했다. 새 시안1회 외 실제 AI 콘텐츠·원격 자료·의존성·push/배포는 범위에서 제외했다.
 
 ## 현재 결과와 진입점
 
 - **유리 화살표 버튼**: `src/components/glass/GlassArrowButton.tsx`와 CSS. 기존32px/9px 모서리/윗빛·그림자/160ms 호버를 유지한다. 단독 사용은44px 클릭 영역, 전체 행은 장식 모드와 `data-glass-arrow-group`으로 함께 밝아진다. 지난 퀴즈에 적용했다.
 - **디자인 부품 모음**: `src/features/design-catalog/`, 개발 전용 `/dev/design`. 실제 공통 부품8종의 이름·동작을 확인한다. 복제 시안이 아니며 실제 컴포넌트를 import한다. 이후 공통 부품을 바꿀 때 `src/components/README.md`와 이 모음을 함께 갱신한다.
-- **연결형 선택기**: `src/components/CompactSelect.tsx`. 남아 있던 라벨의12px 왼쪽 여백을 제거하고 SVG 화살표를 오른쪽14px 안쪽으로 옮겼다. 연도 클릭은 테두리, 월 클릭은 바탕만 표시한다. 키보드/강제 색상에서는 둘 다 윤곽을 유지한다. Firefox의 선택 창 종료 후 상태 차이는 고정된 focus 스타일 속성으로 해결했다.
-- **주차**: `src/features/archive/sermon-week.ts`. 기존 검증된 설교일의 날짜로1–7일=첫째,8–14일=둘째,…29–31일=다섯째 주. 일요일 설교는 해당 월의 몇 번째 일요일과 같다. 제목 위 작은 표식이며 모바일은 실제 날짜와 같은 줄이다. DB/API/migration 불필요. 단위 경계 검사8건.
+- **연결형 선택기**: `src/components/CompactSelect.tsx`. 남아 있던 라벨의12px 왼쪽 여백을 제거하고 SVG 화살표를 오른쪽14px 안쪽으로 옮겼다. 연도·월 클릭은 테두리 없이 바탕만 표시한다. 키보드/강제 색상에서는 둘 다 윤곽을 유지한다. Firefox의 선택 창 종료 후 상태 차이는 고정된 focus 스타일 속성으로 해결했다.
+- **주차**: `src/features/archive/sermon-week.ts`. 기존 검증된 설교일의 날짜로1–7일=첫째,8–14일=둘째,…29–31일=다섯째 주. 일요일 설교는 해당 월의 몇 번째 일요일과 같다. 제목·장절과 나란한 작은 표식이며 모바일은 실제 날짜를 유지하고 자연 줄바꿈한다. DB/API/migration 불필요. 단위 경계 검사8건.
 - **외곽 배치**: archive CSS에서 목록 수/정렬 문구 좌우10px 추가. `sky.css`에서 일반 페이지 세로 flex/min-height100dvh로 푸터를 아래에 두되 긴 내용 뒤에는 자연스럽게 흐르게 했다. 기존 모바일 바로가기 여백 유지. PC 메인 내려가기 안내 bottom104px로 바의 위에 배치한다.
 - **헤더 비교**: 실제 최대1376px와 오른쪽 패널의 right24px가 달라1600px에서88px 차이. A는 현재, B는 본문 공통 여백부터 오른쪽 제어판 끝까지 확장한 비교다. 메인/지난 퀴즈/관리 모두 실제 화면6장. B는 촬영 때만 주입했으며 제품 헤더는 바꾸지 않았다.
 
@@ -36,7 +38,7 @@ DESIGN, design/users 명세, DECISIONS, implementation 목차, 컴포넌트 READ
 
 ## Git·자료·환경
 
-이 문서를 포함한 검증 변경을 로컬 커밋한다(기능 시작 부모37a13af). 재개할 때 실제 `git log -1`과 status를 읽는다. 마지막 원격 일치 확인은main516a98e이며 그 Preview 완료는 미확인이다. 마지막 완전 대조된 Preview는소스ceb50e3/version2227f720-c164-4c04-a014-cb2720fea411(2026-10-16 12:51:24KST)이다. 최신 로컬 작업이 Preview에 반영되었다고 안내하지 않는다. 새 push 요청은 main→Preview 자동 빌드이며 Production 승인이 아니다.
+이 문서를 포함한 검증 변경을 로컬 커밋한다(최신 후속 시작 부모e5348fc). 재개할 때 실제 `git log -1`과 status를 읽는다. 마지막 원격 일치 확인은main516a98e이며 그 Preview 완료는 미확인이다. 마지막 완전 대조된 Preview는소스ceb50e3/version2227f720-c164-4c04-a014-cb2720fea411(2026-10-16 12:51:24KST)이다. 최신 로컬 작업이 Preview에 반영되었다고 안내하지 않는다. 새 push 요청은 main→Preview 자동 빌드이며 Production 승인이 아니다.
 
 로컬 시연 장년은e2e-adult-10/revision3의10×10, 어린이는5×5다. 이전 버전·참여 자료·`.wrangler/ui-demo-state`를 보존했다. 이번 변경은 로컬 자료를 수정하지 않았다. P9-25 실제iPhone 확인 대기도 별도 유지한다.
 

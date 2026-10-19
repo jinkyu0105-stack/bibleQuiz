@@ -119,7 +119,7 @@
 .resultCount strong { margin-right: 3px; color: var(--ink); font-size: 16px; font-variant-numeric: tabular-nums; }
 .listHeading > span { color: var(--ink); }
 .records { --glass-arrow-edge: var(--archive-edge); margin: 0; padding: 0; list-style: none; border: 1px solid var(--archive-edge); border-radius: 10px; background: var(--archive-sheet); box-shadow: 0 8px 20px -16px var(--glass-shadow); }
-.record { position: relative; display: grid; grid-template-columns: 64px minmax(0,1fr) 32px; align-items: center; gap: 20px; min-height: 106px; padding: 16px 22px; transition: background-color 160ms ease; }
+.record { position: relative; display: grid; grid-template-columns: 64px minmax(0,1fr) 32px; align-items: center; gap: 18px; min-height: 86px; padding: 12px 18px; transition: background-color 160ms ease; }
 .record + .record { border-top: 1px solid var(--archive-edge); }
 .record:first-child { border-radius: 9px 9px 0 0; }
 .record:last-child { border-radius: 0 0 9px 9px; }
@@ -129,14 +129,14 @@
 .calendarTile > span { padding: 2px 4px; background: var(--ui-action-bg); color: var(--ui-action); font-size: 11px; font-weight: 650; }
 .calendarTile > strong { padding: 5px 1px; font-size: 18px; font-weight: 700; letter-spacing: -.06em; line-height: 1.55; color: var(--ink); }
 .calendarTile small { font-size: 12px; color: var(--muted); font-weight: 400; }
-.recordBody { min-width: 0; }
+.recordBody { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
 :global(.sky-app.archive-shell .public-layout) .record h3 { margin: 0; font: 650 17px/1.6 'Noto Sans KR',sans-serif; letter-spacing: -.025em; color: var(--ink); overflow-wrap: anywhere; word-break: keep-all; }
 .record h3:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
-.recordMeta { margin-bottom: 4px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 11px; line-height: 1.5; }
+.recordMeta { margin: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 11px; line-height: 1.5; }
 .weekLabel { padding: 1px 7px; border: 1px solid color-mix(in srgb,var(--ui-action) 18%,transparent); border-radius: 5px; color: var(--ui-action); background: color-mix(in srgb,var(--ui-action) 7%,var(--archive-sheet)); font-size: 10px; font-weight: 600; white-space: nowrap; }
 :global(body[data-time=night]) .weekLabel { color: color-mix(in srgb,var(--ui-action) 80%,white); }
 .recordMeta > time { display: none; color: var(--muted); font-variant-numeric: tabular-nums; }
-.recordReference { display: flex; align-items: baseline; gap: 6px; margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+.recordReference { display: flex; align-items: baseline; gap: 6px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
 .recordReference svg { position: relative; top: 2px; flex-shrink: 0; width: 14px; height: 14px; }
 .recordReference code { padding: 1px 6px; border: 1px solid var(--archive-edge); border-radius: 4px; background: color-mix(in srgb,var(--ink) 4%,transparent); color: var(--ink); font: inherit; overflow-wrap: anywhere; }
 .recordActions { display: flex; align-items: center; gap: 8px; }
@@ -165,9 +165,9 @@
   .archiveHeading p { font-size: 12px; margin-top: 4px; }
   .page .filters { grid-template-columns: minmax(0,1fr); gap: 10px; }
   .listHeading { margin-top: 18px; }
-  .record { grid-template-columns: minmax(0,1fr) 32px; gap: 12px; min-height: 106px; padding: 15px 14px; }
+  .record { grid-template-columns: minmax(0,1fr) 32px; gap: 12px; min-height: 84px; padding: 12px 14px; }
   .calendarTile { display: none; }
-  .recordMeta { margin-bottom: 5px; }
+  .recordBody { gap: 5px 8px; }
   .recordMeta > time { display: inline; }
   :global(.sky-app.archive-shell .public-layout) .record h3 { font-size: 15px; line-height: 1.65; }
   .recordReference { font-size: 11px; }
