@@ -38,10 +38,10 @@ test("12-item pagination restores expanded count/scroll on Back and refresh with
   const initialUrl = page.url();
   await page.getByRole("button", { name: "더 보기", exact: true }).click();
   await expect(cards(page)).toHaveCount(24); expect(page.url()).toBe(initialUrl);
-  const target = cards(page).nth(20).getByRole("link", { name: /^장년용/ });
+  const target = cards(page).nth(20).getByRole("button");
   await target.scrollIntoViewIfNeeded();
   const scroll = await page.evaluate(() => window.scrollY);
-  await target.click(); await expect(page).toHaveURL(/level=adult/);
+  await target.click(); await page.getByRole("dialog").getByRole("link", { name: "장년 퀴즈" }).click(); await expect(page).toHaveURL(/level=adult/);
   await expect(page.getByRole("grid")).toBeVisible();
   await page.goBack(); await expect(cards(page)).toHaveCount(24);
   await expect.poll(() => page.evaluate((previous) => Math.abs(window.scrollY - previous), scroll)).toBeLessThan(8);
@@ -118,14 +118,18 @@ test("main shows recent3, explicit difficulty links, and responsive archive in b
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
   await page.getByRole("link", { name: "지난 퀴즈 전체 보기" }).click(); await expect(cards(page)).toHaveCount(12);
-  await expect(cards(page).nth(1).getByRole("link", { name: /^장년용/ })).toHaveCount(0);
-  await expect(cards(page).first().getByRole("link", { name: /^어린이용/ })).toHaveAttribute("href", "/quiz/2026-08-30-000026?level=child");
+  await cards(page).nth(1).getByRole("button").click();
+  await expect(page.getByRole("dialog").getByRole("link", { name: "장년 퀴즈" })).toHaveCount(0);
+  await page.getByRole("button", { name: "선택창 닫기" }).click();
+  await cards(page).first().getByRole("button").click();
+  await expect(page.getByRole("dialog").getByRole("link", { name: "어린이 퀴즈" })).toHaveAttribute("href", "/quiz/2026-08-30-000026?level=child");
+  await page.getByRole("button", { name: "선택창 닫기" }).click();
   for (const theme of ["light", "dark"]) {
     await selectSkyTime(page, (theme) === "dark" ? "밤" : "낮");
     for (const width of [320, 768, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-      expect(await cards(page).first().getByRole("link").first().evaluate((element) => element.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44);
+      expect(await cards(page).first().getByRole("button").evaluate((element) => element.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44);
     }
     await page.screenshot({ path: test.info().outputPath(`archive-${theme}.png`), fullPage: true });
   }
@@ -160,7 +164,7 @@ test("one final wheel reaches the footer and scrolling glass restores without ch
   await expect.poll(() => page.locator("html").evaluate(n => (n as HTMLElement).style.getPropertyValue("--home-footer-height"))).toBe("");
 });
 
-test("archive reading sheet keeps compact icon actions and readable long titles at every size", async ({ page }) => {
+test("archive rows open a keyboard-accessible difficulty dialog at every size", async ({ page }) => {
   await mocks(page);
   await page.route("**/api/archive?**", route => route.fulfill({ json: { data: {
     items: [
@@ -180,25 +184,28 @@ test("archive reading sheet keeps compact icon actions and readable long titles 
       expect(row1.x).toBe(row2.x);
       expect(row1.width).toBe(row2.width);
       expect(Math.abs(row2.y - row1.y - row1.height)).toBeLessThan(2);
-      for (const row of rows) {
-        const title = (await row.getByRole("heading").boundingBox())!;
-        for (const link of await row.getByRole("link").all()) {
-          const box = (await link.boundingBox())!;
-          expect(box.width).toBe(44); expect(box.height).toBe(44);
-          expect(box.x).toBeGreaterThanOrEqual(title.x + title.width);
-          await expect(link.locator("svg")).toHaveCount(1);
-          await expect(link).toHaveText("");
-        }
+      const trigger = rows[0]!.getByRole("button");
+      await trigger.click({ position: { x: 5, y: 5 } });
+      const dialog = page.getByRole("dialog");
+      await expect(dialog).toBeVisible();
+      for (const link of await dialog.getByRole("link").all()) {
+        const box = (await link.boundingBox())!;
+        expect(box.width).toBeGreaterThan(90);
+        expect(Math.abs(box.width - box.height)).toBeLessThan(2);
+        await expect(link.locator("svg")).toHaveCount(1);
       }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      await page.keyboard.press("Escape");
+      await expect(dialog).toBeHidden();
+      await expect(trigger).toBeFocused();
     }
   }
-  const child = cards(page).first().getByRole("link", { name: /^어린이용/ });
-  await child.scrollIntoViewIfNeeded(); await child.focus();
-  await expect(page.getByRole("tooltip", { name: "어린이 퀴즈 풀기", exact: true })).toBeVisible();
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("tooltip", { name: "어린이 퀴즈 풀기", exact: true })).toBeHidden();
-  await expect(child).toBeFocused();
-  await page.keyboard.press("Enter"); await expect(page).toHaveURL(/level=child/);
+  const trigger = cards(page).first().getByRole("button");
+  await trigger.focus(); await page.keyboard.press("Enter");
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("link", { name: "어린이 퀴즈" }).click();
+  await expect(page).toHaveURL(/level=child/);
   await expect(page.getByRole("grid")).toBeVisible();
 });
 

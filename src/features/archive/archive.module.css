@@ -122,7 +122,7 @@
 .resultCount strong { margin-right: 3px; color: var(--ink); font-size: 16px; font-variant-numeric: tabular-nums; }
 .listHeading > span { color: var(--ink); }
 .records { margin: 0; padding: 0; list-style: none; border: 1px solid var(--archive-edge); border-radius: 10px; background: var(--archive-sheet); box-shadow: 0 8px 20px -16px var(--glass-shadow); }
-.record { display: grid; grid-template-columns: 64px minmax(0,1fr) auto; align-items: center; gap: 20px; min-height: 106px; padding: 16px 22px; transition: background-color 160ms ease; }
+.record { position: relative; display: grid; grid-template-columns: 64px minmax(0,1fr); align-items: center; gap: 20px; min-height: 106px; padding: 16px 22px; transition: background-color 160ms ease; }
 .record + .record { border-top: 1px solid var(--archive-edge); }
 .record:first-child { border-radius: 9px 9px 0 0; }
 .record:last-child { border-radius: 0 0 9px 9px; }
@@ -169,7 +169,7 @@
   .page .filters { grid-template-columns: minmax(0,1fr); gap: 10px; }
   .page .dateFilters select { font-size: 14px; padding-left: 6px; }
   .listHeading { margin-top: 18px; }
-  .record { grid-template-columns: minmax(0,1fr) auto; gap: 12px; min-height: 106px; padding: 15px 14px; }
+  .record { grid-template-columns: minmax(0,1fr); gap: 12px; min-height: 106px; padding: 15px 14px; }
   .calendarTile { display: none; }
   .recordMeta { margin-bottom: 5px; }
   .recordMeta > time { display: inline; }
@@ -192,3 +192,18 @@
   .recordActions a, .calendarTile, .practiceNote { color: CanvasText; background: Canvas; border-color: CanvasText; box-shadow: none; }
   .page .searchButton { color: ButtonText; background: ButtonFace; border: 1px solid ButtonText; }
 }
+
+.page .recordOpen { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; min-height: 44px; margin: 0; padding: 0; border: 0; border-radius: inherit; background: transparent; box-shadow: none; transform: none; cursor: pointer; }
+.page .recordOpen:focus-visible { outline-offset: -3px; }
+.levelDialog { width: min(360px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); margin: auto; padding: 20px; overflow-y: auto; border: 1px solid var(--archive-edge); border-radius: 16px; background: var(--archive-sheet); color: var(--ink); box-shadow: 0 18px 60px rgb(16 36 58 / .25); }
+.levelDialog::backdrop { background: rgb(16 36 58 / .3); }
+.levelHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+:global(.sky-app.archive-shell .public-layout) .levelHeader h3 { margin: 0; font: 700 18px/1.5 'Noto Sans KR',sans-serif; }
+.page .levelClose { display: grid; place-items: center; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 1px solid var(--archive-edge); border-radius: 9px; color: var(--ink); background: var(--glass-soft); box-shadow: none; font: 400 24px/1 sans-serif; }
+.levelTitle { margin: 6px 0 18px; color: var(--muted); font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+.levelChoices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.levelChoices a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; aspect-ratio: 1; min-width: 0; border: 1px solid var(--archive-edge); border-radius: 12px; background: var(--glass-soft); color: var(--ui-action); text-decoration: none; font-size: 14px; font-weight: 600; box-shadow: inset 0 1px 0 var(--glass-highlight), 0 3px 6px -3px var(--glass-shadow); transition: background-color 160ms ease; }
+.levelChoices a:is(:hover,:focus-visible) { background: var(--ui-action-bg); border-color: var(--ui-action); }
+.levelChoices a > svg { width: 36px; height: 36px; }
+@media (prefers-reduced-motion: reduce) { .levelChoices a { transition: none; } }
+@media (forced-colors: active) { .levelDialog, .levelChoices a { background: Canvas; color: CanvasText; border-color: CanvasText; } }
