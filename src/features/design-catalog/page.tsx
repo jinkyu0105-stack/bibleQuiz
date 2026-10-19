@@ -47,7 +47,7 @@ export function Component() {
     <Sample id="arrow" name="유리 화살표 버튼" component="GlassArrowButton">
       <p>지난 퀴즈 오른쪽에 추가한 바로 그 버튼입니다. 얇은 전체 테두리, 윗빛과 작은 그림자를 유지합니다.</p>
       <div className={styles.arrowExamples}>
-        <div className={styles.inline}><Tooltip label="다음 예시 보기"><GlassArrowButton label="다음 예시 보기" onClick={() => setMessage("유리 화살표 버튼을 눌렀습니다.")}/></Tooltip><span>단독 버튼</span><GlassArrowButton label="사용할 수 없는 예시" disabled/></div>
+        <div className={styles.inline}><Tooltip label="다음 예시 보기"><GlassArrowButton label="다음 예시 보기" onClick={() => setMessage("유리 화살표 버튼을 눌렀습니다.")}/></Tooltip><span>단독 버튼</span><GlassArrowButton label="사용할 수 없는 예시" disabled/><GlassArrowButton glyph="more" label="더보기 예시" onClick={() => setMessage("같은 유리 버튼의 더보기 변형입니다.")}/><span>더보기 변형</span></div>
         <button className={styles.demoRow} type="button" data-glass-arrow-group onClick={() => setMessage("행 어디를 눌러도 같은 동작입니다.")}><span><strong>행 전체와 함께 밝아지는 버튼</strong><small>지난 퀴즈 목록에서 쓰는 방식</small></span><GlassArrowButton decorative/></button>
       </div>
       <p className={styles.note}>버튼 그림은 32px, 단독 버튼의 누를 수 있는 영역은 44px입니다. 행 안에서는 전체 행이 반응합니다.</p>

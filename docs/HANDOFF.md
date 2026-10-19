@@ -2,47 +2,39 @@
 
 ## 현재 작업
 
-**P9-26 공개 풀이·지난 퀴즈 후속: 모바일 보정 로컬 완료, 배치/목록 제안 사용자 선택 대기.**
+**P9-26 C안·모바일 관리 더보기·Live 정리 로컬 완료, 사용자 화면 확인 대기.**
 
-2026-10-20 main e874d14/clean에서 시작. 경로 `/home/onegem/work/bibleQuiz`, Pro 잔여93%×사용자 기준10=930%(별도5시간 값 없음). 사용자는 전체 배치를 아직 확정하지 않았다. 실제 적용은 모바일 지난 퀴즈 날짜 숨김과 Live 제목/공개 버튼의 한 행 배치 두 곳이다. 새 의존성·실제 콘텐츠 AI·원격 자료·push/배포는 제외했다. 사용자 요청의 디자인 이미지 생성1회만 수행했다.
+2026-10-20 main d0f3c3e/clean에서 시작했다. 경로는 `/home/onegem/work/bibleQuiz`, Pro 잔여92%×사용자 기준10=920%(별도5시간 값 없음). 이번에는 사용자가 C안과 모바일 더보기를 명시 승인했다. 과거의 비교 전용 승인으로 해석하지 않는다. 새 의존성·원격 자료·AI 콘텐츠·push/배포는 제외했다.
 
-## 이번 결과와 진입점
+## 결과와 진입점
 
-- `src/features/archive/archive.module.css`: 767px 이하에서 정확한 날짜를 다시 표시하던 override 제거. 첫 줄은 주차·월별 주제만 남는다. 날짜 타일은 PC에서 유지, 설교일 데이터/검색/선택창 불변.
-- `src/features/admin-weekly/dashboard.module.css`: 760px 이하 Live를 2열 grid로 배치, 제목과 공개 링크를 같은 행에 두고 메타는 아래 전체 폭. 제목은 한 줄/말줄임, 링크의 44px 터치 높이 보존. 기존 공통 `text-wrap:pretty`가 nowrap을 덮는 현상을 실제로 발견해 해당 제목 선택자의 우선순위를 조정했다. PC/나머지 목록 구조는 유지.
-- 이전 e874d14의 월별 주제는 기존 site_state `sermon_theme:YYYY-MM`, GET/PATCH `/api/admin/sermon-themes/:month` 및 `MonthlySermonTheme.tsx`에 구현되어 있다. 새 migration 없고 실제 주제를 추측해 저장하지 않았다. 헤더/지난 퀴즈는 `QuizChoiceDialog`를 공유하며 `/dev/design#choice`에 등록했다.
+- `src/styles/sky.css`: 701px 이상 헤더와 풀이·지난 퀴즈·관리 외곽 본문을 `min(1376px,100vw - 216px)`로 가운데 정렬했다. 우측 패널60px와 간격24px, 창 끝 여유 최소24px. **700px 이하에서만** 하단 설정 팝업이며, 1024px 이하 전환 제안은 채택하지 않았다. 메인 전면 하늘과 섹션 내부 구성은 보존했다. archive의 동적 CSS1100px 제한을 덮도록 `.sky-app.archive-shell .archive-browser`를 사용한다.
+- `QuizRowActions.tsx`와 module CSS: 700px 이하 목록의44px 유리 더보기 버튼. 네이티브 auto popover로 전체 제목·참여 인원·초안 편집/퀴즈 설정/참여 기록을 모았다. 원래 주소와 상태·만료 조건을 유지한다. 위 우선/아래 대체·화면 안 위치 조정, 다시 누르기/바깥 클릭/Esc/닫기, 다른 메뉴 열기, scroll/resize 닫기를 지원한다. 메뉴 내부 스크롤은 허용한다. PC 아이콘은 유지한다.
+- `Dashboard.tsx`와 dashboard CSS: Live 첫 행은 Live+달력 날짜 칩, 둘째 행은 말줄임 제목+공개 화면이다. 공개 중/대표 지정 문구를 제거했다. 퀴즈 준비는 시간대 행동색에 윗빛9%와 얕은 그림자를 더했다. 실제 선택·발행 정책 변경은 없다.
+- `GlassArrowButton glyph="more"`: 기존 유리32px 그림/44px 터치 영역과3개의 작은 원. 기본 화살표는 그대로다. 실제 부품 모음과 components README에 등록했다.
+- **퀴즈 준비가 채워져 보이는 이유**: 기존 `Workspace.tsx`의 `/admin/new`는 dashboard에서 첫 미만료·미발행 초안을 찾아 재개하고, 없을 때 새 입력 화면을 연다. 실제 클릭으로 로컬 연습 초안 재개를 확인했다. 질문을 기능 변경 승인으로 해석하지 않고 외형만 바꿨다. 새 설교는 입력 단계의 ‘설교 작업 선택 → 새 설교 등록’에서 시작한다.
+- 이전 월별 설교 주제 site_state/API, 공통 난이도 선택창, 로컬 장년10×10/어린이5×5는 보존한다.
 
-## 반드시 유지할 승인 경계
+## 확인 주소와 검수
 
-사용자는 헤더=본문 폭이고 설정 패널은 별도로 오른쪽에 놓는 방향을 질문했지만 **아직 확정하지 않았다**. 실제 `sky.css`/공통 레이아웃은 수정하지 않았다. `docs/design/phase-9/layout-audit/independent/review.html`의 C안은 촬영 브라우저에서만 CSS 주입했다.
-
-C안: 헤더/본문 `min(1376px,100vw - 216px)`, 가운데 정렬, 우측 패널60px와 간격24px. 3440/2560에서는1376px,1440에서는1224px,1024에서는808px,768에서는552px. A/C9쌍에서 가로 넘침0. 좁은 화면에서 좌우가 대칭으로 줄어들며 오른쪽만 짧아지지 않는다. **1024px 이하에서는 기존 하단 설정 팝업으로 옮기는 방향을 추천했으나 미적용**. 현재 실제 기준은700px 이하. 다음 turn에서 승인 없이 변경하지 않는다.
-
-모바일 관리 목록은 더보기(···) 하나로 편집/설정/참여 기록을 여는 방식을 생성 시안으로만 제안했다. 제목 공간/행 높이를 확보하지만 추가 탭1회가 필요하다는 점을 설명했다. 실제 목록의 버튼/참여 수는 유지. 이미지의5개 가상 탭/글자 대용 선/버튼 좌표는 제품 사양이 아니다.
-
-사용자에게 알려준 용어: 본문 영역(메인 콘텐츠), 우측 설정 패널. 기존 실제 320~3440px 검사에서 넘침0이었으며 초광폭의 빈 공간은 별도 배치 문제다. DPR1.25에서CSS1440→PNG1800을 재현한 이전 증거를 보존한다. 모든 실제 기기에서 잘림이 없다고 일반화하지 않는다.
-
-## 확인 주소와 자산
-
-- http://localhost:5173/docs/design/phase-9/layout-audit/independent/review
-- http://localhost:5173/archive
 - http://localhost:5173/admin
+- http://localhost:5173/docs/design/phase-9/layout-audit/applied/review
+- http://localhost:5173/dev/design#arrow
 
-새 갤러리는 실제 A/C18장·모바일 네 시간대8장·생성 시안1장 및 측정JSON이다. PNG27개 HTTP200/image/png, A/C18전환·모바일시간대 decode 성공. 처음 갤러리375px에서 이미지의425px 최소 폭 때문에64px 넘침이 있었고 이미지 max-width/min-width를 수정했다. 앱 자체 넘침과 구분한다. 최종 결과는 `http-verification.json`에 기록한다. 사용자 Windows 화면 표시 확인은 별도다.
+최종 갤러리에 실제37PNG와 측정/HTTP 검수 JSON이 있다. 이전 independent/review는 과거 A/C 비교·생성 시안으로 보존하고 현재 적용 링크를 추가했다. PNG37개 HTTP200/image/png,16개 넓이·페이지 전환과8개 모바일 시간대 쌍 decode,320/375/1440px 갤러리 넘침0을 확인했다. HTTP 검증과 사용자 Windows 화면 표시 확인은 별도다.
 
-## 검사와 한계
+실제4페이지×10폭40상태, 관리4시간대×3폭12상태, 더보기4시간대×2폭8상태의 총60화면에서 가로 넘침·페이지 오류0. PC 본문/헤더 양끝 일치, 패널 간격24px, Live 제목/링크 중심 차0. 실제 PNG를 직접 검토했다. 실제 휴대폰/Safari는 미검수다. 이전 WebKit의 시스템 라이브러리 부족에 따른 시작 실패는 이번에 반복하지 않았다.
 
-- 기존 E2E archive metadata3건 + admin quiz board3건, Chromium·모바일 Chromium·Firefox 모두 통과. `/tmp/p926-mobile-e2e.log`, `/tmp/p926-mobile-admin-e2e.log`. 최초 grep은 archive만 선택해 관리 검사를 별도로 실행했다.
-- lint/typecheck exit0: `/tmp/p926-mobile-{lint,types}.log`. CSS만 실제 제품 변경이며 전체 pnpm check/배포 완료로 보고하지 않는다.
-- 최종 실제 모바일/PC32상태(네 시간대×320/375/425/1440×archive/admin)에서 넘침/페이지 오류0. 모바일 제목/링크 중심 오차1px 이하, 날짜 비표시, 한 줄·말줄임을 측정했고 PNG 직접 검토. 처음 찍은 Live는 text-wrap 충돌 때문에2줄이었으므로 폐기하고 최종 촬영으로 교체했다. `/tmp/p926-mobile-final.log`, 갤러리 `measurements.json`.
-- 실제 iPhone/Safari는 미검수. 이전 WebKit은 시스템 라이브러리 부족으로 시작 실패했으며 이번 CSS 검수에서 재시도하지 않았다. 생성 이미지는 실제 작동 화면으로 보고하지 않는다.
+관련 E2E 최종 고유104통과/1skip. 첫 동시 실행99통과/Firefox2시간 초과/1skip 뒤 해당2항목과 새 메뉴의 단독 검사9건이 모두 통과했다. 로그는 `/tmp/p926-c-{e2e,focused-e2e}.log`. lint/typecheck/build exit0, 동일 prefix 로그. 기존 fontkit500kB 초과 경고는 남는다. Phase/배포 완료가 아닌 UI 후속으로 전체 `pnpm check`는 반복하지 않았다. `git diff --check` 확인 후 로컬 커밋한다.
 
-## Git·환경·보존
+폐기·수정한 접근: archive 폭 override의 낮은 CSS 우선순위를 수정했다. 갤러리의 긴 수치 문자열로 인한320px 넘침은 overflow-wrap으로 해결했다. 촬영 도구의 복수 매칭 선택자를 실제 article/첫 workspace 제목으로 수정했다. 앱 기능 오류와 구분한다.
 
-시작 부모 e874d14. CSS2파일·DESIGN/관련 정본·DECISIONS/STATUS/HANDOFF·작업 기록·비교 자산을 로컬 커밋한다. 재개 시 실제 log/status 확인. 마지막 원격 일치 확인main516a98e/배포 완료 미확인, 마지막 완전 대조 Preview ceb50e3/version2227f720-c164-4c04-a014-cb2720fea411. 최신 로컬이 Preview에 반영됐다고 안내하지 않는다.
+## Git·환경·다음 작업
 
-로컬 장년10×10 e2e-adult-10/revision3, 어린이5×5, 이전 버전·참여 자료·`.wrangler/ui-demo-state` 보존. Node24.18.0/pnpm11.14.0. 명령은 bash/login:false/명시workdir, 필요 시 PATH에 `/home/onegem/.nvm/versions/node/v24.18.0/bin` 추가. localhost·브라우저·Git 쓰기는 require_escalated 승인 검토 경로.5173 유지, 재시작 `pnpm dev:demo --port 5173 --strictPort`. E2E4173은 격리 D1. 도구 시작 실패는 codex-exec-recovery를 따른다.
+시작 부모d0f3c3e. 이번 코드·검사·정본·갤러리를 명시 경로 stage로 로컬 커밋한다. 재개 시 실제 log/status를 확인한다. 마지막 원격 일치 확인은 main516a98e/배포 완료 미확인, 마지막 완전 대조 Preview는 ceb50e3/version2227f720-c164-4c04-a014-cb2720fea411이다. 이번 변경이 Preview에 반영됐다고 안내하지 않는다.
 
-다음: 경로/사용량→AGENTS→PROJECT_CONTEXT→DECISIONS→STATUS→HANDOFF→implementation 관련 정본→P9-26→Git status/diff/log. 현재 P9-26에서 C안과 모바일 목록 제안의 선택을 반영한다.
+Node24.18.0/pnpm11.14.0. bash/login:false/명시 cwd. PATH가 필요하면 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. localhost·브라우저·Git 쓰기는 require_escalated 검토 경로다. 5173을 유지하며 재시작 명령은 `pnpm dev:demo --port 5173 --strictPort`. 실제 `.wrangler/ui-demo-state`를 보존한다. E2E4173은 격리 DB다. 실행 도구 시작 실패는 codex-exec-recovery를 따른다.
 
-**현재 P9-26 모바일 보정 로컬 완료 · 부모 공개 UI 사용자 확인 대기 · 다음 C안/모바일 목록 제안 선택 · 세션 유지 · 추천 GPT-6.1-sol/high** — 공통 배치와 조작 방식의 회귀를 함께 확인한다.
+다음은 P9-26 현재 변경에 대한 사용자 확인과 후속 피드백이다. 새 번호나 push/배포로 자동 확대하지 않는다. 시작 시 경로/사용량 → AGENTS → PROJECT_CONTEXT → DECISIONS → STATUS → HANDOFF → implementation 관련 정본 → P9-26 → Git 순서로 확인한다.
+
+**현재 P9-26 이번 범위 로컬 완료 · 부모 공개 UI 사용자 확인 대기 · 다음 C안·모바일 메뉴 사용자 확인 · 세션 유지 · 추천 GPT-6.1-sol/high** — 공통 반응형 배치와 메뉴 조작의 회귀를 함께 판단한다.

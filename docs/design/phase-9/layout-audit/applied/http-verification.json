@@ -1,0 +1,192 @@
+{
+  "http": [
+    {
+      "file": "admin-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-3440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-768.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-dawn-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-dawn-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-dawn-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-day-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-day-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-day-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-dusk-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-dusk-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-dusk-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-night-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-night-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "admin-night-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "archive-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "archive-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "archive-3440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "archive-768.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "home-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "home-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "home-3440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "home-768.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "menu-dawn-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "menu-dawn-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "menu-day-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "menu-day-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "menu-dusk-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "menu-dusk-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "menu-night-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "menu-night-425.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "prepare-existing-draft.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "quiz-1440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "quiz-320.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "quiz-3440.png",
+      "status": 200,
+      "type": "image/png"
+    },
+    {
+      "file": "quiz-768.png",
+      "status": 200,
+      "type": "image/png"
+    }
+  ],
+  "wideImages": 16,
+  "mobilePairs": 8,
+  "galleryOverflow": 0
+}

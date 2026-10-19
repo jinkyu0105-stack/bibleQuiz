@@ -251,3 +251,12 @@ html[data-home-scrolling] body[data-view=home] :is(.glass, .convex-lens)::after 
 @media (min-width: 701px) { .descent-cue { bottom: 104px; } }
 
 .site-navigation button.weekly-quiz-trigger { margin: 0; background: transparent; color: inherit; font: inherit; box-shadow: none; transform: none; cursor: pointer; }
+
+/* Shared centered content frame; the settings rail lives outside it (approved C). */
+@media (min-width: 701px) {
+  .sky-app { --content-frame: min(1376px, calc(100vw - 216px)); }
+  .sky-app:not(.home-shell) { max-width: var(--content-frame); padding-inline: 0; }
+  .sky-app .site-header { width: var(--content-frame); max-width: none; left: 0; right: 0; }
+  .time-rail { right: calc((100vw - min(1376px, calc(100vw - 216px))) / 2 - 84px); }
+  .sky-app.archive-shell .archive-browser { max-width: none; }
+}

@@ -7,6 +7,7 @@ import { ButtonLink } from "../../components/Button";
 import { weeklyDashboardSchema, type WeeklyQuiz } from "../../../shared/api/admin-weekly";
 import { draftCleanupListSchema } from "../../../shared/api/admin-draft-cleanup";
 import { weeklyRequest } from "./client";
+import { QuizRowActions } from "./QuizRowActions";
 import { MonthlySermonTheme } from "./MonthlySermonTheme";
 import styles from "./dashboard.module.css";
 
@@ -49,7 +50,7 @@ export function Component() {
   const rows = items.filter(q => (filter === "all" || (filter === "draft" ? isDraft(q) : q.status === filter)) && `${q.title} ${q.sermonDate}`.includes(search.trim()));
   const due = cleanup?.items.filter(q => q.state === "blocked" || (q.state !== "purged" && q.dueAt && Date.parse(q.dueAt) - checkedAt <= 86_400_000)) ?? [];
   return <div className={styles.page} data-admin-board="quizzes">
-    <AdminBoardHeader title="퀴즈 관리" description="퀴즈를 준비하고, 공개와 참여를 관리하세요." terms={["초안", "발행", "자동 선택", "대표 지정"]} screenshots={["dashboard"]} actions={<ButtonLink variant="primary" to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>}/>
+    <AdminBoardHeader title="퀴즈 관리" description="퀴즈를 준비하고, 공개와 참여를 관리하세요." terms={["초안", "발행", "자동 선택", "대표 지정"]} screenshots={["dashboard"]} actions={<ButtonLink variant="primary" className={styles.prepareButton} to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>}/>
     {message && <p className={styles.alert} role="alert">{message}</p>}
     <div className={styles.statusBar} data-admin-summary>
     <div className={styles.overview} role="group" aria-label="운영 요약">
@@ -58,10 +59,10 @@ export function Component() {
       <Link data-admin-tone="attention" to="/admin/privacy-requests"><span className={styles.metricLabel}><AdminEmoji>💬</AdminEmoji>답변 대기</span><span className={styles.metricValue}><strong>{data?.unansweredCount ?? "—"}</strong><small>건</small></span></Link>
     </div>
     {data && <section className={styles.featured} aria-labelledby="home-quiz-heading">
-      <div className={styles.featuredCopy}><span className={styles.caption}><AdminEmoji>📡</AdminEmoji>Live</span>
-        <h3 id="home-quiz-heading">{featured?.title ?? "아직 공개된 퀴즈가 없습니다"}</h3>
-        <p>{featured ? `${date(featured.sermonDate)} · ${featured.status === "archived" ? "지난 퀴즈" : "공개 중"}${data.homeQuiz?.selection === "automatic" ? " · 자동 선택" : " · 대표 지정"}` : "준비한 퀴즈를 발행하면 이곳에 표시됩니다."}</p>
+      <div className={styles.featuredMeta}><span className={styles.caption}><AdminEmoji>📡</AdminEmoji>Live</span>
+        {featured && <time className={styles.featuredDate} dateTime={featured.sermonDate}><AdminIcon name="calendar"/>{date(featured.sermonDate)}</time>}
       </div>
+      <h3 id="home-quiz-heading" title={featured?.title}>{featured?.title ?? "아직 공개된 퀴즈가 없습니다"}</h3>
       {featured?.slug && <ButtonLink to={`/quiz/${featured.slug}`}>공개 화면 <span aria-hidden="true">↗</span></ButtonLink>}
     </section>}
     </div>
@@ -83,6 +84,7 @@ export function Component() {
               <AdminTooltip label={description || stage(q)}>{descriptionId => <span className={styles.status} tabIndex={0} aria-describedby={descriptionId} data-state={q.expired ? "archived" : q.status} data-tone={q.expired || q.status === "archived" ? "neutral" : q.submissionStatus === "paused" || q.jobStatus === "failed" || q.status === "needs_revision" ? "attention" : q.status === "published" ? "success" : "action"}>{stage(q)}</span>}</AdminTooltip>
               <h4>{q.title}</h4>
             </div>
+            <QuizRowActions quiz={q} stateLabel={stage(q)}/>
             <div className={styles.rowActions}>
               {!isDraft(q) && <div className={styles.participants}>
                 {([['child', '어린이', q.childVisibleCount], ['adult', '장년', q.adultVisibleCount]] as const).map(([icon,label,count]) => <AdminTooltip key={icon} label={`${label} ${count}명 참여`}><span className={styles.participant} tabIndex={0} role="img" aria-label={`${label} ${count}명 참여`}><AdminIcon name={icon}/><span aria-hidden="true">{count}</span></span></AdminTooltip>)}

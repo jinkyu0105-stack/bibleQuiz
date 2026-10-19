@@ -93,19 +93,34 @@ test('quiz board uses sermon dates, compact named icons and above-first tooltips
   const row=page.locator('[data-admin-quiz-row]').filter({has:page.getByRole('heading',{name:'함께 걷는 기쁨 · 연습',exact:true})});
   await expect(row.locator('time')).toHaveAttribute('datetime','2026-10-11');
   expect(await row.locator('time').ariaSnapshot()).toContain('설교일 2026-10-11');
-  const child=row.getByRole('img',{name:'어린이 3명 참여',exact:true});
-  await expect(child.locator('svg')).toHaveCount(1);
-  await expect(row.getByRole('img',{name:'장년 4명 참여',exact:true})).toBeVisible();
-  const action=row.getByRole('link',{name:'퀴즈 설정',exact:true});
-  await expect(action).toHaveAttribute('href','/admin/quiz/published-example');
-  await expect(action).toHaveText('');
-  const box=await action.boundingBox();expect(box!.width).toBe(isMobile?44:36);expect(box!.height).toBe(box!.width);
-  if(!isMobile){const title=await row.getByRole('heading').boundingBox(),count=await child.boundingBox();expect(count!.x).toBeGreaterThan(title!.x+title!.width);expect((await row.boundingBox())!.height).toBeLessThan(90);}
-  await action.focus();const tip=page.getByRole('tooltip',{name:'퀴즈 설정',exact:true});await expect(tip).toBeVisible();await expect(tip).toHaveAttribute('data-side','above');
-  await page.keyboard.press('Escape');await expect(tip).toBeHidden();
-  await action.evaluate(n=>{const anchor=n.parentElement!;anchor.style.transform=`translateY(${2-anchor.getBoundingClientRect().top}px)`;});
-  await action.evaluate(n=>{n.blur();n.focus({preventScroll:true});});expect((await action.boundingBox())!.y).toBeLessThan(12);await expect(tip).toHaveAttribute('data-side','below');
-  await page.keyboard.press('Escape');
+  if(isMobile){
+    const more=row.getByRole('button',{name:'함께 걷는 기쁨 · 연습 관리 더보기'});
+    await more.click();
+    const menu=page.getByRole('dialog',{name:'함께 걷는 기쁨 · 연습 관리',exact:true});
+    await expect(menu).toBeVisible();
+    await expect(menu.getByLabel('참여 인원')).toContainText('어린이 3명');
+    await expect(menu.getByLabel('참여 인원')).toContainText('장년 4명');
+    await expect(menu.getByRole('link',{name:'퀴즈 설정',exact:true})).toHaveAttribute('href','/admin/quiz/published-example');
+    await expect(menu.getByRole('link',{name:'참여 기록',exact:true})).toHaveAttribute('href','/admin/submissions?quiz=published-example');
+    await page.keyboard.press('Escape');await expect(menu).toBeHidden();await expect(more).toBeFocused();
+    await more.click();await expect(menu).toBeVisible();await more.click();await expect(menu).toBeHidden();
+    await more.click();await menu.getByRole('button',{name:'퀴즈 관리 메뉴 닫기'}).click();await expect(menu).toBeHidden();
+    expect((await row.boundingBox())!.height).toBeLessThan(90);
+  }else{
+    const child=row.getByRole('img',{name:'어린이 3명 참여',exact:true});
+    await expect(child.locator('svg')).toHaveCount(1);
+    await expect(row.getByRole('img',{name:'장년 4명 참여',exact:true})).toBeVisible();
+    const action=row.getByRole('link',{name:'퀴즈 설정',exact:true});
+    await expect(action).toHaveAttribute('href','/admin/quiz/published-example');
+    await expect(action).toHaveText('');
+    const box=await action.boundingBox();expect(box!.width).toBe(isMobile?44:36);expect(box!.height).toBe(box!.width);
+    if(!isMobile){const title=await row.getByRole('heading').boundingBox(),count=await child.boundingBox();expect(count!.x).toBeGreaterThan(title!.x+title!.width);expect((await row.boundingBox())!.height).toBeLessThan(90);}
+    await action.focus();const tip=page.getByRole('tooltip',{name:'퀴즈 설정',exact:true});await expect(tip).toBeVisible();await expect(tip).toHaveAttribute('data-side','above');
+    await page.keyboard.press('Escape');await expect(tip).toBeHidden();
+    await action.evaluate(n=>{const anchor=n.parentElement!;anchor.style.transform=`translateY(${2-anchor.getBoundingClientRect().top}px)`;});
+    await action.evaluate(n=>{n.blur();n.focus({preventScroll:true});});expect((await action.boundingBox())!.y).toBeLessThan(12);await expect(tip).toHaveAttribute('data-side','below');
+    await page.keyboard.press('Escape');
+  }
   await expect(page.locator('.site-header').getByRole('button',{name:'이번 주 퀴즈',exact:true})).toHaveAttribute('aria-haspopup','dialog');
   await expect(page.locator('aside').getByRole('link',{name:'사이트 보기',exact:true})).toHaveCount(0);
   await page.goto('/admin/tools');const tool=page.locator('[data-admin-tool]').first(),summary=tool.locator('summary').first();

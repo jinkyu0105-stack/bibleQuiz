@@ -24,3 +24,6 @@ button.button {
   .face { color: ButtonText; background: ButtonFace; border-color: ButtonText; box-shadow: none; }
   .button:focus-visible { outline-color: Highlight; }
 }
+
+.more { display: flex; align-items: center; gap: 3px; }
+.more i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }

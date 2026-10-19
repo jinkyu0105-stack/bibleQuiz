@@ -1,0 +1,1308 @@
+{
+  "records": [
+    {
+      "name": "quiz",
+      "width": 3440,
+      "overflow": 0,
+      "header": {
+        "x": 1032,
+        "right": 2408,
+        "width": 1376,
+        "visible": true
+      },
+      "body": {
+        "x": 1032,
+        "right": 2408,
+        "width": 1376,
+        "visible": true
+      },
+      "rail": {
+        "x": 2432,
+        "right": 2492,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "quiz",
+      "width": 2560,
+      "overflow": 0,
+      "header": {
+        "x": 592,
+        "right": 1968,
+        "width": 1376,
+        "visible": true
+      },
+      "body": {
+        "x": 592,
+        "right": 1968,
+        "width": 1376,
+        "visible": true
+      },
+      "rail": {
+        "x": 1992,
+        "right": 2052,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "quiz",
+      "width": 1440,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 1332,
+        "width": 1224,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 1332,
+        "width": 1224,
+        "visible": true
+      },
+      "rail": {
+        "x": 1356,
+        "right": 1416,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "quiz",
+      "width": 1024,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 916,
+        "width": 808,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 916,
+        "width": 808,
+        "visible": true
+      },
+      "rail": {
+        "x": 940,
+        "right": 1000,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "quiz",
+      "width": 768,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 660,
+        "width": 552,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 660,
+        "width": 552,
+        "visible": true
+      },
+      "rail": {
+        "x": 684,
+        "right": 744,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "quiz",
+      "width": 701,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 593,
+        "width": 485,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 593,
+        "width": 485,
+        "visible": true
+      },
+      "rail": {
+        "x": 617,
+        "right": 677,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "quiz",
+      "width": 700,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 688,
+        "width": 676,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 684,
+        "width": 668,
+        "visible": true
+      },
+      "rail": {
+        "x": 232,
+        "right": 468,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 419,
+        "right": 463,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "quiz",
+      "width": 425,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 413,
+        "width": 401,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 409,
+        "width": 393,
+        "visible": true
+      },
+      "rail": {
+        "x": 94.5,
+        "right": 330.5,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 281.5,
+        "right": 325.5,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "quiz",
+      "width": 375,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 363,
+        "width": 351,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 359,
+        "width": 343,
+        "visible": true
+      },
+      "rail": {
+        "x": 69.5,
+        "right": 305.5,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 256.5,
+        "right": 300.5,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "quiz",
+      "width": 320,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 308,
+        "width": 296,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 304,
+        "width": 288,
+        "visible": true
+      },
+      "rail": {
+        "x": 42,
+        "right": 278,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 229,
+        "right": 273,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "archive",
+      "width": 3440,
+      "overflow": 0,
+      "header": {
+        "x": 1032,
+        "right": 2408,
+        "width": 1376,
+        "visible": true
+      },
+      "body": {
+        "x": 1032,
+        "right": 2408,
+        "width": 1376,
+        "visible": true
+      },
+      "rail": {
+        "x": 2432,
+        "right": 2492,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "archive",
+      "width": 2560,
+      "overflow": 0,
+      "header": {
+        "x": 592,
+        "right": 1968,
+        "width": 1376,
+        "visible": true
+      },
+      "body": {
+        "x": 592,
+        "right": 1968,
+        "width": 1376,
+        "visible": true
+      },
+      "rail": {
+        "x": 1992,
+        "right": 2052,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "archive",
+      "width": 1440,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 1332,
+        "width": 1224,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 1332,
+        "width": 1224,
+        "visible": true
+      },
+      "rail": {
+        "x": 1356,
+        "right": 1416,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "archive",
+      "width": 1024,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 916,
+        "width": 808,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 916,
+        "width": 808,
+        "visible": true
+      },
+      "rail": {
+        "x": 940,
+        "right": 1000,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "archive",
+      "width": 768,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 660,
+        "width": 552,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 660,
+        "width": 552,
+        "visible": true
+      },
+      "rail": {
+        "x": 684,
+        "right": 744,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "archive",
+      "width": 701,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 593,
+        "width": 485,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 593,
+        "width": 485,
+        "visible": true
+      },
+      "rail": {
+        "x": 617,
+        "right": 677,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "archive",
+      "width": 700,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 688,
+        "width": 676,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 684,
+        "width": 668,
+        "visible": true
+      },
+      "rail": {
+        "x": 232,
+        "right": 468,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 419,
+        "right": 463,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "archive",
+      "width": 425,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 413,
+        "width": 401,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 409,
+        "width": 393,
+        "visible": true
+      },
+      "rail": {
+        "x": 94.5,
+        "right": 330.5,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 281.5,
+        "right": 325.5,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "archive",
+      "width": 375,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 363,
+        "width": 351,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 359,
+        "width": 343,
+        "visible": true
+      },
+      "rail": {
+        "x": 69.5,
+        "right": 305.5,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 256.5,
+        "right": 300.5,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "archive",
+      "width": 320,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 308,
+        "width": 296,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 304,
+        "width": 288,
+        "visible": true
+      },
+      "rail": {
+        "x": 42,
+        "right": 278,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 229,
+        "right": 273,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "admin",
+      "width": 3440,
+      "overflow": 0,
+      "header": {
+        "x": 1032,
+        "right": 2408,
+        "width": 1376,
+        "visible": true
+      },
+      "body": {
+        "x": 1032,
+        "right": 2408,
+        "width": 1376,
+        "visible": true
+      },
+      "rail": {
+        "x": 2432,
+        "right": 2492,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "admin",
+      "width": 2560,
+      "overflow": 0,
+      "header": {
+        "x": 592,
+        "right": 1968,
+        "width": 1376,
+        "visible": true
+      },
+      "body": {
+        "x": 592,
+        "right": 1968,
+        "width": 1376,
+        "visible": true
+      },
+      "rail": {
+        "x": 1992,
+        "right": 2052,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "admin",
+      "width": 1440,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 1332,
+        "width": 1224,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 1332,
+        "width": 1224,
+        "visible": true
+      },
+      "rail": {
+        "x": 1356,
+        "right": 1416,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "admin",
+      "width": 1024,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 916,
+        "width": 808,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 916,
+        "width": 808,
+        "visible": true
+      },
+      "rail": {
+        "x": 940,
+        "right": 1000,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "admin",
+      "width": 768,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 660,
+        "width": 552,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 660,
+        "width": 552,
+        "visible": true
+      },
+      "rail": {
+        "x": 684,
+        "right": 744,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "admin",
+      "width": 701,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 593,
+        "width": 485,
+        "visible": true
+      },
+      "body": {
+        "x": 108,
+        "right": 593,
+        "width": 485,
+        "visible": true
+      },
+      "rail": {
+        "x": 617,
+        "right": 677,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": null
+    },
+    {
+      "name": "admin",
+      "width": 700,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 688,
+        "width": 676,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 684,
+        "width": 668,
+        "visible": true
+      },
+      "rail": {
+        "x": 232,
+        "right": 468,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 419,
+        "right": 463,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "admin",
+      "width": 425,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 413,
+        "width": 401,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 409,
+        "width": 393,
+        "visible": true
+      },
+      "rail": {
+        "x": 94.5,
+        "right": 330.5,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 281.5,
+        "right": 325.5,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "admin",
+      "width": 375,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 363,
+        "width": 351,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 359,
+        "width": 343,
+        "visible": true
+      },
+      "rail": {
+        "x": 69.5,
+        "right": 305.5,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 256.5,
+        "right": 300.5,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "admin",
+      "width": 320,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 308,
+        "width": 296,
+        "visible": true
+      },
+      "body": {
+        "x": 16,
+        "right": 304,
+        "width": 288,
+        "visible": true
+      },
+      "rail": {
+        "x": 42,
+        "right": 278,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 229,
+        "right": 273,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "home",
+      "width": 3440,
+      "overflow": 0,
+      "header": {
+        "x": 1032,
+        "right": 2408,
+        "width": 1376,
+        "visible": true
+      },
+      "body": {
+        "x": 1000,
+        "right": 2440,
+        "width": 1440,
+        "visible": true
+      },
+      "rail": {
+        "x": 2432,
+        "right": 2492,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": {
+        "x": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      }
+    },
+    {
+      "name": "home",
+      "width": 2560,
+      "overflow": 0,
+      "header": {
+        "x": 592,
+        "right": 1968,
+        "width": 1376,
+        "visible": true
+      },
+      "body": {
+        "x": 560,
+        "right": 2000,
+        "width": 1440,
+        "visible": true
+      },
+      "rail": {
+        "x": 1992,
+        "right": 2052,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": {
+        "x": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      }
+    },
+    {
+      "name": "home",
+      "width": 1440,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 1332,
+        "width": 1224,
+        "visible": true
+      },
+      "body": {
+        "x": 0,
+        "right": 1440,
+        "width": 1440,
+        "visible": true
+      },
+      "rail": {
+        "x": 1356,
+        "right": 1416,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": {
+        "x": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      }
+    },
+    {
+      "name": "home",
+      "width": 1024,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 916,
+        "width": 808,
+        "visible": true
+      },
+      "body": {
+        "x": 0,
+        "right": 1024,
+        "width": 1024,
+        "visible": true
+      },
+      "rail": {
+        "x": 940,
+        "right": 1000,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": {
+        "x": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      }
+    },
+    {
+      "name": "home",
+      "width": 768,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 660,
+        "width": 552,
+        "visible": true
+      },
+      "body": {
+        "x": 0,
+        "right": 768,
+        "width": 768,
+        "visible": true
+      },
+      "rail": {
+        "x": 684,
+        "right": 744,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": {
+        "x": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      }
+    },
+    {
+      "name": "home",
+      "width": 701,
+      "overflow": 0,
+      "header": {
+        "x": 108,
+        "right": 593,
+        "width": 485,
+        "visible": true
+      },
+      "body": {
+        "x": 0,
+        "right": 701,
+        "width": 701,
+        "visible": true
+      },
+      "rail": {
+        "x": 617,
+        "right": 677,
+        "width": 60,
+        "visible": true
+      },
+      "mobile": {
+        "x": 0,
+        "right": 0,
+        "width": 0,
+        "visible": false
+      }
+    },
+    {
+      "name": "home",
+      "width": 700,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 688,
+        "width": 676,
+        "visible": true
+      },
+      "body": {
+        "x": 0,
+        "right": 700,
+        "width": 700,
+        "visible": true
+      },
+      "rail": {
+        "x": 232,
+        "right": 468,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 419,
+        "right": 463,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "home",
+      "width": 425,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 413,
+        "width": 401,
+        "visible": true
+      },
+      "body": {
+        "x": 0,
+        "right": 425,
+        "width": 425,
+        "visible": true
+      },
+      "rail": {
+        "x": 94.5,
+        "right": 330.5,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 281.5,
+        "right": 325.5,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "home",
+      "width": 375,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 363,
+        "width": 351,
+        "visible": true
+      },
+      "body": {
+        "x": 0,
+        "right": 375,
+        "width": 375,
+        "visible": true
+      },
+      "rail": {
+        "x": 69.5,
+        "right": 305.5,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 256.5,
+        "right": 300.5,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "home",
+      "width": 320,
+      "overflow": 0,
+      "header": {
+        "x": 12,
+        "right": 308,
+        "width": 296,
+        "visible": true
+      },
+      "body": {
+        "x": 0,
+        "right": 320,
+        "width": 320,
+        "visible": true
+      },
+      "rail": {
+        "x": 42,
+        "right": 278,
+        "width": 236,
+        "visible": true
+      },
+      "mobile": {
+        "x": 229,
+        "right": 273,
+        "width": 44,
+        "visible": true
+      }
+    },
+    {
+      "name": "admin",
+      "time": "dawn",
+      "width": 1440,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "buttonFill": "rgb(53, 79, 192)"
+    },
+    {
+      "name": "admin",
+      "time": "dawn",
+      "width": 425,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "buttonFill": "rgb(53, 79, 192)"
+    },
+    {
+      "name": "menu",
+      "time": "dawn",
+      "width": 425,
+      "x": 91,
+      "y": 257.265625,
+      "right": 379,
+      "bottom": 503.609375,
+      "overflow": 0
+    },
+    {
+      "name": "admin",
+      "time": "dawn",
+      "width": 320,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "buttonFill": "rgb(53, 79, 192)"
+    },
+    {
+      "name": "menu",
+      "time": "dawn",
+      "width": 320,
+      "x": 12,
+      "y": 606.265625,
+      "right": 300,
+      "bottom": 852.609375,
+      "overflow": 0
+    },
+    {
+      "name": "admin",
+      "time": "day",
+      "width": 1440,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "buttonFill": "rgb(36, 91, 193)"
+    },
+    {
+      "name": "admin",
+      "time": "day",
+      "width": 425,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "buttonFill": "rgb(36, 91, 193)"
+    },
+    {
+      "name": "menu",
+      "time": "day",
+      "width": 425,
+      "x": 91,
+      "y": 257.265625,
+      "right": 379,
+      "bottom": 503.609375,
+      "overflow": 0
+    },
+    {
+      "name": "admin",
+      "time": "day",
+      "width": 320,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "buttonFill": "rgb(36, 91, 193)"
+    },
+    {
+      "name": "menu",
+      "time": "day",
+      "width": 320,
+      "x": 12,
+      "y": 606.265625,
+      "right": 300,
+      "bottom": 852.609375,
+      "overflow": 0
+    },
+    {
+      "name": "admin",
+      "time": "dusk",
+      "width": 1440,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "buttonFill": "rgb(138, 67, 47)"
+    },
+    {
+      "name": "admin",
+      "time": "dusk",
+      "width": 425,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "buttonFill": "rgb(138, 67, 47)"
+    },
+    {
+      "name": "menu",
+      "time": "dusk",
+      "width": 425,
+      "x": 91,
+      "y": 257.265625,
+      "right": 379,
+      "bottom": 503.609375,
+      "overflow": 0
+    },
+    {
+      "name": "admin",
+      "time": "dusk",
+      "width": 320,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "buttonFill": "rgb(138, 67, 47)"
+    },
+    {
+      "name": "menu",
+      "time": "dusk",
+      "width": 320,
+      "x": 12,
+      "y": 606.265625,
+      "right": 300,
+      "bottom": 852.609375,
+      "overflow": 0
+    },
+    {
+      "name": "admin",
+      "time": "night",
+      "width": 1440,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(21, 44, 71)",
+      "buttonFill": "rgb(172, 200, 255)"
+    },
+    {
+      "name": "admin",
+      "time": "night",
+      "width": 425,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(21, 44, 71)",
+      "buttonFill": "rgb(172, 200, 255)"
+    },
+    {
+      "name": "menu",
+      "time": "night",
+      "width": 425,
+      "x": 91,
+      "y": 257.265625,
+      "right": 379,
+      "bottom": 503.609375,
+      "overflow": 0
+    },
+    {
+      "name": "admin",
+      "time": "night",
+      "width": 320,
+      "overflow": 0,
+      "liveText": "📡Live9월 1일통합 경로 검증용 설교 (테스트)공개 화면 ↗",
+      "centerDifference": 0,
+      "titleWrap": "nowrap",
+      "buttonBackground": "linear-gradient(rgba(255, 255, 255, 0.09), rgba(0, 0, 0, 0) 60%)",
+      "buttonColor": "rgb(21, 44, 71)",
+      "buttonFill": "rgb(172, 200, 255)"
+    },
+    {
+      "name": "menu",
+      "time": "night",
+      "width": 320,
+      "x": 12,
+      "y": 606.265625,
+      "right": 300,
+      "bottom": 852.609375,
+      "overflow": 0
+    },
+    {
+      "name": "prepare",
+      "url": "http://localhost:5173/admin/quiz/c270d783-844f-4085-8bd2-55d19bb24440",
+      "headings": [
+        "🧩[테스트] 편집 연습 — 사랑을 나누는 하루",
+        "🎬설교 영상",
+        "💰이 퀴즈의 AI 호출 비용"
+      ]
+    }
+  ],
+  "errors": []
+}
