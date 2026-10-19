@@ -122,12 +122,12 @@
 .resultCount strong { margin-right: 3px; color: var(--ink); font-size: 16px; font-variant-numeric: tabular-nums; }
 .listHeading > span { color: var(--ink); }
 .records { margin: 0; padding: 0; list-style: none; border: 1px solid var(--archive-edge); border-radius: 10px; background: var(--archive-sheet); box-shadow: 0 8px 20px -16px var(--glass-shadow); }
-.record { position: relative; display: grid; grid-template-columns: 64px minmax(0,1fr); align-items: center; gap: 20px; min-height: 106px; padding: 16px 22px; transition: background-color 160ms ease; }
+.record { position: relative; display: grid; grid-template-columns: 64px minmax(0,1fr) 32px; align-items: center; gap: 20px; min-height: 106px; padding: 16px 22px; transition: background-color 160ms ease; }
 .record + .record { border-top: 1px solid var(--archive-edge); }
 .record:first-child { border-radius: 9px 9px 0 0; }
 .record:last-child { border-radius: 0 0 9px 9px; }
 .record:only-child { border-radius: 9px; }
-.record:is(:hover,:focus-within) { background: color-mix(in srgb,var(--ui-action) 6%,transparent); }
+.record:is(:hover,:focus-within) { background: color-mix(in srgb,var(--glass-highlight) 20%,transparent); }
 .calendarTile { display: grid; text-align: center; overflow: hidden; width: 64px; border: 1px solid color-mix(in srgb,var(--ui-action) 22%,var(--archive-sheet)); border-radius: 8px; background: color-mix(in srgb,var(--archive-sheet) 88%,white); box-shadow: 0 2px 5px -3px var(--glass-shadow); font-variant-numeric: tabular-nums; }
 .calendarTile > span { padding: 2px 4px; background: var(--ui-action-bg); color: var(--ui-action); font-size: 11px; font-weight: 650; }
 .calendarTile > strong { padding: 5px 1px; font-size: 18px; font-weight: 700; letter-spacing: -.06em; line-height: 1.55; color: var(--ink); }
@@ -169,7 +169,7 @@
   .page .filters { grid-template-columns: minmax(0,1fr); gap: 10px; }
   .page .dateFilters select { font-size: 14px; padding-left: 6px; }
   .listHeading { margin-top: 18px; }
-  .record { grid-template-columns: minmax(0,1fr); gap: 12px; min-height: 106px; padding: 15px 14px; }
+  .record { grid-template-columns: minmax(0,1fr) 32px; gap: 12px; min-height: 106px; padding: 15px 14px; }
   .calendarTile { display: none; }
   .recordMeta { margin-bottom: 5px; }
   .recordMeta > time { display: inline; }
@@ -207,3 +207,9 @@
 .levelChoices a > svg { width: 36px; height: 36px; }
 @media (prefers-reduced-motion: reduce) { .levelChoices a { transition: none; } }
 @media (forced-colors: active) { .levelDialog, .levelChoices a { background: Canvas; color: CanvasText; border-color: CanvasText; } }
+
+.recordArrow { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--archive-edge); border-radius: 9px; color: var(--ui-action); background: var(--glass-soft); box-shadow: inset 0 1px 0 var(--glass-highlight), 0 2px 4px -2px var(--glass-shadow); transition: background-color 160ms ease, border-color 160ms ease; }
+.recordArrow > svg { width: 17px; height: 17px; transform: rotate(-90deg); }
+.record:is(:hover,:focus-within) .recordArrow { background: color-mix(in srgb,var(--glass-highlight) 40%,var(--ui-action-bg)); border-color: color-mix(in srgb,var(--ui-action) 35%,var(--archive-edge)); }
+@media (prefers-reduced-motion: reduce) { .recordArrow { transition: none; } }
+@media (forced-colors: active) { .recordArrow { border-color: ButtonText; color: ButtonText; background: ButtonFace; box-shadow: none; } }

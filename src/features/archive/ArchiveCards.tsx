@@ -50,6 +50,7 @@ function ArchiveRecords({ items, onNavigate }: { items: ArchiveItem[]; onNavigat
         <h3 id={`archive-${item.slug}`} tabIndex={-1}>{item.title}</h3>
         <p className={styles.recordReference}><AdminIcon name="book"/><code>{item.bibleReferenceLabel}</code></p>
       </div>
+      <span className={styles.recordArrow} aria-hidden="true"><AdminIcon name="chevron"/></span>
       <button className={styles.recordOpen} type="button" aria-labelledby={`archive-${item.slug}`} aria-haspopup="dialog" aria-expanded={selected?.slug === item.slug} onClick={() => setSelected(item)}/>
     </li>)}
   </ol>
