@@ -79,3 +79,7 @@ import { Button, ButtonLink } from "./components/Button";
 ```
 
 장식 모드에 별도 클릭/키보드 이벤트를 붙이지 않는다. 행 버튼이 접근성 이름과 동작을 소유한다. 행 자체의 밝기 전환은160ms로 맞춘다. 테두리 색을 해당 읽기 면에 맞추려면 `--glass-arrow-edge`를 지정한다. 다른 공통 유리 원형 화살표 `GlassArrow`와 구별한다.
+
+### 입체 작업 버튼
+
+`Button`/`ButtonLink`에 `className="action-button-raised"`를 지정한다. 퀴즈 준비와 Live 공개 화면이 같은 윗빛·안쪽 음영·160ms 호버·1px 눌림을 공유하며, 주요/보조 색은 유지한다. 감소 모션·고대비를 지원한다. 실제 예시는 개발 서버 `/dev/design#raised`의 **입체 작업 버튼**이다.

@@ -50,7 +50,7 @@ export function Component() {
   const rows = items.filter(q => (filter === "all" || (filter === "draft" ? isDraft(q) : q.status === filter)) && `${q.title} ${q.sermonDate}`.includes(search.trim()));
   const due = cleanup?.items.filter(q => q.state === "blocked" || (q.state !== "purged" && q.dueAt && Date.parse(q.dueAt) - checkedAt <= 86_400_000)) ?? [];
   return <div className={styles.page} data-admin-board="quizzes">
-    <AdminBoardHeader title="퀴즈 관리" description="퀴즈를 준비하고, 공개와 참여를 관리하세요." terms={["초안", "발행", "자동 선택", "대표 지정"]} screenshots={["dashboard"]} actions={<ButtonLink variant="primary" className={styles.prepareButton} to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>}/>
+    <AdminBoardHeader title="퀴즈 관리" description="퀴즈를 준비하고, 공개와 참여를 관리하세요." terms={["초안", "발행", "자동 선택", "대표 지정"]} screenshots={["dashboard"]} actions={<ButtonLink variant="primary" className="action-button-raised" to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>}/>
     {message && <p className={styles.alert} role="alert">{message}</p>}
     <div className={styles.statusBar} data-admin-summary>
     <div className={styles.overview} role="group" aria-label="운영 요약">
@@ -63,7 +63,7 @@ export function Component() {
         {featured && <time className={styles.featuredDate} dateTime={featured.sermonDate}><AdminIcon name="calendar"/>{date(featured.sermonDate)}</time>}
       </div>
       <h3 id="home-quiz-heading" title={featured?.title}>{featured?.title ?? "아직 공개된 퀴즈가 없습니다"}</h3>
-      {featured?.slug && <ButtonLink to={`/quiz/${featured.slug}`}>공개 화면 <span aria-hidden="true">↗</span></ButtonLink>}
+      {featured?.slug && <ButtonLink className="action-button-raised" to={`/quiz/${featured.slug}`}>공개 화면 <span aria-hidden="true">↗</span></ButtonLink>}
     </section>}
     </div>
     <MonthlySermonTheme/>

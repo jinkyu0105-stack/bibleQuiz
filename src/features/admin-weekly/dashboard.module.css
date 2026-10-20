@@ -16,9 +16,6 @@
 .featuredDate svg { width: 13px; height: 13px; color: var(--ui-success); }
 :global(.sky-app:not(.home-shell) .admin-main) .featured h3 { grid-column: 1; min-width: 0; margin: 0; font-family: 'Noto Sans KR',sans-serif; font-size: 15px; font-weight: 600; line-height: 1.7; white-space: nowrap; text-wrap: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .featured > a { grid-column: 2; grid-row: 2; font-size: 12px; white-space: nowrap; }
-:global(.sky-app .admin-main) .prepareButton { background-image: linear-gradient(to bottom, rgb(255 255 255 / .09), transparent 60%); border-color: color-mix(in srgb,var(--ui-action-fill) 85%,var(--ink)); box-shadow: inset 0 1px 0 rgb(255 255 255 / .3), inset 0 -1px 0 rgb(0 0 0 / .12), 0 3px 6px -3px var(--glass-shadow); transition: box-shadow 160ms ease, transform 160ms ease; }
-:global(.sky-app .admin-main) .prepareButton:hover { box-shadow: inset 0 1px 0 rgb(255 255 255 / .38), 0 5px 10px -4px var(--glass-shadow); }
-:global(.sky-app .admin-main) .prepareButton:active { transform: translateY(1px); box-shadow: inset 0 1px 3px rgb(0 0 0 / .16); }
 .library { border-top: 1px solid var(--line); padding-top: 18px; }
 .sectionHeading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
 :global(.sky-app:not(.home-shell) .admin-main) .sectionHeading h3 { margin: 0; font-family: 'Noto Sans KR',sans-serif; font-size: 17px; font-weight: 600; }
@@ -92,5 +89,3 @@
  .boardHeading > :last-child { display: block; text-align: center; font-size: 0; }
  .boardHeading > :last-child::after { content: '관리'; font-size: 11px; }
 }
-@media (prefers-reduced-motion: reduce) { :global(.sky-app .admin-main) .prepareButton { transition: none; } }
-@media (forced-colors: active) { :global(.sky-app .admin-main) .prepareButton { background-image: none; box-shadow: none; border-color: ButtonText; } }
