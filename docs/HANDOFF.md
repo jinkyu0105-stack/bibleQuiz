@@ -1,5 +1,9 @@
 # 인수인계
 
+## 이번 재개: 승인된 Preview push·배포 확인
+
+2026-10-21 사용자가 main push와 Preview 완료 확인을 요청했다. 시작 HEAD 2e87173/clean, 원격 main 516a98e보다 24커밋 앞선 상태다. Pro 잔여 86% × 사용자 기준 10 = 860%, 별도 5시간 값 없음. 전체 `pnpm check` 최종 통과(2,568건 및 lint/typecheck/build). 첫 실행의 OPERATIONS_MANUAL_OUTDATED를 원본·앱 사본 동기화와 현재 새 퀴즈 안내로 수정했다. 로그 `/tmp/p926-preview-check-final.log`. 기존 번들 500kB 경고만 남고 빌드는 성공했다. 이 문서 작성 시점에는 아직 push 전이며, 커밋 후 GitHub Workers Builds 결과의 소스/Version ID와 Cloudflare 최신 배포의 100% 버전을 대조한다. Builds API는 현재 연결의 workers-ci.read 권한이 없어 GitHub 공식 check-run 결과를 사용한다. Production·migration·자료·실제 AI는 변경하지 않는다.
+
 ## 현재 작업: P9-26 제작 2~6단계 작업 소섹션
 
 2026-10-21 사용자 요청을 로컬 구현·검사·문서에 반영했다. 1단계 ‘설교 정보’처럼 2~6단계의 제목·내용·관련 버튼을 함께 묶고 여백을 통일했다. 이번 요청은 로컬 완료, 부모 P9-26은 사용자 확인 대기다. 다음은 같은 화면의 사용자 피드백 반영이며 세션을 유지한다. 추천은 GPT-6.1-sol/high: 시각 보정과 저장·검수·접근성을 함께 확인한다. 새 번호·push·배포로 자동 확대하지 않는다.
