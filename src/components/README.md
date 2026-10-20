@@ -83,3 +83,5 @@ import { Button, ButtonLink } from "./components/Button";
 ### 입체 작업 버튼
 
 `Button`/`ButtonLink`에 `className="action-button-raised"`를 지정한다. 퀴즈 준비와 Live 공개 화면이 같은 윗빛·안쪽 음영·160ms 호버·1px 눌림을 공유하며, 주요/보조 색은 유지한다. 감소 모션·고대비를 지원한다. 실제 예시는 개발 서버 `/dev/design#raised`의 **입체 작업 버튼**이다.
+
+관리자 `.admin-main` 안의 모든 공통 `Button`/`ButtonLink`는 입체 작업 스타일을 자동 적용한다. 주요/보조 색상과 크기·동작은 유지한다. 메뉴·탭·전용 아이콘 컨트롤은 대상에서 제외한다. 공개 화면은 명시한 `action-button-raised`만 적용한다.
