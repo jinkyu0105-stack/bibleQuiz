@@ -1,12 +1,16 @@
 # 인수인계
 
-## 이번 재개: 승인된 Preview push·배포 확인
+## 이번 재개: Preview push·배포 완료
 
-2026-10-21 사용자가 main push와 Preview 완료 확인을 요청했다. 시작 HEAD 2e87173/clean, 원격 main 516a98e보다 24커밋 앞선 상태다. Pro 잔여 86% × 사용자 기준 10 = 860%, 별도 5시간 값 없음. 전체 `pnpm check` 최종 통과(2,568건 및 lint/typecheck/build). 첫 실행의 OPERATIONS_MANUAL_OUTDATED를 원본·앱 사본 동기화와 현재 새 퀴즈 안내로 수정했다. 로그 `/tmp/p926-preview-check-final.log`. 기존 번들 500kB 경고만 남고 빌드는 성공했다. 이 문서 작성 시점에는 아직 push 전이며, 커밋 후 GitHub Workers Builds 결과의 소스/Version ID와 Cloudflare 최신 배포의 100% 버전을 대조한다. Builds API는 현재 연결의 workers-ci.read 권한이 없어 GitHub 공식 check-run 결과를 사용한다. Production·migration·자료·실제 AI는 변경하지 않는다.
+2026-10-21 사용자 승인으로 소스 **2717efcc0225eeab137bf9bbe51107d470266062**를 main에 push했다. Workers Builds **16c28ca6-8720-433d-9233-c5b487fb53ad** 성공과 Preview **a17323f0-4eb8-4fb2-a064-442652e6d12b** 100% 적용을 확인했다. 배포 **74a41ecd-d1ee-48d9-b47a-774924e4d390**, 적용 시각 **2026-10-21 01:46:46 KST**다. 이 사후 문서 기록 커밋은 로컬이며 배포 소스로 혼동하지 않는다.
+
+시작 2e87173/clean, 원격 516a98e 이후 누적 24커밋과 매뉴얼 수정이 포함됐다. Pro 잔여 86% × 사용자 기준 10 = 860%, 별도 5시간 값 없음. 전체 `pnpm check` 최종 통과(2,568건 및 lint/typecheck/build). 첫 실행의 OPERATIONS_MANUAL_OUTDATED를 원본·앱 사본 동기화와 현재 새 퀴즈 안내로 수정했다. 로그 `/tmp/p926-preview-check-final.log`. 기존 번들 500kB 경고만 남고 빌드는 성공했다. Builds API는 workers-ci.read 권한 부족으로 조회할 수 없어 GitHub 공식 check-run의 소스/Version ID와 Cloudflare deployments의 100% 버전을 대조했다.
+
+[폰에서 열 관리자 화면](https://biblequiz-app-preview.jinkyu0105.workers.dev/admin/new). 일반 브라우저 User-Agent에서 홈·관리 경로 HTTP 302 Access 연결과 로그인 HTML을 확인했다. 처음 기본 자동 요청은 403이었다. 인증 후 실제 화면·휴대폰은 사용자 확인 대기다. GitHub CI **39460006185**의 validate/browser는 배포 확인 시 진행 중이었다. Production·migration·자료·실제 AI 변경은 없다. 현재 배포 요청 완료, 부모 P9-26 사용자 확인 대기, 다음은 폰 화면 확인, 세션 유지, 추천 GPT-6.1-sol/high.
 
 ## 현재 작업: P9-26 제작 2~6단계 작업 소섹션
 
-2026-10-21 사용자 요청을 로컬 구현·검사·문서에 반영했다. 1단계 ‘설교 정보’처럼 2~6단계의 제목·내용·관련 버튼을 함께 묶고 여백을 통일했다. 이번 요청은 로컬 완료, 부모 P9-26은 사용자 확인 대기다. 다음은 같은 화면의 사용자 피드백 반영이며 세션을 유지한다. 추천은 GPT-6.1-sol/high: 시각 보정과 저장·검수·접근성을 함께 확인한다. 새 번호·push·배포로 자동 확대하지 않는다.
+2026-10-21 사용자 요청을 로컬 구현·검사·문서에 반영했다. 1단계 ‘설교 정보’처럼 2~6단계의 제목·내용·관련 버튼을 함께 묶고 여백을 통일했다. 구현과 위 Preview 반영은 완료했고, 부모 P9-26은 사용자 확인 대기다. 다음은 같은 화면의 사용자 피드백 반영이며 세션을 유지한다. 추천은 GPT-6.1-sol/high: 시각 보정과 저장·검수·접근성을 함께 확인한다. 새 번호·push·배포로 자동 확대하지 않는다.
 
 ## 실제 상태와 진입점
 
@@ -32,4 +36,4 @@
 
 Node 24.18.0/pnpm 11.14.0, bash login:false, 명시적 cwd를 사용한다. 필요하면 PATH에 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. 일반 도구는 작동하며 localhost·브라우저·Git 쓰기는 require_escalated 검토 경로다. 도구 시작 실패는 codex-exec-recovery를 따른다. 5173 서버 명령은 `pnpm dev:demo --port 5173 --strictPort`다. `.wrangler/ui-demo-state`와 실제 자료를 보존한다. E2E 4173은 독립 임시 DB다. 브라우저 검사 중 소스·문서 저장은 Vite 재시작을 유발하므로 피한다.
 
-마지막 원격 일치 확인은 main 516a98e이며 배포 완료는 미확인이다. 마지막 완전 대조 Preview는 ceb50e3/version 2227f720-c164-4c04-a014-cb2720fea411이다. 이번 변경은 로컬만이며 Preview 반영으로 안내하지 않는다. Production은 범위 밖이다.
+최신 원격 소스·배포 버전은 문서 맨 위의 2717efc/a17323f0을 따른다. 직전 516a98e/76664793은 이번 조회에서 대조했고, Production은 변경하지 않았다.

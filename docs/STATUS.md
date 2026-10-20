@@ -1,8 +1,12 @@
 # 현재 상태
 
-## P9-26 Preview 반영 — 2026-10-21
+## P9-26 Preview 반영 완료 — 2026-10-21
 
-사용자가 최신 변경의 main push와 Preview 배포 확인을 승인했다. 로컬 기능 소스는 2e87173이며 원격 main 516a98e 이후 24개 커밋을 포함한다. 배포 전 전체 `pnpm check`가 통과했다(자동 검사 2,568건, lint/typecheck/빌드 포함). 최초 검사는 운영 매뉴얼 사본 불일치로 중단됐으며, 월별 주제 안내를 사본에 반영하고 새 퀴즈 만들기 안내도 현재 동작으로 고쳐 재검사했다. 관련 화면 E2E 41건과 네 시간대·모바일 검수 결과는 유지한다. 이 기록 시점은 push 전이며 배포 결과는 뒤이어 확인한다. Production·원격 자료·migration·실제 AI 변경은 제외한다.
+사용자 승인으로 누적 변경과 매뉴얼 동기화를 main **2717efcc0225eeab137bf9bbe51107d470266062**에 push했다. [Workers Builds](https://dash.cloudflare.com/c975020ce569ec52da63732ba0b94422/workers/services/view/biblequiz-app-preview/production/builds/16c28ca6-8720-433d-9233-c5b487fb53ad) 성공과 Preview 버전 **a17323f0-4eb8-4fb2-a064-442652e6d12b**의 **100% 적용**을 대조했다(2026-10-21 01:46:46 KST). 배포 ID는 74a41ecd-d1ee-48d9-b47a-774924e4d390이다.
+
+배포 전 전체 `pnpm check` 통과: 자동 검사 2,568건, lint/typecheck/빌드 및 로컬 합성 자료 검사. 최초 매뉴얼 원본·사본 불일치를 수정했고, ‘새 퀴즈 만들기’ 안내를 현재 동작으로 맞췄다. 기존 관련 화면 E2E 41건과 네 시간대·모바일 검수 결과를 유지한다. [별도 GitHub CI](https://github.com/jinkyu0105-stack/bibleQuiz/actions/runs/39460006185)는 배포 확인 시 validate/browser 진행 중이었다. CI와 Cloudflare 배포 성공을 구분한다.
+
+[Preview 관리자](https://biblequiz-app-preview.jinkyu0105.workers.dev/admin/new): 일반 브라우저 User-Agent로 홈·관리 경로의 HTTP 302 Access 연결과 로그인 HTML 응답을 확인했다. 기본 자동 요청의 최초 403은 별도로 기록하며 로그인 뒤 실제 화면·휴대폰 확인을 대신하지 않는다. Production·원격 자료·migration·실제 AI 변경 없음. 사후 배포 기록은 로컬 문서 커밋이며 실제 배포 소스는 위 2717efc다. 현재 P9-26 배포 요청 완료, 부모 사용자 확인 대기, 다음 폰에서 화면 확인, 세션 유지, 추천 GPT-6.1-sol/high(화면과 배포 상태를 함께 확인).
 
 ## P9-26 제작 2~6단계 작업 소섹션 — 2026-10-21
 
