@@ -23,7 +23,7 @@ export function Component(){
     if(!id)return()=>controller.abort();void weeklyRequest(`/api/admin/quiz-sets/${id}/workspace`,weeklyQuizSchema,'GET',undefined,controller.signal).then(next=>{if(!controller.signal.aborted)setQuiz(next);}).catch(()=>{if(!controller.signal.aborted)setMessage('퀴즈를 불러오지 못했습니다.');});
     void weeklyRequest('/api/admin/draft-cleanup',draftCleanupListSchema,'GET',undefined,controller.signal).then(data=>{if(!controller.signal.aborted)setDue(data.items.find(item=>item.sermonId===quiz?.sermonId)?.dueAt??null);}).catch(()=>{});return()=>controller.abort();},[id,attempt,quiz?.sermonId]);
   const published=quiz&&['published','archived'].includes(quiz.status);
-  return <div className={`${styles.page} ${styles.workspace}`} data-admin-clear data-admin-workspace data-admin-tool-page={published || undefined}><Link className={styles.backLink} to="/admin">← 퀴즈 목록</Link>{message&&<div><p role="alert">{message}</p><Button onClick={()=>{setMessage('');setAttempt(a=>a+1);}}>다시 불러오기</Button></div>}
+  return <div className={`${styles.page} ${styles.workspace}`} data-admin-clear data-admin-workspace data-authoring={!published || undefined} data-admin-tool-page={published || undefined}><Link className={styles.backLink} to="/admin">← 퀴즈 목록</Link>{message&&<div><p role="alert">{message}</p><Button onClick={()=>{setMessage('');setAttempt(a=>a+1);}}>다시 불러오기</Button></div>}
     {!id?<AdminSermonInput key="new" weekly/>:!quiz?!message&&<p role="status">퀴즈를 불러오고 있습니다.</p>:<>
       <header className={styles.workspaceHeader}><h2><AdminEmoji>🧩</AdminEmoji>{quiz.title}</h2><WorkspaceMeta quiz={quiz} due={due}/></header>
       {published?<>

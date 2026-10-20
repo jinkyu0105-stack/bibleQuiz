@@ -1,23 +1,75 @@
-.chassis { padding: 12px; border: 1px solid var(--control-border); border-radius: 12px; background: var(--admin-sheet,var(--glass-solid)); box-shadow: inset 0 1px 0 var(--glass-highlight), 0 4px 12px -8px var(--glass-shadow); container-type: inline-size; }
-.keys { width: 100%; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 0; margin: 0; padding: 0; list-style: none; border: 1px solid var(--control-border); border-radius: 9px; overflow: hidden; background: var(--line); }
-.keys li { min-width: 0; padding: 5px; border-right: 1px solid var(--control-border); }
-.keys li:last-child { border-right: 0; }
-.chassis .keys button { width: 100%; min-height: 106px; margin: 0; display: grid; justify-items: center; align-content: center; gap: 5px; padding: 10px 5px; border: 1px solid var(--control-border); border-radius: 6px; background: linear-gradient(165deg,color-mix(in srgb,var(--glass-highlight) 25%,var(--admin-sheet,var(--glass-solid))),var(--admin-sheet,var(--glass-solid))); color: var(--ink); box-shadow: inset 0 2px 0 var(--glass-highlight), inset 0 -3px 0 color-mix(in srgb,var(--ink) 12%,transparent), 0 3px 0 color-mix(in srgb,var(--ink) 24%,transparent), 0 5px 5px -2px var(--glass-shadow); transition: transform 140ms ease, box-shadow 140ms ease; }
-.number { font-size: 24px; font-weight: 750; font-variant-numeric: tabular-nums; line-height: 1.1; }
-.title { font-size: 13px; font-weight: 650; white-space: nowrap; }
-.keys small { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--muted); }
-.keys small svg { width: 12px; height: 12px; }
-.chassis .keys [data-recessed] { transform: translateY(2px); background: color-mix(in srgb,var(--ink) 9%,var(--admin-sheet,var(--glass-solid))); box-shadow: inset 0 3px 6px -1px var(--glass-shadow), inset 0 1px 3px color-mix(in srgb,var(--ink) 24%,transparent), 0 1px 0 var(--glass-highlight); }
-.chassis .keys [aria-current=step] { border-color: var(--ui-action); outline: 1px solid var(--ui-action); outline-offset: -3px; }
-.keys [aria-current=step] :is(.number,small) { color: var(--ui-action); }
+.chassis {
+  --key-face: color-mix(in srgb,var(--glass-solid) 82%,transparent);
+  --key-shade: color-mix(in srgb,var(--ink) 35%,transparent);
+  --key-light: color-mix(in srgb,var(--glass-highlight) 92%,transparent);
+  min-width: 0; display: block; position: relative; container-type: inline-size;
+  border: 1px solid color-mix(in srgb,var(--ink) 22%,var(--glass-highlight));
+  border-radius: 18px; padding: 5px; background: var(--glass-clear);
+  box-shadow: inset 0 0 0 2px var(--key-light), inset 0 0 0 5px color-mix(in srgb,var(--glass-highlight) 25%,transparent),
+    0 1px 0 var(--glass-highlight), 0 8px 24px -15px var(--glass-shadow);
+}
+.chassis > nav { display: block; min-width: 0; }
+.keys { width: 100%; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 0; margin: 0; padding: 20px 12px 22px; list-style: none; }
+.keys li { position: relative; min-width: 0; padding-inline: 8px; }
+.keys li + li::before { content: ''; position: absolute; left: -1px; top: 10px; bottom: 6px; width: 1px; background: var(--key-shade); box-shadow: 1px 0 0 var(--key-light); }
+.chassis .keys button {
+  position: relative; width: 100%; min-height: 136px; margin: 0; display: grid; justify-items: center; align-content: center;
+  gap: 8px; padding: 14px 3px 12px; border: 1px solid var(--key-shade); border-radius: 14px;
+  background: linear-gradient(145deg,color-mix(in srgb,var(--glass-highlight) 60%,var(--key-face)),var(--key-face) 52%,color-mix(in srgb,var(--ink) 6%,var(--key-face)));
+  color: var(--ink); text-shadow: 0 1px 0 color-mix(in srgb,var(--glass-highlight) 65%,transparent);
+  box-shadow: inset 0 2px 1px var(--key-light), inset 2px 0 1px color-mix(in srgb,var(--glass-highlight) 65%,transparent),
+    inset 0 -3px 1px var(--key-shade), 0 3px 0 color-mix(in srgb,var(--ink) 50%,transparent), 0 7px 8px -3px var(--glass-shadow);
+  transition: background 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+.keys button::before { content: ''; position: absolute; inset: -4px; border-radius: 18px; border: 1px solid color-mix(in srgb,var(--glass-highlight) 82%,transparent); box-shadow: inset 0 1px 2px var(--key-shade); pointer-events: none; }
+.number { position: relative; font-size: 36px; font-weight: 750; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.number svg { position: absolute; left: calc(100% + 5px); top: 50%; transform: translateY(-35%); width: 13px; height: 13px; }
+.title { font-size: 13px; font-weight: 700; white-space: nowrap; }
+.title b { display: none; font-weight: inherit; }
+.keys small { padding: 2px 8px; border-radius: 5px; font-size: 10px; line-height: 1.4; color: var(--muted); background: color-mix(in srgb,var(--ink) 7%,transparent); }
+.chassis .keys [data-recessed] {
+  background: linear-gradient(145deg,color-mix(in srgb,var(--ink) 23%,var(--key-face)),color-mix(in srgb,var(--ink) 10%,var(--key-face)));
+  box-shadow: inset 0 5px 5px color-mix(in srgb,var(--ink) 38%,transparent), inset 3px 0 6px var(--key-shade), inset -1px -1px 1px var(--key-light),0 1px 0 var(--key-light);
+}
+.chassis .keys [aria-current=step] { color: var(--ui-action); border-color: var(--ui-action); background: linear-gradient(145deg,var(--key-light),color-mix(in srgb,var(--ui-action-bg) 90%,var(--key-face))); }
+.keys [aria-current=step]::before { border-color: var(--ui-action); box-shadow: 0 0 0 1px color-mix(in srgb,var(--ui-action) 30%,transparent),inset 0 0 0 1px var(--key-light); }
+.keys [aria-current=step] small { color: var(--ui-action); background: var(--ui-action-bg); }
 .chassis .keys button:disabled { opacity: 1; color: var(--muted); cursor: not-allowed; }
 .chassis .keys button:hover:not(:disabled) { filter: brightness(1.05); }
-.chassis .keys button:active:not(:disabled) { transform: translateY(2px); box-shadow: inset 0 3px 6px var(--glass-shadow); }
-.chassis .keys button:focus-visible { outline: 3px solid var(--ui-action); outline-offset: -3px; }
+.chassis .keys button:active:not(:disabled) { transform: translateY(2px); box-shadow: inset 0 4px 6px var(--key-shade),0 1px 0 var(--key-light); }
+.chassis .keys button:focus-visible { outline: 3px solid var(--ui-action); outline-offset: 3px; }
+.footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--key-light); box-shadow: 0 -1px 0 color-mix(in srgb,var(--ink) 12%,transparent); }
 .stageHeading { border-bottom: 1px solid var(--line); margin-bottom: 20px; padding-bottom: 16px; }
-:global(.sky-app .admin-main) .stageHeading h2 { margin: 0 0 6px; font-size: 20px; font-weight: 700; }
-.stageHeading p { margin: 0; font-size: 13px; line-height: 1.7; color: var(--muted); }
-@container (max-width: 760px) { .keys { grid-template-columns: repeat(3,minmax(0,1fr)); } .keys li:nth-child(3n) { border-right: 0; } .keys li:nth-child(n+4) { border-top: 1px solid var(--control-border); } }
-@container (max-width: 360px) { .keys { grid-template-columns: repeat(2,minmax(0,1fr)); } .keys li:nth-child(3n) { border-right: 1px solid var(--control-border); } .keys li:nth-child(2n) { border-right: 0; } .keys li:nth-child(n+3) { border-top: 1px solid var(--control-border); } .chassis .keys button { min-height: 90px; } }
+.stageHeading > div { display: flex; align-items: center; gap: 4px; min-height: 44px; }
+:global(.sky-app .admin-main) .stageHeading h2 { margin: 0; font-size: 20px; font-weight: 700; }
+.stageHeading p { margin: 2px 0 0; font-size: 13px; line-height: 1.7; color: var(--muted); }
+:global([data-admin-sheet]) > .stageHeading { margin-bottom: 0; }
+:global(body[data-time=night]) .chassis { --key-face: #586779; --key-shade: rgb(6 17 29 / .65); --key-light: rgb(220 238 255 / .7); background: rgb(165 191 213 / .13); }
+:global(body[data-time=night]) .keys button { text-shadow: 0 1px 1px #172738; }
+:global(body[data-time=night]) .keys [data-recessed] { background: linear-gradient(145deg,#263a50,#475c73); }
+:global(body[data-time=night]) .keys button:disabled { color: #d4e1eb; }
+@container (max-width: 680px) {
+  .keys { padding: 16px 7px 18px; }
+  .keys li { padding-inline: 5px; }
+  .chassis .keys button { min-height: 110px; border-radius: 11px; gap: 7px; }
+  .keys button::before { inset: -3px; border-radius: 14px; }
+  .number { font-size: 28px; }
+  .title { font-size: 12px; }
+  .title > span { display: none; } .title b { display: block; }
+  .number svg { width: 10px; height: 10px; left: calc(100% + 2px); }
+  .footer { flex-wrap: wrap; padding: 10px 12px; gap: 8px; }
+}
+@container (max-width: 380px) {
+  .keys { padding: 12px 2px 14px; }
+  .keys li { padding-inline: 2px; }
+  .keys li + li::before { left: -.5px; top: 7px; bottom: 4px; opacity: .8; }
+  .chassis .keys button { min-height: 84px; padding: 8px 1px; gap: 5px; border-radius: 8px; }
+  .keys button::before { inset: -1px; border-radius: 9px; }
+  .number { font-size: 24px; }
+  .number svg { width: 8px; height: 8px; left: calc(100% + 1px); }
+  .title { font-size: 11px; }
+  .keys small { font-size: 9px; padding: 1px 5px; }
+  .footer { padding-inline: 7px; }
+}
 @media (prefers-reduced-motion: reduce) { .chassis .keys button { transition: none; } }
-@media (forced-colors: active) { .chassis, .chassis .keys button { background: Canvas; color: CanvasText; box-shadow: none; } .chassis .keys [aria-current=step] { outline-color: Highlight; } .chassis .keys button:disabled { color: GrayText; } }
+@media (forced-colors: active) { .chassis, .chassis .keys button { background: Canvas; color: CanvasText; box-shadow: none; text-shadow: none; } .chassis .keys [aria-current=step] { outline: 2px solid Highlight; } .chassis .keys button:disabled { color: GrayText; } .keys button::before,.keys li::before { display: none; } }

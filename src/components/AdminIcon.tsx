@@ -20,6 +20,7 @@ const shapes = {
   book: <path d="M12 21V5 M12 5C9 2 5 3 2 4v15c3-1 7-2 10 1 3-3 7-2 10-1V4c-3-1-7-2-10 1"/>,
   external: <path d="M14 3h7v7 M21 3 11 13 M10 5H4v16h16v-6"/>,
   chevron: <path d="m7 10 5 5 5-5"/>,
+  close: <path d="m6 6 12 12 M18 6 6 18"/>,
   check: <path d="m5 12 4 4L19 6"/>,
   lock: <><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3 M12 14v3"/></>,
   alert: <><circle cx="12" cy="12" r="9"/><path d="M12 7v6 M12 17h.01"/></>,

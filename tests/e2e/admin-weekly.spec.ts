@@ -13,7 +13,7 @@ function content():AdminContentView {
     snapshots:[{kind:'summary',value:{id:'summary',binding:fullBinding,draft:{paragraphs:[{id:'paragraph',text:'서로 사랑하는 삶',intentClaimIds:['claim'],evidence}]}}},...(['child','adult'] as const).map(difficulty=>({kind:'candidate',value:{id:difficulty,difficulty,binding:fullBinding,statuses:{word:'use'},draft:{candidates:[{id:'word',displayAnswer:'사랑',gridAnswer:'사랑',clue:'서로 아끼는 마음',phraseDescription:'설교의 핵심',selectionReason:'중심 메시지',sermonImportance:'핵심',difficultyReason:'익숙한 단어',grounding:{origin:'transcript',intentClaimIds:['claim'],evidence}}]}}}))],
     weekCostMicroUsd:0,weekUnknownCalls:0,jobCostMicroUsd:0,jobUnknownCalls:0,preview:null});
 }
-async function workspace(page:Page,edit:(body:Record<string,unknown>,view:AdminContentView)=>void|false){
+async function workspace(page:Page,edit:(body:Record<string,unknown>,view:AdminContentView)=>void|false|Promise<void|false>){
   const view=content(),mutations:string[]=[];
   const reference=parseBibleReference('요 3:16');if(!reference.ok)throw new Error('synthetic reference');
   await page.route('**/api/admin/**',async route=>{
@@ -21,7 +21,7 @@ async function workspace(page:Page,edit:(body:Record<string,unknown>,view:AdminC
     if(req.method()!=='GET'){
       mutations.push(p);
       if(p.endsWith('/generation/job/review')){
-        const body=req.postDataJSON();if(edit(body,view)===false)return route.fulfill({status:409,json:{error:{code:'INPUT_CONFLICT',message:'다른 저장이 처리됐습니다. 입력을 보존했습니다.',requestId:'11111111-1111-4111-8111-111111111111'}}});
+        const body=req.postDataJSON();if(await edit(body,view)===false)return route.fulfill({status:409,json:{error:{code:'INPUT_CONFLICT',message:'다른 저장이 처리됐습니다. 입력을 보존했습니다.',requestId:'11111111-1111-4111-8111-111111111111'}}});
         return route.fulfill({json:{data:{outcome:'saved'}}});
       }
       throw new Error(`unexpected mutation: ${p}`);
@@ -51,7 +51,7 @@ test('new quiz opens an unsaved blank form and resumes existing work without any
   await expect(page).toHaveURL(/\/admin\/new$/u);
   await expect(page.getByLabel('YouTube 영상 링크')).toHaveValue('');
   await expect(page.getByLabel('설교 제목',{exact:true})).toHaveValue('');
-  await expect(page.getByText('아직 새 작업을 저장하지 않았습니다.',{exact:false})).toBeVisible();
+  await expect(page.getByText('입력은 이 브라우저에 임시 보관됩니다.',{exact:false})).toBeVisible();
   expect(f.mutations).toEqual([]);
   await page.reload();
   await expect(page.getByLabel('YouTube 영상 링크')).toHaveValue('');
@@ -65,8 +65,8 @@ test('new quiz opens an unsaved blank form and resumes existing work without any
   expect(confirmation!.y).toBeGreaterThan(textBox!.y+textBox!.height);
   await page.locator('.admin-main').screenshot({path:testInfo.outputPath('draft-workspace.png')});
   await expect(page.getByLabel('설교 ID',{exact:true})).toHaveCount(0);
-  await expect(page.getByRole('button',{name:/^격자 구성/u})).toBeDisabled();
-  await page.getByRole('button',{name:/^핵심 정리/u}).click();await expect(page).toHaveURL(/step=2/u);
+  await expect(page.getByRole('button',{name:/단계 격자 구성/u})).toBeDisabled();
+  await page.getByRole('button',{name:/단계 핵심 정리/u}).click();await expect(page).toHaveURL(/step=2/u);
   await page.reload();await expect(page.getByRole('heading',{name:'핵심 정리',exact:true})).toBeVisible();
   expect(f.mutations).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
@@ -210,4 +210,51 @@ test('weekly header exposes review status and keyboard navigation at narrow widt
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await page.setViewportSize({width:1366,height:768});await expect(manual).toBeVisible();
   expect(f.mutations).toEqual([]);
+});
+
+test('visible manual save preserves unregistered input without creating a second quiz',async({page})=>{
+  const f=await workspace(page,()=>{throw new Error('registration must stay local');});
+  await page.goto('/admin/new');
+  const controls=page.getByRole('region',{name:'퀴즈 제작 조작판'});
+  await expect(controls.getByRole('button',{name:'임시 저장',exact:true})).toBeVisible();
+  await page.getByRole('textbox',{name:'설교 제목',exact:true}).fill('아직 등록하지 않은 연습 제목');
+  await controls.getByRole('button',{name:'임시 저장',exact:true}).click();
+  await expect(controls.getByRole('status')).toContainText('이 브라우저에');
+  await page.reload();
+  await expect(page.getByRole('textbox',{name:'설교 제목',exact:true})).toHaveValue('');
+  await page.getByRole('button',{name:'불러오기',exact:true}).click();
+  await expect(page.getByRole('textbox',{name:'설교 제목',exact:true})).toHaveValue('아직 등록하지 않은 연습 제목');
+  expect(f.mutations).toEqual([]);
+});
+
+test('next waits for the ongoing save once and stays when edited content requires review again',async({page})=>{
+  let started=false,release:()=>void=()=>{};
+  const hold=new Promise<void>(resolve=>{release=resolve;});
+  const f=await workspace(page,async(body,view)=>{
+    started=true;await hold;
+    const outer=body.operation as {operation:{draft:unknown}};
+    const next=structuredClone(view.snapshots[0]!);next.value.id='saved-summary';
+    if(next.kind==='summary')next.value.draft=outer.operation.draft as typeof next.value.draft;
+    view.version++;view.snapshots.push(next);
+    if(view.content.state==='present'&&view.content.summary){view.content.summary.id=next.value.id;view.content.summary.review=null;}
+  });
+  if(f.view.content.state==='present')for(const kind of ['summary','child','adult'] as const)f.view.content[kind]!.review={id:`${kind}-review`} as NonNullable<typeof f.view.content.summary>['review'];
+  await page.goto('/admin/quiz/weekly?step=3');
+  const next=page.getByRole('button',{name:'저장 후 다음: 격자 구성',exact:true});await expect(next).toBeEnabled();
+  await page.getByRole('textbox',{name:'요약 문단 1',exact:true}).fill('저장이 끝나야 이동할 내용');
+  await expect.poll(()=>started).toBe(true);await next.click();
+  await expect(page).toHaveURL(/step=3/);release();
+  await expect(page.getByText('변경 내용은 저장했습니다. 확정·검수를 마친 뒤 다음 단계로 이동해 주세요.',{exact:true})).toBeVisible();
+  await expect(page.getByRole('textbox',{name:'요약 문단 1',exact:true}).last()).toHaveValue('저장이 끝나야 이동할 내용');
+  await expect(next).toBeDisabled();expect(f.mutations).toHaveLength(1);
+});
+
+test('manual save failure keeps typed content and does not change the step',async({page})=>{
+  const f=await workspace(page,()=>false);await page.goto('/admin/quiz/weekly?step=3');
+  await page.getByRole('textbox',{name:'요약 문단 1',exact:true}).fill('실패해도 유지할 입력');
+  const controls=page.getByRole('region',{name:'퀴즈 제작 조작판'});
+  await controls.getByRole('button',{name:'임시 저장',exact:true}).click();
+  await expect(controls.getByRole('status')).toContainText('저장하지 못했습니다');
+  await expect(page.getByRole('textbox',{name:'요약 문단 1',exact:true})).toHaveValue('실패해도 유지할 입력');
+  await expect(page).toHaveURL(/step=3/);expect(f.mutations).toHaveLength(1);
 });

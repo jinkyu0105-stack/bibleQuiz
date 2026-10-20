@@ -90,9 +90,10 @@ import { Button, ButtonLink } from "./components/Button";
 
 | 부품 이름 | 구현 | 사용 기준 |
 | --- | --- | --- |
-| 카세트 단계 버튼 | `QuizWorkflowSteps.tsx` | 하나의 불투명 프레임, 번호1–6, 이전 단계 눌림·현재 실행색·잠금 대기. `available`과 `reasons`를 기존 업무 조건에서 전달 |
-| 단계 본문 제목 | `QuizStageHeading` | 같은 단계 데이터에서 제목·설명 표시. 페이지 상단에 중복 출력하지 않음 |
+| 카세트 단계 버튼 | `QuizWorkflowSteps.tsx` | 독립된 투명 이중 프레임과 하단 `footer`. 모든 폭에서6키 한 행. 이전 깊은 눌림·현재 실행색·잠금 대기. 업무 조건은 `available`/`reasons`로 전달 |
+| 단계 본문 제목 | `QuizStageHeading` | 같은 단계 데이터에서 제목·설명 표시. `onHelp`로 제목 옆 물음표 연결 |
 | 입체 새로고침 버튼 | `AdminRefreshButton` | 기존 원형 크기와 동작 유지, 얕은 윗빛·음영·클릭 눌림 |
-| 입체 도움말 버튼 | `HelpButton.tsx` |28px 원형 물음표·44px 터치 영역. `label`로 목적 지정. 실제 도움말 모달 연결은 별도 |
+| 입체 도움말 버튼 | `HelpButton.tsx` |28px 원형 물음표·44px 터치 영역. 전체 둘레 음영. `label`/`aria-haspopup="dialog"`로 안내 |
+| 단계 도움말 모달 | `HelpDialog.tsx` | 현재 단계의 용어·예시. Tab 순환, Esc/바깥 클릭, 초점 복귀. nested 확대 dialog의 close를 구분 |
 
 [컴포넌트 갤러리](http://localhost:5173/dev/design#workflow)에서 실제 부품을 조작할 수 있다. 작은 도움말 버튼은 `#help-button`에서 확인한다.

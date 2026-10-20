@@ -1,4 +1,5 @@
 import { HelpButton } from "../../components/HelpButton";
+import { HelpDialog } from "../../components/HelpDialog";
 import { QuizWorkflowSteps } from "../../components/QuizWorkflowSteps";
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
@@ -30,6 +31,7 @@ function Sample({ id, name, component, children }: { id: string; name: string; c
 export function Component() {
   const [workflowStep, setWorkflowStep] = useState(3);
   const [choiceOpen, setChoiceOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
   const [message, setMessage] = useState("예시 버튼을 눌러보세요.");
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
@@ -43,11 +45,13 @@ export function Component() {
       <p className={styles.links}><Link to="/archive">지난 퀴즈에서 보기</Link><a href="/docs/design/phase-9/archive/refinement.html">주차 시안·헤더 너비 비교</a></p>
     </GlassPanel>
     <Sample id="workflow" name="카세트 단계 버튼" component="QuizWorkflowSteps">
-      <p>이전 단계는 눌린 면, 현재·이후 단계는 솟은 면입니다. 숫자는 항상 표시하고 잠금은 따로 알립니다.</p>
-      <QuizWorkflowSteps current={workflowStep} available={[true,true,true,false,false,false]} reasons={["","","","문제 검토 필요","격자 구성 필요","최종 점검 필요"]} onSelect={setWorkflowStep}/>
+      <p>이전 단계는 깊게 눌린 면, 현재·이후 단계는 솟은 면입니다. 좁은 화면에서도 번호와 짧은 이름을 한 줄로 유지합니다.</p>
+      <QuizWorkflowSteps current={workflowStep} available={[true,true,true,false,false,false]} reasons={["","","","문제 검토 필요","격자 구성 필요","최종 점검 필요"]} onSelect={setWorkflowStep} footer={<><span className={styles.inline}><AdminIcon name="check" tone="success"/>저장 상태 표시 예시</span><div className={styles.inline}><Button onClick={() => setMessage("갤러리 예시입니다. 실제 자료는 저장하지 않습니다.")}>임시 저장</Button><Button variant="primary" disabled={workflowStep === 3} onClick={() => setWorkflowStep(step => step + 1)}>다음 단계 ›</Button></div></>}/>
+      <p className={styles.links}><a href="/docs/design/phase-9/workflow-controls/review">네 시간대 시안과 실제 화면</a></p>
     </Sample>
     <Sample id="help-button" name="입체 도움말 버튼" component="HelpButton">
-      <div className={styles.inline}><HelpButton label="도움말 버튼 예시" onClick={() => setMessage("도움말 버튼을 눌렀습니다. 실제 도움말 모달 연결은 후속 작업입니다.")}/><span>그림 28px · 누를 수 있는 영역 44px</span><AdminRefreshButton label="크기 비교용 새로고침" onClick={() => setMessage("새로고침 버튼과 크기를 비교하세요.")}/></div>
+      <div className={styles.inline}><HelpButton label="도움말 버튼 예시" aria-haspopup="dialog" onClick={() => setHelpOpen(true)}/><span>그림 28px · 누를 수 있는 영역 44px</span><AdminRefreshButton label="크기 비교용 새로고침" onClick={() => setMessage("새로고침 버튼과 크기를 비교하세요.")}/></div>
+      <HelpDialog open={helpOpen} title="도움말 창 예시" onClose={() => setHelpOpen(false)}><p>제목 옆의 물음표를 누르면 현재 화면의 용어와 예시를 여기에 표시합니다.</p><p>닫기 버튼·바깥 영역·Esc로 닫으면 물음표 버튼으로 돌아갑니다.</p></HelpDialog>
     </Sample>
     <Sample id="choice" name="난이도 선택창" component="QuizChoiceDialog">
       <p>어린이·장년을 고르는 공통 모달 대화상자입니다. Esc로 닫으면 원래 버튼으로 돌아갑니다.</p>

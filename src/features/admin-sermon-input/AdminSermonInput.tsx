@@ -1,17 +1,20 @@
 import { AdminRefreshButton } from "../../components/AdminListTools";
 import { QuizWorkflowSteps, QuizStageHeading } from "../../components/QuizWorkflowSteps";
 import { quizSteps } from "../../components/quiz-workflow-steps";
-import { AdminConcepts, AdminLabel, GuideText } from "../../components/AdminHelp";
+import { AdminConcepts, AdminLabel } from "../../components/AdminHelp";
+import { AdminIcon } from "../../components/AdminIcon";
+import { HelpDialog } from "../../components/HelpDialog";
 import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { Button } from "../../components/Button";
 import { useBlocker, useNavigate, useSearchParams } from "react-router-dom";
 import type { AdminContentView } from "../../../shared/api/admin-content-generation";
 import { useAutosave } from "../admin-weekly/useAutosave";
-import weeklyStyles from "../admin-weekly/weekly.module.css";
+import { WorkflowSaveProvider } from "../admin-weekly/WorkflowSaveContext";
+import { useWorkflowSave, useWorkflowSavePart } from "../admin-weekly/useWorkflowSave";
 import { SermonDrafts } from "./SermonDrafts";
 import { AiCostDetails } from "./AiCostDetails";
 import type { AdminPublicCaptionImportData } from "../../../shared/api/admin-public-video";
-import { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useEffectEvent, useLayoutEffect, useMemo, useRef, useState, type FormEvent } from "react";
 
 import type {
   AdminSermonInputCommandRequest,
@@ -156,8 +159,15 @@ function CurrentPreview({ current }: { current: AdminSermonInputCurrent }) {
   </section>;
 }
 
-export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = false, onSaved }: { initialSermonId?: string; quizSetId?: string; weekly?: boolean; onSaved?: () => void } = {}) {
+type SermonInputProps = { initialSermonId?: string; quizSetId?: string; weekly?: boolean; onSaved?: () => void };
+export function AdminSermonInput(props: SermonInputProps = {}) {
+  return <WorkflowSaveProvider><SermonInputWorkspace {...props}/></WorkflowSaveProvider>;
+}
+function SermonInputWorkspace({ initialSermonId = "", quizSetId, weekly = false, onSaved }: SermonInputProps) {
   const navigate = useNavigate();
+  const { store: saves, state: saveState } = useWorkflowSave();
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [navigating, setNavigating] = useState(false);
   const [query, setQuery] = useSearchParams();
   const [contentDirty, setContentDirty] = useState(false);
   const onCostQuiz = useCallback((id: string | null) => {
@@ -296,9 +306,12 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
   async function submitImport(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    await saveInitialInput();
+  }
+  async function saveInitialInput(): Promise<boolean> {
     if (importKind === "youtube_visible_transcript" && [...importText].length > 30_000) {
       setFeedback({ state: "error", error: { code: "INPUT_TOO_LARGE", message: "설교 자막은 공백과 줄바꿈을 포함해 3만 자 이하로 입력해 주세요." } });
-      return;
+      return false;
     }
     setFeedback({ state: "loading", message: "설교 자료를 처음 저장하고 있습니다." });
     const result = await importAdminSermonInput(loadedSermonId, {
@@ -311,11 +324,12 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
     if (!result.ok) {
       if (result.error.code === "INPUT_CONFLICT") await refreshWorkspace();
       setFeedback({ state: "error", error: result.error });
-      return;
+      return false;
     }
     setImportText("");
-    await refreshWorkspace();
+    if (!await refreshWorkspace()) return false;
     setFeedback({ state: "success", message: "설교 자료를 처음 저장했습니다." });
+    return true;
   }
 
   async function runCommand(command: AdminSermonInputCommandRequest, message: string): Promise<boolean> {
@@ -326,7 +340,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       setFeedback({ state: "error", error: result.error });
       return false;
     }
-    await refreshWorkspace();
+    if (!await refreshWorkspace()) return false;
     setFeedback({ state: "success", message });
     onSaved?.();
     return true;
@@ -334,10 +348,10 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
   function submitEdit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    void saveEditedInput();
+    void (weekly ? saveCaptionNow() : saveEditedInput());
   }
   async function saveEditedInput() {
-    if (!current || !isCaption) return;
+    if (!current || !isCaption) return false;
     const content = current.content.format === "plain_text"
       ? { format: "plain_text" as const, text: plainEdit }
       : {
@@ -510,9 +524,11 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
   const editedContent = current?.content.format === "plain_text" ? plainEdit : JSON.stringify(timedEdits);
   const changedInput = !!current && !!isCaption && (current.content.format === "plain_text" ? plainEdit !== current.content.text
     : current.content.segments.some(segment => timedEdits[segment.segmentId] !== undefined && timedEdits[segment.segmentId] !== segment.text));
-  useAutosave(weekly && changedInput ? `${current?.version}/${editedContent}` : null,
+  const saveCaptionNow = useAutosave(weekly && changedInput ? `${current?.version}/${editedContent}` : null,
     workspace.state === "ready" && feedback.state !== "loading", saveEditedInput);
-  const blocker = useBlocker(weekly && (changedInput || contentDirty || feedback.state === "loading"));
+  useWorkflowSavePart({ signature: weekly && !current && loadedSermonId && importText.trim() ? JSON.stringify([importKind,importCoverage,importText]) : null,
+    enabled: workspace.state === "ready" && feedback.state !== "loading" && captionFetch.state !== "loading", scope: "server", save: saveInitialInput });
+  const blocker = useBlocker(weekly && (saveState.dirty || saveState.saving || changedInput || contentDirty || feedback.state === "loading"));
   const c = generation?.content.state === "present" ? generation.content : null;
   const contentReady = !!c?.summary?.review && !!c?.child?.review && !!c?.adult?.review;
   const available = [true, !!current?.confirmationId, !!c?.intent?.confirmation, contentReady, !!generation?.preview, !!generation?.preview];
@@ -521,9 +537,19 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
   const step = requestedStep >= 1 && requestedStep <= 6 && available[requestedStep - 1] ? requestedStep : recommended;
   const stepNames = quizSteps.map(item => item.title);
   const reasons = ["", "설교 자료 확인·확정 필요", "설교 의도 확정 필요", "요약·두 난도 검수 필요", "두 격자 최종 검사 필요", "최종 검사 통과 필요"];
-  function selectStep(next: number) {
-    if (changedInput || contentDirty || feedback.state === "loading") { setFeedback({state:"error",error:{code:"SAVE_REQUIRED",message:"편집한 초안이 저장되었는지 먼저 확인해 주세요."}}); return; }
-    setQuery({step:String(next)});
+  const navigation = useRef({ available, busy: feedback.state === "loading" });
+  useLayoutEffect(() => { navigation.current = { available, busy: feedback.state === "loading" }; });
+  async function selectStep(next: number) {
+    if (navigating) return;
+    setNavigating(true);
+    try {
+      if (!await saves.saveAll()) return;
+      if (!navigation.current.available[next - 1] || navigation.current.busy) {
+        saves.announce("변경 내용은 저장했습니다. 확정·검수를 마친 뒤 다음 단계로 이동해 주세요.");
+        return;
+      }
+      setQuery({step:String(next)});
+    } finally { setNavigating(false); }
   }
   const reviewStatus = generation ? ({ awaiting_intent_review: "설교 의도 확인 필요", awaiting_content_review: "요약·문제 검수 필요", review_ready: "최종 검사 완료", failed: "생성 실패: 결과 확인 필요", stale: "입력 변경: 다시 확인 필요", uncertain: "응답 확인 필요", running: "생성 진행 중" } as Record<string, string>)[generation.status] : null;
   const selectedIntent = generation?.snapshots.find(snapshot => snapshot.kind === "intent" && snapshot.value.id === c?.intent?.selectedId);
@@ -542,19 +568,27 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
         <li><span>6</span>발행 <small>검수 후 발행</small></li>
       </ol>}</header>}
     {weekly && <>
-      <QuizWorkflowSteps current={step} available={available} reasons={reasons} onSelect={selectStep}/>
-      <div className={styles.stageControls}>
-        <div><p role="status">{reviewStatus ?? "설교를 등록하면 작업을 시작할 수 있습니다."}{step === 2 && selectionLabel ? ` · ${selectionLabel}` : ""}</p>{(step === 2 && selectedIntent || step === 3) && <a className={styles.reviewJump} href={step === 2 ? `#snapshot-${c?.intent?.selectedId}` : "#review-targets"}>{step === 2 ? "현재 선택본 확인" : "검수할 내용 선택"}</a>}</div>
-        {step < 6 && <Button type="button" disabled={!available[step] || changedInput || contentDirty || feedback.state === "loading"} onClick={() => selectStep(step + 1)}>다음: {stepNames[step]}</Button>}
-      </div>
+      <QuizWorkflowSteps current={step} available={available} reasons={reasons} onSelect={next => void selectStep(next)} footer={<>
+        <p className={styles.workflowSaveStatus} data-tone={saveState.tone} role="status">
+          <span><AdminIcon name={saveState.saving ? "refresh" : saveState.tone === "error" ? "alert" : saveState.dirty ? "edit" : saveState.tone === "success" ? "check" : "database"}/></span>
+          {saveState.dirty && !saveState.saving && saveState.tone !== "error" ? "변경한 내용을 저장할 준비가 됐습니다." : saveState.message}
+        </p>
+        <div className={styles.workflowActions}>
+          <Button type="button" disabled={saveState.saving || navigating} onClick={() => void saves.saveAll()}>임시 저장</Button>
+          {step < 6 && <Button type="button" variant="primary" aria-label={`저장 후 다음: ${stepNames[step]}`} disabled={!available[step] || navigating || feedback.state === "loading" && !saveState.saving} onClick={() => void selectStep(step + 1)}>{navigating ? "저장 확인 중" : "다음 단계"}<span aria-hidden="true">›</span></Button>}
+        </div>
+      </>}/>
     </>}
     {blocker.state === "blocked" && <div role="alert"><p>저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.</p><Button type="button" onClick={() => blocker.reset()}>작업 계속하기</Button><Button type="button" onClick={() => blocker.proceed()}>저장하지 않고 이동</Button></div>}
-    {weekly && <p className={styles.saveGuidance} role="status">{changedInput || contentDirty ? "저장 확인 필요. " : ""}<GuideText text="편집은 잠시 멈추면 자동 저장됩니다. 확정·AI 재생성·발행은 직접 실행합니다."/></p>}
-
-    {weekly ? <details className={weeklyStyles.workspaceHelp}><summary><AdminLabel text="용어·화면 안내"/></summary>{quickHelp}</details> : quickHelp}
+    {weekly ? <HelpDialog open={helpOpen} title={`${stepNames[step - 1]} 도움말`} onClose={() => setHelpOpen(false)}>
+      <p>자막·분석·요약·문제의 편집 내용은 자동 저장되며, 위의 ‘임시 저장’으로도 저장할 수 있습니다. ‘다음 단계’는 이 편집 내용의 저장을 마친 뒤 이동합니다. 설교 정보는 확인 체크 후 저장하고, 배치 선택·설정 적용·확정·검수·발행은 해당 버튼으로 실행하세요.</p>
+      {!initialSermonId && <p>등록 전 입력은 이 브라우저에 보관됩니다. ‘새 작업 등록’을 눌러야 만들던 퀴즈 목록에 추가됩니다.</p>}
+      {quickHelp}
+    </HelpDialog> : quickHelp}
     {costQuizSetId && <AiCostDetails key={`${costQuizSetId}-${costRefresh}`} quizSetId={costQuizSetId} refreshKey={costRefresh} />}
     <div hidden={weekly && step !== 1} data-admin-sheet={weekly || undefined} className={weekly ? styles.stageBody : undefined}>
-    {weekly && <QuizStageHeading step={1}/>}
+    {weekly && <QuizStageHeading step={1} onHelp={() => setHelpOpen(true)}/>}
+    {weekly && step === 1 && reviewStatus && <p className={styles.helper}>{reviewStatus}</p>}
     <SermonDrafts compact={weekly} selectedId={loadedSermonId} onSelect={refreshWorkspace} onMetadataSaved={() => { setMetadataVersion(v => v + 1); onSaved?.(); }} onCostQuizSetId={onCostQuiz} initialCreating={weekly && !initialSermonId} disabled={workspace.state === "loading" || feedback.state === "loading"} />
     {!weekly && <form className={styles.lookup} onSubmit={submitLoad}>
       <label htmlFor="admin-sermon-id">설교 ID
@@ -639,7 +673,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
           <div className={styles.sectionHeading}><h3><AdminLabel text="자막 직접 수정"/></h3><span className={styles.needsReview}>새 버전</span></div>
           {current.content.format === "plain_text" ? <>
             <label className={styles.textareaLabel} htmlFor="caption-edit">수정할 자막
-              <textarea id="caption-edit" value={plainEdit} onChange={(event) => setPlainEdit(event.currentTarget.value)} rows={12} />
+              <textarea id="caption-edit" disabled={feedback.state === "loading"} value={plainEdit} onChange={(event) => setPlainEdit(event.currentTarget.value)} rows={12} />
             </label>
             <p className={styles.helper}>{[...plainEdit].length.toLocaleString("ko-KR")} / 30,000자</p>
           </> : <>
@@ -649,7 +683,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
               </select>
             </label>
             {currentTimedSegment && <label className={styles.textareaLabel} htmlFor="timed-caption-edit">선택한 구간 자막
-              <textarea id="timed-caption-edit" rows={6} value={timedEdits[currentTimedSegment.segmentId] ?? currentTimedSegment.text} onChange={(event) => {
+              <textarea id="timed-caption-edit" disabled={feedback.state === "loading"} rows={6} value={timedEdits[currentTimedSegment.segmentId] ?? currentTimedSegment.text} onChange={(event) => {
                 const value = event.currentTarget.value;
                 setTimedEdits((saved) => ({ ...saved, [currentTimedSegment.segmentId]: value }));
               }} />
@@ -801,6 +835,6 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       </section>}
     </>}
     </div>
-    {workspace.state === "ready" && current && <ContentGeneration key={`content-${loadedSermonId}-${current.version}-${metadataVersion}`} sermonId={loadedSermonId} inputConfirmed={current.confirmationId !== null} inputVersion={current.version} source={current} onCostChanged={() => { setCostRefresh(v => v + 1); onSaved?.(); }} weeklyStep={weekly ? step : undefined} onView={setGeneration} onDirtyChange={setContentDirty} />}
+    {workspace.state === "ready" && current && <ContentGeneration key={`content-${loadedSermonId}-${current.version}-${metadataVersion}`} sermonId={loadedSermonId} inputConfirmed={current.confirmationId !== null} inputVersion={current.version} source={current} onCostChanged={() => { setCostRefresh(v => v + 1); onSaved?.(); }} weeklyStep={weekly ? step : undefined} onHelp={() => setHelpOpen(true)} reviewStatus={reviewStatus ?? null} selectionLabel={step === 2 ? selectionLabel : null} onView={setGeneration} onDirtyChange={setContentDirty} />}
   </section>;
 }

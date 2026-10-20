@@ -8,6 +8,19 @@ import { adminPublicVideoPreviewSchema, type AdminPublicVideoPreview } from "../
 import { BIBLE_BOOKS, createBibleReference, getBibleBook, getVerseCount, parseBibleReference, type BibleBookId } from "../../../shared/bible-reference";
 import { extractSermonTitleMetadata, suggestSermonDate } from "../../../shared/sermon-registration";
 import styles from "./admin-sermon-input.module.css";
+import { useAutosave } from "../admin-weekly/useAutosave";
+import { useWorkflowSavePart } from "../admin-weekly/useWorkflowSave";
+
+const registrationDraftKey = "biblequiz:registration-input:v1";
+const registrationDraftSchema = z.object({
+  video: z.string(), title: z.string(), date: z.string(), referenceInput: z.string(),
+});
+function readRegistrationDraft() {
+  try {
+    const result = registrationDraftSchema.safeParse(JSON.parse(localStorage.getItem(registrationDraftKey) ?? "null"));
+    return result.success ? result.data : null;
+  } catch { return null; }
+}
 
 async function request<T>(path: string, schema: z.ZodType<T>, signal: AbortSignal, method = "GET", body?: unknown, timeoutMs = 15_000): Promise<T> {
   const response = await fetch(`/api/admin/sermon-drafts${path}`, { method, signal: AbortSignal.any([signal, AbortSignal.timeout(timeoutMs)]),
@@ -17,11 +30,12 @@ async function request<T>(path: string, schema: z.ZodType<T>, signal: AbortSigna
   return schema.parse(json.data);
 }
 
-function MetadataForm({ view, onSave, onSelectExisting, busy }: {
+function MetadataForm({ view, onSave, onSelectExisting, busy, compact }: {
   view: DraftMetadataView | null;
-  onSave: (fields: Record<string, unknown>) => Promise<void>;
+  onSave: (fields: Record<string, unknown>) => Promise<boolean>;
   onSelectExisting: (id: string) => Promise<boolean>;
   busy: boolean;
+  compact: boolean;
 }) {
   const [video, setVideo] = useState("");
   const [preview, setPreview] = useState<AdminPublicVideoPreview | null>(null);
@@ -40,6 +54,24 @@ function MetadataForm({ view, onSave, onSelectExisting, busy }: {
   const [start, setStart] = useState(view?.bibleReference?.reference.start.verse ?? 1);
   const [end, setEnd] = useState(view?.bibleReference?.reference.end.verse ?? 1);
   const parsed = parseBibleReference(referenceInput);
+  const [storedInput, setStoredInput] = useState(() => !view && compact ? readRegistrationDraft() : null);
+  const [locallySaved, setLocallySaved] = useState<string | null>(null);
+  const input = JSON.stringify({ video, title, date, referenceInput });
+  const [initialInput] = useState(input);
+  const changedMetadata = !!view && (title !== view.title || date !== view.sermonDate || referenceInput !== view.referenceLabel);
+  useAutosave(compact && !view && input !== initialInput && input !== locallySaved ? input : null, !busy && !previewBusy, async () => {
+    try { localStorage.setItem(registrationDraftKey, input); }
+    catch { throw new Error("이 브라우저에 임시 저장하지 못했습니다. 입력 내용을 복사해 보관해 주세요."); }
+    setLocallySaved(input); setStoredInput(null);
+    return true;
+  }, "browser");
+  async function saveMetadata() {
+    if (!parsed.ok || !confirmed || !title.trim() || !z.iso.date().safeParse(date).success) {
+      throw new Error("설교 제목·날짜·장절을 확인하고 ‘확인했습니다’에 체크해 주세요.");
+    }
+    return onSave({ expectedRevision: view?.metadataRevision, title, sermonDate: date, referenceInput, confirmed: true });
+  }
+  useWorkflowSavePart({ signature: compact && changedMetadata ? input : null, enabled: !busy && !previewBusy, scope: "server", save: saveMetadata });
   function changeReference(value: string) {
     setReferenceInput(value); setConfirmed(false);
     const result = parseBibleReference(value);
@@ -82,10 +114,16 @@ function MetadataForm({ view, onSave, onSelectExisting, busy }: {
   async function submit(event: FormEvent) {
     event.preventDefault();
     if (!parsed.ok || !confirmed || busy || previewBusy) return;
-    await onSave({ ...(view ? { expectedRevision: view.metadataRevision } : { video }), title, sermonDate: date, referenceInput, confirmed: true });
+    if (await onSave({ ...(view ? { expectedRevision: view.metadataRevision } : { video }), title, sermonDate: date, referenceInput, confirmed: true }) && !view) {
+      try { localStorage.removeItem(registrationDraftKey); } catch { /* Registration succeeded; cleanup can be retried by the browser. */ }
+    }
   }
   const options = (count: number) => Array.from({ length: count }, (_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>);
   return <form onSubmit={event => void submit(event)}>
+    {storedInput && <p className={styles.registrationResume}>이 브라우저에 보관한 입력이 있습니다. <Button type="button" onClick={() => {
+      setVideo(storedInput.video); setTitle(storedInput.title); setDate(storedInput.date); changeReference(storedInput.referenceInput);
+      setLocallySaved(JSON.stringify(storedInput)); setStoredInput(null);
+    }}>불러오기</Button></p>}
     <fieldset disabled={busy || previewBusy} className={`${styles.displayFields} ${styles.draftFields}`} onChange={() => setConfirmed(false)}>
       <legend>설교 정보</legend>
       <div className={styles.formGrid}>
@@ -160,12 +198,12 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
     return () => controller.abort();
   }, [selectedId, version, onCostQuizSetId]);
   async function save(fields: Record<string, unknown>) {
-    if (busy) return;
+    if (busy) return false;
     const controller = new AbortController(); operation.current = controller; setBusy(true); setError(""); setMessage("");
     try {
       if (creating) {
         const result = await request("", registerSermonResultSchema, controller.signal, "POST", fields);
-        if (controller.signal.aborted) return;
+        if (controller.signal.aborted) return false;
         if (result.destination === "draft") {
           setCreating(false); setView(null);
           await onSelect(result.sermonId);
@@ -173,11 +211,12 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
         } else setMessage(result.destination === "published" ? "이미 등록·발행된 영상입니다. 발행된 퀴즈 관리에서 계속해 주세요." : "같은 영상의 초안 본문이 보관 기간에 따라 정리되었습니다. 초안 보관 현황을 확인해 주세요.");
       } else if (view) {
         const saved = await request(`/${view.sermonId}`, draftMetadataViewSchema, controller.signal, "PATCH", fields);
-        if (controller.signal.aborted) return;
+        if (controller.signal.aborted) return false;
         setView(saved); onMetadataSaved(); setMessage("설교 정보를 저장했습니다. 생성·배치 검수는 현재 정보를 기준으로 다시 확인해 주세요.");
       }
       setVersion(value => value + 1);
-    } catch (failure) { if (!controller.signal.aborted) setError(failure instanceof Error ? failure.message : "저장에 실패했습니다."); }
+      return true;
+    } catch (failure) { if (!controller.signal.aborted) setError(failure instanceof Error ? failure.message : "저장에 실패했습니다."); return false; }
     finally { if (!controller.signal.aborted) setBusy(false); }
   }
   return <section className={`${styles.panel} ${compact ? styles.compactDrafts : ""}`} aria-labelledby="sermon-drafts-title">
@@ -193,8 +232,8 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
     {error && <p role="alert">{error}</p>}{message && <p role="status">{message}</p>}
     {items?.length === 0 && <p className={styles.helper}>만들던 퀴즈가 없습니다. 새 설교를 등록해 주세요.</p>}
     {!creating && detailError?.id === selectedId && <p role="alert">{detailError.message}</p>}
-    {creating && <p>아직 새 작업을 저장하지 않았습니다. 아래에서 ‘새 작업 등록’을 눌러야 목록에 추가됩니다.</p>}
-    {creating ? <MetadataForm key="new" view={null} onSave={save} onSelectExisting={async id => { setCreating(false); setView(null); return onSelect(id); }} busy={busy || disabled} />
-      : view && view.sermonId === selectedId && <MetadataForm onSelectExisting={onSelect} key={`${view.sermonId}-${view.metadataRevision}-${version}`} view={view} onSave={save} busy={busy || disabled} />}
+    {creating && <p>{compact ? "입력은 이 브라우저에 임시 보관됩니다. ‘새 작업 등록’을 눌러야 만들던 퀴즈 목록에 추가됩니다." : "‘새 작업 등록’을 눌러야 만들던 퀴즈 목록에 추가됩니다."}</p>}
+    {creating ? <MetadataForm compact={compact} key="new" view={null} onSave={save} onSelectExisting={async id => { setCreating(false); setView(null); return onSelect(id); }} busy={busy || disabled} />
+      : view && view.sermonId === selectedId && <MetadataForm compact={compact} onSelectExisting={onSelect} key={`${view.sermonId}-${view.metadataRevision}-${version}`} view={view} onSave={save} busy={busy || disabled} />}
   </section>;
 }

@@ -150,6 +150,7 @@ test('all admin destinations retain headings, restrained emoji and contextual co
     await expect(heading).toBeVisible();
     const guide=page.locator('summary').filter({hasText:'용어·화면 안내'});
     if(await guide.count())await guide.click();
+    else if(url!.includes('/admin/quiz/'))await page.getByRole('button',{name:`${title} 도움말`,exact:true}).click();
     await expect(heading.locator('[aria-hidden="true"]').first()).toContainText(/\p{Extended_Pictographic}/u);
     await page.getByRole('button',{name:term!,exact:true}).first().focus();
     await expect(page.getByRole('tooltip')).toBeVisible();

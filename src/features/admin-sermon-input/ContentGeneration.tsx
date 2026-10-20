@@ -108,7 +108,8 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
     setDraft(next); setReviewed(false);
   }
   async function save() {
-    if (!changed || !editable || saving.current) return;
+    if (!changed) return true;
+    if (!editable || saving.current) return false;
     saving.current = true;
     try {
       let saved = false;
@@ -119,13 +120,14 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
         else saved = await command({ family: "candidate", operation: { kind: "edit", difficulty: draft.value.difficulty, binding: currentBinding, basePoolId: snapshot.value.id, draft: draft.value.draft } });
       }
       if (saved) setDraft(structuredClone(snapshot));
+      return saved;
     } finally { saving.current = false; }
   }
-  useAutosave(autosave && changed ? JSON.stringify(draft) : null, editable, save);
+  const saveNow = useAutosave(autosave && changed ? JSON.stringify(draft) : null, editable, save);
   const reviewActions = <div className={styles.reviewActions}>
     <p role="status">{changed ? "저장 확인 필요: 수정한 내용이 있습니다." : busy ? "처리 중입니다." : selected ? confirmed ? "현재 선택한 내용의 검수가 완료됐습니다." : "현재 선택한 내용을 검토해 주세요." : "비교 자료입니다. 선택하면 현재 작업에 반영됩니다."}</p>
     <div className={styles.formGrid}>
-      <Button type="button" disabled={!editable || !changed} onClick={() => void save()}>{autosave ? "임시 저장" : "수정본 저장"}</Button>
+      <Button type="button" disabled={!editable || !changed} onClick={() => void (autosave ? saveNow() : save())}>{autosave ? "임시 저장" : "수정본 저장"}</Button>
       {!selected && <Button type="button" disabled={busy || changed || replacementStale} onClick={() => void command(snapshot.kind === "intent" ? { family: "intent", operation: { kind: "select", analysisId: snapshot.value.id } } : snapshot.kind === "summary" ? { family: "summary", operation: { kind: "select", summaryId: snapshot.value.id } } : { family: "candidate", operation: { kind: "select", difficulty: snapshot.value.difficulty, poolId: snapshot.value.id } })}>이 자료 선택</Button>}
     </div>
     {selected && !confirmed && (snapshot.kind === "intent"
@@ -189,7 +191,7 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
   </article>;
 }
 
-export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, source, onCostChanged, weeklyStep, onView, onDirtyChange }: { weeklyStep?: number | undefined; onView?: (view: AdminContentView | null) => void; onDirtyChange?: (dirty: boolean) => void; sermonId: string; inputConfirmed: boolean; inputVersion: number; source: AdminSermonInputCurrent; onCostChanged?: () => void }) {
+export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, source, onCostChanged, weeklyStep, onView, onDirtyChange, onHelp, selectionLabel, reviewStatus }: { reviewStatus?: string | null; onHelp?: () => void; selectionLabel?: string | null; weeklyStep?: number | undefined; onView?: (view: AdminContentView | null) => void; onDirtyChange?: (dirty: boolean) => void; sermonId: string; inputConfirmed: boolean; inputVersion: number; source: AdminSermonInputCurrent; onCostChanged?: () => void }) {
   const [view, setView] = useState<AdminContentView | null>(null), [acting, setBusy] = useState(false), [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true), [loadFailed, setLoadFailed] = useState(false), [costsLoaded, setCostsLoaded] = useState(false);
   useEffect(() => { onView?.(view); }, [view, onView]);
@@ -323,7 +325,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
     <a href={`/quiz/${view.publication.slug}`}>공개된 퀴즈 보기</a>
   </section>;
   return <section hidden={weeklyStep === 1} className={styles.panel} data-admin-sheet={weeklyStep !== undefined || undefined} aria-labelledby="content-generation-title" aria-busy={loading}>
-    {weeklyStep ? <><QuizStageHeading step={weeklyStep} id="content-generation-title"/>{view && ["failed", "stale", "uncertain"].includes(view.status) && <p role="status">{({failed:"생성 실패",stale:"입력 변경으로 중단",uncertain:"응답 확인 필요"} as Record<string,string>)[view.status]}</p>}</> : <div className={styles.sectionHeading}><h3 id="content-generation-title"><AdminLabel text="설교 요약·문제 생성"/></h3><span>{view ? ({ failed: "생성 실패", stale: "입력 변경으로 중단", uncertain: "응답 확인 필요" } as Record<string, string>)[view.status] ?? stages[view.stage] ?? "상태 확인" : "연결 확인 중"}</span></div>}
+    {weeklyStep ? <><QuizStageHeading step={weeklyStep} id="content-generation-title" onHelp={onHelp}/>{weeklyStep <= 3 && <div className={styles.stageControls}><p role="status">{reviewStatus}{selectionLabel ? ` · ${selectionLabel}` : ""}</p>{(weeklyStep === 2 && c?.intent || weeklyStep === 3) && <a className={styles.reviewJump} href={weeklyStep === 2 ? `#snapshot-${c?.intent?.selectedId}` : "#review-targets"}>{weeklyStep === 2 ? "현재 선택본 확인" : "검수할 내용 선택"}</a>}</div>}{view && ["failed", "stale", "uncertain"].includes(view.status) && <p role="status">{({failed:"생성 실패",stale:"입력 변경으로 중단",uncertain:"응답 확인 필요"} as Record<string,string>)[view.status]}</p>}</> : <div className={styles.sectionHeading}><h3 id="content-generation-title"><AdminLabel text="설교 요약·문제 생성"/></h3><span>{view ? ({ failed: "생성 실패", stale: "입력 변경으로 중단", uncertain: "응답 확인 필요" } as Record<string, string>)[view.status] ?? stages[view.stage] ?? "상태 확인" : "연결 확인 중"}</span></div>}
     <div hidden={weeklyStep !== undefined && weeklyStep > 3}>
     <details className={styles.generationGuide} open={weeklyStep === undefined || !view?.jobId || newDraft}><summary><AdminLabel text="생성 안내·예상 비용"/></summary>
     <p>{view?.recoveredCritiqueId ? "보관한 분석과 비판 결과를 재사용합니다. 의도를 확정하면 요약·어린이·장년 문제를 이어서 만듭니다." : view?.recoveredAnalysisId ? "보관한 분석을 재사용해 비판 검토부터 이어갑니다. 교정과 의도 분석을 다시 호출하지 않습니다."

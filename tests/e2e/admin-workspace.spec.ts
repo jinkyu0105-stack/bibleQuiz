@@ -6,9 +6,9 @@ test('cassette steps retain all six numbers, distinguish recessed current and lo
   const writes=await mockAdminGuide(page);
   await page.goto('/admin/quiz/weekly?step=3');
   const menu=page.getByRole('navigation',{name:'초안 편집 단계'});
-  const current=menu.getByRole('button',{name:/^문제 검토/});
-  const previous=menu.getByRole('button',{name:/^설교 준비/});
-  const locked=menu.getByRole('button',{name:/^격자 구성/});
+  const current=menu.getByRole('button',{name:/단계 문제 검토/});
+  const previous=menu.getByRole('button',{name:/단계 설교 준비/});
+  const locked=menu.getByRole('button',{name:/단계 격자 구성/});
   await expect(current).toHaveAttribute('aria-current','step');
   await expect(previous).toHaveAttribute('data-recessed','true');
   await expect(locked).toBeDisabled();await expect(locked).toContainText('대기');
@@ -54,7 +54,7 @@ test('six-stage workspace keeps selections, preview controls and publication con
   const steps=page.getByRole('list',{name:'주간 발행 6단계'});
   const names=['설교 준비','핵심 정리','문제 검토','격자 구성','최종 점검','공개하기'];
   for(const [index,name] of names.entries()) {
-    const button=steps.getByRole('button',{name:new RegExp(`^${name}`)});
+    const button=steps.getByRole('button',{name:new RegExp(`단계 ${name}`)});
     await expect(button).toBeEnabled();await button.click();
     await expect(button).toHaveAttribute('aria-current','step');
     await expect(page.getByRole('heading',{name,exact:true})).toBeVisible();
@@ -86,7 +86,7 @@ test('six-stage workspace keeps selections, preview controls and publication con
   const dialog=page.getByRole('dialog',{name:'지금 발행 확인'});
   await expect(dialog).toBeVisible();await expect(dialog).toContainText('기존 퀴즈의 마감·제출·순위는 유지됩니다.');
   await page.keyboard.press('Escape');await expect(dialog).toHaveCount(0);await expect(publish).toBeFocused();
-  await steps.getByRole('button',{name:/^격자 구성/}).click();
+  await steps.getByRole('button',{name:/단계 격자 구성/}).click();
   await expect(page.getByRole('region',{name:'어린이 배치 시험'}).getByLabel('목표 단어 수')).toHaveValue('3');
   expect(writes).toEqual([]);
 });

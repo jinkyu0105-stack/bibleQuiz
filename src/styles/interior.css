@@ -135,6 +135,8 @@ body[data-time=night] :is(.admin-layout, .quiz-page, .archive-browser, .design-c
 /* Clear shells frame brighter reading surfaces, including a neutral slate at night. */
 .sky-app .admin-main:has(> :is([data-admin-board], [data-admin-clear])) { --muted: color-mix(in srgb,var(--ink) 88%,var(--glass-solid)); }
 .sky-app .admin-main:has(> [data-admin-clear]) { background: var(--glass-clear); }
+.sky-app:not(.home-shell) .admin-main:has(> [data-authoring]) { padding: 0; border: 0; background: transparent; box-shadow: none; backdrop-filter: none; }
+.sky-app .admin-main:has(> [data-authoring])::before, .sky-app .admin-main:has(> [data-authoring])::after { display: none; }
 .sky-app .admin-main [data-admin-manual] > header > h2 { font-family: 'Noto Sans KR',sans-serif; font-weight: 700; }
 
 /* One reading material and spacing scale for the manual, tools and quiz workspace. */
