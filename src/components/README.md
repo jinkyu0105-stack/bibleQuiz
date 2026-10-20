@@ -91,6 +91,7 @@ import { Button, ButtonLink } from "./components/Button";
 | 부품 이름 | 구현 | 사용 기준 |
 | --- | --- | --- |
 | 연결형 카세트 단계 버튼 | `QuizWorkflowSteps.tsx` | 투명 이중 프레임과 하단 `footer`. 하나의 외곽 안에6키가 맞닿고 양끝만 둥글다. 이전 눌림·현재 실행색·잠금 대기. 높이112/76/64px. 업무 조건은 `available`/`reasons`로 전달 |
+| 작업 소섹션 | `../features/admin-sermon-input/WorkflowSection.tsx` | 제작 화면의 제목·아이콘·내용 묶음. `title`, `icon`, 접근성 이름 `label`, 의미색 `tone`, 선택적 상태 `status`. 관련 설명·필드·버튼을 children으로 함께 전달. 공통 metadataSection 재질 사용 |
 | 단계 본문 제목 | `QuizStageHeading` | 같은 단계 데이터에서 제목·설명 표시. `onHelp`로 제목 옆 물음표 연결 |
 | 입체 새로고침 버튼 | `AdminRefreshButton` | 기존 원형 크기와 동작 유지, 얕은 윗빛·음영·클릭 눌림 |
 | 입체 도움말 버튼 | `HelpButton.tsx` |22px 원형 물음표(그림만2px 아래)·44px 터치 영역. 전체 둘레 음영. `label`/`aria-haspopup="dialog"`로 안내 |
@@ -101,3 +102,5 @@ import { Button, ButtonLink } from "./components/Button";
 [컴포넌트 갤러리](http://localhost:5173/dev/design#workflow)에서 실제 부품을 조작할 수 있다. 모든 잠금은 자물쇠+이름을 한 묶음으로 가운데 정렬한다. 새 작업의 잠금 상태 예시도 볼 수 있다. 업무상 잠금 조건은 바꾸지 않는다. 클릭에는 진한 테두리가 없고 키보드 focus-visible은 유지한다. 호버 시 대각선 빛 스침450ms 한 번, 감소 모션에서는 정적인 밝기 변화만 남긴다.
 
 작은 도움말·닫기는 `#help-button`, 아이콘14종은 `#glossy-icons`에서 확인한다. 완료는 `success`, 실행·저장은 `action`, 확인은 `attention`, 도움말은 `guide`, 오류는 `danger`다. 시간대 팔레트를 따르고 노을의 실행색은 구리색이다. 저장 성공 체크는 실제 성공 상태일 때만 표시한다. 새 CSS 애니메이션 루프나 외부 이미지/의존성은 없다.
+
+작업 소섹션은 [갤러리 #workflow-section](http://localhost:5173/dev/design#workflow-section), [2~6단계 실제 비교](../../docs/design/phase-9/workflow-sections/review.html)에서 확인한다. 소섹션의 접근성 이름이 내부 입력의 이름과 같아지지 않도록 ‘문제 1 편집’처럼 역할을 덧붙인다. 업무 로직·저장 API는 소섹션이 소유하지 않는다.

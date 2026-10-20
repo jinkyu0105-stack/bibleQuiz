@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>퀴즈 만들기 2~6단계 · 작업 소섹션</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eaf3fa;color:#19374b;font:15px/1.7 system-ui}main{max-width:1280px;margin:auto;padding:28px}h1{font-size:28px;margin:0 0 12px}h2{font-size:21px;margin-top:32px}a{color:#2459b7;text-underline-offset:4px}nav,.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}.controls{padding:16px;border:1px solid #afc4d3;border-radius:12px;background:#f6faff}label{display:flex;align-items:center;gap:8px}select{font:inherit;padding:8px 28px 8px 12px;background:white;border:1px solid #819caa;border-radius:6px;max-width:100%}.pair{display:grid;grid-template-columns:minmax(0,2.5fr) minmax(0,1fr);gap:24px;align-items:start}figure{margin:16px 0;min-width:0}img{display:block;width:100%;height:auto;border:1px solid #afc4d3;border-radius:12px}figcaption{margin-bottom:8px;font-weight:600}.note{font-size:13px;color:#425f72}summary{cursor:pointer;min-height:44px;padding-block:12px}ul{padding-left:22px}@media(max-width:700px){main{padding:16px}.pair{grid-template-columns:1fr}h1{font-size:24px}figure.mobile{max-width:375px;margin-inline:auto}label{width:100%;justify-content:space-between}}
+</style>
+<main>
+<h1>퀴즈 만들기 · 작업 소섹션</h1>
+<nav><a href="/admin">퀴즈 관리로 돌아가기</a><a href="/dev/design#workflow-section">실제 공통 부품 보기</a><a href="../workflow-controls/review#form">1단계와 조작판</a></nav>
+<p>제목·설명·입력 내용·관련 버튼을 하나의 작업 단위로 묶었습니다. 단계 제목 아래는24px, 소섹션 사이는 데스크톱24px·모바일20px 간격입니다. 완료·검수 영역에는 초록 계열을 사용합니다.</p>
+<div class="controls"><label>단계 <select id="step"><option value="2">2 · 핵심 정리</option><option value="3">3 · 문제 검토</option><option value="4" selected>4 · 격자 구성</option><option value="5">5 · 최종 점검</option><option value="6">6 · 공개하기</option></select></label><label>시간대 <select id="theme"><option value="dawn">새벽</option><option value="day" selected>낮</option><option value="sunset">노을</option><option value="night">밤</option></select></label></div>
+<p id="description" aria-live="polite">어린이·장년의 설정과 시험 버튼을 각각 묶고, 선택한 배치를 함께 저장하는 영역을 분리했습니다.</p>
+<div class="pair"><figure><figcaption>실제 앱 · 데스크톱 1440px</figcaption><a id="desktop-link" href="step4-day-1440.png"><img id="desktop" src="step4-day-1440.png" alt="4단계 낮 데스크톱 실제 본문"></a></figure><figure class="mobile"><figcaption>실제 앱 · 모바일 375px</figcaption><a id="mobile-link" href="step4-day-375.png"><img id="mobile" src="step4-day-375.png" alt="4단계 낮 모바일 실제 본문"></a></figure></div>
+<p class="note">생성 시안이 아닌 실제 React 화면입니다. 격리된 브라우저에 합성 연습 자료를 연결해 촬영했으며 실제 설교·원격 DB·AI 호출은 사용하지 않았습니다. 본문을 가리지 않도록 촬영 순간에만 고정 헤더와 하단 메뉴를 숨겼습니다. 이미지 클릭 시 원본 크기로 열립니다. 320px도 별도로 검사했으며 실제 휴대폰 검수와는 구분합니다.</p>
+<details><summary>펼친 상세 영역 · 재생성 / 품질 평가</summary><p>설명·입력·비용 확인·관련 동작을 같은 영역 안에서 확인할 수 있습니다.</p><div class="controls"><label>내용 <select id="expanded"><option value="generation">다시 생성</option><option value="quality">품질 평가</option></select></label><label>색상 <select id="expanded-theme"><option value="day">낮</option><option value="night">밤</option></select></label></div><div class="pair"><figure><figcaption>데스크톱</figcaption><a id="expanded-desktop-link" href="expanded-generation-day-1440.png"><img id="expanded-desktop" src="expanded-generation-day-1440.png" alt="데스크톱 펼친 상세 영역" loading="lazy"></a></figure><figure class="mobile"><figcaption>모바일</figcaption><a id="expanded-mobile-link" href="expanded-generation-day-375.png"><img id="expanded-mobile" src="expanded-generation-day-375.png" alt="모바일 펼친 상세 영역" loading="lazy"></a></figure></div></details>
+</main>
+<script>
+const descriptions={2:'생성과 작업 상태, 설교 핵심의 각 항목, 품질 평가, 검수와 저장을 구분했습니다.',3:'요약과 어린이·장년 문제를 선택하고, 각 문제의 답·단서·원문 근거·사용 여부를 같은 소섹션에서 다룹니다.',4:'어린이·장년의 설정과 시험 버튼을 각각 묶고, 선택한 배치를 함께 저장하는 영역을 분리했습니다.',5:'미리보기 설정, 설교 정보와 요약, 두 난도의 미리보기, 단서 내보내기, 발행 검수표, Top N 설정으로 구분했습니다.',6:'공개 전 확인 안에 검사 결과·공개 안내·지금 발행 버튼을 묶었습니다. 아래에서 실제로 공개할 내용을 다시 확인할 수 있습니다.'};
+const byId=id=>document.getElementById(id);
+function setImage(id,src,alt){byId(id).src=src;byId(id).alt=alt;byId(id+'-link').href=src;}
+function update(){const step=byId('step').value,theme=byId('theme').value;byId('description').textContent=descriptions[step];for(const [id,width]of [['desktop',1440],['mobile',375]])setImage(id,`step${step}-${theme}-${width}.png`,`${step}단계 ${byId('theme').selectedOptions[0].text} ${width}px 실제 본문`);}
+function expanded(){const kind=byId('expanded').value,theme=byId('expanded-theme').value;for(const [id,width]of [['desktop',1440],['mobile',375]])setImage(`expanded-${id}`,`expanded-${kind}-${theme}-${width}.png`,`${byId('expanded').selectedOptions[0].text} ${width}px 실제 화면`);}
+byId('step').addEventListener('change',update);byId('theme').addEventListener('change',update);byId('expanded').addEventListener('change',expanded);byId('expanded-theme').addEventListener('change',expanded);
+</script>
+</html>

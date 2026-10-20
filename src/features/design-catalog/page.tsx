@@ -3,6 +3,7 @@ import { HelpDialog } from "../../components/HelpDialog";
 import { GlossyIcon } from "../../components/GlossyIcon";
 import { DialogCloseButton } from "../../components/DialogCloseButton";
 import { QuizWorkflowSteps } from "../../components/QuizWorkflowSteps";
+import { WorkflowSection } from "../admin-sermon-input/WorkflowSection";
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { GlassPanel } from "../../components/glass/GlassPanel";
@@ -17,7 +18,7 @@ import { Button } from "../../components/Button";
 import styles from "./catalog.module.css";
 
 const entries = [
-  ["workflow", "연결형 카세트 단계 버튼"], ["glossy-icons", "글로시 상태 아이콘"], ["help-button", "입체 도움말 버튼"], ["choice", "난이도 선택창"], ["arrow", "유리 화살표 버튼"], ["select", "연결형 선택기"], ["menu", "이동형 메뉴"],
+  ["workflow", "연결형 카세트 단계 버튼"], ["workflow-section", "작업 소섹션"], ["glossy-icons", "글로시 상태 아이콘"], ["help-button", "입체 도움말 버튼"], ["choice", "난이도 선택창"], ["arrow", "유리 화살표 버튼"], ["select", "연결형 선택기"], ["menu", "이동형 메뉴"],
   ["index", "파일 인덱스 탭"], ["refresh", "원형 새로고침"], ["tooltip", "작은 말풍선"],
   ["raised", "입체 작업 버튼"], ["actions", "기본 작업 버튼"], ["surface", "투명 창과 읽기 면"],
 ] as const;
@@ -52,6 +53,16 @@ export function Component() {
       <QuizWorkflowSteps current={lockedPreview ? 1 : workflowStep} available={lockedPreview ? [true,false,false,false,false,false] : [true,true,true,false,false,false]} reasons={["","설교 준비 필요","핵심 정리 필요","문제 검토 필요","격자 구성 필요","최종 점검 필요"]} onSelect={setWorkflowStep} footer={<><span className={styles.inline}><GlossyIcon name="check" tone="success"/>저장 완료 표시 예시</span><div className={styles.inline}><Button onClick={() => setMessage("갤러리 예시입니다. 실제 자료는 저장하지 않습니다.")}>임시 저장</Button><Button variant="primary" disabled={lockedPreview || workflowStep === 3} onClick={() => setWorkflowStep(step => step + 1)}>다음 단계 ›</Button></div></>}/>
       <p className={styles.inline}><Button aria-pressed={lockedPreview} onClick={() => setLockedPreview(value => !value)}>새 작업의 잠금 상태</Button><a href="/docs/design/phase-9/workflow-controls/review">시안과 실제 화면</a></p>
       <p>잠긴 단계는 자물쇠와 이름을 한 묶음으로 가운데 정렬합니다. 마우스를 올리면 좌상단에서 우하단으로 빛이 한 번 지나갑니다.</p>
+    </Sample>
+    <Sample id="workflow-section" name="작업 소섹션" component="WorkflowSection">
+      <p>한 작업의 제목·설명·입력·관련 버튼을 묶습니다. 바깥 여백은 넉넉하게, 안쪽 간격은 일정하게 유지합니다.</p>
+      <div className={`admin-main ${styles.readingExample}`}>
+        <WorkflowSection title="검수와 저장" icon="check" tone="success">
+          <p>선택한 내용을 검토한 뒤 이 영역에서 저장합니다. 아래 버튼은 갤러리 예시입니다.</p>
+          <Button onClick={() => setMessage("작업 소섹션 예시입니다. 실제 퀴즈 자료는 변경하지 않습니다.")}>임시 저장</Button>
+        </WorkflowSection>
+      </div>
+      <a href="/docs/design/phase-9/workflow-sections/review">2~6단계 · 네 시간대와 모바일 실제 화면</a>
     </Sample>
     <Sample id="glossy-icons" name="글로시 상태 아이콘" component="GlossyIcon">
       <p>얇은 색유리 표면과 부드러운 반사광, 흰색 그림을 공유하는 아이콘 세트입니다. 실행은 파랑, 완료는 초록, 확인은 노랑, 도움말은 자주, 오류는 빨강 계열입니다.</p>

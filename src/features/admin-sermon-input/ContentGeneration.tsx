@@ -7,6 +7,7 @@ import { ContentRegeneration } from "./ContentRegeneration";
 import { ContentPlacement } from "./ContentPlacement";
 import { ContentEvidence } from "./ContentEvidence";
 import { ContentQuality } from "./ContentQuality";
+import { WorkflowSection } from "./WorkflowSection";
 import type { AdminSermonInputCurrent } from "../../../shared/api/admin-sermon-input";
 import type { IntentAnalysis } from "../../../workers/_shared/services/sermon-intent-contract";
 import type { ContentQualityRequest } from "../../../shared/api/admin-content-quality";
@@ -124,9 +125,10 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
     } finally { saving.current = false; }
   }
   const saveNow = useAutosave(autosave && changed ? JSON.stringify(draft) : null, editable, save);
-  const reviewActions = <div className={styles.reviewActions}>
+  const reviewActions = <WorkflowSection title="검수와 저장" icon="check" tone={selected && confirmed ? "success" : "attention"}
+    status={selected ? confirmed ? "검수 완료" : "현재 선택됨" : "비교 자료"}>
     <p role="status">{changed ? "저장 확인 필요: 수정한 내용이 있습니다." : busy ? "처리 중입니다." : selected ? confirmed ? "현재 선택한 내용의 검수가 완료됐습니다." : "현재 선택한 내용을 검토해 주세요." : "비교 자료입니다. 선택하면 현재 작업에 반영됩니다."}</p>
-    <div className={styles.formGrid}>
+    <div className={styles.generationActions}>
       <Button type="button" disabled={!editable || !changed} onClick={() => void (autosave ? saveNow() : save())}>{autosave ? "임시 저장" : "수정본 저장"}</Button>
       {!selected && <Button type="button" disabled={busy || changed || replacementStale} onClick={() => void command(snapshot.kind === "intent" ? { family: "intent", operation: { kind: "select", analysisId: snapshot.value.id } } : snapshot.kind === "summary" ? { family: "summary", operation: { kind: "select", summaryId: snapshot.value.id } } : { family: "candidate", operation: { kind: "select", difficulty: snapshot.value.difficulty, poolId: snapshot.value.id } })}>이 자료 선택</Button>}
     </div>
@@ -137,15 +139,15 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
       : <><label className={styles.checkbox}><input type="checkbox" checked={reviewed} disabled={busy || changed} onChange={event => setReviewed(event.currentTarget.checked)} />내용과 원문 근거를 검토했습니다.</label>
         <Button type="button" disabled={busy || changed || !reviewed || view.quality[snapshot.value.id]?.status === "regenerate"}
           onClick={() => void command(snapshot.kind === "summary" ? { family: "summary", operation: { kind: "review", summaryId: snapshot.value.id } } : { family: "candidate", operation: { kind: "review", difficulty: snapshot.value.difficulty, poolId: snapshot.value.id } })}>이 내용 검수 완료</Button></>)}
-  </div>;
+  </WorkflowSection>;
   const evidence = (items: Parameters<typeof ContentEvidence>[0]["evidence"], group: string, index: number, onEmpty?: () => void) =>
     sourceMatches ? <details className={styles.evidenceDisclosure} open={!autosave}><summary>원문 근거 확인 ({items.length})</summary><ContentEvidence label={fields[group] ?? (draft.kind === "summary" ? `요약 문단 ${index + 1}` : `문제 ${index + 1}`)}
       evidence={items} source={source} editable={editable} onChange={next => setEvidence(group, index, next)} {...(onEmpty ? { onEmpty } : {})} /></details>
       : <details><summary><AdminLabel text="저장 당시 근거 보기"/></summary>{items.map((item, at) => <blockquote key={at}>{item.quote}</blockquote>)}<p>현재 원문과 연결이 다릅니다. 최신 자료에서 다시 검토해 주세요.</p></details>;
-  return <article id={`snapshot-${snapshot.value.id}`} className={styles.panel} onBlur={event => {
+  return <article id={`snapshot-${snapshot.value.id}`} className={`${styles.panel} ${styles.snapshotEditor}`} onBlur={event => {
     if (!autosave && changed && editable && !event.currentTarget.contains(event.relatedTarget)) void save();
   }}>
-    <div className={styles.sectionHeading}><h4>{title}</h4><span>{selected ? confirmed ? "검수 완료" : "현재 선택됨" : "비교 자료"}</span></div>
+    <h4 className="sr-only">{title}</h4>
     {replacement && oldCandidate && newCandidate && <section aria-label="답·단서 변경 비교">
       <h5>선택한 답·단서 변경 비교</h5>
       <div className={styles.formGrid}><div><strong>기존 값</strong><p>답: {oldCandidate.displayAnswer}</p><p>단서: {oldCandidate.clue}</p></div>
@@ -155,6 +157,7 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
     </section>}
     {draft.kind === "intent" && Object.entries(draft.value.analysis).map(([field, claims]) => <details key={field} className={styles.claimGroup} open={!autosave || field === "centralMessage"}>
       <summary>{fields[field]} <span>{claims.length}개 항목</span></summary>
+      <div className={styles.claimGroupBody}>
       {claims.length === 0 && <p className={styles.helper}>아직 작성한 항목이 없습니다.</p>}
       {claims.map((claim, index) => <div key={claim.id} className={styles.claimItem}>
         <label className={styles.field}>내용<textarea value={claim.text} disabled={!editable} onChange={event => editText(field, index, "text", event.currentTarget.value)} /></label>
@@ -169,13 +172,14 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
         {editable && <Button type="button" onClick={() => removeClaim(field, index)}>이 항목 삭제</Button>}
       </div>)}
       {editable && <Button type="button" onClick={() => addClaim(field)}>이 항목 추가</Button>}
+      </div>
     </details>)}
     {draft.kind === "intent" && draft.critique && <details><summary><AdminLabel text="비판 검토의 지적 사항"/></summary>{Object.values(draft.critique).flatMap(check => check.concerns).map((concern, index) => <p key={index}>{concern.note}</p>)}{Object.values(draft.critique).every(check => check.assessment === "clear") && <p>추가 지적 사항이 없습니다. 내용의 최종 판단은 사람이 합니다.</p>}</details>}
-    {draft.kind === "summary" && draft.value.draft.paragraphs.map((paragraph, index) => <div key={paragraph.id} className={styles.claimItem}>
+    {draft.kind === "summary" && draft.value.draft.paragraphs.map((paragraph, index) => <WorkflowSection key={paragraph.id} title={`요약 문단 ${index + 1}`} label={`요약 문단 ${index + 1} 편집`} icon="document">
       <label className={styles.field}>요약 문단 {index + 1}<textarea value={paragraph.text} disabled={!editable} onChange={event => editText("", index, "text", event.currentTarget.value)} /></label>
       {evidence(paragraph.evidence, "", index)}
-    </div>)}
-    {draft.kind === "candidate" && draft.value.draft.candidates.map((item, index) => <div key={item.id} className={styles.claimItem}>
+    </WorkflowSection>)}
+    {draft.kind === "candidate" && draft.value.draft.candidates.map((item, index) => <WorkflowSection key={item.id} title={`문제 ${index + 1}`} label={`문제 ${index + 1} 편집`} icon="edit">
       <label className={styles.field}>답 {index + 1}<input value={item.displayAnswer} disabled={!editable} onChange={event => editText("", index, "answer", event.currentTarget.value)} /></label>
       <label className={styles.field}>단서 {index + 1}<textarea value={item.clue} disabled={!editable} onChange={event => editText("", index, "clue", event.currentTarget.value)} /></label>
       {item.grounding.origin === "transcript" ? evidence(item.grounding.evidence, "", index, () => setCandidateNote(index, ""))
@@ -183,7 +187,7 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
           onChange={event => setCandidateNote(index, event.currentTarget.value)} /></label>}
       <label className={styles.field}>배치에 사용할지 선택<select disabled={busy || changed || !selected} value={draft.value.statuses[item.id]} onChange={event => void command({ family: "candidate", operation: { kind: "set_status", difficulty: draft.value.difficulty, poolId: draft.value.id, candidateId: item.id, status: event.currentTarget.value as "use" | "locked" | "excluded" } })}>
         <option value="use">사용</option><option value="locked">반드시 포함</option><option value="excluded">제외</option></select></label>
-    </div>)}
+    </WorkflowSection>)}
     {selected && <details className={styles.qualityDisclosure} open={!autosave}><summary><AdminLabel text="품질 평가와 검토 메모"/></summary>
     {selected && <ContentQuality key={view.quality[snapshot.value.id]?.revision ?? 0} snapshot={snapshot} view={view} busy={busy || changed} save={quality} />}
     </details>}
@@ -324,9 +328,10 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
     <p>마감 시각 {new Date(view.publication.closesAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (한국 시간)</p>
     <a href={`/quiz/${view.publication.slug}`}>공개된 퀴즈 보기</a>
   </section>;
-  return <section hidden={weeklyStep === 1} className={styles.panel} data-admin-sheet={weeklyStep !== undefined || undefined} aria-labelledby="content-generation-title" aria-busy={loading}>
+  return <section hidden={weeklyStep === 1} className={`${styles.panel} ${styles.workflowContent}`} data-admin-sheet={weeklyStep !== undefined || undefined} aria-labelledby="content-generation-title" aria-busy={loading}>
     {weeklyStep ? <><QuizStageHeading step={weeklyStep} id="content-generation-title" onHelp={onHelp}/>{weeklyStep <= 3 && <div className={styles.stageControls}><p role="status">{reviewStatus}{selectionLabel ? ` · ${selectionLabel}` : ""}</p>{(weeklyStep === 2 && c?.intent || weeklyStep === 3) && <a className={styles.reviewJump} href={weeklyStep === 2 ? `#snapshot-${c?.intent?.selectedId}` : "#review-targets"}>{weeklyStep === 2 ? "현재 선택본 확인" : "검수할 내용 선택"}</a>}</div>}{view && ["failed", "stale", "uncertain"].includes(view.status) && <p role="status">{({failed:"생성 실패",stale:"입력 변경으로 중단",uncertain:"응답 확인 필요"} as Record<string,string>)[view.status]}</p>}</> : <div className={styles.sectionHeading}><h3 id="content-generation-title"><AdminLabel text="설교 요약·문제 생성"/></h3><span>{view ? ({ failed: "생성 실패", stale: "입력 변경으로 중단", uncertain: "응답 확인 필요" } as Record<string, string>)[view.status] ?? stages[view.stage] ?? "상태 확인" : "연결 확인 중"}</span></div>}
-    <div hidden={weeklyStep !== undefined && weeklyStep > 3}>
+    <div hidden={weeklyStep !== undefined && weeklyStep > 3} className={styles.workflowStack}>
+    <WorkflowSection title="생성과 작업 상태" icon="processor">
     <details className={styles.generationGuide} open={weeklyStep === undefined || !view?.jobId || newDraft}><summary><AdminLabel text="생성 안내·예상 비용"/></summary>
     <p>{view?.recoveredCritiqueId ? "보관한 분석과 비판 결과를 재사용합니다. 의도를 확정하면 요약·어린이·장년 문제를 이어서 만듭니다." : view?.recoveredAnalysisId ? "보관한 분석을 재사용해 비판 검토부터 이어갑니다. 교정과 의도 분석을 다시 호출하지 않습니다."
       : "의도 분석과 비판 검토 뒤 사람이 확정합니다. 이어서 요약·어린이·장년 문제를 만들고 각각 검수합니다."}</p>
@@ -352,6 +357,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
     {message && <p role="status">{message}</p>}{acting && <p role="status">요청을 확인하고 있습니다.</p>}
     {loading && <p role="status">작업 상태와 저장된 자료를 불러오고 있습니다. 확인된 내용부터 표시합니다.</p>}
     {loadFailed && <p role="alert">일부 자료를 불러오지 못했습니다. 표시된 내용은 유지됩니다. 생성 상태를 다시 확인한 뒤 편집해 주세요.</p>}
+    </WorkflowSection>
     {weeklyStep === 3 && <GlassMenu nested id="review-targets" className={styles.reviewTargets} role="group" aria-label="검수할 내용">{(["summary", "child", "adult"] as const).map(target => <button key={target} type="button" aria-pressed={reviewTarget === target} onClick={() => setReviewTarget(target)}>{target === "summary" ? "요약" : target === "child" ? "어린이 문제" : "장년 문제"}<small>{c?.[target]?.review ? "검수 완료" : c?.[target] ? "검수 필요" : "생성 대기"}</small></button>)}</GlassMenu>}
     {view?.snapshots.toSorted((a, b) => Number(isSelected(b, view)) - Number(isSelected(a, view))).map(snapshot => <div key={weeklyStep === undefined ? `${snapshot.value.id}-${view.version}` : snapshot.value.id} hidden={weeklyStep !== undefined && (weeklyStep === 2 ? snapshot.kind !== "intent" : snapshot.kind === "intent" || (snapshot.kind === "candidate" ? snapshot.value.difficulty : snapshot.kind) !== reviewTarget)}>
       <details className={styles.snapshotDisclosure} open={weeklyStep === undefined || isSelected(snapshot, view)}>
@@ -372,7 +378,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
           ? partialIntentWait ? "확정하고 비교 반영" : "확정하고 다음 생성 시작" : "의도 확정만 저장"}</Button></div>
     </div></div>}
     </div>
-    <div hidden={weeklyStep !== undefined && weeklyStep < 4}>
+    <div hidden={weeklyStep !== undefined && weeklyStep < 4} className={styles.workflowStack}>
     {view?.jobId && view.placement && <ContentPlacement step={weeklyStep} key={`${view.jobId}-${view.version}-${view.placement.metadataRevision}-${view.placement.revision}`} sermonId={sermonId} view={view} busy={controlBusy} act={act} published={() => void refresh()} />}
     </div>
   </section>;

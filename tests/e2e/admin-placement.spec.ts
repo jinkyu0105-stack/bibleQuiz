@@ -72,7 +72,7 @@ test("administrator compares layouts, restores choices and reviews public and an
   await adult.getByLabel("목표 단어 수").fill("4");
   await adult.getByRole("button", { name: "장년 배치 시험", exact: true }).click();
   await save.click();
-  await expect(panel.getByRole("heading", { name: "선택한 배치의 최종 검사 통과" })).toBeVisible();
+  await expect(panel.getByText("선택한 배치의 최종 검사 통과", { exact: true })).toBeVisible();
   await expect(page.getByText("최종 검사 완료", { exact: true })).toBeVisible();
   expect(saved).toHaveLength(1); expect(saved[0]).toMatchObject({ expectedVersion: 12, expectedSelectionRevision: 1, selection: { child: { index: 1 }, adult: { index: 0 } } });
   expect(JSON.stringify(saved[0])).not.toMatch(/solution|gridAnswer|cells/u);

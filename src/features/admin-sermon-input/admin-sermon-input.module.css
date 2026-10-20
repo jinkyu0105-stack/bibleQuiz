@@ -978,20 +978,20 @@
   min-width: 0; border: 1px solid var(--line); border-radius: 12px;
   background: color-mix(in srgb,var(--glass-field) 45%,transparent);
 }
-:global(.sky-app:not(.home-shell) .admin-main) .metadataSection > h3 {
+:global(.sky-app:not(.home-shell) .admin-main) .metadataSection > :is(h3,h4) {
   display: flex; align-items: center; gap: 8px; margin: 0; padding: 14px 18px;
   border-bottom: 1px solid var(--line); border-radius: 11px 11px 0 0;
   background: color-mix(in srgb,var(--ui-action-bg) 55%,transparent);
   font-size: 15px; font-weight: 700; line-height: 1.4;
 }
-.metadataSection > h3 svg { width: 17px; height: 17px; color: var(--ui-action); }
+.metadataSection > :is(h3,h4) svg { width: 17px; height: 17px; flex: 0 0 auto; color: var(--ui-action); }
 :global(.sky-app .admin-main) .metadataSection > .metadataSectionBody { display: grid; gap: 16px; padding: 18px; margin: 0; }
 .metadataSectionBody > .formGrid { margin: 0; }
 .metadataSectionBody > .actions { margin: 0; gap: 8px; }
 .metadataSectionBody > p { font-size: 12px; line-height: 1.7; color: var(--muted); }
 .registrationHint { line-height: 1.7; }
 @media (max-width: 500px) {
-  :global(.sky-app:not(.home-shell) .admin-main) .metadataSection > h3 { padding: 12px; }
+  :global(.sky-app:not(.home-shell) .admin-main) .metadataSection > :is(h3,h4) { padding: 12px; }
   :global(.sky-app .admin-main) .metadataSection > .metadataSectionBody { padding: 14px 12px; }
 }
 @media (max-width: 500px) { .stageControls { flex-wrap: wrap; } .stageControls > button { margin-left: auto; } .resumeToolbar > label { flex-basis: 160px; } }
@@ -1007,3 +1007,93 @@
 .workflowActions > button > span { font-size: 22px; line-height: .8; }
 .registrationResume { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 12px; }
 @media(max-width:600px) { .workflowActions > :global(.action-button) { min-height: 44px; padding-inline: 12px; font-size: 12px; } .workflowSaveStatus { flex-basis: 100%; font-size: 11px; } .weeklyPage { gap: 18px; } }
+
+/* Each editing task keeps its title, fields and actions inside one reading group. */
+.workflowStack:not([hidden]), .snapshotEditor, .placementSection { display: grid; gap: 24px; }
+.workflowStack { min-width: 0; }
+.workflowContent > .workflowStack:not([hidden]) { margin-top: 24px; }
+.workflowStack > .helper { margin: 0; }
+.workflowSection { --section-tone: var(--ui-action); --section-tint: var(--ui-action-bg); }
+.workflowSection[data-tone=success] { --section-tone: var(--ui-success); --section-tint: var(--ui-success-bg); }
+.workflowSection[data-tone=attention] { --section-tone: var(--ui-attention); --section-tint: var(--ui-attention-bg); }
+:global(.sky-app:not(.home-shell) .admin-main) .workflowSection > h4 {
+  background: color-mix(in srgb,var(--section-tint) 55%,transparent);
+}
+.workflowSection > h4 svg { color: var(--section-tone); }
+:global(.sky-app .admin-main) .workflowSection > .metadataSectionBody > :is(p,h5,ul,.field,.formGrid,.generationActions,.generationGuide,.regenerationDisclosure) { margin-block: 0; }
+:global(.sky-app .admin-main) .workflowSection > .metadataSectionBody > h5 { font-size: 16px; line-height: 1.6; }
+.workflowSection .metadataSectionBody > :global(.action-button) { justify-self: start; max-width: 100%; }
+.workflowSection .metadataSectionBody > p:not(.helper) { font-size: 13px; }
+.workflowSection .metadataSectionBody .checkbox { margin-block: 0; }
+.workflowSection .metadataSectionBody .generationGuide > summary { padding-block: 0; min-height: 32px; }
+.workflowSection .metadataSectionBody .regenerationDisclosure { padding-bottom: 0; }
+.workflowSection .field, .placementFields label { font-size: 13px; }
+:global(.sky-app .admin-main) .snapshotEditor { padding-block: 16px 0; }
+.sectionStatus { margin-left: auto; font-size: 11px; font-weight: 500; color: var(--section-tone); }
+.workflowSection > h4 { flex-wrap: wrap; }
+.workflowSection .metadataSectionBody > .evidenceDisclosure { margin-block: 0; padding-block: 0; }
+.weeklyPage .snapshotDisclosure { margin-top: 0; }
+.weeklyPage .snapshotDisclosure > summary { padding-block: 12px; }
+.weeklyPage .reviewTargets { margin: 0; }
+:global(.sky-app .admin-main) .claimGroup { margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb,var(--glass-field) 45%,transparent); }
+.claimGroup > summary { padding: 14px 18px; font-size: 14px; border-radius: 11px; }
+.claimGroup[open] > summary { border-bottom: 1px solid var(--line); border-radius: 11px 11px 0 0; background: color-mix(in srgb,var(--ui-action-bg) 55%,transparent); }
+.claimGroupBody { display: grid; gap: 16px; padding: 18px; }
+.claimGroupBody > :global(.action-button) { justify-self: start; }
+:global(.sky-app .admin-main) .claimGroupBody > p { margin: 0; }
+.claimGroupBody .claimItem { margin: 0; padding: 0; border: 0; display: grid; gap: 16px; }
+.claimGroupBody .claimItem + .claimItem { padding-top: 20px; border-top: 1px solid var(--line); }
+.claimGroupBody .claimItem > :is(.field,.evidenceDisclosure) { margin: 0; }
+.claimGroupBody .claimItem > :global(.action-button) { justify-self: start; }
+.snapshotEditor > .qualityDisclosure { margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 12px; }
+.snapshotEditor > .qualityDisclosure > summary { padding: 14px 18px; }
+.snapshotEditor .qualityPanel { border: 0; margin: 0; padding: 0 18px 18px; background: transparent; }
+.snapshotEditor .qualityPanel > h5 { display: none; }
+.qualityPanel, .regenerationForm { display: grid; gap: 16px; }
+:global(.sky-app .admin-main) :is(.qualityPanel,.regenerationForm) > :is(p,h4,.field) { margin: 0; }
+.regenerationForm > :global(.action-button) { justify-self: start; }
+.qualityCriteria { gap: 16px; }
+.qualityCriteria > .field { margin: 0; }
+.placementFields { display: grid; grid-template-columns: minmax(0,1fr) minmax(100px,140px); align-items: start; gap: 16px 24px; }
+:global(.sky-app .admin-main) .placementFields fieldset { min-width: 0; padding: 0; margin: 0; border: 0; }
+:global(.sky-app .admin-main) .placementFields legend { margin-bottom: 10px; font-size: 13px; font-weight: 600; }
+.placementFields > .field { margin: 0; }
+.gridSizeOptions { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; max-width: 400px; }
+:global(.sky-app .admin-main) .gridSizeOptions label { display: flex; align-items: center; gap: 7px; min-height: 42px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gridSizeOptions label:has(:checked) { border-color: color-mix(in srgb,var(--ui-action) 40%,var(--line)); background: var(--ui-action-bg); }
+.gridSizeOptions input { width: 18px; height: 18px; flex: 0 0 auto; margin: 0; accent-color: var(--ui-action); }
+.trialResults { display: grid; gap: 16px; padding-top: 20px; border-top: 1px solid var(--line); }
+:global(.sky-app .admin-main) .trialResults > :is(p,h5,.field) { margin: 0; }
+.workflowSection .previewTools { align-items: center; gap: 8px 20px; }
+.workflowSection .previewTools label { font-size: 13px; }
+.weeklyPage .workflowSection .previewViewport { padding: 0; border: 0; border-radius: 0; background: transparent; }
+.weeklyPage .workflowSection .previewViewport[data-preview-theme] { padding: 12px; border-radius: 8px; background: var(--page); }
+.workflowSection .layoutReview { gap: 20px; }
+.workflowSection .layoutReview figure { margin: 0; padding: 0; border: 0; background: transparent; }
+.workflowSection .layoutReview figcaption { font-size: 14px; margin-bottom: 12px; }
+.workflowSection .layoutReview p, .workflowSection .placementClues { font-size: 13px; }
+:global(.sky-app .admin-main) .workflowSection .layoutReview h6 { font-size: 14px; margin: 18px 0 10px; }
+.workflowSection .layoutReview > div > section + section { margin-top: 20px; }
+:global(.sky-app .admin-main) .checkStatus { color: var(--ui-success); font-weight: 700; }
+.workflowSection ul { padding-left: 20px; font-size: 13px; line-height: 1.8; }
+.workflowSection ul li + li { margin-top: 6px; }
+.workflowSection form > fieldset { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; min-width: 0; }
+.workflowSection form > fieldset > legend { font-size: 12px; line-height: 1.7; margin-bottom: 16px; }
+.workflowSection form > fieldset > label { min-width: 0; font-size: 13px; }
+.workflowSection form > fieldset > label:last-of-type { grid-column: 1/-1; }
+.workflowSection form > fieldset > button { justify-self: start; grid-column: 1/-1; }
+@media(max-width:600px) {
+  .placementFields { grid-template-columns: minmax(0,1fr); }
+  .placementFields > .field { max-width: 160px; }
+}
+@media(max-width:500px) {
+  .workflowStack:not([hidden]), .snapshotEditor, .placementSection { gap: 20px; }
+  .claimGroup > summary, .snapshotEditor > .qualityDisclosure > summary { padding: 12px; }
+  .claimGroupBody { padding: 14px 12px; }
+  .snapshotEditor .qualityPanel { padding: 0 12px 14px; }
+  .qualityCriteria { grid-template-columns: minmax(0,1fr); }
+  .workflowSection .previewTools .previewTheme { width: 100%; grid-template-columns: minmax(0,1fr); gap: 6px; }
+  :global(.sky-app .admin-main) .gridSizeOptions label { padding-inline: 6px; font-size: 12px; min-height: 44px; }
+  .workflowSection .layoutReview { grid-template-columns: minmax(0,1fr); }
+}
+@media(max-width:360px) { .gridSizeOptions { grid-template-columns: repeat(2,minmax(0,1fr)); } }

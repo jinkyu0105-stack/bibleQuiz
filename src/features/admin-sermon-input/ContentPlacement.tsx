@@ -1,6 +1,7 @@
 import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { WinnerSettings } from "../admin-weekly/WinnerSettings";
+import { WorkflowSection } from "./WorkflowSection";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { AdminContentView } from "../../../shared/api/admin-content-generation";
 import type { AdminPlacementLayout, AdminPlacementTrial } from "../../../shared/api/admin-placement";
@@ -110,24 +111,28 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
   }
   if (publishedSlug) return <section className={styles.placementSection} aria-label="발행 완료"><h4><AdminLabel text="발행 완료"/></h4><a href={`/quiz/${publishedSlug}`}>공개된 퀴즈 보기</a></section>;
   return <section className={styles.placementSection} aria-label="배치 선택·발행 전 검토">
+    <WorkflowSection title="미리보기 설정" icon="settings">
     <div className={styles.previewTools}>
       <label><input type="checkbox" checked={answers} onChange={e => setAnswers(e.currentTarget.checked)} />관리자 정답 보기</label>
       <label><input type="checkbox" checked={large} onChange={e => setLarge(e.currentTarget.checked)} />크게 보기</label>
       <label><input type="checkbox" checked={mobile} onChange={e => setMobile(e.currentTarget.checked)} />모바일 폭으로 보기</label>
       {step !== undefined && <label className={styles.previewTheme}>색상 미리보기<select value={previewTheme} onChange={e=>setPreviewTheme(e.target.value)}><option value="current">현재 시간대</option><option value="light">라이트</option><option value="dark">다크</option></select></label>}
     </div>
-    <div hidden={step !== undefined && step > 4}>
-    <h4><AdminLabel text="배치 선택·발행 전 검토"/></h4><p>검수한 후보로 여러 배치를 시험합니다. AI 추가 비용은 없습니다.</p>
+    </WorkflowSection>
+    <div hidden={step !== undefined && step > 4} className={styles.workflowStack}>
+    <p className={styles.helper}>검수한 후보로 여러 배치를 시험합니다. AI 추가 비용은 없습니다.</p>
     {!ready && <p>요약·어린이·장년 문제의 검수를 모두 완료하면 배치를 시험할 수 있습니다.</p>}
-    {levels.map(level => <section key={level} className={styles.placementLevel} aria-label={`${names[level]} 배치 시험`}>
-      <h5>{names[level]} 배치</h5>
-      <fieldset disabled={disabled || !ready}><legend>시험할 격자 크기 (복수 선택 가능)</legend><div className={styles.previewTools}>
+    {levels.map(level => <WorkflowSection key={level} title={`${names[level]} 배치`} icon={level} label={`${names[level]} 배치 시험`}>
+      <div className={styles.placementFields}>
+      <fieldset disabled={disabled || !ready}><legend>시험할 격자 크기 (복수 선택 가능)</legend><div className={styles.gridSizeOptions}>
         {[5, 6, 7, 8, 9, 10].map(size => <label key={size}><input type="checkbox" checked={options[level].gridSizes.includes(size)} onChange={e => change(level, { ...options[level], gridSizes: e.currentTarget.checked ? [...options[level].gridSizes, size].sort((a, b) => a - b) : options[level].gridSizes.filter(n => n !== size) })} />{size} × {size}</label>)}
       </div></fieldset>
       <label className={styles.field}>목표 단어 수<input disabled={disabled || !ready} type="number" min={1} max={100} value={options[level].targetWordCounts[0] ?? ""} onChange={e => change(level, { ...options[level], targetWordCounts: [Number(e.currentTarget.value)] })} /></label>
+      </div>
       <p className={styles.helper}>시작 권장: 5×5는 5~7개, 6×6는 6~8개, 7×7는 7~10개, 8×8~10×10은 8~15개. 실제 후보에 따라 달라집니다.</p>
       <Button type="button" disabled={disabled || !ready || !options[level].gridSizes.length || !Number.isInteger(options[level].targetWordCounts[0]) || options[level].targetWordCounts[0]! < 1 || options[level].targetWordCounts[0]! > 100} onClick={() => void trial(level)}>{names[level]} 배치 시험</Button>
-      {trials[level] && <>
+      {trials[level] && <div className={styles.trialResults}>
+        <h5>시험 결과</h5>
         {trials[level].layouts.length === 0 && <p role="status">이 설정에서는 배치를 찾지 못했습니다. 격자 크기·목표 단어 수 또는 후보 상태를 바꿔 다시 시험해 주세요.</p>}
         {trials[level].searchIncomplete && <p>탐색 범위 안의 결과입니다. 가능한 모든 조합을 검사한 것은 아닙니다.</p>}
         {!!trials[level].reasons.length && <details><summary><AdminLabel text="배치가 어려웠던 이유"/></summary>{trials[level].reasons.map(reason => <p key={reason}>{reason}</p>)}</details>}
@@ -135,23 +140,39 @@ export function ContentPlacement({ sermonId, view, busy, act, published, step }:
           {trials[level].layouts.map(layout => <option key={layout.index} value={layout.index}>{layout.index === 0 ? "추천 배치" : `대안 ${layout.index}`} · {layout.grid.gridSize} × {layout.grid.gridSize} · {layout.wordCount}개</option>)}</select></label>
           <div className={styles.previewViewport} data-mobile={mobile} data-preview-theme={step === undefined || previewTheme === "current" ? undefined : previewTheme}><LayoutReview layout={trials[level].layouts[indices[level]]!} title={`${names[level]} 시험`} answers={answers} large={large} /></div>
         </>}
-      </>}
-    </section>)}
+      </div>}
+    </WorkflowSection>)}
+    <WorkflowSection title="배치 저장과 검사" icon="check" tone="success">
+    <p className={styles.helper}>두 난도의 시험 결과를 고른 뒤 함께 저장합니다. 자료나 후보가 바뀌면 다시 검수하고 시험해 주세요.</p>
     <Button type="button" disabled={disabled || !trials.child?.layouts[indices.child] || !trials.adult?.layouts[indices.adult]} onClick={() => void save()}>선택한 두 배치 저장·검사</Button>
-    <p className={styles.helper}>저장 전 시험 결과는 현재 선택본을 바꾸지 않습니다. 자료나 후보가 바뀌면 다시 검수하고 시험해 주세요.</p>
-    {trialBusy && <p role="status">요청을 처리하고 있습니다.</p>}{message && <p role="status">{message}</p>}
+    <p className={styles.helper}>저장 전 시험 결과는 현재 선택본을 바꾸지 않습니다.</p>
+    </WorkflowSection>
     </div>
-    {view.preview && view.reviewLayouts && <section hidden={step === 4} aria-label="최종 검사 미리보기" className={styles.placementLevel}>
-      {step !== 5 && view.status === "review_ready" && placement.current && !publishedSlug && <Button type="button" disabled={disabled} onClick={() => setConfirmPublish(true)}>지금 발행</Button>}
-      <h4>{placement.selected ? "선택한 배치의 최종 검사 통과" : "기본 배치의 최종 검사 통과"}</h4>
+    {trialBusy && <p role="status">요청을 처리하고 있습니다.</p>}{message && <p role="status">{message}</p>}
+    {view.preview && view.reviewLayouts && <section hidden={step === 4} aria-label="최종 검사 미리보기" className={styles.workflowStack}>
+      {step !== 5 && <WorkflowSection title="공개 전 확인" icon="globe" tone="success">
+        <p className={styles.checkStatus}>{placement.selected ? "선택한 배치의 최종 검사 통과" : "기본 배치의 최종 검사 통과"}</p>
+        <p>두 난도 모두 자료 확인과 내용 검수를 마쳤고, 격자의 연결·교차·정답 검사를 통과했습니다. 아직 발행하지 않았습니다.</p>
+        <p>‘지금 발행’을 누르면 공개 시각과 마감, 기존 퀴즈에 미치는 영향을 확인할 수 있습니다.</p>
+        {view.status === "review_ready" && placement.current && !publishedSlug && <Button type="button" variant="primary" disabled={disabled} onClick={() => setConfirmPublish(true)}>지금 발행</Button>}
+      </WorkflowSection>}
+      <WorkflowSection title="설교 정보와 요약" icon="book">
       <h5>{view.preview.metadata.title}</h5><p>설교일 {view.preview.metadata.date} · {view.preview.metadata.bibleReferenceLabel} ({view.preview.metadata.translation})</p>
       <a href={view.preview.metadata.bibleReadingUrl} target="_blank" rel="noreferrer">대한성서공회에서 읽기</a>
       <p className={styles.reviewSummary}>{view.preview.summary.text}</p><p className={styles.helper}>{view.preview.summary.disclosure}</p>
-      {levels.map(level => <div className={styles.previewViewport} data-mobile={mobile} data-preview-theme={step === undefined || previewTheme === "current" ? undefined : previewTheme} key={level}><LayoutReview layout={view.reviewLayouts![level]} title={names[level]} answers={answers} large={large} /></div>)}
+      </WorkflowSection>
+      {levels.map(level => <WorkflowSection key={level} title={`${names[level]} 퀴즈 미리보기`} icon={level}>
+        <div className={styles.previewViewport} data-mobile={mobile} data-preview-theme={step === undefined || previewTheme === "current" ? undefined : previewTheme}><LayoutReview layout={view.reviewLayouts![level]} title={names[level]} answers={answers} large={large} /></div>
+      </WorkflowSection>)}
+      <WorkflowSection title="단서 내보내기" icon="document">
+      <p>어린이·장년 퀴즈의 단서를 정답 없이 복사합니다.</p>
       <Button type="button" onClick={() => void copyClues()}>정답 없이 단서 복사</Button>
-      <p>두 난도 모두 자료 확인과 내용 검수를 마쳤고, 격자의 연결·교차·정답 검사를 통과했습니다. 아직 발행하지 않았습니다.</p>
-      {step === 5 && <ul aria-label="발행 검수표"><li>설교 자료와 설교 의도 확인·확정</li><li>요약·어린이·장년 문제 검수</li><li>두 난도 격자·연결·교차·정답 검사 통과</li><li>아래 Top N 설정과 공개할 내용을 확인해 주세요.</li></ul>}
-      {step === 5 && view.quizSetId && <WinnerSettings quizSetId={view.quizSetId}/>}
+      </WorkflowSection>
+      {step === 5 && <WorkflowSection title="발행 검수표" icon="check" tone="success">
+        <p className={styles.checkStatus}>{placement.selected ? "선택한 배치의 최종 검사 통과" : "기본 배치의 최종 검사 통과"}</p>
+        <ul aria-label="발행 검수표"><li>설교 자료와 설교 의도 확인·확정</li><li>요약·어린이·장년 문제 검수</li><li>두 난도 격자·연결·교차·정답 검사 통과</li><li>아래 Top N 설정과 공개할 내용을 확인해 주세요.</li></ul>
+      </WorkflowSection>}
+      {step === 5 && view.quizSetId && <WinnerSettings quizSetId={view.quizSetId} workflow/>}
 
       {confirmPublish && !publishedSlug && <PublicationConfirmation view={view} disabled={disabled} message={message}
         cancel={() => setConfirmPublish(false)} publish={() => void publish()} />}
