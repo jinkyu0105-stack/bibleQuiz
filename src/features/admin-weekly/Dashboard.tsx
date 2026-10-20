@@ -50,7 +50,7 @@ export function Component() {
   const rows = items.filter(q => (filter === "all" || (filter === "draft" ? isDraft(q) : q.status === filter)) && `${q.title} ${q.sermonDate}`.includes(search.trim()));
   const due = cleanup?.items.filter(q => q.state === "blocked" || (q.state !== "purged" && q.dueAt && Date.parse(q.dueAt) - checkedAt <= 86_400_000)) ?? [];
   return <div className={styles.page} data-admin-board="quizzes">
-    <AdminBoardHeader title="퀴즈 관리" description="퀴즈를 준비하고, 공개와 참여를 관리하세요." terms={["초안", "발행", "자동 선택", "대표 지정"]} screenshots={["dashboard"]} actions={<ButtonLink variant="primary" className="action-button-raised" to="/admin/new">퀴즈 준비 <span aria-hidden="true">＋</span></ButtonLink>}/>
+    <AdminBoardHeader title="퀴즈 관리" description="퀴즈를 준비하고, 공개와 참여를 관리하세요." terms={["초안", "발행", "자동 선택", "대표 지정"]} screenshots={["dashboard"]} actions={<ButtonLink variant="primary" className="action-button-raised" to="/admin/new">새 퀴즈 만들기 <span aria-hidden="true">＋</span></ButtonLink>}/>
     {message && <p className={styles.alert} role="alert">{message}</p>}
     <div className={styles.statusBar} data-admin-summary>
     <div className={styles.overview} role="group" aria-label="운영 요약">
@@ -74,7 +74,7 @@ export function Component() {
       <AdminIndexedBoard label="퀴즈 상태" value={filter} onChange={setFilter} options={([['all', '전체', items.length, 'action'], ['draft', '작성 중', drafts.length, 'action'], ['published', '공개 중', published.length, 'success'], ['archived', '지난 퀴즈', archived.length, 'guide']] as const).map(([value,label,count,tone])=>({value,label,count,tone}))} controls={
         <label className={styles.search}><span className="sr-only">퀴즈 검색</span><input type="search" placeholder="제목 또는 날짜 검색" value={search} onChange={e => setSearch(e.target.value)}/></label>
       }>
-      {!data && loading ? <div className={styles.empty} role="status">퀴즈를 불러오고 있습니다.</div> : !data ? <div className={styles.empty}>새로고침을 눌러 목록을 다시 불러오세요.</div> : rows.length === 0 ? <div className={styles.empty}><h4>{items.length ? "조건에 맞는 퀴즈가 없습니다" : "첫 퀴즈를 준비해 보세요"}</h4><p>{items.length ? "검색어나 상태를 바꾸면 다른 퀴즈를 볼 수 있습니다." : "설교 영상 등록부터 문제 검토와 발행까지 한 화면에서 이어집니다."}</p>{!items.length && <ButtonLink to="/admin/new">퀴즈 준비하기</ButtonLink>}</div> :
+      {!data && loading ? <div className={styles.empty} role="status">퀴즈를 불러오고 있습니다.</div> : !data ? <div className={styles.empty}>새로고침을 눌러 목록을 다시 불러오세요.</div> : rows.length === 0 ? <div className={styles.empty}><h4>{items.length ? "조건에 맞는 퀴즈가 없습니다" : "첫 퀴즈를 준비해 보세요"}</h4><p>{items.length ? "검색어나 상태를 바꾸면 다른 퀴즈를 볼 수 있습니다." : "설교 영상 등록부터 문제 검토와 발행까지 한 화면에서 이어집니다."}</p>{!items.length && <ButtonLink to="/admin/new">새 퀴즈 만들기</ButtonLink>}</div> :
         <><div className={styles.boardHeading} aria-hidden="true"><span>설교일</span><span>퀴즈</span><span>참여 · 관리</span></div>
         <ul className={styles.quizList}>{rows.map(q => {
           const description = [q.quizSetId === data.homeQuiz?.quizSetId ? "홈에 표시되는 퀴즈" : "", isDraft(q) ? q.expired ? "발행 기록과 비용은 보존됩니다." : progress[q.stage ?? ""] ?? "설교 등록·입력 확인" : q.closesAt ? `${q.status === "archived" ? "마감일" : "접수 마감"} ${time(q.closesAt)}${q.status === "published" && Date.parse(q.closesAt) <= checkedAt ? " · 마감 처리 대기" : ""}` : ""].filter(Boolean).join(" · ");

@@ -38,12 +38,21 @@ async function workspace(page:Page,edit:(body:Record<string,unknown>,view:AdminC
   });
   return {view,mutations};
 }
-test('dashboard resumes one existing weekly work and new-work URL reuses it without any write',async({page},testInfo)=>{
+test('new quiz opens an unsaved blank form and resumes existing work without any write',async({page},testInfo)=>{
   const f=await workspace(page,()=>{throw new Error('no mutations');});
   await page.goto('/admin');await expect(page.getByRole('link',{name:'초안 편집',exact:true})).toHaveAttribute('href','/admin/quiz/weekly');
   await expect(page.getByRole('link',{name:/답변 대기 2/})).toBeVisible();
   await page.screenshot({path:`/tmp/p5-72-dashboard-${testInfo.project.name}.png`,fullPage:true});
-  await page.goto('/admin/new');await expect(page).toHaveURL(/\/admin\/quiz\/weekly$/u);
+  await page.getByRole('link',{name:/새 퀴즈 만들기/}).click();
+  await expect(page).toHaveURL(/\/admin\/new$/u);
+  await expect(page.getByLabel('YouTube 영상 링크')).toHaveValue('');
+  await expect(page.getByLabel('설교 제목',{exact:true})).toHaveValue('');
+  await expect(page.getByText('아직 새 작업을 저장하지 않았습니다.',{exact:false})).toBeVisible();
+  expect(f.mutations).toEqual([]);
+  await page.reload();
+  await expect(page.getByLabel('YouTube 영상 링크')).toHaveValue('');
+  await page.getByRole('combobox',{name:'만들던 퀴즈 이어하기',exact:true}).selectOption(quiz.sermonId);
+  await expect(page).toHaveURL(/\/admin\/quiz\/weekly$/u);
   await expect(page.getByRole('heading',{name:'요약과 문제',exact:true})).toBeVisible();
   const summaryEditor=page.locator('article').filter({has:page.getByRole('heading',{name:'설교 요약',exact:true})});
   const textBox=await summaryEditor.getByRole('textbox',{name:'요약 문단 1',exact:true}).boundingBox();

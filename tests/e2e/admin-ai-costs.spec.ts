@@ -36,7 +36,7 @@ test("selected quiz cost opens its call ledger and changes with the selected wor
     ? { history: null } : { input: null } } }));
   await page.route("**/api/admin/quiz-sets/*/ai-costs", route => route.fulfill({ json: { data: route.request().url().includes("quiz-first") ? first : second } }));
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
-  const selected = page.getByRole("combobox", { name: "작성 중인 설교", exact: true });
+  const selected = page.getByRole("combobox", { name: "만들던 퀴즈 이어하기", exact: true });
   await selected.selectOption("first");
   const costButton = page.getByRole("button", { name: /이 퀴즈의 AI 비용/ });
   await expect(costButton).toContainText("USD 0.000524");

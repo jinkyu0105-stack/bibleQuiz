@@ -187,11 +187,12 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
       <AdminRefreshButton label="작업 목록 새로고침" disabled={busy || disabled} onClick={() => { setError(""); setView(null); setVersion(v => v + 1); }}/>
     </div>
     {error && <p role="alert">{error}</p>}{message && <p role="status">{message}</p>}
-    {items === null ? <p role="status">작성 중인 설교을 불러오고 있습니다.</p> : items.length === 0 ? <p>작성 중인 설교이 없습니다. 새 설교를 등록해 주세요.</p> :
-      <label>작성 중인 설교<select value={items.some(item => item.sermonId === selectedId) ? selectedId : ""} disabled={busy || disabled} onChange={e => {
+    {items === null ? <p role="status">만들던 퀴즈를 불러오고 있습니다.</p> : items.length === 0 ? <p>만들던 퀴즈가 없습니다. 새 설교를 등록해 주세요.</p> :
+      <label>만들던 퀴즈 이어하기<select value={items.some(item => item.sermonId === selectedId) ? selectedId : ""} disabled={busy || disabled} onChange={e => {
         if (e.target.value) { setCreating(false); setView(null); setError(""); setMessage(""); void onSelect(e.target.value); }
       }}><option value="" disabled>작업을 선택해 주세요</option>{items.map(item => <option key={item.sermonId} value={item.sermonId} disabled={item.expired}>{item.sermonDate} · {item.title}{item.expired ? " (본문 정리됨)" : ""}</option>)}</select></label>}
     {!creating && detailError?.id === selectedId && <p role="alert">{detailError.message}</p>}
+    {creating && <p>아직 새 작업을 저장하지 않았습니다. 아래에서 ‘새 작업 등록’을 눌러야 목록에 추가됩니다.</p>}
     {creating ? <MetadataForm key="new" view={null} onSave={save} onSelectExisting={async id => { setCreating(false); setView(null); return onSelect(id); }} busy={busy || disabled} />
       : view && view.sermonId === selectedId && <MetadataForm onSelectExisting={onSelect} key={`${view.sermonId}-${view.metadataRevision}-${version}`} view={view} onSave={save} busy={busy || disabled} />}
   </section>;

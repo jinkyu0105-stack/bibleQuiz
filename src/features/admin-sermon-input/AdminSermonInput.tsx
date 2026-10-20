@@ -567,7 +567,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
       {loadedSermonId && <AdminRefreshButton label="새로고침" onClick={() => void refreshWorkspace()}/>}
     </form>}
 
-    {workspace.state === "idle" && <p className={styles.empty}>새 설교를 등록하거나 작성 중인 설교 목록에서 작업을 선택해 주세요. 기존 설교 ID로도 불러올 수 있습니다.</p>}
+    {workspace.state === "idle" && <p className={styles.empty}>새 설교를 등록하거나 ‘만들던 퀴즈 이어하기’에서 작업을 선택해 주세요.</p>}
     {workspace.state === "loading" && <div className={styles.loadingPanel} role="status"><span />설교 자료와 이력을 불러오고 있습니다.</div>}
     {workspace.state === "error" && <Feedback feedback={{ state: "error", error: workspace.error }} />}
 

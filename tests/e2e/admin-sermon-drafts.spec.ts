@@ -31,7 +31,7 @@ test("new sermon registration, duplicate resume, prepublication metadata save an
   await page.route("**/api/admin/sermons/new-sermon/input**", route => route.fulfill({ json: { data: route.request().url().endsWith("/history") ? { history: null } : { input: null } } }));
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   const panel = page.getByRole("region", { name: "설교 작업 선택", exact: true });
-  await expect(panel.getByText("작성 중인 설교이 없습니다. 새 설교를 등록해 주세요.")).toBeVisible();
+  await expect(panel.getByText("만들던 퀴즈가 없습니다. 새 설교를 등록해 주세요.")).toBeVisible();
   await panel.getByRole("button", { name: "새 설교 등록", exact: true }).click();
   await panel.getByLabel("YouTube 영상 링크").fill("https://youtu.be/abcdefghijk");
   await panel.getByLabel("설교 제목", { exact: true }).fill("260920 합성 설교");
@@ -43,7 +43,7 @@ test("new sermon registration, duplicate resume, prepublication metadata save an
   await panel.getByLabel("제목·설교일·성경 장절을 확인했습니다.").check();
   await panel.getByRole("button", { name: "새 작업 등록", exact: true }).click();
   await expect(page.getByRole("heading", { name: "설교 자료 처음 저장", exact: true })).toBeVisible();
-  await expect(panel.getByRole("combobox", { name: "작성 중인 설교", exact: true })).toHaveValue("new-sermon");
+  await expect(panel.getByRole("combobox", { name: "만들던 퀴즈 이어하기", exact: true })).toHaveValue("new-sermon");
   await panel.getByLabel("설교 제목", { exact: true }).fill("수정된 합성 제목");
   await panel.getByLabel("설교 일자(주일)").fill("2026-09-21");
   await expect(panel.getByText(/특별예배 등 의도한 날짜/)).toBeVisible();
@@ -88,7 +88,7 @@ test("resume an existing draft from the list and keep unsaved source text out of
   await page.route("**/api/admin/sermons/*/input**", route => route.fulfill({ json: { data: route.request().url().endsWith("/history") ? { history: null } : { input: null } } }));
   await page.goto("/admin/tools"); await openAdminTool(page, "sermon");
   const panel = page.getByRole("region", { name: "설교 작업 선택", exact: true });
-  const select = panel.getByRole("combobox", { name: "작성 중인 설교", exact: true });
+  const select = panel.getByRole("combobox", { name: "만들던 퀴즈 이어하기", exact: true });
   await select.selectOption("first");
   await expect(panel.getByLabel("설교 제목", { exact: true })).toHaveValue("first 합성 설교");
   const source = page.locator("textarea").first();

@@ -4,8 +4,8 @@ import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { AdminTool } from "../../components/AdminGuide";
 import { Button, ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { weeklyDashboardSchema, weeklyQuizSchema } from "../../../shared/api/admin-weekly";
+import { Link, useParams, useSearchParams } from "react-router-dom";
+import { weeklyQuizSchema } from "../../../shared/api/admin-weekly";
 import { draftCleanupListSchema } from "../../../shared/api/admin-draft-cleanup";
 import { AdminSermonInput } from "../admin-sermon-input/AdminSermonInput";
 import { PublishedMetadata } from "../admin-sermon-input/PublishedMetadata";
@@ -17,20 +17,14 @@ import { WorkspaceMeta } from "./WorkspaceMeta";
 import { weeklyRequest } from "./client";
 import styles from "./weekly.module.css";
 export function Component(){
-  const navigate=useNavigate();
-  const [newChecked,setNewChecked]=useState(false);
   const {id}=useParams(),[query]=useSearchParams();
   const [quiz,setQuiz]=useState<ReturnType<typeof weeklyQuizSchema.parse>|null>(null),[message,setMessage]=useState(''),[attempt,setAttempt]=useState(0),[due,setDue]=useState<string|null>(null);
   useEffect(()=>{const controller=new AbortController();
-    if(!id){void weeklyRequest('/api/admin/dashboard',weeklyDashboardSchema,'GET',undefined,controller.signal).then(data=>{
-      if(controller.signal.aborted)return;
-      const draft=data.items.find(q=>!q.expired&&!['published','archived'].includes(q.status));
-      if(draft)navigate(`/admin/quiz/${draft.quizSetId}`,{replace:true});else setNewChecked(true);
-    }).catch(()=>{if(!controller.signal.aborted)setMessage('기존 초안을 확인하지 못했습니다. 퀴즈 목록에서 다시 확인해 주세요.');});return()=>controller.abort();}void weeklyRequest(`/api/admin/quiz-sets/${id}/workspace`,weeklyQuizSchema,'GET',undefined,controller.signal).then(next=>{if(!controller.signal.aborted)setQuiz(next);}).catch(()=>{if(!controller.signal.aborted)setMessage('퀴즈를 불러오지 못했습니다.');});
-    void weeklyRequest('/api/admin/draft-cleanup',draftCleanupListSchema,'GET',undefined,controller.signal).then(data=>{if(!controller.signal.aborted)setDue(data.items.find(item=>item.sermonId===quiz?.sermonId)?.dueAt??null);}).catch(()=>{});return()=>controller.abort();},[id,attempt,quiz?.sermonId,navigate]);
+    if(!id)return()=>controller.abort();void weeklyRequest(`/api/admin/quiz-sets/${id}/workspace`,weeklyQuizSchema,'GET',undefined,controller.signal).then(next=>{if(!controller.signal.aborted)setQuiz(next);}).catch(()=>{if(!controller.signal.aborted)setMessage('퀴즈를 불러오지 못했습니다.');});
+    void weeklyRequest('/api/admin/draft-cleanup',draftCleanupListSchema,'GET',undefined,controller.signal).then(data=>{if(!controller.signal.aborted)setDue(data.items.find(item=>item.sermonId===quiz?.sermonId)?.dueAt??null);}).catch(()=>{});return()=>controller.abort();},[id,attempt,quiz?.sermonId]);
   const published=quiz&&['published','archived'].includes(quiz.status);
   return <div className={`${styles.page} ${styles.workspace}`} data-admin-clear data-admin-workspace data-admin-tool-page={published || undefined}><Link className={styles.backLink} to="/admin">← 퀴즈 목록</Link>{message&&<div><p role="alert">{message}</p><Button onClick={()=>{setMessage('');setAttempt(a=>a+1);}}>다시 불러오기</Button></div>}
-    {!id?(newChecked?<AdminSermonInput weekly/>:!message&&<p role="status">기존 초안을 확인하고 있습니다.</p>):!quiz?!message&&<p role="status">퀴즈를 불러오고 있습니다.</p>:<>
+    {!id?<AdminSermonInput key="new" weekly/>:!quiz?!message&&<p role="status">퀴즈를 불러오고 있습니다.</p>:<>
       <header className={styles.workspaceHeader}><h2><AdminEmoji>🧩</AdminEmoji>{quiz.title}</h2><WorkspaceMeta quiz={quiz} due={due}/></header>
       {published?<>
         <details className={styles.workspaceHelp}><summary><AdminLabel text="용어·화면 안내"/></summary><div className={styles.quickHelp}><AdminConcepts terms={["발행", "접수 마감", "Top N"]}/>

@@ -77,7 +77,7 @@ export function Component() {
     </Sample>
     <Sample id="raised" name="입체 작업 버튼" component="Button / ButtonLink · action-button-raised">
       <p>관리자 화면의 일반 작업 버튼에 공통으로 사용하는 스타일입니다. 주요 버튼은 진한 색, 보조 버튼은 옅은 색을 유지합니다. 은은한 윗빛과 얕은 그림자, 눌렀을 때의 작은 움직임을 공유합니다.</p>
-      <div className={styles.inline}><Button variant="primary" className="action-button-raised" onClick={() => setMessage("입체 주요 버튼을 눌렀습니다.")}>퀴즈 준비 ＋</Button><Button className="action-button-raised" onClick={() => setMessage("입체 보조 버튼을 눌렀습니다.")}>공개 화면 ↗</Button></div>
+      <div className={styles.inline}><Button variant="primary" className="action-button-raised" onClick={() => setMessage("입체 주요 버튼을 눌렀습니다.")}>새 퀴즈 만들기 ＋</Button><Button className="action-button-raised" onClick={() => setMessage("입체 보조 버튼을 눌렀습니다.")}>공개 화면 ↗</Button></div>
     </Sample>
     <Sample id="actions" name="기본 작업 버튼" component="Button / ButtonLink">
       <div className={styles.inline}><Button variant="primary" onClick={() => setMessage("주요 작업 버튼을 눌렀습니다.")}>입력 확인</Button><Button onClick={() => setMessage("보조 작업 버튼을 눌렀습니다.")}>정답 보기</Button><Button disabled>사용 불가</Button></div>
