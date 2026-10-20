@@ -2,16 +2,16 @@
   --gloss-tone: var(--ui-action,#245bc1);
   --gloss-fill: var(--gloss-tone);
   position: relative; isolation: isolate; display: inline-grid; place-items: center;
-  flex: 0 0 auto; width: 25px; height: 25px; border-radius: 50%;
-  border: 1px solid color-mix(in srgb,var(--gloss-fill) 78%,#142b3d);
-  background: radial-gradient(ellipse at 50% 110%,rgb(255 255 255 / .28),transparent 60%),
-    linear-gradient(165deg,color-mix(in srgb,var(--gloss-fill) 80%,white),var(--gloss-fill) 48%,color-mix(in srgb,var(--gloss-fill) 76%,#102534));
+  flex: 0 0 auto; width: 25px; height: 25px; border-radius: 32%;
+  border: 1px solid color-mix(in srgb,var(--gloss-fill) 28%,transparent);
+  background: radial-gradient(ellipse at 12% 0%,rgb(255 255 255 / .42),transparent 68%),
+    linear-gradient(145deg,color-mix(in srgb,var(--gloss-fill) 72%,white),var(--gloss-fill));
   color: #fff;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / .8),inset 0 -1px 1px rgb(10 36 49 / .3),
-    0 0 0 1px color-mix(in srgb,var(--glass-highlight,white) 65%,transparent),0 2px 4px -1px var(--glass-shadow,rgb(16 36 58 / .3));
+  box-shadow: inset 1px 1px 1px rgb(255 255 255 / .55),inset -1px -1px 1px rgb(255 255 255 / .14),
+    0 2px 4px -2px color-mix(in srgb,var(--gloss-fill) 45%,transparent);
 }
-.icon::before { content: ""; position: absolute; inset: 1px 2px 52%; border-radius: 50% 50% 45% 45%; background: linear-gradient(rgb(255 255 255 / .62),rgb(255 255 255 / .05)); pointer-events: none; }
-.icon > svg { position: relative; width: 15px; height: 15px; stroke-width: 2.1; filter: drop-shadow(0 1px 0 rgb(10 36 49 / .25)); }
+.icon::before { content: ""; position: absolute; inset: 2px; border-radius: inherit; background: radial-gradient(ellipse at 100% 100%,rgb(255 255 255 / .23),transparent 65%); pointer-events: none; }
+.icon > svg { position: relative; width: 15px; height: 15px; stroke-width: 1.9; }
 .icon[data-size=medium] { width: 34px; height: 34px; }
 .icon[data-size=medium] > svg { width: 20px; height: 20px; }
 .icon[data-glossy-tone=success] { --gloss-tone: var(--ui-success,#216648); --gloss-fill: color-mix(in srgb,var(--gloss-tone) 55%,#07985c); }

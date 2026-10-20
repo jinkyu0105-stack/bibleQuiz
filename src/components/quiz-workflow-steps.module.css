@@ -18,25 +18,34 @@
 .keys li { position: relative; min-width: 0; }
 .keys li + li { border-left: 1px solid var(--key-shade); }
 .chassis .keys button {
-  position: relative; width: 100%; min-height: 112px; height: 100%; margin: 0;
+  position: relative; isolation: isolate; overflow: hidden; width: 100%; min-height: 112px; height: 100%; margin: 0;
   display: grid; justify-items: center; align-content: center; gap: 6px; padding: 12px 3px;
   border: 0; border-radius: 0;
-  background: linear-gradient(180deg,var(--key-light),color-mix(in srgb,var(--glass-highlight) 45%,var(--key-face)) 8%,var(--key-face) 47%,color-mix(in srgb,var(--ink) 10%,var(--key-face)) 51%,var(--key-face) 91%,var(--key-light));
+  background: linear-gradient(165deg,var(--key-light),color-mix(in srgb,var(--glass-highlight) 35%,var(--key-face)) 16%,var(--key-face) 56%,color-mix(in srgb,var(--ink) 5%,var(--key-face)) 82%,var(--key-face));
   color: var(--ink); text-shadow: 0 1px 0 color-mix(in srgb,var(--glass-highlight) 65%,transparent);
   box-shadow: inset 1px 0 0 var(--key-light),inset 0 3px 1px var(--key-light),inset 0 -3px 2px var(--key-shade);
   transition: filter 140ms ease;
 }
 .keys li:first-child button { border-radius: 25px 0 0 25px; }
 .keys li:last-child button { border-radius: 0 25px 25px 0; }
+.keys button::after {
+  content: ""; position: absolute; z-index: -1; inset: -100%; pointer-events: none;
+  background: linear-gradient(135deg,transparent 40%,rgb(255 255 255 / .08) 44%,rgb(255 255 255 / .55) 50%,rgb(255 255 255 / .08) 56%,transparent 60%);
+  transform: translate(-55%,-55%); opacity: 0;
+}
+@keyframes keySheen {
+  0% { transform: translate(-55%,-55%); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(55%,55%); opacity: 0; }
+}
+@media (hover: hover) {
+  .keys button:hover:not(:disabled)::after { animation: keySheen 450ms cubic-bezier(.2,.6,.3,1) both; }
+}
 .number { position: relative; display: inline-flex; align-items: center; font-size: 32px; font-weight: 750; font-variant-numeric: tabular-nums; line-height: 1.1; }
-.number svg { position: absolute; right: calc(100% + 5px); top: 50%; transform: translateY(-50%); width: 12px; height: 12px; }
 .title { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: 13px; font-weight: 700; line-height: 1.25; white-space: nowrap; }
 .title svg { width: 12px; height: 12px; flex: 0 0 auto; }
 .title b { display: none; font-weight: inherit; }
-/* Compare label-fixed, label-grouped, number-left and the two upper corners. */
-[data-lock-layout="2"] .title svg { position: absolute; right: calc(100% + 5px); }
-.cornerLock { position: absolute; top: 10px; left: 10px; width: 12px; height: 12px; }
-[data-lock-layout="6"] .cornerLock { left: auto; right: 10px; }
 .keys small { padding: 1px 7px; border-radius: 5px; font-size: 10px; line-height: 1.4; color: var(--muted); background: color-mix(in srgb,var(--ink) 7%,transparent); }
 .chassis .keys [data-recessed] {
   background: linear-gradient(180deg,color-mix(in srgb,var(--ink) 23%,var(--key-face)),color-mix(in srgb,var(--ink) 10%,var(--key-face)) 70%,var(--key-face));
@@ -44,13 +53,15 @@
 }
 .chassis .keys [aria-current=step] {
   color: var(--ui-action);
-  background: linear-gradient(180deg,var(--key-light),color-mix(in srgb,var(--glass-highlight) 50%,var(--ui-action-bg)) 12%,var(--ui-action-bg) 48%,color-mix(in srgb,var(--ui-action) 12%,var(--ui-action-bg)) 52%,var(--ui-action-bg));
-  box-shadow: inset 0 0 0 2px var(--ui-action),inset 0 4px 1px var(--key-light),inset 0 -4px 2px var(--key-shade);
+  background: linear-gradient(165deg,var(--key-light),color-mix(in srgb,var(--glass-highlight) 42%,var(--ui-action-bg)) 18%,var(--ui-action-bg) 60%,color-mix(in srgb,var(--ui-action) 7%,var(--ui-action-bg)));
+  box-shadow: inset 1px 0 0 var(--key-light),inset 0 3px 1px var(--key-light),inset 0 -3px 2px var(--key-shade);
 }
 .keys [aria-current=step] small { color: var(--ui-action); background: var(--ui-action-bg); }
 .chassis .keys button:disabled { opacity: 1; color: var(--muted); cursor: not-allowed; }
 .chassis .keys button:hover:not(:disabled) { filter: brightness(1.06); }
-.chassis .keys button:active:not(:disabled) { transform: none; box-shadow: inset 0 4px 6px var(--key-shade),inset 0 0 0 2px var(--ui-action); }
+.chassis .keys button:active:not(:disabled) { transform: none; box-shadow: inset 0 4px 6px var(--key-shade),inset 0 -1px 0 var(--key-light); }
+.chassis .keys button:focus:not(:focus-visible) { outline: none; }
+:global(.sky-app .admin-main) .chassis .keys button:focus-visible,
 .chassis .keys button:focus-visible { outline: 3px solid var(--ui-action); outline-offset: -5px; }
 .footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--key-light); box-shadow: 0 -1px 0 color-mix(in srgb,var(--ink) 12%,transparent); }
 .stageHeading { border-bottom: 1px solid var(--line); margin-bottom: 20px; padding-bottom: 16px; }
@@ -71,9 +82,7 @@
   .number { font-size: 23px; }
   .title { font-size: 12px; gap: 2px; }
   .title > span { display: none; } .title b { display: block; }
-  .number svg,.title svg,.cornerLock { width: 9px; height: 9px; }
-  .number svg,[data-lock-layout="2"] .title svg { right: calc(100% + 2px); }
-  .cornerLock { top: 7px; left: 6px; } [data-lock-layout="6"] .cornerLock { right: 6px; }
+  .title svg { width: 9px; height: 9px; }
   .keys small { font-size: 9px; padding: 1px 5px; }
   .footer { flex-wrap: wrap; padding: 10px 12px; gap: 8px; }
 }
@@ -85,11 +94,9 @@
   .keys li:last-child button { border-radius: 0 13px 13px 0; }
   .number { font-size: 20px; }
   .title { font-size: 10px; }
-  .number svg,.title svg,.cornerLock { width: 8px; height: 8px; }
-  .number svg,[data-lock-layout="2"] .title svg { right: calc(100% + 1px); }
-  .cornerLock { top: 5px; left: 5px; } [data-lock-layout="6"] .cornerLock { right: 5px; }
+  .title svg { width: 8px; height: 8px; }
   .keys small { font-size: 8px; padding: 0 4px; }
   .footer { padding-inline: 7px; }
 }
-@media (prefers-reduced-motion: reduce) { .chassis .keys button { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .chassis .keys button { transition: none; } .keys button::after { display: none; animation: none !important; } }
 @media (forced-colors: active) { .chassis,.chassis .keys button,:global(body[data-time=night]) .keys [data-recessed] { background: Canvas; color: CanvasText; box-shadow: none; text-shadow: none; } .keys { box-shadow: none; border-color: CanvasText; } .chassis .keys [aria-current=step] { outline: 2px solid Highlight; outline-offset: -3px; } .chassis .keys button:disabled { color: GrayText; } }

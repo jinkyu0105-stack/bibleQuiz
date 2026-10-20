@@ -15,6 +15,7 @@ test('cassette steps retain all six numbers, distinguish recessed current and lo
   for(let index=0;index<6;index++) await expect(menu.getByRole('button').nth(index).locator('span').first()).toHaveText(String(index+1));
   await expect(current).not.toHaveAttribute('data-recessed');
   await previous.focus();await page.keyboard.press('Enter');await expect(previous).toHaveAttribute('aria-current','step');
+  await expect(previous).toHaveCSS('outline-offset','-5px');
   await expect(previous).not.toHaveAttribute('data-recessed');
   await page.emulateMedia({reducedMotion:'reduce'});await expect(previous).toHaveCSS('transition-duration','0s');
   await page.emulateMedia({forcedColors:'active'});await expect(previous).toBeEnabled();await expect(locked).toBeDisabled();

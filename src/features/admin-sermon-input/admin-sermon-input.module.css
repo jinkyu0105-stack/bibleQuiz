@@ -973,8 +973,27 @@
 .resumeToolbar > label { display: flex; align-items: center; gap: 10px; min-width: 0; max-width: 420px; flex: 1 1 200px; }
 .resumeToolbar > label > span { white-space: nowrap; font-size: 12px; font-weight: 600; }
 .resumeToolbar select { min-width: 0; width: 100%; min-height: 36px; padding: 6px 28px 6px 10px; font-size: 12px; text-overflow: ellipsis; }
-.draftFields { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 18px; }
-.draftFields legend { padding: 0 12px 0 0; margin: 0; font-size: 15px; font-weight: 650; }
+:global(.sky-app:not(.home-shell) .admin-main) .draftFields { margin-block: 28px 24px; gap: 24px; }
+.metadataSection {
+  min-width: 0; border: 1px solid var(--line); border-radius: 12px;
+  background: color-mix(in srgb,var(--glass-field) 45%,transparent);
+}
+:global(.sky-app:not(.home-shell) .admin-main) .metadataSection > h3 {
+  display: flex; align-items: center; gap: 8px; margin: 0; padding: 14px 18px;
+  border-bottom: 1px solid var(--line); border-radius: 11px 11px 0 0;
+  background: color-mix(in srgb,var(--ui-action-bg) 55%,transparent);
+  font-size: 15px; font-weight: 700; line-height: 1.4;
+}
+.metadataSection > h3 svg { width: 17px; height: 17px; color: var(--ui-action); }
+:global(.sky-app .admin-main) .metadataSection > .metadataSectionBody { display: grid; gap: 16px; padding: 18px; margin: 0; }
+.metadataSectionBody > .formGrid { margin: 0; }
+.metadataSectionBody > .actions { margin: 0; gap: 8px; }
+.metadataSectionBody > p { font-size: 12px; line-height: 1.7; color: var(--muted); }
+.registrationHint { line-height: 1.7; }
+@media (max-width: 500px) {
+  :global(.sky-app:not(.home-shell) .admin-main) .metadataSection > h3 { padding: 12px; }
+  :global(.sky-app .admin-main) .metadataSection > .metadataSectionBody { padding: 14px 12px; }
+}
 @media (max-width: 500px) { .stageControls { flex-wrap: wrap; } .stageControls > button { margin-left: auto; } .resumeToolbar > label { flex-basis: 160px; } }
 
 :global([data-admin-workspace]) .stageBody > .compactDrafts { padding-top: 0; margin-top: 0; }

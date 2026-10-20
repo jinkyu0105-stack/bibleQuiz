@@ -252,10 +252,16 @@ test('next waits for the ongoing save once and stays when edited content require
 
 test('manual save failure keeps typed content and does not change the step',async({page})=>{
   const f=await workspace(page,()=>false);await page.goto('/admin/quiz/weekly?step=3');
+  await expect(page.getByRole('textbox',{name:'요약 문단 1',exact:true})).toBeVisible();
+  // Keep the 900ms autosave timer from racing the explicit manual-save click on a busy runner.
+  await page.clock.install({time:new Date('2026-10-21T00:00:00Z')});
+  await page.clock.pauseAt(new Date('2026-10-21T00:00:01Z'));
   await page.getByRole('textbox',{name:'요약 문단 1',exact:true}).fill('실패해도 유지할 입력');
   const controls=page.getByRole('region',{name:'퀴즈 제작 조작판'});
   await controls.getByRole('button',{name:'임시 저장',exact:true}).click();
+  await page.clock.runFor(10);
   await expect(controls.getByRole('status')).toContainText('저장하지 못했습니다');
   await expect(page.getByRole('textbox',{name:'요약 문단 1',exact:true})).toHaveValue('실패해도 유지할 입력');
+  await page.clock.runFor(1000);
   await expect(page).toHaveURL(/step=3/);expect(f.mutations).toHaveLength(1);
 });

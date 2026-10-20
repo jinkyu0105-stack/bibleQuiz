@@ -1,7 +1,8 @@
 import { AdminRefreshButton } from "../../components/AdminListTools";
 import { AdminLabel } from "../../components/AdminHelp";
+import { AdminIcon } from "../../components/AdminIcon";
 import { Button } from "../../components/Button";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { z } from "zod";
 import { draftListSchema, draftMetadataViewSchema, registerSermonResultSchema, type DraftItem, type DraftMetadataView } from "../../../shared/api/admin-sermon-drafts";
 import { adminPublicVideoPreviewSchema, type AdminPublicVideoPreview } from "../../../shared/api/admin-public-video";
@@ -37,6 +38,7 @@ function MetadataForm({ view, onSave, onSelectExisting, busy, compact }: {
   busy: boolean;
   compact: boolean;
 }) {
+  const sectionId = useId();
   const [video, setVideo] = useState("");
   const [preview, setPreview] = useState<AdminPublicVideoPreview | null>(null);
   const [previewBusy, setPreviewBusy] = useState(false);
@@ -125,7 +127,10 @@ function MetadataForm({ view, onSave, onSelectExisting, busy, compact }: {
       setLocallySaved(JSON.stringify(storedInput)); setStoredInput(null);
     }}>불러오기</Button></p>}
     <fieldset disabled={busy || previewBusy} className={`${styles.displayFields} ${styles.draftFields}`} onChange={() => setConfirmed(false)}>
-      <legend>설교 정보</legend>
+      <legend className="sr-only">퀴즈 기본 정보</legend>
+      <section className={styles.metadataSection} aria-labelledby={`${sectionId}-sermon`}>
+      <h3 id={`${sectionId}-sermon`}><AdminIcon name="document"/>설교 정보</h3>
+      <div className={styles.metadataSectionBody}>
       <div className={styles.formGrid}>
         {!view && <label>YouTube 영상 링크<input value={video} required onChange={e => {
           previewOperation.current?.abort();
@@ -157,7 +162,12 @@ function MetadataForm({ view, onSave, onSelectExisting, busy, compact }: {
             {copyMessage && <p role="status">{copyMessage}</p>}</>}
       </div>}
       <p>{reason} · {weekday}{weekday && weekday !== "일요일" ? ": 특별예배 등 의도한 날짜인지 확인해 주세요. 저장은 가능합니다." : ""}</p>
-      <label>성경 장절<input value={referenceInput} required placeholder="영상 제목에서 확인되지 않으면 직접 입력" onChange={e => changeReference(e.target.value)} /></label>
+      </div>
+      </section>
+      <section className={styles.metadataSection} aria-label="성경 장절 입력">
+      <h3><AdminIcon name="book"/>성경 장절</h3>
+      <div className={styles.metadataSectionBody}>
+      <label><span className="sr-only">성경 장절</span><input value={referenceInput} required placeholder="영상 제목에서 확인되지 않으면 직접 입력" onChange={e => changeReference(e.target.value)} /></label>
       <div className={styles.formGrid}>
         <label>성경 책<select value={parsed.ok ? book : ""} onChange={e => selectReference(e.target.value as BibleBookId, 1, 1, 1)}><option value="" disabled>성경 책 선택</option>{BIBLE_BOOKS.map(b => <option key={b.bookId} value={b.bookId}>{b.canonicalKoreanName}</option>)}</select></label>
         <label>장<select value={chapter} onChange={e => selectReference(book, Number(e.target.value), 1, 1)}>{options(getBibleBook(book).chapterCount)}</select></label>
@@ -167,6 +177,8 @@ function MetadataForm({ view, onSave, onSelectExisting, busy, compact }: {
       {parsed.ok ? <p>{parsed.value.canonicalLabel} · 총 {parsed.value.verseCount}절 · 개역개정 <a href={parsed.value.readingPortalUrl} target="_blank" rel="noreferrer">대한성서공회에서 읽기</a></p>
         : <p>{referenceInput ? parsed.error.message : "성경 장절을 입력하거나 책·장·절을 선택해 주세요."}</p>}
       {view && <p>공개 주소 미리보기: /quiz/{date}-{view.slugPreview.split("-").at(-1)}</p>}
+      </div>
+      </section>
     </fieldset>
     <label className={styles.checkbox}><input type="checkbox" checked={confirmed} disabled={busy || !parsed.ok} onChange={e => setConfirmed(e.target.checked)} />제목·설교일·성경 장절을 확인했습니다.</label>
     <Button type="submit" disabled={busy || previewBusy || !confirmed || !parsed.ok}>{busy ? "저장 중" : view ? "설교 정보 저장" : "새 작업 등록"}</Button>
@@ -232,7 +244,7 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
     {error && <p role="alert">{error}</p>}{message && <p role="status">{message}</p>}
     {items?.length === 0 && <p className={styles.helper}>만들던 퀴즈가 없습니다. 새 설교를 등록해 주세요.</p>}
     {!creating && detailError?.id === selectedId && <p role="alert">{detailError.message}</p>}
-    {creating && <p>{compact ? "입력은 이 브라우저에 임시 보관됩니다. ‘새 작업 등록’을 눌러야 만들던 퀴즈 목록에 추가됩니다." : "‘새 작업 등록’을 눌러야 만들던 퀴즈 목록에 추가됩니다."}</p>}
+    {creating && <p className={styles.registrationHint}>{compact ? "입력은 이 브라우저에 임시 보관됩니다. ‘새 작업 등록’을 눌러야 만들던 퀴즈 목록에 추가됩니다." : "‘새 작업 등록’을 눌러야 만들던 퀴즈 목록에 추가됩니다."}</p>}
     {creating ? <MetadataForm compact={compact} key="new" view={null} onSave={save} onSelectExisting={async id => { setCreating(false); setView(null); return onSelect(id); }} busy={busy || disabled} />
       : view && view.sermonId === selectedId && <MetadataForm compact={compact} onSelectExisting={onSelect} key={`${view.sermonId}-${view.metadataRevision}-${version}`} view={view} onSave={save} busy={busy || disabled} />}
   </section>;

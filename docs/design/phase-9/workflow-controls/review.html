@@ -7,32 +7,32 @@ body{margin:0;background:#eaf3fa;color:#19374b;font:15px/1.7 system-ui}main{max-
 </style>
 <main>
 <h1>연결형 카세트 조작판</h1>
-<nav><a href="/admin/new">실제 새 퀴즈 만들기</a><a href="/dev/design#workflow">단계 버튼·자물쇠 비교</a><a href="/dev/design#glossy-icons">글로시 아이콘 14종</a><a href="/dev/design#help-button">물음표·입체 닫기 버튼</a></nav>
-<p>하나의 외곽 안에 여섯 키가 맞닿습니다. 양끝만 둥글게 처리하고, 윗빛·가운데 반사·아래 음영으로 글로시한 재질을 표현했습니다. 이전 단계는 눌린 면이며 본문은 조작판과 분리됩니다.</p>
-<h2>연결감과 재질을 위한 새 시안</h2>
+<nav><a href="/admin/new">실제 새 퀴즈 만들기</a><a href="/dev/design#workflow">단계 버튼·빛 스침</a><a href="/dev/design#glossy-icons">글로시 아이콘 14종</a><a href="/dev/design#help-button">물음표·입체 닫기 버튼</a></nav>
+<p>하나의 외곽 안에 여섯 키가 맞닿습니다. 양끝만 둥글게 처리하고, 가운데의 날카로운 광택 경계를 없애고 부드러운 대각선 반사광을 사용합니다. 마우스를 올리면 빛이 좌상단에서 우하단으로450ms 동안 한 번 지나갑니다. 이전 단계는 눌린 면이며 본문은 조작판과 분리됩니다.</p>
+<details><summary>기존 생성 시안 · 연결감 참고</summary>
 <figure><a href="connected-concept.png"><img id="concept" src="connected-concept.png" alt="하나로 연결된 여섯 카세트 키와 초록 글로시 체크 생성 시안"></a><figcaption>생성 이미지 · 형태 참고입니다. 점과 막대는 실제 번호·문구가 들어갈 자리이며, 자물쇠의 정확한 위치와 실제 저장 상태는 아래 구현 화면을 확인하세요.</figcaption></figure>
 <details><summary>좁은 화면용 생성 시안</summary><figure><a href="connected-mobile-concept.png"><img src="connected-mobile-concept.png" alt="낮은 연결형 조작판의 좁은 화면 생성 시안" loading="lazy"></a></figure></details>
-<h2>실제 저장 완료와 자물쇠 위치 비교</h2>
-<figure><a href="connected-autosave.png"><img src="connected-autosave.png" alt="실제 브라우저 자동 저장 완료와 초록 글로시 체크, 다섯 위치의 잠금 표시" loading="lazy"></a><figcaption>실제 로컬 화면 · 독립 시험 브라우저의 등록 전 연습 입력을 자동 저장한 결과입니다. 새 DB 작업이나 실제 자료 변경은 없습니다.</figcaption></figure>
-<p>2번은 글자 왼쪽에 고정, 3번은 자물쇠와 글자를 한 묶음으로 가운데 정렬, 4번은 숫자 왼쪽, 5번은 왼쪽 위, 6번은 오른쪽 위입니다. 비교 후 선호하는 위치로 통일할 수 있습니다.</p>
-<figure style="max-width:360px"><a href="connected-new-day-320.png"><img src="connected-new-day-320.png" alt="320px 실제 화면에서도 한 행인 64px 높이의 여섯 키" loading="lazy"></a><figcaption>320px 실제 화면 · 여섯 키가 한 행이며 높이는64px입니다.</figcaption></figure>
+</details><h2>실제 저장 완료와 확정된 잠금 표시</h2>
+<figure><a href="refined-autosave.png"><img src="refined-autosave.png" alt="실제 브라우저 자동 저장 완료와 초록 색유리 체크, 글자와 함께 가운데 정렬한 잠금 표시" loading="lazy"></a><figcaption>실제 로컬 화면 · 독립 시험 브라우저의 등록 전 연습 입력을 자동 저장한 결과입니다. 새 DB 작업이나 실제 자료 변경은 없습니다.</figcaption></figure>
+<p>사용자가 고른3번 배치로 통일했습니다. 모든 자물쇠는 단계 이름 왼쪽에 붙고, 자물쇠와 이름이 함께 가운데 정렬됩니다. 클릭할 때 진한 테두리가 생기지 않으며 키보드 초점은 유지합니다.</p>
+<figure style="max-width:360px"><a href="refined-new-day-320.png"><img src="refined-new-day-320.png" alt="320px 실제 화면에서도 한 행인 64px 높이의 여섯 키" loading="lazy"></a><figcaption>320px 실제 화면 · 여섯 키가 한 행이며 높이는64px입니다.</figcaption></figure>
 <h2>네 시간대의 실제 제작 화면</h2><label>시간대 <select id="theme"><option value="day">낮</option><option value="dawn">새벽</option><option value="sunset">노을</option><option value="night">밤</option></select></label>
 <p>이전 단계의 눌림·현재 단계·잠금 상태를 같은 화면에서 비교합니다. 상단 미리보기를 누르면 전체 화면을 엽니다.</p>
-<div class="pair preview"><figure><a id="desktop-link" href="connected-actual-day-1440.png"><img id="desktop" src="connected-actual-day-1440.png" alt="1440px 실제 제작 화면·합성 연습 자료"></a><figcaption>실제 앱 · 1440px · 합성 연습 자료</figcaption></figure><figure><a id="mobile-link" href="connected-actual-day-375.png"><img id="mobile" src="connected-actual-day-375.png" alt="375px 실제 제작 화면·합성 연습 자료"></a><figcaption>실제 앱 · 375px · 합성 연습 자료</figcaption></figure></div>
-<details><summary>같은 시간대의 실제 새 퀴즈 화면</summary><div class="pair preview"><figure><a id="new-desktop-link" href="connected-new-day-1440.png"><img id="new-desktop" src="connected-new-day-1440.png" alt="1440px 빈 새 퀴즈 화면" loading="lazy"></a><figcaption>실제 로컬 · 1440px · 기존 작업을 수정하지 않았습니다.</figcaption></figure><figure><a id="new-mobile-link" href="connected-new-day-375.png"><img id="new-mobile" src="connected-new-day-375.png" alt="375px 빈 새 퀴즈 화면" loading="lazy"></a><figcaption>실제 로컬 · 375px</figcaption></figure></div></details>
-<h2 id="icons">공통 글로시 상태 아이콘</h2>
-<p>채운 색·흰색 그림·윗빛을 공유합니다. 실행·저장, 완료, 확인, 도움말, 오류의 다섯 의미 색과 시간대 팔레트를 사용합니다. <a href="/dev/design#glossy-icons">갤러리에서 실제 부품 보기</a></p>
-<figure><a href="connected-icons-day.png"><img src="connected-icons-day.png" alt="낮의 글로시 상태 아이콘 14종 실제 컴포넌트" loading="lazy"></a></figure>
-<details><summary>밤의 아이콘 세트</summary><figure><a href="connected-icons-night.png"><img src="connected-icons-night.png" alt="밤의 글로시 상태 아이콘 14종 실제 컴포넌트" loading="lazy"></a></figure></details>
+<div class="pair preview"><figure><a id="desktop-link" href="refined-actual-day-1440.png"><img id="desktop" src="refined-actual-day-1440.png" alt="1440px 실제 제작 화면·합성 연습 자료"></a><figcaption>실제 앱 · 1440px · 합성 연습 자료</figcaption></figure><figure><a id="mobile-link" href="refined-actual-day-375.png"><img id="mobile" src="refined-actual-day-375.png" alt="375px 실제 제작 화면·합성 연습 자료"></a><figcaption>실제 앱 · 375px · 합성 연습 자료</figcaption></figure></div>
+<h2 id="form">설교 정보와 성경 장절 · 소섹션 구분</h2><p>이어하기 안내 아래28px 간격을 확보했습니다. 설교 정보의 제목·입력·추천 버튼을 하나로 묶고, 성경 장절은 다음 소섹션에 놓았습니다.</p><div class="pair preview"><figure><a id="new-desktop-link" href="refined-new-day-1440.png"><img id="new-desktop" src="refined-new-day-1440.png" alt="1440px 빈 새 퀴즈 화면" loading="lazy"></a><figcaption>실제 로컬 · 1440px · 기존 작업을 수정하지 않았습니다.</figcaption></figure><figure><a id="new-mobile-link" href="refined-new-day-375.png"><img id="new-mobile" src="refined-new-day-375.png" alt="375px 빈 새 퀴즈 화면" loading="lazy"></a><figcaption>실제 로컬 · 375px</figcaption></figure></div>
+<h2 id="icons">공통 글로시 상태 아이콘</h2><p>재질 참고: <a href="https://dribbble.com/shots/14527059-Glass-Icon-Exploration">Anthony Gribben의 Glass Icon Exploration</a>과 <a href="https://icons8.com/icons/liquid-glass-color">Icons8 Liquid Glass Color</a>. 외부 아이콘을 복제·다운로드하지 않고 기존 그림과 의미색으로 직접 구현했습니다.</p>
+<p>진한 원형 테두리와 반구 광택을 없애고 얇은 색유리와 부드러운 반사광을 공유합니다. 실행·저장, 완료, 확인, 도움말, 오류의 다섯 의미 색과 시간대 팔레트를 사용합니다. <a href="/dev/design#glossy-icons">갤러리에서 실제 부품 보기</a></p>
+<figure><a href="refined-icons-day.png"><img src="refined-icons-day.png" alt="낮의 글로시 상태 아이콘 14종 실제 컴포넌트" loading="lazy"></a></figure>
+<details><summary>밤의 아이콘 세트</summary><figure><a href="refined-icons-night.png"><img src="refined-icons-night.png" alt="밤의 글로시 상태 아이콘 14종 실제 컴포넌트" loading="lazy"></a></figure></details>
 <h2 id="help">작은 물음표와 입체 닫기 버튼</h2>
-<p>물음표 그림은24px, 누르는 영역은44px입니다. 도움말·난이도 선택창·화면 확대의 닫기 버튼은 같은 부품을 사용합니다.</p>
-<div class="pair"><figure><a href="connected-new-help.png"><img src="connected-new-help.png" alt="입체 닫기 버튼이 있는 실제 설교 준비 도움말" loading="lazy"></a></figure><figure><a href="connected-choice-close.png"><img src="connected-choice-close.png" alt="공통 입체 닫기 버튼을 적용한 실제 난이도 선택창" loading="lazy"></a></figure></div>
-<details><summary>데스크톱·모바일의 도움말과 화면 예시</summary><div class="pair"><figure><a href="connected-help-chromium.png"><img src="connected-help-chromium.png" alt="데스크톱 문제 검토 도움말" loading="lazy"></a></figure><figure><a href="connected-help-mobile-chromium.png"><img src="connected-help-mobile-chromium.png" alt="모바일 문제 검토 도움말" loading="lazy"></a></figure></div></details>
-<div class="note">‘임시 저장’은 실제 저장과 연결됩니다. ‘다음 단계’는 진행 중인 자동 저장과 남은 편집의 저장을 마친 뒤 이동합니다. 등록 전 입력은 이 브라우저에만 보관하며 새 퀴즈는 등록할 때 생성합니다.</div>
+<p>물음표 그림은22px, 누르는 영역은44px입니다. 그림만2px 아래로 내려 제목과의 시각적 높이를 맞췄습니다. 도움말·난이도 선택창·화면 확대의 닫기 버튼은 같은 부품을 사용합니다.</p>
+<div class="pair"><figure><a href="refined-new-help.png"><img src="refined-new-help.png" alt="입체 닫기 버튼이 있는 실제 설교 준비 도움말" loading="lazy"></a></figure><figure><a href="connected-choice-close.png"><img src="connected-choice-close.png" alt="공통 입체 닫기 버튼을 적용한 실제 난이도 선택창" loading="lazy"></a></figure></div>
+<details><summary>데스크톱·모바일의 도움말과 화면 예시</summary><div class="pair"><figure><a href="refined-help-chromium.png"><img src="refined-help-chromium.png" alt="데스크톱 문제 검토 도움말" loading="lazy"></a></figure><figure><a href="refined-help-mobile-chromium.png"><img src="refined-help-mobile-chromium.png" alt="모바일 문제 검토 도움말" loading="lazy"></a></figure></div></details>
+<h2>빛이 스치는 순간</h2><figure><a href="refined-hover.png"><img src="refined-hover.png" alt="좌상단에서 우하단으로 빛이 지나가는 실제 단계 버튼" loading="lazy"></a></figure><p>움직임은 <a href="/dev/design#workflow">실제 갤러리</a>에서 확인하세요. 모션 줄이기 설정에서는 정적인 밝기 변화만 사용합니다.</p><div class="note">‘임시 저장’은 실제 저장과 연결됩니다. ‘다음 단계’는 진행 중인 자동 저장과 남은 편집의 저장을 마친 뒤 이동합니다. 등록 전 입력은 이 브라우저에만 보관하며 새 퀴즈는 등록할 때 생성합니다.</div>
 <details><summary>이전 독립 키 시안 보존본</summary><figure><a href="cassette-day.png"><img src="cassette-day.png" alt="이전의 독립된 카세트 키 생성 시안" loading="lazy"></a></figure></details>
 <p>검수 범위: 네 시간대 × 2560/1440/768/425/375/320px, 키보드·모달·저장 회귀. 실제 휴대폰의 검수와 자동 브라우저 검수는 구분합니다. 이미지는 누르면 원본 크기로 열립니다.</p>
 </main>
 <script>
-document.querySelector('#theme').addEventListener('change',e=>{const theme=e.target.value;for(const [id,kind,size]of [['desktop','actual',1440],['mobile','actual',375],['new-desktop','new',1440],['new-mobile','new',375]]){const src=`connected-${kind}-${theme}-${size}.png`;document.getElementById(id).src=src;document.getElementById(id+'-link').href=src;}});
+document.querySelector('#theme').addEventListener('change',e=>{const theme=e.target.value;for(const [id,kind,size]of [['desktop','actual',1440],['mobile','actual',375],['new-desktop','new',1440],['new-mobile','new',375]]){const src=`refined-${kind}-${theme}-${size}.png`;document.getElementById(id).src=src;document.getElementById(id+'-link').href=src;}});
 </script>
 </html>

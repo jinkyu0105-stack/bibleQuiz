@@ -2,7 +2,7 @@ import { AdminIcon, type AdminIconName } from "./AdminIcon";
 import type { AdminTone } from "../config/admin-help";
 import styles from "./glossy-icon.module.css";
 
-/** Coloured enamel surface; the adjacent label supplies the meaning and name. */
+/** Soft coloured glass surface; the adjacent label supplies the meaning and name. */
 export function GlossyIcon({ name, tone = "action", size = "small" }: {
   name: AdminIconName; tone?: AdminTone; size?: "small" | "medium";
 }) {

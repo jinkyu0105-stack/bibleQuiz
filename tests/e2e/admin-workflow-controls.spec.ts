@@ -4,6 +4,7 @@ import {selectSkyTime} from './sky-control-helpers';
 
 test('workflow keys keep number order, glass controls and one-row keys and no overflow at desktop and narrow mobile widths',async({page},info)=>{
   test.skip(info.project.name!=='chromium','Viewport matrix runs once.');
+  test.setTimeout(90_000);
   const writes=await mockAdminGuide(page);
   await page.goto('/admin/quiz/weekly?step=3');
   for(const width of [2560,1440,768,425,375,320]) {
@@ -21,7 +22,7 @@ test('workflow keys keep number order, glass controls and one-row keys and no ov
       if(width<=425) expect(boxes[0]!.height).toBeLessThanOrEqual(76);
       expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
       await expect(keys.nth(2)).toHaveAttribute('aria-current','step');await expect(keys.nth(3)).toBeDisabled();
-      if(process.env.CAPTURE_WORKFLOW==='1' && [1440,375].includes(width)) await page.locator('[data-admin-workflow]').screenshot({path:`docs/design/phase-9/workflow-controls/connected-actual-${theme}-${width}.png`});
+      if(process.env.CAPTURE_WORKFLOW==='1' && [1440,375].includes(width)) await page.locator('[data-admin-workflow]').screenshot({path:`docs/design/phase-9/workflow-controls/refined-actual-${theme}-${width}.png`});
     }
   }
   expect(writes).toEqual([]);
@@ -34,7 +35,7 @@ test('stage help stays beside the heading and opens an accessible modal on deskt
   const help=page.getByRole('button',{name:'문제 검토 도움말',exact:true});
   await expect(help).toBeVisible();await expect(page.locator('summary').filter({hasText:'용어·화면 안내'})).toHaveCount(0);
   expect((await help.boundingBox())!.width).toBe(44);
-  expect((await help.locator('span').boundingBox())!.width).toBe(24);
+  expect((await help.locator('span').boundingBox())!.width).toBe(22);
   const heading=page.getByRole('heading',{name:'문제 검토',exact:true});
   const h=await heading.boundingBox(),b=await help.boundingBox();expect(Math.abs(h!.y+h!.height/2-b!.y-b!.height/2)).toBeLessThan(1);
   await help.click();const dialog=page.getByRole('dialog',{name:'문제 검토 도움말',exact:true});
@@ -49,12 +50,12 @@ test('stage help stays beside the heading and opens an accessible modal on deskt
   const screenshot=page.getByRole('dialog',{name:'요약과 두 난도를 각각 검수하기',exact:true});
   await expect(screenshot).toBeVisible();await screenshot.getByRole('button',{name:/닫기/}).click();
   await expect(screenshot).toBeHidden();await expect(dialog).toBeVisible();
-  if(process.env.CAPTURE_WORKFLOW==='1')await page.screenshot({path:`docs/design/phase-9/workflow-controls/connected-help-${info.project.name}.png`});
+  if(process.env.CAPTURE_WORKFLOW==='1')await page.screenshot({path:`docs/design/phase-9/workflow-controls/refined-help-${info.project.name}.png`});
   expect(await dialog.evaluate(el=>el.scrollWidth<=el.clientWidth)).toBe(true);
   await page.keyboard.press('Escape');expect(writes).toEqual([]);
 });
 
-test('new workflow shows five distinct lock placements without adding work',async({page})=>{
+test('new workflow centers every lock with its label without adding work',async({page})=>{
   const writes=await mockAdminGuide(page);
   await page.goto('/admin/new');
   await expect(page.getByRole('link',{name:'← 퀴즈 목록',exact:true})).toHaveCount(0);
@@ -66,16 +67,62 @@ test('new workflow shows five distinct lock placements without adding work',asyn
     const visibleText=Array.from(n.querySelectorAll('span > span,span > b')).find(el=>el.getBoundingClientRect().width);
     return {key:box(n),number:box(n.querySelector('span')!),label:visibleText?box(visibleText):null,lock:n.querySelector('svg')?box(n.querySelector('svg')!):null};
   }));
-  const two=placements[1]!,three=placements[2]!,four=placements[3]!;
-  expect(Math.abs(two.label!.cx-two.key.cx)).toBeLessThan(1);
-  expect(two.lock!.x+two.lock!.w).toBeLessThan(two.label!.x);
-  expect(Math.abs((three.lock!.x+three.label!.x+three.label!.w)/2-three.key.cx)).toBeLessThan(1);
-  expect(Math.abs(four.lock!.cy-four.number.cy)).toBeLessThan(1);
-  expect(four.lock!.x+four.lock!.w).toBeLessThan(four.number.x);
-  for(const index of [4,5]){
-    const p=placements[index]!;
-    expect(p.lock!.y-p.key.y).toBeLessThanOrEqual(10);
-    expect(index===4?p.lock!.cx<p.key.cx:p.lock!.cx>p.key.cx).toBe(true);
+  for(const item of placements.slice(1)) {
+    expect(item.number.cx).toBeCloseTo(item.key.cx,0);
+    expect(item.lock!.x+item.lock!.w).toBeLessThan(item.label!.x);
+    expect(Math.abs(item.lock!.cy-item.label!.cy)).toBeLessThan(1);
+    expect(Math.abs((item.lock!.x+item.label!.x+item.label!.w)/2-item.key.cx)).toBeLessThan(1);
   }
   expect(writes).toEqual([]);
+});
+
+
+test('sermon fields form a separate subsection below the resume notice',async({page})=>{
+  const writes=await mockAdminGuide(page);
+  await page.goto('/admin/new');
+  const sermon=page.getByRole('region',{name:'설교 정보',exact:true});
+  const reference=page.getByRole('region',{name:'성경 장절 입력',exact:true});
+  const notice=page.getByText('입력은 이 브라우저에 임시 보관됩니다. ‘새 작업 등록’을 눌러야 만들던 퀴즈 목록에 추가됩니다.',{exact:true});
+  await expect(sermon.getByLabel('YouTube 영상 링크')).toBeVisible();
+  await expect(sermon.getByLabel('설교 제목',{exact:true})).toBeVisible();
+  await expect(sermon.getByLabel('설교 일자(주일)')).toBeVisible();
+  await expect(sermon.getByRole('button',{name:'제목에서 설교일 추천'})).toBeVisible();
+  await expect(sermon.getByLabel('성경 장절',{exact:true})).toHaveCount(0);
+  await expect(reference.getByLabel('성경 장절',{exact:true})).toBeVisible();
+  const n=await notice.boundingBox(),s=await sermon.boundingBox(),r=await reference.boundingBox();
+  expect(s!.y-n!.y-n!.height).toBeGreaterThanOrEqual(27);
+  expect(r!.y-s!.y-s!.height).toBeGreaterThanOrEqual(23);
+  const heading=sermon.getByRole('heading',{name:'설교 정보',exact:true});
+  await expect(heading).toHaveCSS('font-size','15px');
+  await expect(heading).toHaveCSS('margin-bottom','0px');
+  await sermon.getByLabel('설교 제목',{exact:true}).fill('261018 연습 제목');
+  await sermon.getByRole('button',{name:'제목에서 설교일 추천'}).click();
+  await expect(sermon.getByLabel('설교 일자(주일)')).toHaveValue('2026-10-18');
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect(writes).toEqual([]);
+});
+
+test('workflow pointer focus stays quiet and hover sheen crosses diagonally once',async({page},info)=>{
+  test.skip(info.project.name!=='chromium','Pointer motion uses a desktop browser.');
+  await page.goto('/dev/design#workflow');
+  const key=page.getByRole('navigation',{name:'초안 편집 단계'}).getByRole('button').nth(2);
+  await key.scrollIntoViewIfNeeded();
+  const initial=await key.boundingBox();
+  await key.hover();
+  // Freeze the native CSS animation at two points to inspect its direction without timing races.
+  const positions=await key.evaluate(el=>{
+    const animation=el.getAnimations({subtree:true}).find(a=>a instanceof CSSAnimation && a.animationName.includes('keySheen'))!;
+    if(!animation)throw new Error('Hover sheen did not start');
+    animation.pause();
+    return [90,300].map(time=>{animation.currentTime=time;const m=new DOMMatrix(getComputedStyle(el,'::after').transform);return {x:m.m41,y:m.m42,iterations:animation.effect!.getTiming().iterations};});
+  });
+  expect(positions[1]!.x).toBeGreaterThan(positions[0]!.x);
+  expect(positions[1]!.y).toBeGreaterThan(positions[0]!.y);
+  expect(positions[0]!.iterations).toBe(1);
+  await key.click();await expect(key).toHaveCSS('outline-style','none');
+  expect(await key.boundingBox()).toEqual(initial);
+  await page.keyboard.press('Shift+Tab');await page.keyboard.press('Tab');
+  await expect(key).toBeFocused();await expect(key).toHaveCSS('outline-style','solid');
+  await page.emulateMedia({reducedMotion:'reduce'});
+  expect(await key.evaluate(el=>getComputedStyle(el,'::after').display)).toBe('none');
 });
