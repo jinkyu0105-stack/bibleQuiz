@@ -1,6 +1,6 @@
 import { AdminRefreshButton } from "../../components/AdminListTools";
-import { AdminMenu } from "../../components/AdminMenu";
-import { AdminIcon } from "../../components/AdminIcon";
+import { QuizWorkflowSteps, QuizStageHeading } from "../../components/QuizWorkflowSteps";
+import { quizSteps } from "../../components/quiz-workflow-steps";
 import { AdminConcepts, AdminLabel, GuideText } from "../../components/AdminHelp";
 import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { Button } from "../../components/Button";
@@ -519,7 +519,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
   const recommended = generation?.preview ? 5 : contentReady ? 4 : c?.intent?.confirmation ? 3 : current?.confirmationId ? 2 : 1;
   const requestedStep = Number(query.get("step"));
   const step = requestedStep >= 1 && requestedStep <= 6 && available[requestedStep - 1] ? requestedStep : recommended;
-  const stepNames = ["설교 영상", "설교 의도", "요약과 문제", "격자 배치", "최종 확인", "발행"];
+  const stepNames = quizSteps.map(item => item.title);
   const reasons = ["", "설교 자료 확인·확정 필요", "설교 의도 확정 필요", "요약·두 난도 검수 필요", "두 격자 최종 검사 필요", "최종 검사 통과 필요"];
   function selectStep(next: number) {
     if (changedInput || contentDirty || feedback.state === "loading") { setFeedback({state:"error",error:{code:"SAVE_REQUIRED",message:"편집한 초안이 저장되었는지 먼저 확인해 주세요."}}); return; }
@@ -532,33 +532,30 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
 
   const quickHelp = <div className={styles.quickHelp}><AdminConcepts terms={step === 1 ? ["초안", "확정", "자동 저장"] : step === 2 ? ["설교 의도", "비판 검토", "확정"] : step === 3 ? ["검수", "자동 저장", "재생성"] : step === 4 ? ["격자 배치", "검수"] : ["발행", "접수 마감", "Top N"]}/>
     <AdminScreenshots key={step} ids={step === 1 ? ["input"] : step <= 3 ? ["review"] : ["settings"]} compact/></div>;
-  return <section className={`${styles.page} ${weekly ? styles.weeklyPage : ""}`} data-admin-workflow={weekly || undefined} aria-labelledby="sermon-input-title">
-    <header className={styles.hero}>
-      <div>
-        {!weekly && <p className={styles.kicker}>현재 관리자 작업</p>}
-        {weekly && reviewStatus && <p className={styles.workStatus} role="status">{reviewStatus}{step === 2 && selectionLabel ? ` · 현재 선택: ${selectionLabel}` : ""}</p>}
-        <h2 id="sermon-input-title"><AdminLabel text={weekly ? stepNames[step - 1]! : "설교 자료 검토"}/></h2>
-        <p>{weekly ? ["퀴즈의 바탕이 될 설교를 준비합니다. 영상·성경 장절·자막을 확인한 뒤 설교 자료를 확정하세요.", "설교의 핵심 메시지를 확인합니다. 분석 내용이 원문과 맞는지 읽고 사용할 분석을 확정하세요.", "참여자에게 보여줄 요약과 문제를 다듬습니다. 요약·어린이·장년을 각각 검수해야 다음 단계로 갈 수 있습니다.", "문제가 들어갈 격자를 만듭니다. 크기와 문제 수를 골라 무료로 배치를 비교하고 두 난도의 격자를 선택하세요.", "발행 전에 공개될 내용을 점검합니다. 요약·문제·두 난도 격자를 확인하고 최종 검사를 진행하세요.", "검수한 퀴즈를 참여자에게 공개합니다. 공개 범위와 마감 일시를 확인한 뒤 발행하세요."][step - 1] : "저장된 설교의 자막과 수정 이력을 자세히 살펴봅니다. 아래에서 작업을 선택하면 비교·복원·교정과 검수를 이어갈 수 있습니다."}</p>
-      </div>
-      {!weekly && <ol className={styles.steps} aria-label="주간 발행 6단계">
+  return <section className={`${styles.page} ${weekly ? styles.weeklyPage : ""}`} data-admin-workflow={weekly || undefined} aria-label={weekly ? "퀴즈 편집" : undefined} aria-labelledby={weekly ? undefined : "sermon-input-title"}>
+    {!weekly && <header className={styles.hero}><h2 id="sermon-input-title">설교 자료 검토</h2><p>저장된 설교의 자막과 수정 이력을 자세히 살펴봅니다. 아래에서 작업을 선택하면 비교·복원·교정과 검수를 이어갈 수 있습니다.</p>      {!weekly && <ol className={styles.steps} aria-label="주간 발행 6단계">
         <li aria-current="step"><span>1</span>설교 자료 <small>현재</small></li>
         <li><span>2</span>설교 의도 <small>분석·검수</small></li>
         <li><span>3</span>문제 후보 <small>내용 검수</small></li>
         <li><span>4</span>격자 배치 <small>시험·선택</small></li>
         <li><span>5</span>최종 확인 <small>미리보기</small></li>
         <li><span>6</span>발행 <small>검수 후 발행</small></li>
-      </ol>}
-      {weekly && (step === 2 && selectedIntent || step === 3) && <a className={styles.reviewJump} href={step === 2 ? `#snapshot-${c?.intent?.selectedId}` : "#review-targets"}>{step === 2 ? "현재 선택본 확인" : "검수할 내용 선택"}</a>}
-      {weekly && step < 6 && <Button type="button" disabled={!available[step] || changedInput || contentDirty || feedback.state === "loading"} onClick={() => selectStep(step + 1)}>다음: {stepNames[step]}</Button>}
-    </header>
-    {weekly && <AdminMenu label="초안 편집 단계" selectionKey={String(step)} className={weeklyStyles.stepNavigation}><ol className={weeklyStyles.stepper} aria-label="주간 발행 6단계">{stepNames.map((label,index)=><li key={label}><button type="button" data-admin-menu-item disabled={!available[index]} data-complete={index+1<recommended || undefined} aria-current={step===index+1?"step":undefined} onClick={()=>selectStep(index+1)}><span className={weeklyStyles.stepNumber} data-admin-menu-icon aria-hidden="true">{!available[index] ? <AdminIcon name="lock"/> : index+1<recommended && step!==index+1 ? <AdminIcon name="check"/> : index+1}</span><span className={weeklyStyles.stepTitle}>{label}{step===index+1 && <span className={weeklyStyles.currentStepDot} aria-hidden="true"/>}</span><small>{!available[index]?`잠김 · ${reasons[index]}`:step===index+1?"현재 단계":index+1<recommended?"완료 · 수정 가능":"이동 가능"}</small></button></li>)}</ol></AdminMenu>}
+      </ol>}</header>}
+    {weekly && <>
+      <QuizWorkflowSteps current={step} available={available} reasons={reasons} onSelect={selectStep}/>
+      <div className={styles.stageControls}>
+        <div><p role="status">{reviewStatus ?? "설교를 등록하면 작업을 시작할 수 있습니다."}{step === 2 && selectionLabel ? ` · ${selectionLabel}` : ""}</p>{(step === 2 && selectedIntent || step === 3) && <a className={styles.reviewJump} href={step === 2 ? `#snapshot-${c?.intent?.selectedId}` : "#review-targets"}>{step === 2 ? "현재 선택본 확인" : "검수할 내용 선택"}</a>}</div>
+        {step < 6 && <Button type="button" disabled={!available[step] || changedInput || contentDirty || feedback.state === "loading"} onClick={() => selectStep(step + 1)}>다음: {stepNames[step]}</Button>}
+      </div>
+    </>}
     {blocker.state === "blocked" && <div role="alert"><p>저장되지 않은 편집이 있습니다. 이 화면에서 저장을 확인해 주세요.</p><Button type="button" onClick={() => blocker.reset()}>작업 계속하기</Button><Button type="button" onClick={() => blocker.proceed()}>저장하지 않고 이동</Button></div>}
     {weekly && <p className={styles.saveGuidance} role="status">{changedInput || contentDirty ? "저장 확인 필요. " : ""}<GuideText text="편집은 잠시 멈추면 자동 저장됩니다. 확정·AI 재생성·발행은 직접 실행합니다."/></p>}
 
     {weekly ? <details className={weeklyStyles.workspaceHelp}><summary><AdminLabel text="용어·화면 안내"/></summary>{quickHelp}</details> : quickHelp}
     {costQuizSetId && <AiCostDetails key={`${costQuizSetId}-${costRefresh}`} quizSetId={costQuizSetId} refreshKey={costRefresh} />}
     <div hidden={weekly && step !== 1} data-admin-sheet={weekly || undefined} className={weekly ? styles.stageBody : undefined}>
-    <SermonDrafts selectedId={loadedSermonId} onSelect={refreshWorkspace} onMetadataSaved={() => { setMetadataVersion(v => v + 1); onSaved?.(); }} onCostQuizSetId={onCostQuiz} initialCreating={weekly && !initialSermonId} disabled={workspace.state === "loading" || feedback.state === "loading"} />
+    {weekly && <QuizStageHeading step={1}/>}
+    <SermonDrafts compact={weekly} selectedId={loadedSermonId} onSelect={refreshWorkspace} onMetadataSaved={() => { setMetadataVersion(v => v + 1); onSaved?.(); }} onCostQuizSetId={onCostQuiz} initialCreating={weekly && !initialSermonId} disabled={workspace.state === "loading" || feedback.state === "loading"} />
     {!weekly && <form className={styles.lookup} onSubmit={submitLoad}>
       <label htmlFor="admin-sermon-id">설교 ID
         <input id="admin-sermon-id" value={sermonId} onChange={(event) => setSermonId(event.currentTarget.value)} autoComplete="off" placeholder="저장된 설교 ID" />
@@ -659,7 +656,7 @@ export function AdminSermonInput({ initialSermonId = "", quizSetId, weekly = fal
             </label>}
             <p className={styles.helper}>구간 ID와 시간은 유지하고 글자만 바꿉니다. 수정한 구간 {Object.keys(timedEdits).length}개</p>
           </>}
-          <Button type="submit">수정본 저장</Button>
+          <Button type="submit" disabled={feedback.state === "loading" || (weekly && !changedInput)}>{weekly ? "임시 저장" : "수정본 저장"}</Button>
         </form> : <section className={styles.readOnlyPanel} aria-labelledby="read-only-title">
           <h3 id="read-only-title"><AdminLabel text="받은 자료 그대로 사용"/></h3>
           <p>목사님 제공 원고와 요약본은 읽고 확정할 수 있지만 수정, 복원, 교정하지 않습니다.</p>

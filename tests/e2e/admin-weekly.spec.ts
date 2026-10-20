@@ -40,7 +40,11 @@ async function workspace(page:Page,edit:(body:Record<string,unknown>,view:AdminC
 }
 test('new quiz opens an unsaved blank form and resumes existing work without any write',async({page},testInfo)=>{
   const f=await workspace(page,()=>{throw new Error('no mutations');});
-  await page.goto('/admin');await expect(page.getByRole('link',{name:'초안 편집',exact:true})).toHaveAttribute('href','/admin/quiz/weekly');
+  await page.goto('/admin');
+  const rowMenu=page.getByRole('button',{name:/관리 더보기/});
+  if(await page.evaluate(()=>matchMedia("(max-width:700px)").matches)) await rowMenu.click();
+  await expect(page.getByRole('link',{name:'초안 편집',exact:true}).filter({visible:true})).toHaveAttribute('href','/admin/quiz/weekly');
+  await page.keyboard.press('Escape');
   await expect(page.getByRole('link',{name:/답변 대기 2/})).toBeVisible();
   await page.screenshot({path:`/tmp/p5-72-dashboard-${testInfo.project.name}.png`,fullPage:true});
   await page.getByRole('link',{name:/새 퀴즈 만들기/}).click();
@@ -53,16 +57,17 @@ test('new quiz opens an unsaved blank form and resumes existing work without any
   await expect(page.getByLabel('YouTube 영상 링크')).toHaveValue('');
   await page.getByRole('combobox',{name:'만들던 퀴즈 이어하기',exact:true}).selectOption(quiz.sermonId);
   await expect(page).toHaveURL(/\/admin\/quiz\/weekly$/u);
-  await expect(page.getByRole('heading',{name:'요약과 문제',exact:true})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'문제 검토',exact:true})).toBeVisible();
   const summaryEditor=page.locator('article').filter({has:page.getByRole('heading',{name:'설교 요약',exact:true})});
+  await expect(summaryEditor.getByRole('textbox',{name:'요약 문단 1',exact:true})).toBeVisible();
   const textBox=await summaryEditor.getByRole('textbox',{name:'요약 문단 1',exact:true}).boundingBox();
   const confirmation=await summaryEditor.getByRole('button',{name:'이 내용 검수 완료',exact:true}).boundingBox();
   expect(confirmation!.y).toBeGreaterThan(textBox!.y+textBox!.height);
   await page.locator('.admin-main').screenshot({path:testInfo.outputPath('draft-workspace.png')});
   await expect(page.getByLabel('설교 ID',{exact:true})).toHaveCount(0);
-  await expect(page.getByRole('button',{name:/^격자 배치/u})).toBeDisabled();
-  await page.getByRole('button',{name:/^설교 의도/u}).click();await expect(page).toHaveURL(/step=2/u);
-  await page.reload();await expect(page.getByRole('heading',{name:'설교 의도',exact:true})).toBeVisible();
+  await expect(page.getByRole('button',{name:/^격자 구성/u})).toBeDisabled();
+  await page.getByRole('button',{name:/^핵심 정리/u}).click();await expect(page).toHaveURL(/step=2/u);
+  await page.reload();await expect(page.getByRole('heading',{name:'핵심 정리',exact:true})).toBeVisible();
   expect(f.mutations).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 test('two edited snapshots autosave sequentially without losing the second draft and survive reload',async({page})=>{

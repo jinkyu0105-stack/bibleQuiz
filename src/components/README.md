@@ -85,3 +85,14 @@ import { Button, ButtonLink } from "./components/Button";
 `Button`/`ButtonLink`에 `className="action-button-raised"`를 지정한다. 퀴즈 준비와 Live 공개 화면이 같은 윗빛·안쪽 음영·160ms 호버·1px 눌림을 공유하며, 주요/보조 색은 유지한다. 감소 모션·고대비를 지원한다. 실제 예시는 개발 서버 `/dev/design#raised`의 **입체 작업 버튼**이다.
 
 관리자 `.admin-main` 안의 모든 공통 `Button`/`ButtonLink`는 입체 작업 스타일을 자동 적용한다. 주요/보조 색상과 크기·동작은 유지한다. 메뉴·탭·전용 아이콘 컨트롤은 대상에서 제외한다. 공개 화면은 명시한 `action-button-raised`만 적용한다.
+
+## 제작 화면의 입체 조작 부품
+
+| 부품 이름 | 구현 | 사용 기준 |
+| --- | --- | --- |
+| 카세트 단계 버튼 | `QuizWorkflowSteps.tsx` | 하나의 불투명 프레임, 번호1–6, 이전 단계 눌림·현재 실행색·잠금 대기. `available`과 `reasons`를 기존 업무 조건에서 전달 |
+| 단계 본문 제목 | `QuizStageHeading` | 같은 단계 데이터에서 제목·설명 표시. 페이지 상단에 중복 출력하지 않음 |
+| 입체 새로고침 버튼 | `AdminRefreshButton` | 기존 원형 크기와 동작 유지, 얕은 윗빛·음영·클릭 눌림 |
+| 입체 도움말 버튼 | `HelpButton.tsx` |28px 원형 물음표·44px 터치 영역. `label`로 목적 지정. 실제 도움말 모달 연결은 별도 |
+
+[컴포넌트 갤러리](http://localhost:5173/dev/design#workflow)에서 실제 부품을 조작할 수 있다. 작은 도움말 버튼은 `#help-button`에서 확인한다.

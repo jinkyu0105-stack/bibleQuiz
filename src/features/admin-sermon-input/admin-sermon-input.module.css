@@ -965,3 +965,18 @@
  :global([data-admin-workspace]) .actionGrid > :is(.panel,.readOnlyPanel) + :is(.panel,.readOnlyPanel) { padding-top: 20px; border-top: 1px solid var(--line); }
  .weeklyPage .previewViewport { padding: 12px; }
 }
+
+/* Workflow headings live on their reading sheet; the top only carries controls. */
+.stageControls { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.stageControls p { margin: 0; font-size: 12px; color: var(--muted); }
+.resumeToolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-bottom: 18px; }
+.resumeToolbar > label { display: flex; align-items: center; gap: 10px; min-width: 0; max-width: 420px; flex: 1 1 200px; }
+.resumeToolbar > label > span { white-space: nowrap; font-size: 12px; font-weight: 600; }
+.resumeToolbar select { min-width: 0; width: 100%; min-height: 36px; padding: 6px 28px 6px 10px; font-size: 12px; text-overflow: ellipsis; }
+.draftFields { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 18px; }
+.draftFields legend { padding: 0 12px 0 0; margin: 0; font-size: 15px; font-weight: 650; }
+@media (max-width: 500px) { .stageControls { flex-wrap: wrap; } .stageControls > button { margin-left: auto; } .resumeToolbar > label { flex-basis: 160px; } }
+
+:global([data-admin-workspace]) .stageBody > .compactDrafts { padding-top: 0; margin-top: 0; }
+.compactDrafts > .resumeToolbar { margin-top: 0; padding-bottom: 8px; }
+.compactDrafts > p { margin-block: 8px; font-size: 12px; color: var(--muted); }

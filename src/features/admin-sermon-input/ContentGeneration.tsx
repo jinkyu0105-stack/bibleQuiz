@@ -1,3 +1,4 @@
+import { QuizStageHeading } from "../../components/QuizWorkflowSteps";
 import { AdminLabel } from "../../components/AdminHelp";
 import { Button } from "../../components/Button";
 import { GlassMenu } from "../../components/glass/GlassMenu";
@@ -124,7 +125,7 @@ function SnapshotEditor({ snapshot, view, source, busy, command, quality, confir
   const reviewActions = <div className={styles.reviewActions}>
     <p role="status">{changed ? "저장 확인 필요: 수정한 내용이 있습니다." : busy ? "처리 중입니다." : selected ? confirmed ? "현재 선택한 내용의 검수가 완료됐습니다." : "현재 선택한 내용을 검토해 주세요." : "비교 자료입니다. 선택하면 현재 작업에 반영됩니다."}</p>
     <div className={styles.formGrid}>
-      <Button type="button" disabled={!editable || !changed} onClick={() => void save()}>{autosave ? "초안 저장 · 새 수정본 만들기" : "수정본 저장"}</Button>
+      <Button type="button" disabled={!editable || !changed} onClick={() => void save()}>{autosave ? "임시 저장" : "수정본 저장"}</Button>
       {!selected && <Button type="button" disabled={busy || changed || replacementStale} onClick={() => void command(snapshot.kind === "intent" ? { family: "intent", operation: { kind: "select", analysisId: snapshot.value.id } } : snapshot.kind === "summary" ? { family: "summary", operation: { kind: "select", summaryId: snapshot.value.id } } : { family: "candidate", operation: { kind: "select", difficulty: snapshot.value.difficulty, poolId: snapshot.value.id } })}>이 자료 선택</Button>}
     </div>
     {selected && !confirmed && (snapshot.kind === "intent"
@@ -322,7 +323,7 @@ export function ContentGeneration({ sermonId, inputConfirmed, inputVersion, sour
     <a href={`/quiz/${view.publication.slug}`}>공개된 퀴즈 보기</a>
   </section>;
   return <section hidden={weeklyStep === 1} className={styles.panel} data-admin-sheet={weeklyStep !== undefined || undefined} aria-labelledby="content-generation-title" aria-busy={loading}>
-    <div className={styles.sectionHeading}><h3 id="content-generation-title"><AdminLabel text={weeklyStep === 4 ? "두 난도 격자 배치" : weeklyStep === 5 ? "공개 전 최종 확인" : weeklyStep === 6 ? "발행 준비" : "설교 요약·문제 생성"}/></h3><span>{view ? ({ failed: "생성 실패", stale: "입력 변경으로 중단", uncertain: "응답 확인 필요" } as Record<string, string>)[view.status] ?? stages[view.stage] ?? "상태 확인" : "연결 확인 중"}</span></div>
+    {weeklyStep ? <><QuizStageHeading step={weeklyStep} id="content-generation-title"/>{view && ["failed", "stale", "uncertain"].includes(view.status) && <p role="status">{({failed:"생성 실패",stale:"입력 변경으로 중단",uncertain:"응답 확인 필요"} as Record<string,string>)[view.status]}</p>}</> : <div className={styles.sectionHeading}><h3 id="content-generation-title"><AdminLabel text="설교 요약·문제 생성"/></h3><span>{view ? ({ failed: "생성 실패", stale: "입력 변경으로 중단", uncertain: "응답 확인 필요" } as Record<string, string>)[view.status] ?? stages[view.stage] ?? "상태 확인" : "연결 확인 중"}</span></div>}
     <div hidden={weeklyStep !== undefined && weeklyStep > 3}>
     <details className={styles.generationGuide} open={weeklyStep === undefined || !view?.jobId || newDraft}><summary><AdminLabel text="생성 안내·예상 비용"/></summary>
     <p>{view?.recoveredCritiqueId ? "보관한 분석과 비판 결과를 재사용합니다. 의도를 확정하면 요약·어린이·장년 문제를 이어서 만듭니다." : view?.recoveredAnalysisId ? "보관한 분석을 재사용해 비판 검토부터 이어갑니다. 교정과 의도 분석을 다시 호출하지 않습니다."

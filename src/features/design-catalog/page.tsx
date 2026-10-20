@@ -1,3 +1,5 @@
+import { HelpButton } from "../../components/HelpButton";
+import { QuizWorkflowSteps } from "../../components/QuizWorkflowSteps";
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { GlassPanel } from "../../components/glass/GlassPanel";
@@ -12,7 +14,7 @@ import { Button } from "../../components/Button";
 import styles from "./catalog.module.css";
 
 const entries = [
-  ["choice", "난이도 선택창"], ["arrow", "유리 화살표 버튼"], ["select", "연결형 선택기"], ["menu", "이동형 메뉴"],
+  ["workflow", "카세트 단계 버튼"], ["help-button", "입체 도움말 버튼"], ["choice", "난이도 선택창"], ["arrow", "유리 화살표 버튼"], ["select", "연결형 선택기"], ["menu", "이동형 메뉴"],
   ["index", "파일 인덱스 탭"], ["refresh", "원형 새로고침"], ["tooltip", "작은 말풍선"],
   ["raised", "입체 작업 버튼"], ["actions", "기본 작업 버튼"], ["surface", "투명 창과 읽기 면"],
 ] as const;
@@ -26,6 +28,7 @@ function Sample({ id, name, component, children }: { id: string; name: string; c
 
 /** Development-only catalogue: real shared components, isolated from saved quiz data. */
 export function Component() {
+  const [workflowStep, setWorkflowStep] = useState(3);
   const [choiceOpen, setChoiceOpen] = useState(false);
   const [message, setMessage] = useState("예시 버튼을 눌러보세요.");
   const [year, setYear] = useState("");
@@ -39,6 +42,13 @@ export function Component() {
       <nav aria-label="부품 바로가기" className={styles.contents}>{entries.map(([id, name]) => <a key={id} href={`#${id}`}>{name}</a>)}</nav>
       <p className={styles.links}><Link to="/archive">지난 퀴즈에서 보기</Link><a href="/docs/design/phase-9/archive/refinement.html">주차 시안·헤더 너비 비교</a></p>
     </GlassPanel>
+    <Sample id="workflow" name="카세트 단계 버튼" component="QuizWorkflowSteps">
+      <p>이전 단계는 눌린 면, 현재·이후 단계는 솟은 면입니다. 숫자는 항상 표시하고 잠금은 따로 알립니다.</p>
+      <QuizWorkflowSteps current={workflowStep} available={[true,true,true,false,false,false]} reasons={["","","","문제 검토 필요","격자 구성 필요","최종 점검 필요"]} onSelect={setWorkflowStep}/>
+    </Sample>
+    <Sample id="help-button" name="입체 도움말 버튼" component="HelpButton">
+      <div className={styles.inline}><HelpButton label="도움말 버튼 예시" onClick={() => setMessage("도움말 버튼을 눌렀습니다. 실제 도움말 모달 연결은 후속 작업입니다.")}/><span>그림 28px · 누를 수 있는 영역 44px</span><AdminRefreshButton label="크기 비교용 새로고침" onClick={() => setMessage("새로고침 버튼과 크기를 비교하세요.")}/></div>
+    </Sample>
     <Sample id="choice" name="난이도 선택창" component="QuizChoiceDialog">
       <p>어린이·장년을 고르는 공통 모달 대화상자입니다. Esc로 닫으면 원래 버튼으로 돌아갑니다.</p>
       <Button onClick={() => setChoiceOpen(true)}>선택창 열기</Button>

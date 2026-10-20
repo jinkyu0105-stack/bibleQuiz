@@ -2,36 +2,22 @@ import {expect,test} from '@playwright/test';
 import {mockAdminWorkspace} from './fixtures/admin-workspace';
 import {mockAdminGuide} from './fixtures/admin-guide';
 
-test('workflow highlight carries its icon well while current, complete and locked steps stay distinct',async({page,isMobile})=>{
+test('cassette steps retain all six numbers, distinguish recessed current and locked states, and support keyboard',async({page})=>{
   const writes=await mockAdminGuide(page);
   await page.goto('/admin/quiz/weekly?step=3');
   const menu=page.getByRole('navigation',{name:'초안 편집 단계'});
-  const current=menu.getByRole('button',{name:/^요약과 문제/});
-  const completed=menu.getByRole('button',{name:/^설교 영상/});
-  const locked=menu.getByRole('button',{name:/^격자 배치/});
+  const current=menu.getByRole('button',{name:/^문제 검토/});
+  const previous=menu.getByRole('button',{name:/^설교 준비/});
+  const locked=menu.getByRole('button',{name:/^격자 구성/});
   await expect(current).toHaveAttribute('aria-current','step');
-  await expect(current).toContainText('현재 단계');
-  await expect(completed).toHaveAttribute('data-complete','true');
-  await expect(completed).toContainText('완료 · 수정 가능');
-  await expect(locked).toBeDisabled();await expect(locked).toContainText('잠김');
-  const surface=menu.locator('[data-admin-menu-selection]');
-  const well=surface.locator('[data-admin-menu-icon-surface]');
-  const aligned=async(target:typeof completed)=>{
-    await expect.poll(async()=>{const a=await target.boundingBox(),b=await surface.boundingBox();return a&&b?Math.abs(a.x-b.x)+Math.abs(a.y-b.y):999;}).toBeLessThan(1);
-    const icon=await target.locator('[data-admin-menu-icon]').boundingBox(),box=await well.boundingBox();
-    expect(icon&&box&&Math.abs(icon.x-box.x)+Math.abs(icon.y-box.y)).toBeLessThan(1);
-  };
-  await aligned(current);
-  if(!isMobile){
-    await completed.hover();await aligned(completed);
-    await expect(completed.locator('[data-admin-menu-icon]')).toHaveCSS('background-color','rgba(0, 0, 0, 0)');
-    await expect(current).toHaveAttribute('aria-current','step');
-    await locked.hover({force:true});await aligned(current);
-  }
-  await completed.focus();await aligned(completed);
-  await page.keyboard.press('Enter');await expect(completed).toHaveAttribute('aria-current','step');
-  await page.emulateMedia({reducedMotion:'reduce'});await expect(surface).toHaveCSS('transition-duration','0s');
-  await page.emulateMedia({forcedColors:'active'});await expect(completed).toBeEnabled();await expect(locked).toBeDisabled();
+  await expect(previous).toHaveAttribute('data-recessed','true');
+  await expect(locked).toBeDisabled();await expect(locked).toContainText('대기');
+  for(let index=0;index<6;index++) await expect(menu.getByRole('button').nth(index).locator('span').first()).toHaveText(String(index+1));
+  await expect(current).not.toHaveAttribute('data-recessed');
+  await previous.focus();await page.keyboard.press('Enter');await expect(previous).toHaveAttribute('aria-current','step');
+  await expect(previous).not.toHaveAttribute('data-recessed');
+  await page.emulateMedia({reducedMotion:'reduce'});await expect(previous).toHaveCSS('transition-duration','0s');
+  await page.emulateMedia({forcedColors:'active'});await expect(previous).toBeEnabled();await expect(locked).toBeDisabled();
   expect(writes).toEqual([]);
 });
 
@@ -66,7 +52,7 @@ test('six-stage workspace keeps selections, preview controls and publication con
   const writes=await mockAdminWorkspace(page);
   await page.goto('/admin/quiz/weekly?step=1');
   const steps=page.getByRole('list',{name:'주간 발행 6단계'});
-  const names=['설교 영상','설교 의도','요약과 문제','격자 배치','최종 확인','발행'];
+  const names=['설교 준비','핵심 정리','문제 검토','격자 구성','최종 점검','공개하기'];
   for(const [index,name] of names.entries()) {
     const button=steps.getByRole('button',{name:new RegExp(`^${name}`)});
     await expect(button).toBeEnabled();await button.click();
@@ -100,7 +86,7 @@ test('six-stage workspace keeps selections, preview controls and publication con
   const dialog=page.getByRole('dialog',{name:'지금 발행 확인'});
   await expect(dialog).toBeVisible();await expect(dialog).toContainText('기존 퀴즈의 마감·제출·순위는 유지됩니다.');
   await page.keyboard.press('Escape');await expect(dialog).toHaveCount(0);await expect(publish).toBeFocused();
-  await steps.getByRole('button',{name:/^격자 배치/}).click();
+  await steps.getByRole('button',{name:/^격자 구성/}).click();
   await expect(page.getByRole('region',{name:'어린이 배치 시험'}).getByLabel('목표 단어 수')).toHaveValue('3');
   expect(writes).toEqual([]);
 });

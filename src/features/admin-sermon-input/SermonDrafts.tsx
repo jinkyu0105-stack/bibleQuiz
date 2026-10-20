@@ -87,7 +87,7 @@ function MetadataForm({ view, onSave, onSelectExisting, busy }: {
   const options = (count: number) => Array.from({ length: count }, (_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>);
   return <form onSubmit={event => void submit(event)}>
     <fieldset disabled={busy || previewBusy} className={`${styles.displayFields} ${styles.draftFields}`} onChange={() => setConfirmed(false)}>
-      <legend>{view ? "발행 전 설교 정보" : "새 설교 등록"}</legend>
+      <legend>설교 정보</legend>
       <div className={styles.formGrid}>
         {!view && <label>YouTube 영상 링크<input value={video} required onChange={e => {
           previewOperation.current?.abort();
@@ -135,7 +135,8 @@ function MetadataForm({ view, onSave, onSelectExisting, busy }: {
   </form>;
 }
 
-export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuizSetId, disabled, initialCreating = false }: {
+export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuizSetId, disabled, initialCreating = false, compact = false }: {
+  compact?: boolean;
   initialCreating?: boolean; selectedId: string; onSelect: (id: string) => Promise<boolean>; onMetadataSaved: () => void; onCostQuizSetId: (id: string | null) => void; disabled: boolean;
 }) {
   const [items, setItems] = useState<DraftItem[] | null>(null), [view, setView] = useState<DraftMetadataView | null>(null);
@@ -179,18 +180,18 @@ export function SermonDrafts({ selectedId, onSelect, onMetadataSaved, onCostQuiz
     } catch (failure) { if (!controller.signal.aborted) setError(failure instanceof Error ? failure.message : "저장에 실패했습니다."); }
     finally { if (!controller.signal.aborted) setBusy(false); }
   }
-  return <section className={styles.panel} aria-labelledby="sermon-drafts-title">
-    <h3 id="sermon-drafts-title"><AdminLabel text="설교 작업 선택"/></h3>
-    <p>영상 링크를 입력하면 제목·게시일과 공개 자막이 있는지 확인합니다. 설교일·장절은 직접 확인하고, 자막을 가져오지 못하면 텍스트를 붙여넣어 주세요.</p>
-    <div className={styles.actions}>
-      <Button type="button" disabled={busy || disabled} onClick={() => { setCreating(v => !v); setError(""); setMessage(""); }}>{creating ? "등록 닫기" : "새 설교 등록"}</Button>
+  return <section className={`${styles.panel} ${compact ? styles.compactDrafts : ""}`} aria-labelledby="sermon-drafts-title">
+    <h3 id="sermon-drafts-title" className={compact ? "sr-only" : undefined}><AdminLabel text="설교 작업 선택"/></h3>
+    {!compact && <p>영상 정보와 장절을 확인한 뒤 설교 자료를 등록하세요.</p>}
+    <div className={styles.resumeToolbar}>
+      <label><span>이어하기</span><select aria-label="만들던 퀴즈 이어하기" value={items?.some(item => item.sermonId === selectedId) && !creating ? selectedId : ""} disabled={busy || disabled || items === null || !items.length} onChange={e => {
+        if (e.target.value) { setCreating(false); setView(null); setError(""); setMessage(""); void onSelect(e.target.value); }
+      }}><option value="" disabled>{items === null ? "목록 불러오는 중" : items.length ? "저장된 퀴즈 선택" : "저장된 퀴즈 없음"}</option>{items?.map(item => <option key={item.sermonId} value={item.sermonId} disabled={item.expired}>{item.sermonDate} · {item.title}{item.expired ? " (본문 정리됨)" : ""}</option>)}</select></label>
       <AdminRefreshButton label="작업 목록 새로고침" disabled={busy || disabled} onClick={() => { setError(""); setView(null); setVersion(v => v + 1); }}/>
+      {!creating && <Button type="button" disabled={busy || disabled} onClick={() => { setCreating(true); setError(""); setMessage(""); }}>새 설교 등록</Button>}
     </div>
     {error && <p role="alert">{error}</p>}{message && <p role="status">{message}</p>}
-    {items === null ? <p role="status">만들던 퀴즈를 불러오고 있습니다.</p> : items.length === 0 ? <p>만들던 퀴즈가 없습니다. 새 설교를 등록해 주세요.</p> :
-      <label>만들던 퀴즈 이어하기<select value={items.some(item => item.sermonId === selectedId) ? selectedId : ""} disabled={busy || disabled} onChange={e => {
-        if (e.target.value) { setCreating(false); setView(null); setError(""); setMessage(""); void onSelect(e.target.value); }
-      }}><option value="" disabled>작업을 선택해 주세요</option>{items.map(item => <option key={item.sermonId} value={item.sermonId} disabled={item.expired}>{item.sermonDate} · {item.title}{item.expired ? " (본문 정리됨)" : ""}</option>)}</select></label>}
+    {items?.length === 0 && <p className={styles.helper}>만들던 퀴즈가 없습니다. 새 설교를 등록해 주세요.</p>}
     {!creating && detailError?.id === selectedId && <p role="alert">{detailError.message}</p>}
     {creating && <p>아직 새 작업을 저장하지 않았습니다. 아래에서 ‘새 작업 등록’을 눌러야 목록에 추가됩니다.</p>}
     {creating ? <MetadataForm key="new" view={null} onSave={save} onSelectExisting={async id => { setCreating(false); setView(null); return onSelect(id); }} busy={busy || disabled} />

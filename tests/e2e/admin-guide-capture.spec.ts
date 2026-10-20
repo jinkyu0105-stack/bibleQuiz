@@ -61,7 +61,7 @@ test('capture operator guide examples', async ({ page }) => {
   if(workspaceOnly) {
     mkdirSync('docs/design/phase-9/admin-workspace',{recursive:true});
     await page.setViewportSize({width:1440,height:1500});
-    const names=['설교 영상','설교 의도','요약과 문제','격자 배치','최종 확인','발행'];
+    const names=['설교 준비','핵심 정리','문제 검토','격자 구성','최종 점검','공개하기'];
     for(let step=1;step<=6;step++) {
       await open(`/admin/quiz/weekly?step=${step}`);
       await expect(page.getByRole('heading',{name:names[step-1],exact:true})).toBeVisible();
@@ -148,7 +148,7 @@ test('capture operator guide examples', async ({ page }) => {
   if(dashboardOnly) { expect(writes).toEqual([]); return; }
   if(!boardsOnly) {
     await open('/admin/quiz/weekly?step=1');
-    await expect(page.getByRole('heading',{name:'설교 영상',exact:true})).toBeVisible();
+    await expect(page.getByRole('heading',{name:'설교 준비',exact:true})).toBeVisible();
     await between('input',page.locator('section[aria-labelledby="sermon-drafts-title"]'),page.getByRole('textbox',{name:'성경 장절',exact:true}));
     await open('/admin/quiz/weekly?step=3');
     await expect(page.getByRole('textbox',{name:'요약 문단 1',exact:true})).toBeVisible();

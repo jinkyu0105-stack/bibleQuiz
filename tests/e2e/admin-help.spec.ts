@@ -142,7 +142,7 @@ test('all admin destinations retain headings, restrained emoji and contextual co
     ['/admin','퀴즈 관리','초안'],['/admin/submissions','참여 기록','숨김'],
     ['/admin/privacy-requests','문의·삭제 요청','처리 완료'],['/admin/tools','수정·보관 도구','초안'],
     ['/admin/moderation','이름·문구 필터 관리','정확한 예외'],['/admin/operations','비용·백업 상태','예상 비용'],
-    ['/admin/quiz/weekly?step=3','요약과 문제','검수'],
+    ['/admin/quiz/weekly?step=3','문제 검토','검수'],
   ];
   for(const [url,title,term] of cases) {
     await page.goto(url!);
