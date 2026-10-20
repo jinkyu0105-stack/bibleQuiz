@@ -2,7 +2,7 @@ import { AdminRefreshButton } from "../../components/AdminListTools";
 import { QuizWorkflowSteps, QuizStageHeading } from "../../components/QuizWorkflowSteps";
 import { quizSteps } from "../../components/quiz-workflow-steps";
 import { AdminConcepts, AdminLabel } from "../../components/AdminHelp";
-import { AdminIcon } from "../../components/AdminIcon";
+import { GlossyIcon } from "../../components/GlossyIcon";
 import { HelpDialog } from "../../components/HelpDialog";
 import { AdminScreenshots } from "../../components/AdminScreenshots";
 import { Button } from "../../components/Button";
@@ -570,7 +570,7 @@ function SermonInputWorkspace({ initialSermonId = "", quizSetId, weekly = false,
     {weekly && <>
       <QuizWorkflowSteps current={step} available={available} reasons={reasons} onSelect={next => void selectStep(next)} footer={<>
         <p className={styles.workflowSaveStatus} data-tone={saveState.tone} role="status">
-          <span><AdminIcon name={saveState.saving ? "refresh" : saveState.tone === "error" ? "alert" : saveState.dirty ? "edit" : saveState.tone === "success" ? "check" : "database"}/></span>
+          <GlossyIcon name={saveState.saving ? "refresh" : saveState.tone === "error" ? "alert" : saveState.dirty ? "edit" : saveState.tone === "success" ? "check" : "database"} tone={saveState.tone === "error" ? "danger" : saveState.tone === "success" && !saveState.dirty ? "success" : "action"}/>
           {saveState.dirty && !saveState.saving && saveState.tone !== "error" ? "변경한 내용을 저장할 준비가 됐습니다." : saveState.message}
         </p>
         <div className={styles.workflowActions}>

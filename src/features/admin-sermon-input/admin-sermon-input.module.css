@@ -982,11 +982,7 @@
 .compactDrafts > p { margin-block: 8px; font-size: 12px; color: var(--muted); }
 .weeklyPage { gap: 24px; }
 .workflowSaveStatus { display: flex; align-items: center; gap: 9px; flex: 1 1 220px; margin: 0; font-size: 12px; line-height: 1.6; color: var(--muted); }
-.workflowSaveStatus > span { display: grid; place-items: center; flex: 0 0 25px; width: 25px; height: 25px; border-radius: 50%; color: var(--ui-action); background: var(--ui-action-bg); box-shadow: inset 0 1px 0 var(--glass-highlight); }
-.workflowSaveStatus svg { width: 16px; height: 16px; }
-.workflowSaveStatus[data-tone=success] > span { color: var(--ui-success); background: var(--ui-success-bg); }
-.workflowSaveStatus[data-tone=error] { color: var(--ui-error); }
-.workflowSaveStatus[data-tone=error] > span { color: var(--ui-error); background: var(--ui-error-bg); }
+.workflowSaveStatus[data-tone=error] { color: var(--ui-danger); }
 .workflowActions { display: flex; align-items: center; justify-content: end; gap: 8px; flex: 0 0 auto; margin-left: auto; }
 .workflowActions > :global(.action-button) { min-height: 40px; padding: 8px 16px; font-size: 13px; }
 .workflowActions > button > span { font-size: 22px; line-height: .8; }

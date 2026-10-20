@@ -1,25 +1,38 @@
 <!doctype html>
 <html lang="ko">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>카세트 조작판 · 시안과 실제 화면</title>
+<title>연결형 카세트 조작판 · 시안과 실제 화면</title>
 <style>
-body{margin:0;background:#eaf3fa;color:#19374b;font:15px/1.7 system-ui}main{max-width:1200px;margin:auto;padding:28px}h1{font-size:28px}h2{margin-top:36px}a{color:#2459b7;text-underline-offset:4px}img{display:block;width:100%;border:1px solid #afc4d3;border-radius:12px}figure{margin:16px 0;min-width:0}figcaption{padding:8px 0;color:#425f72}.pair{display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start}select{font:inherit;padding:8px 32px 8px 12px;border:1px solid #819caa;border-radius:6px;background:white}nav{display:flex;gap:10px 20px;flex-wrap:wrap}.note{padding:16px 20px;border:1px solid #aec5d5;border-radius:12px;background:#f6faff}summary{cursor:pointer;padding-block:12px} @media(max-width:700px){main{padding:16px}.pair{grid-template-columns:1fr}h1{font-size:23px}}
+body{margin:0;background:#eaf3fa;color:#19374b;font:15px/1.7 system-ui}main{max-width:1200px;margin:auto;padding:28px}h1{font-size:28px}h2{margin-top:36px}a{color:#2459b7;text-underline-offset:4px}img{display:block;width:100%;border:1px solid #afc4d3;border-radius:12px;box-sizing:border-box}figure{margin:16px 0;min-width:0}figcaption{padding:8px 0;color:#425f72}.pair{display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start}.preview a{display:block;max-height:460px;overflow:hidden;border:1px solid #afc4d3;border-radius:12px}.preview img{border:0;border-radius:0}select{font:inherit;padding:8px 32px 8px 12px;border:1px solid #819caa;border-radius:6px;background:white}nav{display:flex;gap:10px 20px;flex-wrap:wrap}.note{padding:16px 20px;border:1px solid #aec5d5;border-radius:12px;background:#f6faff}summary{cursor:pointer;padding-block:12px} @media(max-width:700px){main{padding:16px}.pair{grid-template-columns:1fr}h1{font-size:23px}}
 </style>
 <main>
-<h1>카세트 조작판과 단계 도움말</h1>
-<nav><a href="/admin/new">실제 새 퀴즈 만들기</a><a href="/dev/design#workflow">카세트 단계 버튼</a><a href="/dev/design#help-button">물음표와 도움말 창</a></nav>
-<p>투명한 조작판과 불투명한 본문을 분리했습니다. 여섯 키는 작은 화면에서도 한 행이며, 이전 단계는 깊게 눌린 면으로 표시합니다.</p>
-<div class="note">상단의 <strong>임시 저장</strong>은 실제 저장과 연결됩니다. <strong>다음 단계</strong>는 진행 중인 자동 저장과 남은 편집의 저장을 마친 뒤 이동합니다. 저장 실패나 재검수가 필요한 경우에는 현재 단계에 머무릅니다. 등록 전 입력은 이 브라우저에 임시 보관하며 빈 퀴즈를 만들지 않습니다.</div>
-<h2>네 시간대 비교</h2><label>시간대 <select id="theme"><option value="day">낮</option><option value="dawn">새벽</option><option value="sunset">노을</option><option value="night">밤</option></select></label>
-<figure><a id="concept-link" href="cassette-day.png"><img id="concept" src="cassette-day.png" alt="낮 카세트 조작판 생성 시안"></a><figcaption>생성 시안 · 형태와 색 참고용입니다. 아래는 실제 구현 화면입니다.</figcaption></figure>
-<div class="pair"><figure><a id="desktop-link" href="cassette-actual-day-1440.png"><img id="desktop" src="cassette-actual-day-1440.png" alt="1440px 실제 퀴즈 제작 화면"></a><figcaption>실제 화면 · 1440px · 연습 자료</figcaption></figure><figure><a id="mobile-link" href="cassette-actual-day-375.png"><img id="mobile" src="cassette-actual-day-375.png" alt="375px 실제 퀴즈 제작 화면"></a><figcaption>실제 화면 · 375px · 연습 자료</figcaption></figure></div>
-<h2>좁은 화면의 한 줄 조작판</h2><figure><a href="cassette-mobile.png"><img src="cassette-mobile.png" alt="짧은 단계명과 여섯 번호를 한 줄에 유지한 생성 시안" loading="lazy"></a><figcaption>모바일 조작판 생성 시안 · 320/375/425px 실제 화면에서 한 줄 유지와 가로 넘침을 확인했습니다.</figcaption></figure>
-<h2>제목 옆 물음표와 도움말 모달</h2><p>현재 단계의 용어와 화면 예시를 모았습니다. 작은 예시를 눌러 확대해도 원래 도움말 창은 유지됩니다.</p><div class="pair"><figure><a href="help-chromium.png"><img src="help-chromium.png" alt="데스크톱 단계 도움말 모달" loading="lazy"></a></figure><figure><a href="help-mobile-chromium.png"><img src="help-mobile-chromium.png" alt="모바일 단계 도움말 모달" loading="lazy"></a></figure></div>
-<h2>실제 로컬 새 퀴즈 화면</h2><p>기존 작업을 수정하지 않고 촬영했습니다. 페이지를 여는 것만으로 새 퀴즈가 생기지 않습니다.</p><div class="pair"><figure><a href="cassette-new-1440.png"><img src="cassette-new-1440.png" alt="로컬 새 퀴즈 빈 입력 화면" loading="lazy"></a></figure><figure><a href="cassette-new-375.png"><img src="cassette-new-375.png" alt="모바일 새 퀴즈 빈 입력 화면" loading="lazy"></a></figure></div>
-<details><summary>기준이 된 원본 생성 시안</summary><figure><a href="steps-concept.png"><img src="steps-concept.png" alt="사용자가 선택한 원본 카세트 조작판 시안" loading="lazy"></a></figure></details>
-<p>모바일 이미지는 실제 앱을 모바일 크기의 브라우저로 검수한 결과입니다. 실제 휴대폰에서의 확인과는 구분합니다. 모든 이미지는 누르면 원본 크기로 열립니다.</p>
+<h1>연결형 카세트 조작판</h1>
+<nav><a href="/admin/new">실제 새 퀴즈 만들기</a><a href="/dev/design#workflow">단계 버튼·자물쇠 비교</a><a href="/dev/design#glossy-icons">글로시 아이콘 14종</a><a href="/dev/design#help-button">물음표·입체 닫기 버튼</a></nav>
+<p>하나의 외곽 안에 여섯 키가 맞닿습니다. 양끝만 둥글게 처리하고, 윗빛·가운데 반사·아래 음영으로 글로시한 재질을 표현했습니다. 이전 단계는 눌린 면이며 본문은 조작판과 분리됩니다.</p>
+<h2>연결감과 재질을 위한 새 시안</h2>
+<figure><a href="connected-concept.png"><img id="concept" src="connected-concept.png" alt="하나로 연결된 여섯 카세트 키와 초록 글로시 체크 생성 시안"></a><figcaption>생성 이미지 · 형태 참고입니다. 점과 막대는 실제 번호·문구가 들어갈 자리이며, 자물쇠의 정확한 위치와 실제 저장 상태는 아래 구현 화면을 확인하세요.</figcaption></figure>
+<details><summary>좁은 화면용 생성 시안</summary><figure><a href="connected-mobile-concept.png"><img src="connected-mobile-concept.png" alt="낮은 연결형 조작판의 좁은 화면 생성 시안" loading="lazy"></a></figure></details>
+<h2>실제 저장 완료와 자물쇠 위치 비교</h2>
+<figure><a href="connected-autosave.png"><img src="connected-autosave.png" alt="실제 브라우저 자동 저장 완료와 초록 글로시 체크, 다섯 위치의 잠금 표시" loading="lazy"></a><figcaption>실제 로컬 화면 · 독립 시험 브라우저의 등록 전 연습 입력을 자동 저장한 결과입니다. 새 DB 작업이나 실제 자료 변경은 없습니다.</figcaption></figure>
+<p>2번은 글자 왼쪽에 고정, 3번은 자물쇠와 글자를 한 묶음으로 가운데 정렬, 4번은 숫자 왼쪽, 5번은 왼쪽 위, 6번은 오른쪽 위입니다. 비교 후 선호하는 위치로 통일할 수 있습니다.</p>
+<figure style="max-width:360px"><a href="connected-new-day-320.png"><img src="connected-new-day-320.png" alt="320px 실제 화면에서도 한 행인 64px 높이의 여섯 키" loading="lazy"></a><figcaption>320px 실제 화면 · 여섯 키가 한 행이며 높이는64px입니다.</figcaption></figure>
+<h2>네 시간대의 실제 제작 화면</h2><label>시간대 <select id="theme"><option value="day">낮</option><option value="dawn">새벽</option><option value="sunset">노을</option><option value="night">밤</option></select></label>
+<p>이전 단계의 눌림·현재 단계·잠금 상태를 같은 화면에서 비교합니다. 상단 미리보기를 누르면 전체 화면을 엽니다.</p>
+<div class="pair preview"><figure><a id="desktop-link" href="connected-actual-day-1440.png"><img id="desktop" src="connected-actual-day-1440.png" alt="1440px 실제 제작 화면·합성 연습 자료"></a><figcaption>실제 앱 · 1440px · 합성 연습 자료</figcaption></figure><figure><a id="mobile-link" href="connected-actual-day-375.png"><img id="mobile" src="connected-actual-day-375.png" alt="375px 실제 제작 화면·합성 연습 자료"></a><figcaption>실제 앱 · 375px · 합성 연습 자료</figcaption></figure></div>
+<details><summary>같은 시간대의 실제 새 퀴즈 화면</summary><div class="pair preview"><figure><a id="new-desktop-link" href="connected-new-day-1440.png"><img id="new-desktop" src="connected-new-day-1440.png" alt="1440px 빈 새 퀴즈 화면" loading="lazy"></a><figcaption>실제 로컬 · 1440px · 기존 작업을 수정하지 않았습니다.</figcaption></figure><figure><a id="new-mobile-link" href="connected-new-day-375.png"><img id="new-mobile" src="connected-new-day-375.png" alt="375px 빈 새 퀴즈 화면" loading="lazy"></a><figcaption>실제 로컬 · 375px</figcaption></figure></div></details>
+<h2 id="icons">공통 글로시 상태 아이콘</h2>
+<p>채운 색·흰색 그림·윗빛을 공유합니다. 실행·저장, 완료, 확인, 도움말, 오류의 다섯 의미 색과 시간대 팔레트를 사용합니다. <a href="/dev/design#glossy-icons">갤러리에서 실제 부품 보기</a></p>
+<figure><a href="connected-icons-day.png"><img src="connected-icons-day.png" alt="낮의 글로시 상태 아이콘 14종 실제 컴포넌트" loading="lazy"></a></figure>
+<details><summary>밤의 아이콘 세트</summary><figure><a href="connected-icons-night.png"><img src="connected-icons-night.png" alt="밤의 글로시 상태 아이콘 14종 실제 컴포넌트" loading="lazy"></a></figure></details>
+<h2 id="help">작은 물음표와 입체 닫기 버튼</h2>
+<p>물음표 그림은24px, 누르는 영역은44px입니다. 도움말·난이도 선택창·화면 확대의 닫기 버튼은 같은 부품을 사용합니다.</p>
+<div class="pair"><figure><a href="connected-new-help.png"><img src="connected-new-help.png" alt="입체 닫기 버튼이 있는 실제 설교 준비 도움말" loading="lazy"></a></figure><figure><a href="connected-choice-close.png"><img src="connected-choice-close.png" alt="공통 입체 닫기 버튼을 적용한 실제 난이도 선택창" loading="lazy"></a></figure></div>
+<details><summary>데스크톱·모바일의 도움말과 화면 예시</summary><div class="pair"><figure><a href="connected-help-chromium.png"><img src="connected-help-chromium.png" alt="데스크톱 문제 검토 도움말" loading="lazy"></a></figure><figure><a href="connected-help-mobile-chromium.png"><img src="connected-help-mobile-chromium.png" alt="모바일 문제 검토 도움말" loading="lazy"></a></figure></div></details>
+<div class="note">‘임시 저장’은 실제 저장과 연결됩니다. ‘다음 단계’는 진행 중인 자동 저장과 남은 편집의 저장을 마친 뒤 이동합니다. 등록 전 입력은 이 브라우저에만 보관하며 새 퀴즈는 등록할 때 생성합니다.</div>
+<details><summary>이전 독립 키 시안 보존본</summary><figure><a href="cassette-day.png"><img src="cassette-day.png" alt="이전의 독립된 카세트 키 생성 시안" loading="lazy"></a></figure></details>
+<p>검수 범위: 네 시간대 × 2560/1440/768/425/375/320px, 키보드·모달·저장 회귀. 실제 휴대폰의 검수와 자동 브라우저 검수는 구분합니다. 이미지는 누르면 원본 크기로 열립니다.</p>
 </main>
 <script>
-document.querySelector('#theme').addEventListener('change',e=>{const theme=e.target.value;for(const [id,suffix]of [['concept',''],['desktop','-actual'],['mobile','-actual']]){const size=id==='desktop'?'-1440':id==='mobile'?'-375':'';const src=`cassette${suffix}-${theme}${size}.png`;document.getElementById(id).src=src;document.getElementById(id+'-link').href=src;}document.getElementById('concept').alt=`${e.target.selectedOptions[0].text} 카세트 조작판 생성 시안`;});
+document.querySelector('#theme').addEventListener('change',e=>{const theme=e.target.value;for(const [id,kind,size]of [['desktop','actual',1440],['mobile','actual',375],['new-desktop','new',1440],['new-mobile','new',375]]){const src=`connected-${kind}-${theme}-${size}.png`;document.getElementById(id).src=src;document.getElementById(id+'-link').href=src;}});
 </script>
 </html>

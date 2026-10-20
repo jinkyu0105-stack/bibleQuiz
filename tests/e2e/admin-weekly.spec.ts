@@ -220,6 +220,7 @@ test('visible manual save preserves unregistered input without creating a second
   await page.getByRole('textbox',{name:'설교 제목',exact:true}).fill('아직 등록하지 않은 연습 제목');
   await controls.getByRole('button',{name:'임시 저장',exact:true}).click();
   await expect(controls.getByRole('status')).toContainText('이 브라우저에');
+  await expect(controls.getByRole('status').locator('[data-glossy-tone="success"]')).toBeVisible();
   await page.reload();
   await expect(page.getByRole('textbox',{name:'설교 제목',exact:true})).toHaveValue('');
   await page.getByRole('button',{name:'불러오기',exact:true}).click();

@@ -13,6 +13,8 @@
 .sample p { font-size: 13px; line-height: 1.8; margin: 8px 0 16px; }
 .inline { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 13px; }
 .inline p { margin: 0; }
+.iconSet { display: grid; grid-template-columns: repeat(auto-fit,minmax(96px,1fr)); gap: 20px 12px; padding: 10px 0; }
+.iconSet > div { display: flex; align-items: center; gap: 10px; font-size: 12px; }
 .arrowExamples { display: grid; grid-template-columns: 1fr 1.5fr; align-items: center; gap: 20px; }
 button.demoRow { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; margin: 0; padding: 18px; border: 1px solid var(--line); border-radius: 9px; background: var(--glass-solid); color: var(--ink); text-align: left; box-shadow: none; transform: none; transition: background-color 160ms ease; }
 .demoRow:hover, .demoRow:focus-visible { background: color-mix(in srgb,var(--glass-highlight) 20%,var(--glass-solid)); }

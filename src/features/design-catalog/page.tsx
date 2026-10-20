@@ -1,5 +1,7 @@
 import { HelpButton } from "../../components/HelpButton";
 import { HelpDialog } from "../../components/HelpDialog";
+import { GlossyIcon } from "../../components/GlossyIcon";
+import { DialogCloseButton } from "../../components/DialogCloseButton";
 import { QuizWorkflowSteps } from "../../components/QuizWorkflowSteps";
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
@@ -15,7 +17,7 @@ import { Button } from "../../components/Button";
 import styles from "./catalog.module.css";
 
 const entries = [
-  ["workflow", "카세트 단계 버튼"], ["help-button", "입체 도움말 버튼"], ["choice", "난이도 선택창"], ["arrow", "유리 화살표 버튼"], ["select", "연결형 선택기"], ["menu", "이동형 메뉴"],
+  ["workflow", "연결형 카세트 단계 버튼"], ["glossy-icons", "글로시 상태 아이콘"], ["help-button", "입체 도움말 버튼"], ["choice", "난이도 선택창"], ["arrow", "유리 화살표 버튼"], ["select", "연결형 선택기"], ["menu", "이동형 메뉴"],
   ["index", "파일 인덱스 탭"], ["refresh", "원형 새로고침"], ["tooltip", "작은 말풍선"],
   ["raised", "입체 작업 버튼"], ["actions", "기본 작업 버튼"], ["surface", "투명 창과 읽기 면"],
 ] as const;
@@ -30,6 +32,7 @@ function Sample({ id, name, component, children }: { id: string; name: string; c
 /** Development-only catalogue: real shared components, isolated from saved quiz data. */
 export function Component() {
   const [workflowStep, setWorkflowStep] = useState(3);
+  const [lockComparison, setLockComparison] = useState(false);
   const [choiceOpen, setChoiceOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const [message, setMessage] = useState("예시 버튼을 눌러보세요.");
@@ -44,13 +47,23 @@ export function Component() {
       <nav aria-label="부품 바로가기" className={styles.contents}>{entries.map(([id, name]) => <a key={id} href={`#${id}`}>{name}</a>)}</nav>
       <p className={styles.links}><Link to="/archive">지난 퀴즈에서 보기</Link><a href="/docs/design/phase-9/archive/refinement.html">주차 시안·헤더 너비 비교</a></p>
     </GlassPanel>
-    <Sample id="workflow" name="카세트 단계 버튼" component="QuizWorkflowSteps">
-      <p>이전 단계는 깊게 눌린 면, 현재·이후 단계는 솟은 면입니다. 좁은 화면에서도 번호와 짧은 이름을 한 줄로 유지합니다.</p>
-      <QuizWorkflowSteps current={workflowStep} available={[true,true,true,false,false,false]} reasons={["","","","문제 검토 필요","격자 구성 필요","최종 점검 필요"]} onSelect={setWorkflowStep} footer={<><span className={styles.inline}><AdminIcon name="check" tone="success"/>저장 상태 표시 예시</span><div className={styles.inline}><Button onClick={() => setMessage("갤러리 예시입니다. 실제 자료는 저장하지 않습니다.")}>임시 저장</Button><Button variant="primary" disabled={workflowStep === 3} onClick={() => setWorkflowStep(step => step + 1)}>다음 단계 ›</Button></div></>}/>
-      <p className={styles.links}><a href="/docs/design/phase-9/workflow-controls/review">네 시간대 시안과 실제 화면</a></p>
+    <Sample id="workflow" name="연결형 카세트 단계 버튼" component="QuizWorkflowSteps">
+      <p>하나의 테두리 안에 여섯 버튼이 틈 없이 이어집니다. 이전 단계는 눌리고 현재·이후 단계는 올라온 면입니다.</p>
+      <QuizWorkflowSteps current={lockComparison ? 1 : workflowStep} available={lockComparison ? [true,false,false,false,false,false] : [true,true,true,false,false,false]} reasons={["","설교 준비 필요","핵심 정리 필요","문제 검토 필요","격자 구성 필요","최종 점검 필요"]} onSelect={setWorkflowStep} footer={<><span className={styles.inline}><GlossyIcon name="check" tone="success"/>저장 완료 표시 예시</span><div className={styles.inline}><Button onClick={() => setMessage("갤러리 예시입니다. 실제 자료는 저장하지 않습니다.")}>임시 저장</Button><Button variant="primary" disabled={lockComparison || workflowStep === 3} onClick={() => setWorkflowStep(step => step + 1)}>다음 단계 ›</Button></div></>}/>
+      <p className={styles.inline}><Button aria-pressed={lockComparison} onClick={() => setLockComparison(value => !value)}>자물쇠 위치 비교</Button><a href="/docs/design/phase-9/workflow-controls/review">시안과 실제 화면</a></p>
+      <p>2번: 글자 왼쪽 고정 / 3번: 자물쇠와 글자를 묶어 가운데 / 4번: 숫자 왼쪽 / 5번: 왼쪽 위 / 6번: 오른쪽 위</p>
+    </Sample>
+    <Sample id="glossy-icons" name="글로시 상태 아이콘" component="GlossyIcon">
+      <p>색을 채운 몸체와 흰색 그림, 윗빛을 공유하는 아이콘 세트입니다. 실행은 파랑, 완료는 초록, 확인은 노랑, 도움말은 자주, 오류는 빨강 계열입니다.</p>
+      <div className={styles.iconSet}>{([
+        ["check","success","완료"],["database","action","저장"],["refresh","action","새로고침"],["edit","action","편집"],
+        ["alert","attention","확인"],["alert","danger","오류"],["help","guide","도움말"],["lock","attention","잠금"],
+        ["shield","success","보호"],["document","action","문서"],["calendar","attention","날짜"],["share","action","공유"],
+        ["settings","action","설정"],["book","guide","매뉴얼"],
+      ] as const).map(([name,tone,label]) => <div key={label}><GlossyIcon name={name} tone={tone} size="medium"/><span>{label}</span></div>)}</div>
     </Sample>
     <Sample id="help-button" name="입체 도움말 버튼" component="HelpButton">
-      <div className={styles.inline}><HelpButton label="도움말 버튼 예시" aria-haspopup="dialog" onClick={() => setHelpOpen(true)}/><span>그림 28px · 누를 수 있는 영역 44px</span><AdminRefreshButton label="크기 비교용 새로고침" onClick={() => setMessage("새로고침 버튼과 크기를 비교하세요.")}/></div>
+      <div className={styles.inline}><HelpButton label="도움말 버튼 예시" aria-haspopup="dialog" onClick={() => setHelpOpen(true)}/><span>그림 24px · 누를 수 있는 영역 44px</span><AdminRefreshButton label="크기 비교용 새로고침" onClick={() => setMessage("새로고침 버튼과 크기를 비교하세요.")}/><DialogCloseButton label="닫기 버튼 예시" onClick={() => setMessage("도움말·난이도 선택창·화면 확대에 사용하는 입체 닫기 버튼입니다.")}/></div>
       <HelpDialog open={helpOpen} title="도움말 창 예시" onClose={() => setHelpOpen(false)}><p>제목 옆의 물음표를 누르면 현재 화면의 용어와 예시를 여기에 표시합니다.</p><p>닫기 버튼·바깥 영역·Esc로 닫으면 물음표 버튼으로 돌아갑니다.</p></HelpDialog>
     </Sample>
     <Sample id="choice" name="난이도 선택창" component="QuizChoiceDialog">

@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import type { Difficulty } from "../../shared/api/public-quiz";
 import { AdminIcon } from "./AdminIcon";
+import { DialogCloseButton } from "./DialogCloseButton";
 import styles from "./quiz-choice.module.css";
 
 /** Shared native modal: Escape, focus containment and return to the invoking button. */
@@ -20,7 +21,7 @@ export function QuizChoiceDialog({ open, title = "퀴즈 선택", description, c
     const box = event.currentTarget.getBoundingClientRect();
     if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) event.currentTarget.close();
   }}>
-    <div className={styles.header}><h3 id={`${id}-heading`}>{title}</h3><button type="button" className={styles.close} aria-label="선택창 닫기" onClick={() => ref.current?.close()}>×</button></div>
+    <div className={styles.header}><h3 id={`${id}-heading`}>{title}</h3><DialogCloseButton label="선택창 닫기" onClick={() => ref.current?.close()}/></div>
     <p id={`${id}-description`} className={styles.description}>{description}</p>
     {children}
     <div className={styles.choices}>{[...choices].sort((a,b) => Number(a.difficulty === "adult") - Number(b.difficulty === "adult")).map(({ difficulty, to }) => <Link key={difficulty} to={to} onClick={() => { onNavigate?.(); ref.current?.close(); }}>

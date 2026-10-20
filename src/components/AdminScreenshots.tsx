@@ -1,6 +1,7 @@
 import { useId, useRef, useState } from "react";
 import { adminScreenshots, type AdminScreenshotId } from "../config/admin-screenshots";
 import { AdminEmoji } from "./AdminHelp";
+import { DialogCloseButton } from "./DialogCloseButton";
 import css from "./admin-screenshots.module.css";
 
 function Screenshot({ id }: { id: AdminScreenshotId }) {
@@ -27,7 +28,7 @@ function Screenshot({ id }: { id: AdminScreenshotId }) {
       }}
       onClick={event => { if (event.target === event.currentTarget) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) close(); } }}
       onClose={() => { setOpened(false); trigger.current?.focus({preventScroll: true}); }}>
-      <header><div><p>실제 화면 · 연습 자료 예시</p><h3 id={label}>{example.title}</h3></div><button type="button" className={css.close} onClick={close} autoFocus>닫기 <span aria-hidden="true">×</span></button></header>
+      <header><div><p>실제 화면 · 연습 자료 예시</p><h3 id={label}>{example.title}</h3></div><DialogCloseButton label="화면 예시 닫기" onClick={close} autoFocus/></header>
       <div className={css.viewActions}><button type="button" aria-pressed={actualSize} onClick={() => setActualSize(value => !value)}>{actualSize ? '화면에 맞추기' : '원본 크기로 보기'}</button><span>Esc로도 닫을 수 있습니다.</span></div>
       <div className={css.imageArea} tabIndex={0} role="region" aria-label="확대한 화면" data-actual-size={actualSize || undefined}>{opened && <img src={src} alt={example.alt}/>}</div>
       <p id={description} className={css.caption}>{example.caption}</p>

@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { AdminIcon } from "./AdminIcon";
+import { DialogCloseButton } from "./DialogCloseButton";
 import styles from "./help-dialog.module.css";
 
 /** Native modal keeps focus inside and restores it to the question button on close. */
@@ -27,7 +27,7 @@ export function HelpDialog({ open, title, onClose, children }: {
     const box = event.currentTarget.getBoundingClientRect();
     if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) ref.current?.close();
   }}>
-    <header><h2 id={id}>{title}</h2><button type="button" aria-label="도움말 닫기" onClick={() => ref.current?.close()}><AdminIcon name="close"/></button></header>
+    <header><h2 id={id}>{title}</h2><DialogCloseButton label="도움말 닫기" onClick={() => ref.current?.close()}/></header>
     <div className={styles.content}>{children}</div>
   </dialog>, document.body);
 }

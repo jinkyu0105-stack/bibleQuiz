@@ -1,0 +1,14 @@
+button.close {
+  display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; min-height: 44px; margin: 0; padding: 0;
+  border: 1px solid var(--control-border); border-radius: 10px; color: var(--ink);
+  background: linear-gradient(150deg,color-mix(in srgb,var(--glass-highlight) 60%,var(--glass-field)),var(--glass-field) 65%);
+  box-shadow: inset 0 1px 0 var(--glass-highlight),inset 1px 0 0 color-mix(in srgb,var(--glass-highlight) 60%,transparent),
+    inset 0 -1px 0 color-mix(in srgb,var(--ink) 16%,transparent),0 2px 3px -1px var(--glass-shadow);
+  cursor: pointer; transition: transform 140ms ease;
+}
+.close svg { width: 17px; height: 17px; }
+.close:hover { filter: brightness(1.07); }
+.close:active { transform: translateY(1px); box-shadow: inset 0 2px 3px var(--glass-shadow); }
+.close:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { button.close { transition: none; } }
+@media (forced-colors: active) { button.close { background: ButtonFace; color: ButtonText; border-color: ButtonText; box-shadow: none; } }

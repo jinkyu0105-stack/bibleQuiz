@@ -11,12 +11,14 @@ export function QuizWorkflowSteps({ current, available, reasons, onSelect, foote
 }) {
   return <section className={styles.chassis} aria-label="퀴즈 제작 조작판"><nav aria-label="초안 편집 단계"><ol className={styles.keys} aria-label="주간 발행 6단계">
     {quizSteps.map((item, index) => <li key={item.title}><button type="button" disabled={!available[index]}
+      data-lock-layout={index + 1}
       aria-label={`${index + 1}단계 ${item.title}${!available[index] ? " · 대기" : ""}`}
       aria-current={current === index + 1 ? 'step' : undefined} data-recessed={index + 1 < current || undefined}
       aria-describedby={!available[index] ? `step-lock-${index}` : undefined} onClick={() => onSelect(index + 1)}>
-      <span className={styles.number} aria-hidden="true">{index + 1}{!available[index] && <AdminIcon name="lock"/>}</span>
-      <span className={styles.title} aria-hidden="true"><span>{item.title}</span><b>{shortTitles[index]}</b></span>
+      <span className={styles.number} aria-hidden="true">{!available[index] && index === 3 && <AdminIcon name="lock"/>}{index + 1}</span>
+      <span className={styles.title} aria-hidden="true">{!available[index] && (index === 1 || index === 2) && <AdminIcon name="lock"/>}<span>{item.title}</span><b>{shortTitles[index]}</b></span>
       <small aria-hidden="true">{!available[index] ? '대기' : current === index + 1 ? '현재' : index + 1 < current ? '이전' : '이동'}</small>
+      {!available[index] && index >= 4 && <AdminIcon className={styles.cornerLock ?? ""} name="lock"/>}
     </button>{!available[index] && <span id={`step-lock-${index}`} className="sr-only">{reasons[index]}</span>}</li>)}
   </ol></nav>{footer && <div className={styles.footer}>{footer}</div>}</section>;
 }

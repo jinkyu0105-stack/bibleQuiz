@@ -90,10 +90,14 @@ import { Button, ButtonLink } from "./components/Button";
 
 | 부품 이름 | 구현 | 사용 기준 |
 | --- | --- | --- |
-| 카세트 단계 버튼 | `QuizWorkflowSteps.tsx` | 독립된 투명 이중 프레임과 하단 `footer`. 모든 폭에서6키 한 행. 이전 깊은 눌림·현재 실행색·잠금 대기. 업무 조건은 `available`/`reasons`로 전달 |
+| 연결형 카세트 단계 버튼 | `QuizWorkflowSteps.tsx` | 투명 이중 프레임과 하단 `footer`. 하나의 외곽 안에6키가 맞닿고 양끝만 둥글다. 이전 눌림·현재 실행색·잠금 대기. 높이112/76/64px. 업무 조건은 `available`/`reasons`로 전달 |
 | 단계 본문 제목 | `QuizStageHeading` | 같은 단계 데이터에서 제목·설명 표시. `onHelp`로 제목 옆 물음표 연결 |
 | 입체 새로고침 버튼 | `AdminRefreshButton` | 기존 원형 크기와 동작 유지, 얕은 윗빛·음영·클릭 눌림 |
-| 입체 도움말 버튼 | `HelpButton.tsx` |28px 원형 물음표·44px 터치 영역. 전체 둘레 음영. `label`/`aria-haspopup="dialog"`로 안내 |
+| 입체 도움말 버튼 | `HelpButton.tsx` |24px 원형 물음표·44px 터치 영역. 전체 둘레 음영. `label`/`aria-haspopup="dialog"`로 안내 |
 | 단계 도움말 모달 | `HelpDialog.tsx` | 현재 단계의 용어·예시. Tab 순환, Esc/바깥 클릭, 초점 복귀. nested 확대 dialog의 close를 구분 |
+| 입체 닫기 버튼 | `DialogCloseButton.tsx` |44px 조작 영역·17px 닫기 그림·얕은 윗빛/음영. `label`로 접근성 이름, `onClick`으로 기존 닫기 동작 연결. 도움말/난이도/스크린샷 모달 공용 |
+| 글로시 상태 아이콘 | `GlossyIcon.tsx` | 색을 채운 원형·흰색 그림·반사광. 기존 `AdminIcon`의 `name`, 다섯 의미색 `tone`, `size="small"(25px)/"medium"(34px)` 사용. 주변 문구에 의미를 전달하는 장식이며 클릭 버튼이 아님 |
 
-[컴포넌트 갤러리](http://localhost:5173/dev/design#workflow)에서 실제 부품을 조작할 수 있다. 작은 도움말 버튼은 `#help-button`에서 확인한다.
+[컴포넌트 갤러리](http://localhost:5173/dev/design#workflow)에서 실제 부품을 조작할 수 있다. 자물쇠 위치 비교를 켜면2글자 왼쪽 고정/3글자와 묶음 가운데/4숫자 왼쪽/5왼쪽 위/6오른쪽 위를 볼 수 있다. 최종 위치 선택 전 비교 상태이며 업무상 잠금 조건은 바꾸지 않는다.
+
+작은 도움말·닫기는 `#help-button`, 아이콘14종은 `#glossy-icons`에서 확인한다. 완료는 `success`, 실행·저장은 `action`, 확인은 `attention`, 도움말은 `guide`, 오류는 `danger`다. 시간대 팔레트를 따르고 노을의 실행색은 구리색이다. 저장 성공 체크는 실제 성공 상태일 때만 표시한다. 새 CSS 애니메이션 루프나 외부 이미지/의존성은 없다.
