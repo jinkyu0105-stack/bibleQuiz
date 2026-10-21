@@ -8,8 +8,8 @@ async function home(page: Page) {
   await expect(page.locator("#home-title")).toBeVisible();
 }
 
-test("phone header stays in one row and the fourth dock button reveals all settings", async ({ page }) => {
-  for (const width of [320, 390, 700]) {
+for (const width of [320, 390, 700]) {
+  test(`phone header stays in one row and the fourth dock button reveals all settings at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
     await home(page);
     const header = (await page.locator(".site-header").boundingBox())!;
@@ -38,8 +38,8 @@ test("phone header stays in one row and the fourth dock button reveals all setti
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.getByRole("button", { name: "화면 설정 닫기", exact: true }).click();
     await expect(page.getByRole("button", { name: "화면 설정", exact: true })).toBeFocused();
-  }
-});
+  });
+}
 
 test("the mobile dock lends its glass lens to settings and returns it home on every close", async ({ page, isMobile }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -59,12 +59,18 @@ test("the mobile dock lends its glass lens to settings and returns it home on ev
   async function toggle() { if (isMobile) await settings.tap(); else await settings.click(); }
   await at(homeLink);
   const travel = page.evaluate(() => new Promise<number[]>(resolve => {
-    const positions: number[] = [], end = performance.now() + 1000;
-    function sample(time: number) {
-      positions.push(document.querySelector(".page-dock > .glass-indicator")!.getBoundingClientRect().x);
-      if (time < end) requestAnimationFrame(sample); else resolve(positions);
-    }
-    requestAnimationFrame(sample);
+    const indicator = document.querySelector(".page-dock > .glass-indicator")!;
+    const trigger = document.querySelector(".mobile-settings-trigger")!;
+    // Start at the actual input, after Playwright's actionability wait. A fixed
+    // window started before tap/click can finish before input on a busy runner.
+    trigger.addEventListener("click", () => {
+      const positions = [indicator.getBoundingClientRect().x], end = performance.now() + 1000;
+      function sample(time: number) {
+        positions.push(indicator.getBoundingClientRect().x);
+        if (time < end) requestAnimationFrame(sample); else resolve(positions);
+      }
+      requestAnimationFrame(sample);
+    }, { once: true, capture: true });
   }));
   await toggle(); await at(settings);
   expect(new Set((await travel).map(x => x.toFixed(1))).size).toBeGreaterThan(2);

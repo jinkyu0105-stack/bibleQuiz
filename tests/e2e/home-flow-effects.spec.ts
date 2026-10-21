@@ -13,7 +13,9 @@ async function home(page: Page) {
   await page.addInitScript(() => { localStorage.setItem("bibleQuiz:mercury-hidden", "true"); localStorage.setItem("bibleQuiz:aurora-spire", "true"); });
   await page.goto("/?video=off");
   await expect(page.locator("#home-title")).toBeVisible();
-  await expect(page.locator(".hero-effects")).toHaveAttribute("data-state", "disabled");
+  // SwiftShader initialization compiles the full effect shader after two paint
+  // frames. Keep a bounded setup wait inside this GPU test's existing 90s budget.
+  await expect(page.locator(".hero-effects")).toHaveAttribute("data-state", "disabled", { timeout: 15_000 });
   await openSkySettings(page);
   const trigger = page.getByRole("button", { name: "배경 효과", exact: true });
   await trigger.focus();

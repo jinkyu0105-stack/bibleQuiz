@@ -331,4 +331,6 @@ GitHub 브라우저 CI는 기존 Chromium PC·모바일 전체 목록을 Playwri
 
 CI는 line 로그에 실행 중인 검사 이름을 남기고, HTML·JSON 결과와 실패 화면·첫 재시도 trace를 각 `browser-results-N` artifact에 7일 보관한다. JSON 결과는 `test-results/results.json`이다. 기존 기기 조건·중복 행렬·정적 시안 촬영용 조건부 제외는 그대로 유지한다. UI 변경 후에는 없어진 문구나 내부 장식 요소 대신 실제 입력·초점·저장·공유·이동·픽셀 동작의 검증을 갱신한다.
 
+같은 검사에서 여러 너비를 반복해 총 시간 제한을 소모하면 너비별 독립 검사로 나누고 모든 단언을 유지한다. 모션 샘플은 실제 사용자 입력 시점부터 측정한다. SwiftShader 초기화 대기는 GPU 검사의 기존 전체 예산 안에서 명시하고 실제 픽셀·정지·속도 검증을 생략하지 않는다.
+
 공식 근거: [Playwright 분할 실행](https://playwright.dev/docs/test-sharding), [CI 실행](https://playwright.dev/docs/ci), [결과 보고](https://playwright.dev/docs/test-reporters). 실제 원인·검사·배포 결과는 [P9-26 작업 기록](../work/P9-26.md#브라우저-ci-시간-초과-수정--2026-10-21)을 따른다.
