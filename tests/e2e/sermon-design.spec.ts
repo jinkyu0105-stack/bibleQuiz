@@ -20,10 +20,18 @@ test("adult and child share the sky composition with full reviewed summaries and
     const title = await page.locator("#sermon-heading").boundingBox();
     expect(title!.x).toBeGreaterThanOrEqual(0);
     expect(title!.x + title!.width).toBeLessThanOrEqual(1440);
-    await expect(page.locator('.quiz-workspace-glass')).toHaveAttribute('data-glass-panel', 'reading');
+    await expect(page.locator('.quiz-reader').first()).toHaveAttribute('data-glass-panel', 'standard');
+    await expect(page.locator('#quiz-panel')).toHaveCSS('background-color', /^rgb\(/);
+    const summary = page.locator('.sermon-summary > summary');
+    await summary.click();
     await expect(page.locator(".summary-copy")).toHaveText(fullSummary);
-    await hero.getByRole("link", { name: level === "adult" ? "퀴즈 풀기" : "함께 퀴즈 풀기" }).click();
-    await expect(page).toHaveURL(/#quiz-panel$/);
+    await expect(page.locator(".summary-copy")).toBeVisible();
+    await summary.click();
+    await expect(page.locator(".summary-copy")).toBeHidden();
+    await hero.getByRole("button", { name: "설교일", exact: true }).click();
+    await expect(page.getByRole("tooltip", { name: /설교일 ·/ })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("link", { name: "다사랑교회 성경퀴즈 처음으로", exact: true })).toHaveAttribute("href", "/");
     await expect(page.getByRole("grid", { name: "낱말 퀴즈 격자" })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }

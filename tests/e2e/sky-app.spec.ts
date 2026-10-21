@@ -35,9 +35,11 @@ test("home opens the real quiz, restores its draft and cleans glass on repeated 
     await page.getByRole("tab", { name: "어린이 퀴즈" }).focus();
     await page.keyboard.press("ArrowRight");
     await expect(page.getByRole("tab", { name: "장년 퀴즈" })).toBeFocused();
-    await expect(page.locator(".difficulty-tabs > .glass-indicator")).toHaveCount(1);
+    await expect(page.getByRole("tab", { name: "장년 퀴즈" })).toHaveAttribute("aria-selected", "true");
+    await expect(page.getByRole("tab", { name: "어린이 퀴즈" })).toHaveAttribute("aria-selected", "false");
     await expect(page.getByTestId("progress")).toHaveText("0 / 40칸 작성");
-    await page.getByRole("link", { name: "← 이번 주 말씀" }).click();
+    await page.getByRole("link", { name: "다사랑교회 성경퀴즈 처음으로", exact: true }).click();
+    await page.locator(".hero-content").getByRole("link", { name: "이번 주 퀴즈", exact: true }).click();
     await expect(page).toHaveURL(/\/#weekly$/);
     await expect(page.locator("#weekly")).toBeInViewport();
     await expect(page.locator(".liquid-filter-definitions")).toHaveCount(filters);

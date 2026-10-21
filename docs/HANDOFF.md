@@ -1,39 +1,29 @@
 # 인수인계
 
-## 이번 재개: Preview push·배포 완료
+## 현재 작업: P9-26 브라우저 CI 복구·Preview 반영
 
-2026-10-21 사용자 승인으로 소스 **2717efcc0225eeab137bf9bbe51107d470266062**를 main에 push했다. Workers Builds **16c28ca6-8720-433d-9233-c5b487fb53ad** 성공과 Preview **a17323f0-4eb8-4fb2-a064-442652e6d12b** 100% 적용을 확인했다. 배포 **74a41ecd-d1ee-48d9-b47a-774924e4d390**, 적용 시각 **2026-10-21 01:46:46 KST**다. 이 사후 문서 기록 커밋은 로컬이며 배포 소스로 혼동하지 않는다.
+2026-10-21 사용자는 25분 초과 원인을 수정하고 검사 생략 없이 전체 통과 뒤 push·Preview 완료 확인을 요청했다. 시작 main 598af9b/clean, Pro 잔여 84% × 사용자 기준 10 = 840%, 별도 5시간 값 없음. 로컬 수정·검사는 완료했고 지금은 검증한 커밋 push와 원격 CI/Preview 확인 단계다. 부모 P9-26 진행 중, 세션 유지, 다음 추천 GPT-6.1-sol/high.
 
-시작 2e87173/clean, 원격 516a98e 이후 누적 24커밋과 매뉴얼 수정이 포함됐다. Pro 잔여 86% × 사용자 기준 10 = 860%, 별도 5시간 값 없음. 전체 `pnpm check` 최종 통과(2,568건 및 lint/typecheck/build). 첫 실행의 OPERATIONS_MANUAL_OUTDATED를 원본·앱 사본 동기화와 현재 새 퀴즈 안내로 수정했다. 로그 `/tmp/p926-preview-check-final.log`. 기존 번들 500kB 경고만 남고 빌드는 성공했다. Builds API는 workers-ci.read 권한 부족으로 조회할 수 없어 GitHub 공식 check-run의 소스/Version ID와 Cloudflare deployments의 100% 버전을 대조했다.
+## 수정과 검증
 
-[폰에서 열 관리자 화면](https://biblequiz-app-preview.jinkyu0105.workers.dev/admin/new). 일반 브라우저 User-Agent에서 홈·관리 경로 HTTP 302 Access 연결과 로그인 HTML을 확인했다. 처음 기본 자동 요청은 403이었다. 인증 후 실제 화면·휴대폰은 사용자 확인 대기다. GitHub CI **39460006185**의 validate/browser는 배포 확인 시 진행 중이었다. Production·migration·자료·실제 AI 변경은 없다. 현재 배포 요청 완료, 부모 P9-26 사용자 확인 대기, 다음은 폰 화면 확인, 세션 유지, 추천 GPT-6.1-sol/high.
+- `.github/workflows/ci.yml`: 기존 PC·모바일 384개를 96×4로 나눈다. 각 2workers/재시도 2회/25분 유지, fail-fast=false, 결과 artifact 7일 보관. `playwright.config.ts`는 CI line/HTML/JSON·실패 화면·첫 재시도 trace를 남긴다.
+- 테스트 6파일은 사라진 UI를 기다리던 경로를 현재 기능으로 갱신했다. 도움말 초점 복귀, Live 제목·날짜·링크, 모바일 더보기, 공유 주소·재방문, 실제 불투명 본문·요약·달력, 선택·입력 복원, 홈 복귀, 모바일 설정 진입과 실제 GPU 픽셀 검증을 유지한다. 제품 UI·DB·의존성 변경은 없다.
+- 원본 CI 39460006185/job 118756693404: 25분 취소. 사라진 홈 링크를 효과 검사에서 90초씩 기다린 후 두 번 재시도했다. 원본 `/tmp/p926-browser-job.log`.
+- 로컬 최종 전체 브라우저 **377통과/기존 조건부 제외 7/실패 0/재시도 0**(4workers, 17.5분). `/tmp/p926-browser-final.json`/`.log`. 수정 전과 같은 384개 및 같은 제외 7개를 확인했다. 분할 목록의 합집합=384, 중복=0. `/tmp/p926-targets-0.json`~`4.json`.
+- 필수 전체 `pnpm check` **2,568건 및 lint/typecheck/빌드 최종 통과**. `/tmp/p926-ci-fix-check-final.log`. 병행 첫 실행의 서버 1건 실패 뒤 파일 7건 독립 실행과 전체 단독 재실행이 통과했다. 기존 fontkit 번들 500kB 경고는 남는다. 중간 브라우저 진단 실패·중단은 [작업 기록](work/P9-26.md#브라우저-ci-시간-초과-수정--2026-10-21)에 모두 구분했다.
+- 기존 제외는 시안 촬영·다른 기기의 중복 행렬·터치/휠 조건이며 새 제외나 테스트 삭제는 없다. 실제 휴대폰/Safari 확인과 구별한다. 자세한 실행 계약은 [검사 정본](spec/testing.md#p9-26-브라우저-ci-실행-계약).
 
-## 현재 작업: P9-26 제작 2~6단계 작업 소섹션
+## 남은 같은 요청
 
-2026-10-21 사용자 요청을 로컬 구현·검사·문서에 반영했다. 1단계 ‘설교 정보’처럼 2~6단계의 제목·내용·관련 버튼을 함께 묶고 여백을 통일했다. 구현과 위 Preview 반영은 완료했고, 부모 P9-26은 사용자 확인 대기다. 다음은 같은 화면의 사용자 피드백 반영이며 세션을 유지한다. 추천은 GPT-6.1-sol/high: 시각 보정과 저장·검수·접근성을 함께 확인한다. 새 번호·push·배포로 자동 확대하지 않는다.
+1. 검증한 파일만 커밋하고 main에 push한다. Preview 자동 배포다.
+2. 새 GitHub CI의 validate와 browser(1~4/4)를 모두 성공까지 확인한다. artifact JSON으로 전체 대상·통과·제외·재시도를 대조한다. 실패 시 같은 범위에서 수정하고 재검증한다.
+3. Cloudflare Builds의 정확한 커밋/Version ID와 최신 deployments의 같은 버전 100%를 대조한다. 사용자 OAuth 재연결 후 Workers CI Read도 HTTP 200으로 확인된 상태다.
+4. Preview 접속 응답과 로컬 5173 상태를 확인하고 문서에 실제 소스·버전·결과를 기록한다. 사후 기록 커밋을 배포 소스로 혼동하지 않는다.
 
-## 실제 상태와 진입점
+직전 Preview 소스는 2717efc, build 16c28ca6-8720-433d-9233-c5b487fb53ad, version a17323f0-4eb8-4fb2-a064-442652e6d12b(100%)다. [Preview 관리자](https://biblequiz-app-preview.jinkyu0105.workers.dev/admin/new). Production·원격 migration·자료·실제 AI는 범위 밖이다.
 
-- 시작은 main c43b86a, clean이었다. 시작 Pro 잔여 89% × 사용자 기준 10 = 890%, 별도 5시간 값은 없었다. 검증한 변경을 로컬 커밋한다. 다음 재개 시 `git status --short`, diff, log로 최종 커밋을 확인한다.
-- `src/features/admin-sermon-input/WorkflowSection.tsx`: 공통 제목·아이콘·상태와 본문 묶음. 같은 폴더 CSS의 metadataSection 재질을 재사용한다. 첫 묶음 위 24px, 묶음 사이 24px/모바일 20px, 안쪽 16px이다. 상태는 ‘검수와 저장’ 제목 옆에 둔다.
-- `ContentGeneration.tsx`: 생성·작업 상태, 핵심 항목, 요약 문단·문제별 편집, 품질 평가, 검수·저장. 중복 시각 제목은 접근성 제목으로 유지한다. 원문 근거·편집·검수 동작은 그대로다.
-- `ContentRegeneration.tsx`: 설명·필드·버튼 간격. `ContentPlacement.tsx`: 보기 설정, 어린이·장년 배치와 시험 결과, 저장·검사, 설교 요약, 미리보기, 단서 복사, 검수표, 공개 확인. 목표 수 입력 폭을 제한하고 모바일 10×10 줄바꿈을 막았다. 복사·발행 응답 메시지가 현재 단계에서도 보이게 했다.
-- `WinnerSettings.tsx`: workflow 옵션에서만 공통 소섹션을 사용한다. 독립 설정 화면과 저장·검증은 유지했다. 공통 부품 갤러리 `/dev/design#workflow-section`에 실제 예시가 있다.
-- 직전 카세트·아이콘·물음표·1단계 기준은 보존했다. 단계 선택은 진행 중 자동저장과 남은 편집 저장을 완료한 후 이동한다. 자동저장 900ms, WorkflowSave, 등록 전 브라우저 보관 키 `biblequiz:registration-input:v1`은 그대로다. 검수·AI·배치·Top N·발행은 개별 명시 조작이다.
+## 환경
 
-## 확인 위치와 검증
+저장소 `/home/onegem/work/bibleQuiz`, bash login:false. Node24.18.0/pnpm11.14.0 경로가 필요하면 PATH에 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. localhost·브라우저·Git 쓰기는 require_escalated 검토 경로다. 도구 시작 실패는 codex-exec-recovery를 따른다. 개발 서버 `pnpm dev:demo --port 5173 --strictPort`와 `.wrangler/ui-demo-state`는 유지했다. E2E4173과 전체 검사 임시 D1은 실제 자료와 분리된다. 브라우저 검사 중에는 소스/문서를 수정해 개발 서버를 다시 로딩하지 않는다.
 
-- [실제 관리](http://localhost:5173/admin)
-- [2~6단계 네 시간대·모바일 실제 화면](http://localhost:5173/docs/design/phase-9/workflow-sections/review)
-- [공통 작업 소섹션](http://localhost:5173/dev/design#workflow-section)
-- 관련 E2E 고유 41건과 lint/typecheck가 최종 통과했다. 초기 검사의 옛 제목 역할·넓은 details 선택·textarea 선택을 보완했다. 마지막 묶음은 첫 시도에서 종료 코드 143으로 중단됐다. 남은 4173 Vite만 정리한 뒤 재실행해 11통과/1중복 skip으로 확정했다. 5173은 유지했다. [상세 검사](work/P9-26.md#제작-26단계-작업-소섹션--2026-10-21).
-- 다섯 단계 × 네 시간대 × 1440/375/320px의 60상태에서 가로 넘침·필드 경계 이탈·페이지 오류가 없었다. 펼친 근거·재생성·품질 평가도 네 시간대 PC/모바일로 확인했다. 기존 저장·검수·배치·발행 확인과 오류·선택 복원 회귀를 포함한다.
-- 합성 자료를 넣은 실제 UI 48PNG와 비교 HTML, 총 49건의 HTTP 200 및 형식을 확인했다. 비교 페이지 60조합에서 이미지 로딩·넘침·오류 검사를 통과했다. 본문 촬영 때만 고정 헤더·하단바를 숨겼으며 비교 페이지에 명시했다. 기존 시안·캡처는 보존했다. 실제 설교나 AI 결과를 사용한 검사는 아니다.
-- 실제 휴대폰/Safari와 사용자 Windows 화면의 표시 확인은 별도다. 전체 Phase/배포 완료가 아닌 UI 후속으로 전체 `pnpm check`는 실행하지 않았다. 새 의존성·원격 자료·실제 AI·schema·push·배포 변경은 없다.
-- 폐기한 배치: 제목 밑에 붙은 첫 묶음, 전체 폭 목표 수 입력, 모바일 10×10 줄바꿈, 설명과 분리된 발행 버튼, 중복 시각 제목과 단독 상태 행. 업무 조건은 변경하지 않았다.
-
-## 환경과 경계
-
-Node 24.18.0/pnpm 11.14.0, bash login:false, 명시적 cwd를 사용한다. 필요하면 PATH에 `/home/onegem/.nvm/versions/node/v24.18.0/bin`을 추가한다. 일반 도구는 작동하며 localhost·브라우저·Git 쓰기는 require_escalated 검토 경로다. 도구 시작 실패는 codex-exec-recovery를 따른다. 5173 서버 명령은 `pnpm dev:demo --port 5173 --strictPort`다. `.wrangler/ui-demo-state`와 실제 자료를 보존한다. E2E 4173은 독립 임시 DB다. 브라우저 검사 중 소스·문서 저장은 Vite 재시작을 유발하므로 피한다.
-
-최신 원격 소스·배포 버전은 문서 맨 위의 2717efc/a17323f0을 따른다. 직전 516a98e/76664793은 이번 조회에서 대조했고, Production은 변경하지 않았다.
+2~6단계 UI의 관련 코드·48PNG·네 시간대/모바일 검수는 [직전 작업 기록](work/P9-26.md#제작-26단계-작업-소섹션--2026-10-21)을 따른다.

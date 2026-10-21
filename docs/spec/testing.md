@@ -323,3 +323,12 @@ P5-71 Cloudflare 최종 검사 전용 Workflow는 기존 5개 응답을 재사�
 합의 전 문서/후보 준비는 diff·로컬 링크·기존 config guard·소스/기존 자료 보존과 후보의 strict dry-run을 확인한다. 후보 검사는 합성HTML/로컬 번들만이며 Production 화면·원격 권한·무료 청구 완료가 아니다. 제품 소스가 같은 P8-01의 pnpm check·격리 복원·입력/PDF 결과를 재사용하고 반복하지 않는다. 실제 배포 단위 완료 전에는 최종 설정·소스에 pnpm check와 관련 검수 결과가 필요하다.
 
 [실행·중지·출시 행렬](../work/P8-02.md#남은-같은-p8-02-실행출시-조건)에 따라 Preview0037/0038과 새 빈 Production0000~0038을 구분하고, 별도 환경/자원·version·SQL/산출물 SHA·백업/삭제 manifest·Access/Turnstile·공유망 제한·대표 실제 사용자/운영 경로를 확인한다. 2026-10-02 사용자 승인은 실제 서버 준비·연결·배포/공개까지 포함하며 새 AI/유료 전환은 제외한다. all-traffic에서 관리자 path 보호로 전환할 때 관리 경계가 열린 틈이 없어야 한다. 설치/실제 콘텐츠/AI·상시 운영 활성화/공개 범위는 구체적 승인 묶음에 고정한다. 알려진 기기·지표 미확인 한계는 유지하며 전체 release 조건을 만족하기 전 P8-02/v1을 완료로 처리하지 않는다.
+
+
+### P9-26 브라우저 CI 실행 계약
+
+GitHub 브라우저 CI는 기존 Chromium PC·모바일 전체 목록을 Playwright `--shard=1/4`~`4/4`로 나눈다. 각 작업은 2workers, 기존 재시도 2회와 25분 한도를 유지하며 `fail-fast: false`로 모든 분할 결과를 받는다. `fullyParallel`과 분할 목록을 대조해 합집합이 원래 전체 목록과 같고 중복이 없는지 확인한다. 분할을 이유로 기능 검사를 제외하지 않는다.
+
+CI는 line 로그에 실행 중인 검사 이름을 남기고, HTML·JSON 결과와 실패 화면·첫 재시도 trace를 각 `browser-results-N` artifact에 7일 보관한다. JSON 결과는 `test-results/results.json`이다. 기존 기기 조건·중복 행렬·정적 시안 촬영용 조건부 제외는 그대로 유지한다. UI 변경 후에는 없어진 문구나 내부 장식 요소 대신 실제 입력·초점·저장·공유·이동·픽셀 동작의 검증을 갱신한다.
+
+공식 근거: [Playwright 분할 실행](https://playwright.dev/docs/test-sharding), [CI 실행](https://playwright.dev/docs/ci), [결과 보고](https://playwright.dev/docs/test-reporters). 실제 원인·검사·배포 결과는 [P9-26 작업 기록](../work/P9-26.md#브라우저-ci-시간-초과-수정--2026-10-21)을 따른다.

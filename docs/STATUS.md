@@ -1,5 +1,13 @@
 # 현재 상태
 
+## P9-26 브라우저 CI 복구 — 원격 확인 중
+
+원본 run 39460006185는 삭제된 UI를 기다리는 실패·재시도와 전체 384개 단일 작업 실행이 겹쳐 25분 제한에 취소됐다. 현재 UI의 도움말 닫기·Live·공유·홈 복귀·모바일 설정 경로로 검사를 갱신하고, 같은 384개를 96×4로 나눴다. 각 2workers/재시도 2회/25분 한도는 유지하며 전체 합집합 일치·중복 0을 확인했다. line/HTML/JSON·실패 화면·trace를 보관한다. 테스트 삭제·새 skip·전역 timeout 확대 없음.
+
+로컬 전체 브라우저 **377통과/기존 조건부 제외 7/실패·재시도 0**, 384개 대상·제외 목록이 이전과 같음을 대조했다. 필수 전체 `pnpm check` 최종 통과(2,568건, lint/typecheck/build). 병행 첫 검사에서는 서버 1건 실패 후 파일 7건과 단독 전체 재실행이 통과했다. 이 기록 시점은 push 전이며 원격 CI/Preview 결과는 후속 확인한다. [상세 원인·중간 실패·최종 검사](work/P9-26.md#브라우저-ci-시간-초과-수정--2026-10-21).
+
+현재 작업 P9-26 진행 중 · 다음 검증 커밋 push와 원격 CI/Preview 대조 · 세션 유지 · 추천 GPT-6.1-sol/high: 실행 결과와 배포 소스를 함께 확인한다. Production·원격 자료·실제 AI 변경 없음.
+
 ## P9-26 Preview 반영 완료 — 2026-10-21
 
 사용자 승인으로 누적 변경과 매뉴얼 동기화를 main **2717efcc0225eeab137bf9bbe51107d470266062**에 push했다. [Workers Builds](https://dash.cloudflare.com/c975020ce569ec52da63732ba0b94422/workers/services/view/biblequiz-app-preview/production/builds/16c28ca6-8720-433d-9233-c5b487fb53ad) 성공과 Preview 버전 **a17323f0-4eb8-4fb2-a064-442652e6d12b**의 **100% 적용**을 대조했다(2026-10-21 01:46:46 KST). 배포 ID는 74a41ecd-d1ee-48d9-b47a-774924e4d390이다.

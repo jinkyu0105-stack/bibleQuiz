@@ -34,9 +34,12 @@ jobs:
 
   browser:
     runs-on: ubuntu-latest
-    # The full desktop/mobile suite exceeded the old 15-minute job limit.
-    # Allow the complete suite, including software GPU startup checks, to finish.
+    name: browser (${{ matrix.shard }}/4)
     timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -52,4 +55,13 @@ jobs:
       - name: Install Chromium
         run: pnpm exec playwright install --with-deps chromium
       - name: Test desktop and mobile Chromium
-        run: pnpm test:e2e --project=chromium --project=mobile-chromium --workers=2
+        run: pnpm test:e2e --project=chromium --project=mobile-chromium --workers=2 --shard=${{ matrix.shard }}/4
+      - name: Save browser results and failure traces
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: browser-results-${{ matrix.shard }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

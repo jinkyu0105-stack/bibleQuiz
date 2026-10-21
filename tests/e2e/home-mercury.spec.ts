@@ -1,4 +1,4 @@
-import { openSkySettings } from "./sky-control-helpers";
+import { openSkySettings, selectSkyTime } from "./sky-control-helpers";
 import { expect as baseExpect, test, type Locator, type Page } from "@playwright/test";
 import { publicResponse } from "../fixtures/public-response";
 
@@ -52,7 +52,7 @@ test("mercury stays behind the home introduction and stops after the weekly link
   await page.getByRole("link", { name: /어린이 퀴즈/ }).click();
   await expect(page.getByRole("grid")).toBeVisible();
   await expect(canvas).toHaveCount(0);
-  await page.getByRole("link", { name: "← 이번 주 말씀" }).click();
+  await page.getByRole("link", { name: "다사랑교회 성경퀴즈 처음으로", exact: true }).click();
   await expect(canvas).toHaveCount(1);
   await page.goto("/privacy-requests");
   await expect(canvas).toHaveCount(0);
@@ -170,11 +170,13 @@ test("reflection tuning changes actual pixels and zero speed holds its flow", as
   await scale.press("End"); await expect.poll(async () => (await pixels()).hash).not.toBe(small.hash);
   const speed = page.getByRole("slider", { name: "흐름 속도", exact: true });
   await speed.press("Home"); await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
+  await openSkySettings(page);
   await page.locator("#motion").focus(); await page.keyboard.press("Enter");
   await expect(canvas).toHaveAttribute("data-state", "running");
   const held = await pixels(), time = await canvas.getAttribute("data-time");
   await expect.poll(() => canvas.getAttribute("data-time")).not.toBe(time);
   expect((await pixels()).hash).toBe(held.hash);
+  await openSkySettings(page);
   await trigger.focus(); await page.keyboard.press("Enter");
   await reflection.focus(); await page.keyboard.press("Enter");
   await speed.press("End");
@@ -213,7 +215,7 @@ test("light width and brightness change the rendered light even while motion is 
   await expect(canvas).toHaveAttribute("data-state", "paused");
   await expectStill(canvas);
   await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
-  await page.getByRole("button", { name: "밤", exact: true }).click();
+  await selectSkyTime(page, "밤", true);
   await expect(canvas).toHaveAttribute("data-state", "paused");
   expect(await light()).toBeGreaterThan(0);
   expect(await canvas.evaluate(node => (node as HTMLCanvasElement).getContext("webgl")!.getError())).toBe(0);

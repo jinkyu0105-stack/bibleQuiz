@@ -29,11 +29,17 @@ test("migrated isolated D1 serves a published fixture through the Worker and bro
   await page.getByRole("link", { name: /어린이 퀴즈/ }).click();
   await expect(page.getByRole("grid", { name: "낱말 퀴즈 격자" })).toBeVisible();
   await expect(page.getByText("가로 1번 통합 검사 단서", { exact: true }).first()).toBeVisible();
-  await expect(page.locator('time[datetime="2099-09-07T00:00:00.000Z"]')).toContainText("한국 시간");
+  await expect(page.locator('time[datetime="2099-09-07T00:00:00.000Z"]')).toHaveText("2099년 9월 7일 오전 9:00");
   await expect(page.getByTestId("remaining-time")).toContainText("남은 기간:");
   await expect(page.locator("body")).not.toContainText(privateCanary);
   await expect(page.locator("body")).not.toContainText(privateSolutionCanary);
-  await page.getByRole("link", { name: "이 퀴즈의 고유 주소" }).click();
+  await page.evaluate(() => Object.defineProperty(navigator, "share", {
+    configurable: true, value: async (data: ShareData) => { Reflect.set(window, "sharedQuizUrl", data.url); },
+  }));
+  await page.getByRole("button", { name: "퀴즈 공유", exact: true }).click();
+  const sharedUrl = new URL("/quiz/2026-09-01-e2e001?level=child", page.url()).href;
+  await expect.poll(() => page.evaluate(() => Reflect.get(window, "sharedQuizUrl"))).toBe(sharedUrl);
+  await page.goto(sharedUrl);
   await expect(page).toHaveURL(/\/quiz\/2026-09-01-e2e001\?level=child$/u);
   await page.reload();
   await expect(page.getByRole("grid", { name: "낱말 퀴즈 격자" })).toBeVisible();

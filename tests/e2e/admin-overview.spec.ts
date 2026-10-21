@@ -2,24 +2,32 @@ import { selectSkyTime } from "./sky-control-helpers";
 import { expect, test } from "@playwright/test";
 import { mockOverview, overview } from "../fixtures/admin-overview";
 
-test("quiz manager shows the actual automatic home quiz and separates editing, published and archived records",async({page},info)=>{
+test("quiz manager shows the actual automatic home quiz and separates editing, published and archived records",async({page,isMobile},info)=>{
  const writes=await mockOverview(page);
  await page.goto("/admin");
  await selectSkyTime(page, "낮");
  const library=page.getByRole("region",{name:"퀴즈 목록 4"});
  await expect(library.getByRole("article")).toHaveCount(4);
- await expect(page.locator('section[aria-labelledby="home-quiz-heading"]').getByText("자동 선택",{exact:false})).toBeVisible();
+ const live=page.locator('section[aria-labelledby="home-quiz-heading"]');
+ await expect(live.getByText("Live",{exact:false})).toBeVisible();
+ await expect(live.locator("time")).toHaveAttribute("datetime","2026-10-12");
+ await expect(live.getByRole("heading")).toHaveText(overview.items[1]!.title);
  await expect(page.getByRole("link",{name:"공개 화면",exact:false}).first()).toHaveAttribute("href","/quiz/2026-10-12-demo01");
  await expect(page.getByText("아직 공개된 퀴즈가 없습니다")).toHaveCount(0);
  const homeTitle=page.locator("#home-quiz-heading");
- expect((await homeTitle.boundingBox())!.width).toBeGreaterThan(150);
+ const titleBox=(await homeTitle.boundingBox())!,liveBox=(await live.boundingBox())!;
+ expect(titleBox.width).toBeGreaterThan(0);expect(titleBox.x+titleBox.width).toBeLessThanOrEqual(liveBox.x+liveBox.width);
  await expect(homeTitle).toHaveCSS("font-family",/Noto Sans KR/);
+ if(isMobile) await library.getByRole("article").filter({has:page.getByRole("heading",{name:overview.items[0]!.title,exact:true})}).getByRole("button",{name:/관리 더보기/}).click();
  await expect(page.getByRole("link",{name:"초안 편집",exact:true})).toHaveAttribute("href","/admin/quiz/demo-draft");
+ if(isMobile) await page.keyboard.press("Escape");
  await page.getByRole("group",{name:"퀴즈 상태"}).getByRole("button",{name:/지난 퀴즈/}).click();
  await expect(library.getByRole("article")).toHaveCount(2);
  await page.getByRole("searchbox",{name:"퀴즈 검색"}).fill("함께");
  await expect(library.getByRole("article")).toHaveCount(1);
+ if(isMobile) await library.getByRole("article").getByRole("button",{name:/관리 더보기/}).click();
  await expect(library.getByRole("link",{name:/참여 기록/})).toHaveAttribute("href","/admin/submissions?quiz=demo-past1");
+ if(isMobile) await page.keyboard.press("Escape");
  await page.getByRole("searchbox",{name:"퀴즈 검색"}).fill("없는 제목");
  await expect(page.getByText("조건에 맞는 퀴즈가 없습니다")).toBeVisible();
  await page.getByRole("searchbox",{name:"퀴즈 검색"}).fill("");
